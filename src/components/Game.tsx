@@ -1,60 +1,81 @@
-import React from "react";
-import { useState } from "react";
-// TODO: import Combat from "./Combat";?
+import React, { useState } from "react";
+import Combat from "./Combat";
+// @ts-ignore
+import Building from "./Building";
 
 // @ts-ignore
 export default function Game(props) {
   const [turn, setTurn] = useState(1);
+  // number of new workers per turn can increase over time
   const [newWorkersPerTurn, setNewWorkersPerTurn] = useState(1);
   const [freeworkers, setFreeworkers] = useState(5);
-  const [woodworkers, setWoodworkers] = useState(0);
-  const [stoneworkers, setStoneworkers] = useState(0);
-  const [ironworkers, setIronworkers] = useState(0);
+  // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
 
-  function handlePlusClick() {
-    setWoodworkers(woodworkers + 1);
-    setFreeworkers(freeworkers - 1);
-    // need to handle workers < 0
+  function moreFreeworkers() {
+    setFreeworkers(freeworkers + newWorkersPerTurn);
   }
 
-  function handleMinusClick() {
-    setWoodworkers(woodworkers - 1);
-    setFreeworkers(freeworkers + 1);
-    // need to handle workers < 0
+  function lessFreeworkers() {
+    setFreeworkers(freeworkers - newWorkersPerTurn);
   }
 
   function endTurn() {
     setTurn(turn + 1);
     if (turn === combatTurn) {
-      alert("Combat time!");
-      // render <CombatPhase />
-      // TODO: Ask why it doesn't fire when I expect it to
-    } else setFreeworkers(freeworkers + 1);
+      alert("Combat!");
+      /* TODO: Make this render */
+      <Combat />;
+    } else {
+      setFreeworkers(freeworkers + newWorkersPerTurn);
+    }
   }
 
+  /* TODO: Get handleClicks working for each building */
   return (
     <div>
       <h1>Welcome to the game.</h1>
+      <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
 
+      <br></br>
+
+      {/* TODO: Hide this during combat */}
       <div className="buildings">
-        <div className="woodworkers">
-          <button onClick={handlePlusClick}>+</button>
-          <button onClick={handleMinusClick}>-</button>
-          <div>Woodworkers: {woodworkers}</div>
+        <div className="building">
+          <Building
+            type="Woodworkers"
+            freeworkers={freeworkers}
+            moreFreeworkers={moreFreeworkers}
+            lessFreeworkers={lessFreeworkers}
+          />
         </div>
-        <div className="stoneworkers">Stoneworkers: {stoneworkers}</div>
-        <div className="ironworkers">Ironworkers: {ironworkers}</div>
+
+        <div className="building">
+          <Building
+            type="Stoneworkers"
+            freeworkers={freeworkers}
+            moreFreeworkers={moreFreeworkers}
+            lessFreeworkers={lessFreeworkers}
+          />
+        </div>
+
+        <div className="building">
+          <Building
+            type="Ironworkers"
+            freeworkers={freeworkers}
+            moreFreeworkers={moreFreeworkers}
+            lessFreeworkers={lessFreeworkers}
+          />
+        </div>
       </div>
+
+      <br></br>
 
       <div className="freeworkers" style={{ fontWeight: "bold" }}>
         Free Workers: {freeworkers}
       </div>
+      {/* TODO: Have resources gathered from buildings at of end turn */}
       <button onClick={endTurn}>End Turn</button>
-      <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
     </div>
-
-    /* TODO: Get Combat component importing correctly
-    <Combat /> */
   );
 }
