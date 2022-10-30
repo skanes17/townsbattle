@@ -74,7 +74,7 @@ export default function Game(props) {
       <div className="freeworkers" style={{ fontWeight: "bold" }}>
         Free Workers: {freeworkers}
       </div>
-      {/* TODO: Have resources gathered from buildings at of end turn */}
+      {/* TODO: Have resources gathered from buildings at end of turn */}
       <button onClick={endTurn}>End Turn</button>
     </div>
   );
