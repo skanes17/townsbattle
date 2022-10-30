@@ -7,67 +7,63 @@ import Building from "./Building";
 export default function Game(props) {
   const [turn, setTurn] = useState(1);
   // number of new workers per turn can increase over time
-  const [newWorkersPerTurn, setNewWorkersPerTurn] = useState(1);
+  const [woodworkers, setWoodworkers] = useState(0);
+  const [stoneworkers, setStoneworkers] = useState(0);
+  const [ironworkers, setIronworkers] = useState(0);
+  const [newWorkers, setNewWorkers] = useState(1);
   const [freeworkers, setFreeworkers] = useState(5);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
 
-  function moreFreeworkers() {
-    setFreeworkers(freeworkers + newWorkersPerTurn);
-  }
-
-  function lessFreeworkers() {
-    setFreeworkers(freeworkers - newWorkersPerTurn);
-  }
-
   function endTurn() {
     setTurn(turn + 1);
-    if (turn === combatTurn) {
-      alert("Combat!");
-      /* TODO: Make this render */
-      return <Combat />;
-    } else {
-      setFreeworkers(freeworkers + newWorkersPerTurn);
-    }
+    setFreeworkers(freeworkers + newWorkers);
   }
 
-  /* TODO: Get handleClicks working for each building */
   return (
     <div>
       <h1>Welcome to the game.</h1>
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
-
       <br></br>
-
       {/* TODO: Hide this during combat */}
-      <div className="buildings">
-        <Building
-          type="Woodworkers"
-          freeworkers={freeworkers}
-          moreFreeworkers={moreFreeworkers}
-          lessFreeworkers={lessFreeworkers}
-        />
-        <Building
-          type="Stoneworkers"
-          freeworkers={freeworkers}
-          moreFreeworkers={moreFreeworkers}
-          lessFreeworkers={lessFreeworkers}
-        />
-        <Building
-          type="Ironworkers"
-          freeworkers={freeworkers}
-          moreFreeworkers={moreFreeworkers}
-          lessFreeworkers={lessFreeworkers}
-        />
-      </div>
-
-      <br></br>
-
       <div className="freeworkers" style={{ fontWeight: "bold" }}>
         Free Workers: {freeworkers}
       </div>
+      <br></br>
+      <div className="buildings">
+        <Building
+          type="Woodworkers"
+          workers={woodworkers}
+          setWorkers={setWoodworkers}
+          freeworkers={freeworkers}
+          setFreeworkers={setFreeworkers}
+        />
+        <Building
+          type="Stoneworkers"
+          workers={stoneworkers}
+          setWorkers={setStoneworkers}
+          freeworkers={freeworkers}
+          setFreeworkers={setFreeworkers}
+        />
+        <Building
+          type="Ironworkers"
+          workers={ironworkers}
+          setWorkers={setIronworkers}
+          freeworkers={freeworkers}
+          setFreeworkers={setFreeworkers}
+        />
+      </div>
+      <br></br>
       {/* TODO: Have resources gathered from buildings at end of turn */}
       <button onClick={endTurn}>End Turn</button>
+
+      <div>
+        {turn === combatTurn ? (
+          <Combat />
+        ) : (
+          <div>Combat is in {combatTurn - turn} turns.</div>
+        )}
+      </div>
     </div>
   );
 }
