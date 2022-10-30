@@ -16,8 +16,12 @@ export default function Game(props) {
   const [combatTurn, setCombatTurn] = useState(4);
 
   function endTurn() {
+    setFreeworkers(woodworkers + stoneworkers + ironworkers + newWorkers);
+    // TODO: Optimize this
+    setWoodworkers(0);
+    setStoneworkers(0);
+    setIronworkers(0);
     setTurn(turn + 1);
-    setFreeworkers(freeworkers + newWorkers);
   }
 
   return (
@@ -61,7 +65,7 @@ export default function Game(props) {
         {turn === combatTurn ? (
           <Combat />
         ) : (
-          <div>Combat is in {combatTurn - turn} turns.</div>
+          <div>Turns until combat: {combatTurn - turn}</div>
         )}
       </div>
     </div>

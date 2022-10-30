@@ -9,3 +9,5 @@ export default function Combat(props) {
     </>
   );
 }
+
+/* TODO: Have combat reset number of turns */
