@@ -27,12 +27,14 @@ export default function Building(props) {
 
   return (
     <>
-      <div>
-        {/* display the current type and number of workers */}
+      <div className="building">
+        {/* display the current type and number of */}
         {props.type}: {worker}
+        <div>
+          <button onClick={handlePlusClick}>+</button>
+          <button onClick={handleMinusClick}>-</button>
+        </div>
       </div>
-      <button onClick={handlePlusClick}>+</button>
-      <button onClick={handleMinusClick}>-</button>
     </>
   );
 }

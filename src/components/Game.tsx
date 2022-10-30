@@ -41,32 +41,24 @@ export default function Game(props) {
 
       {/* TODO: Hide this during combat */}
       <div className="buildings">
-        <div className="building">
-          <Building
-            type="Woodworkers"
-            freeworkers={freeworkers}
-            moreFreeworkers={moreFreeworkers}
-            lessFreeworkers={lessFreeworkers}
-          />
-        </div>
-
-        <div className="building">
-          <Building
-            type="Stoneworkers"
-            freeworkers={freeworkers}
-            moreFreeworkers={moreFreeworkers}
-            lessFreeworkers={lessFreeworkers}
-          />
-        </div>
-
-        <div className="building">
-          <Building
-            type="Ironworkers"
-            freeworkers={freeworkers}
-            moreFreeworkers={moreFreeworkers}
-            lessFreeworkers={lessFreeworkers}
-          />
-        </div>
+        <Building
+          type="Woodworkers"
+          freeworkers={freeworkers}
+          moreFreeworkers={moreFreeworkers}
+          lessFreeworkers={lessFreeworkers}
+        />
+        <Building
+          type="Stoneworkers"
+          freeworkers={freeworkers}
+          moreFreeworkers={moreFreeworkers}
+          lessFreeworkers={lessFreeworkers}
+        />
+        <Building
+          type="Ironworkers"
+          freeworkers={freeworkers}
+          moreFreeworkers={moreFreeworkers}
+          lessFreeworkers={lessFreeworkers}
+        />
       </div>
 
       <br></br>
