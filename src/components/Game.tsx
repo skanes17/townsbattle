@@ -25,7 +25,7 @@ export default function Game(props) {
     if (turn === combatTurn) {
       alert("Combat!");
       /* TODO: Make this render */
-      <Combat />;
+      return <Combat />;
     } else {
       setFreeworkers(freeworkers + newWorkersPerTurn);
     }
