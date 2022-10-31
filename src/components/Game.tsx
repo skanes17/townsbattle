@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Combat from "./Combat";
-// @ts-ignore
 import Villager from "./Villager";
+import DisplayResources from "./DisplayResources";
+import Upgrades from "./Upgrades";
 
 // @ts-ignore
 export default function Game(props) {
@@ -18,7 +19,7 @@ export default function Game(props) {
   const [freeworkers, setFreeworkers] = useState(5);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
-
+  // multipliers determine # of resources harvested per worker
   const [woodMultiplier, setWoodMultipler] = useState(1);
   const [stoneMultiplier, setStoneMultipler] = useState(1);
   const [ironMultiplier, setIronMultipler] = useState(1);
@@ -76,17 +77,15 @@ export default function Game(props) {
         />
       </div>
       <br></br>
-      <div className="resources">
-        <div style={{ fontWeight: "bold" }}>Resources collected</div>
-        <div>Wood: {woodCollected}</div>
-        <div>Stone: {stoneCollected}</div>
-        <div>Iron: {stoneCollected}</div>
+
+      <div className="displayResources">
+        <DisplayResources
+          wood={woodCollected}
+          stone={stoneCollected}
+          iron={ironCollected}
+        />
       </div>
-      <br></br>
-      <div className="buildings" style={{ fontWeight: "bold" }}>
-        {/* TODO: Add functionality to use resources to make buildings */}
-        Buildings Constructed: 0
-      </div>
+
       <br></br>
       {/* TODO: Have resources gathered from buildings at end of turn */}
       <button onClick={endTurn}>End Turn</button>
@@ -98,6 +97,11 @@ export default function Game(props) {
           <div>Turns until combat: {combatTurn - turn}</div>
         )}
       </div>
+
+      <br></br>
+
+      {/* upgrades would show conditionally when enough resources are gathered */}
+      <Upgrades />
     </div>
   );
 }

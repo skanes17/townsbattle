@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+/* TODO: Consider if it would be cleaner to ditch villagers and harvest a resource per click.
+Could have a limit on clicks (energy bar, actions available, etc), each click uses energy.
+Basically the same result since villagers are reset each turn. */
+
 // @ts-ignore
 export default function Villager(props) {
   /* TODO: Rewrite this so workers are reset each turn */
