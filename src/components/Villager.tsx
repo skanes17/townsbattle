@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // @ts-ignore
-export default function Building(props) {
+export default function Villager(props) {
   /* TODO: Rewrite this so workers are reset each turn */
   /* TODO: Ask how to update state of a props within a child */
 
@@ -24,7 +24,7 @@ export default function Building(props) {
 
   return (
     <>
-      <div className="building">
+      <div className="villager">
         {/* display the current type and number of */}
         <button onClick={handlePlusClick}>+</button>
         <button onClick={handleMinusClick}>-</button>
