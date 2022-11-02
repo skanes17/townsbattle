@@ -30,7 +30,8 @@ export default function Game(props) {
       <h1>Welcome to the game.</h1>
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
 
-      {turn === combatTurn ? (
+      <Combat />
+      {/*       {turn === combatTurn ? (
         <Combat turn={turn} setTurn={setTurn} setCombatTurn={setCombatTurn} />
       ) : (
         <Planning
@@ -59,7 +60,7 @@ export default function Game(props) {
           ironMultiplier={ironMultiplier}
           setIronMultipler={setIronMultipler}
         />
-      )}
+      )} */}
     </div>
   );
 }
