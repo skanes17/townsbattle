@@ -14,7 +14,7 @@ export default function Upgrades() {
       <div>Upgrade Pickaxes (+1 to stone per villager)</div>
       <button>Pay 2 wood</button>
       <button>Pay 2 iron</button>
-      <div>Build Town Hall(+1 free workers per turn)</div>
+      <div>Build Town Hall (+1 free workers per turn)</div>
       <button>Pay 2 wood</button>
       <button>Pay 2 stone</button>
       <button>Pay 2 iron</button>

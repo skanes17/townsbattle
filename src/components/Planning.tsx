@@ -5,6 +5,8 @@ import Upgrades from "./Upgrades";
 
 // @ts-ignore
 export default function Planning(props) {
+  // TODO: Fix game getting reset after combat phase
+
   // number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
   const [woodworkers, setWoodworkers] = useState(0);
