@@ -80,11 +80,11 @@ export default function Planning(props) {
       </div>
 
       <br></br>
-      {/* TODO: Have resources gathered from buildings at end of turn */}
-      <button onClick={endTurn}>End Turn</button>
-
       {/* upgrades would show conditionally when enough resources are gathered */}
       <Upgrades />
+      <br></br>
+      <br></br>
+      <button onClick={endTurn}>End Turn</button>
     </div>
   );
 }
