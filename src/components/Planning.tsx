@@ -5,38 +5,31 @@ import Upgrades from "./Upgrades";
 
 // @ts-ignore
 export default function Planning(props) {
-  // TODO: Fix game getting reset after combat phase
-
-  // number of new workers per turn can increase over time
-  // TODO: Add food? And/or some resource common to all unit building?
-  const [woodworkers, setWoodworkers] = useState(0);
-  const [woodCollected, setWoodCollected] = useState(0);
-  const [stoneworkers, setStoneworkers] = useState(0);
-  const [stoneCollected, setStoneCollected] = useState(0);
-  const [ironworkers, setIronworkers] = useState(0);
-  const [ironCollected, setIronCollected] = useState(0);
-  const [newWorkers, setNewWorkers] = useState(1);
-  const [freeworkers, setFreeworkers] = useState(5);
-  // multipliers determine # of resources harvested per worker
-  const [woodMultiplier, setWoodMultipler] = useState(1);
-  const [stoneMultiplier, setStoneMultipler] = useState(1);
-  const [ironMultiplier, setIronMultipler] = useState(1);
-
   function endTurn() {
-    if (freeworkers > 0) {
+    if (props.freeworkers > 0) {
       alert("You have not assigned all free workers!");
       return;
     }
-    setWoodCollected(woodCollected + woodworkers * woodMultiplier);
-    setStoneCollected(stoneCollected + stoneworkers * stoneMultiplier);
-    setIronCollected(ironCollected + ironworkers * ironMultiplier);
-    setFreeworkers(
-      freeworkers + woodworkers + stoneworkers + ironworkers + newWorkers
+    props.setWoodCollected(
+      props.woodCollected + props.woodworkers * props.woodMultiplier
+    );
+    props.setStoneCollected(
+      props.stoneCollected + props.stoneworkers * props.stoneMultiplier
+    );
+    props.setIronCollected(
+      props.ironCollected + props.ironworkers * props.ironMultiplier
+    );
+    props.setFreeworkers(
+      props.freeworkers +
+        props.woodworkers +
+        props.stoneworkers +
+        props.ironworkers +
+        props.newWorkers
     );
     // TODO: Optimize this
-    setWoodworkers(0);
-    setStoneworkers(0);
-    setIronworkers(0);
+    props.setWoodworkers(0);
+    props.setStoneworkers(0);
+    props.setIronworkers(0);
     props.setTurn(props.turn + 1);
   }
 
@@ -44,40 +37,40 @@ export default function Planning(props) {
     <div>
       {/* TODO: Hide this during combat */}
       <div className="freeworkers" style={{ fontWeight: "bold" }}>
-        Free Workers: {freeworkers}
+        Free Workers: {props.freeworkers}
       </div>
       <br></br>
       <div className="villagers">
         <div style={{ fontWeight: "bold" }}>Villagers</div>
         <Villager
           type="Woodworkers"
-          workers={woodworkers}
-          setWorkers={setWoodworkers}
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
+          workers={props.woodworkers}
+          setWorkers={props.setWoodworkers}
+          freeworkers={props.freeworkers}
+          setFreeworkers={props.setFreeworkers}
         />
         <Villager
           type="Stoneworkers"
-          workers={stoneworkers}
-          setWorkers={setStoneworkers}
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
+          workers={props.stoneworkers}
+          setWorkers={props.setStoneworkers}
+          freeworkers={props.freeworkers}
+          setFreeworkers={props.setFreeworkers}
         />
         <Villager
           type="Ironworkers"
-          workers={ironworkers}
-          setWorkers={setIronworkers}
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
+          workers={props.ironworkers}
+          setWorkers={props.setIronworkers}
+          freeworkers={props.freeworkers}
+          setFreeworkers={props.setFreeworkers}
         />
       </div>
       <br></br>
 
       <div className="displayResources">
         <DisplayResources
-          wood={woodCollected}
-          stone={stoneCollected}
-          iron={ironCollected}
+          wood={props.woodCollected}
+          stone={props.stoneCollected}
+          iron={props.ironCollected}
         />
       </div>
 
