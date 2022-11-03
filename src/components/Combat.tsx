@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// TODO: Implement chance to hit which can be upgraded
+// TODO: Implement armor? First x units get +1 defense, etc
+
 // @ts-ignore
 export default function Combat(props) {
   function endTurn() {
@@ -8,47 +11,97 @@ export default function Combat(props) {
     props.setTurn(props.turn + 1);
   }
 
-  // friendlies -- optimize later
+  /* sketching out object idea
+
+const [friendlyUnits, setFriendlyUnits ] = useState({
+  melee: {
+    attack: 5,
+    defense: 5,
+    name: "Melee",
+    type: "balanced",
+    quantity: 0,
+  },
+  pewpew: {
+    attack: 7,
+    defense: 3,
+    name: "Pewpew",
+    type: "ranged",
+    quantity: 0,
+  },
+  tanky: {
+    attack: 3,
+    defense: 7,
+    name: "Tanky",
+    type: "defensive",
+    quantity: 0,
+  }
+}) 
+
+const [enemyUnits, setEnemyUnits ] = useState({
+  melee: {
+    attack: 5,
+    defense: 5,
+    name: "Melee",
+    type: "balanced",
+    quantity: 0,
+  },
+  pewpew: {
+    attack: 7,
+    defense: 3,
+    name: "Pewpew",
+    type: "ranged",
+    quantity: 0,
+  },
+  tanky: {
+    attack: 3,
+    defense: 7,
+    name: "Tanky",
+    type: "defensive",
+    quantity: 0,
+  }
+})  */
+
+  // friendlies -- optimize later -- use arrays?
   const [melee1, setMelee1] = useState({
-    attack: 2,
-    defense: 2,
+    attack: 5,
+    defense: 5,
     name: "Melee",
     type: "balanced",
     quantity: 0,
   });
   const [pewpew1, setPewpew1] = useState({
-    attack: 3,
-    defense: 1,
+    attack: 7,
+    defense: 3,
     name: "Pewpew",
     type: "ranged",
     quantity: 0,
   });
   const [tanky1, setTanky1] = useState({
-    attack: 1,
-    defense: 3,
+    attack: 3,
+    defense: 7,
     name: "Tanky",
     type: "defensive",
     quantity: 0,
   });
 
-  // enemies -- optimize later
+  // enemies -- optimize later -- use arrays?
   const [melee2, setMelee2] = useState({
-    attack: 2,
-    defense: 2,
+    attack: 5,
+    defense: 5,
     name: "Melee",
     type: "balanced",
     quantity: 0,
   });
   const [pewpew2, setPewpew2] = useState({
-    attack: 3,
-    defense: 1,
+    attack: 7,
+    defense: 3,
     name: "Pewpew",
     type: "ranged",
     quantity: 0,
   });
   const [tanky2, setTanky2] = useState({
-    attack: 1,
-    defense: 3,
+    attack: 3,
+    defense: 7,
     name: "Tanky",
     type: "defensive",
     quantity: 0,
@@ -61,6 +114,21 @@ export default function Combat(props) {
       ...unit, // copy other fields
       quantity: unit.quantity + 1,
     });
+  }
+
+  function Fight() {
+    // check friendly units for quantity > 0
+    // gather all these up -- use array with unit * quantity?
+    // choose a unit at random from the array -- same for enemy side
+    // FIGHT -- {friendlyDef - enemyAtk > 0 ? pool it : dead and quantity - 1}
+    // repeat for enemy
+    // go again until one side has quantity 0 for all units
+
+    // check quantity of a unit, eg melee, run a loop that adds that many melee fighters
+    // this will help us keep track of them when their health is low, etc
+    // same for the other units
+
+    return <div>[friendly unit name] vs. [enemy unit name]</div>;
   }
 
   return (
@@ -95,9 +163,7 @@ export default function Combat(props) {
           Atk {tanky1.attack} Def {tanky1.defense}
         </div>
       </div>
-
       <br></br>
-
       <div className="trainFriendlyUnits">
         {/* Took forever to figure this out */}
         <button onClick={() => trainUnit(melee1, setMelee1)}>
@@ -111,7 +177,6 @@ export default function Combat(props) {
         </button>
       </div>
       <br></br>
-
       <div className="enemyUnits" style={{ fontWeight: "bold" }}>
         Enemy Units:
       </div>
@@ -141,7 +206,6 @@ export default function Combat(props) {
           Atk {tanky2.attack} Def {tanky2.defense}
         </div>
       </div>
-
       <div className="trainEnemyUnits">
         {/* Took forever to figure this out */}
         <button onClick={() => trainUnit(melee2, setMelee2)}>
@@ -154,11 +218,7 @@ export default function Combat(props) {
           Train {tanky2.name}
         </button>
       </div>
-
       {/* TODO: Implement direct combat between units, w/randomization etc */}
-
-      <br></br>
-      <button onClick={endTurn}>End Turn</button>
     </>
   );
 }
