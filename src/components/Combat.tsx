@@ -13,6 +13,7 @@ export default function Combat(props) {
 
   /* sketching out object idea
 
+  // **use state to auto-increment them upon unit creation, zero duplicates, could use counter**
 const [friendlyUnits, setFriendlyUnits ] = useState({
   melee: {
     attack: 5,
@@ -20,6 +21,7 @@ const [friendlyUnits, setFriendlyUnits ] = useState({
     name: "Melee",
     type: "balanced",
     quantity: 0,
+    id: 
   },
   pewpew: {
     attack: 7,
@@ -166,13 +168,22 @@ const [enemyUnits, setEnemyUnits ] = useState({
       <br></br>
       <div className="trainFriendlyUnits">
         {/* Took forever to figure this out */}
-        <button onClick={() => trainUnit(melee1, setMelee1)}>
+        <button
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          onClick={() => trainUnit(melee1, setMelee1)}
+        >
           Train {melee1.name}
         </button>
-        <button onClick={() => trainUnit(pewpew1, setPewpew1)}>
+        <button
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          onClick={() => trainUnit(pewpew1, setPewpew1)}
+        >
           Train {pewpew1.name}
         </button>
-        <button onClick={() => trainUnit(tanky1, setTanky1)}>
+        <button
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          onClick={() => trainUnit(tanky1, setTanky1)}
+        >
           Train {tanky1.name}
         </button>
       </div>
@@ -208,13 +219,22 @@ const [enemyUnits, setEnemyUnits ] = useState({
       </div>
       <div className="trainEnemyUnits">
         {/* Took forever to figure this out */}
-        <button onClick={() => trainUnit(melee2, setMelee2)}>
+        <button
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          onClick={() => trainUnit(melee2, setMelee2)}
+        >
           Train {melee2.name}
         </button>
-        <button onClick={() => trainUnit(pewpew2, setPewpew2)}>
+        <button
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          onClick={() => trainUnit(pewpew2, setPewpew2)}
+        >
           Train {pewpew2.name}
         </button>
-        <button onClick={() => trainUnit(tanky2, setTanky2)}>
+        <button
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          onClick={() => trainUnit(tanky2, setTanky2)}
+        >
           Train {tanky2.name}
         </button>
       </div>
