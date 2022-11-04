@@ -27,7 +27,7 @@ export default function Game(props) {
   const [ironMultiplier, setIronMultipler] = useState(1);
 
   // initialized an array, will practice adding units to this
-  /*   const [myUnits, setMyUnits] = useState([
+  const [myUnits, setMyUnits] = useState([
     {
       melee: {
         attack: 5,
@@ -35,50 +35,31 @@ export default function Game(props) {
         id: 0,
       },
     },
-  ]); */
+  ]);
 
   // @ts-ignore
-  /*   function unitObjectToAddToArray(type, attack, defense, id) {
+  const mergeOnClick = () => {
     // template for a unit object
-  } */
+    // this should add new units to the old array -- SPREAD OPERATOR AND WRAPPER FUNCTION
+    // @ts-ignore
+    /*     setMyUnits((myUnits) => {
+      return [...myUnits, ...newUnit];
+    }); */
 
-  // this should add new units to the old array
-  // @ts-ignore
-  /*   setMyUnits((myUnits) => {
-    return [...myUnits, ...newUnit];
-  }); */
-
-  /*   const existingUnits = [
-    {
-      melee: {
-        attack: 5,
-        defense: 5,
-        id: 0,
+    const newUnit = [
+      {
+        pewpew: {
+          attack: 7,
+          defense: 3,
+          id: 1,
+        },
       },
-    },
-    {
-      pewpew: {
-        attack: 7,
-        defense: 3,
-        id: 1,
-      },
-    },
-  ];
-  console.log(existingUnits);
+    ];
 
-  const newUnit = [
-    {
-      tanky: {
-        attack: 3,
-        defense: 7,
-        id: 2,
-      },
-    },
-  ];
+    setMyUnits((myUnits) => [...myUnits, ...newUnit]);
 
-  const merged = [...existingUnits, ...newUnit];
-  console.log("This is the merged array...");
-  console.log(merged); */
+    console.log(myUnits);
+  };
 
   /* TODO: think on Functional updates for adding units
   setMyUnits(myUnits => {
@@ -101,8 +82,8 @@ export default function Game(props) {
   return (
     <div>
       <h1>Welcome to the game.</h1>
+      <button onClick={mergeOnClick}>Merge array</button>;
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
-
       <Combat />
       {/* {turn === combatTurn ? (
         <Combat turn={turn} setTurn={setTurn} setCombatTurn={setCombatTurn} />
