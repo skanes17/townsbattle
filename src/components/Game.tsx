@@ -120,19 +120,19 @@ export default function Game(props) {
   // to be used in UnitBattler
   const [activeUnit, setActiveUnit] = useState();
 
-  // TODO: Make a unitBattler function
+  // TODO: Consider if copy of array should use ststae
   const unitBattler = () => {
-    // select a random unit from the array
-
     // @ts-ignore
-    /* const selectedUnit = myUnits[Math.floor(Math.random() * myUnits.length)]; */
-    const friendlyUnit = myUnits[Math.floor(Math.random() * myUnits.length)];
+    const myUnitsCopy = [...myUnits];
+    // select a random unit from the array
+    const friendlyUnit =
+      myUnitsCopy[Math.floor(Math.random() * myUnitsCopy.length)];
     console.log("--Selected friendly unit is... " + friendlyUnit.type);
     console.log(
       "Attack: " + friendlyUnit.attack + " Health: " + friendlyUnit.defense
     );
 
-    // take a unit at random from enemy array (when it exists)
+    // will take a unit at random from enemy array (when it exists)
     // placeholder object here -- would follow same process as friendly
     const enemyUnit = {
       type: "melee",
@@ -146,6 +146,8 @@ export default function Game(props) {
     // which units were selected...
     // atk/def stats
     // state friendly and enemy damage taken and remaining health
+    // ideally UI would show both healths reduced at once
+    // when damage is taken should be, at minimum, a little red text animation
     if (enemyUnit.defense - friendlyUnit.attack > 0) {
       console.log(
         "The enemy takes " +
@@ -154,11 +156,11 @@ export default function Game(props) {
           (enemyUnit.defense - friendlyUnit.attack) +
           " health."
       );
-      // return enemy to their pool
+      // TODO: code to return enemy to their pool with current health
     } else {
       console.log(
         "The enemy takes " + friendlyUnit.attack + " damage and dies."
-        // remove enemy from their pool
+        // TODO: code to remove enemy from their pool
       );
     }
 
@@ -171,14 +173,14 @@ export default function Game(props) {
           (friendlyUnit.defense - enemyUnit.attack) +
           " health."
       );
-      // TODO: return friendly to their pool, replace with new health!
+      // TODO: return friendly to pool with current health
     } else {
       console.log(
         friendlyUnit.name + " takes " + enemyUnit.attack + " damage and dies."
       );
       // remove friendly from pool
-      // TODO: Make sure this works properly
-      setMyUnits(myUnits.filter((a) => a.id !== friendlyUnit.id));
+      // TODO: Make sure this setState works properly
+      setMyUnits(myUnitsCopy.filter((a) => a.id !== friendlyUnit.id));
       console.log(myUnits);
     }
   };
