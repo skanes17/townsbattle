@@ -31,8 +31,8 @@ export default function Game(props) {
   // TODO: Why don't it let me use useState([])?
   // @ts-ignore
   const [myUnits, setMyUnits] = useState([
-    { type: "melee", name: "Melee", attack: 5, defense: 5 },
-    { type: "pewpew", name: "Pewpew", attack: 7, defense: 3 },
+    { type: "melee", name: "Melee", attack: 5, defense: 5, id: -2 },
+    { type: "pewpew", name: "Pewpew", attack: 7, defense: 3, id: -1 },
   ]);
 
   const [newMelee, setNewMelee] = useState({
@@ -125,17 +125,15 @@ export default function Game(props) {
     // select a random unit from the array
 
     // @ts-ignore
-    const selectedUnit = Math.floor(Math.random() * myUnits.length);
-    console.log("--Selected friendly unit is... " + myUnits[selectedUnit].type);
+    /* const selectedUnit = myUnits[Math.floor(Math.random() * myUnits.length)]; */
+    const friendlyUnit = myUnits[Math.floor(Math.random() * myUnits.length)];
+    console.log("--Selected friendly unit is... " + friendlyUnit.type);
     console.log(
-      "Attack: " +
-        myUnits[selectedUnit].attack +
-        " Health: " +
-        myUnits[selectedUnit].defense
+      "Attack: " + friendlyUnit.attack + " Health: " + friendlyUnit.defense
     );
 
     // take a unit at random from enemy array (when it exists)
-    // placeholder object here
+    // placeholder object here -- would follow same process as friendly
     const enemyUnit = {
       type: "melee",
       name: "Melee",
@@ -148,23 +146,41 @@ export default function Game(props) {
     // which units were selected...
     // atk/def stats
     // state friendly and enemy damage taken and remaining health
-    if (enemyUnit.defense - myUnits[selectedUnit].attack > 0) {
+    if (enemyUnit.defense - friendlyUnit.attack > 0) {
       console.log(
         "The enemy takes " +
-          myUnits[selectedUnit].attack +
+          friendlyUnit.attack +
           " damage but survives with " +
-          (enemyUnit.defense - myUnits[selectedUnit].attack) +
+          (enemyUnit.defense - friendlyUnit.attack) +
           " health."
       );
+      // return enemy to their pool
     } else {
       console.log(
-        "The enemy takes " + myUnits[selectedUnit].attack + " damage and dies."
+        "The enemy takes " + friendlyUnit.attack + " damage and dies."
+        // remove enemy from their pool
       );
-      // remove enemy from their array
     }
 
-    // friendly dies/return to army, enemy dies/return to array
-    // TODO: Friendly needs to lose health -- find a way to make this a cleaner loop
+    if (friendlyUnit.defense - enemyUnit.attack > 0) {
+      console.log(
+        friendlyUnit.name +
+          " takes " +
+          enemyUnit.attack +
+          " damage but survives with " +
+          (friendlyUnit.defense - enemyUnit.attack) +
+          " health."
+      );
+      // TODO: return friendly to their pool, replace with new health!
+    } else {
+      console.log(
+        friendlyUnit.name + " takes " + enemyUnit.attack + " damage and dies."
+      );
+      // remove friendly from pool
+      // TODO: Make sure this works properly
+      setMyUnits(myUnits.filter((a) => a.id !== friendlyUnit.id));
+      console.log(myUnits);
+    }
   };
 
   return (
