@@ -1,32 +1,37 @@
+// THIS IS TOTALLY UNFINISHED
+
 // @ts-nocheck
 import React from "react";
 
-export default function MakeUnits(myUnits, setMyUnits) {
+export default function AddUnitButton({
+  myUnits,
+  setMyUnits,
+  type,
+  name,
+  attack,
+  defense,
+  id,
+}) {
+  // TRY TO USE THIS REFERENCE TO HAVE THIS COMPONENT SELF-CONTAINED
+  /* const [newMelee, setNewMelee] = useState({
+    type: "melee",
+    name: "Melee",
+    attack: 5,
+    defense: 5,
+  }); */
+
   // @ts-ignore
   const addMelee = () => {
-    setMyUnits((myUnits) => {
-      // Object.assign would also work
-      return [...myUnits, newMelee];
-    });
-    console.log(myUnits);
-  };
+    // copy the current newMelee stats
+    // TODO: Check if this is always using the most current state
+    const newMeleeCopy = { ...newMelee, id: unitId };
 
-  // @ts-ignore
-  const addPewpew = () => {
     setMyUnits((myUnits) => {
-      // Object.assign would also work
-      return [...myUnits, newPewpew];
+      return [...myUnits, newMeleeCopy];
     });
-    console.log(myUnits);
-  };
 
-  // @ts-ignore
-  const addTanky = () => {
-    setMyUnits((myUnits) => {
-      // Object.assign would also work
-      return [...myUnits, newTanky];
-    });
     console.log(myUnits);
+    setUnitId(unitId + 1);
   };
 
   return (

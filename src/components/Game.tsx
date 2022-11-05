@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Planning from "./Planning";
 import Combat from "./Combat";
-import MakeUnits from "./MakeUnits";
+import AddUnitButton from "./AddUnitButton";
 import { setConstantValue } from "typescript";
 
 // @ts-ignore
@@ -9,8 +9,6 @@ export default function Game(props) {
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
-
-  // TODO: Fix game getting reset after combat phase
 
   // number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
@@ -57,31 +55,48 @@ export default function Game(props) {
     defense: 3,
   });
 
+  // TODO: optimize this using a AddUnitButton component and props!
+
   // @ts-ignore
   const addMelee = () => {
+    // copy the current newMelee stats
+    // TODO: Check if this process is always using the most current state
+    // this copies the existing state to a fresh array
+    const newMeleeCopy = { ...newMelee, id: unitId };
+
     setMyUnits((myUnits) => {
-      // Object.assign would also work
-      return [...myUnits, newMelee];
+      return [...myUnits, newMeleeCopy];
     });
+
     console.log(myUnits);
+    setUnitId(unitId + 1);
   };
 
   // @ts-ignore
   const addPewpew = () => {
+    // make a COPY of the state array so we can append id to the end
+    const newPewpewCopy = { ...newPewpew, id: unitId };
+
+    // take existing myUnits and append newPewpewCopy to the end
     setMyUnits((myUnits) => {
-      // Object.assign would also work
-      return [...myUnits, newPewpew];
+      return [...myUnits, newPewpewCopy];
     });
+
     console.log(myUnits);
+    // increment the ID counter to ensure elements are unique
+    setUnitId(unitId + 1);
   };
 
   // @ts-ignore
   const addTanky = () => {
+    const newTankyCopy = { ...newTanky, id: unitId };
+
     setMyUnits((myUnits) => {
-      // Object.assign would also work
-      return [...myUnits, newTanky];
+      return [...myUnits, newTankyCopy];
     });
+
     console.log(myUnits);
+    setUnitId(unitId + 1);
   };
 
   return (
@@ -119,7 +134,6 @@ export default function Game(props) {
           setIronMultipler={setIronMultipler}
         />
       )} */}
-
       {/* <MakeUnits myUnits={myUnits} setMyUnits={setMyUnits} /> */}
       <button
         onClick={addMelee}
@@ -139,9 +153,10 @@ export default function Game(props) {
       >
         Train Tanky
       </button>
-      {/*       <AddUnitButton onClick={addUnit}>
-        CLICK THIS TO ADD NEW UNIT
-      </AddUnitButton> */}
+
+      {/* <AddUnitButton newMelee={newMelee} setNewMelee:{setNewMelee} type={newMelee.type} name:{newMelee.name} attack:{newMelee.attack} defense: {newMelee.defense}
+    <AddUnitButton newPewpew={newPewpew} setNewPewpew:{setNewPewpew}  type={newPewpew.type} name:{newPewpew.name} attack:{newPewpew.attack} defense: {newPewpew.defense}
+    <AddUnitButton newTanky={newTanky} setNewTanky:{setNewTanky}  type={newTanky.type} name:{newTanky.name} attack:{newTanky.attack} defense: {newTanky.defense} */}
     </div>
   );
 }
