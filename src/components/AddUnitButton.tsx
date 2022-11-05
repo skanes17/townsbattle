@@ -1,4 +1,19 @@
 // THIS IS TOTALLY UNFINISHED
+// Could these buttons just take the newMelee, newPewpew functions from Game?
+// eg The component is just a button which says "Train {unit}"
+// When clicked, the button calls the appropriate function which exists in Game
+
+// Should just need a generic version of the following code:
+{
+  /* <button
+onClick={addMelee}
+className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+>
+Train Melee
+</button> */
+}
+
+// This would make all the silly code below unnecessary -- trash it next time
 
 // @ts-nocheck
 import React from "react";
