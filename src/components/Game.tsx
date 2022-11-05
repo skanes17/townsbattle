@@ -10,7 +10,7 @@ export default function Game(props) {
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
 
-  // number of new workers per turn can increase over time
+  // current number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
   const [woodworkers, setWoodworkers] = useState(0);
   const [woodCollected, setWoodCollected] = useState(0);
@@ -28,6 +28,7 @@ export default function Game(props) {
   // ids for tracking units
   const [unitId, setUnitId] = useState(0);
 
+  // TODO: Why don't it let me use useState([])?
   // @ts-ignore
   const [myUnits, setMyUnits] = useState([
     { type: "melee", name: "Melee", attack: 5, defense: 5 },
@@ -41,12 +42,7 @@ export default function Game(props) {
     defense: 5,
   });
 
-  const [newTanky, setNewTanky] = useState({
-    type: "tanky",
-    name: "Tanky",
-    attack: 3,
-    defense: 7,
-  });
+  const [meleeCounter, setMeleeCounter] = useState(0);
 
   const [newPewpew, setNewPewpew] = useState({
     type: "pewpew",
@@ -55,21 +51,37 @@ export default function Game(props) {
     defense: 3,
   });
 
-  // TODO: optimize this using a AddUnitButton component and props!
+  const [pewpewCounter, setPewpewCounter] = useState(0);
+
+  const [newTanky, setNewTanky] = useState({
+    type: "tanky",
+    name: "Tanky",
+    attack: 3,
+    defense: 7,
+  });
+
+  const [tankyCounter, setTankyCounter] = useState(0);
 
   // @ts-ignore
   const addMelee = () => {
-    // copy the current newMelee stats
     // TODO: Check if this process is always using the most current state
-    // this copies the existing state to a fresh array
+    // copy the current newMelee stats
+
+    // copy current newMelee stats, append an ID to the end
     const newMeleeCopy = { ...newMelee, id: unitId };
 
+    // update myUnits state accordingly
     setMyUnits((myUnits) => {
       return [...myUnits, newMeleeCopy];
     });
 
     console.log(myUnits);
+
     setUnitId(unitId + 1);
+    // filter to check type, count matches, use it to update current unit number
+    setMeleeCounter(
+      myUnits.filter((element) => element.type === "melee").length
+    );
   };
 
   // @ts-ignore
@@ -85,6 +97,9 @@ export default function Game(props) {
     console.log(myUnits);
     // increment the ID counter to ensure elements are unique
     setUnitId(unitId + 1);
+    setPewpewCounter(
+      myUnits.filter((element) => element.type === "pewpew").length
+    );
   };
 
   // @ts-ignore
@@ -97,13 +112,96 @@ export default function Game(props) {
 
     console.log(myUnits);
     setUnitId(unitId + 1);
+    setTankyCounter(
+      myUnits.filter((element) => element.type === "tanky").length
+    );
+  };
+
+  // to be used in UnitBattler
+  const [activeUnit, setActiveUnit] = useState();
+
+  // TODO: Make a unitBattler function
+  const unitBattler = () => {
+    // select a random unit from the array
+
+    // @ts-ignore
+    const selectedUnit = Math.floor(Math.random() * myUnits.length);
+    console.log("--Selected friendly unit is... " + myUnits[selectedUnit].type);
+    console.log(
+      "Attack: " +
+        myUnits[selectedUnit].attack +
+        " Health: " +
+        myUnits[selectedUnit].defense
+    );
+
+    // take a unit at random from enemy array (when it exists)
+    // placeholder object here
+    const enemyUnit = {
+      type: "melee",
+      name: "Melee",
+      attack: 5,
+      defense: 5,
+    };
+
+    // start a log to display what's happening
+    // this coud exist in its own side div eventualy, and show:
+    // which units were selected...
+    // atk/def stats
+    // state friendly and enemy damage taken and remaining health
+    if (enemyUnit.defense - myUnits[selectedUnit].attack > 0) {
+      console.log(
+        "The enemy takes " +
+          myUnits[selectedUnit].attack +
+          " damage but survives with " +
+          (enemyUnit.defense - myUnits[selectedUnit].attack) +
+          " health."
+      );
+    } else {
+      console.log(
+        "The enemy takes " + myUnits[selectedUnit].attack + " damage and dies."
+      );
+      // remove enemy from their array
+    }
+
+    // friendly dies/return to army, enemy dies/return to array
+    // TODO: Friendly needs to lose health -- find a way to make this a cleaner loop
   };
 
   return (
     <div>
-      <h1>Welcome to the game.</h1>
+      <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+        Welcome to the game.
+      </h1>
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
-      <Combat />
+      <Planning
+        turn={turn}
+        setTurn={setTurn}
+        woodworkers={woodworkers}
+        setWoodworkers={setWoodworkers}
+        woodCollected={woodCollected}
+        setWoodCollected={setWoodCollected}
+        stoneworkers={stoneworkers}
+        setStoneworkers={setStoneworkers}
+        stoneCollected={stoneCollected}
+        setStoneCollected={setStoneCollected}
+        ironworkers={ironworkers}
+        setIronworkers={setIronworkers}
+        ironCollected={ironCollected}
+        setIronCollected={setIronCollected}
+        newWorkers={newWorkers}
+        setNewWorkers={setNewWorkers}
+        freeworkers={freeworkers}
+        setFreeworkers={setFreeworkers}
+        woodMultiplier={woodMultiplier}
+        setWoodMultipler={setWoodMultipler}
+        stoneMultiplier={stoneMultiplier}
+        setStoneMultipler={setStoneMultipler}
+        ironMultiplier={ironMultiplier}
+        setIronMultipler={setIronMultipler}
+      />
+
+      {/*       <h2 className="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600">>Combat</h2>
+      <Combat turn={turn} setTurn={setTurn} setCombatTurn={setCombatTurn} /> */}
       {/* {turn === combatTurn ? (
         <Combat turn={turn} setTurn={setTurn} setCombatTurn={setCombatTurn} />
       ) : (
@@ -134,29 +232,60 @@ export default function Game(props) {
           setIronMultipler={setIronMultipler}
         />
       )} */}
-      {/* <MakeUnits myUnits={myUnits} setMyUnits={setMyUnits} /> */}
-      <button
-        onClick={addMelee}
-        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-      >
-        Train Melee
-      </button>
-      <button
-        onClick={addPewpew}
-        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-      >
-        Train Pewpew
-      </button>
-      <button
-        onClick={addTanky}
-        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-      >
-        Train Tanky
-      </button>
+      <br></br>
+      <div>
+        <h2 className="text-4xl font-extrabold dark:text-white">
+          Unit Creation
+        </h2>
+        <AddUnitButton
+          addUnitFunction={addMelee}
+          name="Melee"
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+        />
+        <div>Current number of melee units is {meleeCounter}</div>
+        <AddUnitButton
+          addUnitFunction={addPewpew}
+          name="Pewpew"
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+        />
+        <div>Current number of pewpew units is {pewpewCounter}</div>
+        <AddUnitButton
+          addUnitFunction={addTanky}
+          name="Tanky"
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+        />
+        <div>Current number of tanky units is {tankyCounter}</div>
+      </div>
+      <br></br>
+      <div>
+        <h2 className="text-4xl font-extrabold dark:text-white">
+          Combat Mechanics
+        </h2>
+        <div>
+          <p>
+            Your army size is {meleeCounter + pewpewCounter + tankyCounter}.
+          </p>
+          <p>
+            {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky.
+          </p>
+          <button
+            onClick={unitBattler}
+            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          >
+            Click to Select a Unit
+          </button>
+        </div>
+      </div>
 
-      {/* <AddUnitButton newMelee={newMelee} setNewMelee:{setNewMelee} type={newMelee.type} name:{newMelee.name} attack:{newMelee.attack} defense: {newMelee.defense}
-    <AddUnitButton newPewpew={newPewpew} setNewPewpew:{setNewPewpew}  type={newPewpew.type} name:{newPewpew.name} attack:{newPewpew.attack} defense: {newPewpew.defense}
-    <AddUnitButton newTanky={newTanky} setNewTanky:{setNewTanky}  type={newTanky.type} name:{newTanky.name} attack:{newTanky.attack} defense: {newTanky.defense} */}
+      {/*  TODO: Make this component work
+           <Combat
+        turn={turn}
+        setTurn={setTurn}
+        setCombatTurn={setCombatTurn}
+        meleeCounter={meleeCounter}
+        pewpewCounter={pewpewCounter}
+        tankyCounter={tankyCounter}
+      /> */}
     </div>
   );
 }

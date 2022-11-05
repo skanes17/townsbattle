@@ -35,7 +35,7 @@ export default function Planning(props) {
 
   return (
     <div>
-      {/* TODO: Hide this during combat */}
+      <h2 className="text-4xl font-extrabold dark:text-white">Planning</h2>
       <div className="freeworkers" style={{ fontWeight: "bold" }}>
         Free Workers: {props.freeworkers}
       </div>
