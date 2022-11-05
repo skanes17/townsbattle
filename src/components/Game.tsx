@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Planning from "./Planning";
 import Combat from "./Combat";
+import MakeUnits from "./MakeUnits";
 import { setConstantValue } from "typescript";
 
 // @ts-ignore
@@ -26,63 +27,66 @@ export default function Game(props) {
   const [stoneMultiplier, setStoneMultipler] = useState(1);
   const [ironMultiplier, setIronMultipler] = useState(1);
 
-  // initialized an array, will practice adding units to this
-  const [myUnits, setMyUnits] = useState([
-    {
-      melee: {
-        attack: 5,
-        defense: 5,
-        id: 0,
-      },
-    },
-  ]);
+  // ids for tracking units
+  const [unitId, setUnitId] = useState(0);
 
   // @ts-ignore
-  const mergeOnClick = () => {
-    // template for a unit object
-    // this should add new units to the old array -- SPREAD OPERATOR AND WRAPPER FUNCTION
-    // @ts-ignore
-    /*     setMyUnits((myUnits) => {
-      return [...myUnits, ...newUnit];
-    }); */
+  const [myUnits, setMyUnits] = useState([
+    { type: "melee", name: "Melee", attack: 5, defense: 5 },
+    { type: "pewpew", name: "Pewpew", attack: 7, defense: 3 },
+  ]);
 
-    const newUnit = [
-      {
-        pewpew: {
-          attack: 7,
-          defense: 3,
-          id: 1,
-        },
-      },
-    ];
+  const [newMelee, setNewMelee] = useState({
+    type: "melee",
+    name: "Melee",
+    attack: 5,
+    defense: 5,
+  });
 
-    setMyUnits((myUnits) => [...myUnits, ...newUnit]);
+  const [newTanky, setNewTanky] = useState({
+    type: "tanky",
+    name: "Tanky",
+    attack: 3,
+    defense: 7,
+  });
 
+  const [newPewpew, setNewPewpew] = useState({
+    type: "pewpew",
+    name: "Pewpew",
+    attack: 7,
+    defense: 3,
+  });
+
+  // @ts-ignore
+  const addMelee = () => {
+    setMyUnits((myUnits) => {
+      // Object.assign would also work
+      return [...myUnits, newMelee];
+    });
     console.log(myUnits);
   };
 
-  /* TODO: think on Functional updates for adding units
-  setMyUnits(myUnits => {
-    // Object.assign would also work
-    return {...myUnits, ...updatedValues};
-  }) */
+  // @ts-ignore
+  const addPewpew = () => {
+    setMyUnits((myUnits) => {
+      // Object.assign would also work
+      return [...myUnits, newPewpew];
+    });
+    console.log(myUnits);
+  };
 
-  /* TEMPLATE
-  const [friendlyUnits, setFriendlyUnits] = useState({
-    melee: {
-      attack: 5,
-      defense: 5,
-      name: "Melee",
-      type: "balanced",
-      quantity: 0,
-      id: 0,
-    },
-  }); */
+  // @ts-ignore
+  const addTanky = () => {
+    setMyUnits((myUnits) => {
+      // Object.assign would also work
+      return [...myUnits, newTanky];
+    });
+    console.log(myUnits);
+  };
 
   return (
     <div>
       <h1>Welcome to the game.</h1>
-      <button onClick={mergeOnClick}>Merge array</button>;
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
       <Combat />
       {/* {turn === combatTurn ? (
@@ -115,6 +119,29 @@ export default function Game(props) {
           setIronMultipler={setIronMultipler}
         />
       )} */}
+
+      {/* <MakeUnits myUnits={myUnits} setMyUnits={setMyUnits} /> */}
+      <button
+        onClick={addMelee}
+        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+      >
+        Train Melee
+      </button>
+      <button
+        onClick={addPewpew}
+        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+      >
+        Train Pewpew
+      </button>
+      <button
+        onClick={addTanky}
+        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+      >
+        Train Tanky
+      </button>
+      {/*       <AddUnitButton onClick={addUnit}>
+        CLICK THIS TO ADD NEW UNIT
+      </AddUnitButton> */}
     </div>
   );
 }

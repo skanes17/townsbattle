@@ -13,6 +13,8 @@ export default function Combat(props) {
 
   /* sketching out object idea
 
+  
+
   // **use state to auto-increment them upon unit creation, zero duplicates, could use counter**
 const [friendlyUnits, setFriendlyUnits ] = useState({
   melee: {
