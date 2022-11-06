@@ -4,6 +4,8 @@ import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
 import { setConstantValue } from "typescript";
 
+// TODO: Fix counter bugs (how to cause re-renders?)
+
 // @ts-ignore
 export default function Game(props) {
   const [turn, setTurn] = useState(1);
@@ -304,21 +306,33 @@ export default function Game(props) {
           name="Melee"
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
         />
-        <div>Current number of melee units is {meleeCounter}</div>
+        <div>Melee units: {meleeCounter}</div>
         <AddUnitButton
           addUnitFunction={addPewpew}
           name="Pewpew"
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
         />
-        <div>Current number of pewpew units is {pewpewCounter}</div>
+        <div>Pewpew units: {pewpewCounter}</div>
         <AddUnitButton
           addUnitFunction={addTanky}
           name="Tanky"
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
         />
-        <div>Current number of tanky units is {tankyCounter}</div>
+        <div>Tanky units: {tankyCounter}</div>
       </div>
       <br></br>
+
+      {/* TODO: Encapsulate combat      
+      <Combat
+        turn={turn}
+        setTurn={setTurn}
+        setCombatTurn={setCombatTurn}
+        meleeCounter={meleeCounter}
+        pewpewCounter={pewpewCounter}
+        tankyCounter={tankyCounter}
+        onClick={unitBattler}
+      /> */}
+
       <div>
         <h2 className="text-4xl font-extrabold dark:text-white">
           Combat Mechanics
@@ -334,7 +348,7 @@ export default function Game(props) {
             onClick={unitBattler}
             className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           >
-            Click to Select a Unit
+            Fight!
           </button>
         </div>
       </div>

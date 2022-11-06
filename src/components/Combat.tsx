@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useState } from "react";
 
-// TODO: Implement chance to hit which can be upgraded
+// TODO: Implement chance to hit? Could be upgraded?
 // TODO: Implement armor? First x units get +1 health, etc
 
 export default function Combat({
@@ -9,11 +9,9 @@ export default function Combat({
   setCombatTurn,
   setTurn,
   meleeCounter,
-  setMeleeCounter,
   pewpewCounter,
-  setPewpewCounter,
   tankyCounter,
-  setTankyCounter,
+  onClick,
 }) {
   function endTurn() {
     // combat is every 4 turns -- change this later
@@ -21,25 +19,24 @@ export default function Combat({
     setTurn(turn + 1);
   }
 
-  function Fight() {
-    // choose a unit at random from the array -- same for enemy side
-    // FIGHT -- {friendlyDef - enemyAtk > 0 ? pool it : dead and quantity - 1}
-    // repeat for enemy
-    // go again until one side has an empty array
-
-    return <div>[friendly unit name] vs. [enemy unit name]</div>;
-  }
-
   return (
-    <>
+    <div>
       <h2 className="text-4xl font-extrabold dark:text-white">
         Combat Mechanics
       </h2>
-
-      <p>Your army size is {meleeCounter + pewpewCounter + tankyCounter}.</p>
-      <p>
-        {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky.
-      </p>
-    </>
+      <div>
+        <p>Your army size is {meleeCounter + pewpewCounter + tankyCounter}.</p>
+        <p>
+          {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky.
+        </p>
+        <button
+          onClick={unitBattler}
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+        >
+          Fight!
+        </button>
+        // TODO: Add End Turn button
+      </div>
+    </div>
   );
 }
