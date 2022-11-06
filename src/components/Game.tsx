@@ -120,7 +120,8 @@ export default function Game(props) {
   // to be used in UnitBattler
   const [activeUnit, setActiveUnit] = useState();
 
-  // TODO: Consider if copy of array should use ststae
+  // TODO: Consider if copy of array should use state
+  // TODO: Make sure changing items in copied array doesn't change original items
   const unitBattler = () => {
     // @ts-ignore
     const myUnitsCopy = [...myUnits];
@@ -142,7 +143,7 @@ export default function Game(props) {
     };
 
     // start a log to display what's happening
-    // this coud exist in its own side div eventualy, and show:
+    // this coud exist in its own side div eventually, and show:
     // which units were selected...
     // atk/def stats
     // state friendly and enemy damage taken and remaining health
@@ -173,14 +174,31 @@ export default function Game(props) {
           (friendlyUnit.defense - enemyUnit.attack) +
           " health."
       );
-      // TODO: return friendly to pool with current health
+      // code to return friendly to pool with current health
+      setMyUnits(
+        // copy the array
+        myUnitsCopy.map((unit) => {
+          // check if id matches the currently selected unit
+          if (unit.id === friendlyUnit.id) {
+            return {
+              // if so, change that unit's defense/health accordingly
+              ...unit,
+              defense: friendlyUnit.defense - enemyUnit.attack,
+            };
+          } else {
+            // if not, don't change anything
+            return unit;
+          }
+        })
+      );
     } else {
       console.log(
         friendlyUnit.name + " takes " + enemyUnit.attack + " damage and dies."
       );
       // remove friendly from pool
       // TODO: Make sure this setState works properly
-      setMyUnits(myUnitsCopy.filter((a) => a.id !== friendlyUnit.id));
+      setMyUnits(myUnitsCopy.filter((unit) => unit.id !== friendlyUnit.id));
+      console.log("Your new array is...");
       console.log(myUnits);
     }
   };
