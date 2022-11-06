@@ -31,15 +31,15 @@ export default function Game(props) {
   // TODO: Why don't it let me use useState([])?
   // @ts-ignore
   const [myUnits, setMyUnits] = useState([
-    { type: "melee", name: "Melee", attack: 5, defense: 5, id: -2 },
-    { type: "pewpew", name: "Pewpew", attack: 7, defense: 3, id: -1 },
+    { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
+    { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
   ]);
 
   const [newMelee, setNewMelee] = useState({
     type: "melee",
     name: "Melee",
     attack: 5,
-    defense: 5,
+    health: 5,
   });
 
   const [meleeCounter, setMeleeCounter] = useState(0);
@@ -48,7 +48,7 @@ export default function Game(props) {
     type: "pewpew",
     name: "Pewpew",
     attack: 7,
-    defense: 3,
+    health: 3,
   });
 
   const [pewpewCounter, setPewpewCounter] = useState(0);
@@ -57,7 +57,7 @@ export default function Game(props) {
     type: "tanky",
     name: "Tanky",
     attack: 3,
-    defense: 7,
+    health: 7,
   });
 
   const [tankyCounter, setTankyCounter] = useState(0);
@@ -117,11 +117,16 @@ export default function Game(props) {
     );
   };
 
+  const [enemyUnits, setEnemyUnits] = useState([
+    { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
+    { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
+    { type: "tanky", name: "Tanky", attack: 3, health: 7, id: -3 },
+  ]);
+
   // to be used in UnitBattler
   const [activeUnit, setActiveUnit] = useState();
 
   // TODO: Consider if copy of array should use state
-  // TODO: Make sure changing items in copied array doesn't change original items
   const unitBattler = () => {
     // @ts-ignore
     const myUnitsCopy = [...myUnits];
@@ -130,7 +135,7 @@ export default function Game(props) {
       myUnitsCopy[Math.floor(Math.random() * myUnitsCopy.length)];
     console.log("--Selected friendly unit is... " + friendlyUnit.type);
     console.log(
-      "Attack: " + friendlyUnit.attack + " Health: " + friendlyUnit.defense
+      "Attack: " + friendlyUnit.attack + " Health: " + friendlyUnit.health
     );
 
     // will take a unit at random from enemy array (when it exists)
@@ -139,7 +144,7 @@ export default function Game(props) {
       type: "melee",
       name: "Melee",
       attack: 5,
-      defense: 5,
+      health: 5,
     };
 
     // start a log to display what's happening
@@ -149,12 +154,12 @@ export default function Game(props) {
     // state friendly and enemy damage taken and remaining health
     // ideally UI would show both healths reduced at once
     // when damage is taken should be, at minimum, a little red text animation
-    if (enemyUnit.defense - friendlyUnit.attack > 0) {
+    if (enemyUnit.health - friendlyUnit.attack > 0) {
       console.log(
         "The enemy takes " +
           friendlyUnit.attack +
           " damage but survives with " +
-          (enemyUnit.defense - friendlyUnit.attack) +
+          (enemyUnit.health - friendlyUnit.attack) +
           " health."
       );
       // TODO: code to return enemy to their pool with current health
@@ -165,13 +170,13 @@ export default function Game(props) {
       );
     }
 
-    if (friendlyUnit.defense - enemyUnit.attack > 0) {
+    if (friendlyUnit.health - enemyUnit.attack > 0) {
       console.log(
         friendlyUnit.name +
           " takes " +
           enemyUnit.attack +
           " damage but survives with " +
-          (friendlyUnit.defense - enemyUnit.attack) +
+          (friendlyUnit.health - enemyUnit.attack) +
           " health."
       );
       // code to return friendly to pool with current health
@@ -181,9 +186,9 @@ export default function Game(props) {
           // check if id matches the currently selected unit
           if (unit.id === friendlyUnit.id) {
             return {
-              // if so, change that unit's defense/health accordingly
+              // if so, change that unit's health/health accordingly
               ...unit,
-              defense: friendlyUnit.defense - enemyUnit.attack,
+              health: friendlyUnit.health - enemyUnit.attack,
             };
           } else {
             // if not, don't change anything

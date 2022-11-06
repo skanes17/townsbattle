@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 // TODO: Implement chance to hit which can be upgraded
-// TODO: Implement armor? First x units get +1 defense, etc
+// TODO: Implement armor? First x units get +1 health, etc
 
 export default function Combat({
   turn,
