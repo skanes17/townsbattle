@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Planning from "./Planning";
 import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
-import { setConstantValue } from "typescript";
+import { setConstantValue, sortAndDeduplicateDiagnostics } from "typescript";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
 
@@ -26,6 +26,65 @@ export default function Game(props) {
   const [woodMultiplier, setWoodMultipler] = useState(1);
   const [stoneMultiplier, setStoneMultipler] = useState(1);
   const [ironMultiplier, setIronMultipler] = useState(1);
+
+  const [buildings, setBuildings] = useState({
+    // for melee
+    swordSmithy: {
+      enabled: false,
+      tier: 1,
+      attackBonus: 2,
+      healthBonus: 2,
+      buildingHealth: 2,
+    },
+    // for ranged
+    archeryRange: {
+      enabled: false,
+      tier: 1,
+      attackBonus: 3,
+      healthBonus: 1,
+      buildingHealth: 2,
+    },
+    // for tanks
+    armorSmithy: {
+      enabled: false,
+      tier: 1,
+      attackBonus: 1,
+      healthBonus: 3,
+      buildingHealth: 2,
+    },
+    // for all units
+    mealHall: {
+      enabled: false,
+      tier: 1,
+      healthBonus: 2,
+      buildingHealth: 2,
+    },
+    // for all units
+    townCenter: {
+      enabled: false,
+      tier: 1,
+      healthBonus: 1,
+      buildingHealth: 3,
+    },
+  });
+
+  const [upgrades, setUpgrades] = useState({
+    axes: {
+      woodCost: 2,
+      stoneCost: 2,
+      ironCost: 0,
+    },
+    pickaxes: {
+      woodCost: 2,
+      stoneCost: 0,
+      ironCost: 2,
+    },
+    surveying: {
+      woodCost: 0,
+      stoneCost: 2,
+      iron: 2,
+    },
+  });
 
   // ids for tracking units
   const [unitId, setUnitId] = useState(0);
