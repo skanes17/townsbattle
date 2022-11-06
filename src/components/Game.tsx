@@ -117,6 +117,7 @@ export default function Game(props) {
     );
   };
 
+  // placeholder enemy array for testing
   const [enemyUnits, setEnemyUnits] = useState([
     { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
     { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
@@ -127,25 +128,21 @@ export default function Game(props) {
   const [activeUnit, setActiveUnit] = useState();
 
   // TODO: Consider if copy of array should use state
+  // TODO: Figure out why arrays don't seem to be new upon click
   const unitBattler = () => {
     // @ts-ignore
     const myUnitsCopy = [...myUnits];
-    // select a random unit from the array
+
+    // @ts-ignore
+    const enemyUnitsCopy = [...enemyUnits];
+
+    // select a random unit from the arrays
     const friendlyUnit =
       myUnitsCopy[Math.floor(Math.random() * myUnitsCopy.length)];
     console.log("--Selected friendly unit is... " + friendlyUnit.type);
-    console.log(
-      "Attack: " + friendlyUnit.attack + " Health: " + friendlyUnit.health
-    );
-
-    // will take a unit at random from enemy array (when it exists)
-    // placeholder object here -- would follow same process as friendly
-    const enemyUnit = {
-      type: "melee",
-      name: "Melee",
-      attack: 5,
-      health: 5,
-    };
+    const enemyUnit =
+      enemyUnitsCopy[Math.floor(Math.random() * enemyUnitsCopy.length)];
+    console.log("--Selected enemy unit is... " + enemyUnit.type);
 
     // start a log to display what's happening
     // this coud exist in its own side div eventually, and show:
@@ -162,17 +159,41 @@ export default function Game(props) {
           (enemyUnit.health - friendlyUnit.attack) +
           " health."
       );
-      // TODO: code to return enemy to their pool with current health
+      // TODO: return enemy to their pool with current health
+      setEnemyUnits(
+        // copy the array
+        enemyUnitsCopy.map((unit) => {
+          // check if id matches the currently selected unit
+          if (unit.id === enemyUnit.id) {
+            return {
+              // if so, change that unit's health/health accordingly
+              ...unit,
+              health: enemyUnit.health - friendlyUnit.attack,
+            };
+          } else {
+            // if not, don't change anything
+            return unit;
+          }
+        })
+      );
     } else {
       console.log(
-        "The enemy takes " + friendlyUnit.attack + " damage and dies."
-        // TODO: code to remove enemy from their pool
+        "Enemy " +
+          enemyUnit.name +
+          " takes " +
+          friendlyUnit.attack +
+          " damage and dies."
       );
+      // remove enemy from their pool
+      setEnemyUnits(enemyUnitsCopy.filter((unit) => unit.id !== enemyUnit.id));
+      console.log("The new enemy array is...");
+      console.log(enemyUnits);
     }
 
     if (friendlyUnit.health - enemyUnit.attack > 0) {
       console.log(
-        friendlyUnit.name +
+        "Friendly " +
+          friendlyUnit.name +
           " takes " +
           enemyUnit.attack +
           " damage but survives with " +
@@ -203,7 +224,7 @@ export default function Game(props) {
       // remove friendly from pool
       // TODO: Make sure this setState works properly
       setMyUnits(myUnitsCopy.filter((unit) => unit.id !== friendlyUnit.id));
-      console.log("Your new array is...");
+      console.log("The new friendly array is...");
       console.log(myUnits);
     }
   };
