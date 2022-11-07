@@ -132,6 +132,7 @@ export default function Game(props) {
     health: 3,
   });
 
+  const [pewpewInTraining, setPewpewInTraining] = useState(0);
   const [pewpewCounter, setPewpewCounter] = useState(0);
 
   const [newTanky, setNewTanky] = useState({
@@ -141,6 +142,7 @@ export default function Game(props) {
     health: 7,
   });
 
+  const [tankyInTraining, setTankyInTraining] = useState(0);
   const [tankyCounter, setTankyCounter] = useState(0);
 
   const trainUnit = () => {};
@@ -400,6 +402,28 @@ export default function Game(props) {
           setResource2={setStoneCollected}
           unitInTraining={meleeInTraining}
           setUnitInTraining={setMeleeInTraining}
+        />
+        <TrainUnits
+          name="Pewpew"
+          resource1Name="wood"
+          resource1={woodCollected}
+          setResource1={setWoodCollected}
+          resource2Name="iron"
+          resource2={ironCollected}
+          setResource2={setIronCollected}
+          unitInTraining={pewpewInTraining}
+          setUnitInTraining={setPewpewInTraining}
+        />
+        <TrainUnits
+          name="Tanky"
+          resource1Name="stone"
+          resource1={stoneCollected}
+          setResource1={setStoneCollected}
+          resource2Name="iron"
+          resource2={ironCollected}
+          setResource2={setIronCollected}
+          unitInTraining={tankyInTraining}
+          setUnitInTraining={setTankyInTraining}
         />
 
         <AddUnitButton

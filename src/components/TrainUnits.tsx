@@ -9,7 +9,7 @@ import AddUnitButton from "./AddUnitButton";
 export default function TrainUnits(props) {
   function handlePlusClick() {
     // each unit needs two different resources in order to be built
-    if (props.resource1 && props.resource2 > 1) {
+    if (props.resource1 > 1 && props.resource2 > 1) {
       props.setUnitInTraining(props.unitInTraining + 1);
       // reduce the resources
       props.setResource1(props.resource1 - 2);
