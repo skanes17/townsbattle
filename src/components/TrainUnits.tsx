@@ -3,7 +3,8 @@ import { isPropertySignature } from "typescript";
 import AddUnitButton from "./AddUnitButton";
 
 // TODO: Create unit on End Turn click
-// TODO: FIgure out how to make it a choice between getting resources and making units
+// TODO: Figure out how to make it a choice between getting resources and making units
+// TODO: Add units to the appropriate array based on the unitsInTraining - use a confirm button for now?
 
 // @ts-ignore
 export default function TrainUnits(props) {
