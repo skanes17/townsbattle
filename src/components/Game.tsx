@@ -318,6 +318,24 @@ export default function Game(props) {
 
   // ===END OF COMBAT MECHANICS===
 
+  function endTurn() {
+    if (freeworkers > 0) {
+      alert("You have not assigned all free workers!");
+      return;
+    }
+    setWoodCollected(woodCollected + woodworkers * woodMultiplier);
+    setStoneCollected(stoneCollected + stoneworkers * stoneMultiplier);
+    setIronCollected(ironCollected + ironworkers * ironMultiplier);
+    setFreeworkers(
+      freeworkers + woodworkers + stoneworkers + ironworkers + newWorkers
+    );
+    // TODO: Optimize this
+    setWoodworkers(0);
+    setStoneworkers(0);
+    setIronworkers(0);
+    setTurn(turn + 1);
+  }
+
   return (
     <div>
       <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
@@ -325,6 +343,7 @@ export default function Game(props) {
       </h1>
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
       <Planning
+        onClick={endTurn}
         turn={turn}
         setTurn={setTurn}
         woodworkers={woodworkers}

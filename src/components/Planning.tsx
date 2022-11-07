@@ -6,34 +6,6 @@ import DisplayUnits from "./DisplayUnits";
 
 // @ts-ignore
 export default function Planning(props) {
-  function endTurn() {
-    if (props.freeworkers > 0) {
-      alert("You have not assigned all free workers!");
-      return;
-    }
-    props.setWoodCollected(
-      props.woodCollected + props.woodworkers * props.woodMultiplier
-    );
-    props.setStoneCollected(
-      props.stoneCollected + props.stoneworkers * props.stoneMultiplier
-    );
-    props.setIronCollected(
-      props.ironCollected + props.ironworkers * props.ironMultiplier
-    );
-    props.setFreeworkers(
-      props.freeworkers +
-        props.woodworkers +
-        props.stoneworkers +
-        props.ironworkers +
-        props.newWorkers
-    );
-    // TODO: Optimize this
-    props.setWoodworkers(0);
-    props.setStoneworkers(0);
-    props.setIronworkers(0);
-    props.setTurn(props.turn + 1);
-  }
-
   return (
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">Planning</h2>
@@ -91,7 +63,7 @@ export default function Planning(props) {
       <br></br> */}
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={endTurn}
+        onClick={props.onClick}
       >
         End Turn
       </button>

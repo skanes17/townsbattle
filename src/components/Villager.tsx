@@ -29,7 +29,6 @@ export default function Villager(props) {
   return (
     <>
       <div className="villager">
-        {/* display the current type and number of */}
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           onClick={handlePlusClick}
