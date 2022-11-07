@@ -27,6 +27,24 @@ export default function Game(props) {
   const [stoneMultiplier, setStoneMultipler] = useState(1);
   const [ironMultiplier, setIronMultipler] = useState(1);
 
+  const [unitCosts, setUnitCosts] = useState({
+    melee: {
+      woodCost: 2,
+      stoneCost: 2,
+      ironCost: 0,
+    },
+    pewpew: {
+      woodCost: 2,
+      stoneCost: 0,
+      ironCost: 2,
+    },
+    tanky: {
+      woodCost: 0,
+      stoneCost: 2,
+      iron: 2,
+    },
+  });
+
   const [buildings, setBuildings] = useState({
     // for melee
     swordSmithy: {
@@ -70,19 +88,19 @@ export default function Game(props) {
 
   const [upgrades, setUpgrades] = useState({
     axes: {
-      woodCost: 2,
-      stoneCost: 2,
+      woodCost: 20,
+      stoneCost: 20,
       ironCost: 0,
     },
     pickaxes: {
-      woodCost: 2,
+      woodCost: 20,
       stoneCost: 0,
-      ironCost: 2,
+      ironCost: 20,
     },
     surveying: {
       woodCost: 0,
-      stoneCost: 2,
-      iron: 2,
+      stoneCost: 20,
+      iron: 20,
     },
   });
 
@@ -205,6 +223,9 @@ export default function Game(props) {
       enemyUnitsCopy[Math.floor(Math.random() * enemyUnitsCopy.length)];
     console.log("--Selected enemy unit is... " + enemyUnit.type);
 
+    const enemyHealthRemaining = enemyUnit.health - friendlyUnit.attack;
+    const friendlyHealthRemaining = friendlyUnit.health - enemyUnit.attack;
+
     // start a log to display what's happening
     // this coud exist in its own side div eventually, and show:
     // which units were selected...
@@ -212,15 +233,14 @@ export default function Game(props) {
     // state friendly and enemy damage taken and remaining health
     // ideally UI would show both healths reduced at once
     // when damage is taken should be, at minimum, a little red text animation
-    if (enemyUnit.health - friendlyUnit.attack > 0) {
+    if (enemyHealthRemaining > 0) {
       console.log(
         "The enemy takes " +
           friendlyUnit.attack +
           " damage but survives with " +
-          (enemyUnit.health - friendlyUnit.attack) +
+          enemyHealthRemaining +
           " health."
       );
-      // TODO: return enemy to their pool with current health
       setEnemyUnits(
         // copy the array
         enemyUnitsCopy.map((unit) => {
@@ -229,7 +249,7 @@ export default function Game(props) {
             return {
               // if so, change that unit's health/health accordingly
               ...unit,
-              health: enemyUnit.health - friendlyUnit.attack,
+              health: enemyHealthRemaining,
             };
           } else {
             // if not, don't change anything
@@ -247,18 +267,16 @@ export default function Game(props) {
       );
       // remove enemy from their pool
       setEnemyUnits(enemyUnitsCopy.filter((unit) => unit.id !== enemyUnit.id));
-      console.log("The new enemy array is...");
-      console.log(enemyUnits);
     }
 
-    if (friendlyUnit.health - enemyUnit.attack > 0) {
+    if (friendlyHealthRemaining > 0) {
       console.log(
         "Friendly " +
           friendlyUnit.name +
           " takes " +
           enemyUnit.attack +
           " damage but survives with " +
-          (friendlyUnit.health - enemyUnit.attack) +
+          friendlyHealthRemaining +
           " health."
       );
       // code to return friendly to pool with current health
@@ -270,7 +288,7 @@ export default function Game(props) {
             return {
               // if so, change that unit's health/health accordingly
               ...unit,
-              health: friendlyUnit.health - enemyUnit.attack,
+              health: friendlyHealthRemaining,
             };
           } else {
             // if not, don't change anything
@@ -285,10 +303,14 @@ export default function Game(props) {
       // remove friendly from pool
       // TODO: Make sure this setState works properly
       setMyUnits(myUnitsCopy.filter((unit) => unit.id !== friendlyUnit.id));
-      console.log("The new friendly array is...");
-      console.log(myUnits);
     }
+    console.log("The new enemy array is...");
+    console.log(enemyUnits);
+    console.log("The new friendly array is...");
+    console.log(myUnits);
   };
+
+  // ===END OF COMBAT MECHANICS===
 
   return (
     <div>
