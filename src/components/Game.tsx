@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Planning from "./Planning";
 import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
+import TrainUnits from "./TrainUnits";
 import { setConstantValue, sortAndDeduplicateDiagnostics } from "typescript";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
@@ -121,6 +122,7 @@ export default function Game(props) {
     health: 5,
   });
 
+  const [meleeInTraining, setMeleeInTraining] = useState(0);
   const [meleeCounter, setMeleeCounter] = useState(0);
 
   const [newPewpew, setNewPewpew] = useState({
@@ -140,6 +142,8 @@ export default function Game(props) {
   });
 
   const [tankyCounter, setTankyCounter] = useState(0);
+
+  const trainUnit = () => {};
 
   // @ts-ignore
   const addMelee = () => {
@@ -343,6 +347,9 @@ export default function Game(props) {
         setStoneMultipler={setStoneMultipler}
         ironMultiplier={ironMultiplier}
         setIronMultipler={setIronMultipler}
+        meleeCounter={meleeCounter}
+        pewpewCounter={pewpewCounter}
+        tankyCounter={tankyCounter}
       />
 
       {/*       <h2 className="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600">>Combat</h2>
@@ -378,10 +385,23 @@ export default function Game(props) {
         />
       )} */}
       <br></br>
+
       <div>
         <h2 className="text-4xl font-extrabold dark:text-white">
           Unit Creation
         </h2>
+        <TrainUnits
+          name="Melee"
+          resource1Name="wood"
+          resource1={woodCollected}
+          setResource1={setWoodCollected}
+          resource2Name="stone"
+          resource2={stoneCollected}
+          setResource2={setStoneCollected}
+          unitInTraining={meleeInTraining}
+          setUnitInTraining={setMeleeInTraining}
+        />
+
         <AddUnitButton
           addUnitFunction={addMelee}
           name="Melee"

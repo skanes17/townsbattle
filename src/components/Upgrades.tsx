@@ -1,11 +1,14 @@
 import React from "react";
 
+// TODO: Add functionality to use resources to make buildings
+//  Stretch Goal: Drag and drop for resources */}
+
+// All this is replacing buildings for now
+
 export default function Upgrades() {
-  return (
+  /* return (
     <div className="displayUpgrades">
       <div className="upgradesTitle" style={{ fontWeight: "bold" }}>
-        {/* TODO: Add functionality to use resources to make buildings
-          Stretch Goal: Drag and drop for resources */}
         Available Upgrades
       </div>
       <div>Upgrade Axes (+1 to wood per villager)</div>
@@ -33,5 +36,5 @@ export default function Upgrades() {
         Pay 2 iron
       </button>
     </div>
-  );
+  ); */
 }

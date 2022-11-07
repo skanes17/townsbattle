@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Villager from "./Villager";
 import DisplayResources from "./DisplayResources";
 import Upgrades from "./Upgrades";
+import DisplayUnits from "./DisplayUnits";
 
 // @ts-ignore
 export default function Planning(props) {
@@ -73,12 +74,21 @@ export default function Planning(props) {
           iron={props.ironCollected}
         />
       </div>
+      <br></br>
+
+      <div className="displayUnits">
+        <DisplayUnits
+          meleeCounter={props.meleeCounter}
+          pewpewCounter={props.pewpewCounter}
+          tankyCounter={props.tankyCounter}
+        />
+      </div>
 
       <br></br>
       {/* upgrades would show conditionally when enough resources are gathered */}
-      <Upgrades />
+      {/*       <Upgrades />
       <br></br>
-      <br></br>
+      <br></br> */}
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={endTurn}
