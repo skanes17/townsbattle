@@ -3,6 +3,7 @@ import Planning from "./Planning";
 import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
 import TrainUnits from "./TrainUnits";
+import MakeBuildings from "./MakeBuildings";
 import { setConstantValue, sortAndDeduplicateDiagnostics } from "typescript";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
@@ -51,30 +52,43 @@ export default function Game(props) {
     // for melee
     swordSmithy: {
       enabled: false,
+      underConstruction: false,
       tier: 1,
       attackBonus: 2,
       healthBonus: 2,
       buildingHealth: 2,
+      woodCost: 10,
+      stoneCost: 10,
+      ironCost: 0,
     },
     // for ranged
     archeryRange: {
       enabled: false,
+      underConstruction: false,
       tier: 1,
       attackBonus: 3,
       healthBonus: 1,
       buildingHealth: 2,
+      woodCost: 10,
+      stoneCost: 0,
+      ironCost: 10,
     },
     // for tanks
     armorSmithy: {
       enabled: false,
+      underConstruction: false,
       tier: 1,
       attackBonus: 1,
       healthBonus: 3,
       buildingHealth: 2,
+      woodCost: 0,
+      stoneCost: 10,
+      ironCost: 10,
     },
     // for all units
     mealHall: {
       enabled: false,
+      underConstruction: false,
       tier: 1,
       healthBonus: 2,
       buildingHealth: 2,
@@ -82,6 +96,7 @@ export default function Game(props) {
     // for all units
     townCenter: {
       enabled: false,
+      underConstruction: false,
       tier: 1,
       healthBonus: 1,
       buildingHealth: 3,
@@ -403,6 +418,20 @@ export default function Game(props) {
         <h2 className="text-4xl font-extrabold dark:text-white">
           Building Creation
         </h2>
+        <MakeBuildings
+          name="Swordsmithy"
+          buildings={buildings}
+          setBuildings={setBuildings}
+          resource1Name="wood"
+          resource1={woodCollected}
+          setResource1={setWoodCollected}
+          resource1Cost={buildings.swordSmithy.woodCost}
+          resource2Name="stone"
+          resource2={stoneCollected}
+          setResource2={setStoneCollected}
+          resource2Cost={buildings.swordSmithy.stoneCost}
+          underConstruction={buildings.swordSmithy.underConstruction}
+        />
         <div>Insert building creation here.</div>
       </div>
       <br></br>
