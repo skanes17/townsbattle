@@ -6,6 +6,7 @@ import TrainUnits from "./TrainUnits";
 import { setConstantValue, sortAndDeduplicateDiagnostics } from "typescript";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
+// TODO: Have a pre-battle screen to summarize what you have?
 
 // @ts-ignore
 export default function Game(props) {
@@ -145,8 +146,6 @@ export default function Game(props) {
   const [tankyInTraining, setTankyInTraining] = useState(0);
   const [tankyCounter, setTankyCounter] = useState(0);
 
-  const trainUnit = () => {};
-
   // @ts-ignore
   const addMelee = () => {
     // TODO: Check if this process is always using the most current state
@@ -159,8 +158,6 @@ export default function Game(props) {
     setMyUnits((myUnits) => {
       return [...myUnits, newMeleeCopy];
     });
-
-    console.log(myUnits);
 
     setUnitId(unitId + 1);
     // filter to check type, count matches, use it to update current unit number
@@ -334,6 +331,23 @@ export default function Game(props) {
     setStoneworkers(0);
     setIronworkers(0);
     setTurn(turn + 1);
+
+    // TODO: Insert function calls to add units to friendly pool
+    // TODO: Fix functions not working as expected when called this way
+    for (let i = 0; i < meleeInTraining; i++) {
+      addMelee();
+    }
+    for (let i = 0; i < pewpewInTraining; i++) {
+      addPewpew();
+    }
+    for (let i = 0; i < tankyInTraining; i++) {
+      addTanky();
+    }
+
+    setMeleeInTraining(0);
+    setPewpewInTraining(0);
+    setTankyInTraining(0);
+    // TODO: Reset units in training
   }
 
   return (
@@ -373,38 +387,6 @@ export default function Game(props) {
         tankyCounter={tankyCounter}
       />
 
-      {/*       <h2 className="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600">>Combat</h2>
-      <Combat turn={turn} setTurn={setTurn} setCombatTurn={setCombatTurn} /> */}
-      {/* {turn === combatTurn ? (
-        <Combat turn={turn} setTurn={setTurn} setCombatTurn={setCombatTurn} />
-      ) : (
-        <Planning
-          turn={turn}
-          setTurn={setTurn}
-          woodworkers={woodworkers}
-          setWoodworkers={setWoodworkers}
-          woodCollected={woodCollected}
-          setWoodCollected={setWoodCollected}
-          stoneworkers={stoneworkers}
-          setStoneworkers={setStoneworkers}
-          stoneCollected={stoneCollected}
-          setStoneCollected={setStoneCollected}
-          ironworkers={ironworkers}
-          setIronworkers={setIronworkers}
-          ironCollected={ironCollected}
-          setIronCollected={setIronCollected}
-          newWorkers={newWorkers}
-          setNewWorkers={setNewWorkers}
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          woodMultiplier={woodMultiplier}
-          setWoodMultipler={setWoodMultipler}
-          stoneMultiplier={stoneMultiplier}
-          setStoneMultipler={setStoneMultipler}
-          ironMultiplier={ironMultiplier}
-          setIronMultipler={setIronMultipler}
-        />
-      )} */}
       <br></br>
 
       <div>
@@ -444,25 +426,6 @@ export default function Game(props) {
           unitInTraining={tankyInTraining}
           setUnitInTraining={setTankyInTraining}
         />
-
-        <AddUnitButton
-          addUnitFunction={addMelee}
-          name="Melee"
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-        />
-        <div>Melee units: {meleeCounter}</div>
-        <AddUnitButton
-          addUnitFunction={addPewpew}
-          name="Pewpew"
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-        />
-        <div>Pewpew units: {pewpewCounter}</div>
-        <AddUnitButton
-          addUnitFunction={addTanky}
-          name="Tanky"
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-        />
-        <div>Tanky units: {tankyCounter}</div>
       </div>
       <br></br>
 
@@ -488,9 +451,24 @@ export default function Game(props) {
           <p>
             {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky.
           </p>
+          <AddUnitButton
+            addUnitFunction={addMelee}
+            name="Melee"
+            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          />
+          <AddUnitButton
+            addUnitFunction={addPewpew}
+            name="Pewpew"
+            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          />
+          <AddUnitButton
+            addUnitFunction={addTanky}
+            name="Tanky"
+            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+          />
           <button
             onClick={unitBattler}
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           >
             Fight!
           </button>

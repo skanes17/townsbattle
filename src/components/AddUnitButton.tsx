@@ -7,7 +7,7 @@ export default function AddUnitButton({ addUnitFunction, name, className }) {
   return (
     <>
       <button onClick={addUnitFunction} className={className}>
-        DevTool--Train {name}
+        +1 {name} (DevTool)
       </button>
     </>
   );

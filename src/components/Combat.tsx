@@ -35,7 +35,7 @@ export default function Combat({
         >
           Fight!
         </button>
-        // TODO: Add End Turn button
+        {/* TODO: Add End Turn button */}
       </div>
     </div>
   );

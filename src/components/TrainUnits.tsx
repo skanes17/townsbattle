@@ -1,6 +1,5 @@
 import React from "react";
 import { isPropertySignature } from "typescript";
-import AddUnitButton from "./AddUnitButton";
 
 // TODO: Create unit on End Turn click
 // TODO: Figure out how to make it a choice between getting resources and making units
@@ -49,22 +48,3 @@ export default function TrainUnits(props) {
     </>
   );
 }
-
-// REFERENCE FOR COSTS FROM GAME
-/* const [unitCosts, setUnitCosts] = useState({
-    melee: {
-      woodCost: 2,
-      stoneCost: 2,
-      ironCost: 0,
-    },
-    pewpew: {
-      woodCost: 2,
-      stoneCost: 0,
-      ironCost: 2,
-    },
-    tanky: {
-      woodCost: 0,
-      stoneCost: 2,
-      iron: 2,
-    },
-  }); */
