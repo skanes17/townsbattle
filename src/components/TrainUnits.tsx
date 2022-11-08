@@ -9,11 +9,16 @@ import { isPropertySignature } from "typescript";
 export default function TrainUnits(props) {
   function handlePlusClick() {
     // each unit needs two different resources in order to be built
-    if (props.resource1 > 1 && props.resource2 > 1) {
+    if (
+      props.resource1 >= props.resource1Cost &&
+      props.resource2 >= props.resource2Cost
+    ) {
       props.setUnitInTraining(props.unitInTraining + 1);
       // reduce the resources
       props.setResource1(props.resource1 - props.resource1Cost);
       props.setResource2(props.resource2 - props.resource2Cost);
+    } else {
+      alert("Not enough resources!");
     }
   }
 

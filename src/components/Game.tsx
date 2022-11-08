@@ -104,11 +104,10 @@ export default function Game(props) {
   });
 
   // fix this later to be more dynamic and make reuseable for buildings
-  function buildingUnderConstruction() {
+  /*   function buildingUnderConstruction() {
     const buildingsCopy = { ...buildings,buildings.swordSmithy.underConstruction: "true" };
     setBuildings(buildingsCopy);
-  }
-  
+  } */
 
   const [upgrades, setUpgrades] = useState({
     axes: {
@@ -426,7 +425,10 @@ export default function Game(props) {
           Building Creation
         </h2>
         <MakeBuildings
+          // @ts-ignore
           buildings={buildings}
+          buildingName="Swordsmithy"
+          /* buildingType={buildings.swordSmithy} */
           setBuildings={setBuildings}
           resource1Name="wood"
           resource1={woodCollected}
