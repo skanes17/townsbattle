@@ -43,7 +43,7 @@ export default function Game(props) {
     tanky: {
       woodCost: 0,
       stoneCost: 2,
-      iron: 2,
+      ironCost: 2,
     },
   });
 
@@ -311,6 +311,16 @@ export default function Game(props) {
     console.log(enemyUnits);
     console.log("The new friendly array is...");
     console.log(myUnits);
+
+    setMeleeCounter(
+      myUnits.filter((element) => element.type === "melee").length
+    );
+    setPewpewCounter(
+      myUnits.filter((element) => element.type === "pewpew").length
+    );
+    setTankyCounter(
+      myUnits.filter((element) => element.type === "tanky").length
+    );
   };
 
   // ===END OF COMBAT MECHANICS===
@@ -406,9 +416,11 @@ export default function Game(props) {
           resource1Name="wood"
           resource1={woodCollected}
           setResource1={setWoodCollected}
+          resource1Cost={unitCosts.melee.woodCost}
           resource2Name="stone"
           resource2={stoneCollected}
           setResource2={setStoneCollected}
+          resource2Cost={unitCosts.melee.stoneCost}
           unitInTraining={meleeInTraining}
           setUnitInTraining={setMeleeInTraining}
         />
@@ -417,9 +429,11 @@ export default function Game(props) {
           resource1Name="wood"
           resource1={woodCollected}
           setResource1={setWoodCollected}
+          resource1Cost={unitCosts.pewpew.woodCost}
           resource2Name="iron"
           resource2={ironCollected}
           setResource2={setIronCollected}
+          resource2Cost={unitCosts.pewpew.ironCost}
           unitInTraining={pewpewInTraining}
           setUnitInTraining={setPewpewInTraining}
         />
@@ -428,9 +442,11 @@ export default function Game(props) {
           resource1Name="stone"
           resource1={stoneCollected}
           setResource1={setStoneCollected}
+          resource1Cost={unitCosts.tanky.stoneCost}
           resource2Name="iron"
           resource2={ironCollected}
           setResource2={setIronCollected}
+          resource2Cost={unitCosts.tanky.ironCost}
           unitInTraining={tankyInTraining}
           setUnitInTraining={setTankyInTraining}
         />

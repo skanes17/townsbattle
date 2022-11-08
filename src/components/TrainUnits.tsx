@@ -12,23 +12,24 @@ export default function TrainUnits(props) {
     if (props.resource1 > 1 && props.resource2 > 1) {
       props.setUnitInTraining(props.unitInTraining + 1);
       // reduce the resources
-      props.setResource1(props.resource1 - 2);
-      props.setResource2(props.resource2 - 2);
+      props.setResource1(props.resource1 - props.resource1Cost);
+      props.setResource2(props.resource2 - props.resource2Cost);
     }
   }
 
   function handleMinusClick() {
     if (props.unitInTraining > 0) {
       props.setUnitInTraining(props.unitInTraining - 1);
-      props.setResource1(props.resource1 + 2);
-      props.setResource2(props.resource2 + 2);
+      props.setResource1(props.resource1 + props.resource1Cost);
+      props.setResource2(props.resource2 + props.resource2Cost);
     }
   }
 
   return (
     <>
       <div>
-        {props.name} Cost: 2 {props.resource1Name}, 2 {props.resource2Name}
+        {props.name} Cost: {props.resource1Cost} {props.resource1Name},{" "}
+        {props.resource2Cost} {props.resource2Name}
       </div>
       <div className="unit">
         <button
