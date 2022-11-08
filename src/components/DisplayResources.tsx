@@ -7,7 +7,7 @@ export default function DisplayResources(props) {
       <div style={{ fontWeight: "bold" }}>Resources collected</div>
       <div>Wood: {props.wood}</div>
       <div>Stone: {props.stone}</div>
-      <div>Iron: {props.iron}</div>
+      <div>Metal: {props.metal}</div>
     </>
   );
 }

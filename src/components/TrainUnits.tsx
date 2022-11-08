@@ -41,13 +41,13 @@ export default function TrainUnits(props) {
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           onClick={handlePlusClick}
         >
-          +
+          +1
         </button>
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           onClick={handleMinusClick}
         >
-          -
+          -1
         </button>
         {props.name} units to train: {props.unitInTraining}
       </div>

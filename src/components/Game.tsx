@@ -8,6 +8,7 @@ import { setConstantValue, sortAndDeduplicateDiagnostics } from "typescript";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
 // TODO: Have a pre-battle screen to summarize what you have?
+// TODO: Woodcutters, Stonemasons, Metalworker
 
 // @ts-ignore
 export default function Game(props) {
@@ -17,34 +18,34 @@ export default function Game(props) {
 
   // current number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
-  const [woodworkers, setWoodworkers] = useState(0);
+  const [woodcutters, setWoodcutters] = useState(0);
   const [woodCollected, setWoodCollected] = useState(0);
-  const [stoneworkers, setStoneworkers] = useState(0);
+  const [stonemasons, setStonemasons] = useState(0);
   const [stoneCollected, setStoneCollected] = useState(0);
-  const [ironworkers, setIronworkers] = useState(0);
-  const [ironCollected, setIronCollected] = useState(0);
+  const [metalworkers, setMetalworkers] = useState(0);
+  const [metalCollected, setMetalCollected] = useState(0);
   const [newWorkers, setNewWorkers] = useState(1);
   const [freeworkers, setFreeworkers] = useState(5);
   // multipliers determine # of resources harvested per worker
   const [woodMultiplier, setWoodMultipler] = useState(1);
   const [stoneMultiplier, setStoneMultipler] = useState(1);
-  const [ironMultiplier, setIronMultipler] = useState(1);
+  const [metalMultiplier, setMetalMultipler] = useState(1);
 
   const [unitCosts, setUnitCosts] = useState({
     melee: {
       woodCost: 2,
       stoneCost: 2,
-      ironCost: 0,
+      metalCost: 0,
     },
     pewpew: {
       woodCost: 2,
       stoneCost: 0,
-      ironCost: 2,
+      metalCost: 2,
     },
     tanky: {
       woodCost: 0,
       stoneCost: 2,
-      ironCost: 2,
+      metalCost: 2,
     },
   });
 
@@ -59,7 +60,7 @@ export default function Game(props) {
       buildingHealth: 2,
       woodCost: 10,
       stoneCost: 10,
-      ironCost: 0,
+      metalCost: 0,
     },
     // for ranged
     archeryRange: {
@@ -71,7 +72,7 @@ export default function Game(props) {
       buildingHealth: 2,
       woodCost: 10,
       stoneCost: 0,
-      ironCost: 10,
+      metalCost: 10,
     },
     // for tanks
     armorSmithy: {
@@ -83,7 +84,7 @@ export default function Game(props) {
       buildingHealth: 2,
       woodCost: 0,
       stoneCost: 10,
-      ironCost: 10,
+      metalCost: 10,
     },
     // for all units
     mealHall: {
@@ -113,17 +114,17 @@ export default function Game(props) {
     axes: {
       woodCost: 20,
       stoneCost: 20,
-      ironCost: 0,
+      metalCost: 0,
     },
     pickaxes: {
       woodCost: 20,
       stoneCost: 0,
-      ironCost: 20,
+      metalCost: 20,
     },
     surveying: {
       woodCost: 0,
       stoneCost: 20,
-      iron: 20,
+      metal: 20,
     },
   });
 
@@ -351,16 +352,16 @@ export default function Game(props) {
       alert("You have not assigned all free workers!");
       return;
     }
-    setWoodCollected(woodCollected + woodworkers * woodMultiplier);
-    setStoneCollected(stoneCollected + stoneworkers * stoneMultiplier);
-    setIronCollected(ironCollected + ironworkers * ironMultiplier);
+    setWoodCollected(woodCollected + woodcutters * woodMultiplier);
+    setStoneCollected(stoneCollected + stonemasons * stoneMultiplier);
+    setMetalCollected(metalCollected + metalworkers * metalMultiplier);
     setFreeworkers(
-      freeworkers + woodworkers + stoneworkers + ironworkers + newWorkers
+      freeworkers + woodcutters + stonemasons + metalworkers + newWorkers
     );
     // TODO: Optimize this
-    setWoodworkers(0);
-    setStoneworkers(0);
-    setIronworkers(0);
+    setWoodcutters(0);
+    setStonemasons(0);
+    setMetalworkers(0);
     setTurn(turn + 1);
 
     // TODO: Insert function calls to add units to friendly pool
@@ -391,18 +392,18 @@ export default function Game(props) {
         onClick={endTurn}
         turn={turn}
         setTurn={setTurn}
-        woodworkers={woodworkers}
-        setWoodworkers={setWoodworkers}
+        woodcutters={woodcutters}
+        setWoodcutters={setWoodcutters}
         woodCollected={woodCollected}
         setWoodCollected={setWoodCollected}
-        stoneworkers={stoneworkers}
-        setStoneworkers={setStoneworkers}
+        stonemasons={stonemasons}
+        setStonemasons={setStonemasons}
         stoneCollected={stoneCollected}
         setStoneCollected={setStoneCollected}
-        ironworkers={ironworkers}
-        setIronworkers={setIronworkers}
-        ironCollected={ironCollected}
-        setIronCollected={setIronCollected}
+        metalworkers={metalworkers}
+        setMetalworkers={setMetalworkers}
+        metalCollected={metalCollected}
+        setMetalCollected={setMetalCollected}
         newWorkers={newWorkers}
         setNewWorkers={setNewWorkers}
         freeworkers={freeworkers}
@@ -411,8 +412,8 @@ export default function Game(props) {
         setWoodMultipler={setWoodMultipler}
         stoneMultiplier={stoneMultiplier}
         setStoneMultipler={setStoneMultipler}
-        ironMultiplier={ironMultiplier}
-        setIronMultipler={setIronMultipler}
+        metalMultiplier={metalMultiplier}
+        setMetalMultipler={setMetalMultipler}
         meleeCounter={meleeCounter}
         pewpewCounter={pewpewCounter}
         tankyCounter={tankyCounter}
@@ -428,7 +429,8 @@ export default function Game(props) {
           // @ts-ignore
           buildings={buildings}
           buildingName="Swordsmithy"
-          /* buildingType={buildings.swordSmithy} */
+          buildingPath="swordSmithy"
+          buildingType={buildings.swordSmithy}
           setBuildings={setBuildings}
           resource1Name="wood"
           resource1={woodCollected}
@@ -440,7 +442,6 @@ export default function Game(props) {
           resource2Cost={buildings.swordSmithy.stoneCost}
           underConstruction={buildings.swordSmithy.underConstruction}
         />
-        <div>Insert building creation here.</div>
       </div>
       <br></br>
 
@@ -467,10 +468,10 @@ export default function Game(props) {
           resource1={woodCollected}
           setResource1={setWoodCollected}
           resource1Cost={unitCosts.pewpew.woodCost}
-          resource2Name="iron"
-          resource2={ironCollected}
-          setResource2={setIronCollected}
-          resource2Cost={unitCosts.pewpew.ironCost}
+          resource2Name="metal"
+          resource2={metalCollected}
+          setResource2={setMetalCollected}
+          resource2Cost={unitCosts.pewpew.metalCost}
           unitInTraining={pewpewInTraining}
           setUnitInTraining={setPewpewInTraining}
         />
@@ -480,10 +481,10 @@ export default function Game(props) {
           resource1={stoneCollected}
           setResource1={setStoneCollected}
           resource1Cost={unitCosts.tanky.stoneCost}
-          resource2Name="iron"
-          resource2={ironCollected}
-          setResource2={setIronCollected}
-          resource2Cost={unitCosts.tanky.ironCost}
+          resource2Name="metal"
+          resource2={metalCollected}
+          setResource2={setMetalCollected}
+          resource2Cost={unitCosts.tanky.metalCost}
           unitInTraining={tankyInTraining}
           setUnitInTraining={setTankyInTraining}
         />

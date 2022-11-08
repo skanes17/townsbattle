@@ -13,26 +13,26 @@ export default function Planning(props) {
         Free Workers: {props.freeworkers}
       </div>
       <br></br>
-      <div className="villagers">
-        <div style={{ fontWeight: "bold" }}>Villagers</div>
+      <div className="workers">
+        <div style={{ fontWeight: "bold" }}>Workers</div>
         <Villager
-          type="Woodworkers"
-          workers={props.woodworkers}
-          setWorkers={props.setWoodworkers}
+          type="Woodcutters"
+          workers={props.woodcutters}
+          setWorkers={props.setWoodcutters}
           freeworkers={props.freeworkers}
           setFreeworkers={props.setFreeworkers}
         />
         <Villager
-          type="Stoneworkers"
-          workers={props.stoneworkers}
-          setWorkers={props.setStoneworkers}
+          type="Stonemasons"
+          workers={props.stonemasons}
+          setWorkers={props.setStonemasons}
           freeworkers={props.freeworkers}
           setFreeworkers={props.setFreeworkers}
         />
         <Villager
-          type="Ironworkers"
-          workers={props.ironworkers}
-          setWorkers={props.setIronworkers}
+          type="Metalworkers"
+          workers={props.metalworkers}
+          setWorkers={props.setMetalworkers}
           freeworkers={props.freeworkers}
           setFreeworkers={props.setFreeworkers}
         />
@@ -43,7 +43,7 @@ export default function Planning(props) {
         <DisplayResources
           wood={props.woodCollected}
           stone={props.stoneCollected}
-          iron={props.ironCollected}
+          metal={props.metalCollected}
         />
       </div>
       <br></br>

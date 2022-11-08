@@ -4,7 +4,8 @@ import React from "react";
 export default function MakeBuildings({
   buildings,
   buildingName,
-  /*   buildingType, */
+  buildingType,
+  buildingPath,
   setBuildings,
   resource1Name,
   resource1,
@@ -19,18 +20,27 @@ export default function MakeBuildings({
   // build basic buildings code here, similar to villagers and units
   // adjust later to accomodate sending state to UI
 
-  // TODO: Remove the reference to swordSmithy below; make it sent as a prop!
+  // TODO: Figure out how to remove the swordSmithy reference below
+  // How to send as a prop??
   function handleBuildClick() {
-    if (resource1 >= resource1Cost && resource2 >= resource2Cost) {
+    if (
+      underConstruction === false &&
+      resource1 >= resource1Cost &&
+      resource2 >= resource2Cost
+    ) {
       // TODO: Subtract resource costs
       const newBuildings = {
         ...buildings,
         swordSmithy: {
-          ...buildings.swordSmithy,
+          ...buildingType,
           underConstruction: true,
         },
       };
       setBuildings(newBuildings);
+      console.log(newBuildings);
+
+      setResource1(resource1 - resource1Cost);
+      setResource2(resource2 - resource2Cost);
     } else {
       alert("Not enough resources!");
     }
@@ -38,18 +48,20 @@ export default function MakeBuildings({
 
   // TODO: Make this function!
   function handleCancelClick() {
-    /* if (resource1 > resource1Cost && resource2 > resource2Cost) {
-
-      const buildingsCopy = { ...buildings };
+    if (underConstruction === true) {
       const newBuildings = {
         ...buildings,
-        buildingType: {
-          ...building.buildingType,
-          underConstruction: true,
+        swordSmithy: {
+          ...buildingType,
+          underConstruction: false,
         },
       };
       setBuildings(newBuildings);
-    } */
+      console.log(newBuildings);
+
+      setResource1(resource1 + resource1Cost);
+      setResource2(resource2 + resource2Cost);
+    }
   }
 
   return (
@@ -72,7 +84,6 @@ export default function MakeBuildings({
           Cancel
         </button>
         {buildingName} is ready to construct: {underConstruction ? "Yes" : "No"}
-        {/* put Yes or No here */}
       </div>
     </>
   );
