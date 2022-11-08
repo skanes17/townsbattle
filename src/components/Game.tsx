@@ -391,6 +391,14 @@ export default function Game(props) {
 
       <div>
         <h2 className="text-4xl font-extrabold dark:text-white">
+          Building Creation
+        </h2>
+        <div>Insert building creation here.</div>
+      </div>
+      <br></br>
+
+      <div>
+        <h2 className="text-4xl font-extrabold dark:text-white">
           Unit Creation
         </h2>
         <TrainUnits
@@ -444,6 +452,12 @@ export default function Game(props) {
         <h2 className="text-4xl font-extrabold dark:text-white">
           Combat Mechanics
         </h2>
+        <button
+          onClick={unitBattler}
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Fight!
+        </button>
         <div>
           <p>
             Your army size is {meleeCounter + pewpewCounter + tankyCounter}.
@@ -466,12 +480,6 @@ export default function Game(props) {
             name="Tanky"
             className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           />
-          <button
-            onClick={unitBattler}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Fight!
-          </button>
         </div>
       </div>
 
