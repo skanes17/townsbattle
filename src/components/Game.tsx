@@ -463,6 +463,12 @@ export default function Game(props) {
         </h2>
         <TrainUnits
           name="Melee"
+          freeworkerName={
+            unitCosts.melee.freeworkerCost > 1 ? "villagers" : "villager"
+          }
+          freeworkers={freeworkers}
+          setFreeworkers={setFreeworkers}
+          freeworkerCost={unitCosts.melee.freeworkerCost}
           resource1Name="wood"
           resource1={woodCollected}
           setResource1={setWoodCollected}
@@ -476,6 +482,12 @@ export default function Game(props) {
         />
         <TrainUnits
           name="Pewpew"
+          freeworkerName={
+            unitCosts.pewpew.freeworkerCost > 1 ? "villagers" : "villager"
+          }
+          freeworkers={freeworkers}
+          setFreeworkers={setFreeworkers}
+          freeworkerCost={unitCosts.pewpew.freeworkerCost}
           resource1Name="wood"
           resource1={woodCollected}
           setResource1={setWoodCollected}
@@ -489,6 +501,12 @@ export default function Game(props) {
         />
         <TrainUnits
           name="Tanky"
+          freeworkerName={
+            unitCosts.tanky.freeworkerCost > 1 ? "villagers" : "villager"
+          }
+          freeworkers={freeworkers}
+          setFreeworkers={setFreeworkers}
+          freeworkerCost={unitCosts.tanky.freeworkerCost}
           resource1Name="stone"
           resource1={stoneCollected}
           setResource1={setStoneCollected}

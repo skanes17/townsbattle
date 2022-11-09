@@ -10,11 +10,13 @@ export default function TrainUnits(props) {
   function handlePlusClick() {
     // each unit needs two different resources in order to be built
     if (
+      props.freeworkers >= props.freeworkerCost &&
       props.resource1 >= props.resource1Cost &&
       props.resource2 >= props.resource2Cost
     ) {
       props.setUnitInTraining(props.unitInTraining + 1);
       // reduce the resources
+      props.setFreeworkers(props.freeworkers - props.freeworkerCost);
       props.setResource1(props.resource1 - props.resource1Cost);
       props.setResource2(props.resource2 - props.resource2Cost);
     } else {
@@ -25,6 +27,7 @@ export default function TrainUnits(props) {
   function handleMinusClick() {
     if (props.unitInTraining > 0) {
       props.setUnitInTraining(props.unitInTraining - 1);
+      props.setFreeworkers(props.freeworkers + props.freeworkerCost);
       props.setResource1(props.resource1 + props.resource1Cost);
       props.setResource2(props.resource2 + props.resource2Cost);
     }
@@ -33,8 +36,10 @@ export default function TrainUnits(props) {
   return (
     <>
       <div>
-        {props.name} Cost: {props.resource1Cost} {props.resource1Name},{" "}
-        {props.resource2Cost} {props.resource2Name}
+        {props.name} Cost: {props.freeworkerCost}{" "}
+        {props.freeworkerCost > 1 ? "villagers" : "villager"},{" "}
+        {props.resource1Cost} {props.resource1Name}, {props.resource2Cost}{" "}
+        {props.resource2Name}
       </div>
       <div className="unit">
         <button
