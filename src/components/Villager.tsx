@@ -6,15 +6,14 @@ Basically the same result since villagers are reset each turn. */
 
 // @ts-ignore
 export default function Villager(props) {
-  /* TODO: Rewrite this so workers are reset each turn */
-  /* TODO: Ask how to update state of a props within a child */
-
   // when a worker is added to this building they're taken from the freeworker pool
   function handlePlusClick() {
     if (props.freeworkers > 0) {
       props.setWorkers(props.workers + 1);
       // needed the () here to call it
       props.setFreeworkers(props.freeworkers - 1);
+    } else {
+      alert("No free workers!");
     }
   }
 

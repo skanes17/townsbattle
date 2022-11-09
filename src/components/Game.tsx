@@ -8,7 +8,8 @@ import { setConstantValue, sortAndDeduplicateDiagnostics } from "typescript";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
 // TODO: Have a pre-battle screen to summarize what you have?
-// TODO: Woodcutters, Stonemasons, Metalworker
+// TODO: Rename workers to villagers
+// TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
 
 // @ts-ignore
 export default function Game(props) {
@@ -425,6 +426,7 @@ export default function Game(props) {
         meleeCounter={meleeCounter}
         pewpewCounter={pewpewCounter}
         tankyCounter={tankyCounter}
+        buildings={buildings}
       />
 
       <br></br>
@@ -543,12 +545,23 @@ export default function Game(props) {
           Fight!
         </button>
         <div>
-          <p>
-            Your army size is {meleeCounter + pewpewCounter + tankyCounter}.
-          </p>
-          <p>
-            {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky.
-          </p>
+          <div>
+            <p>
+              Your army size is {meleeCounter + pewpewCounter + tankyCounter}.
+            </p>
+            <p>
+              {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter}{" "}
+              tanky.
+            </p>
+          </div>
+          <div>
+            <p>
+              {/* The enemy army size is {enemyMeleeCounter + enemyPewpewCounter + enemyTankyCounter}.*/}
+            </p>
+            <p>
+              {/* {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky. // TODO: Make these percents?*/}
+            </p>
+          </div>
           <AddUnitButton
             addUnitFunction={addMelee}
             name="Melee"

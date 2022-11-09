@@ -1,8 +1,12 @@
+// @ts-nocheck
+
 import React, { useState } from "react";
 import Villager from "./Villager";
 import DisplayResources from "./DisplayResources";
 import Upgrades from "./Upgrades";
 import DisplayUnits from "./DisplayUnits";
+import DisplayBuildings from "./DisplayBuildings";
+import { isPropertySignature } from "typescript";
 
 // @ts-ignore
 export default function Planning(props) {
@@ -54,6 +58,11 @@ export default function Planning(props) {
           pewpewCounter={props.pewpewCounter}
           tankyCounter={props.tankyCounter}
         />
+      </div>
+      <br></br>
+
+      <div className="displayBuildings">
+        <DisplayBuildings buildings={props.buildings} />
       </div>
 
       <br></br>
