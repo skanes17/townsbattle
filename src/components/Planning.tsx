@@ -13,6 +13,15 @@ export default function Planning(props) {
   return (
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">Planning</h2>
+      <div className="displayResources">
+        <DisplayResources
+          wood={props.woodCollected}
+          stone={props.stoneCollected}
+          metal={props.metalCollected}
+        />
+      </div>
+      <br></br>
+
       <div className="freeworkers" style={{ fontWeight: "bold" }}>
         Free Workers: {props.freeworkers}
       </div>
@@ -39,15 +48,6 @@ export default function Planning(props) {
           setWorkers={props.setMetalworkers}
           freeworkers={props.freeworkers}
           setFreeworkers={props.setFreeworkers}
-        />
-      </div>
-      <br></br>
-
-      <div className="displayResources">
-        <DisplayResources
-          wood={props.woodCollected}
-          stone={props.stoneCollected}
-          metal={props.metalCollected}
         />
       </div>
       <br></br>
