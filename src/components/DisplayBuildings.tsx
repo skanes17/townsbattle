@@ -4,6 +4,11 @@ import React from "react";
 
 // TODO: Check if building is enabled in the state, show UI accordingly
 export default function DisplayBuildings({ buildings }) {
+  //TODO: Figure out how to filter by enabled; maybe make buildings into an array
+  /*   const enabledBuildings = buildings.filter(
+    (building) => building.enabled == false
+  ); */
+
   return (
     <>
       {/* This would show conditionally based on buildings state */}
