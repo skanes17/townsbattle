@@ -7,6 +7,10 @@ export default function MakeBuildings({
   buildingType,
   buildingPath,
   setBuildings,
+  freeworkerName,
+  freeworkers,
+  freeworkerCost,
+  setFreeworkers,
   resource1Name,
   resource1,
   setResource1,
@@ -25,6 +29,7 @@ export default function MakeBuildings({
   function handleBuildClick() {
     if (
       underConstruction === false &&
+      freeworkers > 0 &&
       resource1 >= resource1Cost &&
       resource2 >= resource2Cost
     ) {
@@ -39,6 +44,7 @@ export default function MakeBuildings({
       setBuildings(newBuildings);
       console.log(newBuildings);
 
+      setFreeworkers(freeworkers - freeworkerCost);
       setResource1(resource1 - resource1Cost);
       setResource2(resource2 - resource2Cost);
     } else {
@@ -46,7 +52,7 @@ export default function MakeBuildings({
     }
   }
 
-  // TODO: Make this function!
+  // TODO: Make it impossible to build/cancel the building once the turn has ended
   function handleCancelClick() {
     if (underConstruction === true) {
       const newBuildings = {
@@ -59,6 +65,7 @@ export default function MakeBuildings({
       setBuildings(newBuildings);
       console.log(newBuildings);
 
+      setFreeworkers(freeworkers + freeworkerCost);
       setResource1(resource1 + resource1Cost);
       setResource2(resource2 + resource2Cost);
     }
@@ -67,8 +74,8 @@ export default function MakeBuildings({
   return (
     <>
       <div>
-        {buildingName} Cost: {resource1Cost} {resource1Name}, {resource2Cost}{" "}
-        {resource2Name}
+        {buildingName} Cost: {freeworkerCost} {freeworkerName}, {resource1Cost}{" "}
+        {resource1Name}, {resource2Cost} {resource2Name}
       </div>
       <div className="unit">
         <button

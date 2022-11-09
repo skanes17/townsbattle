@@ -36,16 +36,19 @@ export default function Game(props) {
       woodCost: 2,
       stoneCost: 2,
       metalCost: 0,
+      freeworkerCost: 1,
     },
     pewpew: {
       woodCost: 2,
       stoneCost: 0,
       metalCost: 2,
+      freeworkerCost: 1,
     },
     tanky: {
       woodCost: 0,
       stoneCost: 2,
       metalCost: 2,
+      freeworkerCost: 1,
     },
   });
 
@@ -61,6 +64,7 @@ export default function Game(props) {
       woodCost: 10,
       stoneCost: 10,
       metalCost: 0,
+      freeworkerCost: 5,
     },
     // for ranged
     archeryRange: {
@@ -73,6 +77,7 @@ export default function Game(props) {
       woodCost: 10,
       stoneCost: 0,
       metalCost: 10,
+      freeworkerCost: 5,
     },
     // for tanks
     armorSmithy: {
@@ -85,6 +90,7 @@ export default function Game(props) {
       woodCost: 0,
       stoneCost: 10,
       metalCost: 10,
+      freeworkerCost: 5,
     },
     // for all units
     mealHall: {
@@ -93,6 +99,7 @@ export default function Game(props) {
       tier: 1,
       healthBonus: 2,
       buildingHealth: 2,
+      freeworkerCost: 5,
     },
     // for all units
     townCenter: {
@@ -101,6 +108,7 @@ export default function Game(props) {
       tier: 1,
       healthBonus: 1,
       buildingHealth: 3,
+      freeworkerCost: 5,
     },
   });
 
@@ -432,6 +440,10 @@ export default function Game(props) {
           buildingPath="swordSmithy"
           buildingType={buildings.swordSmithy}
           setBuildings={setBuildings}
+          freeworkerName="villagers"
+          freeworkers={freeworkers}
+          setFreeworkers={setFreeworkers}
+          freeworkerCost={buildings.swordSmithy.freeworkerCost}
           resource1Name="wood"
           resource1={woodCollected}
           setResource1={setWoodCollected}
