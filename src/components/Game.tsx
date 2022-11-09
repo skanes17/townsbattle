@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useState } from "react";
 import Planning from "./Planning";
 import Combat from "./Combat";
@@ -142,10 +144,7 @@ export default function Game(props) {
 
   // TODO: Why don't it let me use useState([])?
   // @ts-ignore
-  const [myUnits, setMyUnits] = useState([
-    { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
-    { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
-  ]);
+  const [myUnits, setMyUnits] = useState([]);
 
   // TODO: Introduce dynamic update of attack and health stats based on which buildings are built
   const [newMelee, setNewMelee] = useState({
@@ -184,6 +183,7 @@ export default function Game(props) {
     myUnits.filter((element) => element.type === "tanky").length
   );
 
+  // =====FRIENDLY UNITS=====
   // @ts-ignore
   const addMelee = () => {
     // TODO: Fix how the this process is always a step behind
@@ -237,11 +237,70 @@ export default function Game(props) {
   };
 
   // placeholder enemy array for testing
+  // TODO: Add a set number of enemy units per turn
+  // Eg start with an army of 3, one of each
+  // TODO: After first wave, the number is increased each time
+  // Eg 7 units for second wave, enemy units randomly chosen
+  // TODO: Composition of army is displayed to UI, for example 20% melee 30% pewpew 50% tanky
   const [enemyUnits, setEnemyUnits] = useState([
     { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
     { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
     { type: "tanky", name: "Tanky", attack: 3, health: 7, id: -3 },
   ]);
+  // =====END OF FRIENDLY UNITS=====
+
+  // =====ENEMY UNITS=====
+  // @ts-ignore
+  const addEnemyMelee = () => {
+    // TODO: Fix how the this process is always a step behind
+
+    // copy current newMelee stats, append an ID to the end
+    const newMeleeCopy = { ...newMelee, id: unitId };
+
+    // update myUnits state accordingly
+    setMyUnits((enemyUnits) => {
+      return [...enemyUnits, newMeleeCopy];
+    });
+
+    setUnitId(unitId + 1);
+    // filter to check type, count matches, use it to update current unit number
+    setMeleeCounter(
+      enemyUnits.filter((element) => element.type === "melee").length
+    );
+  };
+
+  // @ts-ignore
+  const addEnemyPewpew = () => {
+    // make a COPY of the state array so we can append id to the end
+    const newPewpewCopy = { ...newPewpew, id: unitId };
+
+    // take existing myUnits and append newPewpewCopy to the end
+    setMyUnits((enemyUnits) => {
+      return [...enemyUnits, newPewpewCopy];
+    });
+
+    console.log(enemyUnits);
+    // increment the ID counter to ensure elements are unique
+    setUnitId(unitId + 1);
+    setPewpewCounter(
+      enemyUnits.filter((element) => element.type === "pewpew").length
+    );
+  };
+
+  // @ts-ignore
+  const addEnemyTanky = () => {
+    const newTankyCopy = { ...newTanky, id: unitId };
+
+    setMyUnits((enemyUnits) => {
+      return [...enemyUnits, newTankyCopy];
+    });
+
+    console.log(enemyUnits);
+    setUnitId(unitId + 1);
+    setTankyCounter(
+      enemyUnits.filter((element) => element.type === "tanky").length
+    );
+  };
 
   // to be used in UnitBattler
   const [activeUnit, setActiveUnit] = useState();
@@ -580,21 +639,40 @@ export default function Game(props) {
               {/* {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky. // TODO: Make these percents?*/}
             </p>
           </div>
-          <AddUnitButton
-            addUnitFunction={addMelee}
-            name="Melee"
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          />
-          <AddUnitButton
-            addUnitFunction={addPewpew}
-            name="Pewpew"
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          />
-          <AddUnitButton
-            addUnitFunction={addTanky}
-            name="Tanky"
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          />
+          <div>
+            <AddUnitButton
+              addUnitFunction={addMelee}
+              name="Melee"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            />
+            <AddUnitButton
+              addUnitFunction={addPewpew}
+              name="Pewpew"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            />
+            <AddUnitButton
+              addUnitFunction={addTanky}
+              name="Tanky"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            />
+          </div>
+          <div>
+            <AddUnitButton
+              addUnitFunction={addEnemyMelee}
+              name="Enemy Melee"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            />
+            <AddUnitButton
+              addUnitFunction={addEnemyPewpew}
+              name="Enemy Pewpew"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            />
+            <AddUnitButton
+              addUnitFunction={addEnemyTanky}
+              name="Enemy Tanky"
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            />
+          </div>
         </div>
       </div>
 
