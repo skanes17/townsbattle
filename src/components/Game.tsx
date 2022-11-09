@@ -147,6 +147,7 @@ export default function Game(props) {
     { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
   ]);
 
+  // TODO: Introduce dynamic update of attack and health stats based on which buildings are built
   const [newMelee, setNewMelee] = useState({
     type: "melee",
     name: "Melee",
@@ -155,7 +156,9 @@ export default function Game(props) {
   });
 
   const [meleeInTraining, setMeleeInTraining] = useState(0);
-  const [meleeCounter, setMeleeCounter] = useState(0);
+  const [meleeCounter, setMeleeCounter] = useState(
+    myUnits.filter((element) => element.type === "melee").length
+  );
 
   const [newPewpew, setNewPewpew] = useState({
     type: "pewpew",
@@ -165,7 +168,9 @@ export default function Game(props) {
   });
 
   const [pewpewInTraining, setPewpewInTraining] = useState(0);
-  const [pewpewCounter, setPewpewCounter] = useState(0);
+  const [pewpewCounter, setPewpewCounter] = useState(
+    myUnits.filter((element) => element.type === "pewpew").length
+  );
 
   const [newTanky, setNewTanky] = useState({
     type: "tanky",
@@ -175,12 +180,13 @@ export default function Game(props) {
   });
 
   const [tankyInTraining, setTankyInTraining] = useState(0);
-  const [tankyCounter, setTankyCounter] = useState(0);
+  const [tankyCounter, setTankyCounter] = useState(
+    myUnits.filter((element) => element.type === "tanky").length
+  );
 
   // @ts-ignore
   const addMelee = () => {
-    // TODO: Check if this process is always using the most current state
-    // copy the current newMelee stats
+    // TODO: Fix how the this process is always a step behind
 
     // copy current newMelee stats, append an ID to the end
     const newMeleeCopy = { ...newMelee, id: unitId };
@@ -245,9 +251,21 @@ export default function Game(props) {
   const unitBattler = () => {
     // @ts-ignore
     const myUnitsCopy = [...myUnits];
+    // @ts-ignore
+    const emptyArray = [];
 
     // @ts-ignore
     const enemyUnitsCopy = [...enemyUnits];
+
+    // TODO: End combat when one of the arrays is empty! Something like this
+    /*     if (myUnitsCopy === emptyArray) {
+      alert("Your army was defeated. Your buildings took damage!");
+      return;
+    }
+    if (enemyUnitsCopy === emptyArray) {
+      alert("Enemy army defeated. You won the battle!");
+      return;
+    } */
 
     // select a random unit from the arrays
     const friendlyUnit =
