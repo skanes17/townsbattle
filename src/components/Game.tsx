@@ -115,12 +115,7 @@ export default function Game(props) {
     },
   });
 
-  // fix this later to be more dynamic and make reuseable for buildings
-  /*   function buildingUnderConstruction() {
-    const buildingsCopy = { ...buildings,buildings.swordSmithy.underConstruction: "true" };
-    setBuildings(buildingsCopy);
-  } */
-
+  // Unused right now
   const [upgrades, setUpgrades] = useState({
     axes: {
       woodCost: 20,
@@ -188,14 +183,16 @@ export default function Game(props) {
   const addMelee = () => {
     // TODO: Fix how the this process is always a step behind
 
-    // copy current newMelee stats, append an ID to the end
+    // make a COPY of the state array so we can append ID to the end
     const newMeleeCopy = { ...newMelee, id: unitId };
 
-    // update myUnits state accordingly
+    // take existing myUnits and append newMeleeCopy to the end
     setMyUnits((myUnits) => {
       return [...myUnits, newMeleeCopy];
     });
 
+    console.log(myUnits);
+    // increment the ID counter to ensure elements are unique
     setUnitId(unitId + 1);
     // filter to check type, count matches, use it to update current unit number
     setMeleeCounter(
@@ -205,16 +202,13 @@ export default function Game(props) {
 
   // @ts-ignore
   const addPewpew = () => {
-    // make a COPY of the state array so we can append id to the end
     const newPewpewCopy = { ...newPewpew, id: unitId };
 
-    // take existing myUnits and append newPewpewCopy to the end
     setMyUnits((myUnits) => {
       return [...myUnits, newPewpewCopy];
     });
 
     console.log(myUnits);
-    // increment the ID counter to ensure elements are unique
     setUnitId(unitId + 1);
     setPewpewCounter(
       myUnits.filter((element) => element.type === "pewpew").length
@@ -235,9 +229,12 @@ export default function Game(props) {
       myUnits.filter((element) => element.type === "tanky").length
     );
   };
+  // =====END OF FRIENDLY UNITS=====
 
+  // =====ENEMY UNITS=====
   // placeholder enemy array for testing
-  // TODO: Add a set number of enemy units per turn
+  // TODO: Remove references to newMelee, as upgrades to friendlies would power up the enemy units too
+  // TODO: Call a function to add a set number of enemy units per turn
   // Eg start with an army of 3, one of each
   // TODO: After first wave, the number is increased each time
   // Eg 7 units for second wave, enemy units randomly chosen
@@ -247,23 +244,17 @@ export default function Game(props) {
     { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
     { type: "tanky", name: "Tanky", attack: 3, health: 7, id: -3 },
   ]);
-  // =====END OF FRIENDLY UNITS=====
 
-  // =====ENEMY UNITS=====
   // @ts-ignore
   const addEnemyMelee = () => {
-    // TODO: Fix how the this process is always a step behind
-
-    // copy current newMelee stats, append an ID to the end
     const newMeleeCopy = { ...newMelee, id: unitId };
 
-    // update myUnits state accordingly
-    setMyUnits((enemyUnits) => {
+    setEnemyUnits((enemyUnits) => {
       return [...enemyUnits, newMeleeCopy];
     });
 
+    console.log(enemyUnits);
     setUnitId(unitId + 1);
-    // filter to check type, count matches, use it to update current unit number
     setMeleeCounter(
       enemyUnits.filter((element) => element.type === "melee").length
     );
@@ -271,16 +262,13 @@ export default function Game(props) {
 
   // @ts-ignore
   const addEnemyPewpew = () => {
-    // make a COPY of the state array so we can append id to the end
     const newPewpewCopy = { ...newPewpew, id: unitId };
 
-    // take existing myUnits and append newPewpewCopy to the end
-    setMyUnits((enemyUnits) => {
+    setEnemyUnits((enemyUnits) => {
       return [...enemyUnits, newPewpewCopy];
     });
 
     console.log(enemyUnits);
-    // increment the ID counter to ensure elements are unique
     setUnitId(unitId + 1);
     setPewpewCounter(
       enemyUnits.filter((element) => element.type === "pewpew").length
@@ -291,7 +279,7 @@ export default function Game(props) {
   const addEnemyTanky = () => {
     const newTankyCopy = { ...newTanky, id: unitId };
 
-    setMyUnits((enemyUnits) => {
+    setEnemyUnits((enemyUnits) => {
       return [...enemyUnits, newTankyCopy];
     });
 
