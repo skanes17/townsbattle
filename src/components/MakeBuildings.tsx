@@ -30,11 +30,8 @@ export default function MakeBuildings({
       resource1 >= resource1Cost &&
       resource2 >= resource2Cost
     ) {
-      // TODO: Replace this with array approach
       const buildingsCopy = [...buildings];
       buildingsCopy[index].underConstruction = true;
-
-      // CONTINUE FROM HERE!
 
       setBuildings(buildingsCopy);
       console.log(buildingsCopy);
@@ -47,7 +44,7 @@ export default function MakeBuildings({
     }
   }
 
-  // TODO: Make it impossible to build/cancel the building once the turn has ended
+  // TODO: Remove Build/Cancel mechanics for built buildings
   function handleCancelClick() {
     if (underConstruction === true) {
       const buildingsCopy = [...buildings];

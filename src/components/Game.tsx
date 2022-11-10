@@ -152,20 +152,23 @@ export default function Game(props) {
   // @ts-ignore
   const [myUnits, setMyUnits] = useState([]);
 
-  // TODO: Dynamic update of attack and health stats based on buildings built
-  const [newMelee, setNewMelee] = useState({
+  // ===STATS FOR NEW FRIENDLY UNITS===
+  // TODO: Will have dynamic update of attack and health stats based on building bonuses
+  const [newFriendlyMelee, setNewFriendlyMelee] = useState({
     type: "melee",
     name: "Melee",
     attack: 5, // would set it here
     health: 5,
   });
 
+  // how many units you're going to train this turn
   const [meleeInTraining, setMeleeInTraining] = useState(0);
+  // total units in your army
   const [meleeCounter, setMeleeCounter] = useState(
     myUnits.filter((unit) => unit.type === "melee").length
   );
 
-  const [newPewpew, setNewPewpew] = useState({
+  const [newFriendlyPewpew, setNewFriendlyPewpew] = useState({
     type: "pewpew",
     name: "Pewpew",
     attack: 7,
@@ -177,7 +180,7 @@ export default function Game(props) {
     myUnits.filter((unit) => unit.type === "pewpew").length
   );
 
-  const [newTanky, setNewTanky] = useState({
+  const [newFriendlyTanky, setNewFriendlyTanky] = useState({
     type: "tanky",
     name: "Tanky",
     attack: 3,
@@ -189,21 +192,43 @@ export default function Game(props) {
     myUnits.filter((unit) => unit.type === "tanky").length
   );
 
+  // ===STATS FOR NEW ENEMY UNITS===
+  const [newEnemyMelee, setNewEnemyMelee] = useState({
+    type: "melee",
+    name: "Melee",
+    attack: 5, // would set it here
+    health: 5,
+  });
+
+  const [newEnemyPewpew, setNewEnemyPewpew] = useState({
+    type: "pewpew",
+    name: "Pewpew",
+    attack: 7,
+    health: 3,
+  });
+
+  const [newEnemyTanky, setNewEnemyTanky] = useState({
+    type: "tanky",
+    name: "Tanky",
+    attack: 3,
+    health: 7,
+  });
+
   // =====FRIENDLY UNITS=====
   // @ts-ignore
   const addMelee = () => {
     // TODO: Fix how this process is always a step behind
 
     // make a COPY of the state array so we can append ID to the end
-    const newMeleeCopy = { ...newMelee, id: unitId };
+    const newFriendlyMeleeCopy = { ...newFriendlyMelee, id: unitId };
 
-    // take existing myUnits and append newMeleeCopy to the end
+    // take existing myUnits and append newFriendlyMeleeCopy to the end
     setMyUnits((myUnits) => {
-      return [...myUnits, newMeleeCopy];
+      return [...myUnits, newFriendlyMeleeCopy];
     });
 
     console.log(myUnits);
-    // increment the ID counter to ensure elements are unique
+    // increment the ID counter to ensure units are unique
     setUnitId(unitId + 1);
     // filter to check type, count matches, use it to update current unit number
     setMeleeCounter(myUnits.filter((unit) => unit.type === "melee").length);
@@ -211,10 +236,10 @@ export default function Game(props) {
 
   // @ts-ignore
   const addPewpew = () => {
-    const newPewpewCopy = { ...newPewpew, id: unitId };
+    const newFriendlyPewpewCopy = { ...newFriendlyPewpew, id: unitId };
 
     setMyUnits((myUnits) => {
-      return [...myUnits, newPewpewCopy];
+      return [...myUnits, newFriendlyPewpewCopy];
     });
 
     console.log(myUnits);
@@ -224,10 +249,10 @@ export default function Game(props) {
 
   // @ts-ignore
   const addTanky = () => {
-    const newTankyCopy = { ...newTanky, id: unitId };
+    const newFriendlyTankyCopy = { ...newFriendlyTanky, id: unitId };
 
     setMyUnits((myUnits) => {
-      return [...myUnits, newTankyCopy];
+      return [...myUnits, newFriendlyTankyCopy];
     });
 
     console.log(myUnits);
@@ -237,13 +262,14 @@ export default function Game(props) {
   // =====END OF FRIENDLY UNITS=====
 
   // =====ENEMY UNITS=====
-  // placeholder enemy array for testing
-  // TODO: Remove references to newMelee, as upgrades to friendlies would power up the enemy units too
+  // TODO: Remove references to newFriendlyMelee, as upgrades to friendlies would power up the enemy units too
   // TODO: Call a function to add a set number of enemy units per turn
   // Eg start with an army of 3, one of each
   // TODO: After first wave, the number is increased each time
   // Eg 7 units for second wave, enemy units randomly chosen
   // TODO: Composition of army is displayed to UI, for example 20% melee 30% pewpew 50% tanky
+
+  // placeholder enemy array for testing
   const [enemyUnits, setEnemyUnits] = useState([
     { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
     { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
@@ -252,59 +278,55 @@ export default function Game(props) {
 
   // @ts-ignore
   const addEnemyMelee = () => {
-    const newMeleeCopy = { ...newMelee, id: unitId };
+    const newEnemyMeleeCopy = { ...newEnemyMelee, id: unitId };
 
     setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newMeleeCopy];
+      return [...enemyUnits, newEnemyMeleeCopy];
     });
 
     console.log(enemyUnits);
     setUnitId(unitId + 1);
-    setMeleeCounter(
-      enemyUnits.filter((element) => element.type === "melee").length
-    );
   };
 
   // @ts-ignore
   const addEnemyPewpew = () => {
-    const newPewpewCopy = { ...newPewpew, id: unitId };
+    const newEnemyPewpewCopy = { ...newEnemyPewpew, id: unitId };
 
     setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newPewpewCopy];
+      return [...enemyUnits, newEnemyPewpewCopy];
     });
 
     console.log(enemyUnits);
     setUnitId(unitId + 1);
-    setPewpewCounter(
-      enemyUnits.filter((element) => element.type === "pewpew").length
-    );
   };
 
   // @ts-ignore
   const addEnemyTanky = () => {
-    const newTankyCopy = { ...newTanky, id: unitId };
+    const newEnemyTankyCopy = { ...newEnemyTanky, id: unitId };
 
     setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newTankyCopy];
+      return [...enemyUnits, newEnemyTankyCopy];
     });
 
     console.log(enemyUnits);
     setUnitId(unitId + 1);
-    setTankyCounter(
-      enemyUnits.filter((element) => element.type === "tanky").length
-    );
   };
-
-  // to be used in UnitBattler
-  const [activeUnit, setActiveUnit] = useState();
 
   // TODO: Consider if copy of array should use state
   // TODO: Figure out why arrays don't seem to be new upon click
+
+  // TODO: Ideas for battle UI below:
+  // • start a log to display what's happening
+  // • this could exist in its own side div eventually, and show:
+  // • which units were selected...
+  // • atk/def stats
+  // • state friendly and enemy damage taken and remaining health
+  // • ideally UI would show both healths reduced at once
+  // • when damage is taken should be, at minimum, a little red text animation
+
   const unitBattler = () => {
     // @ts-ignore
     const myUnitsCopy = [...myUnits];
-    // @ts-ignore
-    const emptyArray = [];
 
     // @ts-ignore
     const enemyUnitsCopy = [...enemyUnits];
@@ -332,13 +354,7 @@ export default function Game(props) {
     const enemyHealthRemaining = enemyUnit.health - friendlyUnit.attack;
     const friendlyHealthRemaining = friendlyUnit.health - enemyUnit.attack;
 
-    // start a log to display what's happening
-    // this coud exist in its own side div eventually, and show:
-    // which units were selected...
-    // atk/def stats
-    // state friendly and enemy damage taken and remaining health
-    // ideally UI would show both healths reduced at once
-    // when damage is taken should be, at minimum, a little red text animation
+    // if the enemy survives...
     if (enemyHealthRemaining > 0) {
       console.log(
         "The enemy takes " +
@@ -364,6 +380,7 @@ export default function Game(props) {
         })
       );
     } else {
+      // if the enemy dies...
       console.log(
         "Enemy " +
           enemyUnit.name +
@@ -375,6 +392,7 @@ export default function Game(props) {
       setEnemyUnits(enemyUnitsCopy.filter((unit) => unit.id !== enemyUnit.id));
     }
 
+    // if the friendly unit survives...
     if (friendlyHealthRemaining > 0) {
       console.log(
         "Friendly " +
@@ -403,6 +421,7 @@ export default function Game(props) {
         })
       );
     } else {
+      // if the friendly dies...
       console.log(
         friendlyUnit.name + " takes " + enemyUnit.attack + " damage and dies."
       );
@@ -456,7 +475,7 @@ export default function Game(props) {
     setPewpewInTraining(0);
     setTankyInTraining(0);
 
-    // buildings finish construction and are now built (enabled: true)
+    // buildings finish construction and are now built, setting enabled: true
     setBuildings(
       buildings.map((building) => {
         if (building.underConstruction === true) {
@@ -621,17 +640,7 @@ export default function Game(props) {
       </div>
       <br></br>
 
-      {/* TODO: Encapsulate combat      
-      <Combat
-        turn={turn}
-        setTurn={setTurn}
-        setCombatTurn={setCombatTurn}
-        meleeCounter={meleeCounter}
-        pewpewCounter={pewpewCounter}
-        tankyCounter={tankyCounter}
-        onClick={unitBattler}
-      /> */}
-
+      {/* TODO: Encapsulate Combat properly into a component */}
       <div>
         <h2 className="text-4xl font-extrabold dark:text-white">
           Combat Mechanics
@@ -654,10 +663,11 @@ export default function Game(props) {
           </div>
           <div>
             <p>
-              {/* The enemy army size is {enemyMeleeCounter + enemyPewpewCounter + enemyTankyCounter}.*/}
+              {/* TODO: The enemy army size is {enemyMeleeCounter + enemyPewpewCounter + enemyTankyCounter}.*/}
             </p>
             <p>
-              {/* {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky. // TODO: Make these percents?*/}
+              {/* TODO: {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky.*/}
+              {/* TODO: Make these percents? */}
             </p>
           </div>
           <div>
