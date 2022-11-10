@@ -53,9 +53,11 @@ export default function Game(props) {
     },
   });
 
-  const [buildings, setBuildings] = useState({
+  // used an array of objects here so I could filter it
+  const [buildings, setBuildings] = useState([
     // for melee
-    swordSmithy: {
+    {
+      name: "Swordsmithy",
       enabled: false,
       underConstruction: false,
       tier: 1,
@@ -68,7 +70,8 @@ export default function Game(props) {
       freeworkerCost: 5,
     },
     // for ranged
-    archeryRange: {
+    {
+      name: "Archery Range",
       enabled: false,
       underConstruction: false,
       tier: 1,
@@ -81,7 +84,8 @@ export default function Game(props) {
       freeworkerCost: 5,
     },
     // for tanks
-    armorSmithy: {
+    {
+      name: "Armorsmithy",
       enabled: false,
       underConstruction: false,
       tier: 1,
@@ -94,7 +98,8 @@ export default function Game(props) {
       freeworkerCost: 5,
     },
     // for all units
-    mealHall: {
+    {
+      name: "Meal Hall",
       enabled: false,
       underConstruction: false,
       tier: 1,
@@ -103,15 +108,16 @@ export default function Game(props) {
       freeworkerCost: 5,
     },
     // for all units
-    townCenter: {
-      enabled: false,
+    {
+      name: "Town Center",
+      enabled: true,
       underConstruction: false,
       tier: 1,
-      healthBonus: 1,
+      /* healthBonus: 1, */
       buildingHealth: 3,
       freeworkerCost: 5,
     },
-  });
+  ]);
 
   // fix this later to be more dynamic and make reuseable for buildings
   /*   function buildingUnderConstruction() {
