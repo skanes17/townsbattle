@@ -11,9 +11,9 @@ export default function DisplayUnits({
   return (
     <>
       <div style={{ fontWeight: "bold" }}>Units trained</div>
-      <div>Melee: {meleeCounter}</div>
-      <div>Pewpew: {pewpewCounter}</div>
-      <div>Tanky: {tankyCounter}</div>
+      <div>🗡️ {meleeCounter} Melee</div>
+      <div>🏹 {pewpewCounter} Pewpew</div>
+      <div>🛡️ {tankyCounter} Tanky</div>
     </>
   );
 }

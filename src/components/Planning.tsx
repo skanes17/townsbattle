@@ -29,21 +29,21 @@ export default function Planning(props) {
       <div className="workers">
         <div style={{ fontWeight: "bold" }}>Workers</div>
         <Villager
-          type="Woodcutters"
+          type="🪓 Woodcutters"
           workers={props.woodcutters}
           setWorkers={props.setWoodcutters}
           freeworkers={props.freeworkers}
           setFreeworkers={props.setFreeworkers}
         />
         <Villager
-          type="Stonemasons"
+          type="⚒️ Stonemasons"
           workers={props.stonemasons}
           setWorkers={props.setStonemasons}
           freeworkers={props.freeworkers}
           setFreeworkers={props.setFreeworkers}
         />
         <Villager
-          type="Metalworkers"
+          type="🥽 Metalworkers"
           workers={props.metalworkers}
           setWorkers={props.setMetalworkers}
           freeworkers={props.freeworkers}

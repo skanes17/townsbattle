@@ -59,7 +59,7 @@ export default function Game(props) {
   const [buildings, setBuildings] = useState([
     // for melee
     {
-      name: "Swordsmithy",
+      name: "⚔️ Swordsmithy",
       enabled: false,
       underConstruction: false,
       tier: 1,
@@ -74,7 +74,7 @@ export default function Game(props) {
     },
     // for ranged
     {
-      name: "Archery Range",
+      name: "🎯 Archery Range",
       enabled: false,
       underConstruction: false,
       tier: 1,
@@ -89,7 +89,7 @@ export default function Game(props) {
     },
     // for tanks
     {
-      name: "Armorsmithy",
+      name: "🛡️ Armorsmithy",
       enabled: false,
       underConstruction: false,
       tier: 1,
@@ -104,7 +104,7 @@ export default function Game(props) {
     },
     // for all units
     {
-      name: "Meal Hall",
+      name: "🍖 Meal Hall",
       enabled: false,
       underConstruction: false,
       tier: 1,
@@ -115,7 +115,7 @@ export default function Game(props) {
     },
     // for all units
     {
-      name: "Town Center",
+      name: "🏙️ Town Center",
       enabled: true,
       underConstruction: false,
       tier: 1,
@@ -581,7 +581,7 @@ export default function Game(props) {
           Unit Creation
         </h2>
         <TrainUnits
-          name="Melee"
+          name="🗡️ Melee"
           freeworkerName={
             unitCosts.melee.freeworkerCost > 1 ? "villagers" : "villager"
           }
@@ -600,7 +600,7 @@ export default function Game(props) {
           setUnitInTraining={setMeleeInTraining}
         />
         <TrainUnits
-          name="Pewpew"
+          name="🏹 Pewpew"
           freeworkerName={
             unitCosts.pewpew.freeworkerCost > 1 ? "villagers" : "villager"
           }
@@ -619,7 +619,7 @@ export default function Game(props) {
           setUnitInTraining={setPewpewInTraining}
         />
         <TrainUnits
-          name="Tanky"
+          name="🛡️ Tanky"
           freeworkerName={
             unitCosts.tanky.freeworkerCost > 1 ? "villagers" : "villager"
           }

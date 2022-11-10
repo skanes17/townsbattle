@@ -5,9 +5,9 @@ export default function DisplayResources(props) {
   return (
     <>
       <div style={{ fontWeight: "bold" }}>Resources collected</div>
-      <div>Wood: {props.wood}</div>
-      <div>Stone: {props.stone}</div>
-      <div>Metal: {props.metal}</div>
+      <div>🪵 {props.wood}</div>
+      <div>🪨 {props.stone}</div>
+      <div>🔩 {props.metal}</div>
     </>
   );
 }
