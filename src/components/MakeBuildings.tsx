@@ -80,7 +80,7 @@ export default function MakeBuildings({
         >
           Cancel
         </button>
-        {buildingName} is ready to construct: {underConstruction ? "Yes" : "No"}
+        Ready to construct: {underConstruction ? "Yes" : "No"}
       </div>
     </>
   );

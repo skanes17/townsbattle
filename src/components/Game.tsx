@@ -119,7 +119,7 @@ export default function Game(props) {
       enabled: true,
       underConstruction: false,
       tier: 1,
-      effect: "",
+      effect: "If this building is destroyed, it's game over!",
       /* healthBonus: 1, */
       health: 3,
       freeworkerCost: 5,
@@ -160,17 +160,17 @@ export default function Game(props) {
     { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
   ]);
 
-  // TODO: Introduce dynamic update of attack and health stats based on which buildings are built
+  // TODO: Dynamic update of attack and health stats based on buildings built
   const [newMelee, setNewMelee] = useState({
     type: "melee",
     name: "Melee",
-    attack: 5,
+    attack: 5, // would set it here
     health: 5,
   });
 
   const [meleeInTraining, setMeleeInTraining] = useState(0);
   const [meleeCounter, setMeleeCounter] = useState(
-    myUnits.filter((element) => element.type === "melee").length
+    myUnits.filter((unit) => unit.type === "melee").length
   );
 
   const [newPewpew, setNewPewpew] = useState({
@@ -182,7 +182,7 @@ export default function Game(props) {
 
   const [pewpewInTraining, setPewpewInTraining] = useState(0);
   const [pewpewCounter, setPewpewCounter] = useState(
-    myUnits.filter((element) => element.type === "pewpew").length
+    myUnits.filter((unit) => unit.type === "pewpew").length
   );
 
   const [newTanky, setNewTanky] = useState({
@@ -194,12 +194,12 @@ export default function Game(props) {
 
   const [tankyInTraining, setTankyInTraining] = useState(0);
   const [tankyCounter, setTankyCounter] = useState(
-    myUnits.filter((element) => element.type === "tanky").length
+    myUnits.filter((unit) => unit.type === "tanky").length
   );
 
   // @ts-ignore
   const addMelee = () => {
-    // TODO: Fix how the this process is always a step behind
+    // TODO: Fix how this process is always a step behind
 
     // copy current newMelee stats, append an ID to the end
     const newMeleeCopy = { ...newMelee, id: unitId };
@@ -211,9 +211,7 @@ export default function Game(props) {
 
     setUnitId(unitId + 1);
     // filter to check type, count matches, use it to update current unit number
-    setMeleeCounter(
-      myUnits.filter((element) => element.type === "melee").length
-    );
+    setMeleeCounter(myUnits.filter((unit) => unit.type === "melee").length);
   };
 
   // @ts-ignore
@@ -229,9 +227,7 @@ export default function Game(props) {
     console.log(myUnits);
     // increment the ID counter to ensure elements are unique
     setUnitId(unitId + 1);
-    setPewpewCounter(
-      myUnits.filter((element) => element.type === "pewpew").length
-    );
+    setPewpewCounter(myUnits.filter((unit) => unit.type === "pewpew").length);
   };
 
   // @ts-ignore
@@ -244,9 +240,7 @@ export default function Game(props) {
 
     console.log(myUnits);
     setUnitId(unitId + 1);
-    setTankyCounter(
-      myUnits.filter((element) => element.type === "tanky").length
-    );
+    setTankyCounter(myUnits.filter((unit) => unit.type === "tanky").length);
   };
 
   // placeholder enemy array for testing
@@ -271,14 +265,16 @@ export default function Game(props) {
     const enemyUnitsCopy = [...enemyUnits];
 
     // TODO: End combat when one of the arrays is empty! Something like this
-    /*     if (myUnitsCopy === emptyArray) {
+    if (myUnitsCopy.length === 0) {
       alert("Your army was defeated. Your buildings took damage!");
       return;
+      // TODO: Make this return to Planning mode
     }
-    if (enemyUnitsCopy === emptyArray) {
+    if (enemyUnitsCopy.length === 0) {
       alert("Enemy army defeated. You won the battle!");
       return;
-    } */
+      // TODO: Make this return to Planning mode
+    }
 
     // select a random unit from the arrays
     const friendlyUnit =
@@ -374,15 +370,9 @@ export default function Game(props) {
     console.log("The new friendly array is...");
     console.log(myUnits);
 
-    setMeleeCounter(
-      myUnits.filter((element) => element.type === "melee").length
-    );
-    setPewpewCounter(
-      myUnits.filter((element) => element.type === "pewpew").length
-    );
-    setTankyCounter(
-      myUnits.filter((element) => element.type === "tanky").length
-    );
+    setMeleeCounter(myUnits.filter((unit) => unit.type === "melee").length);
+    setPewpewCounter(myUnits.filter((unit) => unit.type === "pewpew").length);
+    setTankyCounter(myUnits.filter((unit) => unit.type === "tanky").length);
   };
 
   // ===END OF COMBAT MECHANICS===
@@ -405,7 +395,7 @@ export default function Game(props) {
     setTurn(turn + 1);
 
     // TODO: Insert function calls to add units to friendly pool
-    // TODO: Fix functions not working as expected when called this way
+    // TODO: Fix functions not working as expected when called this way (eg IDs are duplicated)
     for (let i = 0; i < meleeInTraining; i++) {
       addMelee();
     }
@@ -416,10 +406,25 @@ export default function Game(props) {
       addTanky();
     }
 
+    // reset units in training
     setMeleeInTraining(0);
     setPewpewInTraining(0);
     setTankyInTraining(0);
-    // TODO: Reset units in training
+
+    // buildings finish construction and are now built (enabled: true)
+    setBuildings(
+      buildings.map((building) => {
+        if (building.underConstruction === true) {
+          return {
+            ...building,
+            enabled: true,
+            underConstruction: false,
+          };
+        } else {
+          return building;
+        }
+      })
+    );
   }
 
   return (
