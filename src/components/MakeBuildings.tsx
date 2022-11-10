@@ -2,10 +2,9 @@
 import React from "react";
 
 export default function MakeBuildings({
+  index,
   buildings,
   buildingName,
-  buildingType,
-  buildingPath,
   setBuildings,
   freeworkerName,
   freeworkers,
@@ -21,11 +20,9 @@ export default function MakeBuildings({
   resource2Cost,
   underConstruction,
 }) {
-  // build basic buildings code here, similar to villagers and units
+  // TODO: Toggle Build/Click as one button
   // adjust later to accomodate sending state to UI
 
-  // TODO: Figure out how to remove the swordSmithy reference below
-  // How to send as a prop??
   function handleBuildClick() {
     if (
       underConstruction === false &&
@@ -33,16 +30,14 @@ export default function MakeBuildings({
       resource1 >= resource1Cost &&
       resource2 >= resource2Cost
     ) {
-      // TODO: Subtract resource costs
-      const newBuildings = {
-        ...buildings,
-        swordSmithy: {
-          ...buildingType,
-          underConstruction: true,
-        },
-      };
-      setBuildings(newBuildings);
-      console.log(newBuildings);
+      // TODO: Replace this with array approach
+      const buildingsCopy = [...buildings];
+      buildingsCopy[index].underConstruction = true;
+
+      // CONTINUE FROM HERE!
+
+      setBuildings(buildingsCopy);
+      console.log(buildingsCopy);
 
       setFreeworkers(freeworkers - freeworkerCost);
       setResource1(resource1 - resource1Cost);
@@ -55,15 +50,10 @@ export default function MakeBuildings({
   // TODO: Make it impossible to build/cancel the building once the turn has ended
   function handleCancelClick() {
     if (underConstruction === true) {
-      const newBuildings = {
-        ...buildings,
-        swordSmithy: {
-          ...buildingType,
-          underConstruction: false,
-        },
-      };
-      setBuildings(newBuildings);
-      console.log(newBuildings);
+      const buildingsCopy = [...buildings];
+      buildingsCopy[index].underConstruction = false;
+      setBuildings(buildingsCopy);
+      console.log(buildingsCopy);
 
       setFreeworkers(freeworkers + freeworkerCost);
       setResource1(resource1 + resource1Cost);

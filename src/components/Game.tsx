@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useState } from "react";
 import Planning from "./Planning";
 import Combat from "./Combat";
@@ -63,7 +65,8 @@ export default function Game(props) {
       tier: 1,
       attackBonus: 2,
       healthBonus: 2,
-      buildingHealth: 2,
+      effect: "Melee units gain +2 to attack, +2 to health",
+      health: 2,
       woodCost: 10,
       stoneCost: 10,
       metalCost: 0,
@@ -77,7 +80,8 @@ export default function Game(props) {
       tier: 1,
       attackBonus: 3,
       healthBonus: 1,
-      buildingHealth: 2,
+      effect: "Pewpew units gain +3 to attack, +1 to health",
+      health: 2,
       woodCost: 10,
       stoneCost: 0,
       metalCost: 10,
@@ -91,7 +95,8 @@ export default function Game(props) {
       tier: 1,
       attackBonus: 1,
       healthBonus: 3,
-      buildingHealth: 2,
+      effect: "Tanky units gain +1 to attack, +3 to defense",
+      health: 2,
       woodCost: 0,
       stoneCost: 10,
       metalCost: 10,
@@ -103,8 +108,9 @@ export default function Game(props) {
       enabled: false,
       underConstruction: false,
       tier: 1,
+      effect: "All units gain +2 to health, +2 to defense",
       healthBonus: 2,
-      buildingHealth: 2,
+      health: 2,
       freeworkerCost: 5,
     },
     // for all units
@@ -113,8 +119,9 @@ export default function Game(props) {
       enabled: true,
       underConstruction: false,
       tier: 1,
+      effect: "",
       /* healthBonus: 1, */
-      buildingHealth: 3,
+      health: 3,
       freeworkerCost: 5,
     },
   ]);
@@ -460,25 +467,42 @@ export default function Game(props) {
           Building Creation
         </h2>
         <MakeBuildings
-          // @ts-ignore
+          index={0}
           buildings={buildings}
-          buildingName="Swordsmithy"
-          buildingPath="swordSmithy"
-          buildingType={buildings.swordSmithy}
+          buildingName={buildings[0].name}
           setBuildings={setBuildings}
           freeworkerName="villagers"
           freeworkers={freeworkers}
           setFreeworkers={setFreeworkers}
-          freeworkerCost={buildings.swordSmithy.freeworkerCost}
+          freeworkerCost={buildings[0].freeworkerCost}
           resource1Name="wood"
           resource1={woodCollected}
           setResource1={setWoodCollected}
-          resource1Cost={buildings.swordSmithy.woodCost}
+          resource1Cost={buildings[0].woodCost}
           resource2Name="stone"
           resource2={stoneCollected}
           setResource2={setStoneCollected}
-          resource2Cost={buildings.swordSmithy.stoneCost}
-          underConstruction={buildings.swordSmithy.underConstruction}
+          resource2Cost={buildings[0].stoneCost}
+          underConstruction={buildings[0].underConstruction}
+        />
+        <MakeBuildings
+          index={1}
+          buildings={buildings}
+          buildingName={buildings[1].name}
+          setBuildings={setBuildings}
+          freeworkerName="villagers"
+          freeworkers={freeworkers}
+          setFreeworkers={setFreeworkers}
+          freeworkerCost={buildings[1].freeworkerCost}
+          resource1Name="wood"
+          resource1={woodCollected}
+          setResource1={setWoodCollected}
+          resource1Cost={buildings[1].woodCost}
+          resource2Name="metal"
+          resource2={metalCollected}
+          setResource2={setMetalCollected}
+          resource2Cost={buildings[1].metalCost}
+          underConstruction={buildings[1].underConstruction}
         />
       </div>
       <br></br>
