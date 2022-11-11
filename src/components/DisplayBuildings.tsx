@@ -18,7 +18,8 @@ export default function DisplayBuildings({ buildings }) {
         <>
           <p>{building.name}</p>
           <p>Tier: {building.tier}</p>
-          <p>Health: {building.health}</p>
+          {/* TODO: Replace number for health with heart symbols */}
+          <p>❤️ Health: {building.health}</p>
           {building.effect === "" ? (
             <p>No effect</p>
           ) : (
