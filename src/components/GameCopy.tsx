@@ -6,7 +6,8 @@ import TrainUnits from "./TrainUnits";
 import MakeBuildings from "./MakeBuildings";
 import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
-import { UpgradeCosts } from "../types/Upgrades";
+import { UpgradeCosts } from "../types/UpgradeCosts";
+import { Unit } from "../types/Unit";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
 // TODO: Have a pre-battle screen to summarize what you have?
@@ -136,7 +137,7 @@ export default function Game(props) {
   ]);
 
   // Unused right now
-  const [upgrades, setUpgrades] = useState<UpgradeCosts>({
+  const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>({
     axes: {
       woodCost: 20,
       stoneCost: 20,
@@ -157,18 +158,31 @@ export default function Game(props) {
   // ids for tracking units
   const [unitId, setUnitId] = useState(0);
 
-  // TODO: Why don't it let me use useState([])?
-  // @ts-ignore
-  const [myUnits, setMyUnits] = useState([]);
+  const [myUnits, setMyUnits] = useState<Unit[]>([]);
 
-  // ===STATS FOR NEW FRIENDLY UNITS===
+  // ===STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
-  const [newFriendlyMelee, setNewFriendlyMelee] = useState({
+  // Note: State was removed -- keep an eye out for problems
+  const baseMelee: Unit = {
     type: "melee",
     name: "Melee",
     attack: 5, // would set it here
     health: 5,
-  });
+  };
+
+  const basePewpew: Unit = {
+    type: "pewpew",
+    name: "Pewpew",
+    attack: 7,
+    health: 3,
+  };
+
+  const baseTanky: Unit = {
+    type: "tanky",
+    name: "Tanky",
+    attack: 3,
+    health: 7,
+  };
 
   // how many units you're going to train this turn
   const [meleeInTraining, setMeleeInTraining] = useState(0);
@@ -177,63 +191,26 @@ export default function Game(props) {
     myUnits.filter((unit) => unit.type === "melee").length
   );
 
-  const [newFriendlyPewpew, setNewFriendlyPewpew] = useState({
-    type: "pewpew",
-    name: "Pewpew",
-    attack: 7,
-    health: 3,
-  });
-
   const [pewpewInTraining, setPewpewInTraining] = useState(0);
   const [pewpewCounter, setPewpewCounter] = useState(
     myUnits.filter((unit) => unit.type === "pewpew").length
   );
-
-  const [newFriendlyTanky, setNewFriendlyTanky] = useState({
-    type: "tanky",
-    name: "Tanky",
-    attack: 3,
-    health: 7,
-  });
 
   const [tankyInTraining, setTankyInTraining] = useState(0);
   const [tankyCounter, setTankyCounter] = useState(
     myUnits.filter((unit) => unit.type === "tanky").length
   );
 
-  // ===STATS FOR NEW ENEMY UNITS===
-  const [newEnemyMelee, setNewEnemyMelee] = useState({
-    type: "melee",
-    name: "Melee",
-    attack: 5, // would set it here
-    health: 5,
-  });
-
-  const [newEnemyPewpew, setNewEnemyPewpew] = useState({
-    type: "pewpew",
-    name: "Pewpew",
-    attack: 7,
-    health: 3,
-  });
-
-  const [newEnemyTanky, setNewEnemyTanky] = useState({
-    type: "tanky",
-    name: "Tanky",
-    attack: 3,
-    health: 7,
-  });
-
-  // =====FRIENDLY UNITS=====
-  // @ts-ignore
+  // =====ADDING FRIENDLY UNITS TO ARMY=====
   const addMelee = () => {
     // TODO: Fix how this process is always a step behind
 
     // make a COPY of the state array so we can append ID to the end
-    const newFriendlyMeleeCopy = { ...newFriendlyMelee, id: unitId };
+    const newFriendlyMelee = { ...baseMelee, id: unitId };
 
-    // take existing myUnits and append newFriendlyMeleeCopy to the end
+    // take existing myUnits and append newFriendlyMelee to the end
     setMyUnits((myUnits) => {
-      return [...myUnits, newFriendlyMeleeCopy];
+      return [...myUnits, newFriendlyMelee];
     });
 
     console.log(myUnits);
@@ -243,12 +220,11 @@ export default function Game(props) {
     setMeleeCounter(myUnits.filter((unit) => unit.type === "melee").length);
   };
 
-  // @ts-ignore
   const addPewpew = () => {
-    const newFriendlyPewpewCopy = { ...newFriendlyPewpew, id: unitId };
+    const newFriendlyPewpew = { ...basePewpew, id: unitId };
 
     setMyUnits((myUnits) => {
-      return [...myUnits, newFriendlyPewpewCopy];
+      return [...myUnits, newFriendlyPewpew];
     });
 
     console.log(myUnits);
@@ -256,12 +232,11 @@ export default function Game(props) {
     setPewpewCounter(myUnits.filter((unit) => unit.type === "pewpew").length);
   };
 
-  // @ts-ignore
   const addTanky = () => {
-    const newFriendlyTankyCopy = { ...newFriendlyTanky, id: unitId };
+    const newFriendlyTanky = { ...baseTanky, id: unitId };
 
     setMyUnits((myUnits) => {
-      return [...myUnits, newFriendlyTankyCopy];
+      return [...myUnits, newFriendlyTanky];
     });
 
     console.log(myUnits);
@@ -271,7 +246,6 @@ export default function Game(props) {
   // =====END OF FRIENDLY UNITS=====
 
   // =====ENEMY UNITS=====
-  // TODO: Remove references to newFriendlyMelee, as upgrades to friendlies would power up the enemy units too
   // TODO: Call a function to add a set number of enemy units per turn
   // Eg start with an army of 3, one of each
   // TODO: After first wave, the number is increased each time
@@ -287,10 +261,10 @@ export default function Game(props) {
 
   // @ts-ignore
   const addEnemyMelee = () => {
-    const newEnemyMeleeCopy = { ...newEnemyMelee, id: unitId };
+    const newEnemyMelee = { ...baseMelee, id: unitId };
 
     setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newEnemyMeleeCopy];
+      return [...enemyUnits, newEnemyMelee];
     });
 
     console.log(enemyUnits);
@@ -299,10 +273,10 @@ export default function Game(props) {
 
   // @ts-ignore
   const addEnemyPewpew = () => {
-    const newEnemyPewpewCopy = { ...newEnemyPewpew, id: unitId };
+    const newEnemyPewpew = { ...basePewpew, id: unitId };
 
     setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newEnemyPewpewCopy];
+      return [...enemyUnits, newEnemyPewpew];
     });
 
     console.log(enemyUnits);
@@ -311,10 +285,10 @@ export default function Game(props) {
 
   // @ts-ignore
   const addEnemyTanky = () => {
-    const newEnemyTankyCopy = { ...newEnemyTanky, id: unitId };
+    const newEnemyTanky = { ...baseTanky, id: unitId };
 
     setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newEnemyTankyCopy];
+      return [...enemyUnits, newEnemyTanky];
     });
 
     console.log(enemyUnits);
