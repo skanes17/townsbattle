@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { GameProps } from "../types/GameProps";
 import Planning from "./Planning";
 import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
@@ -14,8 +15,7 @@ import { Unit } from "../types/Unit";
 // TODO: Rename workers to villagers
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
 
-// @ts-ignore
-export default function Game(props) {
+export default function Game(props: GameProps) {
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
@@ -160,6 +160,13 @@ export default function Game(props) {
 
   const [myUnits, setMyUnits] = useState<Unit[]>([]);
 
+  // placeholder enemy array for testing
+  const [enemyUnits, setEnemyUnits] = useState<Unit[]>([
+    { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
+    { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
+    { type: "tanky", name: "Tanky", attack: 3, health: 7, id: -3 },
+  ]);
+
   // ===STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // Note: State was removed -- keep an eye out for problems
@@ -245,21 +252,13 @@ export default function Game(props) {
   };
   // =====END OF FRIENDLY UNITS=====
 
-  // =====ENEMY UNITS=====
+  // =====ADDING ENEMY UNITS=====
   // TODO: Call a function to add a set number of enemy units per turn
   // Eg start with an army of 3, one of each
-  // TODO: After first wave, the number is increased each time
+  // TODO: After first wave, the number is increased by some amount each time
   // Eg 7 units for second wave, enemy units randomly chosen
   // TODO: Composition of army is displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
-  // placeholder enemy array for testing
-  const [enemyUnits, setEnemyUnits] = useState([
-    { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
-    { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
-    { type: "tanky", name: "Tanky", attack: 3, health: 7, id: -3 },
-  ]);
-
-  // @ts-ignore
   const addEnemyMelee = () => {
     const newEnemyMelee = { ...baseMelee, id: unitId };
 
@@ -271,7 +270,6 @@ export default function Game(props) {
     setUnitId(unitId + 1);
   };
 
-  // @ts-ignore
   const addEnemyPewpew = () => {
     const newEnemyPewpew = { ...basePewpew, id: unitId };
 
@@ -283,7 +281,6 @@ export default function Game(props) {
     setUnitId(unitId + 1);
   };
 
-  // @ts-ignore
   const addEnemyTanky = () => {
     const newEnemyTanky = { ...baseTanky, id: unitId };
 
@@ -295,7 +292,6 @@ export default function Game(props) {
     setUnitId(unitId + 1);
   };
 
-  // TODO: Consider if copy of array should use state
   // TODO: Figure out why arrays don't seem to be new upon click
 
   // TODO: Ideas for battle UI below:
@@ -308,13 +304,10 @@ export default function Game(props) {
   // • when damage is taken should be, at minimum, a little red text animation
 
   const unitBattler = () => {
-    // @ts-ignore
     const myUnitsCopy = [...myUnits];
-
-    // @ts-ignore
     const enemyUnitsCopy = [...enemyUnits];
 
-    // TODO: End combat when one of the arrays is empty! Something like this
+    // Check for end of combat
     if (myUnitsCopy.length === 0) {
       alert("Your army was defeated. Your buildings took damage!");
       return;

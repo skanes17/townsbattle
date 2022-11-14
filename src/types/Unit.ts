@@ -3,4 +3,5 @@ export interface Unit {
   name: "Melee" | "Pewpew" | "Tanky";
   attack: number;
   health: number;
+  id?: number;
 }
