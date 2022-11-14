@@ -15,7 +15,7 @@ import { Unit } from "../types/Unit";
 // TODO: Rename workers to villagers
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
 
-export default function Game(props: GameProps) {
+export default function GameCopy(props: GameProps) {
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
@@ -208,6 +208,16 @@ export default function Game(props: GameProps) {
     myUnits.filter((unit) => unit.type === "tanky").length
   );
 
+  const [enemyMeleeCounter, setEnemyMeleeCounter] = useState(
+    enemyUnits.filter((unit) => unit.type === "melee").length
+  );
+  const [enemyPewpewCounter, setEnemyPewpewCounter] = useState(
+    enemyUnits.filter((unit) => unit.type === "pewpew").length
+  );
+  const [enemyTankyCounter, setEnemyTankyCounter] = useState(
+    enemyUnits.filter((unit) => unit.type === "tanky").length
+  );
+
   // =====ADDING FRIENDLY UNITS TO ARMY=====
   const addMelee = () => {
     // TODO: Fix how this process is always a step behind
@@ -268,6 +278,9 @@ export default function Game(props: GameProps) {
 
     console.log(enemyUnits);
     setUnitId(unitId + 1);
+    setEnemyMeleeCounter(
+      enemyUnits.filter((unit) => unit.type === "melee").length
+    );
   };
 
   const addEnemyPewpew = () => {
@@ -279,6 +292,9 @@ export default function Game(props: GameProps) {
 
     console.log(enemyUnits);
     setUnitId(unitId + 1);
+    setEnemyPewpewCounter(
+      enemyUnits.filter((unit) => unit.type === "melee").length
+    );
   };
 
   const addEnemyTanky = () => {
@@ -290,6 +306,9 @@ export default function Game(props: GameProps) {
 
     console.log(enemyUnits);
     setUnitId(unitId + 1);
+    setEnemyTankyCounter(
+      enemyUnits.filter((unit) => unit.type === "melee").length
+    );
   };
 
   // TODO: Figure out why arrays don't seem to be new upon click
@@ -413,6 +432,16 @@ export default function Game(props: GameProps) {
     setMeleeCounter(myUnits.filter((unit) => unit.type === "melee").length);
     setPewpewCounter(myUnits.filter((unit) => unit.type === "pewpew").length);
     setTankyCounter(myUnits.filter((unit) => unit.type === "tanky").length);
+
+    setEnemyMeleeCounter(
+      enemyUnits.filter((unit) => unit.type === "melee").length
+    );
+    setEnemyPewpewCounter(
+      enemyUnits.filter((unit) => unit.type === "pewpew").length
+    );
+    setEnemyTankyCounter(
+      enemyUnits.filter((unit) => unit.type === "tanky").length
+    );
   };
 
   // ===END OF COMBAT MECHANICS===
@@ -639,10 +668,13 @@ export default function Game(props: GameProps) {
           </div>
           <div>
             <p>
-              {/* TODO: The enemy army size is {enemyMeleeCounter + enemyPewpewCounter + enemyTankyCounter}.*/}
+              The enemy army has{" "}
+              {enemyMeleeCounter + enemyPewpewCounter + enemyTankyCounter}{" "}
+              units.
             </p>
             <p>
-              {/* TODO: {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky.*/}
+              {enemyMeleeCounter} melee, {enemyPewpewCounter} pewpew,{" "}
+              {enemyTankyCounter} tanky.
               {/* TODO: Make these percents? */}
             </p>
           </div>
