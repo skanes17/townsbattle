@@ -1,12 +1,12 @@
-// @ts-nocheck
-
 import React, { useState } from "react";
 import Planning from "./Planning";
 import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
 import TrainUnits from "./TrainUnits";
 import MakeBuildings from "./MakeBuildings";
-import { setConstantValue, sortAndDeduplicateDiagnostics } from "typescript";
+import { UnitCosts } from "../types/UnitCosts";
+import { Buildings } from "../types/Buildings";
+import { UpgradeCosts } from "../types/Upgrades";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
 // TODO: Have a pre-battle screen to summarize what you have?
@@ -34,7 +34,7 @@ export default function Game(props) {
   const [stoneMultiplier, setStoneMultipler] = useState(1);
   const [metalMultiplier, setMetalMultipler] = useState(1);
 
-  const [unitCosts, setUnitCosts] = useState({
+  const [unitCosts, setUnitCosts] = useState<UnitCosts>({
     melee: {
       woodCost: 2,
       stoneCost: 2,
@@ -56,7 +56,7 @@ export default function Game(props) {
   });
 
   // used an array of objects here so I could filter it
-  const [buildings, setBuildings] = useState([
+  const [buildings, setBuildings] = useState<Buildings[]>([
     // for melee
     {
       name: "⚔️ Swordsmithy",
@@ -95,7 +95,7 @@ export default function Game(props) {
       tier: 1,
       attackBonus: 1,
       healthBonus: 3,
-      effect: "Tanky units gain +1 to attack, +3 to defense",
+      effect: "Tanky units gain +1 to attack, +3 to health",
       health: 2,
       woodCost: 0,
       stoneCost: 10,
@@ -108,9 +108,14 @@ export default function Game(props) {
       enabled: false,
       underConstruction: false,
       tier: 1,
-      effect: "All units gain +2 to health, +2 to defense",
+      attackBonus: 0,
       healthBonus: 2,
+      armorBonus: 0,
+      effect: "All units gain +2 to health, +2 to armor",
       health: 2,
+      woodCost: 10,
+      stoneCost: 10,
+      metalCost: 10,
       freeworkerCost: 5,
     },
     // for all units
@@ -119,15 +124,19 @@ export default function Game(props) {
       enabled: true,
       underConstruction: false,
       tier: 1,
+      attackBonus: 0,
       effect: "If this building is destroyed, it's game over!",
-      /* healthBonus: 1, */
+      healthBonus: 0,
       health: 3,
+      woodCost: 0,
+      stoneCost: 0,
+      metalCost: 0,
       freeworkerCost: 5,
     },
   ]);
 
   // Unused right now
-  const [upgrades, setUpgrades] = useState({
+  const [upgrades, setUpgrades] = useState<UpgradeCosts>({
     axes: {
       woodCost: 20,
       stoneCost: 20,
@@ -141,7 +150,7 @@ export default function Game(props) {
     surveying: {
       woodCost: 0,
       stoneCost: 20,
-      metal: 20,
+      metalCost: 20,
     },
   });
 
@@ -154,7 +163,6 @@ export default function Game(props) {
 
   // ===STATS FOR NEW FRIENDLY UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
-  // TODO: Make this a variable
   const [newFriendlyMelee, setNewFriendlyMelee] = useState({
     type: "melee",
     name: "Melee",

@@ -1,5 +1,5 @@
 export interface Unit {
-  type: "" | "" | "";
+  name: "melee" | "pewpew" | "tanky";
   attack: number;
   health: number;
 }
