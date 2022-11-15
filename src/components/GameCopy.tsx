@@ -10,6 +10,7 @@ import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
 import { UpgradeCosts } from "../types/UpgradeCosts";
 import { Unit } from "../types/Unit";
+import AddUnits from "./AddUnits";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
 // TODO: Have a pre-battle screen to summarize what you have?
@@ -647,41 +648,15 @@ export default function GameCopy(props: GameProps) {
               {/* TODO: Make these percents? */}
             </p>
           </div>
-          <div>
-            <AddUnitButton
-              addUnitFunction={addMelee}
-              name="Melee"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-            <AddUnitButton
-              addUnitFunction={addPewpew}
-              name="Pewpew"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-            <AddUnitButton
-              addUnitFunction={addTanky}
-              name="Tanky"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-          </div>
-          <div>
-            <AddUnitButton
-              addUnitFunction={addEnemyMelee}
-              name="Enemy Melee"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-            <AddUnitButton
-              addUnitFunction={addEnemyPewpew}
-              name="Enemy Pewpew"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-            <AddUnitButton
-              addUnitFunction={addEnemyTanky}
-              name="Enemy Tanky"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-          </div>
         </div>
+        <AddUnits
+          addMelee={addMelee}
+          addPewpew={addPewpew}
+          addTanky={addTanky}
+          addEnemyMelee={addEnemyMelee}
+          addEnemyPewpew={addEnemyPewpew}
+          addEnemyTanky={addEnemyTanky}
+        />
       </div>
 
       {/*  TODO: Make this component work
