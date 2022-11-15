@@ -26,6 +26,7 @@ export default function Planning(props) {
         Free Workers: {props.freeworkers}
       </div>
       <br></br>
+
       <div className="workers">
         <div style={{ fontWeight: "bold" }}>Workers</div>
         <Villager

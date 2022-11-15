@@ -11,6 +11,7 @@ import { Buildings } from "../types/Buildings";
 import { UpgradeCosts } from "../types/UpgradeCosts";
 import { Unit } from "../types/Unit";
 import AddUnits from "./AddUnits";
+import UnitCreation from "./UnitCreation";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
 // TODO: Have a pre-battle screen to summarize what you have?
@@ -551,68 +552,23 @@ export default function GameCopy(props: GameProps) {
         setMetalCollected={setMetalCollected}
       />
 
-      <div>
-        <h2 className="text-4xl font-extrabold dark:text-white">
-          Unit Creation
-        </h2>
-        <TrainUnits
-          name="🗡️ Melee"
-          freeworkerName={
-            unitCosts.melee.freeworkerCost > 1 ? "villagers" : "villager"
-          }
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={unitCosts.melee.freeworkerCost}
-          resource1Name="wood"
-          resource1={woodCollected}
-          setResource1={setWoodCollected}
-          resource1Cost={unitCosts.melee.woodCost}
-          resource2Name="stone"
-          resource2={stoneCollected}
-          setResource2={setStoneCollected}
-          resource2Cost={unitCosts.melee.stoneCost}
-          unitInTraining={meleeInTraining}
-          setUnitInTraining={setMeleeInTraining}
-        />
-        <TrainUnits
-          name="🏹 Pewpew"
-          freeworkerName={
-            unitCosts.pewpew.freeworkerCost > 1 ? "villagers" : "villager"
-          }
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={unitCosts.pewpew.freeworkerCost}
-          resource1Name="wood"
-          resource1={woodCollected}
-          setResource1={setWoodCollected}
-          resource1Cost={unitCosts.pewpew.woodCost}
-          resource2Name="metal"
-          resource2={metalCollected}
-          setResource2={setMetalCollected}
-          resource2Cost={unitCosts.pewpew.metalCost}
-          unitInTraining={pewpewInTraining}
-          setUnitInTraining={setPewpewInTraining}
-        />
-        <TrainUnits
-          name="🛡️ Tanky"
-          freeworkerName={
-            unitCosts.tanky.freeworkerCost > 1 ? "villagers" : "villager"
-          }
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={unitCosts.tanky.freeworkerCost}
-          resource1Name="stone"
-          resource1={stoneCollected}
-          setResource1={setStoneCollected}
-          resource1Cost={unitCosts.tanky.stoneCost}
-          resource2Name="metal"
-          resource2={metalCollected}
-          setResource2={setMetalCollected}
-          resource2Cost={unitCosts.tanky.metalCost}
-          unitInTraining={tankyInTraining}
-          setUnitInTraining={setTankyInTraining}
-        />
-      </div>
+      <UnitCreation
+        unitCosts={unitCosts}
+        freeworkers={freeworkers}
+        setFreeworkers={setFreeworkers}
+        woodCollected={woodCollected}
+        stoneCollected={stoneCollected}
+        metalCollected={metalCollected}
+        setWoodCollected={setWoodCollected}
+        setStoneCollected={setStoneCollected}
+        setMetalCollected={setMetalCollected}
+        meleeInTraining={meleeInTraining}
+        pewpewInTraining={pewpewInTraining}
+        tankyInTraining={tankyInTraining}
+        setMeleeInTraining={setMeleeInTraining}
+        setPewpewInTraining={setPewpewInTraining}
+        setTankyInTraining={setTankyInTraining}
+      />
       <br></br>
 
       {/* TODO: Encapsulate Combat properly into a component */}
