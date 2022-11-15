@@ -5,7 +5,7 @@ import Planning from "./Planning";
 import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
 import TrainUnits from "./TrainUnits";
-import MakeBuildings from "./MakeBuildings";
+import MakeBuildings from "./MakeBuilding";
 import { setConstantValue, sortAndDeduplicateDiagnostics } from "typescript";
 
 // TODO: Fix counter bugs (how to cause re-renders?)

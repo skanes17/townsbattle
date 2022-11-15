@@ -1,7 +1,9 @@
 // @ts-nocheck
 import React from "react";
+import { MakeBuildingProps } from "../types/MakeBuildingProps";
 
-export default function MakeBuildings({
+// not sure if the prop typing is working correctly??
+export default function MakeBuilding({
   index,
   buildings,
   buildingName,
@@ -19,7 +21,7 @@ export default function MakeBuildings({
   setResource2,
   resource2Cost,
   underConstruction,
-}) {
+}: MakeBuildingProps) {
   // TODO: Toggle Build/Click as one button
   // adjust later to accomodate sending state to UI
 

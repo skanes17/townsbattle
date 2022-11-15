@@ -4,7 +4,8 @@ import Planning from "./Planning";
 import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
 import TrainUnits from "./TrainUnits";
-import MakeBuildings from "./MakeBuildings";
+import MakeBuilding from "./MakeBuilding";
+import BuildingsUI from "./BuildingsUI";
 import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
 import { UpgradeCosts } from "../types/UpgradeCosts";
@@ -23,7 +24,7 @@ export default function GameCopy(props: GameProps) {
   // current number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
   const [woodcutters, setWoodcutters] = useState(0);
-  const [woodCollected, setWoodCollected] = useState(0);
+  const [woodCollected, setWoodCollected] = useState<number>(0);
   const [stonemasons, setStonemasons] = useState(0);
   const [stoneCollected, setStoneCollected] = useState(0);
   const [metalworkers, setMetalworkers] = useState(0);
@@ -536,50 +537,18 @@ export default function GameCopy(props: GameProps) {
 
       <br></br>
 
-      <div>
-        <h2 className="text-4xl font-extrabold dark:text-white">
-          Building Creation
-        </h2>
-        <MakeBuildings
-          index={0}
-          buildings={buildings}
-          buildingName={buildings[0].name}
-          setBuildings={setBuildings}
-          freeworkerName="villagers"
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={buildings[0].freeworkerCost}
-          resource1Name="wood"
-          resource1={woodCollected}
-          setResource1={setWoodCollected}
-          resource1Cost={buildings[0].woodCost}
-          resource2Name="stone"
-          resource2={stoneCollected}
-          setResource2={setStoneCollected}
-          resource2Cost={buildings[0].stoneCost}
-          underConstruction={buildings[0].underConstruction}
-        />
-        <MakeBuildings
-          index={1}
-          buildings={buildings}
-          buildingName={buildings[1].name}
-          setBuildings={setBuildings}
-          freeworkerName="villagers"
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={buildings[1].freeworkerCost}
-          resource1Name="wood"
-          resource1={woodCollected}
-          setResource1={setWoodCollected}
-          resource1Cost={buildings[1].woodCost}
-          resource2Name="metal"
-          resource2={metalCollected}
-          setResource2={setMetalCollected}
-          resource2Cost={buildings[1].metalCost}
-          underConstruction={buildings[1].underConstruction}
-        />
-      </div>
-      <br></br>
+      <BuildingsUI
+        buildings={buildings}
+        setBuildings={setBuildings}
+        freeworkers={freeworkers}
+        setFreeworkers={setFreeworkers}
+        woodCollected={woodCollected}
+        setWoodCollected={setWoodCollected}
+        stoneCollected={stoneCollected}
+        setStoneCollected={setStoneCollected}
+        metalCollected={metalCollected}
+        setMetalCollected={setMetalCollected}
+      />
 
       <div>
         <h2 className="text-4xl font-extrabold dark:text-white">
