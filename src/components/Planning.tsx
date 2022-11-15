@@ -1,12 +1,10 @@
-// @ts-nocheck
-
 import React, { useState } from "react";
 import Villager from "./Villager";
 import DisplayResources from "./DisplayResources";
 import Upgrades from "./Upgrades";
 import DisplayUnits from "./DisplayUnits";
 import DisplayBuildings from "./DisplayBuildings";
-import { isPropertySignature } from "typescript";
+import DisplayVillagers from "./DisplayVillagers";
 
 // @ts-ignore
 export default function Planning(props) {
@@ -27,30 +25,17 @@ export default function Planning(props) {
       </div>
       <br></br>
 
-      <div className="workers">
-        <div style={{ fontWeight: "bold" }}>Workers</div>
-        <Villager
-          type="🪓 Woodcutters"
-          workers={props.woodcutters}
-          setWorkers={props.setWoodcutters}
-          freeworkers={props.freeworkers}
-          setFreeworkers={props.setFreeworkers}
-        />
-        <Villager
-          type="⚒️ Stonemasons"
-          workers={props.stonemasons}
-          setWorkers={props.setStonemasons}
-          freeworkers={props.freeworkers}
-          setFreeworkers={props.setFreeworkers}
-        />
-        <Villager
-          type="🥽 Metalworkers"
-          workers={props.metalworkers}
-          setWorkers={props.setMetalworkers}
-          freeworkers={props.freeworkers}
-          setFreeworkers={props.setFreeworkers}
-        />
-      </div>
+      <DisplayVillagers
+        freeworkers={props.freeworkers}
+        setFreeworkers={props.setFreeworkers}
+        woodcutters={props.woodcutters}
+        setWoodcutters={props.setWoodcutters}
+        stonemasons={props.stonemasons}
+        setStonemasons={props.setStonemasons}
+        metalworkers={props.metalworkers}
+        setMetalworkers={props.setMetalworkers}
+      />
+
       <br></br>
 
       <div className="displayUnits">
