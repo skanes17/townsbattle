@@ -197,20 +197,12 @@ export default function GameCopy(props: GameProps) {
   // how many units you're going to train this turn
   const [meleeInTraining, setMeleeInTraining] = useState(0);
   // total units in your army
-  const [meleeCounter, setMeleeCounter] = useState(
-    myUnits.filter((unit) => unit.type === "melee").length
-  );
 
   const [pewpewInTraining, setPewpewInTraining] = useState(0);
-  const [pewpewCounter, setPewpewCounter] = useState(
-    myUnits.filter((unit) => unit.type === "pewpew").length
-  );
 
   const [tankyInTraining, setTankyInTraining] = useState(0);
-  const [tankyCounter, setTankyCounter] = useState(
-    myUnits.filter((unit) => unit.type === "tanky").length
-  );
 
+  // TODO: Remove these
   const [enemyMeleeCounter, setEnemyMeleeCounter] = useState(
     enemyUnits.filter((unit) => unit.type === "melee").length
   );
@@ -237,7 +229,6 @@ export default function GameCopy(props: GameProps) {
     // increment the ID counter to ensure units are unique
     setUnitId(unitId + 1);
     // filter to check type, count matches, use it to update current unit number
-    setMeleeCounter(myUnits.filter((unit) => unit.type === "melee").length);
   };
 
   const addPewpew = () => {
@@ -249,7 +240,6 @@ export default function GameCopy(props: GameProps) {
 
     console.log(myUnits);
     setUnitId(unitId + 1);
-    setPewpewCounter(myUnits.filter((unit) => unit.type === "pewpew").length);
   };
 
   const addTanky = () => {
@@ -261,7 +251,6 @@ export default function GameCopy(props: GameProps) {
 
     console.log(myUnits);
     setUnitId(unitId + 1);
-    setTankyCounter(myUnits.filter((unit) => unit.type === "tanky").length);
   };
   // =====END OF FRIENDLY UNITS=====
 
@@ -432,10 +421,7 @@ export default function GameCopy(props: GameProps) {
     console.log("The new friendly array is...");
     console.log(myUnits);
 
-    setMeleeCounter(myUnits.filter((unit) => unit.type === "melee").length);
-    setPewpewCounter(myUnits.filter((unit) => unit.type === "pewpew").length);
-    setTankyCounter(myUnits.filter((unit) => unit.type === "tanky").length);
-
+    // TODO: Remove these
     setEnemyMeleeCounter(
       enemyUnits.filter((unit) => unit.type === "melee").length
     );
@@ -499,6 +485,10 @@ export default function GameCopy(props: GameProps) {
     );
   }
 
+  const meleeCount = myUnits.filter((unit) => unit.type === "melee").length;
+  const pewpewCount = myUnits.filter((unit) => unit.type === "pewpew").length;
+  const tankyCount = myUnits.filter((unit) => unit.type === "tanky").length;
+
   return (
     <div>
       <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
@@ -531,9 +521,9 @@ export default function GameCopy(props: GameProps) {
         setStoneMultipler={setStoneMultipler}
         metalMultiplier={metalMultiplier}
         setMetalMultipler={setMetalMultipler}
-        meleeCounter={meleeCounter}
-        pewpewCounter={pewpewCounter}
-        tankyCounter={tankyCounter}
+        meleeCount={meleeCount}
+        pewpewCount={pewpewCount}
+        tankyCount={tankyCount}
         buildings={buildings}
       />
 
@@ -584,15 +574,13 @@ export default function GameCopy(props: GameProps) {
         </button>
         <div>
           <div>
+            <p>Your army size is {myUnits.length}.</p>
             <p>
-              Your army size is {meleeCounter + pewpewCounter + tankyCounter}.
-            </p>
-            <p>
-              {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter}{" "}
-              tanky.
+              {meleeCount} melee, {pewpewCount} pewpew, {tankyCount} tanky.
             </p>
           </div>
           <div>
+            {/* TODO: Update enemy army to similar as above */}
             <p>
               The enemy army has{" "}
               {enemyMeleeCounter + enemyPewpewCounter + enemyTankyCounter}{" "}

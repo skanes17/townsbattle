@@ -1,6 +1,14 @@
 import React from "react";
 import AddUnitButton from "./AddUnitButton";
-import { AddUnits_Props } from "../types/AddUnits_Props";
+
+interface AddUnits_Props {
+  addMelee: () => void;
+  addPewpew: () => void;
+  addTanky: () => void;
+  addEnemyMelee: () => void;
+  addEnemyPewpew: () => void;
+  addEnemyTanky: () => void;
+}
 
 export default function AddUnits({
   addMelee,

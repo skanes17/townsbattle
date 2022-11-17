@@ -4,16 +4,16 @@ import React from "react";
 
 // @ts-ignore
 export default function DisplayUnits({
-  meleeCounter,
-  pewpewCounter,
-  tankyCounter,
+  meleeCount,
+  pewpewCount,
+  tankyCount,
 }) {
   return (
     <>
       <div style={{ fontWeight: "bold" }}>Units trained</div>
-      <div>🗡️ {meleeCounter} Melee</div>
-      <div>🏹 {pewpewCounter} Pewpew</div>
-      <div>🛡️ {tankyCounter} Tanky</div>
+      <div>🗡️ {meleeCount} Melee</div>
+      <div>🏹 {pewpewCount} Pewpew</div>
+      <div>🛡️ {tankyCount} Tanky</div>
     </>
   );
 }

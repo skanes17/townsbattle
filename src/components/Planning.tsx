@@ -40,9 +40,9 @@ export default function Planning(props) {
 
       <div className="displayUnits">
         <DisplayUnits
-          meleeCounter={props.meleeCounter}
-          pewpewCounter={props.pewpewCounter}
-          tankyCounter={props.tankyCounter}
+          meleeCount={props.meleeCount}
+          pewpewCount={props.pewpewCount}
+          tankyCount={props.tankyCount}
         />
       </div>
       <br></br>
