@@ -12,11 +12,8 @@ export default function Planning(props) {
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">Planning</h2>
       <div className="displayResources">
-        <DisplayResources
-          wood={props.woodCollected}
-          stone={props.stoneCollected}
-          metal={props.metalCollected}
-        />
+        <DisplayResources resources={props.resources} />{" "}
+        {/* started refactoring resources here */}
       </div>
       <br></br>
 
@@ -26,6 +23,9 @@ export default function Planning(props) {
       <br></br>
 
       <DisplayVillagers
+        resources={props.resources}
+        setResources={props.setResources}
+        // should be able to remove everything below, soon
         freeworkers={props.freeworkers}
         setFreeworkers={props.setFreeworkers}
         woodcutters={props.woodcutters}

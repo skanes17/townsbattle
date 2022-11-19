@@ -12,6 +12,7 @@ import { UpgradeCosts } from "../types/UpgradeCosts";
 import { Unit } from "../types/Unit";
 import DevTools from "./DevTools";
 import UnitCreation from "./UnitCreation";
+import { Resources } from "../types/Resources";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Rename workers to villagers
@@ -21,6 +22,16 @@ export default function GameCopy(props: GameProps) {
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
+
+  const [resources, setResources] = useState<Resources>({
+    freeworkers: 0,
+    woodCollected: 0,
+    stoneCollected: 0,
+    metalCollected: 0,
+    woodcutters: 0,
+    stonemasons: 0,
+    metalworkers: 0,
+  });
 
   // current number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
@@ -175,7 +186,7 @@ export default function GameCopy(props: GameProps) {
   const baseMelee: Unit = {
     type: "melee",
     name: "Melee",
-    attack: 5, // would set it here
+    attack: 5,
     health: 5,
   };
 
@@ -479,6 +490,9 @@ export default function GameCopy(props: GameProps) {
         onClick={endTurn}
         turn={turn}
         setTurn={setTurn}
+        // TODO: Continue working on refactoring!!
+        resources={resources} // refactoring in progress Nov19-2022
+        setResources={setResources}
         woodcutters={woodcutters}
         setWoodcutters={setWoodcutters}
         woodCollected={woodCollected}

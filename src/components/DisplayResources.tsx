@@ -6,9 +6,10 @@ export default function DisplayResources(props) {
     <>
       <div style={{ fontWeight: "bold" }}>Resources collected</div>
       {/* TODO: <Resource /> three times -- DRY! */}
-      <div>🪵Wood {props.wood}</div>
-      <div>🪨Stone {props.stone}</div>
-      <div>🔩Metal {props.metal}</div>
+      {/* NOTE: If using the resource object is wonlky, go back to old code for now */}
+      <div>🪵Wood {props.resources.woodCollected}</div>
+      <div>🪨Stone {props.resources.stoneCollected}</div>
+      <div>🔩Metal {props.resources.metalCollected}</div>
     </>
   );
 }

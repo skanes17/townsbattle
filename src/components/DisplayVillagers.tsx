@@ -1,7 +1,10 @@
 import React from "react";
+import { Resources } from "../types/Resources";
 import Villager from "./Villager";
 
 interface DisplayVillagersProps {
+  resources: Resources;
+  setResources: any;
   freeworkers: number;
   setFreeworkers: any;
   woodcutters: number;
@@ -18,9 +21,9 @@ export default function DisplayVillagers(props: DisplayVillagersProps) {
       <div style={{ fontWeight: "bold" }}>Workers</div>
       <Villager
         type="🪓 Woodcutters"
-        workers={props.woodcutters}
+        workers={props.resources.woodcutters}
         setWorkers={props.setWoodcutters}
-        freeworkers={props.freeworkers}
+        freeworkers={props.resources.freeworkers}
         setFreeworkers={props.setFreeworkers}
       />
       <Villager
