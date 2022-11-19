@@ -1,6 +1,16 @@
 import React from "react";
-import { DisplayVillagersProps } from "../types/DisplayVillagersProps";
 import Villager from "./Villager";
+
+interface DisplayVillagersProps {
+  freeworkers: number;
+  setFreeworkers: any;
+  woodcutters: number;
+  setWoodcutters: any;
+  stonemasons: number;
+  setStonemasons: any;
+  metalworkers: number;
+  setMetalworkers: any;
+}
 
 export default function DisplayVillagers(props: DisplayVillagersProps) {
   return (

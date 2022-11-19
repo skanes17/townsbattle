@@ -10,7 +10,7 @@ import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
 import { UpgradeCosts } from "../types/UpgradeCosts";
 import { Unit } from "../types/Unit";
-import AddUnits from "./AddUnits";
+import DevTools from "./DevTools";
 import UnitCreation from "./UnitCreation";
 
 // TODO: Fix counter bugs (how to cause re-renders?)
@@ -595,7 +595,7 @@ export default function GameCopy(props: GameProps) {
         </div>
         <br></br>
 
-        <AddUnits
+        <DevTools
           addMelee={addMelee}
           addPewpew={addPewpew}
           addTanky={addTanky}

@@ -1,7 +1,7 @@
 import React from "react";
 import AddUnitButton from "./AddUnitButton";
 
-interface AddUnits_Props {
+interface AddUnitsProps {
   addMelee: () => void;
   addPewpew: () => void;
   addTanky: () => void;
@@ -17,12 +17,10 @@ export default function AddUnits({
   addEnemyMelee,
   addEnemyPewpew,
   addEnemyTanky,
-}: AddUnits_Props) {
+}: AddUnitsProps) {
   return (
     <>
-      <h2 className="text-4xl font-extrabold dark:text-white">
-        Add Units (Tool)
-      </h2>{" "}
+      <h2 className="text-4xl font-extrabold dark:text-white">Dev Tools</h2>{" "}
       <div>
         <AddUnitButton
           addUnitFunction={addMelee}

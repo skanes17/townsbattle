@@ -1,6 +1,18 @@
 import React, { useState } from "react";
-import { BuildingsUI_Props } from "../types/BuildingsUI_Props";
 import MakeBuilding from "./MakeBuilding";
+
+interface BuildingsUIProps {
+  buildings: any[];
+  setBuildings: any;
+  freeworkers: number;
+  setFreeworkers: any;
+  woodCollected: number;
+  setWoodCollected: any;
+  stoneCollected: number;
+  setStoneCollected: any;
+  metalCollected: number;
+  setMetalCollected: any;
+}
 
 export default function BuildingsUI({
   buildings,
@@ -13,7 +25,7 @@ export default function BuildingsUI({
   setStoneCollected,
   metalCollected,
   setMetalCollected,
-}: BuildingsUI_Props) {
+}: BuildingsUIProps) {
   return (
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">

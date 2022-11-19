@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import { VillagerProps } from "../types/VillagerProps";
 
 /* TODO: Consider if it would be cleaner to ditch villagers and harvest a resource per click.
 Could have a limit on clicks (energy bar, actions available, etc), each click uses energy.
 Basically the same result since villagers are reset each turn. */
+
+interface VillagerProps {
+  type: string;
+  workers: number;
+  setWorkers: any;
+  freeworkers: number;
+  setFreeworkers: any;
+}
 
 // @ts-ignore
 export default function Villager(props: VillagerProps) {
