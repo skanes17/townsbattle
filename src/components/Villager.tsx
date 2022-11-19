@@ -9,11 +9,12 @@ interface VillagerProps {
   type: string;
   workers: number;
   resources: Resources;
-  // likely can remove the remaining once refactored
   setResources: any;
+  // likely can remove the remaining once refactored
+  /* setResources: any;
   setWorkers: any;
   freeworkers: number;
-  setFreeworkers: any;
+  setFreeworkers: any; */
 }
 
 // @ts-ignore
@@ -25,12 +26,14 @@ export default function Villager(props: VillagerProps) {
     if (props.resources.freeworkers > 0) {
       props.setWorkers(props.workers + 1);
 
-      // TODO: Pick up from here -- use Devin's base unit button concept to help
+      // TODO: Pick up from here -- use Devin's base unit button concept to help!
+      // Consider how to access the correct resource dynamically when using this component
+      // Have it somehow triggered by the button? Maybe easiest way...
 
       const updatedResources = { ...props.resources };
       updatedResources.freeworkers = updatedResources.freeworkers - 1;
       updatedResources.freeworkers = updatedResources.freeworkers - 1;
-      props.setFreeworkers(updatedResources);
+      props.setResources(updatedResources);
     } else {
       alert("No free workers!");
     }
@@ -42,7 +45,7 @@ export default function Villager(props: VillagerProps) {
       props.setWorkers(props.workers - 1);
       const updatedResources = { ...props.resources };
       updatedResources.freeworkers = updatedResources.freeworkers + 1;
-      props.setFreeworkers(updatedResources);
+      props.setResources(updatedResources);
     }
   }
 

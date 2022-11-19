@@ -26,14 +26,14 @@ export default function Planning(props) {
         resources={props.resources}
         setResources={props.setResources}
         // should be able to remove everything below, soon
-        freeworkers={props.freeworkers}
+        /* freeworkers={props.freeworkers}
         setFreeworkers={props.setFreeworkers}
         woodcutters={props.woodcutters}
         setWoodcutters={props.setWoodcutters}
         stonemasons={props.stonemasons}
         setStonemasons={props.setStonemasons}
         metalworkers={props.metalworkers}
-        setMetalworkers={props.setMetalworkers}
+        setMetalworkers={props.setMetalworkers} */
       />
 
       <br></br>

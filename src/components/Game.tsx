@@ -490,7 +490,6 @@ export default function GameCopy(props: GameProps) {
         onClick={endTurn}
         turn={turn}
         setTurn={setTurn}
-        // TODO: Continue working on refactoring!!
         resources={resources} // refactoring in progress Nov19-2022
         setResources={setResources}
         woodcutters={woodcutters}

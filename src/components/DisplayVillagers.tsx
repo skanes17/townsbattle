@@ -5,14 +5,14 @@ import Villager from "./Villager";
 interface DisplayVillagersProps {
   resources: Resources;
   setResources: any;
-  freeworkers: number;
+  /*   freeworkers: number;
   setFreeworkers: any;
   woodcutters: number;
   setWoodcutters: any;
   stonemasons: number;
   setStonemasons: any;
   metalworkers: number;
-  setMetalworkers: any;
+  setMetalworkers: any; */
 }
 
 export default function DisplayVillagers(props: DisplayVillagersProps) {
@@ -25,31 +25,31 @@ export default function DisplayVillagers(props: DisplayVillagersProps) {
         resources={props.resources}
         setResources={props.setResources}
         // can likely remove the rest once refactored
-        setWorkers={props.setWoodcutters}
+        /* setWorkers={props.setWoodcutters}
         freeworkers={props.resources.freeworkers}
-        setFreeworkers={props.setFreeworkers}
+        setFreeworkers={props.setFreeworkers} */
       />
       <Villager
         type="⚒️ Stonemasons"
-        workers={props.stonemasons}
+        workers={props.resources.stonemasons}
         resources={props.resources}
         setResources={props.setResources}
         // can likely remove the rest once refactored
 
-        setWorkers={props.setStonemasons}
+        /* setWorkers={props.setStonemasons}
         freeworkers={props.freeworkers}
-        setFreeworkers={props.setFreeworkers}
+        setFreeworkers={props.setFreeworkers} */
       />
       <Villager
         type="🥽 Metalworkers"
-        workers={props.metalworkers}
+        workers={props.resources.metalworkers}
         resources={props.resources}
         setResources={props.setResources}
         // can likely remove the rest once refactored
 
-        setWorkers={props.setMetalworkers}
+        /* setWorkers={props.setMetalworkers}
         freeworkers={props.freeworkers}
-        setFreeworkers={props.setFreeworkers}
+        setFreeworkers={props.setFreeworkers} */
       />
     </div>
   );
