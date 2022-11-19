@@ -1,20 +1,23 @@
-// @ts-nocheck
-
 import React, { useState } from "react";
+import { GameProps } from "../types/GameProps";
 import Planning from "./Planning";
 import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
 import TrainUnits from "./TrainUnits";
-import MakeBuildings from "./MakeBuilding";
-import { setConstantValue, sortAndDeduplicateDiagnostics } from "typescript";
+import MakeBuilding from "./MakeBuilding";
+import BuildingsUI from "./BuildingsUI";
+import { UnitCosts } from "../types/UnitCosts";
+import { Buildings } from "../types/Buildings";
+import { UpgradeCosts } from "../types/UpgradeCosts";
+import { Unit } from "../types/Unit";
+import DevTools from "./DevTools";
+import UnitCreation from "./UnitCreation";
 
-// TODO: Fix counter bugs (how to cause re-renders?)
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Rename workers to villagers
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
 
-// @ts-ignore
-export default function Game(props) {
+export default function GameCopy(props: GameProps) {
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
@@ -22,7 +25,7 @@ export default function Game(props) {
   // current number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
   const [woodcutters, setWoodcutters] = useState(0);
-  const [woodCollected, setWoodCollected] = useState(0);
+  const [woodCollected, setWoodCollected] = useState<number>(0);
   const [stonemasons, setStonemasons] = useState(0);
   const [stoneCollected, setStoneCollected] = useState(0);
   const [metalworkers, setMetalworkers] = useState(0);
@@ -34,7 +37,7 @@ export default function Game(props) {
   const [stoneMultiplier, setStoneMultipler] = useState(1);
   const [metalMultiplier, setMetalMultipler] = useState(1);
 
-  const [unitCosts, setUnitCosts] = useState({
+  const [unitCosts, setUnitCosts] = useState<UnitCosts>({
     melee: {
       woodCost: 2,
       stoneCost: 2,
@@ -56,7 +59,7 @@ export default function Game(props) {
   });
 
   // used an array of objects here so I could filter it
-  const [buildings, setBuildings] = useState([
+  const [buildings, setBuildings] = useState<Buildings[]>([
     // for melee
     {
       name: "⚔️ Swordsmithy",
@@ -95,7 +98,7 @@ export default function Game(props) {
       tier: 1,
       attackBonus: 1,
       healthBonus: 3,
-      effect: "Tanky units gain +1 to attack, +3 to defense",
+      effect: "Tanky units gain +1 to attack, +3 to health",
       health: 2,
       woodCost: 0,
       stoneCost: 10,
@@ -108,9 +111,14 @@ export default function Game(props) {
       enabled: false,
       underConstruction: false,
       tier: 1,
-      effect: "All units gain +2 to health, +2 to defense",
+      attackBonus: 0,
       healthBonus: 2,
+      armorBonus: 0,
+      effect: "All units gain +2 to health, +2 to armor",
       health: 2,
+      woodCost: 10,
+      stoneCost: 10,
+      metalCost: 10,
       freeworkerCost: 5,
     },
     // for all units
@@ -119,15 +127,19 @@ export default function Game(props) {
       enabled: true,
       underConstruction: false,
       tier: 1,
+      attackBonus: 0,
       effect: "If this building is destroyed, it's game over!",
-      /* healthBonus: 1, */
+      healthBonus: 0,
       health: 3,
+      woodCost: 0,
+      stoneCost: 0,
+      metalCost: 0,
       freeworkerCost: 5,
     },
   ]);
 
   // Unused right now
-  const [upgrades, setUpgrades] = useState({
+  const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>({
     axes: {
       woodCost: 20,
       stoneCost: 20,
@@ -141,180 +153,132 @@ export default function Game(props) {
     surveying: {
       woodCost: 0,
       stoneCost: 20,
-      metal: 20,
+      metalCost: 20,
     },
   });
 
   // ids for tracking units
   const [unitId, setUnitId] = useState(0);
 
-  // TODO: Why don't it let me use useState([])?
-  // @ts-ignore
-  const [myUnits, setMyUnits] = useState([]);
+  const [myUnits, setMyUnits] = useState<Unit[]>([]);
 
-  // ===STATS FOR NEW FRIENDLY UNITS===
+  // placeholder enemy array for testing
+  const [enemyUnits, setEnemyUnits] = useState<Unit[]>([
+    { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
+    { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
+    { type: "tanky", name: "Tanky", attack: 3, health: 7, id: -3 },
+  ]);
+
+  // ===STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
-  // TODO: Make this a variable
-  const [newFriendlyMelee, setNewFriendlyMelee] = useState({
+  // Note: State was removed -- keep an eye out for problems
+  const baseMelee: Unit = {
     type: "melee",
     name: "Melee",
     attack: 5, // would set it here
     health: 5,
-  });
+  };
+
+  const basePewpew: Unit = {
+    type: "pewpew",
+    name: "Pewpew",
+    attack: 7,
+    health: 3,
+  };
+
+  const baseTanky: Unit = {
+    type: "tanky",
+    name: "Tanky",
+    attack: 3,
+    health: 7,
+  };
 
   // how many units you're going to train this turn
   const [meleeInTraining, setMeleeInTraining] = useState(0);
   // total units in your army
-  const [meleeCounter, setMeleeCounter] = useState(
-    myUnits.filter((unit) => unit.type === "melee").length
-  );
-
-  const [newFriendlyPewpew, setNewFriendlyPewpew] = useState({
-    type: "pewpew",
-    name: "Pewpew",
-    attack: 7,
-    health: 3,
-  });
 
   const [pewpewInTraining, setPewpewInTraining] = useState(0);
-  const [pewpewCounter, setPewpewCounter] = useState(
-    myUnits.filter((unit) => unit.type === "pewpew").length
-  );
-
-  const [newFriendlyTanky, setNewFriendlyTanky] = useState({
-    type: "tanky",
-    name: "Tanky",
-    attack: 3,
-    health: 7,
-  });
 
   const [tankyInTraining, setTankyInTraining] = useState(0);
-  const [tankyCounter, setTankyCounter] = useState(
-    myUnits.filter((unit) => unit.type === "tanky").length
-  );
 
-  // ===STATS FOR NEW ENEMY UNITS===
-  const [newEnemyMelee, setNewEnemyMelee] = useState({
-    type: "melee",
-    name: "Melee",
-    attack: 5, // would set it here
-    health: 5,
-  });
-
-  const [newEnemyPewpew, setNewEnemyPewpew] = useState({
-    type: "pewpew",
-    name: "Pewpew",
-    attack: 7,
-    health: 3,
-  });
-
-  const [newEnemyTanky, setNewEnemyTanky] = useState({
-    type: "tanky",
-    name: "Tanky",
-    attack: 3,
-    health: 7,
-  });
-
-  // =====FRIENDLY UNITS=====
-  // @ts-ignore
+  // =====ADDING FRIENDLY UNITS TO ARMY=====
   const addMelee = () => {
-    // TODO: Fix how this process is always a step behind
-
     // make a COPY of the state array so we can append ID to the end
-    const newFriendlyMeleeCopy = { ...newFriendlyMelee, id: unitId };
+    const newFriendlyMelee = { ...baseMelee, id: unitId };
 
-    // take existing myUnits and append newFriendlyMeleeCopy to the end
+    // take existing myUnits and append newFriendlyMelee to the end
     setMyUnits((myUnits) => {
-      return [...myUnits, newFriendlyMeleeCopy];
+      return [...myUnits, newFriendlyMelee];
     });
 
     console.log(myUnits);
     // increment the ID counter to ensure units are unique
     setUnitId(unitId + 1);
     // filter to check type, count matches, use it to update current unit number
-    setMeleeCounter(myUnits.filter((unit) => unit.type === "melee").length);
   };
 
-  // @ts-ignore
   const addPewpew = () => {
-    const newFriendlyPewpewCopy = { ...newFriendlyPewpew, id: unitId };
+    const newFriendlyPewpew = { ...basePewpew, id: unitId };
 
     setMyUnits((myUnits) => {
-      return [...myUnits, newFriendlyPewpewCopy];
+      return [...myUnits, newFriendlyPewpew];
     });
 
     console.log(myUnits);
     setUnitId(unitId + 1);
-    setPewpewCounter(myUnits.filter((unit) => unit.type === "pewpew").length);
   };
 
-  // @ts-ignore
   const addTanky = () => {
-    const newFriendlyTankyCopy = { ...newFriendlyTanky, id: unitId };
+    const newFriendlyTanky = { ...baseTanky, id: unitId };
 
     setMyUnits((myUnits) => {
-      return [...myUnits, newFriendlyTankyCopy];
+      return [...myUnits, newFriendlyTanky];
     });
 
     console.log(myUnits);
     setUnitId(unitId + 1);
-    setTankyCounter(myUnits.filter((unit) => unit.type === "tanky").length);
   };
   // =====END OF FRIENDLY UNITS=====
 
-  // =====ENEMY UNITS=====
-  // TODO: Remove references to newFriendlyMelee, as upgrades to friendlies would power up the enemy units too
+  // =====ADDING ENEMY UNITS=====
   // TODO: Call a function to add a set number of enemy units per turn
   // Eg start with an army of 3, one of each
-  // TODO: After first wave, the number is increased each time
+  // TODO: After first wave, the number is increased by some amount each time
   // Eg 7 units for second wave, enemy units randomly chosen
   // TODO: Composition of army is displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
-  // placeholder enemy array for testing
-  const [enemyUnits, setEnemyUnits] = useState([
-    { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
-    { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
-    { type: "tanky", name: "Tanky", attack: 3, health: 7, id: -3 },
-  ]);
-
-  // @ts-ignore
   const addEnemyMelee = () => {
-    const newEnemyMeleeCopy = { ...newEnemyMelee, id: unitId };
+    const newEnemyMelee = { ...baseMelee, id: unitId };
 
     setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newEnemyMeleeCopy];
+      return [...enemyUnits, newEnemyMelee];
     });
 
     console.log(enemyUnits);
     setUnitId(unitId + 1);
   };
 
-  // @ts-ignore
   const addEnemyPewpew = () => {
-    const newEnemyPewpewCopy = { ...newEnemyPewpew, id: unitId };
+    const newEnemyPewpew = { ...basePewpew, id: unitId };
 
     setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newEnemyPewpewCopy];
+      return [...enemyUnits, newEnemyPewpew];
     });
 
     console.log(enemyUnits);
     setUnitId(unitId + 1);
   };
 
-  // @ts-ignore
   const addEnemyTanky = () => {
-    const newEnemyTankyCopy = { ...newEnemyTanky, id: unitId };
+    const newEnemyTanky = { ...baseTanky, id: unitId };
 
     setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newEnemyTankyCopy];
+      return [...enemyUnits, newEnemyTanky];
     });
 
     console.log(enemyUnits);
     setUnitId(unitId + 1);
   };
-
-  // TODO: Consider if copy of array should use state
-  // TODO: Figure out why arrays don't seem to be new upon click
 
   // TODO: Ideas for battle UI below:
   // • start a log to display what's happening
@@ -326,13 +290,17 @@ export default function Game(props) {
   // • when damage is taken should be, at minimum, a little red text animation
 
   const unitBattler = () => {
-    // @ts-ignore
     const myUnitsCopy = [...myUnits];
-
-    // @ts-ignore
     const enemyUnitsCopy = [...enemyUnits];
 
-    // TODO: End combat when one of the arrays is empty! Something like this
+    // Check for end of combat
+    if (myUnitsCopy.length === 0 && enemyUnitsCopy.length === 0) {
+      alert(
+        "Your units defeated each other at the last moment. Prepare for the next battle!"
+      );
+      return;
+    }
+
     if (myUnitsCopy.length === 0) {
       alert("Your army was defeated. Your buildings took damage!");
       return;
@@ -427,17 +395,12 @@ export default function Game(props) {
         friendlyUnit.name + " takes " + enemyUnit.attack + " damage and dies."
       );
       // remove friendly from pool
-      // TODO: Make sure this setState works properly
       setMyUnits(myUnitsCopy.filter((unit) => unit.id !== friendlyUnit.id));
     }
     console.log("The new enemy array is...");
     console.log(enemyUnits);
     console.log("The new friendly array is...");
     console.log(myUnits);
-
-    setMeleeCounter(myUnits.filter((unit) => unit.type === "melee").length);
-    setPewpewCounter(myUnits.filter((unit) => unit.type === "pewpew").length);
-    setTankyCounter(myUnits.filter((unit) => unit.type === "tanky").length);
   };
 
   // ===END OF COMBAT MECHANICS===
@@ -492,6 +455,20 @@ export default function Game(props) {
     );
   }
 
+  const meleeCount = myUnits.filter((unit) => unit.type === "melee").length;
+  const pewpewCount = myUnits.filter((unit) => unit.type === "pewpew").length;
+  const tankyCount = myUnits.filter((unit) => unit.type === "tanky").length;
+
+  const enemyMeleeCount = enemyUnits.filter(
+    (unit) => unit.type === "melee"
+  ).length;
+  const enemyPewpewCount = enemyUnits.filter(
+    (unit) => unit.type === "pewpew"
+  ).length;
+  const enemyTankyCount = enemyUnits.filter(
+    (unit) => unit.type === "tanky"
+  ).length;
+
   return (
     <div>
       <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
@@ -524,121 +501,44 @@ export default function Game(props) {
         setStoneMultipler={setStoneMultipler}
         metalMultiplier={metalMultiplier}
         setMetalMultipler={setMetalMultipler}
-        meleeCounter={meleeCounter}
-        pewpewCounter={pewpewCounter}
-        tankyCounter={tankyCounter}
+        meleeCount={meleeCount}
+        pewpewCount={pewpewCount}
+        tankyCount={tankyCount}
         buildings={buildings}
       />
 
       <br></br>
 
-      <div>
-        <h2 className="text-4xl font-extrabold dark:text-white">
-          Building Creation
-        </h2>
-        <MakeBuildings
-          index={0}
-          buildings={buildings}
-          buildingName={buildings[0].name}
-          setBuildings={setBuildings}
-          freeworkerName="villagers"
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={buildings[0].freeworkerCost}
-          resource1Name="wood"
-          resource1={woodCollected}
-          setResource1={setWoodCollected}
-          resource1Cost={buildings[0].woodCost}
-          resource2Name="stone"
-          resource2={stoneCollected}
-          setResource2={setStoneCollected}
-          resource2Cost={buildings[0].stoneCost}
-          underConstruction={buildings[0].underConstruction}
-        />
-        <MakeBuildings
-          index={1}
-          buildings={buildings}
-          buildingName={buildings[1].name}
-          setBuildings={setBuildings}
-          freeworkerName="villagers"
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={buildings[1].freeworkerCost}
-          resource1Name="wood"
-          resource1={woodCollected}
-          setResource1={setWoodCollected}
-          resource1Cost={buildings[1].woodCost}
-          resource2Name="metal"
-          resource2={metalCollected}
-          setResource2={setMetalCollected}
-          resource2Cost={buildings[1].metalCost}
-          underConstruction={buildings[1].underConstruction}
-        />
-      </div>
-      <br></br>
+      <BuildingsUI
+        buildings={buildings}
+        setBuildings={setBuildings}
+        freeworkers={freeworkers}
+        setFreeworkers={setFreeworkers}
+        woodCollected={woodCollected}
+        setWoodCollected={setWoodCollected}
+        stoneCollected={stoneCollected}
+        setStoneCollected={setStoneCollected}
+        metalCollected={metalCollected}
+        setMetalCollected={setMetalCollected}
+      />
 
-      <div>
-        <h2 className="text-4xl font-extrabold dark:text-white">
-          Unit Creation
-        </h2>
-        <TrainUnits
-          name="🗡️ Melee"
-          freeworkerName={
-            unitCosts.melee.freeworkerCost > 1 ? "villagers" : "villager"
-          }
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={unitCosts.melee.freeworkerCost}
-          resource1Name="wood"
-          resource1={woodCollected}
-          setResource1={setWoodCollected}
-          resource1Cost={unitCosts.melee.woodCost}
-          resource2Name="stone"
-          resource2={stoneCollected}
-          setResource2={setStoneCollected}
-          resource2Cost={unitCosts.melee.stoneCost}
-          unitInTraining={meleeInTraining}
-          setUnitInTraining={setMeleeInTraining}
-        />
-        <TrainUnits
-          name="🏹 Pewpew"
-          freeworkerName={
-            unitCosts.pewpew.freeworkerCost > 1 ? "villagers" : "villager"
-          }
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={unitCosts.pewpew.freeworkerCost}
-          resource1Name="wood"
-          resource1={woodCollected}
-          setResource1={setWoodCollected}
-          resource1Cost={unitCosts.pewpew.woodCost}
-          resource2Name="metal"
-          resource2={metalCollected}
-          setResource2={setMetalCollected}
-          resource2Cost={unitCosts.pewpew.metalCost}
-          unitInTraining={pewpewInTraining}
-          setUnitInTraining={setPewpewInTraining}
-        />
-        <TrainUnits
-          name="🛡️ Tanky"
-          freeworkerName={
-            unitCosts.tanky.freeworkerCost > 1 ? "villagers" : "villager"
-          }
-          freeworkers={freeworkers}
-          setFreeworkers={setFreeworkers}
-          freeworkerCost={unitCosts.tanky.freeworkerCost}
-          resource1Name="stone"
-          resource1={stoneCollected}
-          setResource1={setStoneCollected}
-          resource1Cost={unitCosts.tanky.stoneCost}
-          resource2Name="metal"
-          resource2={metalCollected}
-          setResource2={setMetalCollected}
-          resource2Cost={unitCosts.tanky.metalCost}
-          unitInTraining={tankyInTraining}
-          setUnitInTraining={setTankyInTraining}
-        />
-      </div>
+      <UnitCreation
+        unitCosts={unitCosts}
+        freeworkers={freeworkers}
+        setFreeworkers={setFreeworkers}
+        woodCollected={woodCollected}
+        stoneCollected={stoneCollected}
+        metalCollected={metalCollected}
+        setWoodCollected={setWoodCollected}
+        setStoneCollected={setStoneCollected}
+        setMetalCollected={setMetalCollected}
+        meleeInTraining={meleeInTraining}
+        pewpewInTraining={pewpewInTraining}
+        tankyInTraining={tankyInTraining}
+        setMeleeInTraining={setMeleeInTraining}
+        setPewpewInTraining={setPewpewInTraining}
+        setTankyInTraining={setTankyInTraining}
+      />
       <br></br>
 
       {/* TODO: Encapsulate Combat properly into a component */}
@@ -654,58 +554,30 @@ export default function Game(props) {
         </button>
         <div>
           <div>
+            <p>Your army size is {myUnits.length}.</p>
             <p>
-              Your army size is {meleeCounter + pewpewCounter + tankyCounter}.
-            </p>
-            <p>
-              {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter}{" "}
-              tanky.
+              {meleeCount} melee, {pewpewCount} pewpew, {tankyCount} tanky.
             </p>
           </div>
           <div>
+            <p>The enemy army has {enemyUnits.length} units.</p>
             <p>
-              {/* TODO: The enemy army size is {enemyMeleeCounter + enemyPewpewCounter + enemyTankyCounter}.*/}
-            </p>
-            <p>
-              {/* TODO: {meleeCounter} melee, {pewpewCounter} pewpew, {tankyCounter} tanky.*/}
+              {enemyMeleeCount} melee, {enemyPewpewCount} pewpew,{" "}
+              {enemyTankyCount} tanky.
               {/* TODO: Make these percents? */}
             </p>
           </div>
-          <div>
-            <AddUnitButton
-              addUnitFunction={addMelee}
-              name="Melee"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-            <AddUnitButton
-              addUnitFunction={addPewpew}
-              name="Pewpew"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-            <AddUnitButton
-              addUnitFunction={addTanky}
-              name="Tanky"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-          </div>
-          <div>
-            <AddUnitButton
-              addUnitFunction={addEnemyMelee}
-              name="Enemy Melee"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-            <AddUnitButton
-              addUnitFunction={addEnemyPewpew}
-              name="Enemy Pewpew"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-            <AddUnitButton
-              addUnitFunction={addEnemyTanky}
-              name="Enemy Tanky"
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            />
-          </div>
         </div>
+        <br></br>
+
+        <DevTools
+          addMelee={addMelee}
+          addPewpew={addPewpew}
+          addTanky={addTanky}
+          addEnemyMelee={addEnemyMelee}
+          addEnemyPewpew={addEnemyPewpew}
+          addEnemyTanky={addEnemyTanky}
+        />
       </div>
 
       {/*  TODO: Make this component work
