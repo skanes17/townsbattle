@@ -22,6 +22,9 @@ export default function DisplayVillagers(props: DisplayVillagersProps) {
       <Villager
         type="🪓 Woodcutters"
         workers={props.resources.woodcutters}
+        resources={props.resources}
+        setResources={props.setResources}
+        // can likely remove the rest once refactored
         setWorkers={props.setWoodcutters}
         freeworkers={props.resources.freeworkers}
         setFreeworkers={props.setFreeworkers}
@@ -29,6 +32,10 @@ export default function DisplayVillagers(props: DisplayVillagersProps) {
       <Villager
         type="⚒️ Stonemasons"
         workers={props.stonemasons}
+        resources={props.resources}
+        setResources={props.setResources}
+        // can likely remove the rest once refactored
+
         setWorkers={props.setStonemasons}
         freeworkers={props.freeworkers}
         setFreeworkers={props.setFreeworkers}
@@ -36,6 +43,10 @@ export default function DisplayVillagers(props: DisplayVillagersProps) {
       <Villager
         type="🥽 Metalworkers"
         workers={props.metalworkers}
+        resources={props.resources}
+        setResources={props.setResources}
+        // can likely remove the rest once refactored
+
         setWorkers={props.setMetalworkers}
         freeworkers={props.freeworkers}
         setFreeworkers={props.setFreeworkers}

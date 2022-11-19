@@ -24,7 +24,7 @@ export default function GameCopy(props: GameProps) {
   const [combatTurn, setCombatTurn] = useState(4);
 
   const [resources, setResources] = useState<Resources>({
-    freeworkers: 0,
+    freeworkers: 5,
     woodCollected: 0,
     stoneCollected: 0,
     metalCollected: 0,

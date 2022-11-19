@@ -18,7 +18,7 @@ export default function Planning(props) {
       <br></br>
 
       <div className="freeworkers" style={{ fontWeight: "bold" }}>
-        Free Workers: {props.freeworkers}
+        Free Workers: {props.resources.freeworkers}
       </div>
       <br></br>
 
