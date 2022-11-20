@@ -417,20 +417,39 @@ export default function GameCopy(props: GameProps) {
   // ===END OF COMBAT MECHANICS===
 
   function endTurn() {
-    if (freeworkers > 0) {
+    if (resources.freeworkers > 0) {
       alert("You have not assigned all free workers!");
       return;
     }
-    setWoodCollected(woodCollected + woodcutters * woodMultiplier);
-    setStoneCollected(stoneCollected + stonemasons * stoneMultiplier);
-    setMetalCollected(metalCollected + metalworkers * metalMultiplier);
-    setFreeworkers(
-      freeworkers + woodcutters + stonemasons + metalworkers + newWorkers
-    );
-    // TODO: Optimize this
-    setWoodcutters(0);
-    setStonemasons(0);
-    setMetalworkers(0);
+
+    const resourcesCopy = { ...resources };
+    console.log(resourcesCopy);
+
+    resourcesCopy.woodCollected =
+      resources.woodCollected + resources.woodcutters * woodMultiplier;
+    resourcesCopy.stoneCollected =
+      resources.stoneCollected + resources.stonemasons * stoneMultiplier;
+    resourcesCopy.metalCollected =
+      resources.metalCollected + resources.metalworkers * metalMultiplier;
+
+    const allWorkers =
+      resources.freeworkers +
+      resources.woodcutters +
+      resources.stonemasons +
+      resources.metalworkers +
+      newWorkers;
+
+    // calculate freeworkers for next turn
+    resourcesCopy.freeworkers = allWorkers;
+
+    // reset workers
+    resourcesCopy.woodcutters = 0;
+    resourcesCopy.stonemasons = 0;
+    resourcesCopy.metalworkers = 0;
+
+    setResources(resourcesCopy);
+
+    // increment turn
     setTurn(turn + 1);
 
     // TODO: Insert function calls to add units to friendly pool
@@ -492,12 +511,6 @@ export default function GameCopy(props: GameProps) {
         setTurn={setTurn}
         resources={resources}
         setResources={setResources}
-        woodMultiplier={woodMultiplier}
-        setWoodMultipler={setWoodMultipler}
-        stoneMultiplier={stoneMultiplier}
-        setStoneMultipler={setStoneMultipler}
-        metalMultiplier={metalMultiplier}
-        setMetalMultipler={setMetalMultipler}
         meleeCount={meleeCount}
         pewpewCount={pewpewCount}
         tankyCount={tankyCount}
@@ -507,6 +520,7 @@ export default function GameCopy(props: GameProps) {
       <br></br>
 
       <BuildingsUI
+        // TODO: Refactor using new resources object
         buildings={buildings}
         setBuildings={setBuildings}
         freeworkers={freeworkers}
@@ -520,6 +534,7 @@ export default function GameCopy(props: GameProps) {
       />
 
       <UnitCreation
+        // TODO: Refactor using new resources object
         unitCosts={unitCosts}
         freeworkers={freeworkers}
         setFreeworkers={setFreeworkers}
