@@ -19,48 +19,62 @@ interface VillagerProps {
 
 // @ts-ignore
 export default function Villager(props: VillagerProps) {
-  // when a worker is added to this building they're taken from the freeworker pool
-  function handlePlusClick() {
-    // needed the () here to call it
-
+  const handlePlusClick = (workerType: string) => {
     if (props.resources.freeworkers > 0) {
-      props.setWorkers(props.workers + 1);
+      // @ts-ignore
+      const worker = props.resources[workerType];
 
-      // TODO: Pick up from here -- use Devin's base unit button concept to help!
-      // Consider how to access the correct resource dynamically when using this component
-      // Have it somehow triggered by the button? Maybe easiest way...
-
+      // TODO: Figure out why defense isn't working
+      /* if (!worker) {
+        // Defensive programming
+        console.log("whoops");
+        return;
+      }
+ */
       const updatedResources = { ...props.resources };
+      // @ts-ignore
       updatedResources.freeworkers = updatedResources.freeworkers - 1;
-      updatedResources.freeworkers = updatedResources.freeworkers - 1;
+      //@ts-ignore
+      updatedResources[workerType] = updatedResources[workerType] + 1;
+
       props.setResources(updatedResources);
     } else {
       alert("No free workers!");
     }
-  }
+  };
 
-  // when a worker is taken from this building they return to the freeworker pool
-  function handleMinusClick() {
-    if (props.workers > 0) {
-      props.setWorkers(props.workers - 1);
+  const handleMinusClick = (workerType: string) => {
+    //@ts-ignore
+    if (props.resources[workerType] > 0) {
+      // @ts-ignore
+      const worker = props.resources[workerType];
+
+      if (!worker) {
+        // Defensive programming
+        return;
+      }
+
       const updatedResources = { ...props.resources };
       updatedResources.freeworkers = updatedResources.freeworkers + 1;
+      // @ts-ignore
+      updatedResources[workerType] = updatedResources[workerType] - 1;
       props.setResources(updatedResources);
     }
-  }
+  };
 
+  // TODO: break this into its own component so I just send "woodcutters" once
   return (
     <>
       <div className="villager">
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={handlePlusClick}
+          onClick={() => handlePlusClick("woodcutters")}
         >
           +1
         </button>
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={handleMinusClick}
+          onClick={() => handleMinusClick("woodcutters")}
         >
           -1
         </button>
