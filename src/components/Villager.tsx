@@ -6,23 +6,23 @@ Could have a limit on clicks (energy bar, actions available, etc), each click us
 Basically the same result since villagers are reset each turn. */
 
 interface VillagerProps {
-  type: string;
-  workers: number;
+  name: "🪓 Woodcutters" | "⚒️ Stonemasons" | "🥽 Metalworkers";
+  workerType: "woodcutters" | "stonemasons" | "metalworkers";
   resources: Resources;
   setResources: any;
-  // likely can remove the remaining once refactored
-  /* setResources: any;
-  setWorkers: any;
-  freeworkers: number;
-  setFreeworkers: any; */
 }
 
 // @ts-ignore
-export default function Villager(props: VillagerProps) {
+export default function Villager({
+  name,
+  workerType,
+  resources,
+  setResources,
+}: VillagerProps) {
   const handlePlusClick = (workerType: string) => {
-    if (props.resources.freeworkers > 0) {
-      // @ts-ignore
-      const worker = props.resources[workerType];
+    if (resources.freeworkers > 0) {
+      //@ts-ignore
+      /* const worker = resources[workerType]; */
 
       // TODO: Figure out why defense isn't working
       /* if (!worker) {
@@ -30,14 +30,14 @@ export default function Villager(props: VillagerProps) {
         console.log("whoops");
         return;
       }
- */
-      const updatedResources = { ...props.resources };
+      */
+      const updatedResources = { ...resources };
       // @ts-ignore
       updatedResources.freeworkers = updatedResources.freeworkers - 1;
       //@ts-ignore
       updatedResources[workerType] = updatedResources[workerType] + 1;
 
-      props.setResources(updatedResources);
+      setResources(updatedResources);
     } else {
       alert("No free workers!");
     }
@@ -45,20 +45,20 @@ export default function Villager(props: VillagerProps) {
 
   const handleMinusClick = (workerType: string) => {
     //@ts-ignore
-    if (props.resources[workerType] > 0) {
+    if (resources[workerType] > 0) {
       // @ts-ignore
-      const worker = props.resources[workerType];
+      /* const worker = resources[workerType]; */
 
-      if (!worker) {
+      /* if (!worker) {
         // Defensive programming
         return;
-      }
+      } */
 
-      const updatedResources = { ...props.resources };
+      const updatedResources = { ...resources };
       updatedResources.freeworkers = updatedResources.freeworkers + 1;
       // @ts-ignore
       updatedResources[workerType] = updatedResources[workerType] - 1;
-      props.setResources(updatedResources);
+      setResources(updatedResources);
     }
   };
 
@@ -68,17 +68,20 @@ export default function Villager(props: VillagerProps) {
       <div className="villager">
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={() => handlePlusClick("woodcutters")}
+          //@ts-ignore
+          onClick={() => handlePlusClick(workerType)}
         >
           +1
         </button>
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={() => handleMinusClick("woodcutters")}
+          //@ts-ignore
+          onClick={() => handleMinusClick(workerType)}
         >
           -1
         </button>
-        {props.type}: {props.workers}
+        {/* @ts-ignore */}
+        {name}: {resources[workerType]}
       </div>
     </>
   );

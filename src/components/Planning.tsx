@@ -25,15 +25,6 @@ export default function Planning(props) {
       <DisplayVillagers
         resources={props.resources}
         setResources={props.setResources}
-        // should be able to remove everything below, soon
-        /* freeworkers={props.freeworkers}
-        setFreeworkers={props.setFreeworkers}
-        woodcutters={props.woodcutters}
-        setWoodcutters={props.setWoodcutters}
-        stonemasons={props.stonemasons}
-        setStonemasons={props.setStonemasons}
-        metalworkers={props.metalworkers}
-        setMetalworkers={props.setMetalworkers} */
       />
 
       <br></br>
