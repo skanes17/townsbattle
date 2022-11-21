@@ -12,26 +12,21 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   const enabledBuildings = Object.keys(buildings).filter(
     (key) => buildings[key].enabled
   );
-  // TODO:
-  // 1-Use map to send enabledBuildings items to a component
-  // 2-Edit the process as below to map building properties to UI
 
-  const filteredBuildings = buildings.filter((building) => building.enabled);
-
-  // TODO: Incorporate keys here
   return (
     <>
       <div style={{ fontWeight: "bold" }}>Buildings constructed</div>
-      {filteredBuildings.map((building) => (
+      {/* buildings are mapped dynamically to component */}
+      {enabledBuildings.map((buildingType) => (
         <>
-          <p>{building.name}</p>
-          <p>Tier: {building.tier}</p>
+          <p>{buildings[buildingType].name}</p>
+          <p>Tier: {buildings[buildingType].tier}</p>
           {/* TODO: Replace number for health with heart symbols */}
-          <p>❤️ Health: {building.health}</p>
-          {building.effect === "" ? (
+          <p>❤️ Health: {buildings[buildingType].health}</p>
+          {buildings[buildingType].effect === "" ? (
             <p>No effect</p>
           ) : (
-            <p>Effect: {building.effect}</p>
+            <p>Effect: {buildings[buildingType].effect}</p>
           )}
         </>
       ))}

@@ -4,7 +4,7 @@ import Planning from "./Planning";
 import Combat from "./Combat";
 import AddUnitButton from "./AddUnitButton";
 import TrainUnits from "./TrainUnits";
-import MakeBuilding from "./MakeBuilding";
+import ConstructBuilding from "./ConstructBuilding";
 import BuildingsUI from "./BuildingsUI";
 import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
@@ -148,6 +148,10 @@ export default function GameCopy(props: GameProps) {
       freeworkerCost: 5,
     },
   });
+
+  const enabledBuildings = Object.keys(buildings).filter(
+    (key) => buildings[key].enabled
+  );
 
   // Unused right now
   const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>({
@@ -532,16 +536,17 @@ export default function GameCopy(props: GameProps) {
         // TODO: Refactor using new resources object
         buildings={buildings}
         setBuildings={setBuildings}
+        enabledBuildings={enabledBuildings}
         resources={resources}
         setResources={setResources}
-        freeworkers={freeworkers}
+        /* freeworkers={freeworkers}
         setFreeworkers={setFreeworkers}
         woodCollected={woodCollected}
         setWoodCollected={setWoodCollected}
         stoneCollected={stoneCollected}
         setStoneCollected={setStoneCollected}
         metalCollected={metalCollected}
-        setMetalCollected={setMetalCollected}
+        setMetalCollected={setMetalCollected} */
       />
 
       <UnitCreation

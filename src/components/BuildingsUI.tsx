@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Resources } from "../types/Resources";
-import MakeBuilding from "./MakeBuilding";
+import ConstructBuilding from "./ConstructBuilding";
 
 interface BuildingsUIProps {
   buildings: any;
   setBuildings: any;
+  enabledBuildings: string[];
   resources: Resources;
   setResources: any;
   /*   freeworkers: number;
@@ -20,6 +21,7 @@ interface BuildingsUIProps {
 export default function BuildingsUI({
   buildings,
   setBuildings,
+  enabledBuildings,
   resources,
   setResources,
 }: /*   freeworkers,
@@ -36,28 +38,47 @@ BuildingsUIProps) {
       <h2 className="text-4xl font-extrabold dark:text-white">
         Building Creation
       </h2>
-      <MakeBuilding
-        index={0}
-        freeworkerName="villagers"
-        resource1Name="wood"
-        resource2Name="stone"
-        buildings={buildings}
+      {enabledBuildings.map((buildingType: string) => (
+        <ConstructBuilding
+          buildings={buildings}
+          setBuildings={setBuildings}
+          buildingType={buildingType}
+          resources={resources}
+          setResources={setResources}
+          /* index={0}
         buildingName={buildings[0].name}
-        setBuildings={setBuildings}
-        resources={resources}
-        setResources={setResources}
-        freeworkers={freeworkers}
-        setFreeworkers={setFreeworkers}
         freeworkerCost={buildings[0].freeworkerCost}
-        resource1={woodCollected}
-        setResource1={setWoodCollected}
         resource1Cost={buildings[0].woodCost}
-        resource2={stoneCollected}
-        setResource2={setStoneCollected}
         resource2Cost={buildings[0].stoneCost}
         underConstruction={buildings[0].underConstruction}
+        freeworkers={freeworkers}
+        setFreeworkers={setFreeworkers}
+        resource1={woodCollected}
+        setResource1={setWoodCollected}
+        resource2={stoneCollected}
+        setResource2={setStoneCollected} */
+        />
+      ))}
+      <ConstructBuilding
+        buildings={buildings}
+        setBuildings={setBuildings}
+        enabledBuildings={enabledBuildings}
+        resources={resources}
+        setResources={setResources}
+        /* index={0}
+        buildingName={buildings[0].name}
+        freeworkerCost={buildings[0].freeworkerCost}
+        resource1Cost={buildings[0].woodCost}
+        resource2Cost={buildings[0].stoneCost}
+        underConstruction={buildings[0].underConstruction}
+        freeworkers={freeworkers}
+        setFreeworkers={setFreeworkers}
+        resource1={woodCollected}
+        setResource1={setWoodCollected}
+        resource2={stoneCollected}
+        setResource2={setStoneCollected} */
       />
-      <MakeBuilding
+      <ConstructBuilding
         index={1}
         freeworkerName="villagers"
         resource1Name="wood"

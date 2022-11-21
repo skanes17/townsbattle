@@ -14,7 +14,6 @@ interface UnitCreationProps {
 
 export default function UnitCreation({
   unitCosts,
-  setUnitCosts,
   unitsInTraining,
   setUnitsInTraining,
   resources,
