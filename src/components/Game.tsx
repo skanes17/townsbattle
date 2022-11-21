@@ -485,19 +485,18 @@ export default function GameCopy(props: GameProps) {
     );
   }
 
-  const meleeCount = myUnits.filter((unit) => unit.type === "melee").length;
-  const pewpewCount = myUnits.filter((unit) => unit.type === "pewpew").length;
-  const tankyCount = myUnits.filter((unit) => unit.type === "tanky").length;
+  const unitCounts = {
+    meleeCount: myUnits.filter((unit) => unit.type === "melee").length,
+    pewpewCount: myUnits.filter((unit) => unit.type === "pewpew").length,
+    tankyCount: myUnits.filter((unit) => unit.type === "tanky").length,
+  };
 
-  const enemyMeleeCount = enemyUnits.filter(
-    (unit) => unit.type === "melee"
-  ).length;
-  const enemyPewpewCount = enemyUnits.filter(
-    (unit) => unit.type === "pewpew"
-  ).length;
-  const enemyTankyCount = enemyUnits.filter(
-    (unit) => unit.type === "tanky"
-  ).length;
+  const enemyUnitCounts = {
+    enemyMeleeCount: enemyUnits.filter((unit) => unit.type === "melee").length,
+    enemyPewpewCount: enemyUnits.filter((unit) => unit.type === "pewpew")
+      .length,
+    enemyTankyCount: enemyUnits.filter((unit) => unit.type === "tanky").length,
+  };
 
   return (
     <div>
@@ -509,9 +508,7 @@ export default function GameCopy(props: GameProps) {
         onClick={endTurn}
         resources={resources}
         setResources={setResources}
-        meleeCount={meleeCount}
-        pewpewCount={pewpewCount}
-        tankyCount={tankyCount}
+        unitCounts={unitCounts}
         buildings={buildings}
       />
 
@@ -566,14 +563,16 @@ export default function GameCopy(props: GameProps) {
           <div>
             <p>Your army size is {myUnits.length}.</p>
             <p>
-              {meleeCount} melee, {pewpewCount} pewpew, {tankyCount} tanky.
+              {unitCounts.meleeCount} melee, {unitCounts.pewpewCount} pewpew,{" "}
+              {unitCounts.tankyCount} tanky.
             </p>
           </div>
           <div>
             <p>The enemy army has {enemyUnits.length} units.</p>
             <p>
-              {enemyMeleeCount} melee, {enemyPewpewCount} pewpew,{" "}
-              {enemyTankyCount} tanky.
+              {enemyUnitCounts.enemyMeleeCount} melee,{" "}
+              {enemyUnitCounts.enemyPewpewCount} pewpew,{" "}
+              {enemyUnitCounts.enemyTankyCount} tanky.
               {/* TODO: Make these percents? */}
             </p>
           </div>

@@ -7,14 +7,13 @@ import DisplayBuildings from "./DisplayBuildings";
 import DisplayVillagers from "./DisplayVillagers";
 import { Resources } from "../types/Resources";
 import { Buildings } from "../types/Buildings";
+import { UnitCounts } from "../types/UnitCounts";
 
 interface PlanningProps {
   onClick: () => void;
   resources: Resources;
   setResources: any;
-  meleeCount: number;
-  pewpewCount: number;
-  tankyCount: number;
+  unitCounts: UnitCounts;
   buildings: Buildings[];
 }
 
@@ -22,9 +21,7 @@ export default function Planning({
   onClick,
   resources,
   setResources,
-  meleeCount,
-  pewpewCount,
-  tankyCount,
+  unitCounts,
   buildings,
 }: PlanningProps) {
   return (
@@ -45,11 +42,7 @@ export default function Planning({
       <br></br>
 
       <div className="displayUnits">
-        <DisplayUnits
-          meleeCount={meleeCount}
-          pewpewCount={pewpewCount}
-          tankyCount={tankyCount}
-        />
+        <DisplayUnits unitCounts={unitCounts} />
       </div>
       <br></br>
 
