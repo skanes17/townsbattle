@@ -1,5 +1,25 @@
+import { resourceUsage } from "process";
 import React from "react";
 import { isPropertySignature } from "typescript";
+import { Resources } from "../types/Resources";
+import { UnitCosts } from "../types/UnitCosts";
+
+export interface TrainUnitsProps{
+  name:"🗡️ Melee" | "🏹 Pewpew" | "🛡️ Tanky",
+  // TODO: replace with take name on button as prop
+  freeworkerName:any, // fix this?
+  resources: Resources,
+  setResources:any,
+  unitCosts:UnitCosts,
+  // send on button
+  resource1Name:"wood" | "stone" | "metal",
+  resource1: number,
+  resource2Name:"wood" | "stone" | "metal",
+  resource2:number,
+  setResource2={setStoneCollected}
+  unitInTraining={meleeInTraining}
+  setUnitInTraining={setMeleeInTraining}
+} // TODO: Fix this later!
 
 // TODO: Create unit on End Turn click
 // TODO: Figure out how to make it a choice between getting resources and making units
@@ -10,6 +30,9 @@ export default function TrainUnits(props) {
   function handlePlusClick() {
     // each unit needs two different resources in order to be built
     if (
+      resources.freeworkers >=
+      
+      //-----------------------------------------
       props.freeworkers >= props.freeworkerCost &&
       props.resource1 >= props.resource1Cost &&
       props.resource2 >= props.resource2Cost

@@ -13,6 +13,7 @@ import { Unit } from "../types/Unit";
 import DevTools from "./DevTools";
 import UnitCreation from "./UnitCreation";
 import { Resources } from "../types/Resources";
+import { UnitInTraining, UnitsInTraining } from "../types/UnitInTraining";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Rename workers to villagers
@@ -205,12 +206,11 @@ export default function GameCopy(props: GameProps) {
   };
 
   // how many units you're going to train this turn
-  const [meleeInTraining, setMeleeInTraining] = useState(0);
-  // total units in your army
-
-  const [pewpewInTraining, setPewpewInTraining] = useState(0);
-
-  const [tankyInTraining, setTankyInTraining] = useState(0);
+  const [unitsInTraining, setUnitsInTraining] = useState<UnitsInTraining>({
+    melee: 0,
+    pewpew: 0,
+    tanky: 0,
+  });
 
   // =====ADDING FRIENDLY UNITS TO ARMY=====
   const addMelee = () => {
@@ -454,20 +454,18 @@ export default function GameCopy(props: GameProps) {
 
     // TODO: Insert function calls to add units to friendly pool
     // TODO: Fix functions not working as expected when called this way (eg IDs are duplicated)
-    for (let i = 0; i < meleeInTraining; i++) {
+    for (let i = 0; i < unitsInTraining.melee; i++) {
       addMelee();
     }
-    for (let i = 0; i < pewpewInTraining; i++) {
+    for (let i = 0; i < unitsInTraining.pewpew; i++) {
       addPewpew();
     }
-    for (let i = 0; i < tankyInTraining; i++) {
+    for (let i = 0; i < unitsInTraining.tanky; i++) {
       addTanky();
     }
 
     // reset units in training
-    setMeleeInTraining(0);
-    setPewpewInTraining(0);
-    setTankyInTraining(0);
+    setUnitsInTraining({ melee: 0, pewpew: 0, tanky: 0 });
 
     // buildings finish construction and are now built, setting enabled: true
     setBuildings(
@@ -531,7 +529,12 @@ export default function GameCopy(props: GameProps) {
       <UnitCreation
         // TODO: Refactor using new resources object
         unitCosts={unitCosts}
-        freeworkers={freeworkers}
+        setUnitCosts={setUnitCosts}
+        resources={resources}
+        setResources={setResources}
+        unitsInTraining={unitsInTraining}
+        setUnitsInTraining={setUnitsInTraining}
+        /* freeworkers={freeworkers}
         setFreeworkers={setFreeworkers}
         woodCollected={woodCollected}
         stoneCollected={stoneCollected}
@@ -544,7 +547,7 @@ export default function GameCopy(props: GameProps) {
         tankyInTraining={tankyInTraining}
         setMeleeInTraining={setMeleeInTraining}
         setPewpewInTraining={setPewpewInTraining}
-        setTankyInTraining={setTankyInTraining}
+        setTankyInTraining={setTankyInTraining} */
       />
       <br></br>
 

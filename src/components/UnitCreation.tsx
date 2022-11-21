@@ -1,8 +1,16 @@
+import { Resources } from "../types/Resources";
+import { UnitCosts } from "../types/UnitCosts";
+import { UnitsInTraining } from "../types/UnitInTraining";
 import TrainUnits from "./TrainUnits";
 
 interface UnitCreationProps {
-  unitCosts: any; // couldn't  make object type work
-  freeworkers: number;
+  unitCosts: UnitCosts; // couldn't  make object type work
+  setUnitCosts: any;
+  unitsInTraining: UnitsInTraining;
+  setUnitsInTraining: any;
+  resources: Resources;
+  setResources: any;
+  /* freeworkers: number;
   setFreeworkers: any;
   woodCollected: number;
   stoneCollected: number;
@@ -15,19 +23,22 @@ interface UnitCreationProps {
   tankyInTraining: number;
   setMeleeInTraining: any;
   setPewpewInTraining: any;
-  setTankyInTraining: any;
+  setTankyInTraining: any; */
 }
 
 export default function UnitCreation({
   unitCosts,
-  freeworkers,
+  setUnitCosts,
+  unitsInTraining,
+  setUnitsInTraining,
+  /* freeworkers,
   setFreeworkers,
   woodCollected,
   stoneCollected,
   metalCollected,
   setWoodCollected,
   setStoneCollected,
-  setMetalCollected,
+  setMetalCollected, */
   meleeInTraining,
   pewpewInTraining,
   tankyInTraining,
@@ -42,11 +53,15 @@ export default function UnitCreation({
       <h2 className="text-4xl font-extrabold dark:text-white">Unit Creation</h2>
       <TrainUnits
         name="🗡️ Melee"
+        // TODO: replace with take name on button as prop
         freeworkerName={
           unitCosts.melee.freeworkerCost > 1 ? "villagers" : "villager"
         }
-        freeworkers={freeworkers}
-        setFreeworkers={setFreeworkers}
+        resources={resources}
+        setResources={setResources}
+        /* freeworkers={freeworkers}
+        setFreeworkers={setFreeworkers} */
+        unitCosts={unitsCosts}
         freeworkerCost={unitCosts.melee.freeworkerCost}
         resource1Name="wood"
         resource1={woodCollected}
