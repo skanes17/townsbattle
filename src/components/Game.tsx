@@ -176,30 +176,48 @@ export default function GameCopy(props: GameProps) {
 
   // placeholder enemy array for testing
   const [enemyUnits, setEnemyUnits] = useState<Unit[]>([
-    { type: "melee", name: "Melee", attack: 5, health: 5, id: -2 },
-    { type: "pewpew", name: "Pewpew", attack: 7, health: 3, id: -1 },
-    { type: "tanky", name: "Tanky", attack: 3, health: 7, id: -3 },
+    {
+      unitType: "melee",
+      name: "Melee",
+      attack: 5,
+      health: 5,
+      id: -2,
+    },
+    {
+      unitType: "pewpew",
+      name: "Pewpew",
+      attack: 7,
+      health: 3,
+      id: -1,
+    },
+    {
+      unitType: "tanky",
+      name: "Tanky",
+      attack: 3,
+      health: 7,
+      id: -3,
+    },
   ]);
 
   // ===STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // Note: State was removed -- keep an eye out for problems
   const baseMelee: Unit = {
-    type: "melee",
+    unitType: "melee",
     name: "Melee",
     attack: 5,
     health: 5,
   };
 
   const basePewpew: Unit = {
-    type: "pewpew",
+    unitType: "pewpew",
     name: "Pewpew",
     attack: 7,
     health: 3,
   };
 
   const baseTanky: Unit = {
-    type: "tanky",
+    unitType: "tanky",
     name: "Tanky",
     attack: 3,
     health: 7,
@@ -326,10 +344,10 @@ export default function GameCopy(props: GameProps) {
     // select a random unit from the arrays
     const friendlyUnit =
       myUnitsCopy[Math.floor(Math.random() * myUnitsCopy.length)];
-    console.log("--Selected friendly unit is... " + friendlyUnit.type);
+    console.log("--Selected friendly unit is... " + friendlyUnit.unitType);
     const enemyUnit =
       enemyUnitsCopy[Math.floor(Math.random() * enemyUnitsCopy.length)];
-    console.log("--Selected enemy unit is... " + enemyUnit.type);
+    console.log("--Selected enemy unit is... " + enemyUnit.unitType);
 
     const enemyHealthRemaining = enemyUnit.health - friendlyUnit.attack;
     const friendlyHealthRemaining = friendlyUnit.health - enemyUnit.attack;
@@ -484,16 +502,18 @@ export default function GameCopy(props: GameProps) {
   }
 
   const unitCounts = {
-    meleeCount: myUnits.filter((unit) => unit.type === "melee").length,
-    pewpewCount: myUnits.filter((unit) => unit.type === "pewpew").length,
-    tankyCount: myUnits.filter((unit) => unit.type === "tanky").length,
+    meleeCount: myUnits.filter((unit) => unit.unitType === "melee").length,
+    pewpewCount: myUnits.filter((unit) => unit.unitType === "pewpew").length,
+    tankyCount: myUnits.filter((unit) => unit.unitType === "tanky").length,
   };
 
   const enemyUnitCounts = {
-    enemyMeleeCount: enemyUnits.filter((unit) => unit.type === "melee").length,
-    enemyPewpewCount: enemyUnits.filter((unit) => unit.type === "pewpew")
+    enemyMeleeCount: enemyUnits.filter((unit) => unit.unitType === "melee")
       .length,
-    enemyTankyCount: enemyUnits.filter((unit) => unit.type === "tanky").length,
+    enemyPewpewCount: enemyUnits.filter((unit) => unit.unitType === "pewpew")
+      .length,
+    enemyTankyCount: enemyUnits.filter((unit) => unit.unitType === "tanky")
+      .length,
   };
 
   return (
@@ -527,27 +547,12 @@ export default function GameCopy(props: GameProps) {
       />
 
       <UnitCreation
-        // TODO: Refactor using new resources object
         unitCosts={unitCosts}
         setUnitCosts={setUnitCosts}
         resources={resources}
         setResources={setResources}
         unitsInTraining={unitsInTraining}
         setUnitsInTraining={setUnitsInTraining}
-        /* freeworkers={freeworkers}
-        setFreeworkers={setFreeworkers}
-        woodCollected={woodCollected}
-        stoneCollected={stoneCollected}
-        metalCollected={metalCollected}
-        setWoodCollected={setWoodCollected}
-        setStoneCollected={setStoneCollected}
-        setMetalCollected={setMetalCollected}
-        meleeInTraining={meleeInTraining}
-        pewpewInTraining={pewpewInTraining}
-        tankyInTraining={tankyInTraining}
-        setMeleeInTraining={setMeleeInTraining}
-        setPewpewInTraining={setPewpewInTraining}
-        setTankyInTraining={setTankyInTraining} */
       />
       <br></br>
 
