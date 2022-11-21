@@ -13,7 +13,7 @@ import { Unit } from "../types/Unit";
 import DevTools from "./DevTools";
 import UnitCreation from "./UnitCreation";
 import { Resources } from "../types/Resources";
-import { UnitInTraining, UnitsInTraining } from "../types/UnitInTraining";
+import { UnitsInTraining } from "../types/UnitInTraining";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Rename workers to villagers

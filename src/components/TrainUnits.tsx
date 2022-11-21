@@ -3,22 +3,26 @@ import React from "react";
 import { isPropertySignature } from "typescript";
 import { Resources } from "../types/Resources";
 import { UnitCosts } from "../types/UnitCosts";
+import { UnitsInTraining } from "../types/UnitInTraining";
 
-export interface TrainUnitsProps{
-  name:"🗡️ Melee" | "🏹 Pewpew" | "🛡️ Tanky",
+export interface TrainUnitsProps {
+  name: "🗡️ Melee" | "🏹 Pewpew" | "🛡️ Tanky";
   // TODO: replace with take name on button as prop
-  freeworkerName:any, // fix this?
-  resources: Resources,
-  setResources:any,
-  unitCosts:UnitCosts,
-  // send on button
-  resource1Name:"wood" | "stone" | "metal",
+  freeworkerName: any; // adjust later if necessary
+  resources: Resources;
+  setResources: any;
+  unitCosts: UnitCosts;
+  setUnitCosts: any;
+  unitsInTraining: UnitsInTraining;
+  setUnitsInTraining: any;
+  // TODO: Set resources during call from button
+  /* resource1Name:"wood" | "stone" | "metal",
   resource1: number,
   resource2Name:"wood" | "stone" | "metal",
   resource2:number,
   setResource2={setStoneCollected}
   unitInTraining={meleeInTraining}
-  setUnitInTraining={setMeleeInTraining}
+  setUnitInTraining={setMeleeInTraining} */
 } // TODO: Fix this later!
 
 // TODO: Create unit on End Turn click
@@ -26,43 +30,78 @@ export interface TrainUnitsProps{
 // TODO: Add units to the appropriate array based on the unitsInTraining - use a confirm button for now?
 
 // @ts-ignore
-export default function TrainUnits(props) {
-  function handlePlusClick() {
-    // each unit needs two different resources in order to be built
+export default function TrainUnits({
+  name,
+  freeworkerName,
+  resources,
+  setResources,
+  unitCosts,
+  setUnitCosts,
+  unitsInTraining,
+  setUnitsInTraining,
+}: TrainUnitsProps) {
+  const freeworkerCost = unitCosts["melee"].freeworkerCost;
+  const woodCost = unitCosts["melee"]["woodCost"];
+  const stoneCost = unitCosts["melee"]["stoneCost"];
+  const metalCost = unitCosts["melee"]["metalCost"];
+
+  const handlePlusClick = () => {
+    // TODO: Later, see if these can be combined into one which checks all resources in resources object
     if (
-      resources.freeworkers >=
-      
-      //-----------------------------------------
-      props.freeworkers >= props.freeworkerCost &&
-      props.resource1 >= props.resource1Cost &&
-      props.resource2 >= props.resource2Cost
+      resources.freeworkers >= freeworkerCost &&
+      resources.woodCollected >= woodCost &&
+      resources.stoneCollected >= stoneCost &&
+      resources.metalCollected >= metalCost
     ) {
-      props.setUnitInTraining(props.unitInTraining + 1);
-      // reduce the resources
-      props.setFreeworkers(props.freeworkers - props.freeworkerCost);
-      props.setResource1(props.resource1 - props.resource1Cost);
-      props.setResource2(props.resource2 - props.resource2Cost);
+      // train an extra unit of appropriate type
+      const updatedTrainees = { ...unitsInTraining };
+      updatedTrainees["melee"] = updatedTrainees["melee"] + 1;
+      setUnitsInTraining(updatedTrainees);
+
+      // reduce the resources according to costs
+      const updatedResources = { ...resources };
+      updatedResources.freeworkers =
+        updatedResources.freeworkers - freeworkerCost;
+      updatedResources.woodCollected =
+        updatedResources.woodCollected - woodCost;
+      updatedResources.stoneCollected =
+        updatedResources.stoneCollected - stoneCost;
+      updatedResources.metalCollected =
+        updatedResources.metalCollected - metalCost;
+      setResources(updatedResources);
     } else {
       alert("Not enough resources!");
     }
-  }
+  };
 
-  function handleMinusClick() {
-    if (props.unitInTraining > 0) {
-      props.setUnitInTraining(props.unitInTraining - 1);
-      props.setFreeworkers(props.freeworkers + props.freeworkerCost);
-      props.setResource1(props.resource1 + props.resource1Cost);
-      props.setResource2(props.resource2 + props.resource2Cost);
+  const handleMinusClick = () => {
+    if (unitsInTraining["melee"] > 0) {
+      // train one less unit of appropriate type
+      const updatedTrainees = { ...unitsInTraining };
+      updatedTrainees["melee"] = updatedTrainees["melee"] - 1;
+      setUnitsInTraining(updatedTrainees);
+
+      const updatedResources = { ...resources };
+      updatedResources.freeworkers =
+        updatedResources.freeworkers + freeworkerCost;
+      updatedResources.woodCollected =
+        updatedResources.woodCollected + woodCost;
+      updatedResources.stoneCollected =
+        updatedResources.stoneCollected + stoneCost;
+      updatedResources.metalCollected =
+        updatedResources.metalCollected + metalCost;
+      setResources(updatedResources);
     }
-  }
+  };
 
   return (
     <>
       <div>
-        {props.name} Cost: {props.freeworkerCost}{" "}
-        {props.freeworkerCost > 1 ? "villagers" : "villager"},{" "}
-        {props.resource1Cost} {props.resource1Name}, {props.resource2Cost}{" "}
-        {props.resource2Name}
+        {name} Cost: {freeworkerCost}{" "}
+        {freeworkerCost > 1 ? "villagers" : "villager"},{" "}
+        {woodCost > 0 ? `${woodCost} wood ` : ""}
+        {stoneCost > 0 ? `${stoneCost} stone ` : ""}
+        {metalCost > 0 ? `${metalCost} metal ` : ""}
       </div>
       <div className="unit">
         <button
@@ -77,7 +116,7 @@ export default function TrainUnits(props) {
         >
           -1
         </button>
-        {props.name} units to train: {props.unitInTraining}
+        {name} units to train: {unitsInTraining["melee"]}
       </div>
     </>
   );

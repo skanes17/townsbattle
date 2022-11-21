@@ -31,21 +31,23 @@ export default function UnitCreation({
   setUnitCosts,
   unitsInTraining,
   setUnitsInTraining,
-  /* freeworkers,
+  resources,
+  setResources,
+}: /* freeworkers,
   setFreeworkers,
   woodCollected,
   stoneCollected,
   metalCollected,
   setWoodCollected,
   setStoneCollected,
-  setMetalCollected, */
+  setMetalCollected,
   meleeInTraining,
   pewpewInTraining,
   tankyInTraining,
   setMeleeInTraining,
   setPewpewInTraining,
-  setTankyInTraining,
-}: UnitCreationProps) {
+  setTankyInTraining, */
+UnitCreationProps) {
   /* TODO: Make TrainUnits stuff work (haven't worked on props) */
 
   return (
@@ -59,10 +61,13 @@ export default function UnitCreation({
         }
         resources={resources}
         setResources={setResources}
+        unitCosts={unitCosts}
+        setUnitCosts={setUnitCosts}
+        unitsInTraining={unitsInTraining}
+        setUnitsInTraining={setUnitsInTraining}
         /* freeworkers={freeworkers}
         setFreeworkers={setFreeworkers} */
-        unitCosts={unitsCosts}
-        freeworkerCost={unitCosts.melee.freeworkerCost}
+        /* freeworkerCost={unitCosts.melee.freeworkerCost}
         resource1Name="wood"
         resource1={woodCollected}
         setResource1={setWoodCollected}
@@ -72,14 +77,20 @@ export default function UnitCreation({
         setResource2={setStoneCollected}
         resource2Cost={unitCosts.melee.stoneCost}
         unitInTraining={meleeInTraining}
-        setUnitInTraining={setMeleeInTraining}
+        setUnitInTraining={setMeleeInTraining} */
       />
       <TrainUnits
         name="🏹 Pewpew"
         freeworkerName={
           unitCosts.pewpew.freeworkerCost > 1 ? "villagers" : "villager"
         }
-        freeworkers={freeworkers}
+        resources={resources}
+        setResources={setResources}
+        unitCosts={unitCosts}
+        setUnitCosts={setUnitCosts}
+        unitsInTraining={unitsInTraining}
+        setUnitsInTraining={setUnitsInTraining}
+        /* freeworkers={freeworkers}
         setFreeworkers={setFreeworkers}
         freeworkerCost={unitCosts.pewpew.freeworkerCost}
         resource1Name="wood"
@@ -91,14 +102,20 @@ export default function UnitCreation({
         setResource2={setMetalCollected}
         resource2Cost={unitCosts.pewpew.metalCost}
         unitInTraining={pewpewInTraining}
-        setUnitInTraining={setPewpewInTraining}
+        setUnitInTraining={setPewpewInTraining} */
       />
       <TrainUnits
         name="🛡️ Tanky"
         freeworkerName={
           unitCosts.tanky.freeworkerCost > 1 ? "villagers" : "villager"
         }
-        freeworkers={freeworkers}
+        resources={resources}
+        setResources={setResources}
+        unitCosts={unitCosts}
+        setUnitCosts={setUnitCosts}
+        unitsInTraining={unitsInTraining}
+        setUnitsInTraining={setUnitsInTraining}
+        /* freeworkers={freeworkers}
         setFreeworkers={setFreeworkers}
         freeworkerCost={unitCosts.tanky.freeworkerCost}
         resource1Name="stone"
@@ -110,7 +127,7 @@ export default function UnitCreation({
         setResource2={setMetalCollected}
         resource2Cost={unitCosts.tanky.metalCost}
         unitInTraining={tankyInTraining}
-        setUnitInTraining={setTankyInTraining}
+        setUnitInTraining={setTankyInTraining} */
       />
     </div>
   );
