@@ -1,31 +1,36 @@
 import React, { useState } from "react";
+import { Resources } from "../types/Resources";
 import MakeBuilding from "./MakeBuilding";
 
 interface BuildingsUIProps {
-  buildings: any[];
+  buildings: any;
   setBuildings: any;
-  freeworkers: number;
+  resources: Resources;
+  setResources: any;
+  /*   freeworkers: number;
   setFreeworkers: any;
   woodCollected: number;
   setWoodCollected: any;
   stoneCollected: number;
   setStoneCollected: any;
   metalCollected: number;
-  setMetalCollected: any;
+  setMetalCollected: any; */
 }
 
 export default function BuildingsUI({
   buildings,
   setBuildings,
-  freeworkers,
+  resources,
+  setResources,
+}: /*   freeworkers,
   setFreeworkers,
   woodCollected,
   setWoodCollected,
   stoneCollected,
   setStoneCollected,
   metalCollected,
-  setMetalCollected,
-}: BuildingsUIProps) {
+  setMetalCollected, */
+BuildingsUIProps) {
   return (
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">
@@ -39,6 +44,8 @@ export default function BuildingsUI({
         buildings={buildings}
         buildingName={buildings[0].name}
         setBuildings={setBuildings}
+        resources={resources}
+        setResources={setResources}
         freeworkers={freeworkers}
         setFreeworkers={setFreeworkers}
         freeworkerCost={buildings[0].freeworkerCost}

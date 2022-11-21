@@ -6,16 +6,15 @@ interface DisplayUnitsProps {
 }
 
 export default function DisplayUnits({ unitCounts }: DisplayUnitsProps) {
-  const armySize =
-    unitCounts.meleeCount + unitCounts.pewpewCount + unitCounts.tankyCount;
+  const armySize = unitCounts.melee + unitCounts.pewpew + unitCounts.tanky;
 
   return (
     <>
       <div style={{ fontWeight: "bold" }}>Units trained: {armySize}</div>
       {/* TODO: <UnitCount /> three times? -- DRY! */}
-      <div>🗡️ {unitCounts.meleeCount} Melee</div>
-      <div>🏹 {unitCounts.pewpewCount} Pewpew</div>
-      <div>🛡️ {unitCounts.tankyCount} Tanky</div>
+      <div>🗡️ {unitCounts.melee} Melee</div>
+      <div>🏹 {unitCounts.pewpew} Pewpew</div>
+      <div>🛡️ {unitCounts.tanky} Tanky</div>
     </>
   );
 }

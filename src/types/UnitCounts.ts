@@ -1,5 +1,5 @@
 export interface UnitCounts {
-  meleeCount: number;
-  pewpewCount: number;
-  tankyCount: number;
+  melee: number;
+  pewpew: number;
+  tanky: number;
 }

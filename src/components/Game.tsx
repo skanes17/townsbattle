@@ -14,6 +14,7 @@ import DevTools from "./DevTools";
 import UnitCreation from "./UnitCreation";
 import { Resources } from "../types/Resources";
 import { UnitsInTraining } from "../types/UnitInTraining";
+import { UnitCounts } from "../types/UnitCounts";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Rename workers to villagers
@@ -71,9 +72,8 @@ export default function GameCopy(props: GameProps) {
   });
 
   // used an array of objects here so I could filter it
-  const [buildings, setBuildings] = useState<Buildings[]>([
-    // for melee
-    {
+  const [buildings, setBuildings] = useState<Buildings>({
+    swordsmithy: {
       name: "⚔️ Swordsmithy",
       enabled: false,
       underConstruction: false,
@@ -87,8 +87,7 @@ export default function GameCopy(props: GameProps) {
       metalCost: 0,
       freeworkerCost: 5,
     },
-    // for ranged
-    {
+    archeryRange: {
       name: "🎯 Archery Range",
       enabled: false,
       underConstruction: false,
@@ -103,7 +102,7 @@ export default function GameCopy(props: GameProps) {
       freeworkerCost: 5,
     },
     // for tanks
-    {
+    armorsmithy: {
       name: "🛡️ Armorsmithy",
       enabled: false,
       underConstruction: false,
@@ -118,7 +117,7 @@ export default function GameCopy(props: GameProps) {
       freeworkerCost: 5,
     },
     // for all units
-    {
+    mealHall: {
       name: "🍖 Meal Hall",
       enabled: false,
       underConstruction: false,
@@ -134,7 +133,7 @@ export default function GameCopy(props: GameProps) {
       freeworkerCost: 5,
     },
     // for all units
-    {
+    townCenter: {
       name: "🏙️ Town Center",
       enabled: true,
       underConstruction: false,
@@ -148,7 +147,7 @@ export default function GameCopy(props: GameProps) {
       metalCost: 0,
       freeworkerCost: 5,
     },
-  ]);
+  });
 
   // Unused right now
   const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>({
@@ -501,19 +500,16 @@ export default function GameCopy(props: GameProps) {
     );
   }
 
-  const unitCounts = {
-    meleeCount: myUnits.filter((unit) => unit.unitType === "melee").length,
-    pewpewCount: myUnits.filter((unit) => unit.unitType === "pewpew").length,
-    tankyCount: myUnits.filter((unit) => unit.unitType === "tanky").length,
+  const unitCounts: UnitCounts = {
+    melee: myUnits.filter((unit) => unit.unitType === "melee").length,
+    pewpew: myUnits.filter((unit) => unit.unitType === "pewpew").length,
+    tanky: myUnits.filter((unit) => unit.unitType === "tanky").length,
   };
 
-  const enemyUnitCounts = {
-    enemyMeleeCount: enemyUnits.filter((unit) => unit.unitType === "melee")
-      .length,
-    enemyPewpewCount: enemyUnits.filter((unit) => unit.unitType === "pewpew")
-      .length,
-    enemyTankyCount: enemyUnits.filter((unit) => unit.unitType === "tanky")
-      .length,
+  const enemyUnitCounts: UnitCounts = {
+    melee: enemyUnits.filter((unit) => unit.unitType === "melee").length,
+    pewpew: enemyUnits.filter((unit) => unit.unitType === "pewpew").length,
+    tanky: enemyUnits.filter((unit) => unit.unitType === "tanky").length,
   };
 
   return (
@@ -536,6 +532,8 @@ export default function GameCopy(props: GameProps) {
         // TODO: Refactor using new resources object
         buildings={buildings}
         setBuildings={setBuildings}
+        resources={resources}
+        setResources={setResources}
         freeworkers={freeworkers}
         setFreeworkers={setFreeworkers}
         woodCollected={woodCollected}
@@ -571,16 +569,15 @@ export default function GameCopy(props: GameProps) {
           <div>
             <p>Your army size is {myUnits.length}.</p>
             <p>
-              {unitCounts.meleeCount} melee, {unitCounts.pewpewCount} pewpew,{" "}
-              {unitCounts.tankyCount} tanky.
+              {unitCounts.melee} melee, {unitCounts.pewpew} pewpew,{" "}
+              {unitCounts.tanky} tanky.
             </p>
           </div>
           <div>
             <p>The enemy army has {enemyUnits.length} units.</p>
             <p>
-              {enemyUnitCounts.enemyMeleeCount} melee,{" "}
-              {enemyUnitCounts.enemyPewpewCount} pewpew,{" "}
-              {enemyUnitCounts.enemyTankyCount} tanky.
+              {enemyUnitCounts.melee} melee, {enemyUnitCounts.pewpew} pewpew,{" "}
+              {enemyUnitCounts.tanky} tanky.
               {/* TODO: Make these percents? */}
             </p>
           </div>

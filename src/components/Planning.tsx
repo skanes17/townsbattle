@@ -14,7 +14,7 @@ interface PlanningProps {
   resources: Resources;
   setResources: any;
   unitCounts: UnitCounts;
-  buildings: Buildings[];
+  buildings: Buildings;
 }
 
 export default function Planning({

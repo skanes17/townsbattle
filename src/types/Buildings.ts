@@ -1,4 +1,4 @@
-export interface Buildings {
+export interface Building {
   name: string;
   enabled: boolean;
   underConstruction: boolean;
@@ -13,4 +13,8 @@ export interface Buildings {
   stoneCost: number;
   metalCost: number;
   freeworkerCost: number;
+}
+
+export interface Buildings {
+  [index: string]: Building;
 }
