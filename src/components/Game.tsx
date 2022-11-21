@@ -507,8 +507,6 @@ export default function GameCopy(props: GameProps) {
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
       <Planning
         onClick={endTurn}
-        turn={turn}
-        setTurn={setTurn}
         resources={resources}
         setResources={setResources}
         meleeCount={meleeCount}

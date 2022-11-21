@@ -5,41 +5,56 @@ import Upgrades from "./Upgrades";
 import DisplayUnits from "./DisplayUnits";
 import DisplayBuildings from "./DisplayBuildings";
 import DisplayVillagers from "./DisplayVillagers";
+import { Resources } from "../types/Resources";
+import { Buildings } from "../types/Buildings";
 
-// @ts-ignore
-export default function Planning(props) {
+interface PlanningProps {
+  onClick: () => void;
+  resources: Resources;
+  setResources: any;
+  meleeCount: number;
+  pewpewCount: number;
+  tankyCount: number;
+  buildings: Buildings[];
+}
+
+export default function Planning({
+  onClick,
+  resources,
+  setResources,
+  meleeCount,
+  pewpewCount,
+  tankyCount,
+  buildings,
+}: PlanningProps) {
   return (
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">Planning</h2>
       <div className="displayResources">
-        <DisplayResources resources={props.resources} />{" "}
-        {/* started refactoring resources here */}
+        <DisplayResources resources={resources} />
       </div>
       <br></br>
 
       <div className="freeworkers" style={{ fontWeight: "bold" }}>
-        Free Workers: {props.resources.freeworkers}
+        Free Workers: {resources.freeworkers}
       </div>
       <br></br>
 
-      <DisplayVillagers
-        resources={props.resources}
-        setResources={props.setResources}
-      />
+      <DisplayVillagers resources={resources} setResources={setResources} />
 
       <br></br>
 
       <div className="displayUnits">
         <DisplayUnits
-          meleeCount={props.meleeCount}
-          pewpewCount={props.pewpewCount}
-          tankyCount={props.tankyCount}
+          meleeCount={meleeCount}
+          pewpewCount={pewpewCount}
+          tankyCount={tankyCount}
         />
       </div>
       <br></br>
 
       <div className="displayBuildings">
-        <DisplayBuildings buildings={props.buildings} />
+        <DisplayBuildings buildings={buildings} />
       </div>
 
       <br></br>
@@ -49,7 +64,7 @@ export default function Planning(props) {
       <br></br> */}
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={props.onClick}
+        onClick={onClick}
       >
         End Turn
       </button>

@@ -2,7 +2,11 @@
 
 import React from "react";
 
-export default function DisplayBuildings({ buildings }) {
+interface DisplayBuildingsProps {
+  buildings: Buildings[];
+}
+
+export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   // Old code for objects w/o array
   /* const filteredBuildings = Object.keys(buildings).filter(
     (key) => buildings[key].enabled
