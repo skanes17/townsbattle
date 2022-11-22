@@ -253,6 +253,8 @@ export default function GameCopy(props: GameProps) {
         setEnemyUnits((enemyUnits) => {
           return [...enemyUnits, newUnit];
         });
+
+    setUnitId(unitId + 1);
   };
 
   // TODO: Ideas for battle UI below...
