@@ -232,7 +232,7 @@ export default function GameCopy(props: GameProps) {
     },
   };
 
-  // FUnction to add units to either army
+  // Function to add units to either army
   const addUnit = (unitType: string, friendly: boolean) => {
     // unitType determines which unit to add
     const baseUnit = BASE_UNIT_DATA[unitType];
@@ -382,7 +382,7 @@ export default function GameCopy(props: GameProps) {
 
   // ===END OF COMBAT MECHANICS===
 
-  function endTurn() {
+  const endTurn = () => {
     if (resources.freeworkers > 0) {
       alert("You have not assigned all free workers!");
       return;
@@ -415,22 +415,20 @@ export default function GameCopy(props: GameProps) {
 
     setResources(resourcesCopy);
 
+    // TODO: Add units to army based on unitsInTraining, fix ID duplication
+    // ===INSERT FUNCTION HERE===
+    const newUnits: Unit[] = [];
+
+    // @ts-ignore
+    Object.keys(unitCounts).map((key) => unitCounts[key]);
+    // TODO: PICK UP FROM HERE
+    // This will check the counts and iterate accordingly
+    // After that, update the array
+    // use unitCounts[key] as the number of iterations
+    // eg "for i < unitCounts[key]" or something
+
     // increment turn
     setTurn(turn + 1);
-
-    // TODO: Insert function calls to add units to friendly pool
-    // TODO: Fix ID duplication
-
-    // TODO: Refactor this!!
-    /* for (let i = 0; i < unitsInTraining.melee; i++) {
-      addMelee();
-    }
-    for (let i = 0; i < unitsInTraining.pewpew; i++) {
-      addPewpew();
-    }
-    for (let i = 0; i < unitsInTraining.tanky; i++) {
-      addTanky();
-    } */
 
     // reset units in training
     setUnitsInTraining({ melee: 0, pewpew: 0, tanky: 0 });
@@ -450,7 +448,7 @@ export default function GameCopy(props: GameProps) {
 
     // TODO: Ask why this can be removed and apparently still work properly
     setBuildings(buildingsCopy);
-  }
+  };
 
   const unitCounts: UnitCounts = {
     melee: myUnits.filter((unit) => unit.unitType === "melee").length,
