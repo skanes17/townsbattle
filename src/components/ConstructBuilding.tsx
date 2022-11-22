@@ -8,24 +8,6 @@ interface ConstructBuildingProps {
   buildingType: string;
   resources: Resources;
   setResources: any;
-  /* index: number;
-  resource1Name: "wood" | "stone" | "metal";
-  resource2Name: "wood" | "stone" | "metal";
-  resource3Name?: "wood" | "stone" | "metal";
-  buildingName: string;
-  freeworkers: number;
-  setFreeworkers: any;
-  freeworkerCost: number;
-  resource1: number;
-  resource2: number;
-  resource3?: number;
-  setResource1: any;
-  setResource2: any;
-  setResource3?: any;
-  resource1Cost: number;
-  resource2Cost: number;
-  resource3Cost?: number;
-  underConstruction: boolean; */
 }
 
 export default function ConstructBuilding({
@@ -90,6 +72,7 @@ export default function ConstructBuilding({
         updatedResources.stoneCollected + stoneCost;
       updatedResources.metalCollected =
         updatedResources.metalCollected + metalCost;
+      setResources(updatedResources);
     }
   };
 
@@ -115,7 +98,7 @@ export default function ConstructBuilding({
         >
           Cancel
         </button>
-        Ready to construct:{" "}
+        Under Construction:{" "}
         {buildings[buildingType].underConstruction ? "Yes" : "No"}
       </div>
     </>

@@ -1,7 +1,8 @@
 export interface Building {
   name: string;
-  enabled: boolean;
+  /* enabled: boolean; */
   underConstruction: boolean;
+  constructed: boolean;
   tier: number;
   attackBonus: number;
   healthBonus: number;

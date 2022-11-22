@@ -75,8 +75,9 @@ export default function GameCopy(props: GameProps) {
   const [buildings, setBuildings] = useState<Buildings>({
     swordsmithy: {
       name: "⚔️ Swordsmithy",
-      enabled: false,
+      /* enabled: true, */
       underConstruction: false,
+      constructed: false,
       tier: 1,
       attackBonus: 2,
       healthBonus: 2,
@@ -89,8 +90,9 @@ export default function GameCopy(props: GameProps) {
     },
     archeryRange: {
       name: "🎯 Archery Range",
-      enabled: false,
+      /* enabled: true, */
       underConstruction: false,
+      constructed: false,
       tier: 1,
       attackBonus: 3,
       healthBonus: 1,
@@ -104,8 +106,9 @@ export default function GameCopy(props: GameProps) {
     // for tanks
     armorsmithy: {
       name: "🛡️ Armorsmithy",
-      enabled: false,
+      /* enabled: true, */
       underConstruction: false,
+      constructed: false,
       tier: 1,
       attackBonus: 1,
       healthBonus: 3,
@@ -119,8 +122,9 @@ export default function GameCopy(props: GameProps) {
     // for all units
     mealHall: {
       name: "🍖 Meal Hall",
-      enabled: false,
+      /* enabled: true, */
       underConstruction: false,
+      constructed: false,
       tier: 1,
       attackBonus: 0,
       healthBonus: 2,
@@ -135,8 +139,9 @@ export default function GameCopy(props: GameProps) {
     // for all units
     townCenter: {
       name: "🏙️ Town Center",
-      enabled: true,
+      /* enabled: true, */
       underConstruction: false,
+      constructed: true,
       tier: 1,
       attackBonus: 0,
       effect: "If this building is destroyed, it's game over!",
@@ -145,12 +150,12 @@ export default function GameCopy(props: GameProps) {
       woodCost: 0,
       stoneCost: 0,
       metalCost: 0,
-      freeworkerCost: 5,
+      freeworkerCost: 0,
     },
   });
 
-  const enabledBuildings = Object.keys(buildings).filter(
-    (key) => buildings[key].enabled
+  const buildingsToConstruct = Object.keys(buildings).filter(
+    (key) => !buildings[key].constructed
   );
 
   // Unused right now
@@ -488,20 +493,19 @@ export default function GameCopy(props: GameProps) {
     // reset units in training
     setUnitsInTraining({ melee: 0, pewpew: 0, tanky: 0 });
 
-    // buildings finish construction and are now built, setting enabled: true
-    setBuildings(
-      buildings.map((building) => {
-        if (building.underConstruction === true) {
-          return {
-            ...building,
-            enabled: true,
-            underConstruction: false,
-          };
-        } else {
-          return building;
-        }
-      })
+    // make an array of which buildings were set to construct
+    const newBuildings = Object.keys(buildings).filter(
+      (key) => buildings[key].underConstruction
     );
+    // copy buildings to preserve state
+    const buildingsCopy = { ...buildings };
+
+    // take them out of construction and set them to constructed
+    newBuildings.map((buildingType) => {
+      buildingsCopy[buildingType].underConstruction = false;
+      buildingsCopy[buildingType].constructed = true;
+    });
+    // update state
   }
 
   const unitCounts: UnitCounts = {
@@ -536,17 +540,9 @@ export default function GameCopy(props: GameProps) {
         // TODO: Refactor using new resources object
         buildings={buildings}
         setBuildings={setBuildings}
-        enabledBuildings={enabledBuildings}
+        buildingsToConstruct={buildingsToConstruct}
         resources={resources}
         setResources={setResources}
-        /* freeworkers={freeworkers}
-        setFreeworkers={setFreeworkers}
-        woodCollected={woodCollected}
-        setWoodCollected={setWoodCollected}
-        stoneCollected={stoneCollected}
-        setStoneCollected={setStoneCollected}
-        metalCollected={metalCollected}
-        setMetalCollected={setMetalCollected} */
       />
 
       <UnitCreation

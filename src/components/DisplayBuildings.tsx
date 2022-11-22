@@ -7,17 +7,17 @@ interface DisplayBuildingsProps {
 }
 
 export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
-  // Filter returns the buildings data for enabled buildings
+  // Filter returns the buildings data for constructed buildings
   // Object.keys(buildings) then returns only the keys (names) for those enabled buildings
-  const enabledBuildings = Object.keys(buildings).filter(
-    (key) => buildings[key].enabled
+  const constructedBuildings = Object.keys(buildings).filter(
+    (key) => buildings[key].constructed
   );
 
   return (
     <>
       <div style={{ fontWeight: "bold" }}>Buildings constructed</div>
       {/* buildings are mapped dynamically to component */}
-      {enabledBuildings.map((buildingType) => (
+      {constructedBuildings.map((buildingType) => (
         <>
           <p>{buildings[buildingType].name}</p>
           <p>Tier: {buildings[buildingType].tier}</p>
