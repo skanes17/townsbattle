@@ -7,27 +7,30 @@ interface DisplayVillagersProps {
   setResources: any;
 }
 
-export default function DisplayVillagers(props: DisplayVillagersProps) {
+export default function DisplayVillagers({
+  resources,
+  setResources,
+}: DisplayVillagersProps) {
   return (
     <div className="workers">
       <div style={{ fontWeight: "bold" }}>Workers</div>
       <Villager
         name="🪓 Woodcutters"
         workerType="woodcutters"
-        resources={props.resources}
-        setResources={props.setResources}
+        resources={resources}
+        setResources={setResources}
       />
       <Villager
         name="⚒️ Stonemasons"
         workerType="stonemasons"
-        resources={props.resources}
-        setResources={props.setResources}
+        resources={resources}
+        setResources={setResources}
       />
       <Villager
         name="🥽 Metalworkers"
         workerType="metalworkers"
-        resources={props.resources}
-        setResources={props.setResources}
+        resources={resources}
+        setResources={setResources}
       />
     </div>
   );

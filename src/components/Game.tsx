@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { GameProps } from "../types/GameProps";
 import Planning from "./Planning";
-import Combat from "./Combat";
-import AddUnitButton from "./AddUnitButton";
-import TrainUnits from "./TrainUnits";
-import ConstructBuilding from "./ConstructBuilding";
 import BuildingsUI from "./BuildingsUI";
 import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
@@ -15,6 +11,7 @@ import UnitCreation from "./UnitCreation";
 import { Resources } from "../types/Resources";
 import { UnitsInTraining } from "../types/UnitInTraining";
 import { UnitCounts } from "../types/UnitCounts";
+import ArmyDetails from "./ArmyDetails";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Rename workers to villagers
@@ -37,14 +34,9 @@ export default function GameCopy(props: GameProps) {
 
   // current number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
-  const [woodcutters, setWoodcutters] = useState(0);
-  const [woodCollected, setWoodCollected] = useState<number>(0);
-  const [stonemasons, setStonemasons] = useState(0);
-  const [stoneCollected, setStoneCollected] = useState(0);
-  const [metalworkers, setMetalworkers] = useState(0);
-  const [metalCollected, setMetalCollected] = useState(0);
+
   const [newWorkers, setNewWorkers] = useState(1);
-  const [freeworkers, setFreeworkers] = useState(5);
+
   // multipliers determine # of resources harvested per worker
   const [woodMultiplier, setWoodMultipler] = useState(1);
   const [stoneMultiplier, setStoneMultipler] = useState(1);
@@ -71,11 +63,10 @@ export default function GameCopy(props: GameProps) {
     },
   });
 
-  // used an array of objects here so I could filter it
   const [buildings, setBuildings] = useState<Buildings>({
+    // for melee
     swordsmithy: {
       name: "⚔️ Swordsmithy",
-      /* enabled: true, */
       underConstruction: false,
       constructed: false,
       tier: 1,
@@ -88,9 +79,9 @@ export default function GameCopy(props: GameProps) {
       metalCost: 0,
       freeworkerCost: 5,
     },
+    // for pewpew
     archeryRange: {
       name: "🎯 Archery Range",
-      /* enabled: true, */
       underConstruction: false,
       constructed: false,
       tier: 1,
@@ -103,10 +94,9 @@ export default function GameCopy(props: GameProps) {
       metalCost: 10,
       freeworkerCost: 5,
     },
-    // for tanks
+    // for tanky
     armorsmithy: {
       name: "🛡️ Armorsmithy",
-      /* enabled: true, */
       underConstruction: false,
       constructed: false,
       tier: 1,
@@ -122,7 +112,6 @@ export default function GameCopy(props: GameProps) {
     // for all units
     mealHall: {
       name: "🍖 Meal Hall",
-      /* enabled: true, */
       underConstruction: false,
       constructed: false,
       tier: 1,
@@ -139,7 +128,6 @@ export default function GameCopy(props: GameProps) {
     // for all units
     townCenter: {
       name: "🏙️ Town Center",
-      /* enabled: true, */
       underConstruction: false,
       constructed: true,
       tier: 1,
@@ -479,7 +467,7 @@ export default function GameCopy(props: GameProps) {
     setTurn(turn + 1);
 
     // TODO: Insert function calls to add units to friendly pool
-    // TODO: Fix functions not working as expected when called this way (eg IDs are duplicated)
+    // TODO: Fix ID duplication
     for (let i = 0; i < unitsInTraining.melee; i++) {
       addMelee();
     }
@@ -505,7 +493,9 @@ export default function GameCopy(props: GameProps) {
       buildingsCopy[buildingType].underConstruction = false;
       buildingsCopy[buildingType].constructed = true;
     });
-    // update state
+
+    // TODO: Ask why this can be removed and apparently still work properly
+    setBuildings(buildingsCopy);
   }
 
   const unitCounts: UnitCounts = {
@@ -537,7 +527,6 @@ export default function GameCopy(props: GameProps) {
       <br></br>
 
       <BuildingsUI
-        // TODO: Refactor using new resources object
         buildings={buildings}
         setBuildings={setBuildings}
         buildingsToConstruct={buildingsToConstruct}
@@ -553,47 +542,23 @@ export default function GameCopy(props: GameProps) {
         unitsInTraining={unitsInTraining}
         setUnitsInTraining={setUnitsInTraining}
       />
-      <br></br>
 
-      {/* TODO: Encapsulate Combat properly into a component */}
-      <div>
-        <h2 className="text-4xl font-extrabold dark:text-white">
-          Combat Mechanics
-        </h2>
-        <button
-          onClick={unitBattler}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Fight!
-        </button>
-        <div>
-          <div>
-            <p>Your army size is {myUnits.length}.</p>
-            <p>
-              {unitCounts.melee} melee, {unitCounts.pewpew} pewpew,{" "}
-              {unitCounts.tanky} tanky.
-            </p>
-          </div>
-          <div>
-            <p>The enemy army has {enemyUnits.length} units.</p>
-            <p>
-              {enemyUnitCounts.melee} melee, {enemyUnitCounts.pewpew} pewpew,{" "}
-              {enemyUnitCounts.tanky} tanky.
-              {/* TODO: Make these percents? */}
-            </p>
-          </div>
-        </div>
-        <br></br>
+      <ArmyDetails
+        myUnits={myUnits}
+        enemyUnits={enemyUnits}
+        unitBattler={unitBattler}
+        unitCounts={unitCounts}
+        enemyUnitCounts={enemyUnitCounts}
+      />
 
-        <DevTools
-          addMelee={addMelee}
-          addPewpew={addPewpew}
-          addTanky={addTanky}
-          addEnemyMelee={addEnemyMelee}
-          addEnemyPewpew={addEnemyPewpew}
-          addEnemyTanky={addEnemyTanky}
-        />
-      </div>
+      <DevTools
+        addMelee={addMelee}
+        addPewpew={addPewpew}
+        addTanky={addTanky}
+        addEnemyMelee={addEnemyMelee}
+        addEnemyPewpew={addEnemyPewpew}
+        addEnemyTanky={addEnemyTanky}
+      />
 
       {/*  TODO: Make this component work
            <Combat

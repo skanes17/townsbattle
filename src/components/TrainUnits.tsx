@@ -17,7 +17,6 @@ export interface TrainUnitsProps {
 // TODO: Create unit on End Turn click
 // TODO: Add units to the appropriate array based on the unitsInTraining
 
-// @ts-ignore
 export default function TrainUnits({
   name,
   unitType,

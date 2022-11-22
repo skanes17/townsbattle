@@ -51,7 +51,7 @@ export default function Planning({
       </div>
 
       <br></br>
-      {/* upgrades would show conditionally when enough resources are gathered */}
+      {/* upgrades could show conditionally when enough resources are gathered */}
       {/*       <Upgrades />
       <br></br>
       <br></br> */}

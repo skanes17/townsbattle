@@ -37,6 +37,7 @@ export default function UnitCreation({
           setUnitsInTraining={setUnitsInTraining}
         />
       ))}
+      <br></br>
     </div>
   );
 }

@@ -1,9 +1,16 @@
 import React from "react";
 
-// TODO: Figure out why first click doesn't add a unit
+export interface AddUnitButtonProps {
+  addUnitFunction: any;
+  name: string;
+  className: string;
+}
 
-// @ts-ignore
-export default function AddUnitButton({ addUnitFunction, name, className }) {
+export default function AddUnitButton({
+  addUnitFunction,
+  name,
+  className,
+}: AddUnitButtonProps) {
   return (
     <>
       <button onClick={addUnitFunction} className={className}>

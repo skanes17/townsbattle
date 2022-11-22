@@ -23,7 +23,6 @@ export default function ConstructBuilding({
   const metalCost = buildings[buildingType]["metalCost"];
 
   // TODO: Toggle Build/Click as one button
-  // adjust later to accomodate sending state to UI
 
   const handleBuildClick = (buildingType: string) => {
     if (
@@ -54,7 +53,6 @@ export default function ConstructBuilding({
     }
   };
 
-  // TODO: Remove Build/Cancel mechanics for built buildings
   const handleCancelClick = (buildingType: string) => {
     if (buildings[buildingType].underConstruction === true) {
       // cancel building construction
