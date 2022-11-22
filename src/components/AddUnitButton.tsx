@@ -1,20 +1,25 @@
 import React from "react";
 
 export interface AddUnitButtonProps {
-  addUnitFunction: any;
+  addUnit: any;
+  unitType: string;
   name: string;
+  friendly: boolean;
   className: string;
 }
 
 export default function AddUnitButton({
-  addUnitFunction,
+  addUnit,
+  unitType,
   name,
+  friendly,
   className,
 }: AddUnitButtonProps) {
   return (
     <>
-      <button onClick={addUnitFunction} className={className}>
-        +1 {name} (DevTool)
+      <button onClick={() => addUnit(unitType, friendly)} className={className}>
+        +1 {friendly ? "" : "enemy "}
+        {name} (DevTool)
       </button>
     </>
   );

@@ -22,7 +22,7 @@ export default function BuildingsUI({
       <h2 className="text-4xl font-extrabold dark:text-white">
         Building Creation
       </h2>
-      {buildingsToConstruct.map((buildingType: string) => (
+      {buildingsToConstruct.map((buildingType) => (
         <ConstructBuilding
           buildings={buildings}
           setBuildings={setBuildings}

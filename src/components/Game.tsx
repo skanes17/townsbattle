@@ -12,10 +12,17 @@ import { Resources } from "../types/Resources";
 import { UnitsInTraining } from "../types/UnitInTraining";
 import { UnitCounts } from "../types/UnitCounts";
 import ArmyDetails from "./ArmyDetails";
+import { BaseUnit } from "../types/BaseUnit";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Rename workers to villagers
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
+
+// TODO: Call a function to add a set number of enemy units per turn
+// -eg start with an army of 3, one of each
+// After first wave, the number is increased by some amount each time
+// -eg 7 units for second wave, enemy units randomly chosen
+// Composition of army could be displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
 export default function GameCopy(props: GameProps) {
   const [turn, setTurn] = useState(1);
@@ -195,30 +202,6 @@ export default function GameCopy(props: GameProps) {
     },
   ]);
 
-  // ===STATS FOR NEW UNITS===
-  // TODO: Will have dynamic update of attack and health stats based on building bonuses
-  // Note: State was removed -- keep an eye out for problems
-  const baseMelee: Unit = {
-    unitType: "melee",
-    name: "Melee",
-    attack: 5,
-    health: 5,
-  };
-
-  const basePewpew: Unit = {
-    unitType: "pewpew",
-    name: "Pewpew",
-    attack: 7,
-    health: 3,
-  };
-
-  const baseTanky: Unit = {
-    unitType: "tanky",
-    name: "Tanky",
-    attack: 3,
-    health: 7,
-  };
-
   // how many units you're going to train this turn
   const [unitsInTraining, setUnitsInTraining] = useState<UnitsInTraining>({
     melee: 0,
@@ -226,86 +209,53 @@ export default function GameCopy(props: GameProps) {
     tanky: 0,
   });
 
-  // =====ADDING FRIENDLY UNITS TO ARMY=====
-  const addMelee = () => {
-    // make a COPY of the state array so we can append ID to the end
-    const newFriendlyMelee = { ...baseMelee, id: unitId };
-
-    // take existing myUnits and append newFriendlyMelee to the end
-    setMyUnits((myUnits) => {
-      return [...myUnits, newFriendlyMelee];
-    });
-
-    console.log(myUnits);
-    // increment the ID counter to ensure units are unique
-    setUnitId(unitId + 1);
-    // filter to check type, count matches, use it to update current unit number
+  // ===BASE STATS FOR NEW UNITS===
+  // TODO: Will have dynamic update of attack and health stats based on building bonuses
+  const BASE_UNIT_DATA: BaseUnit = {
+    melee: {
+      unitType: "melee",
+      name: "Melee",
+      attack: 5,
+      health: 5,
+    },
+    pewpew: {
+      unitType: "pewpew",
+      name: "Pewpew",
+      attack: 7,
+      health: 3,
+    },
+    tanky: {
+      unitType: "tanky",
+      name: "Tanky",
+      attack: 3,
+      health: 7,
+    },
   };
 
-  const addPewpew = () => {
-    const newFriendlyPewpew = { ...basePewpew, id: unitId };
+  // FUnction to add units to either army
+  const addUnit = (unitType: string, friendly: boolean) => {
+    // unitType determines which unit to add
+    const baseUnit = BASE_UNIT_DATA[unitType];
 
-    setMyUnits((myUnits) => {
-      return [...myUnits, newFriendlyPewpew];
-    });
+    // TODO: Check that this works
+    if (!baseUnit) {
+      return;
+    }
 
-    console.log(myUnits);
-    setUnitId(unitId + 1);
+    const newUnit = { ...baseUnit, id: unitId };
+
+    friendly
+      ? // if friendly, update friendly army
+        setMyUnits((myUnits) => {
+          return [...myUnits, newUnit];
+        })
+      : // if not friendly, update enemy army
+        setEnemyUnits((enemyUnits) => {
+          return [...enemyUnits, newUnit];
+        });
   };
 
-  const addTanky = () => {
-    const newFriendlyTanky = { ...baseTanky, id: unitId };
-
-    setMyUnits((myUnits) => {
-      return [...myUnits, newFriendlyTanky];
-    });
-
-    console.log(myUnits);
-    setUnitId(unitId + 1);
-  };
-  // =====END OF FRIENDLY UNITS=====
-
-  // =====ADDING ENEMY UNITS=====
-  // TODO: Call a function to add a set number of enemy units per turn
-  // Eg start with an army of 3, one of each
-  // TODO: After first wave, the number is increased by some amount each time
-  // Eg 7 units for second wave, enemy units randomly chosen
-  // TODO: Composition of army is displayed to UI, for example 20% melee 30% pewpew 50% tanky
-
-  const addEnemyMelee = () => {
-    const newEnemyMelee = { ...baseMelee, id: unitId };
-
-    setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newEnemyMelee];
-    });
-
-    console.log(enemyUnits);
-    setUnitId(unitId + 1);
-  };
-
-  const addEnemyPewpew = () => {
-    const newEnemyPewpew = { ...basePewpew, id: unitId };
-
-    setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newEnemyPewpew];
-    });
-
-    console.log(enemyUnits);
-    setUnitId(unitId + 1);
-  };
-
-  const addEnemyTanky = () => {
-    const newEnemyTanky = { ...baseTanky, id: unitId };
-
-    setEnemyUnits((enemyUnits) => {
-      return [...enemyUnits, newEnemyTanky];
-    });
-
-    console.log(enemyUnits);
-    setUnitId(unitId + 1);
-  };
-
-  // TODO: Ideas for battle UI below:
+  // TODO: Ideas for battle UI below...
   // • start a log to display what's happening
   // • this could exist in its own side div eventually, and show:
   // • which units were selected...
@@ -468,7 +418,9 @@ export default function GameCopy(props: GameProps) {
 
     // TODO: Insert function calls to add units to friendly pool
     // TODO: Fix ID duplication
-    for (let i = 0; i < unitsInTraining.melee; i++) {
+
+    // TODO: Refactor this!!
+    /* for (let i = 0; i < unitsInTraining.melee; i++) {
       addMelee();
     }
     for (let i = 0; i < unitsInTraining.pewpew; i++) {
@@ -476,7 +428,7 @@ export default function GameCopy(props: GameProps) {
     }
     for (let i = 0; i < unitsInTraining.tanky; i++) {
       addTanky();
-    }
+    } */
 
     // reset units in training
     setUnitsInTraining({ melee: 0, pewpew: 0, tanky: 0 });
@@ -551,14 +503,7 @@ export default function GameCopy(props: GameProps) {
         enemyUnitCounts={enemyUnitCounts}
       />
 
-      <DevTools
-        addMelee={addMelee}
-        addPewpew={addPewpew}
-        addTanky={addTanky}
-        addEnemyMelee={addEnemyMelee}
-        addEnemyPewpew={addEnemyPewpew}
-        addEnemyTanky={addEnemyTanky}
-      />
+      <DevTools BASE_UNIT_DATA={BASE_UNIT_DATA} addUnit={addUnit} />
 
       {/*  TODO: Make this component work
            <Combat
