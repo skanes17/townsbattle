@@ -1,4 +1,6 @@
+import { BaseUnit } from "../types/BaseUnit";
 import { Resources } from "../types/Resources";
+import { Unit } from "../types/Unit";
 import { UnitCosts } from "../types/UnitCosts";
 import { UnitsInTraining } from "../types/UnitInTraining";
 import TrainUnits from "./TrainUnits";
@@ -10,6 +12,8 @@ interface UnitCreationProps {
   setUnitsInTraining: any;
   resources: Resources;
   setResources: any;
+  BASE_UNIT_DATA: BaseUnit;
+  addUnit: any;
 }
 
 export default function UnitCreation({
@@ -18,23 +22,27 @@ export default function UnitCreation({
   setUnitsInTraining,
   resources,
   setResources,
+  BASE_UNIT_DATA,
+  addUnit,
 }: UnitCreationProps) {
-  const unitTypes = Object.keys(unitsInTraining);
+  /* const unitTypes = Object.keys(unitsInTraining); */
 
   return (
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">Unit Creation</h2>
       {/* TODO: Add defense against bugs (e.g. non-existant units) */}
 
-      {unitTypes.map((unitType: string) => (
+      {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
         <TrainUnits
-          name="🗡️ Melee"
           unitType={unitType}
           resources={resources}
           setResources={setResources}
           unitCosts={unitCosts}
           unitsInTraining={unitsInTraining}
           setUnitsInTraining={setUnitsInTraining}
+          BASE_UNIT_DATA={BASE_UNIT_DATA}
+          addUnit={addUnit}
+          friendly={true}
         />
       ))}
       <br></br>

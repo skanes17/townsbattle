@@ -417,7 +417,7 @@ export default function GameCopy(props: GameProps) {
 
     // TODO: Add units to army based on unitsInTraining
     // ===INSERT FUNCTION HERE===
-    const addNewUnits = () => {
+    /* const addNewUnits = () => {
       let tempId;
       // new array to hold trained units
       const newUnits: Unit[] = [];
@@ -456,7 +456,7 @@ export default function GameCopy(props: GameProps) {
       // After that, update the array
       // use unitCounts[key] as the number of iterations
       // eg "for i < unitCounts[key]" or something
-    };
+    }; */
 
     // increment turn
     setTurn(turn + 1);
@@ -524,6 +524,8 @@ export default function GameCopy(props: GameProps) {
         setResources={setResources}
         unitsInTraining={unitsInTraining}
         setUnitsInTraining={setUnitsInTraining}
+        BASE_UNIT_DATA={BASE_UNIT_DATA}
+        addUnit={addUnit}
       />
 
       <ArmyDetails

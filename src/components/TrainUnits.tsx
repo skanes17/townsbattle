@@ -1,30 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { BaseUnit } from "../types/BaseUnit";
 import { Resources } from "../types/Resources";
+import { Unit } from "../types/Unit";
 import { UnitCosts } from "../types/UnitCosts";
 import { UnitsInTraining } from "../types/UnitInTraining";
+import AddUnitButton from "./AddUnitButton";
 
 export interface TrainUnitsProps {
   // TODO: Improve use of name below by incorporating the myUnits structure (nested)
-  name: "🗡️ Melee" | "🏹 Pewpew" | "🛡️ Tanky";
   unitType: string;
   resources: Resources;
   setResources: any;
   unitCosts: UnitCosts;
   unitsInTraining: UnitsInTraining;
   setUnitsInTraining: any;
+  BASE_UNIT_DATA: BaseUnit;
+  addUnit: any;
+  friendly: boolean;
 }
 
 // TODO: Create unit on End Turn click
 // TODO: Add units to the appropriate array based on the unitsInTraining
 
 export default function TrainUnits({
-  name,
   unitType,
   resources,
   setResources,
   unitCosts,
   unitsInTraining,
   setUnitsInTraining,
+  addUnit,
+  friendly,
 }: TrainUnitsProps) {
   const freeworkerCost = unitCosts[unitType].freeworkerCost;
   const woodCost = unitCosts[unitType]["woodCost"];
@@ -98,7 +104,11 @@ export default function TrainUnits({
       <div>
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={() => handlePlusClick(unitType)}
+          onClick={() => {
+            handlePlusClick(unitType);
+            // updates the myUnitsArray as well
+            addUnit(unitType, friendly);
+          }}
         >
           +1
         </button>
