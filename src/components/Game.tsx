@@ -415,17 +415,48 @@ export default function GameCopy(props: GameProps) {
 
     setResources(resourcesCopy);
 
-    // TODO: Add units to army based on unitsInTraining, fix ID duplication
+    // TODO: Add units to army based on unitsInTraining
     // ===INSERT FUNCTION HERE===
-    const newUnits: Unit[] = [];
+    const addNewUnits = () => {
+      let tempId;
+      // new array to hold trained units
+      const newUnits: Unit[] = [];
 
-    // @ts-ignore
-    Object.keys(unitCounts).map((key) => unitCounts[key]);
-    // TODO: PICK UP FROM HERE
-    // This will check the counts and iterate accordingly
-    // After that, update the array
-    // use unitCounts[key] as the number of iterations
-    // eg "for i < unitCounts[key]" or something
+      // do the following for each unit type...
+      // @ts-ignore
+      Object.keys(BASE_UNIT_DATA).map((unitType) => {
+        // set the baseUnit of the current unitType
+        const baseUnit = BASE_UNIT_DATA[unitType];
+
+        // return if that type doesn't exist
+        if (!baseUnit) {
+          return;
+        }
+
+        // iterate based on the number of that unit type in training
+        //@ts-ignore
+        for (let i = 0; i < unitsInTraining[unitType]; i++) {
+          // create a new unit on each iteration
+          const newUnit = { ...baseUnit, id: unitId + i };
+          // toss them into the array
+          newUnits.push(newUnit);
+          // TODO: tempId has local scope. What's a workaround?
+          tempId = i;
+        }
+      });
+      // TODO: want to update the ID after the units are added
+      setUnitId(tempId + 1);
+      // TODO: want to update the myUnits array to hold the new units
+      setMyUnits((myUnits) => {
+        return [...myUnits, newUnits];
+      });
+      //increment ID
+      // TODO: PICK UP FROM HERE
+      // This will check the counts and iterate accordingly
+      // After that, update the array
+      // use unitCounts[key] as the number of iterations
+      // eg "for i < unitCounts[key]" or something
+    };
 
     // increment turn
     setTurn(turn + 1);
