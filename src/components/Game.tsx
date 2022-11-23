@@ -24,7 +24,7 @@ import { BaseUnit } from "../types/BaseUnit";
 // -eg 7 units for second wave, enemy units randomly chosen
 // Composition of army could be displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
-export default function GameCopy(props: GameProps) {
+export default function Game(props: GameProps) {
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
@@ -520,7 +520,7 @@ export default function GameCopy(props: GameProps) {
   };
 
   // how many units you're going to train this turn
-  const unitsInTraining = {
+  const unitsInTraining: UnitsInTraining = {
     melee: myTrainingUnits.filter((unit) => unit.unitType === "melee").length,
     pewpew: myTrainingUnits.filter((unit) => unit.unitType === "pewpew").length,
     tanky: myTrainingUnits.filter((unit) => unit.unitType === "tanky").length,
