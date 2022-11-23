@@ -16,6 +16,7 @@ export interface TrainUnitsProps {
   setUnitsInTraining: any;
   BASE_UNIT_DATA: BaseUnit;
   addUnit: any;
+  removeUnit: any;
   friendly: boolean;
 }
 
@@ -30,6 +31,7 @@ export default function TrainUnits({
   unitsInTraining,
   setUnitsInTraining,
   addUnit,
+  removeUnit,
   friendly,
 }: TrainUnitsProps) {
   const freeworkerCost = unitCosts[unitType].freeworkerCost;
@@ -114,7 +116,10 @@ export default function TrainUnits({
         </button>
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={() => handleMinusClick(unitType)}
+          onClick={() => {
+            handleMinusClick(unitType);
+            removeUnit(unitType, friendly);
+          }}
         >
           -1
         </button>

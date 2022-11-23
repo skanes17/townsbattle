@@ -14,6 +14,7 @@ interface UnitCreationProps {
   setResources: any;
   BASE_UNIT_DATA: BaseUnit;
   addUnit: any;
+  removeUnit: any;
 }
 
 export default function UnitCreation({
@@ -24,6 +25,7 @@ export default function UnitCreation({
   setResources,
   BASE_UNIT_DATA,
   addUnit,
+  removeUnit,
 }: UnitCreationProps) {
   /* const unitTypes = Object.keys(unitsInTraining); */
 
@@ -42,6 +44,7 @@ export default function UnitCreation({
           setUnitsInTraining={setUnitsInTraining}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           addUnit={addUnit}
+          removeUnit={removeUnit}
           friendly={true}
         />
       ))}

@@ -177,6 +177,8 @@ export default function GameCopy(props: GameProps) {
 
   const [myUnits, setMyUnits] = useState<Unit[]>([]);
 
+  const [myTrainingUnits, setMyTrainingUnits] = useState<Unit[]>([]);
+
   // placeholder enemy array for testing
   const [enemyUnits, setEnemyUnits] = useState<Unit[]>([
     {
@@ -232,7 +234,7 @@ export default function GameCopy(props: GameProps) {
     },
   };
 
-  // Function to add units to either army
+  // Function to ADD units to either army
   const addUnit = (unitType: string, friendly: boolean) => {
     // unitType determines which unit to add
     const baseUnit = BASE_UNIT_DATA[unitType];
@@ -255,6 +257,29 @@ export default function GameCopy(props: GameProps) {
         });
 
     setUnitId(unitId + 1);
+  };
+
+  // Function to REMOVE units from either army
+  // TODO: Fix having to use the unitTypeString workaround
+  const removeUnit = (unitTypeString: string, friendly: boolean) => {
+    if (friendly) {
+      // if friendly, update friendly army
+      //@ts-ignore
+      const chosenId = myUnits.find(
+        (unit) => unit.unitType === unitTypeString
+      ).id;
+
+      // FILTER OUT that unit from the array
+      setMyUnits(myUnits.filter((unit) => unit.id !== chosenId));
+    } else {
+      // if not friendly, update enemy army
+      //@ts-ignore
+      const chosenId = enemyUnits.find(
+        (unit) => unit.unitType === unitTypeString
+      ).id;
+
+      setEnemyUnits(myUnits.filter((unit) => unit.id !== chosenId));
+    }
   };
 
   // TODO: Ideas for battle UI below...
@@ -526,6 +551,7 @@ export default function GameCopy(props: GameProps) {
         setUnitsInTraining={setUnitsInTraining}
         BASE_UNIT_DATA={BASE_UNIT_DATA}
         addUnit={addUnit}
+        removeUnit={removeUnit}
       />
 
       <ArmyDetails
