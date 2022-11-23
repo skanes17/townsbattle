@@ -230,6 +230,7 @@ export default function Game(props: GameProps) {
   // Function to ADD units to either army
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
     if (
+      // TODO: Make the "woodCost", etc dynamic
       resources.freeworkers >= unitCosts[unitType].freeworkerCost &&
       resources.woodCollected >= unitCosts[unitType]["woodCost"] &&
       resources.stoneCollected >= unitCosts[unitType]["stoneCost"] &&
@@ -469,6 +470,7 @@ export default function Game(props: GameProps) {
     const resourcesCopy = { ...resources };
     console.log(resourcesCopy);
 
+    // TODO: Make this dynamic based on existing resources
     resourcesCopy.woodCollected =
       resources.woodCollected + resources.woodcutters * woodMultiplier;
     resourcesCopy.stoneCollected =
@@ -519,6 +521,7 @@ export default function Game(props: GameProps) {
     setTurn(turn + 1);
   };
 
+  // TODO: How to make this dyanmic based on base units?
   // how many units you're going to train this turn
   const unitsInTraining: UnitsInTraining = {
     melee: myTrainingUnits.filter((unit) => unit.unitType === "melee").length,
