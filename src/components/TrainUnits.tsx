@@ -13,10 +13,12 @@ export interface TrainUnitsProps {
   setResources: any;
   unitCosts: UnitCosts;
   unitsInTraining: UnitsInTraining;
-  setUnitsInTraining: any;
-  BASE_UNIT_DATA: BaseUnit;
-  addUnit: any;
-  removeUnit: any;
+  /*   setUnitsInTraining: any;
+   */ BASE_UNIT_DATA: BaseUnit;
+  addTrainingUnit: any;
+  removeTrainingUnit: any;
+  /* addUnit: any;
+  removeUnit: any; */
   friendly: boolean;
 }
 
@@ -29,9 +31,8 @@ export default function TrainUnits({
   setResources,
   unitCosts,
   unitsInTraining,
-  setUnitsInTraining,
-  addUnit,
-  removeUnit,
+  addTrainingUnit,
+  removeTrainingUnit,
   friendly,
 }: TrainUnitsProps) {
   const freeworkerCost = unitCosts[unitType].freeworkerCost;
@@ -47,12 +48,6 @@ export default function TrainUnits({
       resources.stoneCollected >= stoneCost &&
       resources.metalCollected >= metalCost
     ) {
-      // train an extra unit of appropriate type
-      const updatedTrainees = { ...unitsInTraining };
-      // @ts-ignore
-      updatedTrainees[unitType] = updatedTrainees[unitType] + 1;
-      setUnitsInTraining(updatedTrainees);
-
       // reduce the resources according to costs
       const updatedResources = { ...resources };
       updatedResources.freeworkers =
@@ -72,12 +67,6 @@ export default function TrainUnits({
   const handleMinusClick = (unitType: string) => {
     // @ts-ignore
     if (unitsInTraining[unitType] > 0) {
-      // train one less unit of appropriate type
-      const updatedTrainees = { ...unitsInTraining };
-      // @ts-ignore
-      updatedTrainees[unitType] = updatedTrainees[unitType] - 1;
-      setUnitsInTraining(updatedTrainees);
-
       const updatedResources = { ...resources };
       updatedResources.freeworkers =
         updatedResources.freeworkers + freeworkerCost;
@@ -109,7 +98,7 @@ export default function TrainUnits({
           onClick={() => {
             handlePlusClick(unitType);
             // updates the myUnitsArray as well
-            addUnit(unitType, friendly);
+            addTrainingUnit(unitType, friendly);
           }}
         >
           +1
@@ -118,7 +107,7 @@ export default function TrainUnits({
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           onClick={() => {
             handleMinusClick(unitType);
-            removeUnit(unitType, friendly);
+            removeTrainingUnit(unitType, friendly);
           }}
         >
           -1

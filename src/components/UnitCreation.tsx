@@ -9,26 +9,22 @@ interface UnitCreationProps {
   unitCosts: UnitCosts;
   setUnitCosts: any;
   unitsInTraining: UnitsInTraining;
-  setUnitsInTraining: any;
   resources: Resources;
   setResources: any;
   BASE_UNIT_DATA: BaseUnit;
-  addUnit: any;
-  removeUnit: any;
+  addTrainingUnit: any;
+  removeTrainingUnit: any;
 }
 
 export default function UnitCreation({
   unitCosts,
   unitsInTraining,
-  setUnitsInTraining,
   resources,
   setResources,
   BASE_UNIT_DATA,
-  addUnit,
-  removeUnit,
+  addTrainingUnit,
+  removeTrainingUnit,
 }: UnitCreationProps) {
-  /* const unitTypes = Object.keys(unitsInTraining); */
-
   return (
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">Unit Creation</h2>
@@ -41,10 +37,9 @@ export default function UnitCreation({
           setResources={setResources}
           unitCosts={unitCosts}
           unitsInTraining={unitsInTraining}
-          setUnitsInTraining={setUnitsInTraining}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
-          addUnit={addUnit}
-          removeUnit={removeUnit}
+          addTrainingUnit={addTrainingUnit}
+          removeTrainingUnit={removeTrainingUnit}
           friendly={true}
         />
       ))}

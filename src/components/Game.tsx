@@ -204,13 +204,6 @@ export default function GameCopy(props: GameProps) {
     },
   ]);
 
-  // how many units you're going to train this turn
-  const [unitsInTraining, setUnitsInTraining] = useState<UnitsInTraining>({
-    melee: 0,
-    pewpew: 0,
-    tanky: 0,
-  });
-
   // ===BASE STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   const BASE_UNIT_DATA: BaseUnit = {
@@ -235,31 +228,63 @@ export default function GameCopy(props: GameProps) {
   };
 
   // Function to ADD units to either army
-  const addUnit = (unitType: string, friendly: boolean) => {
-    // unitType determines which unit to add
-    const baseUnit = BASE_UNIT_DATA[unitType];
+  const addTrainingUnit = (unitType: string, friendly: boolean) => {
+    if (
+      resources.freeworkers >= unitCosts[unitType].freeworkerCost &&
+      resources.woodCollected >= unitCosts[unitType]["woodCost"] &&
+      resources.stoneCollected >= unitCosts[unitType]["stoneCost"] &&
+      resources.metalCollected >= unitCosts[unitType]["metalCost"]
+    ) {
+      // unitType determines which unit to add
+      const baseUnit = BASE_UNIT_DATA[unitType];
 
-    // TODO: Check that this works
-    if (!baseUnit) {
-      return;
+      // TODO: Check that this works
+      if (!baseUnit) {
+        return;
+      }
+
+      const newUnit = { ...baseUnit, id: unitId };
+
+      friendly
+        ? // if friendly, update friendly army
+          setMyTrainingUnits((myTrainingUnits) => {
+            return [...myTrainingUnits, newUnit];
+          })
+        : // if not friendly, update enemy army
+          setEnemyUnits((enemyUnits) => {
+            return [...enemyUnits, newUnit];
+          });
+
+      setUnitId(unitId + 1);
     }
-
-    const newUnit = { ...baseUnit, id: unitId };
-
-    friendly
-      ? // if friendly, update friendly army
-        setMyTrainingUnits((myTrainingUnits) => {
-          return [...myTrainingUnits, newUnit];
-        })
-      : // if not friendly, update enemy army
-        setEnemyUnits((enemyUnits) => {
-          return [...enemyUnits, newUnit];
-        });
-
-    setUnitId(unitId + 1);
   };
 
-  /* // Function to ADD units to either army
+  const removeTrainingUnit = (unitTypeString: string, friendly: boolean) => {
+    if (friendly) {
+      // if friendly, update friendly army
+      //@ts-ignore
+      const chosenId = myTrainingUnits.find(
+        (unit) => unit.unitType === unitTypeString
+      ).id;
+
+      // FILTER OUT that unit from the array
+      setMyTrainingUnits(
+        myTrainingUnits.filter((unit) => unit.id !== chosenId)
+      );
+    } else {
+      // if not friendly, update enemy army
+      //@ts-ignore
+      const chosenId = enemyUnits.find(
+        (unit) => unit.unitType === unitTypeString
+      ).id;
+
+      setEnemyUnits(enemyUnits.filter((unit) => unit.id !== chosenId));
+    }
+  };
+
+  /*====================================
+  ========DEV TOOLS TO ADD UNITS========
+  =====================================*/
   const addUnit = (unitType: string, friendly: boolean) => {
     // unitType determines which unit to add
     const baseUnit = BASE_UNIT_DATA[unitType];
@@ -282,7 +307,7 @@ export default function GameCopy(props: GameProps) {
         });
 
     setUnitId(unitId + 1);
-  }; */
+  };
 
   // Function to REMOVE units from either army
   // TODO: Fix having to use the unitTypeString workaround
@@ -306,6 +331,9 @@ export default function GameCopy(props: GameProps) {
       setEnemyUnits(myUnits.filter((unit) => unit.id !== chosenId));
     }
   };
+  /*====================================
+  ===========END OF DEV TOOLS===========
+  =====================================*/
 
   // TODO: Ideas for battle UI below...
   // • start a log to display what's happening
@@ -481,13 +509,21 @@ export default function GameCopy(props: GameProps) {
     // TODO: Ask why this can be removed and apparently still work properly
     setBuildings(buildingsCopy);
 
+    // bring all the training units into the main army
     setMyUnits([...myUnits, ...myTrainingUnits]);
 
-    // reset units in training
+    // reset units in training back to zero
     setMyTrainingUnits([]);
 
     // increment turn
     setTurn(turn + 1);
+  };
+
+  // how many units you're going to train this turn
+  const unitsInTraining = {
+    melee: myTrainingUnits.filter((unit) => unit.unitType === "melee").length,
+    pewpew: myTrainingUnits.filter((unit) => unit.unitType === "pewpew").length,
+    tanky: myTrainingUnits.filter((unit) => unit.unitType === "tanky").length,
   };
 
   const unitCounts: UnitCounts = {
@@ -532,10 +568,9 @@ export default function GameCopy(props: GameProps) {
         resources={resources}
         setResources={setResources}
         unitsInTraining={unitsInTraining}
-        setUnitsInTraining={setUnitsInTraining}
         BASE_UNIT_DATA={BASE_UNIT_DATA}
-        addUnit={addUnit}
-        removeUnit={removeUnit}
+        addTrainingUnit={addTrainingUnit}
+        removeTrainingUnit={removeTrainingUnit}
       />
 
       <ArmyDetails
@@ -547,16 +582,6 @@ export default function GameCopy(props: GameProps) {
       />
 
       <DevTools BASE_UNIT_DATA={BASE_UNIT_DATA} addUnit={addUnit} />
-
-      {/*  TODO: Make this component work
-           <Combat
-        turn={turn}
-        setTurn={setTurn}
-        setCombatTurn={setCombatTurn}
-        meleeCounter={meleeCounter}
-        pewpewCounter={pewpewCounter}
-        tankyCounter={tankyCounter}
-      /> */}
     </div>
   );
 }
