@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import { Resources } from "../types/Resources";
 
-/* TODO: Consider if it would be cleaner to ditch villagers and harvest a resource per click.
+/* TODO: Consider if it would be cleaner to ditch workers and harvest a resource per click.
 Could have a limit on clicks (energy bar, actions available, etc), each click uses energy.
-Basically the same result since villagers are reset each turn. */
+Basically the same result since workers are reset each turn. */
 
-interface VillagerProps {
-  name: "🪓 Woodcutters" | "⚒️ Stonemasons" | "🥽 Metalworkers";
-  workerType: "woodcutters" | "stonemasons" | "metalworkers";
+interface WorkerProps {
+  /* name: string;
+  workerType: string; */
   resources: Resources;
   setResources: any;
+  resourceType: string;
 }
 
 // @ts-ignore
-export default function Villager({
-  name,
-  workerType,
+export default function Worker({
+  /* name,
+  workerType, */
   resources,
   setResources,
-}: VillagerProps) {
-  const handlePlusClick = (workerType: string) => {
+  resourceType,
+}: WorkerProps) {
+  const handlePlusClick = (resourceType: string) => {
     if (resources.freeworkers > 0) {
       //@ts-ignore
       /* const worker = resources[workerType]; */
@@ -35,7 +37,9 @@ export default function Villager({
       // @ts-ignore
       updatedResources.freeworkers = updatedResources.freeworkers - 1;
       //@ts-ignore
-      updatedResources[workerType] = updatedResources[workerType] + 1;
+      updatedResources[resourceType].workers =
+        //@ts-ignore
+        updatedResources[resourceType].workers + 1;
 
       setResources(updatedResources);
     } else {
@@ -43,9 +47,9 @@ export default function Villager({
     }
   };
 
-  const handleMinusClick = (workerType: string) => {
+  const handleMinusClick = (resourceType: string) => {
     //@ts-ignore
-    if (resources[workerType] > 0) {
+    if (resources[resourceType].workers > 0) {
       // @ts-ignore
       /* const worker = resources[workerType]; */
 
@@ -57,7 +61,9 @@ export default function Villager({
       const updatedResources = { ...resources };
       updatedResources.freeworkers = updatedResources.freeworkers + 1;
       // @ts-ignore
-      updatedResources[workerType] = updatedResources[workerType] - 1;
+      updatedResources[resourceType].workers =
+        //@ts-ignore
+        updatedResources[resourceType].workers - 1;
       setResources(updatedResources);
     }
   };
@@ -69,19 +75,20 @@ export default function Villager({
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           //@ts-ignore
-          onClick={() => handlePlusClick(workerType)}
+          onClick={() => handlePlusClick(resourceType)}
         >
           +1
         </button>
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           //@ts-ignore
-          onClick={() => handleMinusClick(workerType)}
+          onClick={() => handleMinusClick(resourceType)}
         >
           -1
         </button>
         {/* @ts-ignore */}
-        {name}: {resources[workerType]}
+        {resources[resourceType].workerName}: {resources[resourceType].workers}{" "}
+        {/* // FIX! */}
       </div>
     </>
   );

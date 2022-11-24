@@ -15,7 +15,6 @@ import ArmyDetails from "./ArmyDetails";
 import { BaseUnit } from "../types/BaseUnit";
 
 // TODO: Have a pre-battle screen to summarize what you have?
-// TODO: Rename workers to villagers
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
 
 // TODO: Call a function to add a set number of enemy units per turn
@@ -29,7 +28,32 @@ export default function Game(props: GameProps) {
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
 
+  // NEW RESOURCE STRUCTURE
+  // TODO: Check Typing on this resource to make more flexible
   const [resources, setResources] = useState<Resources>({
+    freeworkers: 5,
+    wood: {
+      collected: 0,
+      workers: 0,
+      workerName: "🪓 Woodcutters",
+      workerType: "woodcutters",
+    },
+    stone: {
+      collected: 0,
+      workers: 0,
+      workerName: "⚒️ Stonemasons",
+      workerType: "stonemasons",
+    },
+    metal: {
+      collected: 0,
+      workers: 0,
+      workerName: "🥽 Metalworkers",
+      workerType: "metalworkers",
+    },
+  });
+
+  // OLD RESOURCE STRUCTURE
+  /* const [resources, setResources] = useState<Resources>({
     freeworkers: 5,
     woodCollected: 0,
     stoneCollected: 0,
@@ -37,7 +61,7 @@ export default function Game(props: GameProps) {
     woodcutters: 0,
     stonemasons: 0,
     metalworkers: 0,
-  });
+  }); */
 
   // current number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
@@ -51,22 +75,22 @@ export default function Game(props: GameProps) {
 
   const [unitCosts, setUnitCosts] = useState<UnitCosts>({
     melee: {
-      woodCost: 2,
-      stoneCost: 2,
-      metalCost: 0,
-      freeworkerCost: 1,
+      wood: 2,
+      stone: 2,
+      metal: 0,
+      freeworker: 1,
     },
     pewpew: {
-      woodCost: 2,
-      stoneCost: 0,
-      metalCost: 2,
-      freeworkerCost: 1,
+      wood: 2,
+      stone: 0,
+      metal: 2,
+      freeworker: 1,
     },
     tanky: {
-      woodCost: 0,
-      stoneCost: 2,
-      metalCost: 2,
-      freeworkerCost: 1,
+      wood: 0,
+      stone: 2,
+      metal: 2,
+      freeworker: 1,
     },
   });
 
@@ -231,10 +255,10 @@ export default function Game(props: GameProps) {
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
     if (
       // TODO: Make the "woodCost", etc dynamic
-      resources.freeworkers >= unitCosts[unitType].freeworkerCost &&
-      resources.woodCollected >= unitCosts[unitType]["woodCost"] &&
-      resources.stoneCollected >= unitCosts[unitType]["stoneCost"] &&
-      resources.metalCollected >= unitCosts[unitType]["metalCost"]
+      resources.freeworkers >= unitCosts[unitType].freeworker &&
+      resources["wood"].collected >= unitCosts[unitType]["wood"] &&
+      resources["stone"].collected >= unitCosts[unitType]["stone"] &&
+      resources["metal"].collected >= unitCosts[unitType]["metal"]
     ) {
       // unitType determines which unit to add
       const baseUnit = BASE_UNIT_DATA[unitType];
@@ -471,27 +495,30 @@ export default function Game(props: GameProps) {
     console.log(resourcesCopy);
 
     // TODO: Make this dynamic based on existing resources
-    resourcesCopy.woodCollected =
-      resources.woodCollected + resources.woodcutters * woodMultiplier;
-    resourcesCopy.stoneCollected =
-      resources.stoneCollected + resources.stonemasons * stoneMultiplier;
-    resourcesCopy.metalCollected =
-      resources.metalCollected + resources.metalworkers * metalMultiplier;
+
+    resourcesCopy["wood"].collected =
+      resources["wood"].collected + resources["wood"].workers * woodMultiplier;
+    resourcesCopy["stone"].collected =
+      resources["stone"].collected +
+      resources["stone"].workers * stoneMultiplier;
+    resourcesCopy["metal"].collected =
+      resources["metal"].collected +
+      resources["metal"].workers * metalMultiplier;
 
     const allWorkers =
       resources.freeworkers +
-      resources.woodcutters +
-      resources.stonemasons +
-      resources.metalworkers +
+      resources["wood"].workers +
+      resources["stone"].workers +
+      resources["metal"].workers +
       newWorkers;
 
     // calculate freeworkers for next turn
     resourcesCopy.freeworkers = allWorkers;
 
     // reset workers
-    resourcesCopy.woodcutters = 0;
-    resourcesCopy.stonemasons = 0;
-    resourcesCopy.metalworkers = 0;
+    resourcesCopy["wood"].workers = 0;
+    resourcesCopy["stone"].workers = 0;
+    resourcesCopy["metal"].workers = 0;
 
     setResources(resourcesCopy);
 

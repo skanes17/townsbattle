@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Villager from "./Villager";
+import Worker from "./Worker";
 import DisplayResources from "./DisplayResources";
 import Upgrades from "./Upgrades";
 import DisplayUnits from "./DisplayUnits";
 import DisplayBuildings from "./DisplayBuildings";
-import DisplayVillagers from "./DisplayVillagers";
+import DisplayWorkers from "./DisplayWorkers";
 import { Resources } from "../types/Resources";
 import { Buildings } from "../types/Buildings";
 import { UnitCounts } from "../types/UnitCounts";
@@ -37,7 +37,7 @@ export default function Planning({
       </div>
       <br></br>
 
-      <DisplayVillagers resources={resources} setResources={setResources} />
+      <DisplayWorkers resources={resources} setResources={setResources} />
 
       <br></br>
 

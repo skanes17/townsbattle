@@ -10,9 +10,9 @@ export default function DisplayResources({ resources }: DisplayResourcesProps) {
     <>
       <div style={{ fontWeight: "bold" }}>Resources collected</div>
       {/* TODO: <Resource /> three times -- DRY! */}
-      <div>🪵Wood {resources.woodCollected}</div>
-      <div>🪨Stone {resources.stoneCollected}</div>
-      <div>🔩Metal {resources.metalCollected}</div>
+      <div>🪵Wood {resources["wood"].collected}</div>
+      <div>🪨Stone {resources["stone"].collected}</div>
+      <div>🔩Metal {resources["metal"].collected}</div>
     </>
   );
 }

@@ -35,29 +35,29 @@ export default function TrainUnits({
   removeTrainingUnit,
   friendly,
 }: TrainUnitsProps) {
-  const freeworkerCost = unitCosts[unitType].freeworkerCost;
-  const woodCost = unitCosts[unitType]["woodCost"];
-  const stoneCost = unitCosts[unitType]["stoneCost"];
-  const metalCost = unitCosts[unitType]["metalCost"];
+  const freeworkerCost = unitCosts[unitType].freeworker;
+  const woodCost = unitCosts[unitType]["wood"];
+  const stoneCost = unitCosts[unitType]["stone"];
+  const metalCost = unitCosts[unitType]["metal"];
 
   const handlePlusClick = (unitType: string) => {
     // TODO: Later, see if these can be combined into one which checks all resources in resources object
     if (
       resources.freeworkers >= freeworkerCost &&
-      resources.woodCollected >= woodCost &&
-      resources.stoneCollected >= stoneCost &&
-      resources.metalCollected >= metalCost
+      resources["wood"].collected >= woodCost &&
+      resources["stone"].collected >= stoneCost &&
+      resources["metal"].collected >= metalCost
     ) {
       // reduce the resources according to costs
       const updatedResources = { ...resources };
       updatedResources.freeworkers =
         updatedResources.freeworkers - freeworkerCost;
-      updatedResources.woodCollected =
-        updatedResources.woodCollected - woodCost;
-      updatedResources.stoneCollected =
-        updatedResources.stoneCollected - stoneCost;
-      updatedResources.metalCollected =
-        updatedResources.metalCollected - metalCost;
+      updatedResources["wood"].collected =
+        updatedResources["wood"].collected - woodCost;
+      updatedResources["stone"].collected =
+        updatedResources["stone"].collected - stoneCost;
+      updatedResources["metal"].collected =
+        updatedResources["metal"].collected - metalCost;
       setResources(updatedResources);
     } else {
       alert("Not enough resources!");
@@ -70,12 +70,12 @@ export default function TrainUnits({
       const updatedResources = { ...resources };
       updatedResources.freeworkers =
         updatedResources.freeworkers + freeworkerCost;
-      updatedResources.woodCollected =
-        updatedResources.woodCollected + woodCost;
-      updatedResources.stoneCollected =
-        updatedResources.stoneCollected + stoneCost;
-      updatedResources.metalCollected =
-        updatedResources.metalCollected + metalCost;
+      updatedResources["wood"].collected =
+        updatedResources["wood"].collected + woodCost;
+      updatedResources["stone"].collected =
+        updatedResources["stone"].collected + stoneCost;
+      updatedResources["metal"].collected =
+        updatedResources["metal"].collected + metalCost;
       setResources(updatedResources);
     }
   };
@@ -87,7 +87,7 @@ export default function TrainUnits({
         {unitType === "melee" ? "🗡️ Melee " : ""}
         {unitType === "pewpew" ? "🏹 Pewpew " : ""}
         {unitType === "tanky" ? "🛡️ Tanky " : ""} Cost: {freeworkerCost}{" "}
-        {freeworkerCost > 1 ? "villagers " : "villager "}
+        {freeworkerCost > 1 ? "workers " : "worker "}
         {woodCost > 0 ? `${woodCost} wood ` : ""}
         {stoneCost > 0 ? `${stoneCost} stone ` : ""}
         {metalCost > 0 ? `${metalCost} metal ` : ""}

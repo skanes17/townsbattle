@@ -28,9 +28,9 @@ export default function ConstructBuilding({
     if (
       buildings[buildingType].underConstruction === false &&
       resources.freeworkers >= freeworkerCost &&
-      resources.woodCollected >= woodCost &&
-      resources.stoneCollected >= stoneCost &&
-      resources.metalCollected >= metalCost
+      resources["wood"].collected >= woodCost &&
+      resources["stone"].collected >= stoneCost &&
+      resources["metal"].collected >= metalCost
     ) {
       // set the building to be constructed
       const updatedBuildings = { ...buildings };
@@ -41,12 +41,12 @@ export default function ConstructBuilding({
       const updatedResources = { ...resources };
       updatedResources.freeworkers =
         updatedResources.freeworkers - freeworkerCost;
-      updatedResources.woodCollected =
-        updatedResources.woodCollected - woodCost;
-      updatedResources.stoneCollected =
-        updatedResources.stoneCollected - stoneCost;
-      updatedResources.metalCollected =
-        updatedResources.metalCollected - metalCost;
+      updatedResources["wood"].collected =
+        updatedResources["wood"].collected - woodCost;
+      updatedResources["stone"].collected =
+        updatedResources["stone"].collected - stoneCost;
+      updatedResources["metal"].collected =
+        updatedResources["metal"].collected - metalCost;
       setResources(updatedResources);
     } else {
       alert("Not enough resources!");
@@ -64,12 +64,12 @@ export default function ConstructBuilding({
       const updatedResources = { ...resources };
       updatedResources.freeworkers =
         updatedResources.freeworkers + freeworkerCost;
-      updatedResources.woodCollected =
-        updatedResources.woodCollected + woodCost;
-      updatedResources.stoneCollected =
-        updatedResources.stoneCollected + stoneCost;
-      updatedResources.metalCollected =
-        updatedResources.metalCollected + metalCost;
+      updatedResources["wood"].collected =
+        updatedResources["wood"].collected + woodCost;
+      updatedResources["stone"].collected =
+        updatedResources["stone"].collected + stoneCost;
+      updatedResources["metal"].collected =
+        updatedResources["metal"].collected + metalCost;
       setResources(updatedResources);
     }
   };
@@ -78,7 +78,7 @@ export default function ConstructBuilding({
     <>
       <div>
         {buildings[buildingType].name} Cost: {freeworkerCost}{" "}
-        {freeworkerCost > 1 ? "villagers " : "villager "}
+        {freeworkerCost > 1 ? "workers " : "worker "}
         {woodCost > 0 ? `${woodCost} wood ` : ""}
         {stoneCost > 0 ? `${stoneCost} stone ` : ""}
         {metalCost > 0 ? `${metalCost} metal ` : ""}
