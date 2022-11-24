@@ -19,7 +19,6 @@ export default function DisplayWorkers({
       {Object.keys(resources)
         .filter((key) => key != "freeworkers")
         .map((resourceType: string) => (
-          // @ts-ignore
           <Worker
             /* name={resources[resourceType].name}
             workerType={resources[resourceType].workerType} */

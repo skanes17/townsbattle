@@ -22,17 +22,14 @@ export default function Worker({
   resourceType,
 }: WorkerProps) {
   const handlePlusClick = (resourceType: string) => {
-    if (resources.freeworkers > 0) {
-      //@ts-ignore
-      /* const worker = resources[workerType]; */
+    //@ts-ignore
+    const selectedResource = resources[resourceType];
+    if (!selectedResource) {
+      alert("resource doesn't exist");
+      return;
+    }
 
-      // TODO: Figure out why defense isn't working
-      /* if (!worker) {
-        // Defensive programming
-        console.log("whoops");
-        return;
-      }
-      */
+    if (resources.freeworkers > 0) {
       const updatedResources = { ...resources };
       // @ts-ignore
       updatedResources.freeworkers = updatedResources.freeworkers - 1;
@@ -49,15 +46,14 @@ export default function Worker({
 
   const handleMinusClick = (resourceType: string) => {
     //@ts-ignore
+    const selectedResource = resources[resourceType];
+    if (!selectedResource) {
+      alert("resource doesn't exist");
+      return;
+    }
+
+    //@ts-ignore
     if (resources[resourceType].workers > 0) {
-      // @ts-ignore
-      /* const worker = resources[workerType]; */
-
-      /* if (!worker) {
-        // Defensive programming
-        return;
-      } */
-
       const updatedResources = { ...resources };
       updatedResources.freeworkers = updatedResources.freeworkers + 1;
       // @ts-ignore

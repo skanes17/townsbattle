@@ -78,19 +78,19 @@ export default function Game(props: GameProps) {
       wood: 2,
       stone: 2,
       metal: 0,
-      freeworker: 1,
+      freeworkers: 1,
     },
     pewpew: {
       wood: 2,
       stone: 0,
       metal: 2,
-      freeworker: 1,
+      freeworkers: 1,
     },
     tanky: {
       wood: 0,
       stone: 2,
       metal: 2,
-      freeworker: 1,
+      freeworkers: 1,
     },
   });
 
@@ -255,7 +255,7 @@ export default function Game(props: GameProps) {
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
     if (
       // TODO: Make the "woodCost", etc dynamic
-      resources.freeworkers >= unitCosts[unitType].freeworker &&
+      resources["freeworkers"] >= unitCosts[unitType]["freeworkers"] &&
       resources["wood"].collected >= unitCosts[unitType]["wood"] &&
       resources["stone"].collected >= unitCosts[unitType]["stone"] &&
       resources["metal"].collected >= unitCosts[unitType]["metal"]
@@ -287,6 +287,8 @@ export default function Game(props: GameProps) {
   const removeTrainingUnit = (unitTypeString: string, friendly: boolean) => {
     if (friendly) {
       // if friendly, update friendly army
+
+      // pick the first unit in the array of the selected type
       //@ts-ignore
       const chosenId = myTrainingUnits.find(
         (unit) => unit.unitType === unitTypeString
@@ -336,7 +338,7 @@ export default function Game(props: GameProps) {
 
   // Function to REMOVE units from either army
   // TODO: Fix having to use the unitTypeString workaround
-  const removeUnit = (unitTypeString: string, friendly: boolean) => {
+  /* const removeUnit = (unitTypeString: string, friendly: boolean) => {
     if (friendly) {
       // if friendly, update friendly army
       //@ts-ignore
@@ -355,7 +357,7 @@ export default function Game(props: GameProps) {
 
       setEnemyUnits(myUnits.filter((unit) => unit.id !== chosenId));
     }
-  };
+  }; */
   /*====================================
   ===========END OF DEV TOOLS===========
   =====================================*/

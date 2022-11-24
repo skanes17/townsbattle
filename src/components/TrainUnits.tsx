@@ -35,23 +35,23 @@ export default function TrainUnits({
   removeTrainingUnit,
   friendly,
 }: TrainUnitsProps) {
-  const freeworkerCost = unitCosts[unitType].freeworker;
+  const freeworkerCost = unitCosts[unitType]["freeworkers"];
   const woodCost = unitCosts[unitType]["wood"];
   const stoneCost = unitCosts[unitType]["stone"];
   const metalCost = unitCosts[unitType]["metal"];
 
   const handlePlusClick = (unitType: string) => {
-    // TODO: Later, see if these can be combined into one which checks all resources in resources object
+    // TODO: Refactor so no repeats, dynamic
     if (
-      resources.freeworkers >= freeworkerCost &&
+      resources["freeworkers"] >= freeworkerCost &&
       resources["wood"].collected >= woodCost &&
       resources["stone"].collected >= stoneCost &&
       resources["metal"].collected >= metalCost
     ) {
       // reduce the resources according to costs
       const updatedResources = { ...resources };
-      updatedResources.freeworkers =
-        updatedResources.freeworkers - freeworkerCost;
+      updatedResources["freeworkers"] =
+        updatedResources["freeworkers"] - freeworkerCost;
       updatedResources["wood"].collected =
         updatedResources["wood"].collected - woodCost;
       updatedResources["stone"].collected =
@@ -68,8 +68,8 @@ export default function TrainUnits({
     // @ts-ignore
     if (unitsInTraining[unitType] > 0) {
       const updatedResources = { ...resources };
-      updatedResources.freeworkers =
-        updatedResources.freeworkers + freeworkerCost;
+      updatedResources["freeworkers"] =
+        updatedResources["freeworkers"] + freeworkerCost;
       updatedResources["wood"].collected =
         updatedResources["wood"].collected + woodCost;
       updatedResources["stone"].collected =
@@ -79,6 +79,8 @@ export default function TrainUnits({
       setResources(updatedResources);
     }
   };
+
+  // TODO: Fix resources not working properly during training
 
   // TODO: Improve the uses of ternary operator below
   return (
