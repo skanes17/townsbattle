@@ -270,16 +270,17 @@ export default function Game(props: GameProps) {
 
       const newUnit = { ...baseUnit, id: unitId };
 
-      friendly
-        ? // if friendly, update friendly army
-          setMyTrainingUnits((myTrainingUnits) => {
-            return [...myTrainingUnits, newUnit];
-          })
-        : // if not friendly, update enemy army
-          setEnemyUnits((enemyUnits) => {
-            return [...enemyUnits, newUnit];
-          });
-
+      if (friendly) {
+        // if friendly, update friendly army
+        setMyTrainingUnits((myTrainingUnits) => {
+          return [...myTrainingUnits, newUnit];
+        });
+      } else {
+        // if not friendly, update enemy army
+        setEnemyUnits((enemyUnits) => {
+          return [...enemyUnits, newUnit];
+        });
+      }
       setUnitId(unitId + 1);
     }
   };

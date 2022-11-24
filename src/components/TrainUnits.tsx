@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { BaseUnit } from "../types/BaseUnit";
 import { Resources } from "../types/Resources";
-import { Unit } from "../types/Unit";
 import { UnitCosts } from "../types/UnitCosts";
 import { UnitsInTraining } from "../types/UnitInTraining";
-import AddUnitButton from "./AddUnitButton";
 
 export interface TrainUnitsProps {
   // TODO: Improve use of name below by incorporating the myUnits structure (nested)
@@ -40,7 +38,7 @@ export default function TrainUnits({
   const stoneCost = unitCosts[unitType]["stone"];
   const metalCost = unitCosts[unitType]["metal"];
 
-  const handlePlusClick = (unitType: string) => {
+  const handlePlusClick = (unitType: string, friendly: boolean) => {
     // TODO: Refactor so no repeats, dynamic
     if (
       resources["freeworkers"] >= freeworkerCost &&
@@ -59,12 +57,15 @@ export default function TrainUnits({
       updatedResources["metal"].collected =
         updatedResources["metal"].collected - metalCost;
       setResources(updatedResources);
+
+      // updates the myTrainingUnits array as well
+      addTrainingUnit(unitType, friendly);
     } else {
       alert("Not enough resources!");
     }
   };
 
-  const handleMinusClick = (unitType: string) => {
+  const handleMinusClick = (unitType: string, friendly: boolean) => {
     // @ts-ignore
     if (unitsInTraining[unitType] > 0) {
       const updatedResources = { ...resources };
@@ -77,6 +78,9 @@ export default function TrainUnits({
       updatedResources["metal"].collected =
         updatedResources["metal"].collected + metalCost;
       setResources(updatedResources);
+
+      // updates the myTrainingUnits array as well
+      removeTrainingUnit(unitType, friendly);
     }
   };
 
@@ -98,9 +102,7 @@ export default function TrainUnits({
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           onClick={() => {
-            handlePlusClick(unitType);
-            // updates the myUnitsArray as well
-            addTrainingUnit(unitType, friendly);
+            handlePlusClick(unitType, friendly);
           }}
         >
           +1
@@ -108,8 +110,7 @@ export default function TrainUnits({
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
           onClick={() => {
-            handleMinusClick(unitType);
-            removeTrainingUnit(unitType, friendly);
+            handleMinusClick(unitType, friendly);
           }}
         >
           -1
