@@ -32,11 +32,6 @@ export default function Planning({
       </div>
       <br></br>
 
-      <div className="freeworkers" style={{ fontWeight: "bold" }}>
-        Free Workers: {resources.freeworkers}
-      </div>
-      <br></br>
-
       <DisplayVillagers resources={resources} setResources={setResources} />
 
       <br></br>

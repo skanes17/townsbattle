@@ -1,5 +1,7 @@
+export type UnitType = "melee" | "pewpew" | "tanky";
+
 export interface Unit {
-  unitType: "melee" | "pewpew" | "tanky";
+  unitType: UnitType;
   name: "Melee" | "Pewpew" | "Tanky";
   attack: number;
   health: number;

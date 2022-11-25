@@ -7,7 +7,7 @@ import { UnitsInTraining } from "../types/UnitInTraining";
 import AddUnitButton from "./AddUnitButton";
 
 export interface TrainUnitsProps {
-  // TODO: Improve use of name below by incorporating the myUnits structure (nested)
+  // TODO: Could use Unit["unitType"];
   unitType: string;
   resources: Resources;
   setResources: any;
@@ -15,7 +15,8 @@ export interface TrainUnitsProps {
   unitsInTraining: UnitsInTraining;
   /*   setUnitsInTraining: any;
    */ BASE_UNIT_DATA: BaseUnit;
-  addTrainingUnit: any;
+  // TODO: Use more Types like this
+  addTrainingUnit: (unitType: any, friendly: boolean) => void;
   removeTrainingUnit: any;
   /* addUnit: any;
   removeUnit: any; */
@@ -50,8 +51,7 @@ export default function TrainUnits({
     ) {
       // reduce the resources according to costs
       const updatedResources = { ...resources };
-      updatedResources.freeworkers =
-        updatedResources.freeworkers - freeworkerCost;
+      updatedResources.freeworkers -= freeworkerCost;
       updatedResources.woodCollected =
         updatedResources.woodCollected - woodCost;
       updatedResources.stoneCollected =
