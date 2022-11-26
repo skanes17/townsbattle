@@ -253,36 +253,28 @@ export default function Game(props: GameProps) {
 
   // Function to ADD units to either army
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
-    if (
-      // TODO: Make the "woodCost", etc dynamic
-      resources["freeworkers"] >= unitCosts[unitType]["freeworkers"] &&
-      resources["wood"].collected >= unitCosts[unitType]["wood"] &&
-      resources["stone"].collected >= unitCosts[unitType]["stone"] &&
-      resources["metal"].collected >= unitCosts[unitType]["metal"]
-    ) {
-      // unitType determines which unit to add
-      const baseUnit = BASE_UNIT_DATA[unitType];
+    // unitType determines which unit to add
+    const baseUnit = BASE_UNIT_DATA[unitType];
 
-      // TODO: Check that this works
-      if (!baseUnit) {
-        return;
-      }
-
-      const newUnit = { ...baseUnit, id: unitId };
-
-      if (friendly) {
-        // if friendly, update friendly army
-        setMyTrainingUnits((myTrainingUnits) => {
-          return [...myTrainingUnits, newUnit];
-        });
-      } else {
-        // if not friendly, update enemy army
-        setEnemyUnits((enemyUnits) => {
-          return [...enemyUnits, newUnit];
-        });
-      }
-      setUnitId(unitId + 1);
+    // TODO: Check that this works
+    if (!baseUnit) {
+      return;
     }
+
+    const newUnit = { ...baseUnit, id: unitId };
+
+    if (friendly) {
+      // if friendly, update friendly army
+      setMyTrainingUnits((myTrainingUnits) => {
+        return [...myTrainingUnits, newUnit];
+      });
+    } else {
+      // if not friendly, update enemy army
+      setEnemyUnits((enemyUnits) => {
+        return [...enemyUnits, newUnit];
+      });
+    }
+    setUnitId(unitId + 1);
   };
 
   const removeTrainingUnit = (unitTypeString: string, friendly: boolean) => {
