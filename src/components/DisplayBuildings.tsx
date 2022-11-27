@@ -14,22 +14,33 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   );
 
   return (
-    <>
+    <div>
       <div style={{ fontWeight: "bold" }}>Buildings constructed</div>
       {/* buildings are mapped dynamically to component */}
       {constructedBuildings.map((buildingType) => (
-        <>
-          <p>{buildings[buildingType].name}</p>
-          <p>Tier: {buildings[buildingType].tier}</p>
-          {/* TODO: Replace number for health with heart symbols */}
-          <p>❤️ Health: {buildings[buildingType].health}</p>
+        <div className="pl-4 border-2 border-orange-400 rounded-md flex-col">
+          <div>{buildings[buildingType].name}</div>
+          <div>
+            <img src="../images/town-center.png" alt="Image of town center" />
+          </div>
           {buildings[buildingType].effect === "" ? (
-            <p>No effect</p>
+            <div>
+              <span className="font-bold">Effect </span>
+              <span>None</span>
+            </div>
           ) : (
-            <p>Effect: {buildings[buildingType].effect}</p>
+            <div>
+              <span className="font-bold">Effect </span>
+              <span>{buildings[buildingType].effect}</span>
+            </div>
           )}
-        </>
+          <div className="flex flew-row-reverse">
+            <div>Tier: {buildings[buildingType].tier}</div>
+            {/* TODO: Replace number for health with heart symbols */}
+            <div>❤️ Health: {buildings[buildingType].health}</div>
+          </div>
+        </div>
       ))}
-    </>
+    </div>
   );
 }

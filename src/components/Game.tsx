@@ -565,9 +565,6 @@ export default function Game(props: GameProps) {
 
   return (
     <div>
-      <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-        Welcome to the game.
-      </h1>
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
       <Planning
         onClick={endTurn}
