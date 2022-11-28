@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Resources } from "../types/Resources";
+import CardName from "./CardName";
+import CardSymbol from "./CardSymbol";
+import PlusMinusButton from "./PlusMinusButton";
 
 /* TODO: Consider if it would be cleaner to ditch workers and harvest a resource per click.
 Could have a limit on clicks (energy bar, actions available, etc), each click uses energy.
@@ -68,24 +71,18 @@ export default function Worker({
   return (
     <>
       <div className="bg-white text-black w-40 h-40 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
-        <div className="flex justify-center items-center h-8 bg-indigo-200 text-lg font-bold mx-2 rounded-b-md col-span-3">
-          {/* @ts-ignore */}
-          {resources[resourceType].workerName}
-        </div>
-
-        <div className="text-5xl flex justify-center items-center col-span-3">
-          {/* @ts-ignore */}
-          {resources[resourceType].resourceSymbol}
-        </div>
+        {/* @ts-ignore */}
+        <CardName cardName={resources[resourceType].workerName} />
+        {/* @ts-ignore */}
+        <CardSymbol cardSymbol={resources[resourceType].resourceSymbol} />
 
         <div className="flex justify-end items-center">
-          <button
-            className="w-8 bg-slate-200 hover:bg-emerald-500 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            //@ts-ignore
+          <PlusMinusButton
+            buttonType="plus"
             onClick={() => handlePlusClick(resourceType)}
           >
             +1
-          </button>
+          </PlusMinusButton>
         </div>
 
         <div className="text-lg font-bold flex justify-center items-center px-4">
@@ -94,13 +91,12 @@ export default function Worker({
         </div>
 
         <div className="flex justify-start items-center">
-          <button
-            className="w-8 bg-slate-200 hover:bg-red-500 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-            //@ts-ignore
+          <PlusMinusButton
+            buttonType="minus"
             onClick={() => handleMinusClick(resourceType)}
           >
             -1
-          </button>
+          </PlusMinusButton>
         </div>
       </div>
     </>

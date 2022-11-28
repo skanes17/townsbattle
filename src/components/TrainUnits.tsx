@@ -91,6 +91,7 @@ export default function TrainUnits({
   return (
     <>
       <div>
+        {/* TODO: Make a card for this. Refactor first... maybe. */}
         {unitType === "melee" ? "🗡️ Melee " : ""}
         {unitType === "pewpew" ? "🏹 Pewpew " : ""}
         {unitType === "tanky" ? "🛡️ Tanky " : ""} Cost: {freeworkerCost}{" "}
@@ -125,3 +126,21 @@ export default function TrainUnits({
     </>
   );
 }
+
+/* return (
+  <div className="p-4 border border-blue-900">
+    <div className="font-bold">Assign Train Units</div>
+
+    <div className="flex space-x-2">
+      {Object.keys(resources)
+        .filter((key) => key != "freeworkers")
+        .map((resourceType: string) => (
+          <Worker
+            resources={resources}
+            setResources={setResources}
+            resourceType={resourceType}
+          />
+        ))}
+    </div>
+  </div>
+); */
