@@ -77,8 +77,8 @@ export default function ConstructBuilding({
   return (
     <>
       <div>
-        {buildings[buildingType].name} Cost: {freeworkerCost}{" "}
-        {freeworkerCost > 1 ? "workers " : "worker "}
+        {buildings[buildingType].nameSymbol} {buildings[buildingType].name}{" "}
+        Cost: {freeworkerCost} {freeworkerCost > 1 ? "workers " : "worker "}
         {woodCost > 0 ? `${woodCost} wood ` : ""}
         {stoneCost > 0 ? `${stoneCost} stone ` : ""}
         {metalCost > 0 ? `${metalCost} metal ` : ""}

@@ -10,7 +10,7 @@ export default function DisplayUnits({ unitCounts }: DisplayUnitsProps) {
 
   return (
     <>
-      <div style={{ fontWeight: "bold" }}>Units trained: {armySize}</div>
+      <div style={{ fontWeight: "bold" }}>Army Size: {armySize}</div>
       {/* TODO: <UnitCount /> three times? -- DRY! */}
       <div>🗡️ {unitCounts.melee} Melee</div>
       <div>🏹 {unitCounts.pewpew} Pewpew</div>

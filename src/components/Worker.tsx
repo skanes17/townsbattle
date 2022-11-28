@@ -67,25 +67,64 @@ export default function Worker({
   // TODO: break this into its own component so I just send "woodcutters" once
   return (
     <>
-      <div>
-        <button
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          //@ts-ignore
-          onClick={() => handlePlusClick(resourceType)}
-        >
-          +1
-        </button>
-        <button
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          //@ts-ignore
-          onClick={() => handleMinusClick(resourceType)}
-        >
-          -1
-        </button>
-        {/* @ts-ignore */}
-        {resources[resourceType].workerName}: {resources[resourceType].workers}{" "}
-        {/* // FIX! */}
+      <div className="bg-white text-black w-40 h-40 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
+        <div className="flex justify-center items-center h-8 bg-indigo-200 text-lg font-bold mx-2 rounded-b-md col-span-3">
+          {/* @ts-ignore */}
+          {resources[resourceType].workerName}
+        </div>
+
+        <div className="text-5xl flex justify-center items-center col-span-3">
+          {/* @ts-ignore */}
+          {resources[resourceType].workerSymbol}
+        </div>
+
+        <div className="flex justify-end items-center">
+          <button
+            className="w-8 bg-slate-200 hover:bg-emerald-500 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            //@ts-ignore
+            onClick={() => handlePlusClick(resourceType)}
+          >
+            +1
+          </button>
+        </div>
+
+        <div className="text-lg font-bold flex justify-center items-center px-4">
+          {/* @ts-ignore */}
+          {resources[resourceType].workers}
+        </div>
+
+        <div className="flex justify-start items-center">
+          <button
+            className="w-8 bg-slate-200 hover:bg-red-500 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            //@ts-ignore
+            onClick={() => handleMinusClick(resourceType)}
+          >
+            -1
+          </button>
+        </div>
       </div>
     </>
   );
+}
+
+{
+  /* <div className="bg-white text-black w-52 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
+  <div className="flex justify-center items-center h-8 bg-indigo-200 text-lg font-bold mx-2 rounded-b-md col-span-3">
+    {buildings[buildingType].name}
+  </div>
+  <div className="flex justify-center items-center h-16 col-span-3">
+    <img className="mx-auto w-16 h-16" src={townCenter} alt={`building`} />
+  </div>
+  <div className="mx-4 p-1 h-28 shadow-sm bg-amber-100 border-slate-300 rounded-sm col-span-3">
+    {buildings[buildingType].effect}
+  </div>
+
+  <div></div>
+  <div className="bg-slate-800 text-md mt-4 px-1 rounded-t-lg text-white justify-self-center place-self-end">
+    Tier {buildings[buildingType].tier}
+  </div>
+  <div className="bg-slate-800 text-md mt-4 px-1 rounded-tl-lg text-white place-self-end">
+    ❤️{buildings[buildingType].health}
+  </div>
+</div>; */
 }

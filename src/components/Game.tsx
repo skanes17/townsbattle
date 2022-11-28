@@ -40,19 +40,22 @@ export default function Game(props: GameProps) {
     wood: {
       collected: 0,
       workers: 0,
-      workerName: "🪓 Woodcutters",
+      workerName: "Woodcutters",
+      workerSymbol: "🪓",
       workerType: "woodcutters",
     },
     stone: {
       collected: 0,
       workers: 0,
-      workerName: "⚒️ Stonemasons",
+      workerName: "Stonemasons",
+      workerSymbol: "⚒️",
       workerType: "stonemasons",
     },
     metal: {
       collected: 0,
       workers: 0,
-      workerName: "🥽 Metalworkers",
+      workerName: "Metalworkers",
+      workerSymbol: "🥽",
       workerType: "metalworkers",
     },
   });
@@ -104,7 +107,8 @@ export default function Game(props: GameProps) {
   const [buildings, setBuildings] = useState<Buildings>({
     // for melee
     swordsmithy: {
-      name: "⚔️ Swordsmithy",
+      name: "Swordsmithy",
+      nameSymbol: "⚔️",
       underConstruction: false,
       constructed: false,
       tier: 1,
@@ -119,7 +123,8 @@ export default function Game(props: GameProps) {
     },
     // for pewpew
     archeryRange: {
-      name: "🎯 Archery Range",
+      name: "Archery Range",
+      nameSymbol: "🎯",
       underConstruction: false,
       constructed: false,
       tier: 1,
@@ -134,7 +139,8 @@ export default function Game(props: GameProps) {
     },
     // for tanky
     armorsmithy: {
-      name: "🛡️ Armorsmithy",
+      name: "Armorsmithy",
+      nameSymbol: "🛡️",
       underConstruction: false,
       constructed: false,
       tier: 1,
@@ -149,7 +155,8 @@ export default function Game(props: GameProps) {
     },
     // for all units
     mealHall: {
-      name: "🍖 Meal Hall",
+      name: "Meal Hall",
+      nameSymbol: "🍖",
       underConstruction: false,
       constructed: false,
       tier: 1,
@@ -165,7 +172,8 @@ export default function Game(props: GameProps) {
     },
     // for all units
     townCenter: {
-      name: "🏙️ Town Center",
+      name: "Town Center",
+      nameSymbol: "🏙️",
       underConstruction: false,
       constructed: true,
       tier: 1,
@@ -215,6 +223,7 @@ export default function Game(props: GameProps) {
     {
       unitType: "melee",
       name: "Melee",
+      nameSymbol: "⚔️",
       attack: 5,
       health: 5,
       id: -2,
@@ -222,6 +231,7 @@ export default function Game(props: GameProps) {
     {
       unitType: "pewpew",
       name: "Pewpew",
+      nameSymbol: "🏹",
       attack: 7,
       health: 3,
       id: -1,
@@ -229,6 +239,7 @@ export default function Game(props: GameProps) {
     {
       unitType: "tanky",
       name: "Tanky",
+      nameSymbol: "🛡️",
       attack: 3,
       health: 7,
       id: -3,
@@ -241,18 +252,21 @@ export default function Game(props: GameProps) {
     melee: {
       unitType: "melee",
       name: "Melee",
+      nameSymbol: "⚔️",
       attack: 5,
       health: 5,
     },
     pewpew: {
       unitType: "pewpew",
       name: "Pewpew",
+      nameSymbol: "🏹",
       attack: 7,
       health: 3,
     },
     tanky: {
       unitType: "tanky",
       name: "Tanky",
+      nameSymbol: "🛡️",
       attack: 3,
       health: 7,
     },
@@ -566,17 +580,20 @@ export default function Game(props: GameProps) {
 
   return (
     <div className="p-4">
-      <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
-
-      <DisplayResources resources={resources} />
+      <div className="p-4 border border-blue-900 grid grid-cols-3">
+        <div>
+          <DisplayResources resources={resources} />
+        </div>
+        <div>2</div>
+        <div>
+          {" "}
+          <DisplayUnits unitCounts={unitCounts} />
+        </div>
+      </div>
 
       <br></br>
 
       <DisplayWorkers resources={resources} setResources={setResources} />
-
-      <br></br>
-
-      <DisplayUnits unitCounts={unitCounts} />
 
       <br></br>
 
@@ -589,42 +606,48 @@ export default function Game(props: GameProps) {
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={endTurn}
       >
-        End Turn
+        End Turn {turn}
       </button>
 
       <br></br>
       <br></br>
 
-      <h2 className="text-4xl font-extrabold dark:text-white">
-        Construct Buildings
-      </h2>
-      {buildingsToConstruct.map((buildingType) => (
-        <ConstructBuilding
-          buildings={buildings}
-          setBuildings={setBuildings}
-          buildingType={buildingType}
-          resources={resources}
-          setResources={setResources}
-        />
-      ))}
+      <div className="grid grid-cols-2">
+        <div>
+          <h2 className="text-4xl font-extrabold dark:text-white">
+            Construct Buildings
+          </h2>
+          {buildingsToConstruct.map((buildingType) => (
+            <ConstructBuilding
+              buildings={buildings}
+              setBuildings={setBuildings}
+              buildingType={buildingType}
+              resources={resources}
+              setResources={setResources}
+            />
+          ))}
+        </div>
 
-      <br></br>
-
-      <h2 className="text-4xl font-extrabold dark:text-white">Unit Creation</h2>
-      {/* TODO: Add defense against bugs (e.g. non-existant units) */}
-      {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
-        <TrainUnits
-          unitType={unitType}
-          resources={resources}
-          setResources={setResources}
-          unitCosts={unitCosts}
-          unitsInTraining={unitsInTraining}
-          BASE_UNIT_DATA={BASE_UNIT_DATA}
-          addTrainingUnit={addTrainingUnit}
-          removeTrainingUnit={removeTrainingUnit}
-          friendly={true}
-        />
-      ))}
+        <div>
+          <h2 className="text-4xl font-extrabold dark:text-white">
+            Train Units
+          </h2>
+          {/* TODO: Add defense against bugs (e.g. non-existant units) */}
+          {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
+            <TrainUnits
+              unitType={unitType}
+              resources={resources}
+              setResources={setResources}
+              unitCosts={unitCosts}
+              unitsInTraining={unitsInTraining}
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
+              addTrainingUnit={addTrainingUnit}
+              removeTrainingUnit={removeTrainingUnit}
+              friendly={true}
+            />
+          ))}
+        </div>
+      </div>
 
       <br></br>
 
@@ -636,7 +659,11 @@ export default function Game(props: GameProps) {
         enemyUnitCounts={enemyUnitCounts}
       />
 
-      <DevTools BASE_UNIT_DATA={BASE_UNIT_DATA} addUnit={addUnit} />
+      <DevTools
+        BASE_UNIT_DATA={BASE_UNIT_DATA}
+        addUnit={addUnit}
+        unitBattler={unitBattler}
+      />
     </div>
   );
 }
