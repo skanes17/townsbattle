@@ -52,6 +52,8 @@ export default function Game(props: GameProps) {
     },
   });
 
+  const BASE_FREEWORKER_COUNT: number = 5;
+
   // OLD RESOURCE STRUCTURE
   /* const [resources, setResources] = useState<Resources>({
     freeworkers: 5,
@@ -500,15 +502,9 @@ export default function Game(props: GameProps) {
       resources["metal"].collected +
       resources["metal"].workers * metalMultiplier;
 
-    const allWorkers =
-      resources.freeworkers +
-      resources["wood"].workers +
-      resources["stone"].workers +
-      resources["metal"].workers +
-      newWorkers;
-
     // calculate freeworkers for next turn
-    resourcesCopy.freeworkers = allWorkers;
+    resourcesCopy.freeworkers = BASE_FREEWORKER_COUNT + newWorkers;
+    setNewWorkers(newWorkers + 1);
 
     // reset workers
     resourcesCopy["wood"].workers = 0;
