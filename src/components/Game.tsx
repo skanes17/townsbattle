@@ -584,9 +584,8 @@ export default function Game(props: GameProps) {
         <div>
           <DisplayResources resources={resources} />
         </div>
-        <div>2</div>
+        <div>In Training: (TODO)</div>
         <div>
-          {" "}
           <DisplayUnits unitCounts={unitCounts} />
         </div>
       </div>
@@ -651,13 +650,13 @@ export default function Game(props: GameProps) {
 
       <br></br>
 
-      <ArmyDetails
+      {/* <ArmyDetails
         myUnits={myUnits}
         enemyUnits={enemyUnits}
         unitBattler={unitBattler}
         unitCounts={unitCounts}
         enemyUnitCounts={enemyUnitCounts}
-      />
+      /> */}
 
       <DevTools
         BASE_UNIT_DATA={BASE_UNIT_DATA}
