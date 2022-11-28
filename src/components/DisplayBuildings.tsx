@@ -19,7 +19,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
       <div className="font-bold">Buildings Constructed</div>
       <div className="flex space-x-2">
         {constructedBuildings.map((buildingType) => (
-          <div className="bg-white text-black w-48 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
+          <div className="bg-white text-black w-52 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
             <div className="flex justify-center items-center h-8 bg-indigo-200 text-lg font-bold mx-2 rounded-b-md col-span-3">
               {buildings[buildingType].name}
             </div>
