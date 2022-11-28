@@ -31,20 +31,8 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
               />
             </div>
             <div className="mx-4 p-1 h-28 shadow-sm bg-amber-100 border-slate-300 rounded-sm col-span-3">
-              {buildings[buildingType].effect === "" ? (
-                <>
-                  <span className="font-bold">Effect </span>
-                  <span>None</span>
-                </>
-              ) : (
-                <>
-                  <span className="font-bold pr-0.5">Effect </span>
-                  <span>{buildings[buildingType].effect}</span>
-                </>
-              )}
+              {buildings[buildingType].effect}
             </div>
-
-            {/* TODO: How to get these spaced properly?? */}
 
             <div></div>
             <div className="bg-slate-800 text-md mt-4 px-1 rounded-t-lg text-white justify-self-center place-self-end">

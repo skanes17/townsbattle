@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { GameProps } from "../types/GameProps";
-import Planning from "./Planning";
 import BuildingsUI from "./BuildingsUI";
 import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
@@ -13,6 +12,12 @@ import { UnitsInTraining } from "../types/UnitInTraining";
 import { UnitCounts } from "../types/UnitCounts";
 import ArmyDetails from "./ArmyDetails";
 import { BaseUnit } from "../types/BaseUnit";
+import DisplayBuildings from "./DisplayBuildings";
+import DisplayResources from "./DisplayResources";
+import DisplayUnits from "./DisplayUnits";
+import DisplayWorkers from "./DisplayWorkers";
+import ConstructBuilding from "./ConstructBuilding";
+import TrainUnits from "./TrainUnits";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -562,34 +567,66 @@ export default function Game(props: GameProps) {
   return (
     <div className="p-4">
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
-      <Planning
-        onClick={endTurn}
-        resources={resources}
-        setResources={setResources}
-        unitCounts={unitCounts}
-        buildings={buildings}
-      />
+
+      <DisplayResources resources={resources} />
 
       <br></br>
 
-      <BuildingsUI
-        buildings={buildings}
-        setBuildings={setBuildings}
-        buildingsToConstruct={buildingsToConstruct}
-        resources={resources}
-        setResources={setResources}
-      />
+      <DisplayWorkers resources={resources} setResources={setResources} />
 
-      <UnitCreation
-        unitCosts={unitCosts}
-        setUnitCosts={setUnitCosts}
-        resources={resources}
-        setResources={setResources}
-        unitsInTraining={unitsInTraining}
-        BASE_UNIT_DATA={BASE_UNIT_DATA}
-        addTrainingUnit={addTrainingUnit}
-        removeTrainingUnit={removeTrainingUnit}
-      />
+      <br></br>
+
+      <DisplayUnits unitCounts={unitCounts} />
+
+      <br></br>
+
+      <DisplayBuildings buildings={buildings} />
+
+      <br></br>
+      {/* upgrades could show conditionally when enough resources are gathered */}
+      {/* <Upgrades /> */}
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={endTurn}
+      >
+        End Turn
+      </button>
+
+      <br></br>
+      <br></br>
+
+      <h2 className="text-4xl font-extrabold dark:text-white">
+        Construct Buildings
+      </h2>
+      {buildingsToConstruct.map((buildingType) => (
+        <ConstructBuilding
+          buildings={buildings}
+          setBuildings={setBuildings}
+          buildingType={buildingType}
+          resources={resources}
+          setResources={setResources}
+        />
+      ))}
+
+      <br></br>
+
+      <h2 className="text-4xl font-extrabold dark:text-white">Unit Creation</h2>
+      {/* TODO: Add defense against bugs (e.g. non-existant units) */}
+      {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
+        <TrainUnits
+          unitType={unitType}
+          resources={resources}
+          setResources={setResources}
+          unitCosts={unitCosts}
+          unitsInTraining={unitsInTraining}
+          BASE_UNIT_DATA={BASE_UNIT_DATA}
+          addTrainingUnit={addTrainingUnit}
+          removeTrainingUnit={removeTrainingUnit}
+          friendly={true}
+        />
+      ))}
+
+      <br></br>
 
       <ArmyDetails
         myUnits={myUnits}
