@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import React from "react";
+import townCenter from "../images/town-center.png";
 
 interface DisplayBuildingsProps {
   buildings: Buildings;
@@ -15,32 +16,42 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
 
   return (
     <div>
-      <div style={{ fontWeight: "bold" }}>Buildings constructed</div>
-      {/* buildings are mapped dynamically to component */}
-      {constructedBuildings.map((buildingType) => (
-        <div className="pl-4 border-2 border-orange-400 rounded-md flex-col">
-          <div>{buildings[buildingType].name}</div>
-          <div>
-            <img src="../images/town-center.png" alt="Image of town center" />
-          </div>
-          {buildings[buildingType].effect === "" ? (
-            <div>
-              <span className="font-bold">Effect </span>
-              <span>None</span>
+      <div className="font-bold">Buildings Constructed</div>
+      <div className="flex">
+        {constructedBuildings.map((buildingType) => (
+          <div className="bg-white text-black w-48 p-2 rounded-md shadow-md flex flex-col items-center">
+            <div className="p-0.5">{buildings[buildingType].name}</div>
+            <div className="flex-1 border-slate-300"></div>
+            <div className="p-0.5 h-16">
+              <img
+                className="w-16 h-16"
+                src={townCenter}
+                alt={`image of building`}
+              />
             </div>
-          ) : (
-            <div>
-              <span className="font-bold">Effect </span>
-              <span>{buildings[buildingType].effect}</span>
+            <div className="shadow-sm bg-amber-100 mx-1 my-0.5 p-1 border-slate-300 rounded-sm">
+              {buildings[buildingType].effect === "" ? (
+                <div>
+                  <span className="font-bold">Effect </span>
+                  <span>None</span>
+                </div>
+              ) : (
+                <div>
+                  <span className="font-bold pr-0.5">Effect </span>
+                  <span>{buildings[buildingType].effect}</span>
+                </div>
+              )}
             </div>
-          )}
-          <div className="flex flew-row-reverse">
-            <div>Tier: {buildings[buildingType].tier}</div>
-            {/* TODO: Replace number for health with heart symbols */}
-            <div>❤️ Health: {buildings[buildingType].health}</div>
+
+            {/* TODO: How to get these spaced properly?? */}
+            <div className="flex flex-row justify-between">
+              <span>Tier {buildings[buildingType].tier}</span>
+              {/* TODO: Replace number for health with heart symbols */}
+              <span>❤️{buildings[buildingType].health}</span>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

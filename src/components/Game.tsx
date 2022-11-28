@@ -163,7 +163,7 @@ export default function Game(props: GameProps) {
       constructed: true,
       tier: 1,
       attackBonus: 0,
-      effect: "If this building is destroyed, it's game over!",
+      effect: "If this building is destroyed it's game over!",
       healthBonus: 0,
       health: 3,
       woodCost: 0,
@@ -564,7 +564,7 @@ export default function Game(props: GameProps) {
   };
 
   return (
-    <div>
+    <div className="p-4">
       <div style={{ fontWeight: "bold" }}>Turn Number: {turn}</div>
       <Planning
         onClick={endTurn}

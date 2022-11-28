@@ -3,7 +3,7 @@ import Game from "./Game";
 
 export default function App() {
   return (
-    <div className="m-4 font-sans">
+    <div className="font-sans bg-gray-900 text-stone-200">
       <Game />
     </div>
   );

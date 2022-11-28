@@ -27,23 +27,20 @@ export default function Planning({
   return (
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">Planning</h2>
-      <div className="displayResources">
-        <DisplayResources resources={resources} />
-      </div>
+
+      <DisplayResources resources={resources} />
+
       <br></br>
 
       <DisplayWorkers resources={resources} setResources={setResources} />
 
       <br></br>
 
-      <div className="displayUnits">
-        <DisplayUnits unitCounts={unitCounts} />
-      </div>
+      <DisplayUnits unitCounts={unitCounts} />
+
       <br></br>
 
-      <div className="displayBuildings">
-        <DisplayBuildings buildings={buildings} />
-      </div>
+      <DisplayBuildings buildings={buildings} />
 
       <br></br>
       {/* upgrades could show conditionally when enough resources are gathered */}
