@@ -75,7 +75,7 @@ export default function Worker({
 
         <div className="text-5xl flex justify-center items-center col-span-3">
           {/* @ts-ignore */}
-          {resources[resourceType].workerSymbol}
+          {resources[resourceType].resourceSymbol}
         </div>
 
         <div className="flex justify-end items-center">

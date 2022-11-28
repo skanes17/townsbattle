@@ -4,21 +4,21 @@ export interface Resources {
     collected: number;
     workers: number;
     workerName: string;
-    workerSymbol: string;
+    resourceSymbol: string;
     workerType: string;
   };
   stone: {
     collected: number;
     workers: number;
     workerName: string;
-    workerSymbol: string;
+    resourceSymbol: string;
     workerType: string;
   };
   metal: {
     collected: number;
     workers: number;
     workerName: string;
-    workerSymbol: string;
+    resourceSymbol: string;
     workerType: string;
   };
 }

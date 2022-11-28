@@ -2,15 +2,15 @@ import React from "react";
 import { Resources } from "../types/Resources";
 import Worker from "./Worker";
 
-interface DisplayWorkersProps {
+interface AssignWorkersProps {
   resources: Resources;
   setResources: any;
 }
 
-export default function DisplayWorkers({
+export default function AssignWorkers({
   resources,
   setResources,
-}: DisplayWorkersProps) {
+}: AssignWorkersProps) {
   return (
     <div className="p-4 border border-blue-900">
       <div className="font-bold">Assign Workers</div>

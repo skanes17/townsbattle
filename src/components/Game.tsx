@@ -14,10 +14,11 @@ import ArmyDetails from "./ArmyDetails";
 import { BaseUnit } from "../types/BaseUnit";
 import DisplayBuildings from "./DisplayBuildings";
 import DisplayResources from "./DisplayResources";
-import DisplayUnits from "./DisplayUnits";
-import DisplayWorkers from "./DisplayWorkers";
+import DisplayUnitCounts from "./DisplayUnitCounts";
+import AssignWorkers from "./AssignWorkers";
 import ConstructBuilding from "./ConstructBuilding";
 import TrainUnits from "./TrainUnits";
+import DisplayTraining from "./DisplayTraining";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -41,21 +42,21 @@ export default function Game(props: GameProps) {
       collected: 0,
       workers: 0,
       workerName: "Woodcutters",
-      workerSymbol: "🪓",
+      resourceSymbol: "🪓",
       workerType: "woodcutters",
     },
     stone: {
       collected: 0,
       workers: 0,
       workerName: "Stonemasons",
-      workerSymbol: "⚒️",
+      resourceSymbol: "⚒️",
       workerType: "stonemasons",
     },
     metal: {
       collected: 0,
       workers: 0,
       workerName: "Metalworkers",
-      workerSymbol: "🥽",
+      resourceSymbol: "🥽",
       workerType: "metalworkers",
     },
   });
@@ -580,19 +581,19 @@ export default function Game(props: GameProps) {
 
   return (
     <div className="p-4">
-      <div className="p-4 border border-blue-900 grid grid-cols-3">
+      <div className="hover:bg-blue-900/25 px-4 border border-blue-900 rounded-b-md grid grid-flow-col auto-cols-auto">
+        <DisplayResources resources={resources} />
+
+        <DisplayTraining unitsInTraining={unitsInTraining} />
+
         <div>
-          <DisplayResources resources={resources} />
-        </div>
-        <div>In Training: (TODO)</div>
-        <div>
-          <DisplayUnits unitCounts={unitCounts} />
+          <DisplayUnitCounts unitCounts={unitCounts} />
         </div>
       </div>
 
       <br></br>
 
-      <DisplayWorkers resources={resources} setResources={setResources} />
+      <AssignWorkers resources={resources} setResources={setResources} />
 
       <br></br>
 
