@@ -1,6 +1,8 @@
 // @ts-nocheck
 
 import React from "react";
+import CardEffect from "./CardEffect";
+import CardFooter from "./CardFooter";
 import CardImage from "./CardImage";
 import CardName from "./CardName";
 import CardSymbol from "./CardSymbol";
@@ -24,22 +26,13 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
         {constructedBuildings.map((buildingType) => (
           <div className="bg-white text-black w-52 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
             <CardName cardName={buildings[buildingType].name} />
-
             <CardImage src={buildings[buildingType].imageSrc} />
-
             <HorizLine3ColGrid />
-            <div className="mx-4 p-1 h-28 shadow-sm bg-amber-100 border-slate-300 rounded-sm col-span-3">
-              {buildings[buildingType].effect}
-            </div>
-
-            <div></div>
-            <div className="bg-slate-800 text-md mt-4 px-1 rounded-t-lg text-white justify-self-center place-self-end">
-              Tier {buildings[buildingType].tier}
-            </div>
-            {/* TODO: Replace number for health with heart symbols */}
-            <div className="bg-slate-800 text-md mt-4 px-1 rounded-tl-lg text-white place-self-end">
-              ❤️{buildings[buildingType].health}
-            </div>
+            <CardEffect effectText={buildings[buildingType].effect} />
+            <CardFooter
+              tier={buildings[buildingType].tier}
+              health={buildings[buildingType].health}
+            />
           </div>
         ))}
       </div>

@@ -1,14 +1,18 @@
 import React from "react";
 import { Resources } from "../types/Resources";
 
-export default function Resources({}: /* resources,
-  resourceType,
-  resourceSymbol, */
-/* resources */ Resources) {
+interface ResourceProps {
+  resources: Resources;
+  resourceType: "wood" | "stone" | "metal";
+}
+
+export default function Resource({ resources, resourceType }: ResourceProps) {
   {
-    /*  <div>
-      {resources[resourceType][resourceSymbol]}{" "}
-      {resources[resourceType].collected}
-    </div>; */
+    return (
+      <div>
+        {resources[resourceType].resourceSymbol}
+        {resources[resourceType].collected}
+      </div>
+    );
   }
 }

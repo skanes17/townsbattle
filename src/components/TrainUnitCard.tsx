@@ -100,9 +100,9 @@ export default function TrainUnitCard({
         <div className="flex justify-end items-center">
           <PlusMinusButton
             buttonType="plus"
-            onClick={() => handlePlusClick(unitType, friendly)}
+            onClick={() => handleMinusClick(unitType, friendly)}
           >
-            +1
+            -1
           </PlusMinusButton>
         </div>
 
@@ -112,9 +112,9 @@ export default function TrainUnitCard({
         <div className="flex justify-start items-center">
           <PlusMinusButton
             buttonType="minus"
-            onClick={() => handleMinusClick(unitType, friendly)}
+            onClick={() => handlePlusClick(unitType, friendly)}
           >
-            -1
+            +1
           </PlusMinusButton>
         </div>
       </div>

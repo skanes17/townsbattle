@@ -78,7 +78,7 @@ export default function WorkerCard({
           cardName={resources[resourceType].workerName}
         />
         {/* @ts-ignore */}
-        <CardSymbol cardSymbol={resources[resourceType].resourceSymbol} />
+        <CardSymbol cardSymbol={resources[resourceType].workerSymbol} />
         <HorizLine3ColGrid />
 
         <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
@@ -92,9 +92,9 @@ export default function WorkerCard({
         <div className="flex justify-end items-center">
           <PlusMinusButton
             buttonType="plus"
-            onClick={() => handlePlusClick(resourceType)}
+            onClick={() => handleMinusClick(resourceType)}
           >
-            +1
+            -1
           </PlusMinusButton>
         </div>
 
@@ -104,9 +104,9 @@ export default function WorkerCard({
         <div className="flex justify-start items-center">
           <PlusMinusButton
             buttonType="minus"
-            onClick={() => handleMinusClick(resourceType)}
+            onClick={() => handlePlusClick(resourceType)}
           >
-            -1
+            +1
           </PlusMinusButton>
         </div>
       </div>

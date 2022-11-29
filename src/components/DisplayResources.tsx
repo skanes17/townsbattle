@@ -1,20 +1,25 @@
 import React from "react";
 import { Resources } from "../types/Resources";
+import Resource from "./Resource";
 
 interface DisplayResourcesProps {
   resources: Resources;
+  resourceTypes: string[];
 }
 
-export default function DisplayResources({ resources }: DisplayResourcesProps) {
+export default function DisplayResources({
+  resources,
+  resourceTypes,
+}: DisplayResourcesProps) {
   return (
     <div>
-      <div className="font-bold">Resources</div>
+      <div className="font-bold text-lg">Resources</div>
       <div className="grid grid-flow-col gap-4 auto-cols-max">
-        {/* TODO: <Resource /> three times -- DRY! */}
         <div>🛠️{resources.freeworkers}</div>
-        <div>🪵{resources["wood"].collected} </div>
-        <div>🪨{resources["stone"].collected} </div>
-        <div>🔩{resources["metal"].collected} </div>
+        {resourceTypes.map((resourceType) => (
+          /* @ts-ignore */
+          <Resource resources={resources} resourceType={resourceType} />
+        ))}
       </div>
     </div>
   );

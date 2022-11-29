@@ -41,26 +41,33 @@ export default function Game(props: GameProps) {
     freeworkers: 5,
     wood: {
       collected: 0,
+      resourceSymbol: "🪵",
       workers: 0,
       workerName: "Woodcutters",
-      resourceSymbol: "🪓",
       workerType: "woodcutters",
+      workerSymbol: "🪓",
     },
     stone: {
       collected: 0,
+      resourceSymbol: "🪨",
       workers: 0,
       workerName: "Stonemasons",
-      resourceSymbol: "⚒️",
       workerType: "stonemasons",
+      workerSymbol: "⚒️",
     },
     metal: {
       collected: 0,
+      resourceSymbol: "🔩",
       workers: 0,
       workerName: "Metalworkers",
-      resourceSymbol: "🥽",
       workerType: "metalworkers",
+      workerSymbol: "🥽",
     },
   });
+
+  const resourceTypes = Object.keys(resources).filter(
+    (key) => key != "freeworkers"
+  );
 
   const BASE_FREEWORKER_COUNT: number = 5;
 
@@ -584,7 +591,7 @@ export default function Game(props: GameProps) {
   return (
     <div className="p-4">
       <div className="hover:bg-blue-900/25 px-4 border border-blue-900 rounded-b-md grid grid-flow-col auto-cols-auto">
-        <DisplayResources resources={resources} />
+        <DisplayResources resources={resources} resourceTypes={resourceTypes} />
 
         <DisplayTraining unitsInTraining={unitsInTraining} />
 
