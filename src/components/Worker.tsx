@@ -72,8 +72,10 @@ export default function Worker({
   return (
     <>
       <div className="pb-2 bg-white text-black w-40 h-52 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1 auto-rows-auto">
-        {/* @ts-ignore */}
-        <CardName cardName={resources[resourceType].workerName} />
+        <CardName
+          /* @ts-ignore */
+          cardName={resources[resourceType].workerName}
+        />
         {/* @ts-ignore */}
         <CardSymbol cardSymbol={resources[resourceType].resourceSymbol} />
         <HorizLine3ColGrid />
@@ -111,26 +113,4 @@ export default function Worker({
       </div>
     </>
   );
-}
-
-{
-  /* <div className="bg-white text-black w-52 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
-  <div className="flex justify-center items-center h-8 bg-indigo-200 text-lg font-bold mx-2 rounded-b-md col-span-3">
-    {buildings[buildingType].name}
-  </div>
-  <div className="flex justify-center items-center h-16 col-span-3">
-    <img className="mx-auto w-16 h-16" src={townCenter} alt={`building`} />
-  </div>
-  <div className="mx-4 p-1 h-28 shadow-sm bg-amber-100 border-slate-300 rounded-sm col-span-3">
-    {buildings[buildingType].effect}
-  </div>
-
-  <div></div>
-  <div className="bg-slate-800 text-md mt-4 px-1 rounded-t-lg text-white justify-self-center place-self-end">
-    Tier {buildings[buildingType].tier}
-  </div>
-  <div className="bg-slate-800 text-md mt-4 px-1 rounded-tl-lg text-white place-self-end">
-    ❤️{buildings[buildingType].health}
-  </div>
-</div>; */
 }

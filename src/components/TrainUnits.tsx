@@ -3,6 +3,10 @@ import { BaseUnit } from "../types/BaseUnit";
 import { Resources } from "../types/Resources";
 import { UnitCosts } from "../types/UnitCosts";
 import { UnitsInTraining } from "../types/UnitInTraining";
+import CardName from "./CardName";
+import CardSymbol from "./CardSymbol";
+import HorizLine3ColGrid from "./HorizLine3ColGrid";
+import PlusMinusButton from "./PlusMinusButton";
 
 export interface TrainUnitsProps {
   // TODO: Could use Unit["unitType"];
@@ -11,8 +15,8 @@ export interface TrainUnitsProps {
   setResources: any;
   unitCosts: UnitCosts;
   unitsInTraining: UnitsInTraining;
-  /*   setUnitsInTraining: any;
-   */ BASE_UNIT_DATA: BaseUnit;
+  /* setUnitsInTraining: any; */
+  BASE_UNIT_DATA: BaseUnit;
   // TODO: Use more Types like this
   addTrainingUnit: (unitType: any, friendly: boolean) => void;
   removeTrainingUnit: any;
@@ -30,6 +34,7 @@ export default function TrainUnits({
   setResources,
   unitCosts,
   unitsInTraining,
+  BASE_UNIT_DATA,
   addTrainingUnit,
   removeTrainingUnit,
   friendly,
@@ -80,57 +85,88 @@ export default function TrainUnits({
   // TODO: Improve the uses of ternary operator below
   return (
     <>
-      <div>
-        {/* TODO: Make a card for this. Refactor first... maybe. */}
-        {unitType === "melee" ? "🗡️ Melee " : ""}
-        {unitType === "pewpew" ? "🏹 Pewpew " : ""}
-        {unitType === "tanky" ? "🛡️ Tanky " : ""} Cost: {freeworkerCost}{" "}
-        {freeworkerCost > 1 ? "workers " : "worker "}
-        {woodCost > 0 ? `${woodCost} wood ` : ""}
-        {stoneCost > 0 ? `${stoneCost} stone ` : ""}
-        {metalCost > 0 ? `${metalCost} metal ` : ""}
-      </div>
-      <div>
-        <button
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={() => {
-            handlePlusClick(unitType, friendly);
-          }}
-        >
-          +1
-        </button>
-        <button
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={() => {
-            handleMinusClick(unitType, friendly);
-          }}
-        >
-          -1
-        </button>
-        {unitType === "melee" ? "🗡️ Melee " : ""}
-        {unitType === "pewpew" ? "🏹 Pewpew " : ""}
-        {unitType === "tanky" ? "🛡️ Tanky " : ""}
-        {/* @ts-ignore */}
-        units to train: {unitsInTraining[unitType]}
+      <div className="pb-2 bg-white text-black w-40 h-52 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1 auto-rows-auto">
+        <CardName cardName={BASE_UNIT_DATA[unitType].name} />
+        <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
+        <HorizLine3ColGrid />
+
+        <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
+          Cost
+        </div>
+
+        <div className="flex justify-center align-middle col-span-3">
+          {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
+          {woodCost > 0 ? `🪵${woodCost} ` : ""}
+          {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
+          {metalCost > 0 ? `🔩${metalCost} ` : ""}
+        </div>
+
+        <div className="flex justify-end items-center">
+          <PlusMinusButton
+            buttonType="plus"
+            onClick={() => handlePlusClick(unitType, friendly)}
+          >
+            +1
+          </PlusMinusButton>
+        </div>
+
+        <div className="text-lg font-bold text-green-700 flex justify-center items-center px-4">
+          {/* @ts-ignore */}
+          {unitsInTraining[unitType]}
+        </div>
+
+        <div className="flex justify-start items-center">
+          <PlusMinusButton
+            buttonType="minus"
+            onClick={() => handleMinusClick(unitType, friendly)}
+          >
+            -1
+          </PlusMinusButton>
+        </div>
       </div>
     </>
   );
 }
 
-/* return (
-  <div className="p-4 border border-blue-900">
-    <div className="font-bold">Assign Train Units</div>
-
-    <div className="flex space-x-2">
-      {Object.keys(resources)
-        .filter((key) => key != "freeworkers")
-        .map((resourceType: string) => (
-          <Worker
-            resources={resources}
-            setResources={setResources}
-            resourceType={resourceType}
-          />
-        ))}
-    </div>
+/* --OLD CODE-- */
+{
+  /* <>
+  <div> */
+}
+{
+  /* TODO: Make a card for this. Refactor first... maybe. */
+}
+/*  {unitType === "melee" ? "🗡️ Melee " : ""}
+    {unitType === "pewpew" ? "🏹 Pewpew " : ""}
+    {unitType === "tanky" ? "🛡️ Tanky " : ""} Cost: {freeworkerCost}{" "}
+    {freeworkerCost > 1 ? "workers " : "worker "}
+    {woodCost > 0 ? `${woodCost} wood ` : ""}
+    {stoneCost > 0 ? `${stoneCost} stone ` : ""}
+    {metalCost > 0 ? `${metalCost} metal ` : ""}
   </div>
-); */
+  <div>
+    <button
+      className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+      onClick={() => {
+        handlePlusClick(unitType, friendly);
+      }}
+    >
+      +1
+    </button>
+    <button
+      className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+      onClick={() => {
+        handleMinusClick(unitType, friendly);
+      }}
+    >
+      -1
+    </button>
+    {unitType === "melee" ? "🗡️ Melee " : ""}
+    {unitType === "pewpew" ? "🏹 Pewpew " : ""}
+    {unitType === "tanky" ? "🛡️ Tanky " : ""} */
+{
+  /* @ts-ignore */
+}
+/* units to train: {unitsInTraining[unitType]}
+  </div>
+</>; */
