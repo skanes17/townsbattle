@@ -3,7 +3,7 @@ import { Resources } from "../types/Resources";
 import { Unit } from "../types/Unit";
 import { UnitCosts } from "../types/UnitCosts";
 import { UnitsInTraining } from "../types/UnitInTraining";
-import TrainUnits from "./TrainUnits";
+import TrainUnitCard from "./TrainUnitCard";
 
 interface UnitCreationProps {
   unitCosts: UnitCosts;
@@ -31,7 +31,7 @@ export default function UnitCreation({
       {/* TODO: Add defense against bugs (e.g. non-existant units) */}
 
       {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
-        <TrainUnits
+        <TrainUnitCard
           unitType={unitType}
           resources={resources}
           setResources={setResources}

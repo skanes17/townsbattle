@@ -1,6 +1,7 @@
 export interface Building {
   name: string;
   nameSymbol: string;
+  imageSrc?: string;
   /* enabled: boolean; */
   underConstruction: boolean;
   constructed: boolean;

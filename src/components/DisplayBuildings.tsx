@@ -1,7 +1,9 @@
 // @ts-nocheck
 
 import React from "react";
-import townCenter from "../images/town-center.png";
+import CardImage from "./CardImage";
+import CardName from "./CardName";
+import CardSymbol from "./CardSymbol";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
 
 interface DisplayBuildingsProps {
@@ -21,16 +23,10 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
       <div className="flex space-x-2">
         {constructedBuildings.map((buildingType) => (
           <div className="bg-white text-black w-52 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
-            <div className="flex justify-center items-center h-8 bg-indigo-200 text-lg font-bold mx-2 rounded-b-md col-span-3">
-              {buildings[buildingType].name}
-            </div>
-            <div className="flex justify-center items-center h-16 col-span-3">
-              <img
-                className="mx-auto w-16 h-16"
-                src={townCenter}
-                alt={`building`}
-              />
-            </div>
+            <CardName cardName={buildings[buildingType].name} />
+
+            <CardImage src={buildings[buildingType].imageSrc} />
+
             <HorizLine3ColGrid />
             <div className="mx-4 p-1 h-28 shadow-sm bg-amber-100 border-slate-300 rounded-sm col-span-3">
               {buildings[buildingType].effect}

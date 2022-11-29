@@ -4,31 +4,26 @@ import { Resources } from "../types/Resources";
 import { UnitCosts } from "../types/UnitCosts";
 import { UnitsInTraining } from "../types/UnitInTraining";
 import CardName from "./CardName";
+import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
 import PlusMinusButton from "./PlusMinusButton";
 
-export interface TrainUnitsProps {
+export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
   unitType: string;
   resources: Resources;
   setResources: any;
   unitCosts: UnitCosts;
   unitsInTraining: UnitsInTraining;
-  /* setUnitsInTraining: any; */
   BASE_UNIT_DATA: BaseUnit;
   // TODO: Use more Types like this
   addTrainingUnit: (unitType: any, friendly: boolean) => void;
   removeTrainingUnit: any;
-  /* addUnit: any;
-  removeUnit: any; */
   friendly: boolean;
 }
 
-// TODO: Create unit on End Turn click
-// TODO: Add units to the appropriate array based on the unitsInTraining
-
-export default function TrainUnits({
+export default function TrainUnitCard({
   unitType,
   resources,
   setResources,
@@ -38,14 +33,14 @@ export default function TrainUnits({
   addTrainingUnit,
   removeTrainingUnit,
   friendly,
-}: TrainUnitsProps) {
+}: TrainUnitCardProps) {
   const freeworkerCost = unitCosts[unitType]["freeworkers"];
   const woodCost = unitCosts[unitType]["wood"];
   const stoneCost = unitCosts[unitType]["stone"];
   const metalCost = unitCosts[unitType]["metal"];
 
   const handlePlusClick = (unitType: string, friendly: boolean) => {
-    // TODO: Refactor so no repeats, dynamic
+    // TODO: Refactor so no repeats; dynamic
     if (
       resources["freeworkers"] >= freeworkerCost &&
       resources["wood"].collected >= woodCost &&
@@ -82,7 +77,6 @@ export default function TrainUnits({
     }
   };
 
-  // TODO: Improve the uses of ternary operator below
   return (
     <>
       <div className="pb-2 bg-white text-black w-40 h-52 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1 auto-rows-auto">
@@ -93,6 +87,8 @@ export default function TrainUnits({
         <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
           Cost
         </div>
+
+        {/* TODO: Improve the uses of ternary operator below */}
 
         <div className="flex justify-center align-middle col-span-3">
           {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
@@ -110,10 +106,8 @@ export default function TrainUnits({
           </PlusMinusButton>
         </div>
 
-        <div className="text-lg font-bold text-green-700 flex justify-center items-center px-4">
-          {/* @ts-ignore */}
-          {unitsInTraining[unitType]}
-        </div>
+        {/* @ts-ignore */}
+        <CardShowCount countToShow={unitsInTraining[unitType]} />
 
         <div className="flex justify-start items-center">
           <PlusMinusButton

@@ -17,8 +17,9 @@ import DisplayResources from "./DisplayResources";
 import DisplayUnitCounts from "./DisplayUnitCounts";
 import AssignWorkers from "./AssignWorkers";
 import ConstructBuilding from "./ConstructBuilding";
-import TrainUnits from "./TrainUnits";
+import TrainUnits from "./TrainUnitCard";
 import DisplayTraining from "./DisplayTraining";
+import townCenter from "../images/town-center.png";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -175,6 +176,7 @@ export default function Game(props: GameProps) {
     townCenter: {
       name: "Town Center",
       nameSymbol: "🏙️",
+      imageSrc: townCenter,
       underConstruction: false,
       constructed: true,
       tier: 1,

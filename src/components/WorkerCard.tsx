@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Resources } from "../types/Resources";
 import CardName from "./CardName";
+import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
 import PlusMinusButton from "./PlusMinusButton";
@@ -9,7 +10,7 @@ import PlusMinusButton from "./PlusMinusButton";
 Could have a limit on clicks (energy bar, actions available, etc), each click uses energy.
 Basically the same result since workers are reset each turn. */
 
-interface WorkerProps {
+interface WorkerCardProps {
   /* name: string;
   workerType: string; */
   resources: Resources;
@@ -18,13 +19,13 @@ interface WorkerProps {
 }
 
 // @ts-ignore
-export default function Worker({
+export default function WorkerCard({
   /* name,
   workerType, */
   resources,
   setResources,
   resourceType,
-}: WorkerProps) {
+}: WorkerCardProps) {
   const handlePlusClick = (resourceType: string) => {
     //@ts-ignore
     const selectedResource = resources[resourceType];
@@ -97,10 +98,8 @@ export default function Worker({
           </PlusMinusButton>
         </div>
 
-        <div className="text-lg font-bold text-green-700 flex justify-center items-center px-4">
-          {/* @ts-ignore */}
-          {resources[resourceType].workers}
-        </div>
+        {/* @ts-ignore */}
+        <CardShowCount countToShow={resources[resourceType].workers} />
 
         <div className="flex justify-start items-center">
           <PlusMinusButton

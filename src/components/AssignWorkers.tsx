@@ -1,6 +1,6 @@
 import React from "react";
 import { Resources } from "../types/Resources";
-import Worker from "./Worker";
+import WorkerCard from "./WorkerCard";
 
 interface AssignWorkersProps {
   resources: Resources;
@@ -20,7 +20,7 @@ export default function AssignWorkers({
         {Object.keys(resources)
           .filter((key) => key != "freeworkers")
           .map((resourceType: string) => (
-            <Worker
+            <WorkerCard
               /* name={resources[resourceType].name}
             workerType={resources[resourceType].workerType} */
               resources={resources}
