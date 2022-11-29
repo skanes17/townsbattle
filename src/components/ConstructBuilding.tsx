@@ -39,14 +39,10 @@ export default function ConstructBuilding({
 
       // reduce the resources according to costs
       const updatedResources = { ...resources };
-      updatedResources.freeworkers =
-        updatedResources.freeworkers - freeworkerCost;
-      updatedResources["wood"].collected =
-        updatedResources["wood"].collected - woodCost;
-      updatedResources["stone"].collected =
-        updatedResources["stone"].collected - stoneCost;
-      updatedResources["metal"].collected =
-        updatedResources["metal"].collected - metalCost;
+      updatedResources.freeworkers -= freeworkerCost;
+      updatedResources["wood"].collected -= woodCost;
+      updatedResources["stone"].collected -= stoneCost;
+      updatedResources["metal"].collected -= metalCost;
       setResources(updatedResources);
     } else {
       alert("Not enough resources!");
@@ -62,14 +58,10 @@ export default function ConstructBuilding({
 
       // give back resources
       const updatedResources = { ...resources };
-      updatedResources.freeworkers =
-        updatedResources.freeworkers + freeworkerCost;
-      updatedResources["wood"].collected =
-        updatedResources["wood"].collected + woodCost;
-      updatedResources["stone"].collected =
-        updatedResources["stone"].collected + stoneCost;
-      updatedResources["metal"].collected =
-        updatedResources["metal"].collected + metalCost;
+      updatedResources.freeworkers += freeworkerCost;
+      updatedResources["wood"].collected += woodCost;
+      updatedResources["stone"].collected += stoneCost;
+      updatedResources["metal"].collected += metalCost;
       setResources(updatedResources);
     }
   };

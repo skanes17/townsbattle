@@ -49,14 +49,10 @@ export default function TrainUnits({
     ) {
       // reduce the resources according to costs
       const updatedResources = { ...resources };
-      updatedResources["freeworkers"] =
-        updatedResources["freeworkers"] - freeworkerCost;
-      updatedResources["wood"].collected =
-        updatedResources["wood"].collected - woodCost;
-      updatedResources["stone"].collected =
-        updatedResources["stone"].collected - stoneCost;
-      updatedResources["metal"].collected =
-        updatedResources["metal"].collected - metalCost;
+      updatedResources["freeworkers"] -= freeworkerCost;
+      updatedResources["wood"].collected -= woodCost;
+      updatedResources["stone"].collected -= stoneCost;
+      updatedResources["metal"].collected -= metalCost;
       setResources(updatedResources);
 
       // updates the myTrainingUnits array as well
@@ -70,22 +66,16 @@ export default function TrainUnits({
     // @ts-ignore
     if (unitsInTraining[unitType] > 0) {
       const updatedResources = { ...resources };
-      updatedResources["freeworkers"] =
-        updatedResources["freeworkers"] + freeworkerCost;
-      updatedResources["wood"].collected =
-        updatedResources["wood"].collected + woodCost;
-      updatedResources["stone"].collected =
-        updatedResources["stone"].collected + stoneCost;
-      updatedResources["metal"].collected =
-        updatedResources["metal"].collected + metalCost;
+      updatedResources["freeworkers"] += freeworkerCost;
+      updatedResources["wood"].collected += woodCost;
+      updatedResources["stone"].collected += stoneCost;
+      updatedResources["metal"].collected += metalCost;
       setResources(updatedResources);
 
       // updates the myTrainingUnits array as well
       removeTrainingUnit(unitType, friendly);
     }
   };
-
-  // TODO: Fix resources not working properly during training
 
   // TODO: Improve the uses of ternary operator below
   return (
