@@ -20,22 +20,19 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   );
 
   return (
-    <div className="p-4 border border-blue-900">
-      <div className="font-bold ">Buildings Constructed</div>
-      <div className="flex space-x-2">
-        {constructedBuildings.map((buildingType) => (
-          <div className="bg-white text-black w-52 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
-            <CardName cardName={buildings[buildingType].name} />
-            <CardImage src={buildings[buildingType].imageSrc} />
-            <HorizLine3ColGrid />
-            <CardEffect effectText={buildings[buildingType].effect} />
-            <CardFooter
-              tier={buildings[buildingType].tier}
-              health={buildings[buildingType].health}
-            />
-          </div>
-        ))}
-      </div>
+    <div>
+      {constructedBuildings.map((buildingType) => (
+        <div className="bg-white text-black w-52 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
+          <CardName cardName={buildings[buildingType].name} />
+          <CardImage src={buildings[buildingType].imageSrc} />
+          <HorizLine3ColGrid />
+          <CardEffect effectText={buildings[buildingType].effect} />
+          <CardFooter
+            tier={buildings[buildingType].tier}
+            health={buildings[buildingType].health}
+          />
+        </div>
+      ))}
     </div>
   );
 }

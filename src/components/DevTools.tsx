@@ -1,5 +1,6 @@
 import React from "react";
 import { BaseUnit } from "../types/BaseUnit";
+import Button from "../types/Button";
 import AddUnitButton from "./AddUnitButton";
 
 interface DevToolsProps {
@@ -17,12 +18,10 @@ export default function DevTools({
     <div className="border-t-2 border-amber-500">
       <h2 className="text-4xl font-extrabold dark:text-white">Dev Tools</h2>{" "}
       <div>
-        <button
-          onClick={unitBattler}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
+        <Button buttonColor="red" onClick={unitBattler}>
           Fight!
-        </button>
+        </Button>
+
         <br></br>
         {/* Get all base unit types, dyanmically create a button for each */}
         {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (

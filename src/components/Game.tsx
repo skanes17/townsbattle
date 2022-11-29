@@ -6,20 +6,20 @@ import { Buildings } from "../types/Buildings";
 import { UpgradeCosts } from "../types/UpgradeCosts";
 import { Unit } from "../types/Unit";
 import DevTools from "./DevTools";
-import UnitCreation from "./UnitCreation";
 import { Resources } from "../types/Resources";
 import { UnitsInTraining } from "../types/UnitInTraining";
 import { UnitCounts } from "../types/UnitCounts";
-import ArmyDetails from "./ArmyDetails";
 import { BaseUnit } from "../types/BaseUnit";
 import DisplayBuildings from "./DisplayBuildings";
 import DisplayResources from "./DisplayResources";
 import DisplayUnitCounts from "./DisplayUnitCounts";
 import AssignWorkers from "./AssignWorkers";
 import ConstructBuilding from "./ConstructBuilding";
-import TrainUnits from "./TrainUnitCard";
 import DisplayTraining from "./DisplayTraining";
 import townCenter from "../images/town-center.png";
+import DisplayTrainingCards from "./DisplayTrainingCards";
+import FlexWrapContainer from "./FlexWrapContainer";
+import Button from "../types/Button";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -281,6 +281,9 @@ export default function Game(props: GameProps) {
       health: 7,
     },
   };
+
+  /* // TODO: Incorporate later for cleaner code
+  const unitTypes = Object.keys(BASE_UNIT_DATA); */
 
   // Function to ADD units to either army
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
@@ -592,31 +595,41 @@ export default function Game(props: GameProps) {
     <div className="p-4">
       <div className="hover:bg-blue-900/25 px-4 border border-blue-900 rounded-b-md grid grid-flow-col auto-cols-auto">
         <DisplayResources resources={resources} resourceTypes={resourceTypes} />
-
         <DisplayTraining unitsInTraining={unitsInTraining} />
-
-        <div>
-          <DisplayUnitCounts unitCounts={unitCounts} />
-        </div>
+        <DisplayUnitCounts unitCounts={unitCounts} />
       </div>
 
       <br></br>
 
-      <AssignWorkers resources={resources} setResources={setResources} />
+      <FlexWrapContainer headerText="Assign Workers">
+        <AssignWorkers resources={resources} setResources={setResources} />
+      </FlexWrapContainer>
 
       <br></br>
 
-      <DisplayBuildings buildings={buildings} />
+      <FlexWrapContainer headerText="Train Units">
+        <DisplayTrainingCards
+          resources={resources}
+          setResources={setResources}
+          unitCosts={unitCosts}
+          unitsInTraining={unitsInTraining}
+          BASE_UNIT_DATA={BASE_UNIT_DATA}
+          addTrainingUnit={addTrainingUnit}
+          removeTrainingUnit={removeTrainingUnit}
+        />
+      </FlexWrapContainer>
 
       <br></br>
-      {/* upgrades could show conditionally when enough resources are gathered */}
-      {/* <Upgrades /> */}
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={endTurn}
-      >
+
+      <FlexWrapContainer headerText="Buildings Constructed">
+        <DisplayBuildings buildings={buildings} />
+      </FlexWrapContainer>
+      <br></br>
+
+      {/* TODO: Fix buttonColor not always working well */}
+      <Button buttonColor="blue" onClick={endTurn}>
         End Turn {turn}
-      </button>
+      </Button>
 
       <br></br>
       <br></br>
@@ -636,37 +649,9 @@ export default function Game(props: GameProps) {
             />
           ))}
         </div>
-
-        <div>
-          <h2 className="text-4xl font-extrabold dark:text-white">
-            Train Units
-          </h2>
-          {/* TODO: Add defense against bugs (e.g. non-existant units) */}
-          {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
-            <TrainUnits
-              unitType={unitType}
-              resources={resources}
-              setResources={setResources}
-              unitCosts={unitCosts}
-              unitsInTraining={unitsInTraining}
-              BASE_UNIT_DATA={BASE_UNIT_DATA}
-              addTrainingUnit={addTrainingUnit}
-              removeTrainingUnit={removeTrainingUnit}
-              friendly={true}
-            />
-          ))}
-        </div>
       </div>
 
       <br></br>
-
-      {/* <ArmyDetails
-        myUnits={myUnits}
-        enemyUnits={enemyUnits}
-        unitBattler={unitBattler}
-        unitCounts={unitCounts}
-        enemyUnitCounts={enemyUnitCounts}
-      /> */}
 
       <DevTools
         BASE_UNIT_DATA={BASE_UNIT_DATA}
