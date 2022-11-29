@@ -11,7 +11,7 @@ export default function DisplayResources({ resources }: DisplayResourcesProps) {
       <div className="font-bold">Resources</div>
       <div className="grid grid-flow-col gap-4 auto-cols-max">
         {/* TODO: <Resource /> three times -- DRY! */}
-        <div>🛠️{resources.freeworkers} Freeworkers</div>
+        <div>🛠️{resources.freeworkers}</div>
         <div>🪵{resources["wood"].collected} </div>
         <div>🪨{resources["stone"].collected} </div>
         <div>🔩{resources["metal"].collected} </div>

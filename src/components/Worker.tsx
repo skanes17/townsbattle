@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Resources } from "../types/Resources";
 import CardName from "./CardName";
 import CardSymbol from "./CardSymbol";
+import HorizLine3ColGrid from "./HorizLine3ColGrid";
 import PlusMinusButton from "./PlusMinusButton";
 
 /* TODO: Consider if it would be cleaner to ditch workers and harvest a resource per click.
@@ -70,11 +71,20 @@ export default function Worker({
   // TODO: break this into its own component so I just send "woodcutters" once
   return (
     <>
-      <div className="bg-white text-black w-40 h-40 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
+      <div className="pb-2 bg-white text-black w-40 h-52 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1 auto-rows-auto">
         {/* @ts-ignore */}
         <CardName cardName={resources[resourceType].workerName} />
         {/* @ts-ignore */}
         <CardSymbol cardSymbol={resources[resourceType].resourceSymbol} />
+        <HorizLine3ColGrid />
+
+        <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
+          Cost
+        </div>
+
+        <div className="flex justify-center align-middle col-span-3">
+          🛠️{/**/}1
+        </div>
 
         <div className="flex justify-end items-center">
           <PlusMinusButton
@@ -85,7 +95,7 @@ export default function Worker({
           </PlusMinusButton>
         </div>
 
-        <div className="text-lg font-bold flex justify-center items-center px-4">
+        <div className="text-lg font-bold text-green-700 flex justify-center items-center px-4">
           {/* @ts-ignore */}
           {resources[resourceType].workers}
         </div>

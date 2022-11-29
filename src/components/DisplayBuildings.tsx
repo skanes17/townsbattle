@@ -2,6 +2,7 @@
 
 import React from "react";
 import townCenter from "../images/town-center.png";
+import HorizLine3ColGrid from "./HorizLine3ColGrid";
 
 interface DisplayBuildingsProps {
   buildings: Buildings;
@@ -30,6 +31,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
                 alt={`building`}
               />
             </div>
+            <HorizLine3ColGrid />
             <div className="mx-4 p-1 h-28 shadow-sm bg-amber-100 border-slate-300 rounded-sm col-span-3">
               {buildings[buildingType].effect}
             </div>
