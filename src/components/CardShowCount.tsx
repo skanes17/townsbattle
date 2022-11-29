@@ -1,7 +1,7 @@
 import React from "react";
 
 interface CardShowCountProps {
-  countToShow: number;
+  countToShow: number | string;
 }
 
 export default function CardShowCount({ countToShow }: CardShowCountProps) {

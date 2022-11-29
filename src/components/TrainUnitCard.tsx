@@ -6,8 +6,9 @@ import { UnitsInTraining } from "../types/UnitInTraining";
 import CardName from "./CardName";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
+import CardTemplate from "./CardTemplate";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
-import PlusMinusButton from "./PlusMinusButton";
+import AddRemoveButton from "./AddRemoveButton";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
@@ -39,6 +40,21 @@ export default function TrainUnitCard({
   const stoneCost = unitCosts[unitType]["stone"];
   const metalCost = unitCosts[unitType]["metal"];
 
+  const handleMinusClick = (unitType: string, friendly: boolean) => {
+    // @ts-ignore
+    if (unitsInTraining[unitType] > 0) {
+      const updatedResources = { ...resources };
+      updatedResources["freeworkers"] += freeworkerCost;
+      updatedResources["wood"].collected += woodCost;
+      updatedResources["stone"].collected += stoneCost;
+      updatedResources["metal"].collected += metalCost;
+      setResources(updatedResources);
+
+      // updates the myTrainingUnits array as well
+      removeTrainingUnit(unitType, friendly);
+    }
+  };
+
   const handlePlusClick = (unitType: string, friendly: boolean) => {
     // TODO: Refactor so no repeats; dynamic
     if (
@@ -62,63 +78,45 @@ export default function TrainUnitCard({
     }
   };
 
-  const handleMinusClick = (unitType: string, friendly: boolean) => {
-    // @ts-ignore
-    if (unitsInTraining[unitType] > 0) {
-      const updatedResources = { ...resources };
-      updatedResources["freeworkers"] += freeworkerCost;
-      updatedResources["wood"].collected += woodCost;
-      updatedResources["stone"].collected += stoneCost;
-      updatedResources["metal"].collected += metalCost;
-      setResources(updatedResources);
-
-      // updates the myTrainingUnits array as well
-      removeTrainingUnit(unitType, friendly);
-    }
-  };
-
   return (
-    <>
-      <div className="pb-2 bg-white text-black w-40 h-52 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1 auto-rows-auto">
-        <CardName cardName={BASE_UNIT_DATA[unitType].name} />
-        <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
-        <HorizLine3ColGrid />
+    <CardTemplate>
+      <CardName cardName={BASE_UNIT_DATA[unitType].name} />
+      <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
+      <HorizLine3ColGrid />
 
-        <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
-          Cost
-        </div>
-
-        {/* TODO: Improve the uses of ternary operator below */}
-
-        <div className="flex justify-center align-middle col-span-3">
-          {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
-          {woodCost > 0 ? `🪵${woodCost} ` : ""}
-          {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
-          {metalCost > 0 ? `🔩${metalCost} ` : ""}
-        </div>
-
-        <div className="flex justify-end items-center">
-          <PlusMinusButton
-            buttonType="minus"
-            onClick={() => handleMinusClick(unitType, friendly)}
-          >
-            -1
-          </PlusMinusButton>
-        </div>
-
-        {/* @ts-ignore */}
-        <CardShowCount countToShow={unitsInTraining[unitType]} />
-
-        <div className="flex justify-start items-center">
-          <PlusMinusButton
-            buttonType="plus"
-            onClick={() => handlePlusClick(unitType, friendly)}
-          >
-            +1
-          </PlusMinusButton>
-        </div>
+      <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
+        Cost
       </div>
-    </>
+
+      {/* TODO: Improve the uses of ternary operator below */}
+      <div className="flex justify-center align-middle col-span-3">
+        {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
+        {woodCost > 0 ? `🪵${woodCost} ` : ""}
+        {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
+        {metalCost > 0 ? `🔩${metalCost} ` : ""}
+      </div>
+
+      <div className="flex justify-end items-center">
+        <AddRemoveButton
+          buttonType="minus"
+          onClick={() => handleMinusClick(unitType, friendly)}
+        >
+          -1
+        </AddRemoveButton>
+      </div>
+
+      {/* @ts-ignore */}
+      <CardShowCount countToShow={unitsInTraining[unitType]} />
+
+      <div className="flex justify-start items-center">
+        <AddRemoveButton
+          buttonType="plus"
+          onClick={() => handlePlusClick(unitType, friendly)}
+        >
+          +1
+        </AddRemoveButton>
+      </div>
+    </CardTemplate>
   );
 }
 

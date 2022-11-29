@@ -3,8 +3,9 @@ import { Resources } from "../types/Resources";
 import CardName from "./CardName";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
+import CardTemplate from "./CardTemplate";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
-import PlusMinusButton from "./PlusMinusButton";
+import PlusMinusButton from "./AddRemoveButton";
 
 /* TODO: Consider if it would be cleaner to ditch workers and harvest a resource per click.
 Could have a limit on clicks (energy bar, actions available, etc), each click uses energy.
@@ -72,7 +73,7 @@ export default function WorkerCard({
   // TODO: break this into its own component so I just send "woodcutters" once
   return (
     <>
-      <div className="pb-2 bg-white text-black w-40 h-52 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1 auto-rows-auto">
+      <CardTemplate>
         <CardName
           /* @ts-ignore */
           cardName={resources[resourceType].workerName}
@@ -109,7 +110,7 @@ export default function WorkerCard({
             +1
           </PlusMinusButton>
         </div>
-      </div>
+      </CardTemplate>
     </>
   );
 }

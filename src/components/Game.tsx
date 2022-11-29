@@ -621,6 +621,21 @@ export default function Game(props: GameProps) {
 
       <br></br>
 
+      <FlexWrapContainer headerText="Construct Buildings">
+        {/* TODO: Toss this in a component */}
+        {buildingsToConstruct.map((buildingType) => (
+          <ConstructBuilding
+            buildings={buildings}
+            setBuildings={setBuildings}
+            buildingType={buildingType}
+            resources={resources}
+            setResources={setResources}
+          />
+        ))}
+      </FlexWrapContainer>
+
+      <br></br>
+
       <FlexWrapContainer headerText="Buildings Constructed">
         <DisplayBuildings buildings={buildings} />
       </FlexWrapContainer>
@@ -632,25 +647,6 @@ export default function Game(props: GameProps) {
       </Button>
 
       <br></br>
-      <br></br>
-
-      <div className="grid grid-cols-2">
-        <div>
-          <h2 className="text-4xl font-extrabold dark:text-white">
-            Construct Buildings
-          </h2>
-          {buildingsToConstruct.map((buildingType) => (
-            <ConstructBuilding
-              buildings={buildings}
-              setBuildings={setBuildings}
-              buildingType={buildingType}
-              resources={resources}
-              setResources={setResources}
-            />
-          ))}
-        </div>
-      </div>
-
       <br></br>
 
       <DevTools

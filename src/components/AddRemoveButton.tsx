@@ -1,16 +1,16 @@
 import React from "react";
 
-interface PlusMinusButtonProps {
+interface AddRemoveButtonProps {
   children: any;
   buttonType: "plus" | "minus";
   onClick: () => void;
 }
 
-export default function PlusMinusButton({
+export default function AddRemoveButton({
   children,
   buttonType,
   onClick,
-}: PlusMinusButtonProps) {
+}: AddRemoveButtonProps) {
   return (
     <button
       className={`bg-slate-200 hover:bg-${

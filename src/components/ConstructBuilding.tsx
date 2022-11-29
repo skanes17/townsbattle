@@ -1,6 +1,12 @@
 import React from "react";
 import { Buildings } from "../types/Buildings";
 import { Resources } from "../types/Resources";
+import AddRemoveButton from "./AddRemoveButton";
+import CardName from "./CardName";
+import CardShowCount from "./CardShowCount";
+import CardSymbol from "./CardSymbol";
+import CardTemplate from "./CardTemplate";
+import HorizLine3ColGrid from "./HorizLine3ColGrid";
 
 interface ConstructBuildingProps {
   buildings: Buildings;
@@ -22,7 +28,23 @@ export default function ConstructBuilding({
   const stoneCost = buildings[buildingType]["stoneCost"];
   const metalCost = buildings[buildingType]["metalCost"];
 
-  // TODO: Toggle Build/Click as one button
+  // TODO: Toggle Build/Click alternate in UI
+  const handleCancelClick = (buildingType: string) => {
+    if (buildings[buildingType].underConstruction === true) {
+      // cancel building construction
+      const updatedBuildings = { ...buildings };
+      updatedBuildings[buildingType].underConstruction = false;
+      setBuildings(updatedBuildings);
+
+      // give back resources
+      const updatedResources = { ...resources };
+      updatedResources.freeworkers += freeworkerCost;
+      updatedResources["wood"].collected += woodCost;
+      updatedResources["stone"].collected += stoneCost;
+      updatedResources["metal"].collected += metalCost;
+      setResources(updatedResources);
+    }
+  };
 
   const handleBuildClick = (buildingType: string) => {
     if (
@@ -49,48 +71,38 @@ export default function ConstructBuilding({
     }
   };
 
-  const handleCancelClick = (buildingType: string) => {
-    if (buildings[buildingType].underConstruction === true) {
-      // cancel building construction
-      const updatedBuildings = { ...buildings };
-      updatedBuildings[buildingType].underConstruction = false;
-      setBuildings(updatedBuildings);
-
-      // give back resources
-      const updatedResources = { ...resources };
-      updatedResources.freeworkers += freeworkerCost;
-      updatedResources["wood"].collected += woodCost;
-      updatedResources["stone"].collected += stoneCost;
-      updatedResources["metal"].collected += metalCost;
-      setResources(updatedResources);
-    }
-  };
-
   return (
-    <>
-      <div>
-        {buildings[buildingType].nameSymbol} {buildings[buildingType].name}{" "}
-        Cost: {freeworkerCost} {freeworkerCost > 1 ? "workers " : "worker "}
-        {woodCost > 0 ? `${woodCost} wood ` : ""}
-        {stoneCost > 0 ? `${stoneCost} stone ` : ""}
-        {metalCost > 0 ? `${metalCost} metal ` : ""}
+    <CardTemplate>
+      <CardName cardName={buildings[buildingType].name} />
+      <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} />
+      <HorizLine3ColGrid />
+      <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
+        Cost
       </div>
-      <div className="unit">
-        <button
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={() => handleBuildClick(buildingType)}
-        >
-          Build
-        </button>
-        <button
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-          onClick={() => handleCancelClick(buildingType)}
-        >
-          Cancel
-        </button>
-        Under Construction:{" "}
-        {buildings[buildingType].underConstruction ? "Yes" : "No"}
+      {/* TODO: Improve the uses of ternary operator below */}
+      <div className="flex justify-center align-middle col-span-3">
+        {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
+        {woodCost > 0 ? `🪵${woodCost} ` : ""}
+        {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
+        {metalCost > 0 ? `🔩${metalCost} ` : ""}
       </div>
-    </>
+
+      <div className="flex justify-around items-center col-span-3">
+        <AddRemoveButton
+          buttonType="minus"
+          onClick={
+            buildings[buildingType].underConstruction
+              ? () => handleCancelClick(buildingType)
+              : () => handleBuildClick(buildingType)
+          }
+        >
+          {buildings[buildingType].underConstruction ? "Cancel" : "Build"}
+        </AddRemoveButton>
+
+        <CardShowCount
+          countToShow={buildings[buildingType].underConstruction ? "Yes" : "No"}
+        />
+      </div>
+    </CardTemplate>
   );
 }
