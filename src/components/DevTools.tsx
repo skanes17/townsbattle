@@ -16,10 +16,10 @@ export default function DevTools({
 }: DevToolsProps) {
   return (
     <div className="border-t-2 border-amber-500">
-      <h2 className="text-amber-500 font-extrabold dark:text-white">
+      <h2 className="font-extrabold text-amber-500 dark:text-white">
         Dev Tools
       </h2>{" "}
-      <div className="flex justify-evenly items-center">
+      <div className="flex items-center justify-evenly">
         {/* Get all base unit types, dyanmically create a button for each */}
         {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
           <AddUnitButton
@@ -28,7 +28,7 @@ export default function DevTools({
             name={BASE_UNIT_DATA[unitType].name}
             // choose true for friendly units
             friendly={true}
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            className="rounded border border-gray-400 bg-white py-1 px-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
           />
         ))}
 
@@ -43,7 +43,7 @@ export default function DevTools({
             name={BASE_UNIT_DATA[unitType].name}
             // choose true for enemy units
             friendly={false}
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+            className="rounded border border-gray-400 bg-white py-1 px-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
           />
         ))}
       </div>

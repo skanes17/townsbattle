@@ -84,19 +84,19 @@ export default function TrainUnitCard({
       <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
       <HorizLine3ColGrid />
 
-      <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
+      <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
         Cost
       </div>
 
       {/* TODO: Improve the uses of ternary operator below */}
-      <div className="flex justify-center align-middle col-span-3">
+      <div className="col-span-3 flex justify-center align-middle">
         {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
         {woodCost > 0 ? `🪵${woodCost} ` : ""}
         {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
         {metalCost > 0 ? `🔩${metalCost} ` : ""}
       </div>
 
-      <div className="flex justify-end items-center">
+      <div className="flex items-center justify-end">
         <AddRemoveButton
           buttonType="minus"
           onClick={() => handleMinusClick(unitType, friendly)}
@@ -108,7 +108,7 @@ export default function TrainUnitCard({
       {/* @ts-ignore */}
       <CardShowCount countToShow={unitsInTraining[unitType]} />
 
-      <div className="flex justify-start items-center">
+      <div className="flex items-center justify-start">
         <AddRemoveButton
           buttonType="plus"
           onClick={() => handlePlusClick(unitType, friendly)}

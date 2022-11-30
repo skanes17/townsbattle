@@ -15,7 +15,7 @@ export default function AddRemoveButton({
     <button
       className={`bg-slate-200 hover:bg-${
         buttonType === "plus" ? "green" : "red"
-      }-400 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow`}
+      }-400 rounded border border-gray-400 py-1 px-2 font-semibold text-gray-800 shadow`}
       //@ts-ignore
       onClick={onClick}
     >

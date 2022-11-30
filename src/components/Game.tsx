@@ -593,7 +593,7 @@ export default function Game(props: GameProps) {
 
   return (
     <div className="p-4">
-      <div className="bg-blue-900/25 hover:bg-blue-900/50 px-4 border border-blue-900 rounded-b-md grid grid-flow-col auto-cols-auto">
+      <div className="grid auto-cols-auto grid-flow-col rounded-b-md border border-blue-900 bg-blue-900/25 px-4 hover:bg-blue-900/50">
         <DisplayResources resources={resources} resourceTypes={resourceTypes} />
         <DisplayTraining unitsInTraining={unitsInTraining} />
         <DisplayUnitCounts unitCounts={unitCounts} />
@@ -640,7 +640,7 @@ export default function Game(props: GameProps) {
         </FlexWrapContainer>
       </div>
 
-      <div className="mt-8 flex justify-center items-center">
+      <div className="mt-8 flex items-center justify-center">
         {/* TODO: Fix buttonColor not always working well */}
         <Button buttonColor="blue" onClick={endTurn}>
           End Turn {turn}

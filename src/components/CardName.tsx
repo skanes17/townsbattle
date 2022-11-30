@@ -7,7 +7,7 @@ interface CardNameProps {
 export default function CardName({ cardName }: CardNameProps) {
   return (
     <div
-      className={`flex justify-center items-center h-8 bg-indigo-200 text-lg font-bold mx-2 rounded-b-md col-span-3`}
+      className={`col-span-3 mx-2 flex h-8 items-center justify-center rounded-b-md bg-indigo-200 text-lg font-bold`}
     >
       {cardName}
     </div>

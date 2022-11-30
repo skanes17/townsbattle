@@ -25,7 +25,7 @@ export default function ArmyDetails({
       <h2 className="text-4xl font-extrabold dark:text-white">Army Details</h2>
       <button
         onClick={unitBattler}
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        className="rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
       >
         Fight!
       </button>

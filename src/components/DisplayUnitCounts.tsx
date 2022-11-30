@@ -12,10 +12,10 @@ export default function DisplayUnitCounts({
 
   return (
     <div className="m-auto text-center">
-      <div className="font-bold lg:text-lg md:text-base sm:text-sm">
+      <div className="font-bold sm:text-sm md:text-base lg:text-lg">
         Army Size
       </div>
-      <div className="transition ease-in-out hover:scale-105 hover:text-yellow-300 grid lg:text-2xl md:text-lg grid-flow-col gap-4 auto-cols-max">
+      <div className="grid auto-cols-max grid-flow-col gap-4 transition ease-in-out hover:scale-105 hover:text-yellow-300 md:text-lg lg:text-2xl">
         {/* TODO: <UnitCount /> three times? -- DRY! */}
         <div>🗡️ {unitCounts.melee}</div>
         <div>🏹 {unitCounts.pewpew}</div>

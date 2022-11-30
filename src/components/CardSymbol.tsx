@@ -6,7 +6,7 @@ interface CardSymbolProps {
 
 export default function CardSymbol({ cardSymbol }: CardSymbolProps) {
   return (
-    <div className="text-5xl flex justify-center items-center col-span-3">
+    <div className="col-span-3 flex items-center justify-center text-5xl">
       {cardSymbol}
     </div>
   );

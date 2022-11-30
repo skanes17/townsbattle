@@ -4,7 +4,7 @@ interface CardEffectProps {
 
 export default function CardEffect({ effectText }: CardEffectProps) {
   return (
-    <div className="mx-4 p-2 italic h-28 shadow-md bg-amber-100 border-slate-300 rounded-sm col-span-3">
+    <div className="col-span-3 mx-4 h-28 rounded-sm border-slate-300 bg-amber-100 p-2 italic shadow-md">
       {effectText}
     </div>
   );

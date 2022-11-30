@@ -82,15 +82,15 @@ export default function WorkerCard({
         <CardSymbol cardSymbol={resources[resourceType].workerSymbol} />
         <HorizLine3ColGrid />
 
-        <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
+        <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
           Cost
         </div>
 
-        <div className="flex justify-center align-middle col-span-3">
+        <div className="col-span-3 flex justify-center align-middle">
           🛠️{/**/}1
         </div>
 
-        <div className="flex justify-end items-center">
+        <div className="flex items-center justify-end">
           <PlusMinusButton
             buttonType="plus"
             onClick={() => handleMinusClick(resourceType)}
@@ -102,7 +102,7 @@ export default function WorkerCard({
         {/* @ts-ignore */}
         <CardShowCount countToShow={resources[resourceType].workers} />
 
-        <div className="flex justify-start items-center">
+        <div className="flex items-center justify-start">
           <PlusMinusButton
             buttonType="minus"
             onClick={() => handlePlusClick(resourceType)}

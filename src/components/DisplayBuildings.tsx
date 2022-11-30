@@ -22,7 +22,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   return (
     <>
       {constructedBuildings.map((buildingType) => (
-        <div className="bg-white text-black w-52 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
+        <div className="grid h-72 w-52 grid-cols-3 gap-1 rounded-md border-4 border-blue-900 bg-white text-black shadow-md shadow-gray-500/50">
           <CardName cardName={buildings[buildingType].name} />
           <CardImage src={buildings[buildingType].imageSrc} />
           <HorizLine3ColGrid />

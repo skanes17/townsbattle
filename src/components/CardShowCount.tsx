@@ -6,7 +6,7 @@ interface CardShowCountProps {
 
 export default function CardShowCount({ countToShow }: CardShowCountProps) {
   return (
-    <div className="text-lg font-bold text-green-700 flex justify-center items-center px-4">
+    <div className="flex items-center justify-center px-4 text-lg font-bold text-green-700">
       {/* @ts-ignore */}
       {countToShow}
     </div>

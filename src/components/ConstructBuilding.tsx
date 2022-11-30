@@ -76,18 +76,18 @@ export default function ConstructBuilding({
       <CardName cardName={buildings[buildingType].name} />
       <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} />
       <HorizLine3ColGrid />
-      <div className="pl-2 font-bold flex justify-start align-middle col-span-3">
+      <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
         Cost
       </div>
       {/* TODO: Improve the uses of ternary operator below */}
-      <div className="flex justify-center align-middle col-span-3">
+      <div className="col-span-3 flex justify-center align-middle">
         {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
         {woodCost > 0 ? `🪵${woodCost} ` : ""}
         {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
         {metalCost > 0 ? `🔩${metalCost} ` : ""}
       </div>
 
-      <div className="flex justify-around items-center col-span-3">
+      <div className="col-span-3 flex items-center justify-around">
         <AddRemoveButton
           buttonType="minus"
           onClick={

@@ -8,10 +8,10 @@ export default function CardFooter({ tier, health }: CardFooterProps) {
   return (
     <>
       <div></div>
-      <div className="bg-slate-800 text-md mt-4 px-1 rounded-t-lg text-white justify-self-center place-self-end">
+      <div className="text-md mt-4 place-self-end justify-self-center rounded-t-lg bg-slate-800 px-1 text-white">
         Tier {tier}
       </div>
-      <div className="bg-slate-800 text-md mt-4 px-1 rounded-tl-lg text-white place-self-end">
+      <div className="text-md mt-4 place-self-end rounded-tl-lg bg-slate-800 px-1 text-white">
         ❤️{health}
       </div>
     </>
