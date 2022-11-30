@@ -19,7 +19,7 @@ import DisplayTraining from "./DisplayTraining";
 import townCenter from "../images/town-center.png";
 import DisplayTrainingCards from "./DisplayTrainingCards";
 import FlexWrapContainer from "./FlexWrapContainer";
-import Button from "../types/Button";
+import Button from "./Button";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -117,7 +117,7 @@ export default function Game(props: GameProps) {
     // for melee
     swordsmithy: {
       name: "Swordsmithy",
-      nameSymbol: "⚔️",
+      nameSymbol: "🗡️",
       underConstruction: false,
       constructed: false,
       tier: 1,
@@ -593,7 +593,7 @@ export default function Game(props: GameProps) {
 
   return (
     <div className="p-4">
-      <div className="hover:bg-blue-900/25 px-4 border border-blue-900 rounded-b-md grid grid-flow-col auto-cols-auto">
+      <div className="bg-blue-900/25 hover:bg-blue-900/50 px-4 border border-blue-900 rounded-b-md grid grid-flow-col auto-cols-auto">
         <DisplayResources resources={resources} resourceTypes={resourceTypes} />
         <DisplayTraining unitsInTraining={unitsInTraining} />
         <DisplayUnitCounts unitCounts={unitCounts} />
@@ -601,50 +601,51 @@ export default function Game(props: GameProps) {
 
       <br></br>
 
-      <FlexWrapContainer headerText="Assign Workers">
-        <AssignWorkers resources={resources} setResources={setResources} />
-      </FlexWrapContainer>
+      <div className="flex flex-wrap justify-evenly">
+        <FlexWrapContainer headerText="Assign Workers">
+          <AssignWorkers resources={resources} setResources={setResources} />
+        </FlexWrapContainer>
 
-      <br></br>
-
-      <FlexWrapContainer headerText="Train Units">
-        <DisplayTrainingCards
-          resources={resources}
-          setResources={setResources}
-          unitCosts={unitCosts}
-          unitsInTraining={unitsInTraining}
-          BASE_UNIT_DATA={BASE_UNIT_DATA}
-          addTrainingUnit={addTrainingUnit}
-          removeTrainingUnit={removeTrainingUnit}
-        />
-      </FlexWrapContainer>
-
-      <br></br>
-
-      <FlexWrapContainer headerText="Construct Buildings">
-        {/* TODO: Toss this in a component */}
-        {buildingsToConstruct.map((buildingType) => (
-          <ConstructBuilding
-            buildings={buildings}
-            setBuildings={setBuildings}
-            buildingType={buildingType}
+        <FlexWrapContainer headerText="Train Units">
+          <DisplayTrainingCards
             resources={resources}
             setResources={setResources}
+            unitCosts={unitCosts}
+            unitsInTraining={unitsInTraining}
+            BASE_UNIT_DATA={BASE_UNIT_DATA}
+            addTrainingUnit={addTrainingUnit}
+            removeTrainingUnit={removeTrainingUnit}
           />
-        ))}
-      </FlexWrapContainer>
+        </FlexWrapContainer>
 
-      <br></br>
+        {/* <br></br> */}
 
-      <FlexWrapContainer headerText="Buildings Constructed">
-        <DisplayBuildings buildings={buildings} />
-      </FlexWrapContainer>
-      <br></br>
+        <FlexWrapContainer headerText="Construct Buildings">
+          {/* TODO: Toss this in a component */}
+          {buildingsToConstruct.map((buildingType) => (
+            <ConstructBuilding
+              buildings={buildings}
+              setBuildings={setBuildings}
+              buildingType={buildingType}
+              resources={resources}
+              setResources={setResources}
+            />
+          ))}
+        </FlexWrapContainer>
+      </div>
 
-      {/* TODO: Fix buttonColor not always working well */}
-      <Button buttonColor="blue" onClick={endTurn}>
-        End Turn {turn}
-      </Button>
+      <div className="flex flex-wrap justify-evenly">
+        <FlexWrapContainer headerText="Buildings Constructed">
+          <DisplayBuildings buildings={buildings} />
+        </FlexWrapContainer>
+      </div>
+
+      <div className="mt-8 flex justify-center items-center">
+        {/* TODO: Fix buttonColor not always working well */}
+        <Button buttonColor="blue" onClick={endTurn}>
+          End Turn {turn}
+        </Button>
+      </div>
 
       <br></br>
       <br></br>

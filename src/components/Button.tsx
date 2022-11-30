@@ -13,7 +13,8 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`bg-${buttonColor}-500 hover:bg-${buttonColor}-700 text-white font-bold py-2 px-4 rounded`}
+      className={`transition ease-in-out bg-${buttonColor}-500 text-white text-xl font-bold py-2 px-4 rounded hover:bg-${buttonColor}-700 hover:scale-105 active:scale-100`}
+      /* className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`} */
       onClick={onClick}
     >
       {children}

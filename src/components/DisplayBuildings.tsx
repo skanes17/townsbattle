@@ -20,7 +20,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   );
 
   return (
-    <div>
+    <>
       {constructedBuildings.map((buildingType) => (
         <div className="bg-white text-black w-52 h-72 border-4 border-blue-900 rounded-md shadow-md shadow-gray-500/50 grid grid-cols-3 gap-1">
           <CardName cardName={buildings[buildingType].name} />
@@ -33,7 +33,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
           />
         </div>
       ))}
-    </div>
+    </>
   );
 }
 
