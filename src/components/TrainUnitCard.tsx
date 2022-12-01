@@ -96,7 +96,7 @@ export default function TrainUnitCard({
         Cost
       </div>
       {/* TODO: Improve the uses of ternary operator below */}
-      <div className="col-span-3 flex justify-center align-middle">
+      <div className="col-span-3 flex justify-center align-middle text-lg">
         {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
         {woodCost > 0 ? `🪵${woodCost} ` : ""}
         {stoneCost > 0 ? `🪨${stoneCost} ` : ""}

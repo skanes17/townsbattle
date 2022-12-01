@@ -17,7 +17,7 @@ export default function Button({
         buttonColor === "blue" ? "bg-blue-500" : "bg-red-500"
       } rounded py-2 px-4 text-xl font-bold text-white hover:${
         buttonColor === "blue" ? "bg-blue-700" : "bg-red-700"
-      } hover:scale-105 active:scale-100`}
+      } duration-75 hover:scale-105 active:scale-100`}
       onClick={onClick}
     >
       {children}

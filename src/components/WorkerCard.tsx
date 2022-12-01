@@ -86,7 +86,7 @@ export default function WorkerCard({
           Cost
         </div>
 
-        <div className="col-span-3 flex justify-center align-middle">
+        <div className="col-span-3 flex justify-center align-middle text-lg">
           🛠️{/**/}1
         </div>
 

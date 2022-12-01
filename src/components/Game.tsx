@@ -597,10 +597,25 @@ export default function Game(props: GameProps) {
   return (
     <div className="p-4">
       {/* TODO: Make this a right-side bar for large screen, top bar for smaller */}
-      <div className="grid auto-cols-min grid-flow-col  justify-end rounded-b-md border border-blue-900 bg-blue-900/25 px-4 hover:bg-blue-900/50 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-        <DisplayResources resources={resources} resourceTypes={resourceTypes} />
-        <DisplayTraining unitsInTraining={unitsInTraining} />
-        <DisplayUnitCounts unitCounts={unitCounts} />
+
+      {/* grid to hold button and stats */}
+      <div className="grid auto-cols-auto">
+        {/* This div holds button */}
+        <div className="col-start-1 flex items-center justify-start pl-4">
+          <Button buttonColor="blue" onClick={endTurn}>
+            End Turn {turn}
+          </Button>
+        </div>
+        {/* This div holds stats */}
+
+        <div className="col-start-2 grid auto-cols-fr grid-flow-col justify-end rounded-b-md border border-blue-900 bg-blue-900/25 px-4 hover:bg-blue-900/50 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+          <DisplayResources
+            resources={resources}
+            resourceTypes={resourceTypes}
+          />
+          {/* <DisplayTraining unitsInTraining={unitsInTraining} /> */}
+          <DisplayUnitCounts unitCounts={unitCounts} />
+        </div>
       </div>
 
       <br></br>
@@ -644,14 +659,6 @@ export default function Game(props: GameProps) {
         </FlexWrapContainer>
       </div>
 
-      <div className="mt-8 flex items-center justify-center">
-        {/* TODO: Fix buttonColor not always working well */}
-        <Button buttonColor="blue" onClick={endTurn}>
-          End Turn {turn}
-        </Button>
-      </div>
-
-      <br></br>
       <br></br>
 
       <DevTools
