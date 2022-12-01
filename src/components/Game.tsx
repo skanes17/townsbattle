@@ -660,6 +660,7 @@ export default function Game(props: GameProps) {
       </div>
 
       <br></br>
+      <br></br>
 
       <DevTools
         BASE_UNIT_DATA={BASE_UNIT_DATA}
