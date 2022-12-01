@@ -3,12 +3,13 @@ import { BaseUnit } from "../types/BaseUnit";
 import { Resources } from "../types/Resources";
 import { UnitCosts } from "../types/UnitCosts";
 import { UnitsInTraining } from "../types/UnitInTraining";
-import CardName from "./CardName";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import CardTemplate from "./CardTemplate";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
 import AddRemoveButton from "./AddRemoveButton";
+import TrainUnitCardHeader from "./TrainUnitCardName";
+import CardDescription from "./CardDescription";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
@@ -80,14 +81,20 @@ export default function TrainUnitCard({
 
   return (
     <CardTemplate>
-      <CardName cardName={BASE_UNIT_DATA[unitType].name} />
-      <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
+      <TrainUnitCardHeader
+        cardName={BASE_UNIT_DATA[unitType].name}
+        attack={BASE_UNIT_DATA[unitType].attack}
+        health={BASE_UNIT_DATA[unitType].health}
+      ></TrainUnitCardHeader>
       <HorizLine3ColGrid />
-
+      {/*       <CardHeader cardName={BASE_UNIT_DATA[unitType].name} />
+       */}{" "}
+      <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
+      <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
+      <HorizLine3ColGrid />
       <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
         Cost
       </div>
-
       {/* TODO: Improve the uses of ternary operator below */}
       <div className="col-span-3 flex justify-center align-middle">
         {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
@@ -95,7 +102,6 @@ export default function TrainUnitCard({
         {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
         {metalCost > 0 ? `🔩${metalCost} ` : ""}
       </div>
-
       <div className="flex items-center justify-end">
         <AddRemoveButton
           buttonType="minus"
@@ -104,10 +110,8 @@ export default function TrainUnitCard({
           -1
         </AddRemoveButton>
       </div>
-
       {/* @ts-ignore */}
       <CardShowCount countToShow={unitsInTraining[unitType]} />
-
       <div className="flex items-center justify-start">
         <AddRemoveButton
           buttonType="plus"
@@ -119,46 +123,3 @@ export default function TrainUnitCard({
     </CardTemplate>
   );
 }
-
-/* --OLD CODE-- */
-{
-  /* <>
-  <div> */
-}
-{
-  /* TODO: Make a card for this. Refactor first... maybe. */
-}
-/*  {unitType === "melee" ? "🗡️ Melee " : ""}
-    {unitType === "pewpew" ? "🏹 Pewpew " : ""}
-    {unitType === "tanky" ? "🛡️ Tanky " : ""} Cost: {freeworkerCost}{" "}
-    {freeworkerCost > 1 ? "workers " : "worker "}
-    {woodCost > 0 ? `${woodCost} wood ` : ""}
-    {stoneCost > 0 ? `${stoneCost} stone ` : ""}
-    {metalCost > 0 ? `${metalCost} metal ` : ""}
-  </div>
-  <div>
-    <button
-      className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-      onClick={() => {
-        handlePlusClick(unitType, friendly);
-      }}
-    >
-      +1
-    </button>
-    <button
-      className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
-      onClick={() => {
-        handleMinusClick(unitType, friendly);
-      }}
-    >
-      -1
-    </button>
-    {unitType === "melee" ? "🗡️ Melee " : ""}
-    {unitType === "pewpew" ? "🏹 Pewpew " : ""}
-    {unitType === "tanky" ? "🛡️ Tanky " : ""} */
-{
-  /* @ts-ignore */
-}
-/* units to train: {unitsInTraining[unitType]}
-  </div>
-</>; */

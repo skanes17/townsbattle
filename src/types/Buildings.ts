@@ -9,7 +9,7 @@ export interface Building {
   attackBonus: number;
   healthBonus: number;
   armorBonus?: number;
-  effect?: string;
+  description?: string;
   bonus?: string;
   health: number;
   woodCost: number;

@@ -123,7 +123,7 @@ export default function Game(props: GameProps) {
       tier: 1,
       attackBonus: 2,
       healthBonus: 2,
-      effect: "Melee units gain +2 to attack, +2 to health",
+      description: "Melee units gain +2 to attack, +2 to health",
       health: 2,
       woodCost: 10,
       stoneCost: 10,
@@ -139,7 +139,7 @@ export default function Game(props: GameProps) {
       tier: 1,
       attackBonus: 3,
       healthBonus: 1,
-      effect: "Pewpew units gain +3 to attack, +1 to health",
+      description: "Pewpew units gain +3 to attack, +1 to health",
       health: 2,
       woodCost: 10,
       stoneCost: 0,
@@ -155,7 +155,7 @@ export default function Game(props: GameProps) {
       tier: 1,
       attackBonus: 1,
       healthBonus: 3,
-      effect: "Tanky units gain +1 to attack, +3 to health",
+      description: "Tanky units gain +1 to attack, +3 to health",
       health: 2,
       woodCost: 0,
       stoneCost: 10,
@@ -172,7 +172,7 @@ export default function Game(props: GameProps) {
       attackBonus: 0,
       healthBonus: 2,
       armorBonus: 0,
-      effect: "All units gain +2 to health, +2 to armor",
+      description: "All units gain +2 to health, +2 to armor",
       health: 2,
       woodCost: 10,
       stoneCost: 10,
@@ -188,7 +188,7 @@ export default function Game(props: GameProps) {
       constructed: true,
       tier: 1,
       attackBonus: 0,
-      effect: "If this building is destroyed it's game over!",
+      description: "If this building is destroyed it's game over!",
       healthBonus: 0,
       health: 3,
       woodCost: 0,
@@ -263,6 +263,7 @@ export default function Game(props: GameProps) {
       unitType: "melee",
       name: "Melee",
       nameSymbol: "⚔️",
+      description: "Attack and health are balanced.",
       attack: 5,
       health: 5,
     },
@@ -270,6 +271,7 @@ export default function Game(props: GameProps) {
       unitType: "pewpew",
       name: "Pewpew",
       nameSymbol: "🏹",
+      description: "Great attack but not much health.",
       attack: 7,
       health: 3,
     },
@@ -277,6 +279,7 @@ export default function Game(props: GameProps) {
       unitType: "tanky",
       name: "Tanky",
       nameSymbol: "🛡️",
+      description: "Low attack but lots of health.",
       attack: 3,
       health: 7,
     },
@@ -593,7 +596,8 @@ export default function Game(props: GameProps) {
 
   return (
     <div className="p-4">
-      <div className="grid auto-cols-auto grid-flow-col rounded-b-md border border-blue-900 bg-blue-900/25 px-4 hover:bg-blue-900/50">
+      {/* TODO: Make this a right-side bar for large screen, top bar for smaller */}
+      <div className="grid auto-cols-min grid-flow-col  justify-end rounded-b-md border border-blue-900 bg-blue-900/25 px-4 hover:bg-blue-900/50 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
         <DisplayResources resources={resources} resourceTypes={resourceTypes} />
         <DisplayTraining unitsInTraining={unitsInTraining} />
         <DisplayUnitCounts unitCounts={unitCounts} />

@@ -2,7 +2,8 @@ import React from "react";
 import { Buildings } from "../types/Buildings";
 import { Resources } from "../types/Resources";
 import AddRemoveButton from "./AddRemoveButton";
-import CardName from "./CardName";
+import CardDescription from "./CardDescription";
+import CardHeader from "./CardHeader";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import CardTemplate from "./CardTemplate";
@@ -73,8 +74,9 @@ export default function ConstructBuilding({
 
   return (
     <CardTemplate>
-      <CardName cardName={buildings[buildingType].name} />
+      <CardHeader cardName={buildings[buildingType].name} />
       <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} />
+      <CardDescription descriptionText={buildings[buildingType].description} />
       <HorizLine3ColGrid />
       <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
         Cost

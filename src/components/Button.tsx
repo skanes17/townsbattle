@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface ButtonProps {
-  buttonColor: string;
+  buttonColor: "blue" | "red";
   onClick: () => void;
   children: any;
 }
@@ -13,8 +13,11 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`transition ease-in-out bg-${buttonColor}-500 rounded py-2 px-4 text-xl font-bold text-white hover:bg-${buttonColor}-700 hover:scale-105 active:scale-100`}
-      /* className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`} */
+      className={`transition ease-in-out ${
+        buttonColor === "blue" ? "bg-blue-500" : "bg-red-500"
+      } rounded py-2 px-4 text-xl font-bold text-white hover:${
+        buttonColor === "blue" ? "bg-blue-700" : "bg-red-700"
+      } hover:scale-105 active:scale-100`}
       onClick={onClick}
     >
       {children}

@@ -1,12 +1,12 @@
 // @ts-nocheck
 
 import React from "react";
-import CardEffect from "./CardEffect";
 import CardFooter from "./CardFooter";
 import CardImage from "./CardImage";
-import CardName from "./CardName";
+import CardHeader from "./CardHeader";
 import CardSymbol from "./CardSymbol";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
+import CardDescription from "./CardDescription";
 
 interface DisplayBuildingsProps {
   buildings: Buildings;
@@ -23,10 +23,11 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
     <>
       {constructedBuildings.map((buildingType) => (
         <div className="grid h-72 w-52 grid-cols-3 gap-1 rounded-md border-4 border-blue-900 bg-white text-black shadow-md shadow-gray-500/50">
-          <CardName cardName={buildings[buildingType].name} />
+          <CardHeader cardName={buildings[buildingType].name} />
           <CardImage src={buildings[buildingType].imageSrc} />
-          <HorizLine3ColGrid />
-          <CardEffect effectText={buildings[buildingType].effect} />
+          <CardDescription
+            descriptionText={buildings[buildingType].description}
+          />
           <CardFooter
             tier={buildings[buildingType].tier}
             health={buildings[buildingType].health}

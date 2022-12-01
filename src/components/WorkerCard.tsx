@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Resources } from "../types/Resources";
-import CardName from "./CardName";
+import CardHeader from "./CardHeader";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import CardTemplate from "./CardTemplate";
@@ -74,7 +74,7 @@ export default function WorkerCard({
   return (
     <>
       <CardTemplate>
-        <CardName
+        <CardHeader
           /* @ts-ignore */
           cardName={resources[resourceType].workerName}
         />
