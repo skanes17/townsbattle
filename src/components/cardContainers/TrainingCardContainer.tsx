@@ -1,11 +1,11 @@
 import React from "react";
-import { BaseUnit } from "../types/BaseUnit";
-import { Resources } from "../types/Resources";
-import { UnitCosts } from "../types/UnitCosts";
-import { UnitsInTraining } from "../types/UnitInTraining";
-import TrainUnitCard from "./TrainUnitCard";
+import { BaseUnit } from "../../types/BaseUnit";
+import { Resources } from "../../types/Resources";
+import { UnitCosts } from "../../types/UnitCosts";
+import { UnitsInTraining } from "../../types/UnitInTraining";
+import TrainUnitCard from "../cards/TrainUnitCard";
 
-export interface TrainUnitsProps {
+export interface TrainingCardContainerProps {
   resources: Resources;
   setResources: any;
   unitCosts: UnitCosts;
@@ -16,7 +16,7 @@ export interface TrainUnitsProps {
   removeTrainingUnit: any;
 }
 
-export default function TrainUnits({
+export default function TrainingCardContainer({
   resources,
   setResources,
   unitCosts,
@@ -24,7 +24,7 @@ export default function TrainUnits({
   BASE_UNIT_DATA,
   addTrainingUnit,
   removeTrainingUnit,
-}: TrainUnitsProps) {
+}: TrainingCardContainerProps) {
   return (
     <>
       {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (

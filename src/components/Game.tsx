@@ -13,13 +13,13 @@ import { BaseUnit } from "../types/BaseUnit";
 import DisplayBuildings from "./DisplayBuildings";
 import DisplayResources from "./DisplayResources";
 import DisplayUnitCounts from "./DisplayUnitCounts";
-import AssignWorkers from "./AssignWorkers";
+import WorkerCardContainer from "./cardContainers/WorkerCardContainer";
 import ConstructBuilding from "./ConstructBuilding";
 import DisplayTraining from "./DisplayTraining";
 import townCenter from "../images/town-center.png";
-import DisplayTrainingCards from "./DisplayTrainingCards";
+import TrainingCardContainer from "./cardContainers/TrainingCardContainer";
 import FlexWrapContainer from "./FlexWrapContainer";
-import Button from "./Button";
+import Button from "./buttons/Button";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -622,11 +622,14 @@ export default function Game(props: GameProps) {
 
       <div className="flex flex-wrap justify-evenly">
         <FlexWrapContainer headerText="Assign Workers">
-          <AssignWorkers resources={resources} setResources={setResources} />
+          <WorkerCardContainer
+            resources={resources}
+            setResources={setResources}
+          />
         </FlexWrapContainer>
 
         <FlexWrapContainer headerText="Train Units">
-          <DisplayTrainingCards
+          <TrainingCardContainer
             resources={resources}
             setResources={setResources}
             unitCosts={unitCosts}
@@ -640,7 +643,7 @@ export default function Game(props: GameProps) {
         {/* <br></br> */}
 
         <FlexWrapContainer headerText="Construct Buildings">
-          {/* TODO: Toss this in a component */}
+          {/* TODO: Match component structure with other cards */}
           {buildingsToConstruct.map((buildingType) => (
             <ConstructBuilding
               buildings={buildings}
@@ -651,15 +654,13 @@ export default function Game(props: GameProps) {
             />
           ))}
         </FlexWrapContainer>
-      </div>
 
-      <div className="flex flex-wrap justify-evenly">
         <FlexWrapContainer headerText="Buildings Constructed">
+          {/* TODO: Match component structure with other cards */}
           <DisplayBuildings buildings={buildings} />
         </FlexWrapContainer>
       </div>
 
-      <br></br>
       <br></br>
 
       <DevTools

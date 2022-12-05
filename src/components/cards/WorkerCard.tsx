@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Resources } from "../types/Resources";
+import { Resources } from "../../types/Resources";
 import CardHeader from "./CardHeader";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import CardTemplate from "./CardTemplate";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
-import PlusMinusButton from "./AddRemoveButton";
+import AddRemoveButton from "../buttons/AddRemoveButton";
 
 /* TODO: Consider if it would be cleaner to ditch workers and harvest a resource per click.
 Could have a limit on clicks (energy bar, actions available, etc), each click uses energy.
@@ -91,24 +91,24 @@ export default function WorkerCard({
         </div>
 
         <div className="flex items-center justify-end">
-          <PlusMinusButton
-            buttonType="plus"
+          <AddRemoveButton
+            buttonColor="red"
             onClick={() => handleMinusClick(resourceType)}
           >
             -1
-          </PlusMinusButton>
+          </AddRemoveButton>
         </div>
 
         {/* @ts-ignore */}
         <CardShowCount countToShow={resources[resourceType].workers} />
 
         <div className="flex items-center justify-start">
-          <PlusMinusButton
-            buttonType="minus"
+          <AddRemoveButton
+            buttonColor="green"
             onClick={() => handlePlusClick(resourceType)}
           >
             +1
-          </PlusMinusButton>
+          </AddRemoveButton>
         </div>
       </CardTemplate>
     </>

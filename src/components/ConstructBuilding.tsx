@@ -1,13 +1,13 @@
 import React from "react";
 import { Buildings } from "../types/Buildings";
 import { Resources } from "../types/Resources";
-import AddRemoveButton from "./AddRemoveButton";
-import CardDescription from "./CardDescription";
-import CardHeader from "./CardHeader";
-import CardShowCount from "./CardShowCount";
-import CardSymbol from "./CardSymbol";
-import CardTemplate from "./CardTemplate";
-import HorizLine3ColGrid from "./HorizLine3ColGrid";
+import AddRemoveButton from "./buttons/AddRemoveButton";
+import CardDescription from "./cards/CardDescription";
+import CardHeader from "./cards/CardHeader";
+import CardShowCount from "./cards/CardShowCount";
+import CardSymbol from "./cards/CardSymbol";
+import CardTemplate from "./cards/CardTemplate";
+import HorizLine3ColGrid from "./cards/HorizLine3ColGrid";
 
 interface ConstructBuildingProps {
   buildings: Buildings;
@@ -91,7 +91,7 @@ export default function ConstructBuilding({
 
       <div className="col-span-3 flex items-center justify-around">
         <AddRemoveButton
-          buttonType="minus"
+          buttonColor="green"
           onClick={
             buildings[buildingType].underConstruction
               ? () => handleCancelClick(buildingType)

@@ -15,8 +15,8 @@ export default function Button({
     <button
       className={`transition ease-in-out ${
         buttonColor === "blue" ? "bg-blue-500" : "bg-red-500"
-      } rounded py-2 px-4 text-xl font-bold text-white hover:${
-        buttonColor === "blue" ? "bg-blue-700" : "bg-red-700"
+      } rounded py-2 px-4 text-xl font-bold text-white ${
+        buttonColor === "blue" ? "hover:bg-blue-700" : "hover:bg-red-700"
       } duration-75 hover:scale-105 active:scale-100`}
       onClick={onClick}
     >

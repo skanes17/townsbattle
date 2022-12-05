@@ -1,16 +1,16 @@
 import React from "react";
-import { Resources } from "../types/Resources";
-import WorkerCard from "./WorkerCard";
+import { Resources } from "../../types/Resources";
+import WorkerCard from "../cards/WorkerCard";
 
-interface AssignWorkersProps {
+interface WorkerCardContainerProps {
   resources: Resources;
   setResources: any;
 }
 
-export default function AssignWorkers({
+export default function WorkerCardContainer({
   resources,
   setResources,
-}: AssignWorkersProps) {
+}: WorkerCardContainerProps) {
   return (
     <>
       {/* This gets all the keys excluding "freeworkers" */}

@@ -1,7 +1,7 @@
 import React from "react";
 import { BaseUnit } from "../types/BaseUnit";
-import Button from "./Button";
-import AddUnitButton from "./AddUnitButton";
+import Button from "./buttons/Button";
+import AddUnitButton from "./buttons/AddUnitButton";
 
 interface DevToolsProps {
   BASE_UNIT_DATA: BaseUnit;

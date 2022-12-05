@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { BaseUnit } from "../types/BaseUnit";
-import { Resources } from "../types/Resources";
-import { UnitCosts } from "../types/UnitCosts";
-import { UnitsInTraining } from "../types/UnitInTraining";
+import { BaseUnit } from "../../types/BaseUnit";
+import { Resources } from "../../types/Resources";
+import { UnitCosts } from "../../types/UnitCosts";
+import { UnitsInTraining } from "../../types/UnitInTraining";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import CardTemplate from "./CardTemplate";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
-import AddRemoveButton from "./AddRemoveButton";
+import AddRemoveButton from "../buttons/AddRemoveButton";
 import TrainUnitCardHeader from "./TrainUnitCardName";
 import CardDescription from "./CardDescription";
 
@@ -104,7 +104,7 @@ export default function TrainUnitCard({
       </div>
       <div className="flex items-center justify-end">
         <AddRemoveButton
-          buttonType="minus"
+          buttonColor="red"
           onClick={() => handleMinusClick(unitType, friendly)}
         >
           -1
@@ -114,7 +114,7 @@ export default function TrainUnitCard({
       <CardShowCount countToShow={unitsInTraining[unitType]} />
       <div className="flex items-center justify-start">
         <AddRemoveButton
-          buttonType="plus"
+          buttonColor="green"
           onClick={() => handlePlusClick(unitType, friendly)}
         >
           +1
