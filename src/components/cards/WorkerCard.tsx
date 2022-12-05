@@ -4,8 +4,8 @@ import CardHeader from "./CardHeader";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import CardTemplate from "./CardTemplate";
-import HorizLine3ColGrid from "./HorizLine3ColGrid";
 import AddRemoveButton from "../buttons/AddRemoveButton";
+import CardDescription from "./CardDescription";
 
 /* TODO: Consider if it would be cleaner to ditch workers and harvest a resource per click.
 Could have a limit on clicks (energy bar, actions available, etc), each click uses energy.
@@ -80,7 +80,10 @@ export default function WorkerCard({
         />
         {/* @ts-ignore */}
         <CardSymbol cardSymbol={resources[resourceType].workerSymbol} />
-        <HorizLine3ColGrid />
+        <CardDescription
+          /* @ts-ignore */
+          descriptionText={resources[resourceType].description}
+        />
 
         <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
           Cost
@@ -104,7 +107,7 @@ export default function WorkerCard({
 
         <div className="flex items-center justify-start">
           <AddRemoveButton
-            buttonColor="green"
+            buttonColor="blue"
             onClick={() => handlePlusClick(resourceType)}
           >
             +1

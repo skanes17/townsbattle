@@ -86,12 +86,8 @@ export default function TrainUnitCard({
         attack={BASE_UNIT_DATA[unitType].attack}
         health={BASE_UNIT_DATA[unitType].health}
       ></TrainUnitCardHeader>
-      <HorizLine3ColGrid />
-      {/*       <CardHeader cardName={BASE_UNIT_DATA[unitType].name} />
-       */}{" "}
       <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
       <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
-      <HorizLine3ColGrid />
       <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
         Cost
       </div>
@@ -114,7 +110,7 @@ export default function TrainUnitCard({
       <CardShowCount countToShow={unitsInTraining[unitType]} />
       <div className="flex items-center justify-start">
         <AddRemoveButton
-          buttonColor="green"
+          buttonColor="blue"
           onClick={() => handlePlusClick(unitType, friendly)}
         >
           +1

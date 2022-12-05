@@ -20,6 +20,7 @@ import townCenter from "../images/town-center.png";
 import TrainingCardContainer from "./cardContainers/TrainingCardContainer";
 import FlexWrapContainer from "./FlexWrapContainer";
 import Button from "./buttons/Button";
+import DisplayUnderConstruction from "./DisplayUnderConstruction";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -46,6 +47,7 @@ export default function Game(props: GameProps) {
       workerName: "Woodcutters",
       workerType: "woodcutters",
       workerSymbol: "🪓",
+      description: "Collects 1 wood.",
     },
     stone: {
       collected: 0,
@@ -54,6 +56,7 @@ export default function Game(props: GameProps) {
       workerName: "Stonemasons",
       workerType: "stonemasons",
       workerSymbol: "⚒️",
+      description: "Collects 1 stone.",
     },
     metal: {
       collected: 0,
@@ -62,6 +65,7 @@ export default function Game(props: GameProps) {
       workerName: "Metalworkers",
       workerType: "metalworkers",
       workerSymbol: "🥽",
+      description: "Collects 1 metal.",
     },
   });
 
@@ -123,7 +127,7 @@ export default function Game(props: GameProps) {
       tier: 1,
       attackBonus: 2,
       healthBonus: 2,
-      description: "Melee units gain +2 to attack, +2 to health",
+      description: "Melee units gain +2 to attack, +2 to health.",
       health: 2,
       woodCost: 10,
       stoneCost: 10,
@@ -139,7 +143,7 @@ export default function Game(props: GameProps) {
       tier: 1,
       attackBonus: 3,
       healthBonus: 1,
-      description: "Pewpew units gain +3 to attack, +1 to health",
+      description: "Pewpew units gain +3 to attack, +1 to health.",
       health: 2,
       woodCost: 10,
       stoneCost: 0,
@@ -155,7 +159,7 @@ export default function Game(props: GameProps) {
       tier: 1,
       attackBonus: 1,
       healthBonus: 3,
-      description: "Tanky units gain +1 to attack, +3 to health",
+      description: "Tanky units gain +1 to attack, +3 to health.",
       health: 2,
       woodCost: 0,
       stoneCost: 10,
@@ -172,7 +176,7 @@ export default function Game(props: GameProps) {
       attackBonus: 0,
       healthBonus: 2,
       armorBonus: 0,
-      description: "All units gain +2 to health, +2 to armor",
+      description: "All units gain +2 to health, +2 to armor.",
       health: 2,
       woodCost: 10,
       stoneCost: 10,
@@ -196,7 +200,26 @@ export default function Game(props: GameProps) {
       metalCost: 0,
       freeworkerCost: 0,
     },
+    scoutingPost: {
+      name: "Scouting Post",
+      nameSymbol: "🔍",
+      underConstruction: false,
+      constructed: false,
+      tier: 1,
+      attackBonus: 0,
+      description: "Upgrade intel on the enemy army.",
+      healthBonus: 0,
+      health: 2,
+      woodCost: 15,
+      stoneCost: 15,
+      metalCost: 15,
+      freeworkerCost: 10,
+    },
   });
+
+  const buildingsUnderConstruction = Object.keys(buildings).filter(
+    (key) => buildings[key].underConstruction
+  );
 
   const buildingsToConstruct = Object.keys(buildings).filter(
     (key) => !buildings[key].constructed
@@ -595,25 +618,15 @@ export default function Game(props: GameProps) {
   };
 
   return (
-    <div className="p-4">
-      {/* TODO: Make this a right-side bar for large screen, top bar for smaller */}
-
-      {/* grid to hold button and stats */}
-      <div className="grid auto-cols-auto">
-        {/* This div holds button */}
-        <div className="col-start-1 flex items-center justify-start pl-4">
-          <Button buttonColor="blue" onClick={endTurn}>
-            End Turn {turn}
-          </Button>
-        </div>
-        {/* This div holds stats */}
-
-        <div className="col-start-2 grid auto-cols-fr grid-flow-col justify-end rounded-b-md border border-blue-900 bg-blue-900/25 px-4 hover:bg-blue-900/50 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+    <div className="p-1">
+      {/* TODO: Center all dashboard info in the middle of their grid/div? */}
+      {/* grid to hold resource/army dashbaord */}
+      <div className="sticky top-0 grid auto-cols-auto">
+        <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-sky-300/25 bg-sky-900/90 px-4 hover:bg-sky-900/95 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <DisplayResources
             resources={resources}
             resourceTypes={resourceTypes}
           />
-          {/* <DisplayTraining unitsInTraining={unitsInTraining} /> */}
           <DisplayUnitCounts unitCounts={unitCounts} />
         </div>
       </div>
@@ -668,6 +681,21 @@ export default function Game(props: GameProps) {
         addUnit={addUnit}
         unitBattler={unitBattler}
       />
+
+      <div className="sticky bottom-0 grid auto-cols-auto">
+        <div className="col-start-1 grid auto-cols-fr grid-flow-col justify-end rounded-md border border-sky-300/25 bg-sky-900/90 px-4 hover:bg-sky-900/95 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+          <DisplayTraining unitsInTraining={unitsInTraining} />
+          <div className="sticky bottom-0 flex items-center justify-center p-0">
+            <Button buttonColor="blue" onClick={endTurn}>
+              End Turn {turn}
+            </Button>
+          </div>
+          <DisplayUnderConstruction
+            buildings={buildings}
+            buildingsUnderConstruction={buildingsUnderConstruction}
+          />
+        </div>
+      </div>
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function DisplayUnitCounts({
       <div className="font-bold sm:text-sm md:text-base lg:text-lg">
         Army Size
       </div>
-      <div className="grid auto-cols-max grid-flow-col gap-4 transition duration-75 ease-in-out hover:scale-105 hover:text-yellow-300 md:text-lg lg:text-2xl">
+      <div className="grid auto-cols-max grid-flow-col gap-4 transition duration-75 ease-in-out hover:text-yellow-300 md:text-lg lg:text-2xl">
         {/* TODO: <UnitCount /> three times? -- DRY! */}
         <div>🗡️ {unitCounts.melee}</div>
         <div>🏹 {unitCounts.pewpew}</div>

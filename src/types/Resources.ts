@@ -7,6 +7,7 @@ export interface Resources {
     workerName: string;
     workerType: string;
     workerSymbol: string;
+    description: string;
   };
   stone: {
     collected: number;
@@ -15,6 +16,7 @@ export interface Resources {
     workerName: string;
     workerType: string;
     workerSymbol: string;
+    description: string;
   };
   metal: {
     collected: number;
@@ -23,6 +25,7 @@ export interface Resources {
     workerName: string;
     workerType: string;
     workerSymbol: string;
+    description: string;
   };
 }
 

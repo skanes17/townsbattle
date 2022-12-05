@@ -77,7 +77,6 @@ export default function ConstructBuilding({
       <CardHeader cardName={buildings[buildingType].name} />
       <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} />
       <CardDescription descriptionText={buildings[buildingType].description} />
-      <HorizLine3ColGrid />
       <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
         Cost
       </div>
@@ -91,7 +90,7 @@ export default function ConstructBuilding({
 
       <div className="col-span-3 flex items-center justify-around">
         <AddRemoveButton
-          buttonColor="green"
+          buttonColor="blue"
           onClick={
             buildings[buildingType].underConstruction
               ? () => handleCancelClick(buildingType)
