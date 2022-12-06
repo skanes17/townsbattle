@@ -2,15 +2,23 @@ import React from "react";
 import { BaseUnit } from "../types/BaseUnit";
 import Button from "./buttons/Button";
 import AddUnitButton from "./buttons/AddUnitButton";
+import { Resources } from "../types/Resources";
+import AddResourceButton from "./buttons/AddResourceButton";
 
 interface DevToolsProps {
   BASE_UNIT_DATA: BaseUnit;
+  resources: Resources;
+  resourceTypes: string[];
+  addResource: any;
   addUnit: any;
   unitBattler: () => void;
 }
 
 export default function DevTools({
   BASE_UNIT_DATA,
+  resources,
+  resourceTypes,
+  addResource,
   addUnit,
   unitBattler,
 }: DevToolsProps) {
@@ -20,7 +28,7 @@ export default function DevTools({
         Dev Tools
       </h2>{" "}
       <div className="flex items-center justify-evenly">
-        {/* Get all base unit types, dyanmically create a button for each */}
+        {/* Get all base unit types, dynamically create a button for each */}
         {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
           <AddUnitButton
             addUnit={addUnit}
@@ -47,6 +55,23 @@ export default function DevTools({
           />
         ))}
       </div>
+      <div>
+        {resourceTypes.map((resourceType: string) => (
+          <AddResourceButton
+            addResource={addResource} // TODO: Make the function
+            resourceType={resourceType}
+            /* @ts-ignore */
+            name={resources[resourceType].name}
+            className="rounded border border-gray-400 bg-white py-1 px-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
+          />
+        ))}
+      </div>
     </div>
   );
 }
+
+/*
+const resourceTypes = Object.keys(resources).filter(
+  (key) => key != "freeworkers"
+);
+*/

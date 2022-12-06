@@ -2,6 +2,7 @@ export interface Resources {
   freeworkers: number;
   wood: {
     collected: number;
+    name: string;
     resourceSymbol: string;
     workers: number;
     workerName: string;
@@ -11,6 +12,7 @@ export interface Resources {
   };
   stone: {
     collected: number;
+    name: string;
     resourceSymbol: string;
     workers: number;
     workerName: string;
@@ -20,6 +22,7 @@ export interface Resources {
   };
   metal: {
     collected: number;
+    name: string;
     resourceSymbol: string;
     workers: number;
     workerName: string;

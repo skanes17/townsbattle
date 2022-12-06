@@ -42,6 +42,7 @@ export default function Game(props: GameProps) {
     freeworkers: 5,
     wood: {
       collected: 0,
+      name: "Wood",
       resourceSymbol: "🪵",
       workers: 0,
       workerName: "Woodcutters",
@@ -51,6 +52,7 @@ export default function Game(props: GameProps) {
     },
     stone: {
       collected: 0,
+      name: "Stone",
       resourceSymbol: "🪨",
       workers: 0,
       workerName: "Stonemasons",
@@ -60,6 +62,7 @@ export default function Game(props: GameProps) {
     },
     metal: {
       collected: 0,
+      name: "metal",
       resourceSymbol: "🔩",
       workers: 0,
       workerName: "Metalworkers",
@@ -74,17 +77,6 @@ export default function Game(props: GameProps) {
   );
 
   const BASE_FREEWORKER_COUNT: number = 5;
-
-  // OLD RESOURCE STRUCTURE
-  /* const [resources, setResources] = useState<Resources>({
-    freeworkers: 5,
-    woodCollected: 0,
-    stoneCollected: 0,
-    metalCollected: 0,
-    woodcutters: 0,
-    stonemasons: 0,
-    metalworkers: 0,
-  }); */
 
   // current number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
@@ -389,6 +381,22 @@ export default function Game(props: GameProps) {
     setUnitId(unitId + 1);
   };
 
+  /*====================================
+  ======DEV TOOLS TO ADD RESOURCES======
+  =====================================*/
+  const addResource = (resourceType: string) => {
+    //@ts-ignore
+    const selectedResource = resources[resourceType];
+    if (!selectedResource) {
+      alert("resource doesn't exist");
+      return;
+    }
+    const updatedResources = { ...resources };
+    //@ts-ignore
+    updatedResources[resourceType].collected += 1;
+    setResources(updatedResources);
+  };
+
   // Function to REMOVE units from either army
   // TODO: Fix having to use the unitTypeString workaround
   /* const removeUnit = (unitTypeString: string, friendly: boolean) => {
@@ -682,10 +690,12 @@ export default function Game(props: GameProps) {
 
       <DevTools
         BASE_UNIT_DATA={BASE_UNIT_DATA}
+        resources={resources}
+        resourceTypes={resourceTypes}
+        addResource={addResource}
         addUnit={addUnit}
         unitBattler={unitBattler}
       />
-
       {/* TODO: Consider merging UnitCount and UnitInTraining components; only the count differs */}
 
       <div className="sticky bottom-0 grid auto-cols-auto">
