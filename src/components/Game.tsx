@@ -308,8 +308,8 @@ export default function Game(props: GameProps) {
     },
   };
 
-  /* // TODO: Incorporate later for cleaner code
-  const unitTypes = Object.keys(BASE_UNIT_DATA); */
+  // TODO: Incorporate later for cleaner code
+  const unitTypes = Object.keys(BASE_UNIT_DATA);
 
   // Function to ADD units to either army
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
@@ -627,7 +627,11 @@ export default function Game(props: GameProps) {
             resources={resources}
             resourceTypes={resourceTypes}
           />
-          <DisplayUnitCounts unitCounts={unitCounts} />
+          <DisplayUnitCounts
+            BASE_UNIT_DATA={BASE_UNIT_DATA}
+            unitTypes={unitTypes}
+            unitCounts={unitCounts}
+          />
         </div>
       </div>
 
@@ -682,9 +686,15 @@ export default function Game(props: GameProps) {
         unitBattler={unitBattler}
       />
 
+      {/* TODO: Consider merging UnitCount and UnitInTraining components; only the count differs */}
+
       <div className="sticky bottom-0 grid auto-cols-auto">
         <div className="col-start-1 grid auto-cols-fr grid-flow-col justify-end rounded-md border border-sky-300/25 bg-sky-900/90 px-4 hover:bg-sky-900/95 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-          <DisplayTraining unitsInTraining={unitsInTraining} />
+          <DisplayTraining
+            BASE_UNIT_DATA={BASE_UNIT_DATA}
+            unitTypes={unitTypes}
+            unitsInTraining={unitsInTraining}
+          />
           <div className="sticky bottom-0 flex items-center justify-center p-0">
             <Button buttonColor="blue" onClick={endTurn}>
               End Turn {turn}
