@@ -5,22 +5,22 @@ import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
 import { UpgradeCosts } from "../types/UpgradeCosts";
 import { Unit } from "../types/Unit";
-import DevTools from "./DevTools";
+import DevTools from "./devTools/DevTools";
 import { Resources } from "../types/Resources";
 import { UnitsInTraining } from "../types/UnitInTraining";
 import { UnitCounts } from "../types/UnitCounts";
 import { BaseUnit } from "../types/BaseUnit";
 import DisplayBuildings from "./DisplayBuildings";
-import DisplayResources from "./DisplayResources";
-import DisplayUnitCounts from "./DisplayUnitCounts";
-import WorkerCardContainer from "./cardContainers/WorkerCardContainer";
+import DisplayResources from "./dashboards/DisplayResources";
+import DisplayUnitCounts from "./dashboards/DisplayUnitCounts";
+import WorkerCardContainer from "./cards/WorkerCardContainer";
 import ConstructBuilding from "./ConstructBuilding";
-import DisplayTraining from "./DisplayTraining";
+import DisplayTraining from "./dashboards/DisplayTraining";
 import townCenter from "../images/town-center.png";
-import TrainingCardContainer from "./cardContainers/TrainingCardContainer";
+import TrainingCardContainer from "./cards/TrainingCardContainer";
 import FlexWrapContainer from "./FlexWrapContainer";
 import Button from "./buttons/Button";
-import DisplayUnderConstruction from "./DisplayUnderConstruction";
+import DisplayUnderConstruction from "./dashboards/DisplayUnderConstruction";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -401,7 +401,7 @@ export default function Game(props: GameProps) {
     }
     const updatedResources = { ...resources };
     //@ts-ignore
-    updatedResources[resourceType].collected += 1;
+    updatedResources[resourceType].collected += 10;
     setResources(updatedResources);
   };
 
@@ -652,8 +652,6 @@ export default function Game(props: GameProps) {
         </div>
       </div>
 
-      <br></br>
-
       <div className="flex flex-wrap justify-evenly">
         <FlexWrapContainer headerText="Assign Workers">
           <WorkerCardContainer
@@ -673,8 +671,6 @@ export default function Game(props: GameProps) {
             removeTrainingUnit={removeTrainingUnit}
           />
         </FlexWrapContainer>
-
-        {/* <br></br> */}
 
         <FlexWrapContainer headerText="Construct Buildings">
           {/* TODO: Match component structure with other cards */}

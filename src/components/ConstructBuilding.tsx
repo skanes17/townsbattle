@@ -24,7 +24,7 @@ export default function ConstructBuilding({
   resources,
   setResources,
 }: ConstructBuildingProps) {
-  const freeworkerCost = buildings[buildingType].freeworkerCost;
+  const freeworkerCost = buildings[buildingType]["freeworkerCost"];
   const woodCost = buildings[buildingType]["woodCost"];
   const stoneCost = buildings[buildingType]["stoneCost"];
   const metalCost = buildings[buildingType]["metalCost"];

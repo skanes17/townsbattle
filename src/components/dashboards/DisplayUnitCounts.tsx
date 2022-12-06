@@ -1,7 +1,7 @@
 import React from "react";
-import { BaseUnit } from "../types/BaseUnit";
-import { UnitCounts } from "../types/UnitCounts";
-import UnitCount from "./UnitCount";
+import { BaseUnit } from "../../types/BaseUnit";
+import { UnitCounts } from "../../types/UnitCounts";
+import UnitCount from "../UnitCount";
 
 interface DisplayUnitCountsProps {
   BASE_UNIT_DATA: BaseUnit;

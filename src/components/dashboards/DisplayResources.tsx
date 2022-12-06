@@ -1,6 +1,6 @@
 import React from "react";
-import { Resources } from "../types/Resources";
-import Resource from "./Resource";
+import { Resources } from "../../types/Resources";
+import Resource from "../Resource";
 
 interface DisplayResourcesProps {
   resources: Resources;

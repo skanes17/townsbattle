@@ -16,7 +16,7 @@ export default function AddResourceButton({
   return (
     <>
       <button onClick={() => addResource(resourceType)} className={className}>
-        +1 {name} (DevTool)
+        +10 {name} (DevTool)
       </button>
     </>
   );

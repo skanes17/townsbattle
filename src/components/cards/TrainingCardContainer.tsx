@@ -3,7 +3,7 @@ import { BaseUnit } from "../../types/BaseUnit";
 import { Resources } from "../../types/Resources";
 import { UnitCosts } from "../../types/UnitCosts";
 import { UnitsInTraining } from "../../types/UnitInTraining";
-import TrainUnitCard from "../cards/TrainUnitCard";
+import TrainUnitCard from "./TrainUnitCard";
 
 export interface TrainingCardContainerProps {
   resources: Resources;
