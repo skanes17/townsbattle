@@ -39,7 +39,7 @@ export default function ConstructBuilding({
 
       // give back resources
       const updatedResources = { ...resources };
-      updatedResources.freeworkers += freeworkerCost;
+      updatedResources["freeworkers"].collected += freeworkerCost;
       updatedResources["wood"].collected += woodCost;
       updatedResources["stone"].collected += stoneCost;
       updatedResources["metal"].collected += metalCost;
@@ -50,7 +50,7 @@ export default function ConstructBuilding({
   const handleBuildClick = (buildingType: string) => {
     if (
       buildings[buildingType].underConstruction === false &&
-      resources.freeworkers >= freeworkerCost &&
+      resources["freeworkers"].collected >= freeworkerCost &&
       resources["wood"].collected >= woodCost &&
       resources["stone"].collected >= stoneCost &&
       resources["metal"].collected >= metalCost
@@ -62,7 +62,7 @@ export default function ConstructBuilding({
 
       // reduce the resources according to costs
       const updatedResources = { ...resources };
-      updatedResources.freeworkers -= freeworkerCost;
+      updatedResources["freeworkers"].collected -= freeworkerCost;
       updatedResources["wood"].collected -= woodCost;
       updatedResources["stone"].collected -= stoneCost;
       updatedResources["metal"].collected -= metalCost;

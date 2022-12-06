@@ -1,6 +1,5 @@
 import React from "react";
 import { Resources } from "../types/Resources";
-import HeaderStatsBlock from "./HeaderStatsBlock";
 import Resource from "./Resource";
 
 interface DisplayResourcesProps {
@@ -18,7 +17,6 @@ export default function DisplayResources({
         Resources
       </div>
       <div className="grid auto-cols-max grid-flow-col gap-4 transition duration-75 ease-in-out hover:text-yellow-300 md:text-lg lg:text-2xl">
-        <div>🛠️{resources.freeworkers}</div>
         {resourceTypes.map((resourceType) => (
           /* @ts-ignore */
           <Resource resources={resources} resourceType={resourceType} />

@@ -1,5 +1,12 @@
+// TODO: Incorporate something like "pick" for freeworkers here?
+
 export interface Resources {
-  freeworkers: number;
+  freeworkers: {
+    collected: number;
+    name: string;
+    resourceSymbol: string;
+    description: string;
+  };
   wood: {
     collected: number;
     name: string;

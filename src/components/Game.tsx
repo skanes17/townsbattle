@@ -39,7 +39,13 @@ export default function Game(props: GameProps) {
   // NEW RESOURCE STRUCTURE
   // TODO: Check Typing on this resource to make more flexible
   const [resources, setResources] = useState<Resources>({
-    freeworkers: 5,
+    freeworkers: {
+      collected: 5,
+      name: "Freeworker",
+      resourceSymbol: "🛠️",
+      description:
+        "Used when gathering resources, training untis, and constructing buildings",
+    },
     wood: {
       collected: 0,
       name: "Wood",
@@ -62,7 +68,7 @@ export default function Game(props: GameProps) {
     },
     metal: {
       collected: 0,
-      name: "metal",
+      name: "Metal",
       resourceSymbol: "🔩",
       workers: 0,
       workerName: "Metalworkers",
@@ -72,9 +78,11 @@ export default function Game(props: GameProps) {
     },
   });
 
-  const resourceTypes = Object.keys(resources).filter(
+  // FIXME: Remove this kind of things now that resources are refactored
+  /* const resourceTypes = Object.keys(resources).filter(
     (key) => key != "freeworkers"
-  );
+  ); */
+  const resourceTypes = Object.keys(resources);
 
   const BASE_FREEWORKER_COUNT: number = 5;
 
@@ -549,7 +557,8 @@ export default function Game(props: GameProps) {
   // ===END OF COMBAT MECHANICS===
 
   const endTurn = () => {
-    if (resources.freeworkers > 0) {
+    /* @ts-ignore */
+    if (resources["freeworkers"].collected > 0) {
       alert("You have not assigned all free workers!");
       return;
     }
@@ -569,7 +578,7 @@ export default function Game(props: GameProps) {
       resources["metal"].workers * metalMultiplier;
 
     // calculate freeworkers for next turn
-    resourcesCopy.freeworkers = BASE_FREEWORKER_COUNT + newWorkers;
+    resourcesCopy["freeworkers"].collected = BASE_FREEWORKER_COUNT + newWorkers;
     setNewWorkers(newWorkers + 1);
 
     // reset workers

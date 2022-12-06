@@ -45,7 +45,7 @@ export default function TrainUnitCard({
     // @ts-ignore
     if (unitsInTraining[unitType] > 0) {
       const updatedResources = { ...resources };
-      updatedResources["freeworkers"] += freeworkerCost;
+      updatedResources["freeworkers"].collected += freeworkerCost;
       updatedResources["wood"].collected += woodCost;
       updatedResources["stone"].collected += stoneCost;
       updatedResources["metal"].collected += metalCost;
@@ -59,14 +59,14 @@ export default function TrainUnitCard({
   const handlePlusClick = (unitType: string, friendly: boolean) => {
     // TODO: Refactor so no repeats; dynamic
     if (
-      resources["freeworkers"] >= freeworkerCost &&
+      resources["freeworkers"].collected >= freeworkerCost &&
       resources["wood"].collected >= woodCost &&
       resources["stone"].collected >= stoneCost &&
       resources["metal"].collected >= metalCost
     ) {
       // reduce the resources according to costs
       const updatedResources = { ...resources };
-      updatedResources["freeworkers"] -= freeworkerCost;
+      updatedResources["freeworkers"].collected -= freeworkerCost;
       updatedResources["wood"].collected -= woodCost;
       updatedResources["stone"].collected -= stoneCost;
       updatedResources["metal"].collected -= metalCost;

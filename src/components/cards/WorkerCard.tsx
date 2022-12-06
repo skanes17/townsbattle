@@ -35,14 +35,12 @@ export default function WorkerCard({
       return;
     }
 
-    if (resources.freeworkers > 0) {
+    if (resources["freeworkers"].collected > 0) {
       const updatedResources = { ...resources };
       // @ts-ignore
-      updatedResources.freeworkers = updatedResources.freeworkers - 1;
+      updatedResources["freeworkers"].collected -= 1;
       //@ts-ignore
-      updatedResources[resourceType].workers =
-        //@ts-ignore
-        updatedResources[resourceType].workers + 1;
+      updatedResources[resourceType].workers += 1;
 
       setResources(updatedResources);
     } else {
@@ -61,11 +59,9 @@ export default function WorkerCard({
     //@ts-ignore
     if (resources[resourceType].workers > 0) {
       const updatedResources = { ...resources };
-      updatedResources.freeworkers = updatedResources.freeworkers + 1;
+      updatedResources["freeworkers"].collected += 1;
       // @ts-ignore
-      updatedResources[resourceType].workers =
-        //@ts-ignore
-        updatedResources[resourceType].workers - 1;
+      updatedResources[resourceType].workers -= 1;
       setResources(updatedResources);
     }
   };
