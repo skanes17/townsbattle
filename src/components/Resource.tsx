@@ -7,12 +7,10 @@ interface ResourceProps {
 }
 
 export default function Resource({ resources, resourceType }: ResourceProps) {
-  {
-    return (
-      <div>
-        {resources[resourceType].resourceSymbol}
-        {resources[resourceType].collected}
-      </div>
-    );
-  }
+  return (
+    <div>
+      {resources[resourceType].resourceSymbol}
+      {resources[resourceType].collected}
+    </div>
+  );
 }

@@ -15,7 +15,7 @@ export default function WorkerCardContainer({
     <>
       {/* This gets all the keys excluding "freeworkers" */}
       {Object.keys(resources)
-        .filter((key) => key != "freeworkers")
+        .filter((key) => key !== "freeworkers")
         .map((resourceType: string) => (
           <WorkerCard
             resources={resources}

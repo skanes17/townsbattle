@@ -13,11 +13,9 @@ export default function UnitCount({
   unitType,
   unitCounts,
 }: UnitCountProps) {
-  {
-    return (
-      <div>
-        {BASE_UNIT_DATA[unitType].nameSymbol} {unitCounts[unitType]}
-      </div>
-    );
-  }
+  return (
+    <div>
+      {BASE_UNIT_DATA[unitType].nameSymbol} {unitCounts[unitType]}
+    </div>
+  );
 }

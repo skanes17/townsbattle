@@ -13,11 +13,9 @@ export default function UnitInTraining({
   unitType,
   unitsInTraining,
 }: UnitInTrainingProps) {
-  {
-    return (
-      <div>
-        {BASE_UNIT_DATA[unitType].nameSymbol} {unitsInTraining[unitType]}
-      </div>
-    );
-  }
+  return (
+    <div>
+      {BASE_UNIT_DATA[unitType].nameSymbol} {unitsInTraining[unitType]}
+    </div>
+  );
 }

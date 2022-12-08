@@ -605,16 +605,12 @@ export default function Game(props: GameProps) {
     let id = unitId;
     const units = myTrainingUnits.map((unit, i) => {
       // resolve base unit from unit type
-      const _unit = {
-        [unit.unitType]: BASE_UNIT_DATA[unit.unitType],
-      };
-      _unit[unit.unitType].id = id;
+      const _unit = BASE_UNIT_DATA[unit.unitType];
       id += i;
-      // FIXME: Not updating id properly!
 
       return {
         ..._unit,
-        // Putting id here was improperly nested; couldn't figure it out
+        id: i,
       };
     });
 
