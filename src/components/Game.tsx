@@ -316,6 +316,7 @@ export default function Game(props: GameProps) {
   // Function to ADD units to either army
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
     // unitType determines which unit to add
+    // FIXME: Was doing this based on a nested structure; myUnits is not nested!
     const _newUnit = { unitType: unitType, tempId: tempId };
 
     // TODO: Check that this works
@@ -326,7 +327,7 @@ export default function Game(props: GameProps) {
     if (friendly) {
       /* FIXME: remove the ts-ignore */
       /* @ts-ignore */
-      myTrainingUnits.push(_newUnit);
+      myTrainingUnits = [...myTrainingUnits, _newUnit];
       tempId += 1;
     }
     // TODO: Implement this if necessary, replace state with constant
@@ -629,7 +630,7 @@ export default function Game(props: GameProps) {
     setTurn(turn + 1);
   };
 
-  // TODO: How to make this dyanmic based on base units?
+  // TODO: How to make this dynamic based on base units?
   // how many units you're going to train this turn
   const unitsInTraining: UnitsInTraining = {
     melee: myTrainingUnits.filter((unit) => unit.unitType === "melee").length,
