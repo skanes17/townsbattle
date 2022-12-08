@@ -250,7 +250,7 @@ export default function Game(props: GameProps) {
   const [myUnits, setMyUnits] = useState<Unit[]>([]);
 
   // constant NOT used here so I could clear training each turn
-  let myTrainingUnits: TrainingUnit[] = [];
+  const [myTrainingUnits, setMyTrainingUnits] = useState<TrainingUnit[]>([]);
 
   // placeholder enemy array for testing
   const [enemyUnits, setEnemyUnits] = useState<Unit[]>([
@@ -318,6 +318,7 @@ export default function Game(props: GameProps) {
     // unitType determines which unit to add
     // FIXME: Was doing this based on a nested structure; myUnits is not nested!
     const _newUnit = { unitType: unitType, tempId: tempId };
+    tempId += 1;
 
     // TODO: Check that this works
     if (!_newUnit) {
@@ -327,8 +328,7 @@ export default function Game(props: GameProps) {
     if (friendly) {
       /* FIXME: remove the ts-ignore */
       /* @ts-ignore */
-      myTrainingUnits = [...myTrainingUnits, _newUnit];
-      tempId += 1;
+      setMyTrainingUnits((myTrainingUnits) => [...myTrainingUnits, _newUnit]);
     }
     // TODO: Implement this if necessary, replace state with constant
     /* else {
@@ -620,7 +620,7 @@ export default function Game(props: GameProps) {
     setUnitId(id);
 
     // reset units in training back to zero
-    myTrainingUnits = [];
+    setMyTrainingUnits([]);
 
     // increment turn
     setTurn(turn + 1);
