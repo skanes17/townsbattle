@@ -1,3 +1,5 @@
+import UnitCount from "../components/UnitCount";
+
 export type UnitType = "melee" | "pewpew" | "tanky";
 
 export interface Unit {
@@ -8,4 +10,10 @@ export interface Unit {
   attack: number;
   health: number;
   id?: number;
+}
+
+/* // TODO: Use Pick<> here? */
+export interface TrainingUnit {
+  unitType: UnitType;
+  tempId: number;
 }

@@ -4,7 +4,7 @@ import BuildingsUI from "./BuildingsUI";
 import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
 import { UpgradeCosts } from "../types/UpgradeCosts";
-import { Unit } from "../types/Unit";
+import { TrainingUnit, Unit, UnitType } from "../types/Unit";
 import DevTools from "./devTools/DevTools";
 import { Resources } from "../types/Resources";
 import { UnitsInTraining } from "../types/UnitInTraining";
@@ -249,7 +249,8 @@ export default function Game(props: GameProps) {
 
   const [myUnits, setMyUnits] = useState<Unit[]>([]);
 
-  const [myTrainingUnits, setMyTrainingUnits] = useState<Unit[]>([]);
+  // constant NOT used here so I could clear training each turn
+  let myTrainingUnits: TrainingUnit[] = [];
 
   // placeholder enemy array for testing
   const [enemyUnits, setEnemyUnits] = useState<Unit[]>([
@@ -308,57 +309,52 @@ export default function Game(props: GameProps) {
     },
   };
 
-  // TODO: Incorporate later for cleaner code
   const unitTypes = Object.keys(BASE_UNIT_DATA);
 
+  // needed tempId to allow removal later. Possible FIXME:?
+  let tempId = 0;
   // Function to ADD units to either army
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
     // unitType determines which unit to add
-    const baseUnit = BASE_UNIT_DATA[unitType];
+    const _newUnit = { unitType: unitType, tempId: tempId };
 
     // TODO: Check that this works
-    if (!baseUnit) {
+    if (!_newUnit) {
       return;
     }
 
-    const newUnit = { ...baseUnit, id: unitId };
-
     if (friendly) {
-      // if friendly, update friendly army
-      setMyTrainingUnits((myTrainingUnits) => {
-        return [...myTrainingUnits, newUnit];
-      });
-    } else {
-      // if not friendly, update enemy army
-      setEnemyUnits((enemyUnits) => {
-        return [...enemyUnits, newUnit];
-      });
+      /* FIXME: remove the ts-ignore */
+      /* @ts-ignore */
+      myTrainingUnits.push(_newUnit);
+      tempId += 1;
     }
-    setUnitId(unitId + 1);
+    // TODO: Implement this if necessary, replace state with constant
+    /* else {
+      setEnemyUnits((enemyUnits) => {
+        return [...enemyUnits, _newUnit];
+      });
+    } */
   };
 
   const removeTrainingUnit = (unitTypeString: string, friendly: boolean) => {
     if (friendly) {
-      // if friendly, update friendly army
-
       // pick the first unit in the array of the selected type
       //@ts-ignore
       const chosenId = myTrainingUnits.find(
         (unit) => unit.unitType === unitTypeString
-      ).id;
+      ).tempId;
 
       // FILTER OUT that unit from the array
-      setMyTrainingUnits(
-        myTrainingUnits.filter((unit) => unit.id !== chosenId)
-      );
+      myTrainingUnits.filter((unit) => unit.tempId !== chosenId);
     } else {
-      // if not friendly, update enemy army
+      /* // implement w/o state if necessary
       //@ts-ignore
       const chosenId = enemyUnits.find(
         (unit) => unit.unitType === unitTypeString
       ).id;
 
-      setEnemyUnits(enemyUnits.filter((unit) => unit.id !== chosenId));
+      setEnemyUnits(enemyUnits.filter((unit) => unit.id !== chosenId)); */
     }
   };
 
@@ -604,11 +600,30 @@ export default function Game(props: GameProps) {
     // TODO: Ask why this can be removed and apparently still work properly
     setBuildings(buildingsCopy);
 
+    // Train Units Process
+    let id = unitId;
+    const units = myTrainingUnits.map((unit, i) => {
+      // resolve base unit from unit type
+      const _unit = {
+        [unit.unitType]: BASE_UNIT_DATA[unit.unitType],
+      };
+      _unit[unit.unitType].id = id;
+      id += i;
+      // FIXME: Not updating id properly!
+
+      return {
+        ..._unit,
+        // Putting id here was improperly nested; couldn't figure it out
+      };
+    });
+
     // bring all the training units into the main army
-    setMyUnits([...myUnits, ...myTrainingUnits]);
+    /* @ts-ignore */
+    setMyUnits((myUnits) => [...myUnits, ...units]);
+    setUnitId(id);
 
     // reset units in training back to zero
-    setMyTrainingUnits([]);
+    myTrainingUnits = [];
 
     // increment turn
     setTurn(turn + 1);
