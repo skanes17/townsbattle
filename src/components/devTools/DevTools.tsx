@@ -12,6 +12,7 @@ interface DevToolsProps {
   addResource: any;
   addUnit: any;
   unitBattler: () => void;
+  switchPhase: () => void;
 }
 
 export default function DevTools({
@@ -21,6 +22,7 @@ export default function DevTools({
   addResource,
   addUnit,
   unitBattler,
+  switchPhase,
 }: DevToolsProps) {
   return (
     <div className="border-t-2 border-amber-500 blur-sm transition duration-150 ease-in-out hover:filter-none">
@@ -66,6 +68,9 @@ export default function DevTools({
           />
         ))}
       </div>
+      <Button buttonColor="red" onClick={switchPhase}>
+        Planning/Combat
+      </Button>
     </div>
   );
 }

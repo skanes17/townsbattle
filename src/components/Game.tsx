@@ -655,6 +655,12 @@ export default function Game(props: GameProps) {
     setTurn(turn + 1);
   };
 
+  const [inCombat, setInCombat] = useState(false);
+
+  const switchPhase = () => {
+    setInCombat(!inCombat);
+  };
+
   // TODO: How to make this dynamic based on base units?
   // how many units you're going to train this turn
   const unitsInTraining: UnitsInTraining = {
@@ -741,6 +747,7 @@ export default function Game(props: GameProps) {
         addResource={addResource}
         addUnit={addUnit}
         unitBattler={unitBattler}
+        switchPhase={switchPhase}
       />
       {/* TODO: Consider merging UnitCount and UnitInTraining components; only the count differs */}
 
