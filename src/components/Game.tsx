@@ -311,14 +311,11 @@ export default function Game(props: GameProps) {
 
   const unitTypes = Object.keys(BASE_UNIT_DATA);
 
-  // needed tempId to allow removal later. Possible FIXME:?
-  let tempId = 0;
   // Function to ADD units to either army
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
     // unitType determines which unit to add
-    // FIXME: Was doing this based on a nested structure; myUnits is not nested!
-    const _newUnit = { unitType: unitType, tempId: tempId };
-    tempId += 1;
+    // shorthand used for object
+    const _newUnit = { unitType };
 
     // TODO: Check that this works
     if (!_newUnit) {
@@ -330,7 +327,7 @@ export default function Game(props: GameProps) {
       /* @ts-ignore */
       setMyTrainingUnits((myTrainingUnits) => [...myTrainingUnits, _newUnit]);
     }
-    // TODO: Implement this if necessary, replace state with constant
+    // Following code could be used for enemy unit training
     /* else {
       setEnemyUnits((enemyUnits) => {
         return [...enemyUnits, _newUnit];
@@ -338,25 +335,29 @@ export default function Game(props: GameProps) {
     } */
   };
 
-  const removeTrainingUnit = (unitTypeString: string, friendly: boolean) => {
+  const removeTrainingUnit = (unitType: string, friendly: boolean) => {
     if (friendly) {
+      const _myTrainingUnitsCopy = [...myTrainingUnits];
+
       // pick the first unit in the array of the selected type
-      //@ts-ignore
-      const chosenId = myTrainingUnits.find(
-        (unit) => unit.unitType === unitTypeString
-      ).tempId;
+      const _unitIndex = _myTrainingUnitsCopy.findIndex(
+        (unit) => unit.unitType === unitType
+      );
 
-      // FILTER OUT that unit from the array
-      myTrainingUnits.filter((unit) => unit.tempId !== chosenId);
-    } else {
-      /* // implement w/o state if necessary
-      //@ts-ignore
-      const chosenId = enemyUnits.find(
-        (unit) => unit.unitType === unitTypeString
-      ).id;
-
-      setEnemyUnits(enemyUnits.filter((unit) => unit.id !== chosenId)); */
+      // remove that unit from the array
+      _myTrainingUnitsCopy.splice(_unitIndex, 1);
+      setMyTrainingUnits([..._myTrainingUnitsCopy]);
     }
+    // Following code could be used for enemy unit training
+    /* else {
+      const _enemyUnitsCopy = [...enemyUnits];
+      
+      const _unitIndex = _enemyUnitsCopy.findIndex(unit => unit.unitType===unitTypeString)
+
+      // remove that unit from the array
+      _enemyUnitsCopy.splice(_unitIndex,1);
+      setEnemyUnits([..._enemyUnitsCopy]);
+    } */
   };
 
   /*====================================
