@@ -25,7 +25,7 @@ export default function DevTools({
   switchPhase,
 }: DevToolsProps) {
   return (
-    <div className="border-t-2 border-amber-500 blur-sm transition duration-150 ease-in-out hover:filter-none">
+    <div className="border-t-2 border-amber-500 transition duration-150 ease-in-out hover:filter-none">
       <h2 className="font-extrabold text-amber-500 dark:text-white">
         Dev Tools
       </h2>{" "}

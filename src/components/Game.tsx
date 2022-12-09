@@ -21,6 +21,7 @@ import TrainingCardContainer from "./cards/TrainingCardContainer";
 import FlexWrapContainer from "./FlexWrapContainer";
 import Button from "./buttons/Button";
 import DisplayUnderConstruction from "./dashboards/DisplayUnderConstruction";
+import CombatMockup from "./combat/CombatMockup";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -681,10 +682,23 @@ export default function Game(props: GameProps) {
     tanky: enemyUnits.filter((unit) => unit.unitType === "tanky").length,
   };
 
-  return (
+  /* TODO: Center all dashboard info in the middle of their grid/div? */
+
+  return inCombat ? (
+    <>
+      <CombatMockup />
+      <DevTools
+        BASE_UNIT_DATA={BASE_UNIT_DATA}
+        resources={resources}
+        resourceTypes={resourceTypes}
+        addResource={addResource}
+        addUnit={addUnit}
+        unitBattler={unitBattler}
+        switchPhase={switchPhase}
+      />
+    </>
+  ) : (
     <div className="p-1">
-      {/* TODO: Center all dashboard info in the middle of their grid/div? */}
-      {/* grid to hold resource/army dashbaord */}
       <div className="sticky top-0 grid auto-cols-auto">
         <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-sky-300/25 bg-sky-900/90 px-4 hover:bg-sky-900/95 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <DisplayResources
