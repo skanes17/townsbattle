@@ -610,7 +610,7 @@ export default function Game(props: GameProps) {
 
       return {
         ..._unit,
-        id: i,
+        id, // shorthand if key = value
       };
     });
 
