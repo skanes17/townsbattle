@@ -259,24 +259,27 @@ export default function Game(props: GameProps) {
       name: "Melee",
       nameSymbol: "⚔️",
       attack: 5,
-      health: 5,
-      id: -2,
+      maxHealth: 5,
+      currentHealth: 5,
+      id: 0,
     },
     {
       unitType: "pewpew",
       name: "Pewpew",
       nameSymbol: "🏹",
       attack: 7,
-      health: 3,
-      id: -1,
+      maxHealth: 3,
+      currentHealth: 3,
+      id: 1,
     },
     {
       unitType: "tanky",
       name: "Tanky",
       nameSymbol: "🛡️",
       attack: 3,
-      health: 7,
-      id: -3,
+      maxHealth: 7,
+      currentHealth: 7,
+      id: 2,
     },
   ]);
 
@@ -289,7 +292,7 @@ export default function Game(props: GameProps) {
       nameSymbol: "⚔️",
       description: "Attack and health are balanced.",
       attack: 5,
-      health: 5,
+      maxHealth: 5,
     },
     pewpew: {
       unitType: "pewpew",
@@ -297,7 +300,7 @@ export default function Game(props: GameProps) {
       nameSymbol: "🏹",
       description: "Great attack but not much health.",
       attack: 7,
-      health: 3,
+      maxHealth: 3,
     },
     tanky: {
       unitType: "tanky",
@@ -305,7 +308,7 @@ export default function Game(props: GameProps) {
       nameSymbol: "🛡️",
       description: "Low attack but lots of health.",
       attack: 3,
-      health: 7,
+      maxHealth: 7,
     },
   };
 
@@ -372,7 +375,11 @@ export default function Game(props: GameProps) {
       return;
     }
 
-    const newUnit = { ...baseUnit, id: unitId };
+    const newUnit = {
+      ...baseUnit,
+      currentHealth: baseUnit.maxHealth,
+      id: unitId,
+    };
 
     friendly
       ? // if friendly, update friendly army
@@ -464,18 +471,30 @@ export default function Game(props: GameProps) {
     // select a random unit from the arrays
     const friendlyUnit =
       myUnitsCopy[Math.floor(Math.random() * myUnitsCopy.length)];
-    console.log("--Selected friendly unit is... " + friendlyUnit.unitType);
+    console.log(
+      "--Selected friendly unit is... " +
+        friendlyUnit.name +
+        "_" +
+        friendlyUnit.id
+    );
     const enemyUnit =
       enemyUnitsCopy[Math.floor(Math.random() * enemyUnitsCopy.length)];
-    console.log("--Selected enemy unit is... " + enemyUnit.unitType);
+    console.log(
+      "--Selected enemy unit is... " + enemyUnit.name + "_" + enemyUnit.id
+    );
 
-    const enemyHealthRemaining = enemyUnit.health - friendlyUnit.attack;
-    const friendlyHealthRemaining = friendlyUnit.health - enemyUnit.attack;
+    // TODO: Incorporate similar later with currentHealth
+    const enemyHealthRemaining = enemyUnit.maxHealth - friendlyUnit.attack;
+    const friendlyHealthRemaining = friendlyUnit.maxHealth - enemyUnit.attack;
 
     // if the enemy survives...
     if (enemyHealthRemaining > 0) {
       console.log(
-        "The enemy takes " +
+        "Enemy " +
+          enemyUnit.name +
+          "_" +
+          enemyUnit.id +
+          " takes " +
           friendlyUnit.attack +
           " damage but survives with " +
           enemyHealthRemaining +
@@ -489,7 +508,7 @@ export default function Game(props: GameProps) {
             return {
               // if so, change that unit's health/health accordingly
               ...unit,
-              health: enemyHealthRemaining,
+              currentHealth: enemyHealthRemaining,
             };
           } else {
             // if not, don't change anything
@@ -502,6 +521,8 @@ export default function Game(props: GameProps) {
       console.log(
         "Enemy " +
           enemyUnit.name +
+          "_" +
+          enemyUnit.id +
           " takes " +
           friendlyUnit.attack +
           " damage and dies."
@@ -515,6 +536,8 @@ export default function Game(props: GameProps) {
       console.log(
         "Friendly " +
           friendlyUnit.name +
+          "_" +
+          friendlyUnit.id +
           " takes " +
           enemyUnit.attack +
           " damage but survives with " +
@@ -530,7 +553,7 @@ export default function Game(props: GameProps) {
             return {
               // if so, change that unit's health/health accordingly
               ...unit,
-              health: friendlyHealthRemaining,
+              currentHealth: friendlyHealthRemaining,
             };
           } else {
             // if not, don't change anything
@@ -541,7 +564,12 @@ export default function Game(props: GameProps) {
     } else {
       // if the friendly dies...
       console.log(
-        friendlyUnit.name + " takes " + enemyUnit.attack + " damage and dies."
+        friendlyUnit.name +
+          "_" +
+          friendlyUnit.id +
+          " takes " +
+          enemyUnit.attack +
+          " damage and dies."
       );
       // remove friendly from pool
       setMyUnits(myUnitsCopy.filter((unit) => unit.id !== friendlyUnit.id));
@@ -607,16 +635,16 @@ export default function Game(props: GameProps) {
     const units = myTrainingUnits.map((unit, i) => {
       // resolve base unit from unit type
       const _unit = BASE_UNIT_DATA[unit.unitType];
-      id += i;
+      id += 1;
 
       return {
         ..._unit,
+        currentHealth: _unit.maxHealth,
         id, // shorthand if key = value
       };
     });
 
     // bring all the training units into the main army
-    /* @ts-ignore */
     setMyUnits((myUnits) => [...myUnits, ...units]);
     setUnitId(id);
 

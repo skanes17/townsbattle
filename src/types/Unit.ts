@@ -8,7 +8,8 @@ export interface Unit {
   nameSymbol: "⚔️" | "🏹" | "🛡️";
   description?: string;
   attack: number;
-  health: number;
+  maxHealth: number;
+  currentHealth: number;
   id?: number;
 }
 

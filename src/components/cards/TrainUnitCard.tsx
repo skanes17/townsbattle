@@ -84,7 +84,7 @@ export default function TrainUnitCard({
       <TrainUnitCardHeader
         cardName={BASE_UNIT_DATA[unitType].name}
         attack={BASE_UNIT_DATA[unitType].attack}
-        health={BASE_UNIT_DATA[unitType].health}
+        health={BASE_UNIT_DATA[unitType].maxHealth}
       ></TrainUnitCardHeader>
       <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
       <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
