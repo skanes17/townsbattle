@@ -8,7 +8,7 @@ import CardSymbol from "./CardSymbol";
 import CardTemplate from "./CardTemplate";
 import HorizLine3ColGrid from "./HorizLine3ColGrid";
 import AddRemoveButton from "../buttons/AddRemoveButton";
-import TrainUnitCardHeader from "./TrainUnitCardName";
+import TrainUnitCardHeader from "./TrainUnitCardHeader";
 import CardDescription from "./CardDescription";
 
 export interface TrainUnitCardProps {

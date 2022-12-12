@@ -1,57 +1,110 @@
-import React from "react";
+import React, { useState } from "react";
+import { Unit } from "../../types/Unit";
+import AddRemoveButton from "../buttons/AddRemoveButton";
 import Button from "../buttons/Button";
+import CardDescription from "../cards/CardDescription";
+import CardSymbol from "../cards/CardSymbol";
+import CardTemplate from "../cards/CardTemplate";
+import CombatCardTemplate from "../cards/CombatCardTemplate";
+import TrainUnitCardHeader from "../cards/TrainUnitCardHeader";
+import UnitTile from "./UnitTile";
 
 /* TODO: Figure out how to place friendly divs in grid form, enemies start from top right */
 
-export default function CombatMockup() {
+interface CombatMockup {
+  myUnits: Unit[];
+}
+
+export default function CombatMockup({ myUnits }: CombatMockup) {
+  const [combatUnits, setCombatUnits] = useState<Unit[]>([...myUnits]);
+
+  const testMelee: Unit = {
+    unitType: "melee",
+    name: "Melee",
+    nameSymbol: "⚔️",
+    description: "Attack and health are balanced.",
+    attack: 5,
+    maxHealth: 5,
+    currentHealth: 4,
+    id: 17,
+  };
+
+  const testArmy = new Array(17).fill(null).map((_) => {
+    return testMelee;
+  });
+
   return (
     // grid for the whole page
     <body className="grid grid-cols-12 grid-rows-4 place-content-stretch gap-2 p-4">
       {/* sub grid to control squares for units -- use different sizes per screen*/}
-      {/* TODO: conditionally render grid size by unit count(eg 5x5 for 25 units) */}
-      <div className="square end col-span-4 col-start-1 row-span-2 row-start-1 mx-auto grid w-full max-w-sm grid-flow-row-dense grid-cols-5 grid-rows-5 gap-1 self-center bg-blue-500/50 p-1">
-        <div className="square group relative my-auto mx-auto max-w-min justify-items-center rounded-md border-2 border-indigo-300/20 text-center text-4xl shadow-inner hover:border-indigo-300/80 ">
-          <div className="pb-1">⚔️</div>
-          <div className="mx-auto aspect-[7/1] w-11/12 rounded-sm bg-green-400 pb-2"></div>
-          <span className="pointer-events-none absolute top-16 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded bg-black/80 px-2 py-1 text-left text-lg text-white opacity-0 before:absolute before:border-transparent before:border-t-black group-hover:opacity-100">
-            <div>Melee</div>
-            <div>Attack: 5</div>
-            <div>HP: 5/5</div>
-          </span>
-        </div>
-        <div className="square max-w-min bg-blue-700">P</div>
-        <div className="square max-w-min bg-red-700">M</div>
-        {/* <div className="square max-w-min bg-red-700">M</div>
-        <div className="square max-w-min bg-green-700">T</div>
-        <div className="square max-w-min bg-green-700">T</div>
-        <div className="square max-w-min bg-blue-700">T</div>
-        <div className="square max-w-min bg-green-700">T</div>
-        <div className="square max-w-min bg-pink-700">T</div>{" "}
-        <div className="square max-w-min bg-blue-700">T</div>
-        <div className="square max-w-min bg-green-700">T</div>
-        <div className="square max-w-min bg-red-700">T</div>
-        <div className="square max-w-min bg-green-700">T</div>
-        <div className="square max-w-min bg-pink-700">T</div>
-        <div className="square max-w-min bg-red-700">T</div>
-        <div className="square max-w-min bg-green-700">T</div>
-        <div className="square max-w-min bg-pink-700">T</div>
-        <div className="square max-w-min bg-green-700">T</div>
-        <div className="square max-w-min bg-blue-700">T</div>
-        <div className="square max-w-min bg-green-700">T</div>
-        <div className="square max-w-min bg-pink-700">T</div>
-        <div className="square max-w-min bg-red-700">T</div>
-        <div className="square max-w-min bg-green-700">T</div>
-        <div className="square max-w-min bg-blue-700">T</div>
-        <div className="square max-w-min bg-red-700">T</div> */}
+      <div className="square col-span-4 col-start-1 row-span-2 row-start-1 mx-auto grid w-full max-w-sm auto-rows-min grid-cols-2 gap-1 self-center overflow-y-auto overflow-x-hidden bg-blue-500/5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        {testArmy.map((unit) => (
+          <UnitTile unit={unit} />
+        ))}
       </div>
-      <div className="col-span-4 col-start-5 row-span-2 row-start-1 aspect-[5/3] w-full grid-flow-row self-center rounded-md bg-gray-500 p-4">
-        Log
+      <tbody className="col-span-4 col-start-5 row-span-2 row-start-1 aspect-[5/4] w-full self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4 text-xs sm:text-sm lg:text-lg xl:aspect-[5/3]">
+        <tr className="py-1 text-white odd:bg-white/5">
+          The enemy army has reached Gabenfort!
+        </tr>
+        <tr className="py-1 text-amber-400 odd:bg-white/5">
+          Gary Longshanks (melee) faces off against Orga Thrung (tanky).
+        </tr>
+        <tr className="py-1 text-green-400  odd:bg-white/5">
+          Gary Longshanks does 3 damage to the enemy tanky.
+        </tr>
+        <tr className="py-1 text-red-600  odd:bg-white/5">
+          Orga Thrung retaliates with a savage 7 damage.
+        </tr>
+        <tr className="py-1 text-red-300  odd:bg-white/5">
+          Gary Longshanks falls!
+        </tr>
+        {/* <tr className="py-1 text-amber-400  odd:bg-white/5">
+          Peter Whislequill (pewpew) faces off against Gygor Grunch(melee).
+        </tr>
+        <tr className="py-1 text-green-400">
+          Peter Whislequill does 7 damage to Gygor Grunch.
+        </tr>
+        <tr className="py-1 text-red-500">
+          Gygor takes a mean swing back at peter Whistlequill, but misses!
+        </tr>
+        <tr className="py-1 text-amber-400">
+          Both units survive and return to their armies.
+        </tr> */}
+      </tbody>
+      <div className="square end min col-span-4 col-start-9 row-span-2 row-start-1 mx-auto grid w-full max-w-sm auto-rows-min grid-cols-2 gap-1 self-center overflow-y-auto overflow-x-hidden bg-red-500/5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        {testArmy.map((unit) => (
+          <UnitTile unit={unit} />
+        ))}
       </div>
-      <div className="square col-span-4 col-start-9 row-span-2 row-start-1 mx-auto grid w-full max-w-sm grid-flow-col self-center bg-red-500/50">
-        Enemies
-      </div>
-      <div className="card col-span-5 col-start-1 row-span-3 row-start-3 mr-4 w-4/5 max-w-xs justify-self-end rounded-md bg-blue-400 px-4">
-        Friendly Card
+
+      {/* TODO: Component this up! */}
+      <div className="card col-span-5 col-start-1 row-span-3 row-start-3 mr-4 w-4/5 max-w-xs justify-self-end rounded-md bg-blue-400/20 px-4">
+        <CombatCardTemplate>
+          <div
+            className={`col-span-3 self-center text-center text-5xl font-bold`}
+          >
+            Melee
+          </div>
+
+          <div
+            className={`col-span-3 items-center self-center text-center text-[10rem] font-bold`}
+          >
+            ⚔️
+          </div>
+
+          <div className={`m-3 self-end whitespace-nowrap text-start text-4xl`}>
+            🗡️{/*  */}5
+          </div>
+
+          <div></div>
+
+          {/* TODO: Conditional green for full, orange for damaged, red for critical */}
+          <div
+            className={`m-3 self-end whitespace-nowrap text-end text-4xl text-orange-600`}
+          >
+            ❤️{/*  */}4
+          </div>
+        </CombatCardTemplate>
       </div>
 
       <div className=" md:text-md col-span-4 col-start-5 row-start-3 flex h-full w-1/2 items-center place-self-center bg-gray-200/10 p-2 text-center text-xs sm:text-sm lg:text-lg xl:text-xl">
@@ -82,8 +135,33 @@ export default function CombatMockup() {
         </div>
       </div>
 
-      <div className="card col-span-5 col-start-8 row-span-3 row-start-3 ml-4 w-4/5 max-w-xs justify-self-start rounded-md bg-red-400 px-4">
-        Enemy Card
+      <div className="card col-span-5 col-start-8 row-span-3 row-start-3 ml-4 w-4/5 max-w-xs justify-self-start rounded-md bg-red-400/20 px-4">
+        <CombatCardTemplate>
+          <div
+            className={`col-span-3 self-center text-center text-5xl font-bold`}
+          >
+            Tanky
+          </div>
+
+          <div
+            className={`col-span-3 items-center self-center text-center text-[10rem] font-bold`}
+          >
+            🛡️
+          </div>
+
+          <div className={`m-3 self-end whitespace-nowrap text-start text-4xl`}>
+            🗡️{/*  */}3
+          </div>
+
+          <div></div>
+
+          {/* TODO: Conditional green for full, orange for damaged, red for critical */}
+          <div
+            className={`m-3 self-end whitespace-nowrap text-end text-4xl text-black`}
+          >
+            ❤️{/*  */}7
+          </div>
+        </CombatCardTemplate>
       </div>
     </body>
   );
