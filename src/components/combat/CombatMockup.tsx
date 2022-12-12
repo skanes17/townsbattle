@@ -6,20 +6,48 @@ import Button from "../buttons/Button";
 export default function CombatMockup() {
   return (
     // grid for the whole page
-    <body className="grid min-h-screen grid-cols-12 grid-rows-4 place-content-stretch gap-2 p-4">
+    <body className="grid grid-cols-12 grid-rows-4 place-content-stretch gap-2 p-4">
       {/* sub grid to control squares for units -- use different sizes per screen*/}
-      {/* columns/rows could be conditionally rendered by unit count (eg 5x5 for 25 units) */}
-      <div className="square col-span-4 col-start-1 row-span-2 row-start-1 mx-auto grid w-full max-w-sm grid-flow-row-dense self-center bg-blue-500">
-        <div className="square max-w-min bg-red-700">M</div>
+      {/* TODO: conditionally render grid size by unit count(eg 5x5 for 25 units) */}
+      <div className="square end col-span-4 col-start-1 row-span-2 row-start-1 mx-auto grid w-full max-w-sm grid-flow-row-dense grid-cols-5 grid-rows-5 gap-1 self-center bg-blue-500/50 p-1">
+        <div className="square group relative my-auto mx-auto max-w-min justify-items-center rounded-md border-2 border-indigo-300/20 text-center text-4xl shadow-inner hover:border-indigo-300/80 ">
+          <div className="pb-1">⚔️</div>
+          <div className="mx-auto aspect-[7/1] w-11/12 rounded-sm bg-green-400 pb-2"></div>
+          <span className="pointer-events-none absolute top-16 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded bg-black/80 px-2 py-1 text-left text-lg text-white opacity-0 before:absolute before:border-transparent before:border-t-black group-hover:opacity-100">
+            <div>Melee</div>
+            <div>Attack: 5</div>
+            <div>HP: 5/5</div>
+          </span>
+        </div>
         <div className="square max-w-min bg-blue-700">P</div>
         <div className="square max-w-min bg-red-700">M</div>
-        <div className="square max-w-min bg-red-700">M</div>
+        {/* <div className="square max-w-min bg-red-700">M</div>
         <div className="square max-w-min bg-green-700">T</div>
+        <div className="square max-w-min bg-green-700">T</div>
+        <div className="square max-w-min bg-blue-700">T</div>
+        <div className="square max-w-min bg-green-700">T</div>
+        <div className="square max-w-min bg-pink-700">T</div>{" "}
+        <div className="square max-w-min bg-blue-700">T</div>
+        <div className="square max-w-min bg-green-700">T</div>
+        <div className="square max-w-min bg-red-700">T</div>
+        <div className="square max-w-min bg-green-700">T</div>
+        <div className="square max-w-min bg-pink-700">T</div>
+        <div className="square max-w-min bg-red-700">T</div>
+        <div className="square max-w-min bg-green-700">T</div>
+        <div className="square max-w-min bg-pink-700">T</div>
+        <div className="square max-w-min bg-green-700">T</div>
+        <div className="square max-w-min bg-blue-700">T</div>
+        <div className="square max-w-min bg-green-700">T</div>
+        <div className="square max-w-min bg-pink-700">T</div>
+        <div className="square max-w-min bg-red-700">T</div>
+        <div className="square max-w-min bg-green-700">T</div>
+        <div className="square max-w-min bg-blue-700">T</div>
+        <div className="square max-w-min bg-red-700">T</div> */}
       </div>
       <div className="col-span-4 col-start-5 row-span-2 row-start-1 aspect-[5/3] w-full grid-flow-row self-center rounded-md bg-gray-500 p-4">
         Log
       </div>
-      <div className="square col-span-4 col-start-9 row-span-2 row-start-1 mx-auto grid w-full max-w-sm grid-flow-col self-center bg-red-500">
+      <div className="square col-span-4 col-start-9 row-span-2 row-start-1 mx-auto grid w-full max-w-sm grid-flow-col self-center bg-red-500/50">
         Enemies
       </div>
       <div className="card col-span-5 col-start-1 row-span-3 row-start-3 mr-4 w-4/5 max-w-xs justify-self-end rounded-md bg-blue-400 px-4">
@@ -34,15 +62,23 @@ export default function CombatMockup() {
       </div>
 
       <div className="col-span-2 col-start-6 row-start-4 mx-auto p-4">
-        <div className="h-100% flex justify-center pb-4">
-          <Button buttonColor="blue" onClick={() => ""}>
+        <div className="flex justify-center">
+          <button
+            className="mb-4 h-20 w-32 rounded border border-white/40 bg-blue-600 py-2 px-4 text-xl font-bold text-white duration-75
+                 hover:bg-blue-800 active:scale-100"
+            onClick={() => ""}
+          >
             Fight!
-          </Button>
+          </button>
         </div>
         <div className="flex justify-center">
-          <Button buttonColor="red" onClick={() => ""}>
+          <button
+            className="rounded border border-white/40 bg-red-600 py-2 px-4 text-xl font-bold text-white duration-75
+                 hover:bg-red-800 active:scale-100"
+            onClick={() => ""}
+          >
             Auto
-          </Button>
+          </button>
         </div>
       </div>
 
