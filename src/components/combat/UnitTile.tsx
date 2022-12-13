@@ -1,13 +1,13 @@
 import React from "react";
 import { Unit } from "../../types/Unit";
 
-interface UnitTile {
+interface UnitTileProps {
   unit: Unit;
 }
 
-export default function UnitTile({ unit }: UnitTile) {
+export default function UnitTile({ unit }: UnitTileProps) {
   const percentHealth = (unit.currentHealth / unit.maxHealth) * 100;
-  let healthWidth;
+  let healthWidth, healthBarColor, hoverBorder;
   if (percentHealth <= 5) {
     healthWidth = "w-[5%]";
   } else if (percentHealth <= 10) {
@@ -33,21 +33,22 @@ export default function UnitTile({ unit }: UnitTile) {
   } else healthWidth = "w-[100%]";
 
   /* TODO: Connect HealthTextColor to unit cards */
-  let healthBarColor, healthTextColor;
   if (percentHealth <= 25) {
     healthBarColor = "bg-red-400";
-    healthTextColor = "text-red-400";
+    hoverBorder = "hover:border-red-300/80";
   } else if (percentHealth <= 50) {
     healthBarColor = "bg-orange-400";
-    healthTextColor = "text-orange-400";
+    hoverBorder = "hover:border-orange-300/80";
   } else {
     healthBarColor = "bg-green-400";
-    healthTextColor = "text-green-400";
+    hoverBorder = "hover:border-green-300/80";
   }
 
   return (
     <>
-      <div className="square group relative my-auto mx-auto max-w-min snap-center justify-items-center rounded-md border-2 border-white/20 p-1 text-center shadow-inner hover:border-orange-300/80">
+      <div
+        className={`square group relative my-auto mx-auto max-w-min snap-center justify-items-center rounded-md border-2 border-white/20 p-1 text-center shadow-inner ${hoverBorder}`}
+      >
         <div className="pb-1 text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl">
           {unit.nameSymbol}
         </div>
