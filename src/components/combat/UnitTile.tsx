@@ -8,6 +8,43 @@ interface UnitTile {
 
 export default function UnitTile({ unit }: UnitTile) {
   const percentHealth = (unit.currentHealth / unit.maxHealth) * 100;
+  let healthWidth;
+  if (percentHealth <= 5) {
+    healthWidth = "w-[5%]";
+  } else if (percentHealth <= 10) {
+    healthWidth = "w-[10%]";
+  } else if (percentHealth <= 20) {
+    healthWidth = "w-[20%]";
+  } else if (percentHealth <= 30) {
+    healthWidth = "w-[30%]";
+  } else if (percentHealth <= 40) {
+    healthWidth = "w-[40%]";
+  } else if (percentHealth <= 50) {
+    healthWidth = "w-[50%]";
+  } else if (percentHealth <= 60) {
+    healthWidth = "w-[60%]";
+  } else if (percentHealth <= 70) {
+    healthWidth = "w-[70%]";
+  } else if (percentHealth <= 80) {
+    healthWidth = "w-[80%]";
+  } else if (percentHealth <= 90) {
+    healthWidth = "w-[90%]";
+  } else if (percentHealth < 100) {
+    healthWidth = "w-[95%]";
+  } else healthWidth = "w-[100%]";
+
+  /* TODO: Connect HealthTextColor to unit cards */
+  let healthBarColor, healthTextColor;
+  if (percentHealth <= 25) {
+    healthBarColor = "bg-red-400";
+    healthTextColor = "text-red-400";
+  } else if (percentHealth <= 50) {
+    healthBarColor = "bg-orange-400";
+    healthTextColor = "text-orange-400";
+  } else {
+    healthBarColor = "bg-green-400";
+    healthTextColor = "text-green-400";
+  }
 
   return (
     <>
@@ -18,7 +55,7 @@ export default function UnitTile({ unit }: UnitTile) {
         {/* TODO: Determine healthbar size and color from current health */}
         {/* TODO: Match hover color with health status eg. red for hurtin */}
         <div
-          className={`h-2 w-[${percentHealth}%] rounded-sm bg-orange-400`}
+          className={`h-2 ${healthWidth} ${healthBarColor} rounded-sm`}
         ></div>
         <span className="pointer-events-none absolute top-16 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded bg-black/80 px-2 py-1 text-center text-xs text-white opacity-0 before:absolute before:border-transparent before:border-t-black group-hover:opacity-100 sm:text-xs lg:text-sm xl:text-sm">
           {/* TODO: Add space for randomly generated name */}
@@ -35,14 +72,3 @@ export default function UnitTile({ unit }: UnitTile) {
     </>
   );
 }
-
-/* 
-unitType: UnitType;
-  name: "Melee" | "Pewpew" | "Tanky";
-  nameSymbol: "⚔️" | "🏹" | "🛡️";
-  description?: string;
-  attack: number;
-  maxHealth: number;
-  currentHealth: number;
-  id?: number;
-*/
