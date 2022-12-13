@@ -32,7 +32,6 @@ export default function UnitTile({ unit }: UnitTileProps) {
     healthWidth = "w-[95%]";
   } else healthWidth = "w-[100%]";
 
-  /* TODO: Connect HealthTextColor to unit cards */
   if (percentHealth <= 25) {
     healthBarColor = "bg-red-400";
     hoverBorder = "hover:border-red-300/80";
