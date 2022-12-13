@@ -1,4 +1,3 @@
-import { util } from "prettier";
 import React from "react";
 import { Unit } from "../../types/Unit";
 
@@ -48,7 +47,7 @@ export default function UnitTile({ unit }: UnitTile) {
 
   return (
     <>
-      <div className="square group relative my-auto mx-auto max-w-min justify-items-center rounded-md border-2 border-white/20 p-1 text-center shadow-inner hover:border-orange-300/80">
+      <div className="square group relative my-auto mx-auto max-w-min snap-center justify-items-center rounded-md border-2 border-white/20 p-1 text-center shadow-inner hover:border-orange-300/80">
         <div className="pb-1 text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl">
           {unit.nameSymbol}
         </div>
