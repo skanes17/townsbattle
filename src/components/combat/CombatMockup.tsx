@@ -35,9 +35,9 @@ export default function CombatMockup({ myUnits }: CombatMockup) {
 
   return (
     // grid for the whole page
-    <body className="grid grid-cols-12 grid-rows-4 place-content-stretch gap-2 p-4">
+    <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-2 p-4">
       {/* sub grid to control squares for units -- use different sizes per screen*/}
-      <div className="square col-span-4 col-start-1 row-span-2 row-start-1 mx-auto grid w-full max-w-sm auto-rows-min grid-cols-2 gap-1 self-center overflow-y-auto overflow-x-hidden bg-blue-500/5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      <div className="col-span-4 col-start-1 row-span-2 row-start-1 mx-auto grid h-3/4 w-full max-w-sm auto-rows-min grid-cols-2 gap-1 self-center overflow-y-auto overflow-x-hidden bg-blue-500/5 sm:h-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {testArmy.map((unit) => (
           <UnitTile unit={unit} />
         ))}
@@ -71,63 +71,65 @@ export default function CombatMockup({ myUnits }: CombatMockup) {
           Both units survive and return to their armies.
         </tr> */}
       </tbody>
-      <div className="square end min col-span-4 col-start-9 row-span-2 row-start-1 mx-auto grid w-full max-w-sm auto-rows-min grid-cols-2 gap-1 self-center overflow-y-auto overflow-x-hidden bg-red-500/5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      <div className="col-span-4 col-start-9 row-span-2 row-start-1 mx-auto grid h-3/4 w-full max-w-sm auto-rows-min grid-cols-2 gap-1 self-center overflow-y-auto overflow-x-hidden bg-red-500/5 sm:h-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {testArmy.map((unit) => (
           <UnitTile unit={unit} />
         ))}
       </div>
 
       {/* TODO: Component this up! */}
-      <div className="card col-span-5 col-start-1 row-span-3 row-start-3 mr-4 w-4/5 max-w-xs justify-self-end rounded-md bg-blue-400/20 px-4">
+      <div className="card col-span-5 col-start-1 row-start-3 mr-4 w-4/5 max-w-xs justify-self-end rounded-md bg-blue-400/20 px-4">
         <CombatCardTemplate>
           <div
-            className={`col-span-3 self-center text-center text-5xl font-bold`}
+            className={`col-span-3 self-center text-center text-base font-bold sm:text-3xl md:text-4xl lg:text-5xl`}
           >
             Melee
           </div>
 
           <div
-            className={`col-span-3 items-center self-center text-center text-[10rem] font-bold`}
+            className={`col-span-3 items-center self-center text-center text-4xl font-bold sm:text-8xl md:text-9xl lg:text-[10rem]`}
           >
             ⚔️
           </div>
 
-          <div className={`m-3 self-end whitespace-nowrap text-start text-4xl`}>
-            🗡️{/*  */}5
-          </div>
-
-          <div></div>
-
-          {/* TODO: Conditional green for full, orange for damaged, red for critical */}
-          <div
-            className={`m-3 self-end whitespace-nowrap text-end text-4xl text-orange-600`}
-          >
-            ❤️{/*  */}4
+          <div className="col-span-3 flex justify-between">
+            <div
+              className={`self-end text-center text-xl sm:m-3 sm:text-2xl md:text-4xl lg:text-5xl`}
+            >
+              🗡️{/*  */}5
+            </div>
+            {/* TODO: Conditional green for full, orange for damaged, red for critical */}
+            <div
+              className={`self-end text-center text-xl text-orange-600 sm:m-3 sm:text-2xl md:text-4xl lg:text-5xl`}
+            >
+              ❤️{/*  */}4
+            </div>
           </div>
         </CombatCardTemplate>
       </div>
 
-      <div className=" md:text-md col-span-4 col-start-5 row-start-3 flex h-full w-1/2 items-center place-self-center bg-gray-200/10 p-2 text-center text-xs sm:text-sm lg:text-lg xl:text-xl">
-        <p>
-          Possible flavour text here, sometimes. Maybe. It depends. What'd you
-          like?
-        </p>
-      </div>
+      {/* TODO: Work on me next! Get it responsive, not breaking at small content sizes */}
+      <div className="col-span-2 col-start-6 row-start-3 grid auto-rows-min place-content-end gap-2">
+        <div className="mx-auto bg-gray-200/10 text-center text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+          <p>
+            Possible flavour text here, sometimes. Maybe. It depends. What'd you
+            like?
+          </p>
+        </div>
 
-      <div className="col-span-2 col-start-6 row-start-4 mx-auto p-4">
-        <div className="flex justify-center">
+        <div className="flex items-end justify-center p-4">
           <button
-            className="mb-4 h-20 w-32 rounded border border-white/40 bg-blue-600 py-2 px-4 text-xl font-bold text-white duration-75
-                 hover:bg-blue-800 active:scale-100"
+            className="h-20 w-32 rounded border border-white/40 bg-blue-600 text-2xl font-bold text-white duration-75 hover:bg-blue-800 sm:h-12 sm:w-20 sm:text-lg md:h-16 md:w-24 md:text-2xl lg:h-20 lg:w-32 lg:text-3xl xl:h-24 xl:w-40
+                 xl:text-4xl"
             onClick={() => ""}
           >
             Fight!
           </button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex items-start justify-center p-4">
           <button
-            className="rounded border border-white/40 bg-red-600 py-2 px-4 text-xl font-bold text-white duration-75
-                 hover:bg-red-800 active:scale-100"
+            className="h-12 w-20 rounded border border-white/40 bg-red-600 text-lg font-bold text-white duration-75 hover:bg-red-800 md:h-10 md:w-20 md:text-base lg:h-12 lg:w-20 lg:text-xl xl:h-14 xl:w-24
+                 xl:text-2xl"
             onClick={() => ""}
           >
             Auto
@@ -135,31 +137,32 @@ export default function CombatMockup({ myUnits }: CombatMockup) {
         </div>
       </div>
 
-      <div className="card col-span-5 col-start-8 row-span-3 row-start-3 ml-4 w-4/5 max-w-xs justify-self-start rounded-md bg-red-400/20 px-4">
+      <div className="card col-span-5 col-start-8 row-start-3 ml-4 w-4/5 max-w-xs justify-self-start rounded-md bg-red-400/20 px-4">
         <CombatCardTemplate>
           <div
-            className={`col-span-3 self-center text-center text-5xl font-bold`}
+            className={`col-span-3 self-center text-center text-base font-bold sm:text-3xl md:text-4xl lg:text-5xl`}
           >
             Tanky
           </div>
 
           <div
-            className={`col-span-3 items-center self-center text-center text-[10rem] font-bold`}
+            className={`col-span-3 items-center self-center text-center text-4xl font-bold sm:text-8xl md:text-9xl lg:text-[10rem]`}
           >
             🛡️
           </div>
 
-          <div className={`m-3 self-end whitespace-nowrap text-start text-4xl`}>
-            🗡️{/*  */}3
-          </div>
-
-          <div></div>
-
-          {/* TODO: Conditional green for full, orange for damaged, red for critical */}
-          <div
-            className={`m-3 self-end whitespace-nowrap text-end text-4xl text-black`}
-          >
-            ❤️{/*  */}7
+          <div className="col-span-3 flex justify-between">
+            <div
+              className={`self-end text-center text-xl sm:m-3 sm:text-2xl md:text-4xl lg:text-5xl`}
+            >
+              🗡️{/*  */}3
+            </div>
+            {/* TODO: Conditional green for full, orange for damaged, red for critical */}
+            <div
+              className={`self-end text-center text-xl text-orange-600 sm:m-3 sm:text-2xl md:text-4xl lg:text-5xl`}
+            >
+              ❤️{/*  */}7
+            </div>
           </div>
         </CombatCardTemplate>
       </div>
