@@ -21,7 +21,7 @@ import TrainingCardContainer from "./cards/TrainingCardContainer";
 import FlexWrapContainer from "./FlexWrapContainer";
 import Button from "./buttons/Button";
 import DisplayUnderConstruction from "./dashboards/DisplayUnderConstruction";
-import CombatMockup from "./combat/CombatMockup";
+import Combat from "./combat/Combat";
 
 // TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -686,7 +686,11 @@ export default function Game(props: GameProps) {
 
   return inCombat ? (
     <>
-      <CombatMockup myUnits={myUnits} enemyUnits={enemyUnits} />
+      <Combat
+        myUnits={myUnits}
+        enemyUnits={enemyUnits}
+        unitCounts={unitCounts}
+      />
       <DevTools
         BASE_UNIT_DATA={BASE_UNIT_DATA}
         resources={resources}

@@ -25,9 +25,12 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
       </div>
       {/* TODO: Conditional green for full, orange for damaged, red for critical */}
       <div
-        className={`self-end text-center text-xl ${healthTextColor} sm:m-3 sm:text-2xl md:text-4xl lg:text-5xl`}
+        className={`self-end text-center text-xl sm:m-3 sm:text-2xl md:text-4xl lg:text-5xl`}
       >
-        ❤️{unit.currentHealth}
+        ❤️<span className={`${healthTextColor}`}>{unit.currentHealth}</span>
+        <span className="text-xs sm:text-sm md:text-base lg:text-lg">
+          /{unit.maxHealth}
+        </span>
       </div>
     </div>
   );
