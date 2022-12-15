@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Phase } from "../../types/CombatPhases";
+import { Phase, Subphase } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import { UnitCounts } from "../../types/UnitCounts";
 import CombatCardTemplate from "../cards/CombatCardTemplate";
@@ -22,8 +22,9 @@ export default function Combat({
   enemyUnits,
   unitCounts,
 }: CombatProps) {
-  // TODO: use 0 for this when the UI is created
   const [phase, setPhase] = useState<Phase>("post");
+  const [subphase, setSubphase] = useState<Subphase>("select");
+
   const [combatUnits, setCombatUnits] = useState<Unit[]>([...myUnits]);
   const [combatEnemyUnits, setCombatEnemyUnits] = useState<Unit[]>([
     ...enemyUnits,
@@ -61,12 +62,6 @@ export default function Combat({
     return testTanky;
   });
 
-  const friendlyUnit = testArmy[Math.floor(Math.random() * testArmy.length)];
-  /* const friendlyUnit = combatUnits[Math.floor(Math.random() * combatUnits.length)]; */
-  const enemyUnit =
-    testEnemyArmy[Math.floor(Math.random() * testEnemyArmy.length)];
-  /* const enemyUnit = enemyUnits[Math.floor(Math.random() * enemyUnits.length)]; */
-
   const combatUnitCounts: UnitCounts = {
     melee: combatUnits.filter((unit) => unit.unitType === "melee").length,
     pewpew: combatUnits.filter((unit) => unit.unitType === "pewpew").length,
@@ -78,6 +73,55 @@ export default function Combat({
     pewpew: enemyUnits.filter((unit) => unit.unitType === "pewpew").length,
     tanky: enemyUnits.filter((unit) => unit.unitType === "tanky").length,
   };
+
+  let friendlyUnit = testArmy[Math.floor(Math.random() * testArmy.length)];
+  let enemyUnit =
+    combatEnemyUnits[Math.floor(Math.random() * testEnemyArmy.length)];
+
+  /* TODO: Work on this next */
+  /* let friendlyUnit: Unit, enemyUnit: Unit; */
+  const combatMasterFunction = () => {
+    switch (phase) {
+      case "pre":
+        setPhase("combat");
+        break;
+      case "combat":
+        // fight
+        // resolve
+        // check if battle is over
+        // if true^, enter "post" phase
+        switch (subphase) {
+          case "select":
+            // randomly select a unit from each army
+            friendlyUnit =
+              combatUnits[Math.floor(Math.random() * combatUnits.length)];
+            enemyUnit =
+              combatEnemyUnits[
+                Math.floor(Math.random() * combatEnemyUnits.length)
+              ];
+            setSubphase("fight");
+            break;
+          case "fight":
+            // chosen units attack each other
+            /* TODO: If less than zero, set to 0 */
+            const friendlyHealthRemaining =
+              friendlyUnit.maxHealth - enemyUnit.attack;
+            const enemyHealthRemaining =
+              enemyUnit.maxHealth - friendlyUnit.attack;
+            break;
+          case "resolve":
+            break;
+          case "victoryCheck":
+            break;
+        }
+        break;
+      case "post":
+        break;
+    }
+  };
+
+  // TODO: Build autobattler
+  const autoBattler = () => {};
 
   return (
     <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-3 p-4 md:gap-4 lg:gap-5 xl:gap-8">
@@ -99,7 +143,7 @@ export default function Combat({
             <button
               className="text-md rounded border border-white/40 bg-blue-600 p-2 font-bold text-white duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl 
                    xl:text-4xl"
-              onClick={() => ""}
+              onClick={() => combatMasterFunction()}
             >
               Return to Planning
             </button>
@@ -135,7 +179,7 @@ export default function Combat({
               <button
                 className="text-md h-8 w-16 rounded border border-white/40 bg-blue-600 font-bold text-white duration-75 hover:bg-blue-800 sm:h-12 sm:w-20 sm:text-lg md:h-16 md:w-24 md:text-2xl lg:h-20 lg:w-32 lg:text-3xl xl:h-24 xl:w-40
                    xl:text-4xl"
-                onClick={() => ""}
+                onClick={() => combatMasterFunction()}
               >
                 Start
               </button>
@@ -144,7 +188,7 @@ export default function Combat({
               <button
                 className="text-md h-8 w-16 rounded border border-white/40 bg-blue-600 font-bold text-white duration-75 hover:bg-blue-800 sm:h-12 sm:w-20 sm:text-lg md:h-16 md:w-24 md:text-2xl lg:h-20 lg:w-32 lg:text-3xl xl:h-24 xl:w-40
                    xl:text-4xl"
-                onClick={() => ""}
+                onClick={() => combatMasterFunction()}
               >
                 Fight!
               </button>
@@ -155,7 +199,7 @@ export default function Combat({
               <button
                 className="h-6 w-10 rounded border border-white/40 bg-red-600 text-sm font-bold text-white duration-75 hover:bg-red-800 sm:h-6 sm:w-12 sm:text-sm md:h-10 md:w-20 md:text-base lg:h-12 lg:w-20 lg:text-xl xl:h-14 xl:w-24
                    xl:text-2xl"
-                onClick={() => ""}
+                onClick={() => autoBattler()}
               >
                 Auto
               </button>

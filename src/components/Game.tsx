@@ -484,7 +484,6 @@ export default function Game(props: GameProps) {
       "--Selected enemy unit is... " + enemyUnit.name + "_" + enemyUnit.id
     );
 
-    // TODO: Incorporate similar later with currentHealth
     const enemyHealthRemaining = enemyUnit.maxHealth - friendlyUnit.attack;
     const friendlyHealthRemaining = friendlyUnit.maxHealth - enemyUnit.attack;
 

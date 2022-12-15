@@ -25,6 +25,7 @@ export default function CombatLog({ phase }: CombatLogProps) {
           <tr className="py-1 text-white odd:bg-white/5">
             The enemy army has reached Gabenfort!
           </tr>
+          {/* TODO: Use subphase "select" to represent units here */}
           <tr className="py-1 text-amber-400 odd:bg-white/5">
             Gary Longshanks (melee) faces off against Orga Thrung (tanky).
           </tr>

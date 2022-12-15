@@ -1,3 +1,3 @@
 export type Phase = "pre" | "combat" | "post";
 
-export type SubPhase = "select" | "fight" | "resolve" | "victoryCheck";
+export type Subphase = "select" | "fight" | "resolve" | "victoryCheck";
