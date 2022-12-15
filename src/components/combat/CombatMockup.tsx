@@ -8,9 +8,13 @@ import CombatLog from "./CombatLog";
 
 interface CombatMockupProps {
   myUnits: Unit[];
+  enemyUnits: Unit[];
 }
 
-export default function CombatMockup({ myUnits }: CombatMockupProps) {
+export default function CombatMockup({
+  myUnits,
+  enemyUnits,
+}: CombatMockupProps) {
   const [combatUnits, setCombatUnits] = useState<Unit[]>([...myUnits]);
 
   const testMelee: Unit = {
@@ -45,15 +49,19 @@ export default function CombatMockup({ myUnits }: CombatMockupProps) {
     return testTanky;
   });
 
-  const friendlyUnit = testArmy[Math.floor(Math.random() * testArmy.length)];
-  const enemyUnit =
-    testEnemyArmy[Math.floor(Math.random() * testEnemyArmy.length)];
+  /* const friendlyUnit = testArmy[Math.floor(Math.random() * testArmy.length)]; */
+  const friendlyUnit = myUnits[Math.floor(Math.random() * myUnits.length)];
+  /* const enemyUnit =
+    testEnemyArmy[Math.floor(Math.random() * testEnemyArmy.length)]; */
+  const enemyUnit = enemyUnits[Math.floor(Math.random() * enemyUnits.length)];
 
   return (
     <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-3 p-4 md:gap-4 lg:gap-5 xl:gap-8">
-      <ArmyGrid army={testArmy} startColumn="1" />
+      {/* <ArmyGrid army={testArmy} startColumn="1" /> */}
+      <ArmyGrid army={myUnits} startColumn="1" />
       <CombatLog />
-      <ArmyGrid army={testEnemyArmy} startColumn="8" />
+      {/* <ArmyGrid army={testEnemyArmy} startColumn="8" /> */}
+      <ArmyGrid army={enemyUnits} startColumn="8" />
 
       <div className="card col-span-5 col-start-1 row-start-4 mr-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-end md:mt-0">
         <CombatCardTemplate unit={friendlyUnit} />
