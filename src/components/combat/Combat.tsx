@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Phase, Subphase } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import { UnitCounts } from "../../types/UnitCounts";
+import CombatButton from "../buttons/CombatButton";
 import CombatCardTemplate from "../cards/CombatCardTemplate";
 import PostCombatSummary from "../cards/PostCombatSummary";
 import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
@@ -22,8 +23,11 @@ export default function Combat({
   enemyUnits,
   unitCounts,
 }: CombatProps) {
-  const [phase, setPhase] = useState<Phase>("post");
+  const [phase, setPhase] = useState<Phase>("pre");
   const [subphase, setSubphase] = useState<Subphase>("select");
+
+  // log text output here
+  const [logState, setLogState] = useState<string[]>([]);
 
   const [combatUnits, setCombatUnits] = useState<Unit[]>([...myUnits]);
   const [combatEnemyUnits, setCombatEnemyUnits] = useState<Unit[]>([
@@ -78,12 +82,18 @@ export default function Combat({
   let enemyUnit =
     combatEnemyUnits[Math.floor(Math.random() * testEnemyArmy.length)];
 
-  /* TODO: Work on this next */
   /* let friendlyUnit: Unit, enemyUnit: Unit; */
-  const combatMasterFunction = () => {
+  const combatMegaFunction = () => {
     switch (phase) {
       case "pre":
+        // randomly select a unit from each army
+        friendlyUnit =
+          combatUnits[Math.floor(Math.random() * combatUnits.length)];
+        enemyUnit =
+          combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)];
         setPhase("combat");
+        // jump directly to fight subphase because units are already selected
+        setSubphase("fight");
         break;
       case "combat":
         // fight
@@ -92,7 +102,8 @@ export default function Combat({
         // if true^, enter "post" phase
         switch (subphase) {
           case "select":
-            // randomly select a unit from each army
+            // loop back here if an army survives
+            // randomly select a NEW unit from each army
             friendlyUnit =
               combatUnits[Math.floor(Math.random() * combatUnits.length)];
             enemyUnit =
@@ -103,19 +114,87 @@ export default function Combat({
             break;
           case "fight":
             // chosen units attack each other
-            /* TODO: If less than zero, set to 0 */
-            const friendlyHealthRemaining =
-              friendlyUnit.maxHealth - enemyUnit.attack;
-            const enemyHealthRemaining =
-              enemyUnit.maxHealth - friendlyUnit.attack;
+            /* If health ends up less than zero, set to 0 for display */
+            let friendlyHealthRemaining =
+              friendlyUnit.currentHealth - enemyUnit.attack;
+            if (friendlyHealthRemaining < 0) {
+              friendlyHealthRemaining = 0;
+            }
+
+            // set new unit health
+            setCombatUnits(
+              combatUnits.map((unit) => {
+                // check if id matches the currently selected unit
+                if (unit.id === friendlyUnit.id) {
+                  return {
+                    // if so, change that unit's health/health accordingly
+                    ...unit,
+                    currentHealth: friendlyHealthRemaining,
+                  };
+                } else {
+                  // if not, don't change anything
+                  return unit;
+                }
+              })
+            );
+
+            let enemyHealthRemaining =
+              enemyUnit.currentHealth - friendlyUnit.attack;
+            if (enemyHealthRemaining < 0) {
+              enemyHealthRemaining = 0;
+            }
+
+            // set new enemy unit health
+            setCombatEnemyUnits(
+              combatEnemyUnits.map((unit) => {
+                if (unit.id === enemyUnit.id) {
+                  return {
+                    ...unit,
+                    currentHealth: enemyHealthRemaining,
+                  };
+                } else {
+                  return unit;
+                }
+              })
+            );
+
+            setSubphase("resolve");
             break;
           case "resolve":
+            // if the unit has no health
+            if (friendlyUnit.currentHealth === 0) {
+              // remove it from their pool
+              setCombatUnits(
+                combatUnits.filter((unit) => unit.id !== enemyUnit.id)
+              );
+            }
+
+            if (enemyUnit.currentHealth === 0) {
+              setCombatEnemyUnits(
+                combatEnemyUnits.filter((unit) => unit.id !== enemyUnit.id)
+              );
+            }
+            // return the unit to the army and pick a new one, or not
+
+            setSubphase("victoryCheck");
             break;
           case "victoryCheck":
+            if (combatUnits.length === 0 || combatEnemyUnits.length === 0) {
+              // if an army was defeated, end combat
+
+              setPhase("post");
+            } else {
+              // if both armies remain, select new units
+              setSubphase("select");
+            }
             break;
         }
         break;
       case "post":
+        // calculate number of units defeated
+        // number of units lost
+        // number of units injured
+        // buildings damaged (and how much?)
         break;
     }
   };
@@ -143,7 +222,7 @@ export default function Combat({
             <button
               className="text-md rounded border border-white/40 bg-blue-600 p-2 font-bold text-white duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl 
                    xl:text-4xl"
-              onClick={() => combatMasterFunction()}
+              onClick={() => combatMegaFunction()}
             >
               Return to Planning
             </button>
@@ -168,30 +247,44 @@ export default function Combat({
             <div className="mx-auto max-h-24 overflow-y-auto rounded-bl-md rounded-tr-md border border-white/25 p-2 text-center text-xs sm:max-h-full sm:text-sm md:text-base lg:text-lg xl:text-xl">
               {/* TODO: Maybe make this take up 4 columns, pops up as overlap then fades? */}
               <p>
-                Possible flavour text here, sometimes. Maybe. It depends. What'd
-                you like?
+                Random taunts when units battle each other, pop up during fight
+                then fade.
               </p>
             </div>
           )}
 
           <div className="flex items-end justify-center p-4 pb-0">
             {phase === "pre" && (
-              <button
-                className="text-md h-8 w-16 rounded border border-white/40 bg-blue-600 font-bold text-white duration-75 hover:bg-blue-800 sm:h-12 sm:w-20 sm:text-lg md:h-16 md:w-24 md:text-2xl lg:h-20 lg:w-32 lg:text-3xl xl:h-24 xl:w-40
-                   xl:text-4xl"
-                onClick={() => combatMasterFunction()}
-              >
-                Start
-              </button>
+              <CombatButton
+                buttonText="Start"
+                onClick={() => combatMegaFunction()}
+              />
             )}
-            {phase === "combat" && (
-              <button
-                className="text-md h-8 w-16 rounded border border-white/40 bg-blue-600 font-bold text-white duration-75 hover:bg-blue-800 sm:h-12 sm:w-20 sm:text-lg md:h-16 md:w-24 md:text-2xl lg:h-20 lg:w-32 lg:text-3xl xl:h-24 xl:w-40
-                   xl:text-4xl"
-                onClick={() => combatMasterFunction()}
-              >
-                Fight!
-              </button>
+            {/* FIXME: Must be a cleaner way?? */}
+            {phase === "combat" && subphase === "select" ? (
+              <CombatButton
+                buttonText="Select!"
+                onClick={() => combatMegaFunction()}
+              />
+            ) : phase === "combat" && subphase === "fight" ? (
+              <CombatButton
+                buttonText="Fight"
+                onClick={() => combatMegaFunction()}
+              />
+            ) : phase === "combat" && subphase === "resolve" ? (
+              <CombatButton
+                buttonText="Next"
+                onClick={() => combatMegaFunction()}
+              />
+            ) : (
+              phase === "combat" &&
+              subphase === "victoryCheck" && (
+                /* FIXME: Make name depend on state of army (select, summary, etc) */
+                <CombatButton
+                  buttonText="Next"
+                  onClick={() => combatMegaFunction()}
+                />
+              )
             )}
           </div>
           {phase === "combat" && (
