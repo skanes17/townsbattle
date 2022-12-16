@@ -255,6 +255,7 @@ export default function Game(props: GameProps) {
 
   // placeholder enemy array for testing
   const [enemyUnits, setEnemyUnits] = useState<Unit[]>([
+    /* 
     {
       unitType: "melee",
       name: "Melee",
@@ -282,6 +283,7 @@ export default function Game(props: GameProps) {
       currentHealth: 7,
       id: 2,
     },
+   */
   ]);
 
   // ===BASE STATS FOR NEW UNITS===
@@ -685,7 +687,11 @@ export default function Game(props: GameProps) {
 
   return inCombat ? (
     <>
-      <Combat myUnits={myUnits} enemyUnits={enemyUnits} />
+      <Combat
+        myUnits={myUnits}
+        enemyUnits={enemyUnits}
+        switchPhase={switchPhase}
+      />
       <DevTools
         BASE_UNIT_DATA={BASE_UNIT_DATA}
         resources={resources}

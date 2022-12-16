@@ -11,7 +11,7 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
   let healthTextColor;
   if (percentHealth <= 25) {
     healthTextColor = "text-red-600";
-  } else if (percentHealth < 100) {
+  } else if (percentHealth <= 50) {
     healthTextColor = "text-orange-600";
   }
 

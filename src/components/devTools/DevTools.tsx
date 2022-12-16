@@ -51,7 +51,7 @@ export default function DevTools({
             addUnit={addUnit}
             unitType={unitType}
             name={BASE_UNIT_DATA[unitType].name}
-            // choose true for enemy units
+            // choose false for enemy units
             friendly={false}
             className="rounded border border-gray-400 bg-white py-1 px-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
           />

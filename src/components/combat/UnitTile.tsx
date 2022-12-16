@@ -35,29 +35,30 @@ export default function UnitTile({ unit, selectedUnit }: UnitTileProps) {
 
   if (percentHealth <= 25) {
     healthBarColor = "bg-red-400";
-    hoverBorder = "hover:border-red-300/80";
+    hoverBorder = "hover:border-red-300/100";
   } else if (percentHealth <= 50) {
     healthBarColor = "bg-orange-400";
-    hoverBorder = "hover:border-orange-300/80";
+    hoverBorder = "hover:border-orange-300/100";
   } else {
     healthBarColor = "bg-green-400";
-    hoverBorder = "hover:border-green-300/80";
+    hoverBorder = "hover:border-green-300/100";
   }
 
   if (unit === selectedUnit) {
     borderWidth = "border-2";
     if (percentHealth <= 25) {
-      borderColor = "border-green-400";
+      borderColor = "border-red-400/80";
     } else if (percentHealth <= 50) {
-      borderColor = "border-orange-400";
+      borderColor = "border-orange-400/80";
     } else {
-      borderColor = "border-green-400";
+      borderColor = "border-green-400/80";
     }
   } else {
     borderWidth = "border-2";
     borderColor = "border-white/20";
   }
 
+  /* FIXME: Not highlighting properly in resolve phase, possibly others */
   return (
     <>
       <div

@@ -16,9 +16,14 @@ import CombatLog from "./CombatLog";
 interface CombatProps {
   myUnits: Unit[];
   enemyUnits: Unit[];
+  switchPhase: () => void;
 }
 
-export default function Combat({ myUnits, enemyUnits }: CombatProps) {
+export default function Combat({
+  myUnits,
+  enemyUnits,
+  switchPhase,
+}: CombatProps) {
   const [phase, setPhase] = useState<Phase>("pre");
   const [subphase, setSubphase] = useState<Subphase>("select");
 
@@ -91,16 +96,11 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
         setEnemyUnit(
           combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)]
         );
-
-        // jump directly to "combat" and "fight" subphase because units are already selected
+        // initiate combat!
         setPhase("combat");
         setSubphase("fight");
         break;
       case "combat":
-        // fight
-        // resolve
-        // check if battle is over
-        // if true^, enter "post" phase
         switch (subphase) {
           case "select":
             // loop back here if an army survives
@@ -123,7 +123,22 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
             const enemyHealthRemaining =
               enemyUnit.maxHealth - friendlyUnit.attack;
 
-            // set new unit health
+            /* FIXME: Combine the state update for selected unit and army? */
+            if (friendlyHealthRemaining > 0) {
+              setFriendlyUnit({
+                ...friendlyUnit,
+                currentHealth: friendlyHealthRemaining,
+              });
+            } else setFriendlyUnit({ ...friendlyUnit, currentHealth: 0 });
+
+            if (enemyHealthRemaining > 0) {
+              setEnemyUnit({
+                ...enemyUnit,
+                currentHealth: enemyHealthRemaining,
+              });
+            } else setEnemyUnit({ ...enemyUnit, currentHealth: 0 });
+
+            // update army with new unit health
             setCombatUnits(
               combatUnits.map((unit) => {
                 // if id matches the currently selected unit, change its health
@@ -153,25 +168,19 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
             // set new enemy unit health
             setCombatEnemyUnits(
               combatEnemyUnits.map((unit) => {
-                // if id matches the currently selected unit, change its health
-                if (unit.id === friendlyUnit.id) {
+                if (unit.id === enemyUnit.id) {
                   if (enemyHealthRemaining > 0) {
                     return {
-                      // if so, change that unit's health/health accordingly
                       ...unit,
                       currentHealth: enemyHealthRemaining,
                     };
-                  }
-                  // set minimum unit health to 0
-                  else {
+                  } else {
                     return {
-                      // if so, change that unit's health/health accordingly
                       ...unit,
                       currentHealth: 0,
                     };
                   }
                 } else {
-                  // if not, don't change anything
                   return unit;
                 }
               })
@@ -184,7 +193,7 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
             if (friendlyUnit.currentHealth === 0) {
               // remove it from their pool
               setCombatUnits(
-                combatUnits.filter((unit) => unit.id !== enemyUnit.id)
+                combatUnits.filter((unit) => unit.id !== friendlyUnit.id)
               );
             }
             if (enemyUnit.currentHealth === 0) {
@@ -203,7 +212,15 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
               setPhase("post");
             } else {
               // if both armies remain, select new units
-              setSubphase("select");
+              setFriendlyUnit(
+                combatUnits[Math.floor(Math.random() * combatUnits.length)]
+              );
+              setEnemyUnit(
+                combatEnemyUnits[
+                  Math.floor(Math.random() * combatEnemyUnits.length)
+                ]
+              );
+              setSubphase("fight");
             }
             break;
         }
@@ -233,7 +250,11 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
       />
       <CombatLog phase={phase} />
       {/* <ArmyGrid army={testEnemyArmy} startColumn="8" /> */}
-      <ArmyGrid army={enemyUnits} selectedUnit={enemyUnit} startColumn="8" />
+      <ArmyGrid
+        army={combatEnemyUnits}
+        selectedUnit={enemyUnit}
+        startColumn="8"
+      />
 
       {phase === "post" ? (
         <>
@@ -245,7 +266,7 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
             <button
               className="text-md rounded border border-white/40 bg-blue-600 p-2 font-bold text-white duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl 
                    xl:text-4xl"
-              onClick={() => combatMegaFunction()}
+              onClick={() => switchPhase()}
             >
               Return to Planning
             </button>
@@ -296,7 +317,7 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
               />
             ) : phase === "combat" && subphase === "resolve" ? (
               <CombatButton
-                buttonText="Select!"
+                buttonText="Resolve"
                 onClick={() => combatMegaFunction()}
               />
             ) : (
@@ -304,7 +325,7 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
               subphase === "victoryCheck" && (
                 /* FIXME: Make name depend on state of army (select, summary, etc) */
                 <CombatButton
-                  buttonText="Next"
+                  buttonText="Again!"
                   onClick={() => combatMegaFunction()}
                 />
               )
