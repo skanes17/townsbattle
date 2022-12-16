@@ -690,6 +690,8 @@ export default function Game(props: GameProps) {
       <Combat
         myUnits={myUnits}
         enemyUnits={enemyUnits}
+        setMyUnits={setMyUnits}
+        setEnemyUnits={setEnemyUnits}
         switchPhase={switchPhase}
       />
       <DevTools

@@ -1,14 +1,17 @@
 import React from "react";
+import { Phase } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import UnitTile from "./UnitTile";
 
 interface ArmyGridProps {
+  phase: Phase;
   army: Unit[];
   selectedUnit: Unit;
   startColumn: "1" | "8";
 }
 
 export default function ArmyGrid({
+  phase,
   army,
   selectedUnit,
   startColumn,
@@ -29,7 +32,7 @@ export default function ArmyGrid({
       className={`col-span-5 ${colStart} row-span-2 row-start-2 mx-auto grid h-full max-h-48 w-fit max-w-sm snap-y auto-rows-min grid-cols-3 gap-1 self-center overflow-y-auto overflow-x-hidden rounded border border-indigo-900/50 bg-blue-500/5 sm:col-span-4 sm:row-start-1 sm:aspect-square sm:max-h-full md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6`}
     >
       {army.map((unit) => (
-        <UnitTile unit={unit} selectedUnit={selectedUnit} />
+        <UnitTile unit={unit} selectedUnit={selectedUnit} phase={phase} />
       ))}
     </div>
   );

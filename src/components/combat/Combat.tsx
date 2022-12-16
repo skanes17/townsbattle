@@ -16,16 +16,20 @@ import CombatLog from "./CombatLog";
 interface CombatProps {
   myUnits: Unit[];
   enemyUnits: Unit[];
+  setMyUnits: any;
+  setEnemyUnits: any;
   switchPhase: () => void;
 }
 
 export default function Combat({
   myUnits,
   enemyUnits,
+  setMyUnits,
+  setEnemyUnits,
   switchPhase,
 }: CombatProps) {
   const [phase, setPhase] = useState<Phase>("pre");
-  const [subphase, setSubphase] = useState<Subphase>("select");
+  const [subphase, setSubphase] = useState<Subphase>("fight");
 
   // log text output here
   const [logState, setLogState] = useState<string[]>([]);
@@ -35,6 +39,7 @@ export default function Combat({
     ...enemyUnits,
   ]);
 
+  /* ======== FOR TESTING ========
   const testMelee: Unit = {
     unitType: "melee",
     name: "Melee",
@@ -66,6 +71,7 @@ export default function Combat({
   const testEnemyArmy = new Array(numberOfEnemies).fill(null).map((_) => {
     return testTanky;
   });
+  ============================= */
 
   const combatUnitCounts: UnitCounts = {
     melee: combatUnits.filter((unit) => unit.unitType === "melee").length,
@@ -79,6 +85,8 @@ export default function Combat({
     tanky: enemyUnits.filter((unit) => unit.unitType === "tanky").length,
   };
 
+  // FIXME: How can I avoid choosing units here without later instances being undefined?
+  /* FIXME: Problem with Tankys?? Combat won't end */
   const [friendlyUnit, setFriendlyUnit] = useState(
     combatUnits[Math.floor(Math.random() * combatUnits.length)]
   );
@@ -86,6 +94,8 @@ export default function Combat({
     combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)]
   );
 
+  // TODO: If you have no units upon combat:
+  // immediately go to post, buildings are damaged accordingly
   const combatMegaFunction = () => {
     switch (phase) {
       case "pre":
@@ -102,19 +112,6 @@ export default function Combat({
         break;
       case "combat":
         switch (subphase) {
-          case "select":
-            // loop back here if an army survives
-            // randomly select a NEW unit from each army
-            setFriendlyUnit(
-              combatUnits[Math.floor(Math.random() * combatUnits.length)]
-            );
-            setEnemyUnit(
-              combatEnemyUnits[
-                Math.floor(Math.random() * combatEnemyUnits.length)
-              ]
-            );
-            setSubphase("fight");
-            break;
           case "fight":
             // chosen units attack each other
             /* If health ends up less than zero, set to 0 for display */
@@ -209,6 +206,12 @@ export default function Combat({
             if (combatUnits.length === 0 || combatEnemyUnits.length === 0) {
               // if an army was defeated, end combat
 
+              // calculate all the stats to present on next screen, such as...
+              // number of units defeated
+              // number of units lost
+              // number of units injured
+              // buildings damaged (and how much?)
+
               setPhase("post");
             } else {
               // if both armies remain, select new units
@@ -226,10 +229,11 @@ export default function Combat({
         }
         break;
       case "post":
-        // calculate number of units defeated
-        // number of units lost
-        // number of units injured
-        // buildings damaged (and how much?)
+        /* TODO: Hook up "Return to Planning" button here? */
+        setMyUnits(combatUnits);
+        setEnemyUnits(combatEnemyUnits);
+
+        switchPhase();
         break;
     }
   };
@@ -240,17 +244,17 @@ export default function Combat({
   /* FIXME: Need a better approach! Picking through which conditional rendering is a bit tricky. */
   return (
     <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-3 p-4 md:gap-4 lg:gap-5 xl:gap-8">
-      {/* common components to all phases */}
+      {/* ArmyGrid & CombatLog are common components to all phases */}
       {/* TODO: Reduce opacity of army grids when combat is over, put a green outline for winner, red for loser? */}
-      {/* <ArmyGrid army={testArmy} startColumn="1" /> */}
       <ArmyGrid
+        phase={phase}
         army={combatUnits}
         selectedUnit={friendlyUnit}
         startColumn="1"
       />
       <CombatLog phase={phase} />
-      {/* <ArmyGrid army={testEnemyArmy} startColumn="8" /> */}
       <ArmyGrid
+        phase={phase}
         army={combatEnemyUnits}
         selectedUnit={enemyUnit}
         startColumn="8"
@@ -266,7 +270,7 @@ export default function Combat({
             <button
               className="text-md rounded border border-white/40 bg-blue-600 p-2 font-bold text-white duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl 
                    xl:text-4xl"
-              onClick={() => switchPhase()}
+              onClick={() => combatMegaFunction()}
             >
               Return to Planning
             </button>
@@ -305,12 +309,7 @@ export default function Combat({
               />
             )}
             {/* FIXME: Must be a cleaner way?? */}
-            {phase === "combat" && subphase === "select" ? (
-              <CombatButton
-                buttonText="Select!"
-                onClick={() => combatMegaFunction()}
-              />
-            ) : phase === "combat" && subphase === "fight" ? (
+            {phase === "combat" && subphase === "fight" ? (
               <CombatButton
                 buttonText="Fight"
                 onClick={() => combatMegaFunction()}
@@ -325,7 +324,11 @@ export default function Combat({
               subphase === "victoryCheck" && (
                 /* FIXME: Make name depend on state of army (select, summary, etc) */
                 <CombatButton
-                  buttonText="Again!"
+                  buttonText={
+                    combatUnits.length === 0 || combatEnemyUnits.length === 0
+                      ? "Summary"
+                      : "Again!"
+                  }
                   onClick={() => combatMegaFunction()}
                 />
               )
