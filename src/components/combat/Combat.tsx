@@ -74,24 +74,23 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
     tanky: enemyUnits.filter((unit) => unit.unitType === "tanky").length,
   };
 
-  /* let friendlyUnit = testArmy[Math.floor(Math.random() * testArmy.length)];
-  let enemyUnit =
-    combatEnemyUnits[Math.floor(Math.random() * testEnemyArmy.length)]; */
+  const [friendlyUnit, setFriendlyUnit] = useState(
+    combatUnits[Math.floor(Math.random() * combatUnits.length)]
+  );
+  const [enemyUnit, setEnemyUnit] = useState(
+    combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)]
+  );
 
-  let friendlyUnit =
-    combatUnits[Math.floor(Math.random() * combatUnits.length)];
-  let enemyUnit =
-    combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)];
-
-  /* let friendlyUnit: Unit, enemyUnit: Unit; */
   const combatMegaFunction = () => {
     switch (phase) {
       case "pre":
         // randomly select a unit from each army
-        friendlyUnit =
-          combatUnits[Math.floor(Math.random() * combatUnits.length)];
-        enemyUnit =
-          combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)];
+        setFriendlyUnit(
+          combatUnits[Math.floor(Math.random() * combatUnits.length)]
+        );
+        setEnemyUnit(
+          combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)]
+        );
 
         // jump directly to "combat" and "fight" subphase because units are already selected
         setPhase("combat");
@@ -106,33 +105,44 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
           case "select":
             // loop back here if an army survives
             // randomly select a NEW unit from each army
-            friendlyUnit =
-              combatUnits[Math.floor(Math.random() * combatUnits.length)];
-            enemyUnit =
+            setFriendlyUnit(
+              combatUnits[Math.floor(Math.random() * combatUnits.length)]
+            );
+            setEnemyUnit(
               combatEnemyUnits[
                 Math.floor(Math.random() * combatEnemyUnits.length)
-              ];
+              ]
+            );
             setSubphase("fight");
             break;
           case "fight":
             // chosen units attack each other
             /* If health ends up less than zero, set to 0 for display */
-            let friendlyHealthRemaining =
-              friendlyUnit.currentHealth - enemyUnit.attack;
-            if (friendlyHealthRemaining < 0) {
-              friendlyHealthRemaining = 0;
-            }
+            const friendlyHealthRemaining =
+              friendlyUnit.maxHealth - enemyUnit.attack;
+            const enemyHealthRemaining =
+              enemyUnit.maxHealth - friendlyUnit.attack;
 
             // set new unit health
             setCombatUnits(
               combatUnits.map((unit) => {
-                // check if id matches the currently selected unit
+                // if id matches the currently selected unit, change its health
                 if (unit.id === friendlyUnit.id) {
-                  return {
-                    // if so, change that unit's health/health accordingly
-                    ...unit,
-                    currentHealth: friendlyHealthRemaining,
-                  };
+                  if (friendlyHealthRemaining > 0) {
+                    return {
+                      // if so, change that unit's health/health accordingly
+                      ...unit,
+                      currentHealth: friendlyHealthRemaining,
+                    };
+                  }
+                  // set minimum unit health to 0
+                  else {
+                    return {
+                      // if so, change that unit's health/health accordingly
+                      ...unit,
+                      currentHealth: 0,
+                    };
+                  }
                 } else {
                   // if not, don't change anything
                   return unit;
@@ -140,21 +150,28 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
               })
             );
 
-            let enemyHealthRemaining =
-              enemyUnit.currentHealth - friendlyUnit.attack;
-            if (enemyHealthRemaining < 0) {
-              enemyHealthRemaining = 0;
-            }
-
             // set new enemy unit health
             setCombatEnemyUnits(
               combatEnemyUnits.map((unit) => {
-                if (unit.id === enemyUnit.id) {
-                  return {
-                    ...unit,
-                    currentHealth: enemyHealthRemaining,
-                  };
+                // if id matches the currently selected unit, change its health
+                if (unit.id === friendlyUnit.id) {
+                  if (enemyHealthRemaining > 0) {
+                    return {
+                      // if so, change that unit's health/health accordingly
+                      ...unit,
+                      currentHealth: enemyHealthRemaining,
+                    };
+                  }
+                  // set minimum unit health to 0
+                  else {
+                    return {
+                      // if so, change that unit's health/health accordingly
+                      ...unit,
+                      currentHealth: 0,
+                    };
+                  }
                 } else {
+                  // if not, don't change anything
                   return unit;
                 }
               })
@@ -170,16 +187,15 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
                 combatUnits.filter((unit) => unit.id !== enemyUnit.id)
               );
             }
-
             if (enemyUnit.currentHealth === 0) {
               setCombatEnemyUnits(
                 combatEnemyUnits.filter((unit) => unit.id !== enemyUnit.id)
               );
             }
-            // return the unit to the army and pick a new one, or not
-
             setSubphase("victoryCheck");
             break;
+
+          // return the unit to the army and pick a new one, or not
           case "victoryCheck":
             if (combatUnits.length === 0 || combatEnemyUnits.length === 0) {
               // if an army was defeated, end combat
@@ -204,15 +220,20 @@ export default function Combat({ myUnits, enemyUnits }: CombatProps) {
   // TODO: Build autobattler
   const autoBattler = () => {};
 
+  /* FIXME: Need a better approach! Picking through which conditional rendering is a bit tricky. */
   return (
     <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-3 p-4 md:gap-4 lg:gap-5 xl:gap-8">
       {/* common components to all phases */}
       {/* TODO: Reduce opacity of army grids when combat is over, put a green outline for winner, red for loser? */}
       {/* <ArmyGrid army={testArmy} startColumn="1" /> */}
-      <ArmyGrid army={combatUnits} startColumn="1" />
+      <ArmyGrid
+        army={combatUnits}
+        selectedUnit={friendlyUnit}
+        startColumn="1"
+      />
       <CombatLog phase={phase} />
       {/* <ArmyGrid army={testEnemyArmy} startColumn="8" /> */}
-      <ArmyGrid army={enemyUnits} startColumn="8" />
+      <ArmyGrid army={enemyUnits} selectedUnit={enemyUnit} startColumn="8" />
 
       {phase === "post" ? (
         <>
