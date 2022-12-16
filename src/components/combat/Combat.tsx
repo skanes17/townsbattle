@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Phase, Subphase } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import { UnitCounts } from "../../types/UnitCounts";
+import AutoButton from "../buttons/AutoButton";
 import CombatButton from "../buttons/CombatButton";
 import CombatCardTemplate from "../cards/CombatCardTemplate";
 import PostCombatSummary from "../cards/PostCombatSummary";
@@ -91,8 +92,9 @@ export default function Combat({
           combatUnits[Math.floor(Math.random() * combatUnits.length)];
         enemyUnit =
           combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)];
+
+        // jump directly to "combat" and "fight" subphase because units are already selected
         setPhase("combat");
-        // jump directly to fight subphase because units are already selected
         setSubphase("fight");
         break;
       case "combat":
@@ -206,11 +208,11 @@ export default function Combat({
     <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-3 p-4 md:gap-4 lg:gap-5 xl:gap-8">
       {/* common components to all phases */}
       {/* TODO: Reduce opacity of army grids when combat is over, put a green outline for winner, red for loser? */}
-      <ArmyGrid army={testArmy} startColumn="1" />
-      {/* <ArmyGrid army={combatUnits} startColumn="1" /> */}
+      {/* <ArmyGrid army={testArmy} startColumn="1" /> */}
+      <ArmyGrid army={combatUnits} startColumn="1" />
       <CombatLog phase={phase} />
-      <ArmyGrid army={testEnemyArmy} startColumn="8" />
-      {/* <ArmyGrid army={enemyUnits} startColumn="8" /> */}
+      {/* <ArmyGrid army={testEnemyArmy} startColumn="8" /> */}
+      <ArmyGrid army={enemyUnits} startColumn="8" />
 
       {phase === "post" ? (
         <>
@@ -289,13 +291,7 @@ export default function Combat({
           </div>
           {phase === "combat" && (
             <div className="flex items-start justify-center p-4 pt-0">
-              <button
-                className="h-6 w-10 rounded border border-white/40 bg-red-600 text-sm font-bold text-white duration-75 hover:bg-red-800 sm:h-6 sm:w-12 sm:text-sm md:h-10 md:w-20 md:text-base lg:h-12 lg:w-20 lg:text-xl xl:h-14 xl:w-24
-                   xl:text-2xl"
-                onClick={() => autoBattler()}
-              >
-                Auto
-              </button>
+              <AutoButton buttonText="Auto" onClick={() => autoBattler()} />
             </div>
           )}
         </div>
