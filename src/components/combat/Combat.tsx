@@ -4,6 +4,8 @@ import { Unit } from "../../types/Unit";
 import { UnitCounts } from "../../types/UnitCounts";
 import AutoButton from "../buttons/AutoButton";
 import CombatButton from "../buttons/CombatButton";
+//TODO: Fix this
+// import { AutoButton, CombatButton } from '../buttons';
 import CombatCardTemplate from "../cards/CombatCardTemplate";
 import PostCombatSummary from "../cards/PostCombatSummary";
 import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
@@ -12,6 +14,19 @@ import CombatLog from "./CombatLog";
 
 /* TODO: Figure out how to place enemy units starting from top right in grid */
 /* FIXME: Page breaking when army has 0 units */
+
+/* TODO: Incorporate enums (enumeration) */
+enum Phases {
+  Pre,
+  Combat,
+  Post,
+}
+
+enum SubPhases {
+  Fight,
+  Resolve,
+  VictoryCheck,
+}
 
 interface CombatProps {
   myUnits: Unit[];
@@ -94,11 +109,18 @@ export default function Combat({
     combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)]
   );
 
+  /* FIXME: Choose units based on array index */
+  // keep everything in an array (state)
+  // arrayIdx (state)
+  // 'current' unit, is just army[idx]
+  // army[idx].health - 10;
+
   // TODO: If you have no units upon combat:
   // immediately go to post, buildings are damaged accordingly
   const combatMegaFunction = () => {
     switch (phase) {
       case "pre":
+        // preCombat()
         // randomly select a unit from each army
         setFriendlyUnit(
           combatUnits[Math.floor(Math.random() * combatUnits.length)]
@@ -121,40 +143,28 @@ export default function Combat({
               enemyUnit.maxHealth - friendlyUnit.attack;
 
             /* FIXME: Combine the state update for selected unit and army? */
-            if (friendlyHealthRemaining > 0) {
-              setFriendlyUnit({
-                ...friendlyUnit,
-                currentHealth: friendlyHealthRemaining,
-              });
-            } else setFriendlyUnit({ ...friendlyUnit, currentHealth: 0 });
 
-            if (enemyHealthRemaining > 0) {
-              setEnemyUnit({
-                ...enemyUnit,
-                currentHealth: enemyHealthRemaining,
-              });
-            } else setEnemyUnit({ ...enemyUnit, currentHealth: 0 });
+            setFriendlyUnit({
+              ...friendlyUnit,
+              /* If health ends up less than zero, set to 0 for display */
+              currentHealth: Math.max(0, friendlyHealthRemaining),
+            });
+
+            setEnemyUnit({
+              ...enemyUnit,
+              currentHealth: Math.max(0, enemyHealthRemaining),
+            });
 
             // update army with new unit health
             setCombatUnits(
               combatUnits.map((unit) => {
                 // if id matches the currently selected unit, change its health
                 if (unit.id === friendlyUnit.id) {
-                  if (friendlyHealthRemaining > 0) {
-                    return {
-                      // if so, change that unit's health/health accordingly
-                      ...unit,
-                      currentHealth: friendlyHealthRemaining,
-                    };
-                  }
-                  // set minimum unit health to 0
-                  else {
-                    return {
-                      // if so, change that unit's health/health accordingly
-                      ...unit,
-                      currentHealth: 0,
-                    };
-                  }
+                  return {
+                    // if so, change that unit's health/health accordingly
+                    ...unit,
+                    currentHealth: Math.max(0, friendlyHealthRemaining),
+                  };
                 } else {
                   // if not, don't change anything
                   return unit;
@@ -166,17 +176,10 @@ export default function Combat({
             setCombatEnemyUnits(
               combatEnemyUnits.map((unit) => {
                 if (unit.id === enemyUnit.id) {
-                  if (enemyHealthRemaining > 0) {
-                    return {
-                      ...unit,
-                      currentHealth: enemyHealthRemaining,
-                    };
-                  } else {
-                    return {
-                      ...unit,
-                      currentHealth: 0,
-                    };
-                  }
+                  return {
+                    ...unit,
+                    currentHealth: Math.max(0, enemyHealthRemaining),
+                  };
                 } else {
                   return unit;
                 }
@@ -285,7 +288,9 @@ export default function Combat({
               unitCounts={combatUnitCounts}
             />
           )}
-          {phase === "combat" && <CombatCardTemplate unit={friendlyUnit} />}
+          {phase === "combat" && (
+            <CombatCardTemplate unit={friendlyUnit} subphase={subphase} />
+          )}
         </div>
       )}
 
@@ -351,7 +356,9 @@ export default function Combat({
               unitCounts={combatEnemyUnitCounts}
             />
           )}
-          {phase === "combat" && <CombatCardTemplate unit={enemyUnit} />}
+          {phase === "combat" && (
+            <CombatCardTemplate unit={enemyUnit} subphase={subphase} />
+          )}
         </div>
       )}
     </body>
