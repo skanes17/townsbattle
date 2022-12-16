@@ -685,11 +685,7 @@ export default function Game(props: GameProps) {
 
   return inCombat ? (
     <>
-      <Combat
-        myUnits={myUnits}
-        enemyUnits={enemyUnits}
-        unitCounts={unitCounts}
-      />
+      <Combat myUnits={myUnits} enemyUnits={enemyUnits} />
       <DevTools
         BASE_UNIT_DATA={BASE_UNIT_DATA}
         resources={resources}

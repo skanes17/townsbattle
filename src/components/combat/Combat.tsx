@@ -16,14 +16,9 @@ import CombatLog from "./CombatLog";
 interface CombatProps {
   myUnits: Unit[];
   enemyUnits: Unit[];
-  unitCounts: UnitCounts;
 }
 
-export default function Combat({
-  myUnits,
-  enemyUnits,
-  unitCounts,
-}: CombatProps) {
+export default function Combat({ myUnits, enemyUnits }: CombatProps) {
   const [phase, setPhase] = useState<Phase>("pre");
   const [subphase, setSubphase] = useState<Subphase>("select");
 
@@ -79,9 +74,14 @@ export default function Combat({
     tanky: enemyUnits.filter((unit) => unit.unitType === "tanky").length,
   };
 
-  let friendlyUnit = testArmy[Math.floor(Math.random() * testArmy.length)];
+  /* let friendlyUnit = testArmy[Math.floor(Math.random() * testArmy.length)];
   let enemyUnit =
-    combatEnemyUnits[Math.floor(Math.random() * testEnemyArmy.length)];
+    combatEnemyUnits[Math.floor(Math.random() * testEnemyArmy.length)]; */
+
+  let friendlyUnit =
+    combatUnits[Math.floor(Math.random() * combatUnits.length)];
+  let enemyUnit =
+    combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)];
 
   /* let friendlyUnit: Unit, enemyUnit: Unit; */
   const combatMegaFunction = () => {
@@ -235,7 +235,7 @@ export default function Combat({
           {phase === "pre" && (
             <PreCombatCardTemplate
               headerText="Your Army"
-              army={testArmy}
+              army={combatUnits}
               unitCounts={combatUnitCounts}
             />
           )}
@@ -275,7 +275,7 @@ export default function Combat({
               />
             ) : phase === "combat" && subphase === "resolve" ? (
               <CombatButton
-                buttonText="Next"
+                buttonText="Select!"
                 onClick={() => combatMegaFunction()}
               />
             ) : (
@@ -302,7 +302,7 @@ export default function Combat({
           {phase === "pre" && (
             <PreCombatCardTemplate
               headerText="Enemy Army"
-              army={testEnemyArmy}
+              army={combatEnemyUnits}
               unitCounts={combatEnemyUnitCounts}
             />
           )}
