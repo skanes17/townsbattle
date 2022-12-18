@@ -101,7 +101,6 @@ export default function Combat({
   };
 
   // FIXME: How can I avoid choosing units here without later instances being undefined?
-  /* FIXME: Problem with Tankys?? Combat won't end */
 
   /* FIXME: Choose units based on array index */
   // keep everything in an array (state)
@@ -115,31 +114,30 @@ export default function Combat({
     .map((unit, index) => {
       if (unit.currentHealth !== 0) {
         return index;
-      }
+      } else return -1;
+      // FIXME: Better way to do this?
     })
-    // filter out all instances of "undefined" from the array
-    .filter((index) => index !== undefined);
-  // FIXME: better way to do this?
+    .filter((index) => index >= 0);
 
   const survivingEnemyUnitIndexes = combatEnemyUnits
     .map((unit, index) => {
       if (unit.currentHealth !== 0) {
         return index;
-      }
+      } else return -1;
     })
-    .filter((index) => index !== undefined);
+    .filter((index) => index >= 0);
 
   // choose an index at random from the surviving units
   const [friendlyIndex, setFriendlyIndex] = useState(
-    Math.floor(Math.random() * survivingFriendlyUnitIndexes.length)
+    survivingFriendlyUnitIndexes[
+      Math.floor(Math.random() * survivingFriendlyUnitIndexes.length)
+    ]
   );
   const [enemyIndex, setEnemyIndex] = useState(
-    Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
+    survivingEnemyUnitIndexes[
+      Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
+    ]
   );
-
-  // randomly select a unit from remaining units
-  const friendlyUnit = combatUnits[friendlyIndex];
-  const enemyUnit = combatEnemyUnits[enemyIndex];
 
   // FIXME: TODO: Next, remove the friendlyUnit declaration above, replace all stuff below with simply calling combatUnit[friendlyIndex]
 
@@ -159,15 +157,17 @@ export default function Combat({
           case "fight":
             // chosen units attack each other
             const friendlyHealthRemaining =
-              friendlyUnit.currentHealth - enemyUnit.attack;
+              combatUnits[friendlyIndex].currentHealth -
+              combatEnemyUnits[enemyIndex].attack;
             const enemyHealthRemaining =
-              enemyUnit.currentHealth - friendlyUnit.attack;
+              combatEnemyUnits[enemyIndex].currentHealth -
+              combatUnits[friendlyIndex].attack;
 
             // update army with new unit health
             setCombatUnits(
               // find the chosen unit in the "main" array
-              combatUnits.map((unit) => {
-                if (unit === friendlyUnit) {
+              combatUnits.map((unit, i) => {
+                if (i === friendlyIndex) {
                   return {
                     // change that unit's health
                     ...unit,
@@ -183,8 +183,8 @@ export default function Combat({
 
             // set new enemy unit health
             setCombatEnemyUnits(
-              combatEnemyUnits.map((unit) => {
-                if (unit === enemyUnit) {
+              combatEnemyUnits.map((unit, i) => {
+                if (i === enemyIndex) {
                   return {
                     ...unit,
                     currentHealth: Math.max(0, enemyHealthRemaining),
@@ -220,10 +220,16 @@ export default function Combat({
             } else {
               // if both armies remain, select new units
               setFriendlyIndex(
-                Math.floor(Math.random() * survivingFriendlyUnitIndexes.length)
+                survivingFriendlyUnitIndexes[
+                  Math.floor(
+                    Math.random() * survivingFriendlyUnitIndexes.length
+                  )
+                ]
               );
               setEnemyIndex(
-                Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
+                survivingEnemyUnitIndexes[
+                  Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
+                ]
               );
 
               setSubphase("fight");
@@ -270,21 +276,24 @@ export default function Combat({
       <ArmyGrid
         phase={phase}
         army={combatUnits}
-        selectedUnit={friendlyUnit}
+        selectedUnit={combatUnits[friendlyIndex]}
         startColumn="1"
       />
       <CombatLog phase={phase} />
       <ArmyGrid
         phase={phase}
         army={combatEnemyUnits}
-        selectedUnit={enemyUnit}
+        selectedUnit={combatEnemyUnits[enemyIndex]}
         startColumn="8"
       />
 
       {phase === "post" ? (
         <>
           <div className="center col-span-12 col-start-1 row-start-4 w-5/6 self-center justify-self-center sm:row-start-3 sm:mt-2 md:mt-0">
-            <PostCombatSummary />
+            <PostCombatSummary
+              friendlyUnits={combatUnits}
+              enemyUnits={combatEnemyUnits}
+            />
           </div>
           {/* FIXME: Should really just call button once!! */}
           <div className="col-span-12 flex items-center justify-end">
@@ -307,7 +316,10 @@ export default function Combat({
             />
           )}
           {phase === "combat" && (
-            <CombatCardTemplate unit={friendlyUnit} subphase={subphase} />
+            <CombatCardTemplate
+              unit={combatUnits[friendlyIndex]}
+              subphase={subphase}
+            />
           )}
         </div>
       )}
@@ -371,7 +383,10 @@ export default function Combat({
             />
           )}
           {phase === "combat" && (
-            <CombatCardTemplate unit={enemyUnit} subphase={subphase} />
+            <CombatCardTemplate
+              unit={combatEnemyUnits[enemyIndex]}
+              subphase={subphase}
+            />
           )}
         </div>
       )}

@@ -48,7 +48,7 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
     hoverBorder = "hover:border-green-300/100";
   }
 
-  if (phase === "combat" && unit.id === selectedUnit.id) {
+  if (phase === "combat" && unit === selectedUnit) {
     borderWidth = "border-2";
     if (percentHealth <= 25) {
       borderColor = "border-red-400/80";
@@ -68,7 +68,7 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
         className={`square group relative my-auto mx-auto max-w-min snap-center justify-items-center rounded-md ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >
         <div className="pb-1 text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl">
-          {unit.nameSymbol}
+          {unit.currentHealth === 0 ? "💀" : unit.nameSymbol}
           {/* TODO: Skull overlay here! */}
         </div>
         <div

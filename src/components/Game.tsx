@@ -288,14 +288,15 @@ export default function Game(props: GameProps) {
 
   // ===BASE STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
+  //  TODO: Incorporate chance to hit, 5% chance to crit
   const BASE_UNIT_DATA: BaseUnit = {
     melee: {
       unitType: "melee",
       name: "Melee",
       nameSymbol: "⚔️",
-      description: "Attack and health are balanced.",
+      description: "Attack and health are roughly balanced.",
       attack: 5,
-      maxHealth: 5,
+      maxHealth: 6,
     },
     pewpew: {
       unitType: "pewpew",
@@ -303,7 +304,7 @@ export default function Game(props: GameProps) {
       nameSymbol: "🏹",
       description: "Great attack but not much health.",
       attack: 7,
-      maxHealth: 3,
+      maxHealth: 4,
     },
     tanky: {
       unitType: "tanky",
@@ -311,7 +312,7 @@ export default function Game(props: GameProps) {
       nameSymbol: "🛡️",
       description: "Low attack but lots of health.",
       attack: 3,
-      maxHealth: 7,
+      maxHealth: 8,
     },
   };
 
