@@ -119,29 +119,35 @@ export default function PostCombatSummary({
       </p>
       <p className="col-start-2 row-start-2">
         {friendlyUnitsInjured.total} friendly units{" "}
-        <span className="text-amber-500">injured</span>:
+        <span className="text-amber-500">injured</span>
+        {friendlyUnitsInjured.total === 0 ? "." : ":"}
       </p>
-      <p className="col-start-2 row-start-3 ml-2 ">
-        {friendlyUnitsInjured.melee} melee (
-        {Math.round(
-          (friendlyUnitsInjured.melee / friendlyUnitsInjured.total) * 100
-        )}
-        %)
-      </p>
-      <p className="col-start-2 row-start-4 ml-2 ">
-        {friendlyUnitsInjured.pewpew} pewpew (
-        {Math.round(
-          (friendlyUnitsInjured.pewpew / friendlyUnitsInjured.total) * 100
-        )}
-        %)
-      </p>
-      <p className="col-start-2 row-start-5 ml-2 ">
-        {friendlyUnitsInjured.tanky} tanky (
-        {Math.round(
-          (friendlyUnitsInjured.tanky / friendlyUnitsInjured.total) * 100
-        )}
-        %)
-      </p>
+      {friendlyUnitsInjured.total === 0 ? null : (
+        <>
+          <p className="col-start-2 row-start-3 ml-2 ">
+            {friendlyUnitsInjured.melee} melee (
+            {Math.round(
+              (friendlyUnitsInjured.melee / friendlyUnitsInjured.total) * 100
+            )}
+            %)
+          </p>
+          <p className="col-start-2 row-start-4 ml-2 ">
+            {friendlyUnitsInjured.pewpew} pewpew (
+            {Math.round(
+              (friendlyUnitsInjured.pewpew / friendlyUnitsInjured.total) * 100
+            )}
+            %)
+          </p>
+          <p className="col-start-2 row-start-5 ml-2 ">
+            {friendlyUnitsInjured.tanky} tanky (
+            {Math.round(
+              (friendlyUnitsInjured.tanky / friendlyUnitsInjured.total) * 100
+            )}
+            %)
+          </p>
+        </>
+      )}
+
       <p className="col-start-3 row-start-2">
         <span className="text-red-500">Lost</span> {friendlyUnitsDefeated.total}{" "}
         friendly units:
