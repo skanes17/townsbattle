@@ -16,7 +16,7 @@ import CombatLog from "./CombatLog";
 /* FIXME: Page breaking when army has 0 units */
 
 /* TODO: Incorporate enums (enumeration) */
-enum Phases {
+/* enum Phases {
   Pre,
   Combat,
   Post,
@@ -26,7 +26,7 @@ enum SubPhases {
   Fight,
   Resolve,
   VictoryCheck,
-}
+} */
 
 interface CombatProps {
   myUnits: Unit[];
@@ -265,30 +265,22 @@ export default function Combat({
     }
   };
 
-  // TODO: Finish autobattler
+  // TODO: Test autobattler
+  // TODO: Incorporate something like "Auto - 5/10/20 units" or something... so you can batch fights
   const autoBattler = () => {
-    const autoBattleFriendlyUnits = [...combatUnits];
-    const autoBattleEnemyUnits = [...combatEnemyUnits];
-    let _survivingFriendlyUnitIndexes = survivingFriendlyUnitIndexes;
-    let _survivingEnemyUnitIndexes = survivingEnemyUnitIndexes;
+    const autoFriendlyUnits = [...combatUnits];
+    const autoEnemyUnits = [...combatEnemyUnits];
     // TODO: loop until all units on one or both sides are dead
 
-    let autoBattleFriendlyIndex =
-      _survivingFriendlyUnitIndexes[
-        Math.floor(Math.random() * _survivingFriendlyUnitIndexes.length)
-      ];
-    let autoBattleEnemyIndex;
-    _survivingEnemyUnitIndexes[
-      Math.floor(Math.random() * _survivingEnemyUnitIndexes.length)
-    ];
-
-    /* TODO: Check and fix this and continue onward */
-    autoBattleFriendlyUnits[autoBattleFriendlyIndex].currentHealth -
-      autoBattleEnemyUnits[autoBattleEnemyIndex].attack;
-    autoBattleEnemyUnits[autoBattleEnemyIndex].currentHealth -
-      autoBattleFriendlyUnits[autoBattleFriendlyIndex].attack;
-
-    /*  _survivingFriendlyUnitIndexes = autoBattleFriendlyUnits
+    // gather surviving units
+    let _survivingFriendlyUnitIndexes = autoFriendlyUnits
+      .map((unit, index) => {
+        if (unit.currentHealth !== 0) {
+          return index;
+        } else return -1;
+      })
+      .filter((index) => index >= 0);
+    let _survivingEnemyUnitIndexes = autoEnemyUnits
       .map((unit, index) => {
         if (unit.currentHealth !== 0) {
           return index;
@@ -296,14 +288,52 @@ export default function Combat({
       })
       .filter((index) => index >= 0);
 
-    _survivingEnemyUnitIndexes = autoBattleEnemyUnits
-      .map((unit, index) => {
-        if (unit.currentHealth !== 0) {
-          return index;
-        } else return -1;
-      })
-      .filter((index) => index >= 0);
-  }; */
+    while (
+      _survivingFriendlyUnitIndexes.length > 0 &&
+      _survivingEnemyUnitIndexes.length > 0
+    ) {
+      // choose a unit from each army
+      let _friendlyIndex =
+        _survivingFriendlyUnitIndexes[
+          Math.floor(Math.random() * _survivingFriendlyUnitIndexes.length)
+        ];
+      let _enemyIndex =
+        _survivingEnemyUnitIndexes[
+          Math.floor(Math.random() * _survivingEnemyUnitIndexes.length)
+        ];
+
+      // reduce their health appropriately
+      autoFriendlyUnits[_friendlyIndex].currentHealth = Math.max(
+        0,
+        autoFriendlyUnits[_friendlyIndex].currentHealth -
+          autoEnemyUnits[_enemyIndex].attack
+      );
+      autoEnemyUnits[_enemyIndex].currentHealth = Math.max(
+        0,
+        autoEnemyUnits[_enemyIndex].currentHealth -
+          autoFriendlyUnits[_friendlyIndex].attack
+      );
+
+      // check if units are still alive; if so, continue the loop
+      _survivingFriendlyUnitIndexes = autoFriendlyUnits
+        .map((unit, index) => {
+          if (unit.currentHealth !== 0) {
+            return index;
+          } else return -1;
+        })
+        .filter((index) => index >= 0);
+      _survivingEnemyUnitIndexes = autoEnemyUnits
+        .map((unit, index) => {
+          if (unit.currentHealth !== 0) {
+            return index;
+          } else return -1;
+        })
+        .filter((index) => index >= 0);
+    }
+
+    setCombatUnits(autoFriendlyUnits);
+    setCombatEnemyUnits(autoEnemyUnits);
+    setPhase("post");
   };
 
   /* FIXME: Need a better approach! Picking through which conditional rendering is a bit tricky. */

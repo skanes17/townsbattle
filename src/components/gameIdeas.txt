@@ -1,0 +1,11 @@
+Critcal hit chance (eg 5%)
+Units who face off against each other have lower hit chance
+Units have traits 
+-Tankys reduce all damage to them by 1 (armor)
+-pewpews can attack first before the enemy unit does
+-melee can be base unit
+If a unit survives a round, then it can keep attacking (instead of going back into the army)
+If a unit was to die, it comes back with 1 health instead of dying
+Passively lower the enemy attack by X
+Cheap unit can be 'fodder' and has a higher chance of being selected
+
