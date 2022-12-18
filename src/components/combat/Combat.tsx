@@ -109,23 +109,39 @@ export default function Combat({
   // 'current' unit, is just army[idx]
   // army[idx].health - 10;
 
-  // we only want to choose from remaining units (health not 0)
-  const friendlyUnitsRemaining = combatUnits.filter(
-    (unit) => unit.currentHealth !== 0
+  // we only want to choose from units that are alive (health not 0)
+  // we'll first generate an array of indexes for surviving combat units
+  const survivingFriendlyUnitIndexes = combatUnits
+    .map((unit, index) => {
+      if (unit.currentHealth !== 0) {
+        return index;
+      }
+    })
+    // filter out all instances of "undefined" from the array
+    .filter((index) => index !== undefined);
+  // FIXME: better way to do this?
+
+  const survivingEnemyUnitIndexes = combatEnemyUnits
+    .map((unit, index) => {
+      if (unit.currentHealth !== 0) {
+        return index;
+      }
+    })
+    .filter((index) => index !== undefined);
+
+  // choose an index at random from the surviving units
+  const [friendlyIndex, setFriendlyIndex] = useState(
+    Math.floor(Math.random() * survivingFriendlyUnitIndexes.length)
   );
-  const enemyUnitsRemaining = combatEnemyUnits.filter(
-    (unit) => unit.currentHealth !== 0
+  const [enemyIndex, setEnemyIndex] = useState(
+    Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
   );
 
-  // randomly select a unit index from remaining units
-  const [friendlyUnit, setFriendlyUnit] = useState(
-    friendlyUnitsRemaining[
-      Math.floor(Math.random() * friendlyUnitsRemaining.length)
-    ]
-  );
-  const [enemyUnit, setEnemyUnit] = useState(
-    enemyUnitsRemaining[Math.floor(Math.random() * enemyUnitsRemaining.length)]
-  );
+  // randomly select a unit from remaining units
+  const friendlyUnit = combatUnits[friendlyIndex];
+  const enemyUnit = combatEnemyUnits[enemyIndex];
+
+  // FIXME: TODO: Next, remove the friendlyUnit declaration above, replace all stuff below with simply calling combatUnit[friendlyIndex]
 
   // TODO: If you have no units upon combat:
   // immediately go to post; buildings are damaged accordingly
@@ -188,8 +204,8 @@ export default function Combat({
           // return the unit to the army and pick a new one, or not
           case "victoryCheck":
             if (
-              friendlyUnitsRemaining.length === 0 ||
-              enemyUnitsRemaining.length === 0
+              survivingFriendlyUnitIndexes.length === 0 ||
+              survivingEnemyUnitIndexes.length === 0
             ) {
               // if an army was defeated, end combat
 
@@ -203,15 +219,11 @@ export default function Combat({
               setPhase("post");
             } else {
               // if both armies remain, select new units
-              setFriendlyUnit(
-                friendlyUnitsRemaining[
-                  Math.floor(Math.random() * friendlyUnitsRemaining.length)
-                ]
+              setFriendlyIndex(
+                Math.floor(Math.random() * survivingFriendlyUnitIndexes.length)
               );
-              setEnemyUnit(
-                enemyUnitsRemaining[
-                  Math.floor(Math.random() * enemyUnitsRemaining.length)
-                ]
+              setEnemyIndex(
+                Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
               );
 
               setSubphase("fight");
@@ -220,9 +232,27 @@ export default function Combat({
         }
         break;
       case "post":
-        /* TODO: Hook up "Return to Planning" button here? */
-        setMyUnits(friendlyUnitsRemaining);
-        setEnemyUnits(enemyUnitsRemaining);
+        // send all all surviving units back to planning
+        setMyUnits(
+          combatUnits
+            .map((unit) => {
+              if (unit.currentHealth !== 0) {
+                return unit;
+              }
+            })
+            .filter((unit) => unit !== undefined)
+        );
+
+        // probably unnecessary at this phase but keeping it anyway; can't hurt?
+        setEnemyUnits(
+          combatEnemyUnits
+            .map((unit) => {
+              if (unit.currentHealth !== 0) {
+                return unit;
+              }
+            })
+            .filter((unit) => unit !== undefined)
+        );
 
         switchPhase();
         break;
@@ -313,8 +343,8 @@ export default function Combat({
                 /* FIXME: Make name depend on state of army (select, summary, etc) */
                 <CombatButton
                   buttonText={
-                    friendlyUnitsRemaining.length === 0 ||
-                    enemyUnitsRemaining.length === 0
+                    survivingFriendlyUnitIndexes.length === 0 ||
+                    survivingEnemyUnitIndexes.length === 0
                       ? "Summary"
                       : "Again!"
                   }
