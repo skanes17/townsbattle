@@ -265,8 +265,46 @@ export default function Combat({
     }
   };
 
-  // TODO: Build autobattler
-  const autoBattler = () => {};
+  // TODO: Finish autobattler
+  const autoBattler = () => {
+    const autoBattleFriendlyUnits = [...combatUnits];
+    const autoBattleEnemyUnits = [...combatEnemyUnits];
+    let _survivingFriendlyUnitIndexes = survivingFriendlyUnitIndexes;
+    let _survivingEnemyUnitIndexes = survivingEnemyUnitIndexes;
+    // TODO: loop until all units on one or both sides are dead
+
+    let autoBattleFriendlyIndex =
+      _survivingFriendlyUnitIndexes[
+        Math.floor(Math.random() * _survivingFriendlyUnitIndexes.length)
+      ];
+    let autoBattleEnemyIndex;
+    _survivingEnemyUnitIndexes[
+      Math.floor(Math.random() * _survivingEnemyUnitIndexes.length)
+    ];
+
+    /* TODO: Check and fix this and continue onward */
+    autoBattleFriendlyUnits[autoBattleFriendlyIndex].currentHealth -
+      autoBattleEnemyUnits[autoBattleEnemyIndex].attack;
+    autoBattleEnemyUnits[autoBattleEnemyIndex].currentHealth -
+      autoBattleFriendlyUnits[autoBattleFriendlyIndex].attack;
+
+    /*  _survivingFriendlyUnitIndexes = autoBattleFriendlyUnits
+      .map((unit, index) => {
+        if (unit.currentHealth !== 0) {
+          return index;
+        } else return -1;
+      })
+      .filter((index) => index >= 0);
+
+    _survivingEnemyUnitIndexes = autoBattleEnemyUnits
+      .map((unit, index) => {
+        if (unit.currentHealth !== 0) {
+          return index;
+        } else return -1;
+      })
+      .filter((index) => index >= 0);
+  }; */
+  };
 
   /* FIXME: Need a better approach! Picking through which conditional rendering is a bit tricky. */
   return (
@@ -365,7 +403,7 @@ export default function Combat({
               )
             )}
           </div>
-          {phase === "combat" && (
+          {phase === "combat" && subphase !== "victoryCheck" && (
             <div className="flex items-start justify-center p-4 pt-0">
               <AutoButton buttonText="Auto" onClick={() => autoBattler()} />
             </div>
