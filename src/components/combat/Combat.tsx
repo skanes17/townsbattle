@@ -102,12 +102,6 @@ export default function Combat({
 
   // FIXME: How can I avoid choosing units here without later instances being undefined?
   /* FIXME: Problem with Tankys?? Combat won't end */
-  const [friendlyUnit, setFriendlyUnit] = useState(
-    combatUnits[Math.floor(Math.random() * combatUnits.length)]
-  );
-  const [enemyUnit, setEnemyUnit] = useState(
-    combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)]
-  );
 
   /* FIXME: Choose units based on array index */
   // keep everything in an array (state)
@@ -115,19 +109,31 @@ export default function Combat({
   // 'current' unit, is just army[idx]
   // army[idx].health - 10;
 
+  // we only want to choose from remaining units (health not 0)
+  const friendlyUnitsRemaining = combatUnits.filter(
+    (unit) => unit.currentHealth !== 0
+  );
+  const enemyUnitsRemaining = combatEnemyUnits.filter(
+    (unit) => unit.currentHealth !== 0
+  );
+
+  // randomly select a unit index from remaining units
+  const [friendlyUnit, setFriendlyUnit] = useState(
+    friendlyUnitsRemaining[
+      Math.floor(Math.random() * friendlyUnitsRemaining.length)
+    ]
+  );
+  const [enemyUnit, setEnemyUnit] = useState(
+    enemyUnitsRemaining[Math.floor(Math.random() * enemyUnitsRemaining.length)]
+  );
+
   // TODO: If you have no units upon combat:
-  // immediately go to post, buildings are damaged accordingly
+  // immediately go to post; buildings are damaged accordingly
   const combatMegaFunction = () => {
     switch (phase) {
       case "pre":
-        // preCombat()
-        // randomly select a unit from each army
-        setFriendlyUnit(
-          combatUnits[Math.floor(Math.random() * combatUnits.length)]
-        );
-        setEnemyUnit(
-          combatEnemyUnits[Math.floor(Math.random() * combatEnemyUnits.length)]
-        );
+        // TODO: Implement functions for each major step eg. preCombat()
+
         // initiate combat!
         setPhase("combat");
         setSubphase("fight");
@@ -136,37 +142,24 @@ export default function Combat({
         switch (subphase) {
           case "fight":
             // chosen units attack each other
-            /* If health ends up less than zero, set to 0 for display */
             const friendlyHealthRemaining =
-              friendlyUnit.maxHealth - enemyUnit.attack;
+              friendlyUnit.currentHealth - enemyUnit.attack;
             const enemyHealthRemaining =
-              enemyUnit.maxHealth - friendlyUnit.attack;
-
-            /* FIXME: Combine the state update for selected unit and army? */
-
-            setFriendlyUnit({
-              ...friendlyUnit,
-              /* If health ends up less than zero, set to 0 for display */
-              currentHealth: Math.max(0, friendlyHealthRemaining),
-            });
-
-            setEnemyUnit({
-              ...enemyUnit,
-              currentHealth: Math.max(0, enemyHealthRemaining),
-            });
+              enemyUnit.currentHealth - friendlyUnit.attack;
 
             // update army with new unit health
             setCombatUnits(
+              // find the chosen unit in the "main" array
               combatUnits.map((unit) => {
-                // if id matches the currently selected unit, change its health
-                if (unit.id === friendlyUnit.id) {
+                if (unit === friendlyUnit) {
                   return {
-                    // if so, change that unit's health/health accordingly
+                    // change that unit's health
                     ...unit,
+                    /* If health ends up less than zero, set to 0 for display */
                     currentHealth: Math.max(0, friendlyHealthRemaining),
                   };
                 } else {
-                  // if not, don't change anything
+                  // don't change the health of any other units
                   return unit;
                 }
               })
@@ -175,7 +168,7 @@ export default function Combat({
             // set new enemy unit health
             setCombatEnemyUnits(
               combatEnemyUnits.map((unit) => {
-                if (unit.id === enemyUnit.id) {
+                if (unit === enemyUnit) {
                   return {
                     ...unit,
                     currentHealth: Math.max(0, enemyHealthRemaining),
@@ -186,29 +179,21 @@ export default function Combat({
               })
             );
 
-            setSubphase("resolve");
-            break;
-          case "resolve":
-            // if the unit has no health
-            if (friendlyUnit.currentHealth === 0) {
-              // remove it from their pool
-              setCombatUnits(
-                combatUnits.filter((unit) => unit.id !== friendlyUnit.id)
-              );
-            }
-            if (enemyUnit.currentHealth === 0) {
-              setCombatEnemyUnits(
-                combatEnemyUnits.filter((unit) => unit.id !== enemyUnit.id)
-              );
-            }
+            // TODO: If health===0 set a Skull symbol! (go to UnitTile and set if health === 0 then add skull)
+            // TODO: Add in animation for units attacking each other
+
             setSubphase("victoryCheck");
             break;
 
           // return the unit to the army and pick a new one, or not
           case "victoryCheck":
-            if (combatUnits.length === 0 || combatEnemyUnits.length === 0) {
+            if (
+              friendlyUnitsRemaining.length === 0 ||
+              enemyUnitsRemaining.length === 0
+            ) {
               // if an army was defeated, end combat
 
+              // TODO: See below
               // calculate all the stats to present on next screen, such as...
               // number of units defeated
               // number of units lost
@@ -219,13 +204,16 @@ export default function Combat({
             } else {
               // if both armies remain, select new units
               setFriendlyUnit(
-                combatUnits[Math.floor(Math.random() * combatUnits.length)]
-              );
-              setEnemyUnit(
-                combatEnemyUnits[
-                  Math.floor(Math.random() * combatEnemyUnits.length)
+                friendlyUnitsRemaining[
+                  Math.floor(Math.random() * friendlyUnitsRemaining.length)
                 ]
               );
+              setEnemyUnit(
+                enemyUnitsRemaining[
+                  Math.floor(Math.random() * enemyUnitsRemaining.length)
+                ]
+              );
+
               setSubphase("fight");
             }
             break;
@@ -233,8 +221,8 @@ export default function Combat({
         break;
       case "post":
         /* TODO: Hook up "Return to Planning" button here? */
-        setMyUnits(combatUnits);
-        setEnemyUnits(combatEnemyUnits);
+        setMyUnits(friendlyUnitsRemaining);
+        setEnemyUnits(enemyUnitsRemaining);
 
         switchPhase();
         break;
@@ -319,18 +307,14 @@ export default function Combat({
                 buttonText="Fight"
                 onClick={() => combatMegaFunction()}
               />
-            ) : phase === "combat" && subphase === "resolve" ? (
-              <CombatButton
-                buttonText="Resolve"
-                onClick={() => combatMegaFunction()}
-              />
             ) : (
               phase === "combat" &&
               subphase === "victoryCheck" && (
                 /* FIXME: Make name depend on state of army (select, summary, etc) */
                 <CombatButton
                   buttonText={
-                    combatUnits.length === 0 || combatEnemyUnits.length === 0
+                    friendlyUnitsRemaining.length === 0 ||
+                    enemyUnitsRemaining.length === 0
                       ? "Summary"
                       : "Again!"
                   }

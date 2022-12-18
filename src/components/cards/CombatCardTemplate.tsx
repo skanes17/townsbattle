@@ -15,7 +15,7 @@ export default function CombatCardTemplate({
   subphase,
 }: CombatCardTemplateProps) {
   let fightAnimation;
-  if (subphase === "resolve") {
+  if (subphase === "victoryCheck") {
     fightAnimation = "animate-[jiggleRight 0.25s linear 1]";
   }
 

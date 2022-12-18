@@ -11,7 +11,9 @@ interface UnitTileProps {
 export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
   const percentHealth = (unit.currentHealth / unit.maxHealth) * 100;
   let healthWidth, healthBarColor, hoverBorder, borderWidth, borderColor;
-  if (percentHealth <= 5) {
+  if (percentHealth === 0) {
+    healthWidth = "w-0";
+  } else if (percentHealth <= 5) {
     healthWidth = "w-[5%]";
   } else if (percentHealth <= 10) {
     healthWidth = "w-[10%]";
@@ -67,6 +69,7 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
       >
         <div className="pb-1 text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl">
           {unit.nameSymbol}
+          {/* TODO: Skull overlay here! */}
         </div>
         <div
           className={`h-2 ${healthWidth} ${healthBarColor} rounded-sm`}
