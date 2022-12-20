@@ -1,11 +1,11 @@
 import React from "react";
 import { BaseUnit } from "../../types/BaseUnit";
-import { UnitsInTraining } from "../../types/UnitInTraining";
+import { UnitCounts } from "../../types/UnitCounts";
 
 interface UnitInTrainingProps {
   BASE_UNIT_DATA: BaseUnit;
   unitType: "melee" | "pewpew" | "tanky";
-  unitsInTraining: UnitsInTraining;
+  unitsInTraining: UnitCounts;
 }
 
 export default function UnitInTraining({

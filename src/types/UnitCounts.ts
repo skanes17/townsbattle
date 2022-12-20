@@ -12,4 +12,4 @@ export interface CombatUnitCounts {
   total: number;
 }
 
-/* TODO: Make this more efficient by using a union or similar */
+/* TODO: Make this more efficient by using a union? Extends? */

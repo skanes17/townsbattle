@@ -1,5 +1,3 @@
-// TODO: Incorporate something like "pick" for freeworkers here?
-// TODO: Improve this type? Make it more dyanmic, less prescriptive?
 export interface Resources {
   freeworkers: {
     collected: number;
@@ -39,24 +37,23 @@ export interface Resources {
   };
 }
 
-/* FIXME: Incorporate the following but fix the associated error in <Game/> */
-/* 
+/* FIXME: Incorporate the following refactoring but fix the associated error in <Game/> */
 // TODO: Continue to improve this type, make it more dynamic, less prescriptive
 
-export interface Resources {
-  freeworkers: Freeworker;
-  wood: Resource;
-  stone: Resource;
-  metal: Resource;
-}
+/* type ResourceName = "Freeworker" | "Wood" | "Stone" | "Metal";
+type ResourceSymbol = "🛠️" | "🪵" | "🪨" | "🔩";
+type WorkerName = "Woodcutters" | "Stonemasons" | "Metalworkers";
+type WorkerType = "woodcutters" | "stonemasons" | "metalworkers";
+type WorkerSymbol = "🪓" | "⚒️" | "🥽";
+
 interface Resource {
   collected: number;
-  name: string;
-  resourceSymbol: ResourceSymbol;
+  name: "Freeworker" | "Wood" | "Stone" | "Metal";
+  resourceSymbol: "🛠️" | "🪵" | "🪨" | "🔩";
   workers: number;
-  workerName: string;
-  workerType: string;
-  workerSymbol: WorkerSymbol;
+  workerName: "Woodcutters" | "Stonemasons" | "Metalworkers";
+  workerType: "woodcutters" | "stonemasons" | "metalworkers";
+  workerSymbol: "🪓" | "⚒️" | "🥽";
   description: string;
 }
 
@@ -65,6 +62,9 @@ type Freeworker = Pick<
   "collected" | "name" | "resourceSymbol" | "description"
 >;
 
-type ResourceSymbol = "🪵" | "🪨" | "🔩";
-type WorkerSymbol = "🪓" | "⚒️" | "🥽";
- */
+export interface Resources {
+  freeworkers: Freeworker;
+  wood: Resource;
+  stone: Resource;
+  metal: Resource;
+} */

@@ -1,8 +1,9 @@
 export type UnitType = "melee" | "pewpew" | "tanky";
+export type UnitName = "Melee" | "Pewpew" | "Tanky";
 
 export interface Unit {
   unitType: UnitType;
-  name: "Melee" | "Pewpew" | "Tanky";
+  name: UnitName;
   nameSymbol: "⚔️" | "🏹" | "🛡️";
   description?: string;
   attack: number;

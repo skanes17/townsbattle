@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { BaseUnit } from "../../types/BaseUnit";
 import { Resources } from "../../types/Resources";
 import { UnitCosts } from "../../types/UnitCosts";
-import { UnitsInTraining } from "../../types/UnitInTraining";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import CardTemplate from "./CardTemplate";
@@ -10,6 +9,7 @@ import HorizLine3ColGrid from "./HorizLine3ColGrid";
 import AddRemoveButton from "../buttons/AddRemoveButton";
 import TrainUnitCardHeader from "./TrainUnitCardHeader";
 import CardDescription from "./CardDescription";
+import { UnitCounts } from "../../types/UnitCounts";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
@@ -17,7 +17,7 @@ export interface TrainUnitCardProps {
   resources: Resources;
   setResources: any;
   unitCosts: UnitCosts;
-  unitsInTraining: UnitsInTraining;
+  unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
   // TODO: Use more Types like this
   addTrainingUnit: (unitType: any, friendly: boolean) => void;

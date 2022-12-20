@@ -9,7 +9,6 @@ import { UpgradeCosts } from "../types/UpgradeCosts";
 import { TrainingUnit, Unit, UnitType } from "../types/Unit";
 import DevTools from "./devTools/DevTools";
 import { Resources } from "../types/Resources";
-import { UnitsInTraining } from "../types/UnitInTraining";
 import { UnitCounts } from "../types/UnitCounts";
 import { BaseUnit } from "../types/BaseUnit";
 import DisplayBuildings from "./planning/DisplayBuildings";
@@ -398,7 +397,7 @@ export default function Game(props: GameProps) {
 
   // How many units you're going to train this turn
   // TODO: How to make this dynamic based on base units?
-  const unitsInTraining: UnitsInTraining = {
+  const unitsInTraining: UnitCounts = {
     melee: myTrainingUnits.filter((unit) => unit.unitType === "melee").length,
     pewpew: myTrainingUnits.filter((unit) => unit.unitType === "pewpew").length,
     tanky: myTrainingUnits.filter((unit) => unit.unitType === "tanky").length,

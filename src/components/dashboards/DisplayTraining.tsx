@@ -1,12 +1,12 @@
 import React from "react";
 import { BaseUnit } from "../../types/BaseUnit";
-import { UnitsInTraining } from "../../types/UnitInTraining";
+import { UnitCounts } from "../../types/UnitCounts";
 import UnitInTraining from "../planning/UnitInTraining";
 
 interface DisplayTrainingProps {
   BASE_UNIT_DATA: BaseUnit;
   unitTypes: string[];
-  unitsInTraining: UnitsInTraining;
+  unitsInTraining: UnitCounts;
 }
 
 export default function DisplayTraining({
