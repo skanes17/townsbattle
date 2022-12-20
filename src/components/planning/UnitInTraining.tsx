@@ -1,6 +1,6 @@
 import React from "react";
-import { BaseUnit } from "../types/BaseUnit";
-import { UnitsInTraining } from "../types/UnitInTraining";
+import { BaseUnit } from "../../types/BaseUnit";
+import { UnitsInTraining } from "../../types/UnitInTraining";
 
 interface UnitInTrainingProps {
   BASE_UNIT_DATA: BaseUnit;

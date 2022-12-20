@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GameProps } from "../types/GameProps";
-import BuildingsUI from "./BuildingsUI";
+import BuildingsUI from "./planning/BuildingsUI";
 import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
 import { UpgradeCosts } from "../types/UpgradeCosts";
@@ -10,11 +10,11 @@ import { Resources } from "../types/Resources";
 import { UnitsInTraining } from "../types/UnitInTraining";
 import { UnitCounts } from "../types/UnitCounts";
 import { BaseUnit } from "../types/BaseUnit";
-import DisplayBuildings from "./DisplayBuildings";
+import DisplayBuildings from "./planning/DisplayBuildings";
 import DisplayResources from "./dashboards/DisplayResources";
 import DisplayUnitCounts from "./dashboards/DisplayUnitCounts";
 import WorkerCardContainer from "./cards/WorkerCardContainer";
-import ConstructBuilding from "./ConstructBuilding";
+import ConstructBuilding from "./planning/ConstructBuilding";
 import DisplayTraining from "./dashboards/DisplayTraining";
 import townCenter from "../images/town-center.png";
 import TrainingCardContainer from "./cards/TrainingCardContainer";
@@ -23,7 +23,6 @@ import Button from "./buttons/Button";
 import DisplayUnderConstruction from "./dashboards/DisplayUnderConstruction";
 import Combat from "./combat/Combat";
 
-// TODO: Have a pre-battle screen to summarize what you have?
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
 
 // TODO: Call a function to add a set number of enemy units per turn

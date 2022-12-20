@@ -1,5 +1,7 @@
 import React from "react";
 
+// TODO: Consolidate this component with AddResourceButton, AddUnitButton
+
 interface AddUnitButtonProps {
   addEnemyUnit: any;
   unitType: string;

@@ -1,7 +1,7 @@
 import React from "react";
 import { BaseUnit } from "../../types/BaseUnit";
 import { UnitsInTraining } from "../../types/UnitInTraining";
-import UnitInTraining from "../UnitInTraining";
+import UnitInTraining from "../planning/UnitInTraining";
 
 interface DisplayTrainingProps {
   BASE_UNIT_DATA: BaseUnit;
