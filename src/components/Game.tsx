@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { GameProps } from "../types/GameProps";
+import { resourceData } from "../gameData/resources";
+import { baseUnitData, unitCostsData } from "../gameData/units";
 import BuildingsUI from "./planning/BuildingsUI";
 import { UnitCosts } from "../types/UnitCosts";
 import { Buildings } from "../types/Buildings";
@@ -16,12 +18,13 @@ import DisplayUnitCounts from "./dashboards/DisplayUnitCounts";
 import WorkerCardContainer from "./cards/WorkerCardContainer";
 import ConstructBuilding from "./planning/ConstructBuilding";
 import DisplayTraining from "./dashboards/DisplayTraining";
-import townCenter from "../images/town-center.png";
 import TrainingCardContainer from "./cards/TrainingCardContainer";
 import FlexWrapContainer from "./FlexWrapContainer";
 import Button from "./buttons/Button";
 import DisplayUnderConstruction from "./dashboards/DisplayUnderConstruction";
 import Combat from "./combat/Combat";
+import { buildingsData } from "../gameData/buildings";
+import { upgradesData } from "../gameData/upgrades";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -37,289 +40,62 @@ export default function Game(props: GameProps) {
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
+  const [inCombat, setInCombat] = useState(false);
 
-  // NEW RESOURCE STRUCTURE
-  // TODO: Check Typing on this resource to make more flexible
-  const [resources, setResources] = useState<Resources>({
-    freeworkers: {
-      collected: 5,
-      name: "Freeworker",
-      resourceSymbol: "🛠️",
-      description:
-        "Used when gathering resources, training untis, and constructing buildings",
-    },
-    wood: {
-      collected: 0,
-      name: "Wood",
-      resourceSymbol: "🪵",
-      workers: 0,
-      workerName: "Woodcutters",
-      workerType: "woodcutters",
-      workerSymbol: "🪓",
-      description: "Collects 1 wood.",
-    },
-    stone: {
-      collected: 0,
-      name: "Stone",
-      resourceSymbol: "🪨",
-      workers: 0,
-      workerName: "Stonemasons",
-      workerType: "stonemasons",
-      workerSymbol: "⚒️",
-      description: "Collects 1 stone.",
-    },
-    metal: {
-      collected: 0,
-      name: "Metal",
-      resourceSymbol: "🔩",
-      workers: 0,
-      workerName: "Metalworkers",
-      workerType: "metalworkers",
-      workerSymbol: "🥽",
-      description: "Collects 1 metal.",
-    },
-  });
-
-  // FIXME: Remove this kind of things now that resources are refactored
-  /* const resourceTypes = Object.keys(resources).filter(
-    (key) => key != "freeworkers"
-  ); */
-  const resourceTypes = Object.keys(resources);
-
-  const BASE_FREEWORKER_COUNT: number = 5;
-
-  // current number of new workers per turn can increase over time
   // TODO: Add food? And/or some resource common to all unit building?
+  // Idea: Freeworkers are consumed when used for making units...
+  // ... but introduce a gold economy which is used for building stuff along with resources
+  // .. then you need to choose between basic resources AND gold every turn
+  // maybe freeworkers aren't guaranteed every turn??
+  // set number per turn, and a new building adds new ones per turn?
 
+  /* ===RESOURCES AND WORKERS=== */
+  const [resources, setResources] = useState<Resources>(resourceData);
+  const resourceTypes = Object.keys(resources);
+  // # of resources harvested per worker
+  const [resourceMultipliers, setResourceMultipliers] = useState({
+    wood: 1,
+    stone: 1,
+    metal: 1,
+  });
+  // number of workers at start of game (turn 1)
+  const BASE_FREEWORKER_COUNT: number = 5;
+  // number of new workers per turn increases over time
   const [newWorkers, setNewWorkers] = useState(1);
 
-  // multipliers determine # of resources harvested per worker
-  const [woodMultiplier, setWoodMultipler] = useState(1);
-  const [stoneMultiplier, setStoneMultipler] = useState(1);
-  const [metalMultiplier, setMetalMultipler] = useState(1);
-
-  const [unitCosts, setUnitCosts] = useState<UnitCosts>({
-    melee: {
-      wood: 2,
-      stone: 2,
-      metal: 0,
-      freeworkers: 1,
-    },
-    pewpew: {
-      wood: 2,
-      stone: 0,
-      metal: 2,
-      freeworkers: 1,
-    },
-    tanky: {
-      wood: 0,
-      stone: 2,
-      metal: 2,
-      freeworkers: 1,
-    },
-  });
-
-  const [buildings, setBuildings] = useState<Buildings>({
-    // for melee
-    swordsmithy: {
-      name: "Swordsmithy",
-      nameSymbol: "🗡️",
-      underConstruction: false,
-      constructed: false,
-      tier: 1,
-      attackBonus: 2,
-      healthBonus: 2,
-      description: "Melee units gain +2 to attack, +2 to health.",
-      health: 2,
-      woodCost: 10,
-      stoneCost: 10,
-      metalCost: 0,
-      freeworkerCost: 5,
-    },
-    // for pewpew
-    archeryRange: {
-      name: "Archery Range",
-      nameSymbol: "🎯",
-      underConstruction: false,
-      constructed: false,
-      tier: 1,
-      attackBonus: 3,
-      healthBonus: 1,
-      description: "Pewpew units gain +3 to attack, +1 to health.",
-      health: 2,
-      woodCost: 10,
-      stoneCost: 0,
-      metalCost: 10,
-      freeworkerCost: 5,
-    },
-    // for tanky
-    armorsmithy: {
-      name: "Armorsmithy",
-      nameSymbol: "🛡️",
-      underConstruction: false,
-      constructed: false,
-      tier: 1,
-      attackBonus: 1,
-      healthBonus: 3,
-      description: "Tanky units gain +1 to attack, +3 to health.",
-      health: 2,
-      woodCost: 0,
-      stoneCost: 10,
-      metalCost: 10,
-      freeworkerCost: 5,
-    },
-    // for all units
-    mealHall: {
-      name: "Meal Hall",
-      nameSymbol: "🍖",
-      underConstruction: false,
-      constructed: false,
-      tier: 1,
-      attackBonus: 0,
-      healthBonus: 2,
-      armorBonus: 0,
-      description: "All units gain +2 to health, +2 to armor.",
-      health: 2,
-      woodCost: 10,
-      stoneCost: 10,
-      metalCost: 10,
-      freeworkerCost: 5,
-    },
-    // for all units
-    townCenter: {
-      name: "Town Center",
-      nameSymbol: "🏙️",
-      imageSrc: townCenter,
-      underConstruction: false,
-      constructed: true,
-      tier: 1,
-      attackBonus: 0,
-      description: "If this building is destroyed it's game over!",
-      healthBonus: 0,
-      health: 3,
-      woodCost: 0,
-      stoneCost: 0,
-      metalCost: 0,
-      freeworkerCost: 0,
-    },
-    scoutingPost: {
-      name: "Scouting Post",
-      nameSymbol: "🔍",
-      underConstruction: false,
-      constructed: false,
-      tier: 1,
-      attackBonus: 0,
-      description: "Upgrade intel on the enemy army.",
-      healthBonus: 0,
-      health: 2,
-      woodCost: 15,
-      stoneCost: 15,
-      metalCost: 15,
-      freeworkerCost: 10,
-    },
-  });
-
+  /* ===BUILDINGS=== */
+  const [buildings, setBuildings] = useState<Buildings>(buildingsData);
   const buildingsUnderConstruction = Object.keys(buildings).filter(
     (key) => buildings[key].underConstruction
   );
-
   const buildingsToConstruct = Object.keys(buildings).filter(
     (key) => !buildings[key].constructed
   );
 
+  /* ===UPGRADES=== */
   // Unused right now
-  const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>({
-    axes: {
-      woodCost: 20,
-      stoneCost: 20,
-      metalCost: 0,
-    },
-    pickaxes: {
-      woodCost: 20,
-      stoneCost: 0,
-      metalCost: 20,
-    },
-    surveying: {
-      woodCost: 0,
-      stoneCost: 20,
-      metalCost: 20,
-    },
-  });
+  const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>(upgradesData);
 
+  /* ===UNITS=== */
+  const [unitCosts, setUnitCosts] = useState<UnitCosts>(unitCostsData);
   // ids for tracking units
   const [unitId, setUnitId] = useState(0);
-
+  // friendly army
   const [myUnits, setMyUnits] = useState<Unit[]>([]);
-
   // constant NOT used here so I could clear training each turn
   const [myTrainingUnits, setMyTrainingUnits] = useState<TrainingUnit[]>([]);
-
   // placeholder enemy array for testing
-  const [enemyUnits, setEnemyUnits] = useState<Unit[]>([
-    /* 
-    {
-      unitType: "melee",
-      name: "Melee",
-      nameSymbol: "⚔️",
-      attack: 5,
-      maxHealth: 5,
-      currentHealth: 5,
-      id: 0,
-    },
-    {
-      unitType: "pewpew",
-      name: "Pewpew",
-      nameSymbol: "🏹",
-      attack: 7,
-      maxHealth: 3,
-      currentHealth: 3,
-      id: 1,
-    },
-    {
-      unitType: "tanky",
-      name: "Tanky",
-      nameSymbol: "🛡️",
-      attack: 3,
-      maxHealth: 7,
-      currentHealth: 7,
-      id: 2,
-    },
-   */
-  ]);
-
+  const [enemyUnits, setEnemyUnits] = useState<Unit[]>([]);
   // ===BASE STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
-  const BASE_UNIT_DATA: BaseUnit = {
-    melee: {
-      unitType: "melee",
-      name: "Melee",
-      nameSymbol: "⚔️",
-      description: "Attack and health are roughly balanced.",
-      attack: 6,
-      maxHealth: 10,
-    },
-    pewpew: {
-      unitType: "pewpew",
-      name: "Pewpew",
-      nameSymbol: "🏹",
-      description: "Great attack but not much health.",
-      attack: 9,
-      maxHealth: 7,
-    },
-    tanky: {
-      unitType: "tanky",
-      name: "Tanky",
-      nameSymbol: "🛡️",
-      description: "Low attack but lots of health.",
-      attack: 4,
-      maxHealth: 15,
-    },
-  };
-
+  // FIXME: TypeScript yelling about incompatibility
+  /* @ts-ignore */
+  const BASE_UNIT_DATA: BaseUnit = baseUnitData;
   const unitTypes = Object.keys(BASE_UNIT_DATA);
 
-  // Function to ADD units to either army
+  /* ===FUNCTIONS=== */
+  // ADD units to either army
   const addTrainingUnit = (unitType: string, friendly: boolean) => {
     // unitType determines which unit to add
     // shorthand used for object
@@ -335,14 +111,9 @@ export default function Game(props: GameProps) {
       /* @ts-ignore */
       setMyTrainingUnits((myTrainingUnits) => [...myTrainingUnits, _newUnit]);
     }
-    // Following code could be used for enemy unit training
-    /* else {
-      setEnemyUnits((enemyUnits) => {
-        return [...enemyUnits, _newUnit];
-      });
-    } */
   };
 
+  // REMOVE units from either army
   const removeTrainingUnit = (unitType: string, friendly: boolean) => {
     if (friendly) {
       const _myTrainingUnitsCopy = [...myTrainingUnits];
@@ -351,26 +122,14 @@ export default function Game(props: GameProps) {
       const _unitIndex = _myTrainingUnitsCopy.findIndex(
         (unit) => unit.unitType === unitType
       );
-
       // remove that unit from the array
       _myTrainingUnitsCopy.splice(_unitIndex, 1);
       setMyTrainingUnits([..._myTrainingUnitsCopy]);
     }
-    // Following code could be used for enemy unit training
-    /* else {
-      const _enemyUnitsCopy = [...enemyUnits];
-      
-      const _unitIndex = _enemyUnitsCopy.findIndex(unit => unit.unitType===unitTypeString)
-
-      // remove that unit from the array
-      _enemyUnitsCopy.splice(_unitIndex,1);
-      setEnemyUnits([..._enemyUnitsCopy]);
-    } */
   };
 
-  /*====================================
-  ========DEV TOOLS TO ADD UNITS========
-  =====================================*/
+  /* ===DEV TOOLS=== */
+  // add friendly/enemy units
   const addUnit = (unitType: string, friendly: boolean) => {
     // unitType determines which unit to add
     const baseUnit = BASE_UNIT_DATA[unitType];
@@ -399,9 +158,7 @@ export default function Game(props: GameProps) {
     setUnitId(unitId + 1);
   };
 
-  /*====================================
-  ======DEV TOOLS TO ADD RESOURCES======
-  =====================================*/
+  //add resources
   const addResource = (resourceType: string) => {
     //@ts-ignore
     const selectedResource = resources[resourceType];
@@ -415,41 +172,8 @@ export default function Game(props: GameProps) {
     setResources(updatedResources);
   };
 
-  // Function to REMOVE units from either army
-  // TODO: Fix having to use the unitTypeString workaround
-  /* const removeUnit = (unitTypeString: string, friendly: boolean) => {
-    if (friendly) {
-      // if friendly, update friendly army
-      //@ts-ignore
-      const chosenId = myUnits.find(
-        (unit) => unit.unitType === unitTypeString
-      ).id;
-
-      // FILTER OUT that unit from the array
-      setMyUnits(myUnits.filter((unit) => unit.id !== chosenId));
-    } else {
-      // if not friendly, update enemy army
-      //@ts-ignore
-      const chosenId = enemyUnits.find(
-        (unit) => unit.unitType === unitTypeString
-      ).id;
-
-      setEnemyUnits(myUnits.filter((unit) => unit.id !== chosenId));
-    }
-  }; */
-  /*====================================
-  ===========END OF DEV TOOLS===========
-  =====================================*/
-
-  // TODO: Ideas for battle UI below...
-  // • start a log to display what's happening
-  // • this could exist in its own side div eventually, and show:
-  // • which units were selected...
-  // • atk/def stats
-  // • state friendly and enemy damage taken and remaining health
-  // • ideally UI would show both healths reduced at once
-  // • when damage is taken should be, at minimum, a little red text animation
-
+  // TODO: Delete unitBattler function when Combat component is complete
+  // Currently being used as a reference
   const unitBattler = () => {
     const myUnitsCopy = [...myUnits];
     const enemyUnitsCopy = [...enemyUnits];
@@ -465,12 +189,10 @@ export default function Game(props: GameProps) {
     if (myUnitsCopy.length === 0) {
       alert("Your army was defeated. Your buildings took damage!");
       return;
-      // TODO: Make this return to Planning mode
     }
     if (enemyUnitsCopy.length === 0) {
       alert("Enemy army defeated. You won the battle!");
       return;
-      // TODO: Make this return to Planning mode
     }
 
     // select a random unit from the arrays
@@ -586,6 +308,45 @@ export default function Game(props: GameProps) {
 
   // ===END OF COMBAT MECHANICS===
 
+  const collectResources = (resourcesCopy: Resources) => {
+    // TODO: Make this dynamic based on existing resources
+    resourcesCopy["wood"].collected =
+      resources["wood"].collected +
+      resources["wood"].workers * resourceMultipliers.wood;
+    resourcesCopy["stone"].collected =
+      resources["stone"].collected +
+      resources["stone"].workers * resourceMultipliers.stone;
+    resourcesCopy["metal"].collected =
+      resources["metal"].collected +
+      resources["metal"].workers * resourceMultipliers.metal;
+  };
+
+  const calculateFreeworkers = (resourcesCopy: Resources) => {
+    // calculate freeworkers for next turn
+    resourcesCopy["freeworkers"].collected = BASE_FREEWORKER_COUNT + newWorkers;
+    setNewWorkers(newWorkers + 1);
+  };
+
+  const resetWorkers = (resourcesCopy: Resources) => {
+    // reset workers
+    resourcesCopy["wood"].workers = 0;
+    resourcesCopy["stone"].workers = 0;
+    resourcesCopy["metal"].workers = 0;
+  };
+
+  const buildingConstructor = (buildingsCopy: Buildings) => {
+    // determine which buildings were under construction
+    const newBuildings = Object.keys(buildings).filter(
+      (key) => buildings[key].underConstruction
+    );
+
+    // take them out of construction and set them to constructed
+    newBuildings.map((buildingType) => {
+      buildingsCopy[buildingType].underConstruction = false;
+      buildingsCopy[buildingType].constructed = true;
+    });
+  };
+
   const endTurn = () => {
     /* @ts-ignore */
     if (resources["freeworkers"].collected > 0) {
@@ -593,45 +354,18 @@ export default function Game(props: GameProps) {
       return;
     }
 
+    // copy resources to preserve state
     const resourcesCopy = { ...resources };
-    console.log(resourcesCopy);
 
-    // TODO: Make this dynamic based on existing resources
-
-    resourcesCopy["wood"].collected =
-      resources["wood"].collected + resources["wood"].workers * woodMultiplier;
-    resourcesCopy["stone"].collected =
-      resources["stone"].collected +
-      resources["stone"].workers * stoneMultiplier;
-    resourcesCopy["metal"].collected =
-      resources["metal"].collected +
-      resources["metal"].workers * metalMultiplier;
-
-    // calculate freeworkers for next turn
-    resourcesCopy["freeworkers"].collected = BASE_FREEWORKER_COUNT + newWorkers;
-    setNewWorkers(newWorkers + 1);
-
-    // reset workers
-    resourcesCopy["wood"].workers = 0;
-    resourcesCopy["stone"].workers = 0;
-    resourcesCopy["metal"].workers = 0;
-
+    collectResources(resourcesCopy);
+    calculateFreeworkers(resourcesCopy);
+    resetWorkers(resourcesCopy);
     setResources(resourcesCopy);
 
-    // make an array of which buildings were set to construct
-    const newBuildings = Object.keys(buildings).filter(
-      (key) => buildings[key].underConstruction
-    );
     // copy buildings to preserve state
     const buildingsCopy = { ...buildings };
-
-    // take them out of construction and set them to constructed
-    newBuildings.map((buildingType) => {
-      buildingsCopy[buildingType].underConstruction = false;
-      buildingsCopy[buildingType].constructed = true;
-    });
-
-    // TODO: Ask why this can be removed and apparently still work properly
+    buildingConstructor(buildingsCopy);
+    // FIXME: Why can this be removed and apparently still work properly??
     setBuildings(buildingsCopy);
 
     // Train Units Process
@@ -644,29 +378,26 @@ export default function Game(props: GameProps) {
       return {
         ..._unit,
         currentHealth: _unit.maxHealth,
-        id, // shorthand if key = value
+        id, // shorthand for when key = value
       };
     });
 
     // bring all the training units into the main army
     setMyUnits((myUnits) => [...myUnits, ...units]);
+    // update ID state accordingly
     setUnitId(id);
-
     // reset units in training back to zero
     setMyTrainingUnits([]);
-
     // increment turn
     setTurn(turn + 1);
   };
-
-  const [inCombat, setInCombat] = useState(false);
 
   const switchPhase = () => {
     setInCombat(!inCombat);
   };
 
+  // How many units you're going to train this turn
   // TODO: How to make this dynamic based on base units?
-  // how many units you're going to train this turn
   const unitsInTraining: UnitsInTraining = {
     melee: myTrainingUnits.filter((unit) => unit.unitType === "melee").length,
     pewpew: myTrainingUnits.filter((unit) => unit.unitType === "pewpew").length,

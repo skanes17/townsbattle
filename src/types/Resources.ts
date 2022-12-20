@@ -1,5 +1,5 @@
 // TODO: Incorporate something like "pick" for freeworkers here?
-
+// TODO: Improve this type? Make it more dyanmic, less prescriptive?
 export interface Resources {
   freeworkers: {
     collected: number;

@@ -224,7 +224,6 @@ export default function Combat({
   const combatMegaFunction = () => {
     switch (phase) {
       case "pre":
-        // TODO: Implement functions for each major step eg. preCombat()
         setPhase("combat");
         setSubphase("fight");
         break;
@@ -236,14 +235,13 @@ export default function Combat({
             setSubphase("victoryCheck");
             break;
 
-          // return the unit to the army and pick a new one, or not
           case "victoryCheck":
+            // return the unit to the army and pick a new one, or not
+            // if an army was defeated, end combat
             if (
               survivingFriendlyUnitIndexes.length === 0 ||
               survivingEnemyUnitIndexes.length === 0
             ) {
-              // if an army was defeated, end combat
-
               // TODO: See below
               // calculate all the stats to present on next screen, such as...
               // number of units defeated
