@@ -39,22 +39,32 @@ export interface Resources {
   };
 }
 
-// TODO: How to define shape of an object like this?
+/* FIXME: Incorporate the following but fix the associated error in <Game/> */
+/* 
+// TODO: Continue to improve this type, make it more dynamic, less prescriptive
 
-/*
-resources = {
-  freeworkers: 5,
-  wood: {
-    collected: 0,
-    workers: 0
-  },
-  stone: {
-    collected: 0,
-    workers: 0
-  },
-  metal: {
-    collected: 0,
-    workers: 0
-  }
-};
-*/
+export interface Resources {
+  freeworkers: Freeworker;
+  wood: Resource;
+  stone: Resource;
+  metal: Resource;
+}
+interface Resource {
+  collected: number;
+  name: string;
+  resourceSymbol: ResourceSymbol;
+  workers: number;
+  workerName: string;
+  workerType: string;
+  workerSymbol: WorkerSymbol;
+  description: string;
+}
+
+type Freeworker = Pick<
+  Resource,
+  "collected" | "name" | "resourceSymbol" | "description"
+>;
+
+type ResourceSymbol = "🪵" | "🪨" | "🔩";
+type WorkerSymbol = "🪓" | "⚒️" | "🥽";
+ */

@@ -1,5 +1,3 @@
-import UnitCount from "../components/planning/UnitCount";
-
 export type UnitType = "melee" | "pewpew" | "tanky";
 
 export interface Unit {
