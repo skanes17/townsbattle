@@ -23,6 +23,8 @@ import Button from "./buttons/Button";
 import DisplayUnderConstruction from "./dashboards/DisplayUnderConstruction";
 import Combat from "./combat/Combat";
 
+// FIXME: Many areas/lists don't have a unique key/id.
+
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
 
 // TODO: Call a function to add a set number of enemy units per turn

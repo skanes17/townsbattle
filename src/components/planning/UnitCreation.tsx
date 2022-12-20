@@ -1,9 +1,9 @@
-import { BaseUnit } from "../types/BaseUnit";
-import { Resources } from "../types/Resources";
-import { Unit } from "../types/Unit";
-import { UnitCosts } from "../types/UnitCosts";
-import { UnitsInTraining } from "../types/UnitInTraining";
-import TrainUnitCard from "./cards/TrainUnitCard";
+import { BaseUnit } from "../../types/BaseUnit";
+import { Resources } from "../../types/Resources";
+import { Unit } from "../../types/Unit";
+import { UnitCosts } from "../../types/UnitCosts";
+import { UnitsInTraining } from "../../types/UnitInTraining";
+import TrainUnitCard from "../cards/TrainUnitCard";
 
 interface UnitCreationProps {
   unitCosts: UnitCosts;

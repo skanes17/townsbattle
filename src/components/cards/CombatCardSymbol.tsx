@@ -1,6 +1,5 @@
 import React from "react";
 import { Unit } from "../../types/Unit";
-import UnitCount from "../planning/UnitCount";
 
 interface CombatCardSymbolProps {
   unit: Unit;

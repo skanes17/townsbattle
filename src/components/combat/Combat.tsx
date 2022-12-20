@@ -139,7 +139,85 @@ export default function Combat({
     ]
   );
 
-  // FIXME: TODO: Next, remove the friendlyUnit declaration above, replace all stuff below with simply calling combatUnit[friendlyIndex]
+  const fight = () => {
+    // chosen units attack each other
+    const friendlyHealthRemaining =
+      combatUnits[friendlyIndex].currentHealth -
+      combatEnemyUnits[enemyIndex].attack;
+    const enemyHealthRemaining =
+      combatEnemyUnits[enemyIndex].currentHealth -
+      combatUnits[friendlyIndex].attack;
+
+    // update army with new unit health
+    setCombatUnits(
+      // find the chosen unit in the "main" array
+      combatUnits.map((unit, i) => {
+        if (i === friendlyIndex) {
+          return {
+            // change that unit's health
+            ...unit,
+            /* If health ends up less than zero, set to 0 for display */
+            currentHealth: Math.max(0, friendlyHealthRemaining),
+          };
+        } else {
+          // don't change the health of any other units
+          return unit;
+        }
+      })
+    );
+
+    // set new enemy unit health
+    setCombatEnemyUnits(
+      combatEnemyUnits.map((unit, i) => {
+        if (i === enemyIndex) {
+          return {
+            ...unit,
+            currentHealth: Math.max(0, enemyHealthRemaining),
+          };
+        } else {
+          return unit;
+        }
+      })
+    );
+  };
+
+  const selectNewUnits = () => {
+    // if both armies remain, select new units
+    setFriendlyIndex(
+      survivingFriendlyUnitIndexes[
+        Math.floor(Math.random() * survivingFriendlyUnitIndexes.length)
+      ]
+    );
+    setEnemyIndex(
+      survivingEnemyUnitIndexes[
+        Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
+      ]
+    );
+  };
+
+  const sendArmiesToPlanning = () => {
+    // send all all surviving units back to planning
+    setMyUnits(
+      combatUnits
+        .map((unit) => {
+          if (unit.currentHealth !== 0) {
+            return unit;
+          }
+        })
+        .filter((unit) => unit !== undefined)
+    );
+
+    // probably unnecessary at this phase but keeping it anyway; can't hurt?
+    setEnemyUnits(
+      combatEnemyUnits
+        .map((unit) => {
+          if (unit.currentHealth !== 0) {
+            return unit;
+          }
+        })
+        .filter((unit) => unit !== undefined)
+    );
+  };
 
   // TODO: If you have no units upon combat:
   // immediately go to post; buildings are damaged accordingly
@@ -147,57 +225,14 @@ export default function Combat({
     switch (phase) {
       case "pre":
         // TODO: Implement functions for each major step eg. preCombat()
-
-        // initiate combat!
         setPhase("combat");
         setSubphase("fight");
         break;
       case "combat":
         switch (subphase) {
           case "fight":
-            // chosen units attack each other
-            const friendlyHealthRemaining =
-              combatUnits[friendlyIndex].currentHealth -
-              combatEnemyUnits[enemyIndex].attack;
-            const enemyHealthRemaining =
-              combatEnemyUnits[enemyIndex].currentHealth -
-              combatUnits[friendlyIndex].attack;
-
-            // update army with new unit health
-            setCombatUnits(
-              // find the chosen unit in the "main" array
-              combatUnits.map((unit, i) => {
-                if (i === friendlyIndex) {
-                  return {
-                    // change that unit's health
-                    ...unit,
-                    /* If health ends up less than zero, set to 0 for display */
-                    currentHealth: Math.max(0, friendlyHealthRemaining),
-                  };
-                } else {
-                  // don't change the health of any other units
-                  return unit;
-                }
-              })
-            );
-
-            // set new enemy unit health
-            setCombatEnemyUnits(
-              combatEnemyUnits.map((unit, i) => {
-                if (i === enemyIndex) {
-                  return {
-                    ...unit,
-                    currentHealth: Math.max(0, enemyHealthRemaining),
-                  };
-                } else {
-                  return unit;
-                }
-              })
-            );
-
-            // TODO: If health===0 set a Skull symbol! (go to UnitTile and set if health === 0 then add skull)
+            fight();
             // TODO: Add in animation for units attacking each other
-
             setSubphase("victoryCheck");
             break;
 
@@ -218,48 +253,14 @@ export default function Combat({
 
               setPhase("post");
             } else {
-              // if both armies remain, select new units
-              setFriendlyIndex(
-                survivingFriendlyUnitIndexes[
-                  Math.floor(
-                    Math.random() * survivingFriendlyUnitIndexes.length
-                  )
-                ]
-              );
-              setEnemyIndex(
-                survivingEnemyUnitIndexes[
-                  Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
-                ]
-              );
-
+              selectNewUnits();
               setSubphase("fight");
             }
             break;
         }
         break;
       case "post":
-        // send all all surviving units back to planning
-        setMyUnits(
-          combatUnits
-            .map((unit) => {
-              if (unit.currentHealth !== 0) {
-                return unit;
-              }
-            })
-            .filter((unit) => unit !== undefined)
-        );
-
-        // probably unnecessary at this phase but keeping it anyway; can't hurt?
-        setEnemyUnits(
-          combatEnemyUnits
-            .map((unit) => {
-              if (unit.currentHealth !== 0) {
-                return unit;
-              }
-            })
-            .filter((unit) => unit !== undefined)
-        );
-
+        sendArmiesToPlanning();
         switchPhase();
         break;
     }
@@ -336,7 +337,6 @@ export default function Combat({
     setPhase("post");
   };
 
-  /* FIXME: Need a better approach! Picking through which conditional rendering is a bit tricky. */
   return (
     <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-3 p-4 md:gap-4 lg:gap-5 xl:gap-8">
       {/* ArmyGrid & CombatLog are common components to all phases */}
