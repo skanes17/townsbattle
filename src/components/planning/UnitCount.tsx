@@ -14,7 +14,7 @@ export default function UnitCount({
   unitCounts,
 }: UnitCountProps) {
   return (
-    <div>
+    <div className="hover:text-yellow-300 ">
       {BASE_UNIT_DATA[unitType].nameSymbol} {unitCounts[unitType]}
     </div>
   );

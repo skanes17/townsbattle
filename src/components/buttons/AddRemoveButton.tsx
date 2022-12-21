@@ -2,22 +2,22 @@ import React from "react";
 
 interface AddRemoveButtonProps {
   children: any;
-  buttonColor: "blue" | "red";
+  buttonType: "add" | "remove";
   onClick: () => void;
 }
 
 export default function AddRemoveButton({
   children,
-  buttonColor,
+  buttonType,
   onClick,
 }: AddRemoveButtonProps) {
   return (
     <button
-      className={`${buttonColor === "blue" ? "bg-sky-600" : "bg-red-600"} ${
-        buttonColor === "blue" ? "hover:bg-sky-700" : "hover:bg-red-700"
-      } rounded border border-gray-400 py-1 px-3 font-semibold text-white shadow`}
+      className={`${buttonType === "add" ? "bg-emerald-900" : "bg-red-900"} ${
+        buttonType === "add" ? "hover:bg-emerald-700" : "hover:bg-red-700"
+      } min-w-full rounded border border-gray-400 py-1 text-xs font-semibold text-white shadow`}
       //@ts-ignore
-      onClick={onClick}
+      onClick={() => onClick()}
     >
       {children}
     </button>

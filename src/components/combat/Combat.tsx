@@ -100,14 +100,6 @@ export default function Combat({
     tanky: enemyUnits.filter((unit) => unit.unitType === "tanky").length,
   };
 
-  // FIXME: How can I avoid choosing units here without later instances being undefined?
-
-  /* FIXME: Choose units based on array index */
-  // keep everything in an array (state)
-  // arrayIdx (state)
-  // 'current' unit, is just army[idx]
-  // army[idx].health - 10;
-
   // we only want to choose from units that are alive (health not 0)
   // we'll first generate an array of indexes for surviving combat units
   const survivingFriendlyUnitIndexes = combatUnits

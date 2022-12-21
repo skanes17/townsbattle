@@ -7,6 +7,7 @@ import CardHeader from "../cards/CardHeader";
 import CardSymbol from "../cards/CardSymbol";
 import HorizLine3ColGrid from "../cards/HorizLine3ColGrid";
 import CardDescription from "../cards/CardDescription";
+import CardTemplate from "../cards/CardTemplate";
 
 interface DisplayBuildingsProps {
   buildings: Buildings;
@@ -22,7 +23,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   return (
     <>
       {constructedBuildings.map((buildingType) => (
-        <div className="grid h-72 w-52 grid-cols-3 gap-1 rounded-md border-4 border-blue-900 bg-white text-black shadow-md shadow-gray-500/50">
+        <CardTemplate>
           <CardHeader cardName={buildings[buildingType].name} />
           <CardImage src={buildings[buildingType].imageSrc} />
           <CardDescription
@@ -32,7 +33,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
             tier={buildings[buildingType].tier}
             health={buildings[buildingType].health}
           />
-        </div>
+        </CardTemplate>
       ))}
     </>
   );

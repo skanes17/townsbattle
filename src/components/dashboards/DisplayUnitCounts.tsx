@@ -21,7 +21,7 @@ export default function DisplayUnitCounts({
       <div className="font-bold sm:text-sm md:text-base lg:text-lg">
         Army Size
       </div>
-      <div className="grid auto-cols-max grid-flow-col gap-4 transition duration-75 ease-in-out hover:text-yellow-300 md:text-lg lg:text-2xl">
+      <div className="grid auto-cols-max grid-flow-col gap-4 transition duration-75 ease-in-out md:text-lg lg:text-2xl">
         {unitTypes.map((unitType) => (
           <UnitCount
             BASE_UNIT_DATA={BASE_UNIT_DATA}

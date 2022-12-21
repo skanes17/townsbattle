@@ -98,23 +98,34 @@ export default function TrainUnitCard({
         {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
         {metalCost > 0 ? `🔩${metalCost} ` : ""}
       </div>
-      <div className="flex items-center justify-end">
-        <AddRemoveButton
-          buttonColor="red"
-          onClick={() => handleMinusClick(unitType, friendly)}
-        >
-          -1
-        </AddRemoveButton>
-      </div>
-      {/* @ts-ignore */}
-      <CardShowCount countToShow={unitsInTraining[unitType]} />
-      <div className="flex items-center justify-start">
-        <AddRemoveButton
-          buttonColor="blue"
-          onClick={() => handlePlusClick(unitType, friendly)}
-        >
-          +1
-        </AddRemoveButton>
+      <div className="col-span-3 grid auto-cols-min grid-cols-5 gap-1">
+        <div className="flex items-center justify-center">
+          <AddRemoveButton
+            buttonType="remove"
+            onClick={() => handleMinusClick(unitType, friendly)}
+          >
+            Zero
+          </AddRemoveButton>
+        </div>
+        <div className="flex items-center justify-center">
+          <AddRemoveButton
+            buttonType="remove"
+            onClick={() => handleMinusClick(unitType, friendly)}
+          >
+            -
+          </AddRemoveButton>
+        </div>
+        {/* @ts-ignore */}
+        <CardShowCount countToShow={unitsInTraining[unitType]} />
+        <div className="flex items-center justify-center">
+          <AddRemoveButton
+            buttonType="add"
+            onClick={() => handlePlusClick(unitType, friendly)}
+          >
+            +
+          </AddRemoveButton>
+        </div>
+        <div className="flex items-center justify-center">Max</div>
       </div>
     </CardTemplate>
   );

@@ -91,7 +91,7 @@ export default function WorkerCard({
 
         <div className="flex items-center justify-end">
           <AddRemoveButton
-            buttonColor="red"
+            buttonType="remove"
             onClick={() => handleMinusClick(resourceType)}
           >
             -1
@@ -103,7 +103,7 @@ export default function WorkerCard({
 
         <div className="flex items-center justify-start">
           <AddRemoveButton
-            buttonColor="blue"
+            buttonType="add"
             onClick={() => handlePlusClick(resourceType)}
           >
             +1

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Resources } from "../../types/Resources";
-import ConstructBuilding from "./ConstructBuilding";
+import ConstructBuilding from "../cards/ConstructBuilding";
 
 interface BuildingsUIProps {
   buildings: any;
