@@ -7,7 +7,7 @@ import CombatButton from "../buttons/CombatButton";
 //TODO: Fix this
 // import { AutoButton, CombatButton } from '../buttons';
 import CombatCardTemplate from "../cards/CombatCardTemplate";
-import PostCombatSummary from "../cards/PostCombatSummary";
+import PostCombatSummary from "./PostCombatSummary";
 import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 import ArmyGrid from "./ArmyGrid";
 import CombatLog from "./CombatLog";
