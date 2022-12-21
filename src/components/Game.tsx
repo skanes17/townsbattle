@@ -90,7 +90,7 @@ export default function Game(props: GameProps) {
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
   // FIXME: TypeScript yelling about incompatibility
   /* @ts-ignore */
-  const BASE_UNIT_DATA: BaseUnit = baseUnitData;
+  const BASE_UNIT_DATA: BaseUnit = baseUnitData as const;
   const unitTypes = Object.keys(BASE_UNIT_DATA);
 
   /* ===FUNCTIONS=== */
@@ -111,6 +111,9 @@ export default function Game(props: GameProps) {
       setMyTrainingUnits((myTrainingUnits) => [...myTrainingUnits, _newUnit]);
     }
   };
+
+  //TODO: Build max training function
+  const maxTrainingUnits = (unitType: string, friendly: boolean) => {};
 
   // REMOVE units from either army
   const removeTrainingUnit = (unitType: string, friendly: boolean) => {

@@ -104,6 +104,16 @@ export default function TrainUnitCard({
     }
   };
 
+  const handleMaxClick = (unitType: string, friendly: boolean) => {
+    // FIXME: Got called away after making this -- not tested, ligic may not even be correct
+    const maxTrainable = Math.max(
+      resources["freeworkers"].collected % freeworkerCost,
+      resources["wood"].collected % woodCost,
+      resources["stone"].collected % stoneCost,
+      resources["metal"].collected % metalCost
+    );
+  };
+
   return (
     <CardTemplate>
       <TrainUnitCardHeader
