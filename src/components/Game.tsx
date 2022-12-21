@@ -127,6 +127,17 @@ export default function Game(props: GameProps) {
     }
   };
 
+  const removeAllTrainingUnits = (unitType: string, friendly: boolean) => {
+    if (friendly) {
+      const _myTrainingUnitsCopy = [...myTrainingUnits];
+
+      // filter out all units in the array of the selected type
+      setMyTrainingUnits(
+        _myTrainingUnitsCopy.filter((unit) => unit.unitType !== unitType)
+      );
+    }
+  };
+
   /* ===DEV TOOLS=== */
   // add friendly/enemy units
   const addUnit = (unitType: string, friendly: boolean) => {
@@ -469,6 +480,7 @@ export default function Game(props: GameProps) {
             BASE_UNIT_DATA={BASE_UNIT_DATA}
             addTrainingUnit={addTrainingUnit}
             removeTrainingUnit={removeTrainingUnit}
+            removeAllTrainingUnits={removeAllTrainingUnits}
           />
         </FlexWrapContainer>
 

@@ -14,6 +14,7 @@ export interface TrainingCardContainerProps {
   // TODO: Use more Types like this
   addTrainingUnit: (unitType: any, friendly: boolean) => void;
   removeTrainingUnit: any;
+  removeAllTrainingUnits: any;
 }
 
 export default function TrainingCardContainer({
@@ -24,6 +25,7 @@ export default function TrainingCardContainer({
   BASE_UNIT_DATA,
   addTrainingUnit,
   removeTrainingUnit,
+  removeAllTrainingUnits,
 }: TrainingCardContainerProps) {
   return (
     <>
@@ -37,6 +39,7 @@ export default function TrainingCardContainer({
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           addTrainingUnit={addTrainingUnit}
           removeTrainingUnit={removeTrainingUnit}
+          removeAllTrainingUnits={removeAllTrainingUnits}
           friendly={true}
         />
       ))}

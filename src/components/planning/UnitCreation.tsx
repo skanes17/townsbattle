@@ -13,6 +13,7 @@ interface UnitCreationProps {
   BASE_UNIT_DATA: BaseUnit;
   addTrainingUnit: any;
   removeTrainingUnit: any;
+  removeAllTrainingUnits: any;
 }
 
 export default function UnitCreation({
@@ -23,6 +24,7 @@ export default function UnitCreation({
   BASE_UNIT_DATA,
   addTrainingUnit,
   removeTrainingUnit,
+  removeAllTrainingUnits,
 }: UnitCreationProps) {
   return (
     <div>
@@ -39,6 +41,7 @@ export default function UnitCreation({
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           addTrainingUnit={addTrainingUnit}
           removeTrainingUnit={removeTrainingUnit}
+          removeAllTrainingUnits={removeAllTrainingUnits}
           friendly={true}
         />
       ))}

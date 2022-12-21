@@ -22,6 +22,7 @@ export interface TrainUnitCardProps {
   // TODO: Use more Types like this
   addTrainingUnit: (unitType: any, friendly: boolean) => void;
   removeTrainingUnit: any;
+  removeAllTrainingUnits: any;
   friendly: boolean;
 }
 
@@ -34,12 +35,36 @@ export default function TrainUnitCard({
   BASE_UNIT_DATA,
   addTrainingUnit,
   removeTrainingUnit,
+  removeAllTrainingUnits,
   friendly,
 }: TrainUnitCardProps) {
   const freeworkerCost = unitCosts[unitType]["freeworkers"];
   const woodCost = unitCosts[unitType]["wood"];
   const stoneCost = unitCosts[unitType]["stone"];
   const metalCost = unitCosts[unitType]["metal"];
+
+  const handleZeroClick = (unitType: string, friendly: boolean) => {
+    // @ts-ignore
+    if (unitsInTraining[unitType] > 0) {
+      const updatedResources = { ...resources };
+      updatedResources["freeworkers"].collected +=
+        // @ts-ignore
+        freeworkerCost * unitsInTraining[unitType];
+      updatedResources["wood"].collected +=
+        // @ts-ignore
+        woodCost * unitsInTraining[unitType];
+      updatedResources["stone"].collected +=
+        // @ts-ignore
+        stoneCost * unitsInTraining[unitType];
+      updatedResources["metal"].collected +=
+        // @ts-ignore
+        metalCost * unitsInTraining[unitType];
+      setResources(updatedResources);
+
+      // updates the myTrainingUnits array as well
+      removeAllTrainingUnits(unitType, friendly);
+    }
+  };
 
   const handleMinusClick = (unitType: string, friendly: boolean) => {
     // @ts-ignore
@@ -102,7 +127,7 @@ export default function TrainUnitCard({
         <div className="flex items-center justify-center">
           <AddRemoveButton
             buttonType="remove"
-            onClick={() => handleMinusClick(unitType, friendly)}
+            onClick={() => handleZeroClick(unitType, friendly)}
           >
             Zero
           </AddRemoveButton>
