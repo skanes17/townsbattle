@@ -12,6 +12,7 @@ interface UnitCreationProps {
   setResources: any;
   BASE_UNIT_DATA: BaseUnit;
   addTrainingUnit: any;
+  maxTrainingUnits: any;
   removeTrainingUnit: any;
   removeAllTrainingUnits: any;
 }
@@ -23,6 +24,7 @@ export default function UnitCreation({
   setResources,
   BASE_UNIT_DATA,
   addTrainingUnit,
+  maxTrainingUnits,
   removeTrainingUnit,
   removeAllTrainingUnits,
 }: UnitCreationProps) {
@@ -40,6 +42,7 @@ export default function UnitCreation({
           unitsInTraining={unitsInTraining}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           addTrainingUnit={addTrainingUnit}
+          maxTrainingUnits={maxTrainingUnits}
           removeTrainingUnit={removeTrainingUnit}
           removeAllTrainingUnits={removeAllTrainingUnits}
           friendly={true}

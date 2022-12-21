@@ -21,6 +21,7 @@ export interface TrainUnitCardProps {
   BASE_UNIT_DATA: BaseUnit;
   // TODO: Use more Types like this
   addTrainingUnit: (unitType: any, friendly: boolean) => void;
+  maxTrainingUnits: any;
   removeTrainingUnit: any;
   removeAllTrainingUnits: any;
   friendly: boolean;
@@ -34,6 +35,7 @@ export default function TrainUnitCard({
   unitsInTraining,
   BASE_UNIT_DATA,
   addTrainingUnit,
+  maxTrainingUnits,
   removeTrainingUnit,
   removeAllTrainingUnits,
   friendly,
@@ -105,13 +107,29 @@ export default function TrainUnitCard({
   };
 
   const handleMaxClick = (unitType: string, friendly: boolean) => {
-    // FIXME: Got called away after making this -- not tested, ligic may not even be correct
-    const maxTrainable = Math.max(
-      resources["freeworkers"].collected % freeworkerCost,
-      resources["wood"].collected % woodCost,
-      resources["stone"].collected % stoneCost,
-      resources["metal"].collected % metalCost
+    // FIXME: Doesn't work if one a resource COST is zero, even if that resource isn't required
+
+    // check all costs and see that at least one unit can be afforded
+    const maxTrainable = Math.min(
+      Math.floor(resources["freeworkers"].collected / freeworkerCost),
+      Math.floor(resources["wood"].collected / woodCost),
+      Math.floor(resources["stone"].collected / stoneCost),
+      Math.floor(resources["metal"].collected / metalCost)
     );
+
+    if (maxTrainable > 0) {
+      const updatedResources = { ...resources };
+      updatedResources["freeworkers"].collected -=
+        freeworkerCost * maxTrainable;
+      updatedResources["wood"].collected -= woodCost * maxTrainable;
+      updatedResources["stone"].collected -= stoneCost * maxTrainable;
+      updatedResources["metal"].collected -= metalCost * maxTrainable;
+      setResources(updatedResources);
+
+      maxTrainingUnits(unitType, friendly, maxTrainable);
+    } else {
+      alert("Not enough resources!");
+    }
   };
 
   return (
@@ -160,7 +178,14 @@ export default function TrainUnitCard({
             +
           </AddRemoveButton>
         </div>
-        <div className="flex items-center justify-center">Max</div>
+        <div className="flex items-center justify-center">
+          <AddRemoveButton
+            buttonType="add"
+            onClick={() => handleMaxClick(unitType, friendly)}
+          >
+            Max
+          </AddRemoveButton>
+        </div>
       </div>
     </CardTemplate>
   );

@@ -13,6 +13,7 @@ export interface TrainingCardContainerProps {
   BASE_UNIT_DATA: BaseUnit;
   // TODO: Use more Types like this
   addTrainingUnit: (unitType: any, friendly: boolean) => void;
+  maxTrainingUnits: any;
   removeTrainingUnit: any;
   removeAllTrainingUnits: any;
 }
@@ -24,6 +25,7 @@ export default function TrainingCardContainer({
   unitsInTraining,
   BASE_UNIT_DATA,
   addTrainingUnit,
+  maxTrainingUnits,
   removeTrainingUnit,
   removeAllTrainingUnits,
 }: TrainingCardContainerProps) {
@@ -38,6 +40,7 @@ export default function TrainingCardContainer({
           unitsInTraining={unitsInTraining}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           addTrainingUnit={addTrainingUnit}
+          maxTrainingUnits={maxTrainingUnits}
           removeTrainingUnit={removeTrainingUnit}
           removeAllTrainingUnits={removeAllTrainingUnits}
           friendly={true}

@@ -113,7 +113,16 @@ export default function Game(props: GameProps) {
   };
 
   //TODO: Build max training function
-  const maxTrainingUnits = (unitType: string, friendly: boolean) => {};
+  const maxTrainingUnits = (
+    unitType: string,
+    friendly: boolean,
+    maxTrainable: number
+  ) => {
+    if (friendly) {
+      const _newUnits = Array(maxTrainable).fill({ unitType });
+      setMyTrainingUnits(myTrainingUnits.concat(_newUnits));
+    }
+  };
 
   // REMOVE units from either army
   const removeTrainingUnit = (unitType: string, friendly: boolean) => {
@@ -482,6 +491,7 @@ export default function Game(props: GameProps) {
             unitsInTraining={unitsInTraining}
             BASE_UNIT_DATA={BASE_UNIT_DATA}
             addTrainingUnit={addTrainingUnit}
+            maxTrainingUnits={maxTrainingUnits}
             removeTrainingUnit={removeTrainingUnit}
             removeAllTrainingUnits={removeAllTrainingUnits}
           />

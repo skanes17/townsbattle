@@ -94,7 +94,7 @@ export default function WorkerCard({
             buttonType="remove"
             onClick={() => handleMinusClick(resourceType)}
           >
-            -1
+            -
           </AddRemoveButton>
         </div>
 
@@ -106,7 +106,7 @@ export default function WorkerCard({
             buttonType="add"
             onClick={() => handlePlusClick(resourceType)}
           >
-            +1
+            +
           </AddRemoveButton>
         </div>
       </CardTemplate>
