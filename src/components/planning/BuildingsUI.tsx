@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { BuildingCosts } from "../../types/BuildingCosts";
 import { Resources } from "../../types/Resources";
 import ConstructBuilding from "../cards/ConstructBuilding";
 
 interface BuildingsUIProps {
   buildings: any;
   setBuildings: any;
+  buildingCosts: BuildingCosts;
   buildingsToConstruct: string[];
   resources: Resources;
   setResources: any;
@@ -13,6 +15,7 @@ interface BuildingsUIProps {
 export default function BuildingsUI({
   buildings,
   setBuildings,
+  buildingCosts,
   buildingsToConstruct,
   resources,
   setResources,
@@ -26,6 +29,7 @@ export default function BuildingsUI({
         <ConstructBuilding
           buildings={buildings}
           setBuildings={setBuildings}
+          buildingCosts={buildingCosts}
           buildingType={buildingType}
           resources={resources}
           setResources={setResources}

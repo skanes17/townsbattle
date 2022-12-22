@@ -132,7 +132,6 @@ export default function TrainUnitCard({
     }
   };
 
-  // FIXME: currently unused
   const redCost = "text-red-600";
   const greenCost = "text-green-500";
 
@@ -155,7 +154,7 @@ export default function TrainUnitCard({
             /* If this resource is required, show its cost */
             /* @ts-ignore */
             unitCosts[unitType][resourceType] > 0 &&
-            // if you don't have enough collected to train the unit, show in red
+            // if you don't have enough collected to train the unit, show in red; else green
             /* @ts-ignore */
             (resources[resourceType].collected <
             /* @ts-ignore */
@@ -167,7 +166,6 @@ export default function TrainUnitCard({
                 {unitCosts[unitType][resourceType]}{" "}
               </span>
             ) : (
-              // if you do have enough of this resource collected, show in green
               <span className={`${greenCost}`}>
                 {/* @ts-ignore */}
                 {resources[resourceType].resourceSymbol}

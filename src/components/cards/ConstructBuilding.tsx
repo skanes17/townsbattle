@@ -1,4 +1,5 @@
 import React from "react";
+import { BuildingCosts } from "../../types/BuildingCosts";
 import { Buildings } from "../../types/Buildings";
 import { Resources } from "../../types/Resources";
 import AddRemoveButton from "../buttons/AddRemoveButton";
@@ -12,6 +13,7 @@ import HorizLine3ColGrid from "./HorizLine3ColGrid";
 interface ConstructBuildingProps {
   buildings: Buildings;
   setBuildings: any;
+  buildingCosts: BuildingCosts;
   buildingType: string;
   resources: Resources;
   setResources: any;
@@ -20,6 +22,7 @@ interface ConstructBuildingProps {
 export default function ConstructBuilding({
   buildings,
   setBuildings,
+  buildingCosts,
   buildingType,
   resources,
   setResources,
@@ -72,6 +75,9 @@ export default function ConstructBuilding({
     }
   };
 
+  const redCost = "text-red-600";
+  const greenCost = "text-green-500";
+
   return (
     <CardTemplate>
       <CardHeader cardName={buildings[buildingType].name} />
@@ -82,10 +88,32 @@ export default function ConstructBuilding({
       </div>
       {/* TODO: Improve the uses of ternary operator below */}
       <div className="col-span-3 flex justify-center align-middle text-lg">
-        {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
-        {woodCost > 0 ? `🪵${woodCost} ` : ""}
-        {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
-        {metalCost > 0 ? `🔩${metalCost} ` : ""}
+        {/* TODO: Refactor to improve nested ternary */}
+        {Object.keys(resources).map(
+          (resourceType) =>
+            /* If this resource is required, show its cost */
+            /* @ts-ignore */
+            buildingCosts[buildingType][resourceType] > 0 &&
+            // if you don't have enough collected to train the unit, show in red; else green
+            /* @ts-ignore */
+            (resources[resourceType].collected <
+            /* @ts-ignore */
+            buildingCosts[buildingType][resourceType] ? (
+              <span className={`${redCost}`}>
+                {/* @ts-ignore */}
+                {resources[resourceType].resourceSymbol}
+                {/* @ts-ignore */}
+                {buildingCosts[buildingType][resourceType]}{" "}
+              </span>
+            ) : (
+              <span className={`${greenCost}`}>
+                {/* @ts-ignore */}
+                {resources[resourceType].resourceSymbol}
+                {/* @ts-ignore */}
+                {buildingCosts[buildingType][resourceType]}{" "}
+              </span>
+            ))
+        )}
       </div>
 
       <div className="col-span-3 flex items-center justify-around">

@@ -22,8 +22,9 @@ import FlexWrapContainer from "./FlexWrapContainer";
 import Button from "./buttons/Button";
 import DisplayUnderConstruction from "./dashboards/DisplayUnderConstruction";
 import Combat from "./combat/Combat";
-import { buildingsData } from "../gameData/buildings";
+import { buildingsData, buildingCostsData } from "../gameData/buildings";
 import { upgradesData } from "../gameData/upgrades";
+import { BuildingCosts } from "../types/BuildingCosts";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -64,6 +65,8 @@ export default function Game(props: GameProps) {
 
   /* ===BUILDINGS=== */
   const [buildings, setBuildings] = useState<Buildings>(buildingsData);
+  const [buildingCosts, setBuildingCosts] =
+    useState<BuildingCosts>(buildingCostsData);
   const buildingsUnderConstruction = Object.keys(buildings).filter(
     (key) => buildings[key].underConstruction
   );
@@ -504,6 +507,7 @@ export default function Game(props: GameProps) {
             <ConstructBuilding
               buildings={buildings}
               setBuildings={setBuildings}
+              buildingCosts={buildingCosts}
               buildingType={buildingType}
               resources={resources}
               setResources={setResources}

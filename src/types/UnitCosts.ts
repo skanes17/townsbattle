@@ -1,8 +1,8 @@
 export interface UnitCost {
+  freeworkers: number;
   wood: number;
   stone: number;
   metal: number;
-  freeworkers: number;
 }
 
 export interface UnitCosts {
