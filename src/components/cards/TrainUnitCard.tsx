@@ -132,6 +132,10 @@ export default function TrainUnitCard({
     }
   };
 
+  // FIXME: currently unused
+  const redCost = "text-red-600";
+  const greenCost = "text-green-500";
+
   return (
     <CardTemplate>
       <TrainUnitCardHeader
@@ -144,12 +148,19 @@ export default function TrainUnitCard({
       <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
         Cost
       </div>
-      {/* TODO: Improve the uses of ternary operator below */}
       <div className="col-span-3 flex justify-center align-middle text-lg">
-        {freeworkerCost > 0 ? `🛠️${freeworkerCost} ` : ""}
-        {woodCost > 0 ? `🪵${woodCost} ` : ""}
-        {stoneCost > 0 ? `🪨${stoneCost} ` : ""}
-        {metalCost > 0 ? `🔩${metalCost} ` : ""}
+        {Object.keys(resources).map(
+          (resourceType) =>
+            /* @ts-ignore */
+            unitCosts[unitType][resourceType] > 0 && (
+              <span>
+                {/* @ts-ignore */}
+                {resources[resourceType].resourceSymbol}
+                {/* @ts-ignore */}
+                {unitCosts[unitType][resourceType]}{" "}
+              </span>
+            )
+        )}
       </div>
       <div className="col-span-3 grid auto-cols-min grid-cols-5 gap-1">
         <div className="flex items-center justify-center">

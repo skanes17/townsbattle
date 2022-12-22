@@ -119,6 +119,7 @@ export default function Game(props: GameProps) {
     maxTrainable: number
   ) => {
     if (friendly) {
+      // fill an array with the appropriate number of the chosen unit type
       const _newUnits = Array(maxTrainable).fill({ unitType });
       setMyTrainingUnits(myTrainingUnits.concat(_newUnits));
     }

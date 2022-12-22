@@ -10,6 +10,7 @@ export interface Resources {
     name: string;
     resourceSymbol: string;
     workers: number;
+    workersNeeded: number;
     workerName: string;
     workerType: string;
     workerSymbol: string;
@@ -20,6 +21,7 @@ export interface Resources {
     name: string;
     resourceSymbol: string;
     workers: number;
+    workersNeeded: number;
     workerName: string;
     workerType: string;
     workerSymbol: string;
@@ -30,6 +32,7 @@ export interface Resources {
     name: string;
     resourceSymbol: string;
     workers: number;
+    workersNeeded: number;
     workerName: string;
     workerType: string;
     workerSymbol: string;

@@ -27,21 +27,21 @@ export const baseUnitData = {
 
 export const unitCostsData = {
   melee: {
+    freeworkers: 1,
     wood: 2,
     stone: 2,
     metal: 0,
-    freeworkers: 1,
   },
   pewpew: {
+    freeworkers: 1,
     wood: 2,
     stone: 0,
     metal: 2,
-    freeworkers: 1,
   },
   tanky: {
+    freeworkers: 1,
     wood: 0,
     stone: 2,
     metal: 2,
-    freeworkers: 1,
   },
 };

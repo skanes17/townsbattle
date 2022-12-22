@@ -25,7 +25,9 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
       {constructedBuildings.map((buildingType) => (
         <CardTemplate>
           <CardHeader cardName={buildings[buildingType].name} />
-          <CardImage src={buildings[buildingType].imageSrc} />
+          <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} />
+          {/* FIXME: Use image
+          <CardImage src={buildings[buildingType].imageSrc} /> */}
           <CardDescription
             descriptionText={buildings[buildingType].description}
           />

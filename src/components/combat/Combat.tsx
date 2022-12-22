@@ -12,6 +12,8 @@ import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 import ArmyGrid from "./ArmyGrid";
 import CombatLog from "./CombatLog";
 
+// TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
+
 /* TODO: Figure out how to place enemy units starting from top right in grid */
 /* FIXME: Page breaking when army has 0 units */
 

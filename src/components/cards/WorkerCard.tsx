@@ -66,7 +66,12 @@ export default function WorkerCard({
     }
   };
 
-  // TODO: break this into its own component so I just send "woodcutters" once
+  let costColor;
+  /* @ts-ignore */
+  resources["freeworkers"].collected < resources[resourceType].workersNeeded
+    ? (costColor = "text-red-600")
+    : (costColor = "text-green-500");
+
   return (
     <>
       <CardTemplate>
@@ -85,8 +90,12 @@ export default function WorkerCard({
           Cost
         </div>
 
-        <div className="col-span-3 flex justify-center align-middle text-lg">
-          🛠️{/**/}1
+        <div
+          className={`col-span-3 flex justify-center align-middle text-lg ${costColor}`}
+        >
+          🛠️{/**/}
+          {/* @ts-ignore */}
+          {resources[resourceType].workersNeeded}
         </div>
 
         <div className="flex items-center justify-end">

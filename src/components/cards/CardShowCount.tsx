@@ -5,8 +5,15 @@ interface CardShowCountProps {
 }
 
 export default function CardShowCount({ countToShow }: CardShowCountProps) {
+  let countStyle;
+  if (countToShow > 0) {
+    countStyle = "font-bold text-amber-400";
+  }
+
   return (
-    <div className="flex items-center justify-center px-4 text-lg font-bold text-green-700">
+    <div
+      className={`flex items-center justify-center px-4 text-xl ${countStyle}`}
+    >
       {/* @ts-ignore */}
       {countToShow}
     </div>
