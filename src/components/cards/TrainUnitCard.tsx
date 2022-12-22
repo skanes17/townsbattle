@@ -149,17 +149,32 @@ export default function TrainUnitCard({
         Cost
       </div>
       <div className="col-span-3 flex justify-center align-middle text-lg">
+        {/* TODO: Refactor to improve nested ternary */}
         {Object.keys(resources).map(
           (resourceType) =>
+            /* If this resource is required, show its cost */
             /* @ts-ignore */
-            unitCosts[unitType][resourceType] > 0 && (
-              <span>
+            unitCosts[unitType][resourceType] > 0 &&
+            // if you don't have enough collected to train the unit, show in red
+            /* @ts-ignore */
+            (resources[resourceType].collected <
+            /* @ts-ignore */
+            unitCosts[unitType][resourceType] ? (
+              <span className={`${redCost}`}>
                 {/* @ts-ignore */}
                 {resources[resourceType].resourceSymbol}
                 {/* @ts-ignore */}
                 {unitCosts[unitType][resourceType]}{" "}
               </span>
-            )
+            ) : (
+              // if you do have enough of this resource collected, show in green
+              <span className={`${greenCost}`}>
+                {/* @ts-ignore */}
+                {resources[resourceType].resourceSymbol}
+                {/* @ts-ignore */}
+                {unitCosts[unitType][resourceType]}{" "}
+              </span>
+            ))
         )}
       </div>
       <div className="col-span-3 grid auto-cols-min grid-cols-5 gap-1">
