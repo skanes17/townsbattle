@@ -465,8 +465,8 @@ export default function Game(props: GameProps) {
     </>
   ) : (
     <div className="p-1">
-      <div className="sticky top-0 grid auto-cols-auto">
-        <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-700 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+      <div className="sticky top-0 z-10 grid auto-cols-auto">
+        <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <DisplayResources
             resources={resources}
             resourceTypes={resourceTypes}
@@ -534,8 +534,8 @@ export default function Game(props: GameProps) {
       />
       {/* TODO: Consider merging UnitCount and UnitInTraining components; only the count differs */}
 
-      <div className="sticky bottom-0 grid auto-cols-auto">
-        <div className="col-start-1 grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-700 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+      <div className="sticky bottom-0 z-10 grid auto-cols-auto">
+        <div className="col-start-1 grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <DisplayTraining
             BASE_UNIT_DATA={BASE_UNIT_DATA}
             unitTypes={unitTypes}
