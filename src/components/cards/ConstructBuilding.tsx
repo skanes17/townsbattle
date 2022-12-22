@@ -86,7 +86,6 @@ export default function ConstructBuilding({
       <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
         Cost
       </div>
-      {/* TODO: Improve the uses of ternary operator below */}
       <div className="col-span-3 flex justify-center align-middle text-lg">
         {/* TODO: Refactor to improve nested ternary */}
         {Object.keys(resources).map(

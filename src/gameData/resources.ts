@@ -15,7 +15,7 @@ export const resourceData = {
     workerName: "Woodcutters",
     workerType: "woodcutters",
     workerSymbol: "🪓",
-    description: "Collects 1 wood.",
+    description: "Collects 1🪵.",
   },
   stone: {
     collected: 0,
@@ -26,7 +26,7 @@ export const resourceData = {
     workerName: "Stonemasons",
     workerType: "stonemasons",
     workerSymbol: "⚒️",
-    description: "Collects 1 stone.",
+    description: "Collects 1🪨.",
   },
   metal: {
     collected: 0,
@@ -37,6 +37,6 @@ export const resourceData = {
     workerName: "Metalworkers",
     workerType: "metalworkers",
     workerSymbol: "🥽",
-    description: "Collects 1 metal.",
+    description: "Collects 1🔩.",
   },
 };
