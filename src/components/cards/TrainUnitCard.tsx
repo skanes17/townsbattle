@@ -106,16 +106,15 @@ export default function TrainUnitCard({
     }
   };
 
+  // check all costs and see that at least one unit can be afforded
+  const maxTrainable = Math.min(
+    Math.floor(resources["freeworkers"].collected / freeworkerCost),
+    Math.floor(resources["wood"].collected / woodCost),
+    Math.floor(resources["stone"].collected / stoneCost),
+    Math.floor(resources["metal"].collected / metalCost)
+  );
   const handleMaxClick = (unitType: string, friendly: boolean) => {
     // FIXME: Doesn't work if one a resource COST is zero, even if that resource isn't required
-
-    // check all costs and see that at least one unit can be afforded
-    const maxTrainable = Math.min(
-      Math.floor(resources["freeworkers"].collected / freeworkerCost),
-      Math.floor(resources["wood"].collected / woodCost),
-      Math.floor(resources["stone"].collected / stoneCost),
-      Math.floor(resources["metal"].collected / metalCost)
-    );
 
     if (maxTrainable > 0) {
       const updatedResources = { ...resources };
@@ -145,7 +144,7 @@ export default function TrainUnitCard({
       <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
       <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
       <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
-        Cost
+        Cost (can train {maxTrainable > 0 ? maxTrainable : "0"} more)
       </div>
       <div className="col-span-3 flex justify-center align-middle text-lg">
         {/* TODO: Refactor to improve nested ternary */}
