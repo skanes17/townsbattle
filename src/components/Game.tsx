@@ -25,6 +25,7 @@ import Combat from "./combat/Combat";
 import { buildingsData, buildingCostsData } from "../gameData/buildings";
 import { upgradesData } from "../gameData/upgrades";
 import { BuildingCosts } from "../types/BuildingCosts";
+import { GameContext } from "../context/GameState";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -478,7 +479,6 @@ export default function Game(props: GameProps) {
           />
         </div>
       </div>
-
       <div className="flex flex-wrap justify-evenly">
         <FlexWrapContainer headerText="Assign Workers">
           <WorkerCardContainer
@@ -486,7 +486,6 @@ export default function Game(props: GameProps) {
             setResources={setResources}
           />
         </FlexWrapContainer>
-
         <FlexWrapContainer headerText="Train Units">
           <TrainingCardContainer
             resources={resources}
@@ -500,7 +499,6 @@ export default function Game(props: GameProps) {
             removeAllTrainingUnits={removeAllTrainingUnits}
           />
         </FlexWrapContainer>
-
         <FlexWrapContainer headerText="Construct Buildings">
           {/* TODO: Match component structure with other cards */}
           {buildingsToConstruct.map((buildingType) => (
@@ -514,15 +512,12 @@ export default function Game(props: GameProps) {
             />
           ))}
         </FlexWrapContainer>
-
         <FlexWrapContainer headerText="Buildings Constructed">
           {/* TODO: Match component structure with other cards */}
           <DisplayBuildings buildings={buildings} />
         </FlexWrapContainer>
       </div>
-
       <br></br>
-
       <DevTools
         BASE_UNIT_DATA={BASE_UNIT_DATA}
         resources={resources}
@@ -533,7 +528,6 @@ export default function Game(props: GameProps) {
         switchPhase={switchPhase}
       />
       {/* TODO: Consider merging UnitCount and UnitInTraining components; only the count differs */}
-
       <div className="sticky bottom-0 z-10 grid auto-cols-auto">
         <div className="col-start-1 grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <DisplayTraining

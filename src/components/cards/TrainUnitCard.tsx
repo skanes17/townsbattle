@@ -191,8 +191,11 @@ export default function TrainUnitCard({
             -
           </AddRemoveButton>
         </div>
-        {/* @ts-ignore */}
-        <CardShowCount countToShow={unitsInTraining[unitType]} />
+        {/* string may not match "melee", "pewpew" etc. Use as "keyof" to say it'll be appropriate */}
+        {/* ! assures TS that this will not be undefined; not ideal general solution */}
+        <CardShowCount
+          countToShow={unitsInTraining[unitType as keyof UnitCounts]!}
+        />
         <div className="flex items-center justify-center">
           <AddRemoveButton
             buttonType="add"
