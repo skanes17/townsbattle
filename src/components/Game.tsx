@@ -26,6 +26,7 @@ import { buildingsData, buildingCostsData } from "../gameData/buildings";
 import { upgradesData } from "../gameData/upgrades";
 import { BuildingCosts } from "../types/BuildingCosts";
 import { GameContext } from "../context/GameState";
+import MenuItem from "./startPage/MenuItem";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -38,6 +39,8 @@ import { GameContext } from "../context/GameState";
 // Composition of army could be displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
 export default function Game(props: GameProps) {
+  const [onStartPage, setOnStartPage] = useState(true);
+
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
@@ -423,6 +426,10 @@ export default function Game(props: GameProps) {
     setInCombat(!inCombat);
   };
 
+  const startGame = () => {
+    setOnStartPage(!onStartPage);
+  };
+
   // How many units you're going to train this turn
   // TODO: How to make this dynamic based on base units?
   const unitsInTraining: UnitCounts = {
@@ -445,7 +452,21 @@ export default function Game(props: GameProps) {
 
   /* TODO: Center all dashboard info in the middle of their grid/div? */
 
-  return inCombat ? (
+  return onStartPage ? (
+    <div className=" flex h-screen flex-col items-center justify-center">
+      <div className="m-4 grid auto-rows-auto place-items-center gap-1 border border-indigo-900 p-4">
+        <div className="mb-2 rounded bg-amber-600 p-2 text-5xl text-slate-900 ">
+          <div className="text-center">Townsbattle</div>
+          <div className="text-xl">The Game</div>
+        </div>
+        <MenuItem text="Start" icon="▶️" onClick={startGame} />
+        <MenuItem text="Leaderboard" icon="🏆" />
+        <MenuItem text="Options" icon="🔧" />
+        <MenuItem text="How to Play" icon="❓" />
+        <MenuItem text="About" icon="⭐" />
+      </div>
+    </div>
+  ) : inCombat ? (
     <>
       <Combat
         myUnits={myUnits}
