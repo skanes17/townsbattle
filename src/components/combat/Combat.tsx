@@ -171,6 +171,7 @@ export default function Combat({
 
   const sendArmiesToPlanning = () => {
     // send all all surviving units back to planning
+    // TODO: Top up their health?
     setMyUnits(
       combatUnits
         .map((unit) => {
