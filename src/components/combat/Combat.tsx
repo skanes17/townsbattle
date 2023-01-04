@@ -135,44 +135,24 @@ export default function Combat({
 
   const fight = () => {
     // chosen units attack each other
-    const friendlyHealthRemaining =
-      combatUnits[friendlyIndex].currentHealth -
-      combatEnemyUnits[enemyIndex].attack;
-    const enemyHealthRemaining =
-      combatEnemyUnits[enemyIndex].currentHealth -
-      combatUnits[friendlyIndex].attack;
 
+    // FIXME: Simplify this? Still hesitant to modify combatUnits directly
+    const _friendlyCopy = [...combatUnits];
+    // damage the selected friendly unit; set to 0 if dmg exceeds health
+    _friendlyCopy[friendlyIndex].currentHealth = Math.max(
+      0,
+      _friendlyCopy[friendlyIndex].currentHealth -
+        combatEnemyUnits[enemyIndex].attack
+    );
     // update army with new unit health
-    setCombatUnits(
-      // find the chosen unit in the "main" array
-      combatUnits.map((unit, i) => {
-        if (i === friendlyIndex) {
-          return {
-            // change that unit's health
-            ...unit,
-            /* If health ends up less than zero, set to 0 for display */
-            currentHealth: Math.max(0, friendlyHealthRemaining),
-          };
-        } else {
-          // don't change the health of any other units
-          return unit;
-        }
-      })
-    );
+    setCombatUnits(_friendlyCopy);
 
-    // set new enemy unit health
-    setCombatEnemyUnits(
-      combatEnemyUnits.map((unit, i) => {
-        if (i === enemyIndex) {
-          return {
-            ...unit,
-            currentHealth: Math.max(0, enemyHealthRemaining),
-          };
-        } else {
-          return unit;
-        }
-      })
+    const _enemyCopy = [...combatEnemyUnits];
+    _enemyCopy[enemyIndex].currentHealth = Math.max(
+      0,
+      _enemyCopy[enemyIndex].currentHealth - combatUnits[friendlyIndex].attack
     );
+    setCombatEnemyUnits(_enemyCopy);
   };
 
   const selectNewUnits = () => {

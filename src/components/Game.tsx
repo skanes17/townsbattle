@@ -200,7 +200,7 @@ export default function Game(props: GameProps) {
   };
 
   // TODO: Delete unitBattler function when Combat component is complete
-  // Currently being used as a reference
+  // Currently being used as a reference for the log
   const unitBattler = () => {
     const myUnitsCopy = [...myUnits];
     const enemyUnitsCopy = [...enemyUnits];

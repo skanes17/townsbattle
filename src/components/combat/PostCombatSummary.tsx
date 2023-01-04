@@ -25,6 +25,7 @@ export default function PostCombatSummary({
     total: enemyUnits.filter((unit) => unit.currentHealth === 0).length,
   };
 
+  // currently unused
   const enemyUnitsInjured: CombatUnitCounts = {
     melee: enemyUnits.filter(
       (unit) =>
