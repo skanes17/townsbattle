@@ -27,6 +27,7 @@ import { upgradesData } from "../gameData/upgrades";
 import { BuildingCosts } from "../types/BuildingCosts";
 import { GameContext } from "../context/GameState";
 import MenuItem from "./startPage/MenuItem";
+import MenuTitle from "./startPage/MenuTitle";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -400,14 +401,14 @@ export default function Game(props: GameProps) {
 
     // Train Units Process
     let id = unitId;
-    const units = myTrainingUnits.map((unit, i) => {
+    const units = myTrainingUnits.map((unit) => {
       // resolve base unit from unit type
-      const _unit = BASE_UNIT_DATA[unit.unitType];
+      const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
       id += 1;
 
       return {
-        ..._unit,
-        currentHealth: _unit.maxHealth,
+        ..._chosenUnit,
+        currentHealth: _chosenUnit.maxHealth,
         id, // shorthand for when key = value
       };
     });
@@ -455,14 +456,7 @@ export default function Game(props: GameProps) {
   return onStartPage ? (
     <div className=" flex h-screen flex-col items-center justify-center">
       <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded bg-white/5 p-4 shadow-inherit">
-        <div className="mb-2 rounded border-slate-500 bg-slate-900/90 p-2 text-white sm:p-3 md:p-4 lg:p-5 xl:p-6 ">
-          <div className="text-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
-            Townsbattle
-          </div>
-          <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">
-            The Game
-          </div>
-        </div>
+        <MenuTitle title="Battlesburg" subtitle="The Game" />
         <MenuItem text="Start" icon="▶️" onClick={startGame} />
         <MenuItem text="Leaderboard" icon="🏆" />
         <MenuItem text="Options" icon="🔧" />
