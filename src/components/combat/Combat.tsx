@@ -356,6 +356,7 @@ export default function Combat({
               unitCounts={combatUnitCounts}
             />
           )}
+          {/* TODO: When HP is 0, show a skull on the combat card */}
           {phase === "combat" && (
             <CombatCardTemplate
               unit={combatUnits[friendlyIndex]}
