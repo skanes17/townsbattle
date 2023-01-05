@@ -4,3 +4,5 @@ export interface MenuItemProps {
   icon: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
   onClick?: any;
 }
+
+export type MenuIcon = Pick<MenuItemProps, "icon">;

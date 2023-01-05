@@ -28,6 +28,7 @@ import { BuildingCosts } from "../types/BuildingCosts";
 import { GameContext } from "../context/GameState";
 import MenuItem from "./startPage/MenuItem";
 import MenuTitle from "./startPage/MenuTitle";
+import PopupModal from "./startPage/PopupModal";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -41,6 +42,7 @@ import MenuTitle from "./startPage/MenuTitle";
 
 export default function Game(props: GameProps) {
   const [onStartPage, setOnStartPage] = useState(true);
+  const [startModal, setStartModal] = useState(false);
 
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
@@ -431,6 +433,10 @@ export default function Game(props: GameProps) {
     setOnStartPage(!onStartPage);
   };
 
+  const toggleStartModal = () => {
+    setStartModal(!startModal);
+  };
+
   // How many units you're going to train this turn
   // TODO: How to make this dynamic based on base units?
   const unitsInTraining: UnitCounts = {
@@ -454,16 +460,41 @@ export default function Game(props: GameProps) {
   /* TODO: Center all dashboard info in the middle of their grid/div? */
 
   return onStartPage ? (
-    <div className=" flex h-screen flex-col items-center justify-center">
-      <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded bg-white/5 p-4 shadow-inherit">
-        <MenuTitle title="Battlesburg" subtitle="The Game" />
-        <MenuItem text="Start" icon="▶️" onClick={startGame} />
-        <MenuItem text="Leaderboard" icon="🏆" />
-        <MenuItem text="Options" icon="🔧" />
-        <MenuItem text="How to Play" icon="❓" />
-        <MenuItem text="About" icon="⭐" />
+    <>
+      <div className=" flex h-screen flex-col items-center justify-center">
+        <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded bg-white/5 p-4 shadow-inherit">
+          <MenuTitle title="Battlesburg" subtitle="The Game" />
+          <MenuItem text="Start" icon="▶️" onClick={toggleStartModal} />
+          <MenuItem text="Leaderboard" icon="🏆" />
+          <MenuItem text="Options" icon="🔧" />
+          <MenuItem text="How to Play" icon="❓" />
+          <MenuItem text="About" icon="⭐" />
+        </div>
       </div>
-    </div>
+
+      {/* only render this if startModal === true */}
+      {startModal && (
+        <PopupModal
+          icon={"▶️"}
+          headerText="How to Play"
+          onClick1={toggleStartModal}
+          onClick2={startGame}
+        >
+          {/* FIXME: Figure out how to get this into component */}
+          <p className="mt-2 text-[15px] leading-relaxed text-gray-500">
+            In this game you collect resources to train and upgrade an army to
+            fend off ever-growing waves of enemies waves.
+          </p>
+          <p className="mt-2 text-[15px] leading-relaxed text-gray-500">
+            Survive as long as you can!
+          </p>
+        </PopupModal>
+      )}
+
+      <Button buttonColor="red" onClick={startGame}>
+        Planning
+      </Button>
+    </>
   ) : inCombat ? (
     <>
       <Combat
