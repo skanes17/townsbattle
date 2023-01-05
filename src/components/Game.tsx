@@ -29,6 +29,7 @@ import { GameContext } from "../context/GameState";
 import MenuItem from "./startPage/MenuItem";
 import MenuTitle from "./startPage/MenuTitle";
 import PopupModal from "./startPage/PopupModal";
+import MenuInput from "./startPage/MenuInput";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -43,6 +44,10 @@ import PopupModal from "./startPage/PopupModal";
 export default function Game(props: GameProps) {
   const [onStartPage, setOnStartPage] = useState(true);
   const [startModal, setStartModal] = useState(false);
+  const [difficulty, setDifficulty] = useState<"easy" | "normal" | "hard">(
+    "normal"
+  );
+  const [tutorials, setTutorials] = useState(true);
 
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
@@ -463,7 +468,7 @@ export default function Game(props: GameProps) {
     <>
       <div className=" flex h-screen flex-col items-center justify-center">
         <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded bg-white/5 p-4 shadow-inherit">
-          <MenuTitle title="Battlesburg" subtitle="The Game" />
+          <MenuTitle title="Townsbattle" subtitle="The Game" />
           <MenuItem text="Start" icon="▶️" onClick={toggleStartModal} />
           <MenuItem text="Leaderboard" icon="🏆" />
           <MenuItem text="Options" icon="🔧" />
@@ -477,17 +482,96 @@ export default function Game(props: GameProps) {
         <PopupModal
           icon={"▶️"}
           headerText="How to Play"
-          onClick1={toggleStartModal}
-          onClick2={startGame}
+          onClickLeft={toggleStartModal}
+          onClickRight={startGame}
         >
           {/* FIXME: Figure out how to get this into component */}
-          <p className="mt-2 text-[15px] leading-relaxed text-gray-500">
-            In this game you collect resources to train and upgrade an army to
-            fend off ever-growing waves of enemies waves.
+          <p className="mt-2 leading-relaxed text-gray-500">
+            Collect resources, train and upgrade an army, and defeat waves of
+            enemies. Survive as long as you can!
           </p>
-          <p className="mt-2 text-[15px] leading-relaxed text-gray-500">
-            Survive as long as you can!
-          </p>
+
+          <MenuInput placeholderText="Gabenfort" />
+
+          {/* FIXME: Simplify buttons into a component -- Incorporate DRY */}
+          <div>
+            <div className="mt-6 text-lg font-medium text-gray-900 dark:text-white">
+              Choose Your Difficulty
+            </div>
+            <div className="mt-3 items-center gap-2 sm:flex">
+              {difficulty === "easy" ? (
+                <button className="w-full flex-1 rounded-md border bg-green-600 p-2.5 text-white outline-none ring-green-600 ring-offset-2 active:bg-green-500">
+                  Easy
+                </button>
+              ) : (
+                <button
+                  className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-green-600 ring-offset-2 active:bg-green-500"
+                  onClick={() => setDifficulty("easy")}
+                >
+                  Easy
+                </button>
+              )}
+              {difficulty === "normal" ? (
+                <button className="active: w-full flex-1 rounded-md border bg-blue-600 p-2.5 text-white outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500">
+                  Normal
+                </button>
+              ) : (
+                <button
+                  className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500"
+                  onClick={() => setDifficulty("normal")}
+                >
+                  Normal
+                </button>
+              )}
+              {difficulty === "hard" ? (
+                <button className="active: w-full flex-1 rounded-md border bg-red-600 p-2.5 text-white outline-none ring-red-600 ring-offset-2 active:bg-red-500">
+                  Hard
+                </button>
+              ) : (
+                <button
+                  className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-red-600 ring-offset-2 active:bg-red-500"
+                  onClick={() => setDifficulty("hard")}
+                >
+                  Hard
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <div className="mt-6 text-lg font-medium text-gray-900 dark:text-white">
+              Want Tutorials?
+            </div>
+            <div className="mt-3 items-center gap-2 sm:flex">
+              {tutorials === true ? (
+                <>
+                  <button
+                    className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500"
+                    onClick={() => setTutorials(false)}
+                  >
+                    Off
+                  </button>
+                  <button className="active: w-full flex-1 rounded-md border bg-blue-600 p-2.5 text-white outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500">
+                    On
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button className="active: w-full flex-1 rounded-md border bg-blue-600 p-2.5 text-white outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500">
+                    Off
+                  </button>
+                  <button
+                    className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500"
+                    onClick={() => setTutorials(true)}
+                  >
+                    On
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-3 border-t border-gray-300"></div>
         </PopupModal>
       )}
 

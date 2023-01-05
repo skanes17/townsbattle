@@ -6,15 +6,15 @@ interface PopupModalProps {
   icon: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
   headerText: string;
   children: any;
-  onClick1: () => void;
-  onClick2: () => void;
+  onClickLeft: () => void;
+  onClickRight: () => void;
 }
 
 export default function PopupModal({
   icon,
   headerText,
-  onClick1,
-  onClick2,
+  onClickLeft,
+  onClickRight,
   children,
 }: PopupModalProps) {
   return (
@@ -25,7 +25,8 @@ export default function PopupModal({
     */}
       <div className="flex min-h-screen items-center px-4 py-8">
         <div className="relative mx-auto w-full max-w-lg rounded-md bg-white p-4 shadow-lg">
-          <div className="mt-3 sm:flex">
+          {/* TODO: Consider better implementation of overflow scroll */}
+          <div className="mt-3 max-h-[90%] overflow-y-auto p-2 sm:flex">
             <div className="mx-auto flex h-12 w-12 flex-none items-center justify-center rounded-full bg-blue-100">
               {icon}
             </div>
@@ -36,16 +37,16 @@ export default function PopupModal({
               {children}
               <div className="mt-3 items-center gap-2 sm:flex">
                 <button
-                  className="mt-2 w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-indigo-600 ring-offset-2 focus:ring-2"
-                  onClick={onClick1}
+                  className="mt-2 w-full flex-1 rounded-md bg-red-600 p-2.5 text-white outline-none ring-red-600 ring-offset-2 focus:ring-2"
+                  onClick={onClickLeft}
                 >
                   Cancel
                 </button>
                 <button
                   className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-white outline-none ring-blue-600 ring-offset-2 focus:ring-2"
-                  onClick={onClick2}
+                  onClick={onClickRight}
                 >
-                  Start
+                  Next
                 </button>
               </div>
             </div>
