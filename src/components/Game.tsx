@@ -454,10 +454,14 @@ export default function Game(props: GameProps) {
 
   return onStartPage ? (
     <div className=" flex h-screen flex-col items-center justify-center">
-      <div className="m-4 grid auto-rows-auto place-items-center gap-1 border border-indigo-900 p-4">
-        <div className="mb-2 rounded bg-amber-600 p-2 text-5xl text-slate-900 ">
-          <div className="text-center">Townsbattle</div>
-          <div className="text-xl">The Game</div>
+      <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded bg-white/5 p-4 shadow-inherit">
+        <div className="mb-2 rounded border-slate-500 bg-slate-900/90 p-2 text-white sm:p-3 md:p-4 lg:p-5 xl:p-6 ">
+          <div className="text-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+            Townsbattle
+          </div>
+          <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+            The Game
+          </div>
         </div>
         <MenuItem text="Start" icon="▶️" onClick={startGame} />
         <MenuItem text="Leaderboard" icon="🏆" />
