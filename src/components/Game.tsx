@@ -495,6 +495,7 @@ export default function Game(props: GameProps) {
           <MenuInput placeholderText="Gabenfort" />
 
           {/* FIXME: Simplify buttons into a component -- Incorporate DRY */}
+          {/* FIXME: Wrap all in a form; add type="button" to buttons that won't submit data, type="submit" otherwise */}
           <div>
             <div className="mt-6 text-lg font-medium text-gray-900 dark:text-white">
               Choose Your Difficulty

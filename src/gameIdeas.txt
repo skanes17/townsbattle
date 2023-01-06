@@ -15,6 +15,8 @@ Have an option for autoplay (not the sim) that steps forward every 1/2 seconds o
 -PLANNING-
 Have a log somewhere in planning to hold the alerts (eg. "Not enough resources!")
 --maybe could be a pop-up animation right where you've clicked
+• Maybe simplify the card systems... have the names and icons, and when you click it opens
+  a menu and you can then choose where to put your resources or something. Something cleaner anyway.
 
 -STYLING the COSTS-
 Each resource on its own line, perhaps like this:
