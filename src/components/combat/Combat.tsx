@@ -239,7 +239,6 @@ export default function Combat({
     }
   };
 
-  // TODO: Test autobattler
   // TODO: Incorporate something like "Auto - 5/10/20 units" or something... so you can batch fights
   const autoBattler = () => {
     const autoFriendlyUnits = [...combatUnits];
@@ -407,7 +406,7 @@ export default function Combat({
               )
             )}
           </div>
-          {phase === "combat" && subphase !== "victoryCheck" && (
+          {phase === "combat" && (
             <div className="flex items-start justify-center p-4 pt-0">
               <AutoButton buttonText="Auto" onClick={() => autoBattler()} />
             </div>

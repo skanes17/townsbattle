@@ -103,6 +103,7 @@ export default function Game(props: GameProps) {
   // ===BASE STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
+
   // FIXME: TypeScript yelling about incompatibility
   /* @ts-ignore */
   const BASE_UNIT_DATA: BaseUnit = baseUnitData as const;
