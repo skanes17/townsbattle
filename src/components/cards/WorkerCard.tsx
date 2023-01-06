@@ -87,8 +87,14 @@ export default function WorkerCard({
         />
 
         <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
-          Cost
+          Cost (can assign{" "}
+          {resources["freeworkers"].collected /
+            /* @ts-ignore */
+            resources[resourceType].workersNeeded}{" "}
+          more)
         </div>
+
+        {/* Math.floor(resources["freeworkers"].collected / freeworkerCost) */}
 
         <div
           className={`col-span-3 flex justify-center align-middle text-lg ${costColor}`}
