@@ -30,6 +30,8 @@ import MenuItem from "./startPage/MenuItem";
 import MenuTitle from "./startPage/MenuTitle";
 import PopupModal from "./startPage/PopupModal";
 import MenuInput from "./startPage/MenuInput";
+import SubmitButton from "./buttons/SubmitButton";
+import ModalButton from "./buttons/ModalButton";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -502,40 +504,46 @@ export default function Game(props: GameProps) {
             </div>
             <div className="mt-3 items-center gap-2 sm:flex">
               {difficulty === "easy" ? (
-                <button className="w-full flex-1 rounded-md border bg-green-600 p-2.5 text-white outline-none ring-green-600 ring-offset-2 active:bg-green-500">
-                  Easy
-                </button>
+                <ModalButton
+                  buttonText="Easy"
+                  buttonColor="green"
+                  isSelected={true}
+                />
               ) : (
-                <button
-                  className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-green-600 ring-offset-2 active:bg-green-500"
+                <ModalButton
+                  buttonText="Easy"
+                  buttonColor="green"
+                  isSelected={false}
                   onClick={() => setDifficulty("easy")}
-                >
-                  Easy
-                </button>
+                />
               )}
               {difficulty === "normal" ? (
-                <button className="active: w-full flex-1 rounded-md border bg-blue-600 p-2.5 text-white outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500">
-                  Normal
-                </button>
+                <ModalButton
+                  buttonText="Normal"
+                  buttonColor="blue"
+                  isSelected={true}
+                />
               ) : (
-                <button
-                  className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500"
+                <ModalButton
+                  buttonText="Normal"
+                  buttonColor="blue"
+                  isSelected={false}
                   onClick={() => setDifficulty("normal")}
-                >
-                  Normal
-                </button>
+                />
               )}
               {difficulty === "hard" ? (
-                <button className="active: w-full flex-1 rounded-md border bg-red-600 p-2.5 text-white outline-none ring-red-600 ring-offset-2 active:bg-red-500">
-                  Hard
-                </button>
+                <ModalButton
+                  buttonText="Hard"
+                  buttonColor="red"
+                  isSelected={true}
+                />
               ) : (
-                <button
-                  className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-red-600 ring-offset-2 active:bg-red-500"
+                <ModalButton
+                  buttonText="Hard"
+                  buttonColor="red"
+                  isSelected={false}
                   onClick={() => setDifficulty("hard")}
-                >
-                  Hard
-                </button>
+                />
               )}
             </div>
           </div>
@@ -547,27 +555,31 @@ export default function Game(props: GameProps) {
             <div className="mt-3 items-center gap-2 sm:flex">
               {tutorials === true ? (
                 <>
-                  <button
-                    className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500"
+                  <ModalButton
+                    buttonText="Off"
+                    buttonColor="blue"
+                    isSelected={false}
                     onClick={() => setTutorials(false)}
-                  >
-                    Off
-                  </button>
-                  <button className="active: w-full flex-1 rounded-md border bg-blue-600 p-2.5 text-white outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500">
-                    On
-                  </button>
+                  />
+                  <ModalButton
+                    buttonText="On"
+                    buttonColor="blue"
+                    isSelected={true}
+                  />
                 </>
               ) : (
                 <>
-                  <button className="active: w-full flex-1 rounded-md border bg-blue-600 p-2.5 text-white outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500">
-                    Off
-                  </button>
-                  <button
-                    className="active: w-full flex-1 rounded-md border p-2.5 text-gray-800 outline-none ring-indigo-600 ring-offset-2 active:bg-blue-500"
+                  <ModalButton
+                    buttonText="Off"
+                    buttonColor="blue"
+                    isSelected={true}
+                  />
+                  <ModalButton
+                    buttonText="On"
+                    buttonColor="blue"
+                    isSelected={false}
                     onClick={() => setTutorials(true)}
-                  >
-                    On
-                  </button>
+                  />
                 </>
               )}
             </div>
@@ -577,9 +589,9 @@ export default function Game(props: GameProps) {
         </PopupModal>
       )}
 
-      <Button buttonColor="red" onClick={startGame}>
+      <SubmitButton buttonColor="red" onClick={startGame}>
         Planning
-      </Button>
+      </SubmitButton>
     </>
   ) : inCombat ? (
     <>
