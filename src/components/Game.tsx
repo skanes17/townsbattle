@@ -634,6 +634,9 @@ export default function Game(props: GameProps) {
             resources={resources}
             resourceTypes={resourceTypes}
           />
+          <div className="place-self-center text-xl">
+            Train Units to Protect {townName}!
+          </div>
           <DisplayUnitCounts
             BASE_UNIT_DATA={BASE_UNIT_DATA}
             unitTypes={unitTypes}
