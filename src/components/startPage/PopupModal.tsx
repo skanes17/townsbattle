@@ -6,8 +6,8 @@ interface PopupModalProps {
   icon: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
   headerText: string;
   children: any;
-  onClickLeft: () => void;
-  onClickRight: () => void;
+  onClickLeft?: () => void;
+  onClickRight?: () => void;
 }
 
 export default function PopupModal({

@@ -3,17 +3,18 @@ import { Phase } from "../../types/CombatPhases";
 
 interface CombatLogProps {
   phase: Phase;
+  townName: string;
 }
 
 /* TODO: Send new text to the top */
 /* TODO: Remove table formatting, make only the newest line colored amber. */
-export default function CombatLog({ phase }: CombatLogProps) {
+export default function CombatLog({ phase, townName }: CombatLogProps) {
   return (
     <tbody className="col-span-12 col-start-1 row-start-1 aspect-video max-h-32 w-full self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4 text-sm sm:col-span-4 sm:col-start-5 sm:row-span-2 sm:row-start-1 sm:h-5/6 sm:max-h-full sm:w-full sm:text-sm lg:text-lg xl:aspect-[5/3]">
       {phase === "pre" && (
         <>
           <tr className="py-1 text-white odd:bg-white/5">
-            The enemy has reached the gates of Gabenfort.
+            The enemy has reached the gates of {townName}.
           </tr>
           {/* TODO: Incorporate this feature. eg If you have a Tier 1 scout post, you get a message. */}
           <tr className="py-1 text-sky-400 odd:bg-white/5">

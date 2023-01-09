@@ -46,6 +46,7 @@ import ModalButton from "./buttons/ModalButton";
 export default function Game(props: GameProps) {
   const [onStartPage, setOnStartPage] = useState(true);
   const [startModal, setStartModal] = useState(false);
+  const [leaderboardModal, setLeaderboardModal] = useState(false);
   const [townName, setTownName] = useState("");
   const [difficulty, setDifficulty] = useState<"easy" | "normal" | "hard">(
     "normal"
@@ -446,6 +447,10 @@ export default function Game(props: GameProps) {
     setStartModal(!startModal);
   };
 
+  const toggleLeaderboardModal = () => {
+    setLeaderboardModal(!leaderboardModal);
+  };
+
   // How many units you're going to train this turn
   // TODO: How to make this dynamic based on base units?
   const unitsInTraining: UnitCounts = {
@@ -474,7 +479,11 @@ export default function Game(props: GameProps) {
         <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded bg-white/5 p-4 shadow-inherit">
           <MenuTitle title="Townsbattle" subtitle="The Game" />
           <MenuItem text="Start" icon="▶️" onClick={toggleStartModal} />
-          <MenuItem text="Leaderboard" icon="🏆" />
+          <MenuItem
+            text="Leaderboard"
+            icon="🏆"
+            onClick={toggleLeaderboardModal}
+          />
           <MenuItem text="Options" icon="🔧" />
           <MenuItem text="How to Play" icon="❓" />
           <MenuItem text="About" icon="⭐" />
@@ -484,7 +493,7 @@ export default function Game(props: GameProps) {
       {/* only render this if startModal === true */}
       {startModal && (
         <PopupModal
-          icon={"▶️"}
+          icon="▶️"
           headerText="How to Play"
           onClickLeft={toggleStartModal}
           onClickRight={startGame}
@@ -506,7 +515,7 @@ export default function Game(props: GameProps) {
           {/* FIXME: Wrap all in a form; add type="button" to buttons that won't submit data, type="submit" otherwise */}
           <div>
             <div className="mt-6 text-lg font-medium text-gray-900 dark:text-white">
-              Choose Your Difficulty
+              Difficulty
             </div>
             <div className="mt-3 items-center gap-2 sm:flex">
               {difficulty === "easy" ? (
@@ -556,7 +565,7 @@ export default function Game(props: GameProps) {
 
           <div>
             <div className="mt-6 text-lg font-medium text-gray-900 dark:text-white">
-              Want Tutorials?
+              Tutorials
             </div>
             <div className="mt-3 items-center gap-2 sm:flex">
               {tutorials === true ? (
@@ -603,6 +612,21 @@ export default function Game(props: GameProps) {
         </PopupModal>
       )}
 
+      {leaderboardModal && (
+        <PopupModal
+          headerText="Leaderboard"
+          icon="🏆"
+          onClickLeft={toggleLeaderboardModal}
+        >
+          <p className="mt-2 leading-relaxed text-gray-500">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
+            suscipit fuga impedit explicabo, consequuntur at corrupti, est,
+            culpa nostrum recusandae debitis distinctio odio repellendus
+            voluptatum asperiores harum facilis mollitia.
+          </p>
+        </PopupModal>
+      )}
+
       <SubmitButton buttonColor="red" onClick={startGame}>
         Planning
       </SubmitButton>
@@ -614,6 +638,7 @@ export default function Game(props: GameProps) {
         enemyUnits={enemyUnits}
         setMyUnits={setMyUnits}
         setEnemyUnits={setEnemyUnits}
+        townName={townName}
         switchPhase={switchPhase}
       />
       <DevTools
