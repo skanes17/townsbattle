@@ -45,13 +45,18 @@ import ModalButton from "./buttons/ModalButton";
 
 export default function Game(props: GameProps) {
   const [onStartPage, setOnStartPage] = useState(true);
+
   const [startModal, setStartModal] = useState(false);
-  const [leaderboardModal, setLeaderboardModal] = useState(false);
   const [townName, setTownName] = useState("");
   const [difficulty, setDifficulty] = useState<"easy" | "normal" | "hard">(
     "normal"
   );
   const [tutorials, setTutorials] = useState(true);
+
+  const [leaderboardModal, setLeaderboardModal] = useState(false);
+  const [optionsModal, setOptionsModal] = useState(false);
+  const [howToPlayModal, setHowToPlayModal] = useState(false);
+  const [aboutModal, setAboutModal] = useState(false);
 
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
@@ -446,9 +451,17 @@ export default function Game(props: GameProps) {
   const toggleStartModal = () => {
     setStartModal(!startModal);
   };
-
   const toggleLeaderboardModal = () => {
     setLeaderboardModal(!leaderboardModal);
+  };
+  const toggleOptionsModal = () => {
+    setOptionsModal(!optionsModal);
+  };
+  const toggleHowToPlayModal = () => {
+    setHowToPlayModal(!howToPlayModal);
+  };
+  const toggleAboutModal = () => {
+    setAboutModal(!aboutModal);
   };
 
   // How many units you're going to train this turn
@@ -484,20 +497,19 @@ export default function Game(props: GameProps) {
             icon="🏆"
             onClick={toggleLeaderboardModal}
           />
-          <MenuItem text="Options" icon="🔧" />
-          <MenuItem text="How to Play" icon="❓" />
-          <MenuItem text="About" icon="⭐" />
+          <MenuItem text="Options" icon="🔧" onClick={toggleOptionsModal} />
+          <MenuItem
+            text="How to Play"
+            icon="❓"
+            onClick={toggleHowToPlayModal}
+          />
+          <MenuItem text="About" icon="⭐" onClick={toggleAboutModal} />
         </div>
       </div>
 
       {/* only render this if startModal === true */}
       {startModal && (
-        <PopupModal
-          icon="▶️"
-          headerText="How to Play"
-          onClickLeft={toggleStartModal}
-          onClickRight={startGame}
-        >
+        <PopupModal icon="▶️" headerText="How to Play">
           {/* FIXME: Figure out how to get this into component */}
           <p className="mt-2 leading-relaxed text-gray-500">
             Collect resources, train and upgrade an army, and defeat waves of
@@ -609,27 +621,107 @@ export default function Game(props: GameProps) {
             <p>Difficulty: {difficulty}</p>
             <p>Tutorials: {tutorials ? "On" : "Off"}</p>
           </div>
+
+          <div className="mt-3 items-center gap-2 sm:flex">
+            <button
+              className="mt-2 w-full flex-1 rounded-md bg-red-600 p-2.5 text-white outline-none ring-red-600 ring-offset-2 focus:ring-2"
+              onClick={toggleStartModal}
+            >
+              Cancel
+            </button>
+            <button
+              className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-white outline-none ring-blue-600 ring-offset-2 focus:ring-2"
+              onClick={startGame}
+            >
+              Next
+            </button>
+          </div>
         </PopupModal>
       )}
 
       {leaderboardModal && (
-        <PopupModal
-          headerText="Leaderboard"
-          icon="🏆"
-          onClickLeft={toggleLeaderboardModal}
-        >
+        <PopupModal headerText="Leaderboard" icon="🏆">
           <p className="mt-2 leading-relaxed text-gray-500">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
             suscipit fuga impedit explicabo, consequuntur at corrupti, est,
             culpa nostrum recusandae debitis distinctio odio repellendus
             voluptatum asperiores harum facilis mollitia.
           </p>
+
+          <div className="mt-3 items-center gap-2 sm:flex">
+            <button
+              className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-white outline-none ring-green-600 ring-offset-2 focus:ring-2"
+              onClick={toggleLeaderboardModal}
+            >
+              Close
+            </button>
+          </div>
         </PopupModal>
       )}
 
-      <SubmitButton buttonColor="red" onClick={startGame}>
-        Planning
-      </SubmitButton>
+      {optionsModal && (
+        <PopupModal headerText="Options" icon="🔧">
+          <p className="mt-2 leading-relaxed text-gray-500">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
+            suscipit fuga impedit explicabo, consequuntur at corrupti, est,
+            culpa nostrum recusandae debitis distinctio odio repellendus
+            voluptatum asperiores harum facilis mollitia.
+          </p>
+
+          <div className="mt-3 items-center gap-2 sm:flex">
+            <button
+              className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-white outline-none ring-green-600 ring-offset-2 focus:ring-2"
+              onClick={toggleOptionsModal}
+            >
+              Close
+            </button>
+          </div>
+        </PopupModal>
+      )}
+
+      {howToPlayModal && (
+        <PopupModal headerText="How To Play" icon="❓">
+          <p className="mt-2 leading-relaxed text-gray-500">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
+            suscipit fuga impedit explicabo, consequuntur at corrupti, est,
+            culpa nostrum recusandae debitis distinctio odio repellendus
+            voluptatum asperiores harum facilis mollitia.
+          </p>
+
+          <div className="mt-3 items-center gap-2 sm:flex">
+            <button
+              className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-white outline-none ring-green-600 ring-offset-2 focus:ring-2"
+              onClick={toggleHowToPlayModal}
+            >
+              Close
+            </button>
+          </div>
+        </PopupModal>
+      )}
+
+      {aboutModal && (
+        <PopupModal headerText="About" icon="⭐">
+          <p className="mt-2 leading-relaxed text-gray-500">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
+            suscipit fuga impedit explicabo, consequuntur at corrupti, est,
+            culpa nostrum recusandae debitis distinctio odio repellendus
+            voluptatum asperiores harum facilis mollitia.
+          </p>
+
+          <div className="mt-3 items-center gap-2 sm:flex">
+            <button
+              className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-white outline-none ring-green-600 ring-offset-2 focus:ring-2"
+              onClick={toggleAboutModal}
+            >
+              Close
+            </button>
+          </div>
+        </PopupModal>
+      )}
+
+      <Button buttonColor="red" onClick={startGame}>
+        Planning/Combat
+      </Button>
     </>
   ) : inCombat ? (
     <>
@@ -649,6 +741,7 @@ export default function Game(props: GameProps) {
         addUnit={addUnit}
         unitBattler={unitBattler}
         switchPhase={switchPhase}
+        startGame={startGame}
       />
     </>
   ) : (
@@ -716,6 +809,7 @@ export default function Game(props: GameProps) {
         addUnit={addUnit}
         unitBattler={unitBattler}
         switchPhase={switchPhase}
+        startGame={startGame}
       />
       {/* TODO: Consider merging UnitCount and UnitInTraining components; only the count differs */}
       <div className="sticky bottom-0 z-10 grid auto-cols-auto">

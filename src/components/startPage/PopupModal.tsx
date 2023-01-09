@@ -6,15 +6,11 @@ interface PopupModalProps {
   icon: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
   headerText: string;
   children: any;
-  onClickLeft?: () => void;
-  onClickRight?: () => void;
 }
 
 export default function PopupModal({
   icon,
   headerText,
-  onClickLeft,
-  onClickRight,
   children,
 }: PopupModalProps) {
   return (
@@ -35,20 +31,6 @@ export default function PopupModal({
                 {headerText}
               </h4>
               {children}
-              <div className="mt-3 items-center gap-2 sm:flex">
-                <button
-                  className="mt-2 w-full flex-1 rounded-md bg-red-600 p-2.5 text-white outline-none ring-red-600 ring-offset-2 focus:ring-2"
-                  onClick={onClickLeft}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-white outline-none ring-blue-600 ring-offset-2 focus:ring-2"
-                  onClick={onClickRight}
-                >
-                  Next
-                </button>
-              </div>
             </div>
           </div>
         </div>
