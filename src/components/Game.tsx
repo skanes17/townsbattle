@@ -46,6 +46,7 @@ import ModalButton from "./buttons/ModalButton";
 export default function Game(props: GameProps) {
   const [onStartPage, setOnStartPage] = useState(true);
   const [startModal, setStartModal] = useState(false);
+  const [townName, setTownName] = useState("");
   const [difficulty, setDifficulty] = useState<"easy" | "normal" | "hard">(
     "normal"
   );
@@ -494,9 +495,14 @@ export default function Game(props: GameProps) {
             enemies. Survive as long as you can!
           </p>
 
-          <MenuInput placeholderText="Gabenfort" />
+          <MenuInput
+            placeholderText="Gabenfort"
+            // current valueof the input box
+            value={townName}
+            // what to do when input is changed
+            onChange={(e) => setTownName(e.target.value)}
+          />
 
-          {/* FIXME: Simplify buttons into a component -- Incorporate DRY */}
           {/* FIXME: Wrap all in a form; add type="button" to buttons that won't submit data, type="submit" otherwise */}
           <div>
             <div className="mt-6 text-lg font-medium text-gray-900 dark:text-white">
@@ -585,7 +591,15 @@ export default function Game(props: GameProps) {
             </div>
           </div>
 
+          {/* horizontal line */}
           <div className="mt-3 border-t border-gray-300"></div>
+
+          <div className="bg-amber-100 capitalize text-gray-500">
+            <p className="font-bold text-gray-800">Summary (DevTool)</p>
+            <p>Town Name: {townName}</p>
+            <p>Difficulty: {difficulty}</p>
+            <p>Tutorials: {tutorials ? "On" : "Off"}</p>
+          </div>
         </PopupModal>
       )}
 
