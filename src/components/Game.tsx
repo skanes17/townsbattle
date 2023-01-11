@@ -518,7 +518,8 @@ export default function Game(props: GameProps) {
 
           <MenuInput
             placeholderText="Gabenfort"
-            // current valueof the input box
+            // current value of the input box
+            // if no name is chosen, a default gets used using {townName || "Townsburg"}
             value={townName}
             // what to do when input is changed
             onChange={(e) => setTownName(e.target.value)}
@@ -617,7 +618,7 @@ export default function Game(props: GameProps) {
 
           <div className="bg-amber-100 capitalize text-gray-500">
             <p className="font-bold text-gray-800">Summary (DevTool)</p>
-            <p>Town Name: {townName}</p>
+            <p>Town Name: {townName || "Townsburg"}</p>
             <p>Difficulty: {difficulty}</p>
             <p>Tutorials: {tutorials ? "On" : "Off"}</p>
           </div>
@@ -753,7 +754,7 @@ export default function Game(props: GameProps) {
             resourceTypes={resourceTypes}
           />
           <div className="place-self-center text-xl">
-            Train Units to Protect {townName}!
+            Train Units to Protect {townName || "Townsburg"}!
           </div>
           <DisplayUnitCounts
             BASE_UNIT_DATA={BASE_UNIT_DATA}
