@@ -203,12 +203,18 @@ export default function Combat({
       case "pre":
         setPhase("combat");
         setSubphase("fight");
+
+        // TODO: show flavortext in log, enemy has reached the town etc
+
         break;
       case "combat":
         switch (subphase) {
           case "fight":
             fight();
             // TODO: Add in animation for units attacking each other
+
+            // TODO: state which units are facing off against each other
+
             setSubphase("victoryCheck");
             break;
 
@@ -321,7 +327,15 @@ export default function Combat({
         selectedUnit={combatUnits[friendlyIndex]}
         startColumn="1"
       />
-      <CombatLog phase={phase} townName={townName} />
+      <CombatLog
+        phase={phase}
+        subphase={subphase}
+        townName={townName}
+        combatUnits={combatUnits}
+        combatEnemyUnits={combatEnemyUnits}
+        friendlyIndex={friendlyIndex}
+        enemyIndex={enemyIndex}
+      />
       <ArmyGrid
         phase={phase}
         army={combatEnemyUnits}
