@@ -18,7 +18,7 @@ import CombatLog from "./CombatLog";
 /* FIXME: Page breaking when army has 0 units */
 
 /* TODO: Incorporate enums (enumeration) */
-/* enum Phases {
+enum Phases {
   Pre,
   Combat,
   Post,
@@ -28,7 +28,7 @@ enum SubPhases {
   Fight,
   Resolve,
   VictoryCheck,
-} */
+}
 
 interface CombatProps {
   myUnits: Unit[];
@@ -47,8 +47,8 @@ export default function Combat({
   townName,
   switchPhase,
 }: CombatProps) {
-  const [phase, setPhase] = useState<Phase>("pre");
-  const [subphase, setSubphase] = useState<Subphase>("fight");
+  const [phase, setPhase] = useState<Phases>(Phases.Pre);
+  const [subphase, setSubphase] = useState<SubPhases>(SubPhases.Fight);
 
   // log text output here
   const [logState, setLogState] = useState<string[]>([]);
@@ -200,25 +200,25 @@ export default function Combat({
   // immediately go to post; buildings are damaged accordingly
   const combatMegaFunction = () => {
     switch (phase) {
-      case "pre":
-        setPhase("combat");
-        setSubphase("fight");
+      case Phases.Pre:
+        // TODO: save first combat snapshot here
 
-        // TODO: show flavortext in log, enemy has reached the town etc
+        setPhase(Phases.Combat);
+        setSubphase(SubPhases.Fight);
 
         break;
-      case "combat":
+      case Phases.Combat:
         switch (subphase) {
-          case "fight":
+          case SubPhases.Fight:
             fight();
             // TODO: Add in animation for units attacking each other
 
             // TODO: state which units are facing off against each other
 
-            setSubphase("victoryCheck");
+            setSubphase(SubPhases.VictoryCheck);
             break;
 
-          case "victoryCheck":
+          case SubPhases.VictoryCheck:
             // return the unit to the army and pick a new one, or not
             // if an army was defeated, end combat
             if (
@@ -232,15 +232,15 @@ export default function Combat({
               // number of units injured
               // buildings damaged (and how much?)
 
-              setPhase("post");
+              setPhase(Phases.Post);
             } else {
               selectNewUnits();
-              setSubphase("fight");
+              setSubphase(SubPhases.Fight);
             }
             break;
         }
         break;
-      case "post":
+      case Phases.Post:
         sendArmiesToPlanning();
         switchPhase();
         break;
@@ -314,7 +314,7 @@ export default function Combat({
 
     setCombatUnits(autoFriendlyUnits);
     setCombatEnemyUnits(autoEnemyUnits);
-    setPhase("post");
+    setPhase(Phases.Post);
   };
 
   return (
@@ -343,7 +343,7 @@ export default function Combat({
         startColumn="8"
       />
 
-      {phase === "post" ? (
+      {phase === Phases.Post ? (
         <>
           <div className="center col-span-12 col-start-1 row-start-4 w-5/6 self-center justify-self-center sm:row-start-3 sm:mt-2 md:mt-0">
             <PostCombatSummary
@@ -364,7 +364,7 @@ export default function Combat({
         </>
       ) : (
         <div className="card col-span-5 col-start-1 row-start-4 mr-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-end md:mt-0">
-          {phase === "pre" && (
+          {phase === Phases.Pre && (
             <PreCombatCardTemplate
               headerText="Your Army"
               army={combatUnits}
@@ -372,7 +372,7 @@ export default function Combat({
             />
           )}
           {/* TODO: When HP is 0, show a skull on the combat card */}
-          {phase === "combat" && (
+          {phase === Phases.Combat && (
             <CombatCardTemplate
               unit={combatUnits[friendlyIndex]}
               subphase={subphase}
@@ -381,9 +381,9 @@ export default function Combat({
         </div>
       )}
 
-      {(phase === "pre" || phase === "combat") && (
+      {(phase === Phases.Pre || phase === Phases.Combat) && (
         <div className="col-span-2 col-start-6 row-start-4 grid auto-rows-min place-content-center gap-2 sm:row-start-3 sm:mt-2 md:mt-0">
-          {phase === "combat" && (
+          {phase === Phases.Combat && (
             <div className="mx-auto max-h-24 overflow-y-auto rounded-bl-md rounded-tr-md border border-white/25 p-2 text-center text-xs sm:max-h-full sm:text-sm md:text-base lg:text-lg xl:text-xl">
               {/* TODO: Maybe make this take up 4 columns, pops up as overlap then fades? */}
               <p>
@@ -394,21 +394,21 @@ export default function Combat({
           )}
 
           <div className="flex items-end justify-center p-4 pb-0">
-            {phase === "pre" && (
+            {phase === Phases.Pre && (
               <CombatButton
                 buttonText="Start"
                 onClick={() => combatMegaFunction()}
               />
             )}
             {/* FIXME: Must be a cleaner way?? */}
-            {phase === "combat" && subphase === "fight" ? (
+            {phase === Phases.Combat && subphase === SubPhases.Fight ? (
               <CombatButton
                 buttonText="Fight"
                 onClick={() => combatMegaFunction()}
               />
             ) : (
-              phase === "combat" &&
-              subphase === "victoryCheck" && (
+              phase === Phases.Combat &&
+              subphase === SubPhases.VictoryCheck && (
                 /* FIXME: Make name depend on state of army (select, summary, etc) */
                 <CombatButton
                   buttonText={
@@ -422,7 +422,7 @@ export default function Combat({
               )
             )}
           </div>
-          {phase === "combat" && (
+          {phase === Phases.Combat && (
             <div className="flex items-start justify-center p-4 pt-0">
               <AutoButton buttonText="Auto" onClick={() => autoBattler()} />
             </div>
@@ -430,16 +430,16 @@ export default function Combat({
         </div>
       )}
 
-      {phase !== "post" && (
+      {phase !== Phases.Post && (
         <div className="card col-span-5 col-start-8 row-start-4 ml-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-start md:mt-0">
-          {phase === "pre" && (
+          {phase === Phases.Pre && (
             <PreCombatCardTemplate
               headerText="Enemy Army"
               army={combatEnemyUnits}
               unitCounts={combatEnemyUnitCounts}
             />
           )}
-          {phase === "combat" && (
+          {phase === Phases.Combat && (
             <CombatCardTemplate
               unit={combatEnemyUnits[enemyIndex]}
               subphase={subphase}

@@ -1,11 +1,11 @@
 import React from "react";
-import { Phase } from "../../types/CombatPhases";
+import { Phase, Phases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 
 interface UnitTileProps {
   unit: Unit;
   selectedUnit: Unit;
-  phase: Phase;
+  phase: Phases;
 }
 
 export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
@@ -48,7 +48,7 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
     hoverBorder = "hover:border-green-300/100";
   }
 
-  if (phase === "combat" && unit === selectedUnit) {
+  if (phase === Phases.Combat && unit === selectedUnit) {
     borderWidth = "border-2";
     if (percentHealth <= 25) {
       borderColor = "border-red-400/80";

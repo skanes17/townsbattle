@@ -1,5 +1,5 @@
 import React from "react";
-import { Subphase } from "../../types/CombatPhases";
+import { Subphase, SubPhases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import CombatCardFooter from "./CombatCardFooter";
 import CombatCardHeader from "./CombatCardHeader";
@@ -7,7 +7,7 @@ import CombatCardSymbol from "./CombatCardSymbol";
 
 interface CombatCardTemplateProps {
   unit: Unit;
-  subphase: Subphase;
+  subphase: SubPhases;
 }
 
 export default function CombatCardTemplate({
@@ -15,7 +15,7 @@ export default function CombatCardTemplate({
   subphase,
 }: CombatCardTemplateProps) {
   let fightAnimation;
-  if (subphase === "victoryCheck") {
+  if (subphase === SubPhases.VictoryCheck) {
     fightAnimation = "animate-[jiggleRight 0.25s linear 1]";
   }
 

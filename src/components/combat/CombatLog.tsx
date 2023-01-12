@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Phase, Subphase } from "../../types/CombatPhases";
+import { Phase, Phases, Subphase, SubPhases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import POddStyle from "../POddStyle";
 
 interface CombatLogProps {
-  phase: Phase;
-  subphase: Subphase;
+  phase: Phases;
+  subphase: SubPhases;
   townName: string;
   combatUnits: Unit[];
   combatEnemyUnits: Unit[];
@@ -46,7 +46,7 @@ export default function CombatLog({
 
   return (
     <div className="col-span-12 col-start-1 row-start-1 aspect-video max-h-32 w-full self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4 text-sm sm:col-span-4 sm:col-start-5 sm:row-span-2 sm:row-start-1 sm:h-5/6 sm:max-h-full sm:w-full sm:text-sm lg:text-lg xl:aspect-[5/3]">
-      {phase === "pre" && (
+      {phase === Phases.Pre && (
         <div>
           <POddStyle>The enemy has reached the gates of {townName}.</POddStyle>
           {/* TODO: Incorporate this feature. eg If you have a Tier 1 scout post, you get a message. */}
@@ -56,7 +56,7 @@ export default function CombatLog({
           </POddStyle>
         </div>
       )}
-      {phase === "combat" && subphase === "fight" && (
+      {phase === Phases.Combat && subphase === SubPhases.Fight && (
         <div>
           <POddStyle>
             <span className="text-green-400">
@@ -72,7 +72,7 @@ export default function CombatLog({
           </POddStyle>
         </div>
       )}
-      {phase === "combat" && subphase === "victoryCheck" && (
+      {phase === Phases.Combat && subphase === SubPhases.VictoryCheck && (
         <div>
           <POddStyle>
             <span className="text-green-400">
@@ -155,7 +155,8 @@ export default function CombatLog({
           ) : null}
         </div>
       )}
-      {phase === "post" && (
+      {/* FIXME: Render the appropriate text when battle is over (lengths are 0) */}
+      {phase === Phases.Post && (
         /* TODO: Need a count of surviving units to render this */
         <div>
           <POddStyle>

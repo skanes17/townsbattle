@@ -1,10 +1,10 @@
 import React from "react";
-import { Phase } from "../../types/CombatPhases";
+import { Phase, Phases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import UnitTile from "./UnitTile";
 
 interface ArmyGridProps {
-  phase: Phase;
+  phase: Phases;
   army: Unit[];
   selectedUnit: Unit;
   startColumn: "1" | "8";
