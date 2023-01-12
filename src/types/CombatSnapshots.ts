@@ -1,5 +1,6 @@
 export interface UnitSnapshot {
   name: string;
+  id?: number;
   friendly: boolean;
 }
 
@@ -9,7 +10,8 @@ export interface Action {
 }
 
 export interface CombatSnapshot {
-  source: UnitSnapshot;
-  target: UnitSnapshot;
-  action: Action;
+  friendly: UnitSnapshot;
+  enemy: UnitSnapshot;
+  friendlyAction: Action;
+  enemyAction: Action;
 }

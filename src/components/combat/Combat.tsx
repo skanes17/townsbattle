@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Phase, Subphase } from "../../types/CombatPhases";
+import { Phases, SubPhases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import { UnitCounts } from "../../types/UnitCounts";
 import AutoButton from "../buttons/AutoButton";
@@ -11,24 +11,12 @@ import PostCombatSummary from "./PostCombatSummary";
 import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 import ArmyGrid from "./ArmyGrid";
 import CombatLog from "./CombatLog";
+import { CombatSnapshot, UnitSnapshot } from "../../types/CombatSnapshots";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
 /* TODO: Figure out how to place enemy units starting from top right in grid */
 /* FIXME: Page breaking when army has 0 units */
-
-/* TODO: Incorporate enums (enumeration) */
-enum Phases {
-  Pre,
-  Combat,
-  Post,
-}
-
-enum SubPhases {
-  Fight,
-  Resolve,
-  VictoryCheck,
-}
 
 interface CombatProps {
   myUnits: Unit[];
@@ -48,15 +36,14 @@ export default function Combat({
   switchPhase,
 }: CombatProps) {
   const [phase, setPhase] = useState<Phases>(Phases.Pre);
-  const [subphase, setSubphase] = useState<SubPhases>(SubPhases.Fight);
-
-  // log text output here
-  const [logState, setLogState] = useState<string[]>([]);
+  const [subPhase, setSubPhase] = useState<SubPhases>(SubPhases.Fight);
 
   const [combatUnits, setCombatUnits] = useState<Unit[]>([...myUnits]);
   const [combatEnemyUnits, setCombatEnemyUnits] = useState<Unit[]>([
     ...enemyUnits,
   ]);
+
+  const [combatSnapshots, setCombatSnapshots] = useState<CombatSnapshot[]>([]);
 
   /* ======== FOR TESTING ========
   const testMelee: Unit = {
@@ -135,6 +122,36 @@ export default function Combat({
     ]
   );
 
+  const takeSnapshot = () => {
+    const combatSnapshot: CombatSnapshot = {
+      // chosen friendly
+      friendly: {
+        name: combatUnits[friendlyIndex].name,
+        id: combatUnits[friendlyIndex].id,
+        friendly: true,
+      },
+      // chosen enemy
+      enemy: {
+        name: combatEnemyUnits[enemyIndex].name,
+        id: combatEnemyUnits[enemyIndex].id,
+        friendly: false,
+      },
+      // what happens to the friendly
+      friendlyAction: {
+        effect: "damaged",
+        value: combatEnemyUnits[friendlyIndex].attack,
+      },
+      // what happens to the enemy
+      enemyAction: {
+        effect: "damaged",
+        value: combatUnits[friendlyIndex].attack,
+      },
+    };
+
+    // should I use this instead? (combatSnapshots => {[...combatSnapshots, combatSnapshot]})
+    setCombatSnapshots([...combatSnapshots, combatSnapshot]);
+  };
+
   const fight = () => {
     // chosen units attack each other
 
@@ -201,21 +218,20 @@ export default function Combat({
   const combatMegaFunction = () => {
     switch (phase) {
       case Phases.Pre:
-        // TODO: save first combat snapshot here
+        // take a snapshot of the situation, what will take place this round
+        takeSnapshot();
 
         setPhase(Phases.Combat);
-        setSubphase(SubPhases.Fight);
+        setSubPhase(SubPhases.Fight);
 
         break;
       case Phases.Combat:
-        switch (subphase) {
+        switch (subPhase) {
           case SubPhases.Fight:
             fight();
             // TODO: Add in animation for units attacking each other
 
-            // TODO: state which units are facing off against each other
-
-            setSubphase(SubPhases.VictoryCheck);
+            setSubPhase(SubPhases.VictoryCheck);
             break;
 
           case SubPhases.VictoryCheck:
@@ -235,7 +251,7 @@ export default function Combat({
               setPhase(Phases.Post);
             } else {
               selectNewUnits();
-              setSubphase(SubPhases.Fight);
+              setSubPhase(SubPhases.Fight);
             }
             break;
         }
@@ -329,8 +345,9 @@ export default function Combat({
       />
       <CombatLog
         phase={phase}
-        subphase={subphase}
+        subphase={subPhase}
         townName={townName}
+        combatSnapshots={combatSnapshots}
         combatUnits={combatUnits}
         combatEnemyUnits={combatEnemyUnits}
         friendlyIndex={friendlyIndex}
@@ -375,7 +392,7 @@ export default function Combat({
           {phase === Phases.Combat && (
             <CombatCardTemplate
               unit={combatUnits[friendlyIndex]}
-              subphase={subphase}
+              subphase={subPhase}
             />
           )}
         </div>
@@ -401,14 +418,14 @@ export default function Combat({
               />
             )}
             {/* FIXME: Must be a cleaner way?? */}
-            {phase === Phases.Combat && subphase === SubPhases.Fight ? (
+            {phase === Phases.Combat && subPhase === SubPhases.Fight ? (
               <CombatButton
                 buttonText="Fight"
                 onClick={() => combatMegaFunction()}
               />
             ) : (
               phase === Phases.Combat &&
-              subphase === SubPhases.VictoryCheck && (
+              subPhase === SubPhases.VictoryCheck && (
                 /* FIXME: Make name depend on state of army (select, summary, etc) */
                 <CombatButton
                   buttonText={
@@ -442,7 +459,7 @@ export default function Combat({
           {phase === Phases.Combat && (
             <CombatCardTemplate
               unit={combatEnemyUnits[enemyIndex]}
-              subphase={subphase}
+              subphase={subPhase}
             />
           )}
         </div>

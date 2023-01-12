@@ -6,7 +6,7 @@ export enum Phases {
   Post,
 }
 
-export type Subphase = "fight" | "victoryCheck";
+export type SubPhase = "fight" | "victoryCheck";
 
 export enum SubPhases {
   Fight,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Subphase, SubPhases } from "../../types/CombatPhases";
+import { SubPhases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import CombatCardFooter from "./CombatCardFooter";
 import CombatCardHeader from "./CombatCardHeader";

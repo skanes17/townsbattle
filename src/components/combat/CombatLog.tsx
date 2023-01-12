@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Phase, Phases, Subphase, SubPhases } from "../../types/CombatPhases";
+import { Phases, SubPhases } from "../../types/CombatPhases";
+import { CombatSnapshot } from "../../types/CombatSnapshots";
 import { Unit } from "../../types/Unit";
 import POddStyle from "../POddStyle";
 
@@ -7,6 +8,7 @@ interface CombatLogProps {
   phase: Phases;
   subphase: SubPhases;
   townName: string;
+  combatSnapshots: CombatSnapshot[];
   combatUnits: Unit[];
   combatEnemyUnits: Unit[];
   friendlyIndex: number;
@@ -19,6 +21,7 @@ export default function CombatLog({
   phase,
   subphase,
   townName,
+  combatSnapshots,
   combatUnits,
   combatEnemyUnits,
   friendlyIndex,
