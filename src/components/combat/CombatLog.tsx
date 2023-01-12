@@ -8,6 +8,7 @@ interface CombatLogProps {
   phase: Phases;
   subphase: SubPhases;
   townName: string;
+  defaultTownName: string;
   combatSnapshots: CombatSnapshot[];
   combatUnits: Unit[];
   combatEnemyUnits: Unit[];
@@ -21,6 +22,7 @@ export default function CombatLog({
   phase,
   subphase,
   townName,
+  defaultTownName,
   combatSnapshots,
   combatUnits,
   combatEnemyUnits,
@@ -29,6 +31,7 @@ export default function CombatLog({
 }: CombatLogProps) {
   const [logState, setLogState] = useState<string[]>([]);
 
+  // drafting
   const combatLog = [
     "Your units defeated each other at the last moment. Prepare for the next battle!",
 
@@ -51,7 +54,9 @@ export default function CombatLog({
     <div className="col-span-12 col-start-1 row-start-1 aspect-video max-h-32 w-full self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4 text-sm sm:col-span-4 sm:col-start-5 sm:row-span-2 sm:row-start-1 sm:h-5/6 sm:max-h-full sm:w-full sm:text-sm lg:text-lg xl:aspect-[5/3]">
       {phase === Phases.Pre && (
         <div>
-          <POddStyle>The enemy has reached the gates of {townName}.</POddStyle>
+          <POddStyle>
+            The enemy has reached the gates of {townName || defaultTownName}.
+          </POddStyle>
           {/* TODO: Incorporate this feature. eg If you have a Tier 1 scout post, you get a message. */}
           <POddStyle>
             Scouts say the chance of winning is about{" "}
@@ -63,13 +68,17 @@ export default function CombatLog({
         <div>
           <POddStyle>
             <span className="text-green-400">
-              {friendlyUnit.name}
-              {friendlyUnit.id}
+              {combatSnapshots[0].friendly.name}
+              {combatSnapshots[0].friendly.id}
+              {/* {friendlyUnit.name}
+              {friendlyUnit.id} */}
             </span>{" "}
             faces off against{" "}
             <span className="text-red-400">
-              {enemyUnit.name}
-              {enemyUnit.id}
+              {combatSnapshots[0].enemy.name}
+              {combatSnapshots[0].enemy.id}
+              {/* {enemyUnit.name}
+              {enemyUnit.id} */}
             </span>
             .
           </POddStyle>
@@ -96,6 +105,8 @@ export default function CombatLog({
             </span>{" "}
             retaliates with {enemyUnit.attack} damage.
           </POddStyle>
+
+          {/* FIXME: Consider whether remaining health log is really necessary */}
           {friendlyUnit.currentHealth > 0 ? (
             <POddStyle>
               <span className="text-green-400">

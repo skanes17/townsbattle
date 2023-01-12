@@ -24,6 +24,7 @@ interface CombatProps {
   setMyUnits: any;
   setEnemyUnits: any;
   townName: string;
+  defaultTownName: string;
   switchPhase: () => void;
 }
 
@@ -33,6 +34,7 @@ export default function Combat({
   setMyUnits,
   setEnemyUnits,
   townName,
+  defaultTownName,
   switchPhase,
 }: CombatProps) {
   const [phase, setPhase] = useState<Phases>(Phases.Pre);
@@ -125,6 +127,7 @@ export default function Combat({
   const takeSnapshot = () => {
     const combatSnapshot: CombatSnapshot = {
       // chosen friendly
+      /* TODO: Rethink this to include copied unit properties here?? Could make combat log displaying easier */
       friendly: {
         name: combatUnits[friendlyIndex].name,
         id: combatUnits[friendlyIndex].id,
@@ -347,6 +350,7 @@ export default function Combat({
         phase={phase}
         subphase={subPhase}
         townName={townName}
+        defaultTownName={defaultTownName}
         combatSnapshots={combatSnapshots}
         combatUnits={combatUnits}
         combatEnemyUnits={combatEnemyUnits}

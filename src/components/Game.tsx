@@ -48,6 +48,7 @@ export default function Game(props: GameProps) {
 
   const [startModal, setStartModal] = useState(false);
   const [townName, setTownName] = useState("");
+  const defaultTownName = "Townsburg";
   const [difficulty, setDifficulty] = useState<"easy" | "normal" | "hard">(
     "normal"
   );
@@ -517,7 +518,7 @@ export default function Game(props: GameProps) {
           </p>
 
           <MenuInput
-            placeholderText="Gabenfort"
+            placeholderText="Townsburg"
             // current value of the input box
             // if no name is chosen, a default gets used using {townName || "Townsburg"}
             value={townName}
@@ -618,7 +619,7 @@ export default function Game(props: GameProps) {
 
           <div className="bg-amber-100 capitalize text-gray-500">
             <p className="font-bold text-gray-800">Summary (DevTool)</p>
-            <p>Town Name: {townName || "Townsburg"}</p>
+            <p>Town Name: {townName || defaultTownName}</p>
             <p>Difficulty: {difficulty}</p>
             <p>Tutorials: {tutorials ? "On" : "Off"}</p>
           </div>
@@ -732,6 +733,7 @@ export default function Game(props: GameProps) {
         setMyUnits={setMyUnits}
         setEnemyUnits={setEnemyUnits}
         townName={townName}
+        defaultTownName={defaultTownName}
         switchPhase={switchPhase}
       />
       <DevTools
@@ -754,7 +756,7 @@ export default function Game(props: GameProps) {
             resourceTypes={resourceTypes}
           />
           <div className="place-self-center text-xl">
-            Train Units to Protect {townName || "Townsburg"}!
+            Train Units to Protect {townName || defaultTownName}!
           </div>
           <DisplayUnitCounts
             BASE_UNIT_DATA={BASE_UNIT_DATA}
@@ -787,6 +789,7 @@ export default function Game(props: GameProps) {
           {/* TODO: Match component structure with other cards */}
           {buildingsToConstruct.map((buildingType) => (
             <ConstructBuilding
+              key={buildingType}
               buildings={buildings}
               setBuildings={setBuildings}
               buildingCosts={buildingCosts}
