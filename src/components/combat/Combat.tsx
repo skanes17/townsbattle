@@ -151,7 +151,7 @@ export default function Combat({
       },
     };
 
-    // should I use this instead? (combatSnapshots => {[...combatSnapshots, combatSnapshot]})
+    // should I use this instead? (combatSnapshots => {return [...combatSnapshots, combatSnapshot]})
     setCombatSnapshots([...combatSnapshots, combatSnapshot]);
   };
 

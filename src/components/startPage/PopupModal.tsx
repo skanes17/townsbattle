@@ -16,7 +16,7 @@ export default function PopupModal({
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto">
       {/*
-    allows user to click outside to close the modal
+    allows user to click outside to close the modal when paired with an onClick event
     <div className="fixed inset-0 h-full w-full bg-black opacity-40"></div>
     */}
       <div className="flex min-h-screen items-center px-4 py-8">
