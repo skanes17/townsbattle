@@ -1,15 +1,14 @@
 export type Phase = "pre" | "combat" | "post";
 
 export enum Phases {
-  Pre,
+  PreCombat,
   Combat,
-  Post,
+  PostCombat,
 }
 
 export type SubPhase = "fight" | "victoryCheck";
 
 export enum SubPhases {
   Fight,
-  Resolve,
   VictoryCheck,
 }

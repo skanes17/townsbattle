@@ -12,6 +12,13 @@ import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 import ArmyGrid from "./ArmyGrid";
 import CombatLog from "./CombatLog";
 import { CombatSnapshot, UnitSnapshot } from "../../types/CombatSnapshots";
+import {
+  CombatEvent,
+  Event,
+  EventType,
+  PostCombatEvent,
+  PreCombatEvent,
+} from "../../types/CombatEvents";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -37,7 +44,7 @@ export default function Combat({
   defaultTownName,
   switchPhase,
 }: CombatProps) {
-  const [phase, setPhase] = useState<Phases>(Phases.Pre);
+  const [phase, setPhase] = useState<Phases>(Phases.PreCombat);
   const [subPhase, setSubPhase] = useState<SubPhases>(SubPhases.Fight);
 
   const [combatUnits, setCombatUnits] = useState<Unit[]>([...myUnits]);
@@ -46,6 +53,8 @@ export default function Combat({
   ]);
 
   const [combatSnapshots, setCombatSnapshots] = useState<CombatSnapshot[]>([]);
+
+  const [events, setEvents] = useState<Event[]>([]);
 
   /* ======== FOR TESTING ========
   const testMelee: Unit = {
@@ -155,7 +164,29 @@ export default function Combat({
     setCombatSnapshots([...combatSnapshots, combatSnapshot]);
   };
 
-  const fight = () => {
+  const preCombatEvent = () => {
+    const preCombatEvent: PreCombatEvent = {
+      type: "preCombat",
+      data: {
+        friendly: {
+          name: combatUnits[friendlyIndex].name,
+          id: combatUnits[friendlyIndex].id,
+        },
+        enemy: {
+          name: combatEnemyUnits[enemyIndex].name,
+          id: combatEnemyUnits[enemyIndex].id,
+        },
+      },
+    };
+    /* FIXME: Should choose randomly from a number of messages, say indexes 1-5, when two units face off */
+    const eventIndex = 1;
+
+    const combatState = { event: preCombatEvent, idx: eventIndex };
+    // experimenting with appending to top
+    setEvents([combatState, ...events]);
+  };
+
+  const damageUnits = () => {
     // chosen units attack each other
 
     // FIXME: Simplify this? Still hesitant to modify combatUnits directly
@@ -166,6 +197,7 @@ export default function Combat({
       _friendlyCopy[friendlyIndex].currentHealth -
         combatEnemyUnits[enemyIndex].attack
     );
+
     // update army with new unit health
     setCombatUnits(_friendlyCopy);
 
@@ -175,6 +207,35 @@ export default function Combat({
       _enemyCopy[enemyIndex].currentHealth - combatUnits[friendlyIndex].attack
     );
     setCombatEnemyUnits(_enemyCopy);
+
+    // the following adds a combat event for the combat log
+    const combatEvent: CombatEvent = {
+      type: "combat",
+      data: {
+        friendly: {
+          name: combatUnits[friendlyIndex].name,
+          attack: combatUnits[friendlyIndex].attack,
+          maxHealth: combatUnits[friendlyIndex].maxHealth,
+          // used copy to avoid state update's async issues
+          currentHealth: _friendlyCopy[friendlyIndex].currentHealth,
+          id: combatUnits[friendlyIndex].id,
+        },
+        enemy: {
+          name: combatEnemyUnits[enemyIndex].name,
+          attack: combatEnemyUnits[enemyIndex].attack,
+          maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
+          // used copy to avoid state update's async issues
+          currentHealth: _enemyCopy[enemyIndex].currentHealth,
+          id: combatEnemyUnits[enemyIndex].id,
+        },
+      },
+    };
+    /* FIXME: Should choose the appropriate message based on context when two units are fighting */
+    const eventIndex = 0;
+
+    const combatState = { event: combatEvent, idx: eventIndex };
+    // experimenting with appending to top
+    setEvents([combatState, ...events]);
   };
 
   const selectNewUnits = () => {
@@ -220,9 +281,9 @@ export default function Combat({
   // immediately go to post; buildings are damaged accordingly
   const combatMegaFunction = () => {
     switch (phase) {
-      case Phases.Pre:
-        // take a snapshot of the situation, what will take place this round
-        takeSnapshot();
+      case Phases.PreCombat:
+        // add a preCombat event to the "events" state
+        preCombatEvent();
 
         setPhase(Phases.Combat);
         setSubPhase(SubPhases.Fight);
@@ -231,8 +292,11 @@ export default function Combat({
       case Phases.Combat:
         switch (subPhase) {
           case SubPhases.Fight:
-            fight();
+            // combatEvent() happens within damageUnits
+            damageUnits();
             // TODO: Add in animation for units attacking each other
+
+            // FIXME: Left off here, Jan16 2023 -- haven't fleshed out CombatLogV2 yet
 
             setSubPhase(SubPhases.VictoryCheck);
             break;
@@ -251,7 +315,7 @@ export default function Combat({
               // number of units injured
               // buildings damaged (and how much?)
 
-              setPhase(Phases.Post);
+              setPhase(Phases.PostCombat);
             } else {
               selectNewUnits();
               setSubPhase(SubPhases.Fight);
@@ -259,7 +323,7 @@ export default function Combat({
             break;
         }
         break;
-      case Phases.Post:
+      case Phases.PostCombat:
         sendArmiesToPlanning();
         switchPhase();
         break;
@@ -333,7 +397,7 @@ export default function Combat({
 
     setCombatUnits(autoFriendlyUnits);
     setCombatEnemyUnits(autoEnemyUnits);
-    setPhase(Phases.Post);
+    setPhase(Phases.PostCombat);
   };
 
   return (
@@ -364,7 +428,7 @@ export default function Combat({
         startColumn="8"
       />
 
-      {phase === Phases.Post ? (
+      {phase === Phases.PostCombat ? (
         <>
           <div className="center col-span-12 col-start-1 row-start-4 w-5/6 self-center justify-self-center sm:row-start-3 sm:mt-2 md:mt-0">
             <PostCombatSummary
@@ -385,7 +449,7 @@ export default function Combat({
         </>
       ) : (
         <div className="card col-span-5 col-start-1 row-start-4 mr-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-end md:mt-0">
-          {phase === Phases.Pre && (
+          {phase === Phases.PreCombat && (
             <PreCombatCardTemplate
               headerText="Your Army"
               army={combatUnits}
@@ -402,7 +466,7 @@ export default function Combat({
         </div>
       )}
 
-      {(phase === Phases.Pre || phase === Phases.Combat) && (
+      {(phase === Phases.PreCombat || phase === Phases.Combat) && (
         <div className="col-span-2 col-start-6 row-start-4 grid auto-rows-min place-content-center gap-2 sm:row-start-3 sm:mt-2 md:mt-0">
           {phase === Phases.Combat && (
             <div className="mx-auto max-h-24 overflow-y-auto rounded-bl-md rounded-tr-md border border-white/25 p-2 text-center text-xs sm:max-h-full sm:text-sm md:text-base lg:text-lg xl:text-xl">
@@ -415,7 +479,7 @@ export default function Combat({
           )}
 
           <div className="flex items-end justify-center p-4 pb-0">
-            {phase === Phases.Pre && (
+            {phase === Phases.PreCombat && (
               <CombatButton
                 buttonText="Start"
                 onClick={() => combatMegaFunction()}
@@ -451,9 +515,9 @@ export default function Combat({
         </div>
       )}
 
-      {phase !== Phases.Post && (
+      {phase !== Phases.PostCombat && (
         <div className="card col-span-5 col-start-8 row-start-4 ml-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-start md:mt-0">
-          {phase === Phases.Pre && (
+          {phase === Phases.PreCombat && (
             <PreCombatCardTemplate
               headerText="Enemy Army"
               army={combatEnemyUnits}
