@@ -14,11 +14,12 @@ import CombatLog from "./CombatLog";
 import { CombatSnapshot, UnitSnapshot } from "../../types/CombatSnapshots";
 import {
   CombatEvent,
-  Event,
   EventType,
+  MainCombatEvent,
   PostCombatEvent,
   PreCombatEvent,
 } from "../../types/CombatEvents";
+import CombatLogV2 from "./CombatLogV2";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -54,7 +55,7 @@ export default function Combat({
 
   const [combatSnapshots, setCombatSnapshots] = useState<CombatSnapshot[]>([]);
 
-  const [events, setEvents] = useState<Event[]>([]);
+  const [combatEvents, setCombatEvents] = useState<CombatEvent[]>([]);
 
   /* ======== FOR TESTING ========
   const testMelee: Unit = {
@@ -179,11 +180,11 @@ export default function Combat({
       },
     };
     /* FIXME: Should choose randomly from a number of messages, say indexes 1-5, when two units face off */
-    const eventIndex = 1;
+    const eventIndex = 0;
 
     const combatState = { event: preCombatEvent, idx: eventIndex };
     // experimenting with appending to top
-    setEvents([combatState, ...events]);
+    setCombatEvents([combatState, ...combatEvents]);
   };
 
   const damageUnits = () => {
@@ -209,7 +210,7 @@ export default function Combat({
     setCombatEnemyUnits(_enemyCopy);
 
     // the following adds a combat event for the combat log
-    const combatEvent: CombatEvent = {
+    const combatEvent: MainCombatEvent = {
       type: "combat",
       data: {
         friendly: {
@@ -235,7 +236,35 @@ export default function Combat({
 
     const combatState = { event: combatEvent, idx: eventIndex };
     // experimenting with appending to top
-    setEvents([combatState, ...events]);
+    setCombatEvents([combatState, ...combatEvents]);
+  };
+
+  /* FIXME: Unfinished! */
+  const postCombatEvent = () => {
+    const postCombatEvent: PostCombatEvent = {
+      type: "postCombat",
+      data: {
+        friendly: {
+          name: combatUnits[friendlyIndex].name,
+          maxHealth: combatUnits[friendlyIndex].maxHealth,
+          currentHealth: combatUnits[friendlyIndex].currentHealth,
+          id: combatUnits[friendlyIndex].id,
+        },
+        enemy: {
+          name: combatEnemyUnits[enemyIndex].name,
+          maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
+          currentHealth: combatEnemyUnits[enemyIndex].currentHealth,
+          id: combatEnemyUnits[enemyIndex].id,
+        },
+      },
+    };
+
+    /* FIXME: Should choose the appropriate message based on context post combat */
+    const eventIndex = 0;
+
+    const combatState = { event: postCombatEvent, idx: eventIndex };
+    // experimenting with appending to top
+    setCombatEvents([combatState, ...combatEvents]);
   };
 
   const selectNewUnits = () => {
@@ -314,6 +343,8 @@ export default function Combat({
               // number of units lost
               // number of units injured
               // buildings damaged (and how much?)
+
+              postCombatEvent();
 
               setPhase(Phases.PostCombat);
             } else {
@@ -410,7 +441,12 @@ export default function Combat({
         selectedUnit={combatUnits[friendlyIndex]}
         startColumn="1"
       />
-      <CombatLog
+      <CombatLogV2
+        combatEvents={combatEvents}
+        townName={townName}
+        defaultTownName={defaultTownName}
+      />
+      {/* <CombatLog
         phase={phase}
         subphase={subPhase}
         townName={townName}
@@ -420,7 +456,7 @@ export default function Combat({
         combatEnemyUnits={combatEnemyUnits}
         friendlyIndex={friendlyIndex}
         enemyIndex={enemyIndex}
-      />
+      /> */}
       <ArmyGrid
         phase={phase}
         army={combatEnemyUnits}

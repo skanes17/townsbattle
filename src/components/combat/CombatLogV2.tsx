@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { getAllJSDocTagsOfKind } from "typescript";
 import {
   PreCombatEvent,
-  CombatEvent,
+  MainCombatEvent,
   PostCombatEvent,
+  CombatEvent,
 } from "../../types/CombatEvents";
 import { Phases, SubPhases } from "../../types/CombatPhases";
 import { CombatSnapshot } from "../../types/CombatSnapshots";
@@ -11,34 +12,19 @@ import { Unit } from "../../types/Unit";
 import POddStyle from "../POddStyle";
 
 interface CombatLogProps {
-  events: Event[];
-  phase: Phases;
-  subphase: SubPhases;
+  combatEvents: CombatEvent[];
   townName: string;
   defaultTownName: string;
-  combatSnapshots: CombatSnapshot[];
-  combatUnits: Unit[];
-  combatEnemyUnits: Unit[];
-  friendlyIndex: number;
-  enemyIndex: number;
 }
 
 /* TODO: Send new text to the top */
 /* TODO: Remove table formatting, make only the newest line colored amber. */
 export default function CombatLog({
-  events,
-  phase,
-  subphase,
+  combatEvents,
   townName,
   defaultTownName,
-  combatSnapshots,
-  combatUnits,
-  combatEnemyUnits,
-  friendlyIndex,
-  enemyIndex,
 }: CombatLogProps) {
   const messages = {
-    // preCombat is the type
     preCombat: [
       (event: PreCombatEvent) => {
         return (
@@ -53,7 +39,7 @@ export default function CombatLog({
       /* more alternatives here */
     ],
     combat: [
-      (event: CombatEvent) => {
+      (event: MainCombatEvent) => {
         return (
           <>
             <span>{event.data.friendly.name}</span> has attacked{" "}
@@ -62,7 +48,7 @@ export default function CombatLog({
           </>
         );
       },
-      (event: CombatEvent) => {
+      (event: MainCombatEvent) => {
         return (
           <>
             <span>{event.data.enemy.name}</span> has attacked{" "}
@@ -90,10 +76,13 @@ export default function CombatLog({
     ],
   };
 
-  /* FIXME: Overall structure of this may be broken -- worth remaking the COmbatLog component, maybe from scratch; less confusing */
-  events.map((item) => {
-    return messages[item.event.type][item.event.idx](item);
-  });
+  return (
+    <div className="col-span-12 col-start-1 row-start-1 aspect-video max-h-32 w-full self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4 text-sm sm:col-span-4 sm:col-start-5 sm:row-span-2 sm:row-start-1 sm:h-5/6 sm:max-h-full sm:w-full sm:text-sm lg:text-lg xl:aspect-[5/3]">
+      {combatEvents.map((item) => {
+        messages[item.event.type][item.event.idx](item);
+      })}
+    </div>
+  );
 }
 
 /*

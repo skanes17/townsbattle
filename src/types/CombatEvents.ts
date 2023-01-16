@@ -1,7 +1,5 @@
-export type EventType = PreCombatEvent | CombatEvent | PostCombatEvent;
-
-export interface Event {
-  event: EventType;
+export interface CombatEvent {
+  event: PreCombatEvent | MainCombatEvent | PostCombatEvent;
   idx: number;
 }
 
@@ -16,7 +14,7 @@ export interface PreCombatEvent {
   };
 }
 
-export interface CombatEvent {
+export interface MainCombatEvent {
   type: "combat";
   data: {
     friendly: {
@@ -41,14 +39,12 @@ export interface PostCombatEvent {
   data: {
     friendly: {
       name: string;
-      attack: number;
       maxHealth: number;
       currentHealth: number;
       id?: number;
     };
     enemy: {
       name: string;
-      attack: number;
       maxHealth: number;
       currentHealth: number;
       id?: number;
