@@ -44,8 +44,7 @@ export default function CombatLogV2({
               .
             </p>
             <p>
-              {/* TODO: The enemy has reached the gates of {townName || defaultTownName}. */}
-              The enemy has reached the gates.{" "}
+              The enemy has reached the gates of {townName || defaultTownName}.
             </p>
           </>
         );
@@ -95,7 +94,6 @@ export default function CombatLogV2({
           <p>
             <span>
               {event.data.friendly.name}
-
               {event.data.friendly.id}
             </span>{" "}
             returns to their army.
@@ -108,19 +106,8 @@ export default function CombatLogV2({
   return (
     <div className="col-span-12 col-start-1 row-start-1 aspect-video max-h-32 w-full self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4 text-sm sm:col-span-4 sm:col-start-5 sm:row-span-2 sm:row-start-1 sm:h-5/6 sm:max-h-full sm:w-full sm:text-sm lg:text-lg xl:aspect-[5/3]">
       {combatEvents.map((item) => {
-        /* FIXME: There must be a better way to handle the type error present w/o the switch? */
-        switch (item.event.type) {
-          case "preCombat":
-            return messages[item.event.type][item.idx](item.event);
-          case "combat":
-            return messages[item.event.type][item.idx](item.event);
-          case "postCombat":
-            return messages[item.event.type][item.idx](item.event);
-          default:
-            /* TODO: Review this usage */
-            const _exhaustiveCheck: never = item.event;
-            return _exhaustiveCheck;
-        }
+        /* @ts-ignore */
+        return messages[item.event.type][item.idx](item.event);
       })}
     </div>
   );
