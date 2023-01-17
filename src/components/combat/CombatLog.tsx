@@ -8,6 +8,7 @@ import {
 import { Phases, SubPhases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
 import POddStyle from "../POddStyle";
+import { messages } from "./Messages";
 
 interface CombatLogProps {
   combatEvents: CombatEvent[];
@@ -22,134 +23,6 @@ export default function CombatLog({
   townName,
   defaultTownName,
 }: CombatLogProps) {
-  const messages = {
-    // preCombat, mainCombat, postCombat are the types
-    preCombat: [
-      // different indexes used for desired events/text
-      (event: PreCombatEvent) => {
-        return (
-          <>
-            <POddStyle>
-              <span className="text-green-400">
-                {event.data.friendly.name}
-                {event.data.friendly.id}
-              </span>{" "}
-              faces off against{" "}
-              <span className="text-red-400">
-                {event.data.enemy.name}
-                {event.data.enemy.id}
-              </span>
-              .
-            </POddStyle>
-          </>
-        );
-      },
-      (event: PreCombatEvent) => {
-        return (
-          <>
-            <POddStyle>
-              <span className="text-green-400">
-                {event.data.friendly.name}
-                {event.data.friendly.id}
-              </span>{" "}
-              jumps in and stares down{" "}
-              <span className="text-red-400">
-                {event.data.enemy.name}
-                {event.data.enemy.id}
-              </span>
-              .
-            </POddStyle>
-          </>
-        );
-      },
-      (event: PreCombatEvent) => {
-        return (
-          <>
-            <POddStyle>
-              <span className="text-green-400">
-                {event.data.friendly.name}
-                {event.data.friendly.id}
-              </span>{" "}
-              wants to try his luck against{" "}
-              <span className="text-red-400">
-                {event.data.enemy.name}
-                {event.data.enemy.id}
-              </span>
-              .
-            </POddStyle>
-          </>
-        );
-      },
-      /* more alternatives here */
-    ],
-    combat: [
-      (event: MainCombatEvent) => {
-        return (
-          <POddStyle>
-            <span className="text-green-400">
-              {event.data.friendly.name}
-              {event.data.friendly.id}
-            </span>{" "}
-            attacks{" "}
-            <span className="text-red-400">
-              {event.data.enemy.name}
-              {event.data.enemy.id}
-            </span>{" "}
-            for{" "}
-            <span className="text-amber-400">
-              {event.data.friendly.attack} damage
-            </span>{" "}
-            and takes{" "}
-            <span className="text-amber-400">
-              {event.data.enemy.attack} damage
-            </span>
-            .
-          </POddStyle>
-        );
-      },
-      (event: MainCombatEvent) => {
-        return (
-          <POddStyle>
-            <span className="text-green-400">
-              {event.data.friendly.name}
-              {event.data.friendly.id}
-            </span>{" "}
-            injures{" "}
-            <span className="text-red-400">
-              {event.data.enemy.name}
-              {event.data.enemy.id}
-            </span>{" "}
-            for{" "}
-            <span className="text-amber-400">
-              {event.data.friendly.attack} damage
-            </span>{" "}
-            and takes{" "}
-            <span className="text-amber-400">
-              {event.data.enemy.attack} damage
-            </span>
-            .
-          </POddStyle>
-        );
-      },
-    ],
-    postCombat: [
-      (event: PostCombatEvent) => {
-        return <>Both units survive and return to their armies.</>;
-      },
-      (event: PostCombatEvent) => {
-        return (
-          <POddStyle>
-            <span className="text-green-400">
-              {event.data.friendly.name}
-              {event.data.friendly.id}
-            </span>{" "}
-            returns to their army.
-          </POddStyle>
-        );
-      },
-    ],
-  };
-
   return (
     <div className="col-span-12 col-start-1 row-start-1 aspect-video max-h-32 w-full self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4 text-sm sm:col-span-4 sm:col-start-5 sm:row-span-2 sm:row-start-1 sm:h-5/6 sm:max-h-full sm:w-full sm:text-sm lg:text-lg xl:aspect-[5/3]">
       {combatEvents.map((item) => {
