@@ -17,6 +17,7 @@ import {
   PostCombatEvent,
   PreCombatEvent,
 } from "../../types/CombatEvents";
+import { messages } from "./Messages";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -52,40 +53,6 @@ export default function Combat({
 
   const [combatEvents, setCombatEvents] = useState<CombatEvent[]>([]);
   const [turnsCompleted, setTurnsCompleted] = useState(0);
-
-  /* ======== FOR TESTING ========
-  const testMelee: Unit = {
-    unitType: "melee",
-    name: "Melee",
-    nameSymbol: "⚔️",
-    description: "Attack and health are balanced.",
-    attack: 5,
-    maxHealth: 5,
-    currentHealth: 4,
-    id: 17,
-  };
-
-  const testTanky: Unit = {
-    unitType: "tanky",
-    name: "Tanky",
-    nameSymbol: "🛡️",
-    description: "Low attack but lots of health.",
-    attack: 3,
-    maxHealth: 7,
-    currentHealth: 1,
-  };
-
-  const numberOfFriendlies = 25;
-  const numberOfEnemies = 17;
-
-  const testArmy = new Array(numberOfFriendlies).fill(null).map((_) => {
-    return testMelee;
-  });
-
-  const testEnemyArmy = new Array(numberOfEnemies).fill(null).map((_) => {
-    return testTanky;
-  });
-  ============================= */
 
   const combatUnitCounts: UnitCounts = {
     melee: combatUnits.filter((unit) => unit.unitType === "melee").length,
@@ -151,6 +118,45 @@ export default function Combat({
     setCombatEvents([combatState, ...combatEvents]);
   };
 
+  const selectNewUnits = () => {
+    // FIXME: Had to use hacky workaround to get state to cooperate with preCombatEvent
+    // suggest refactoring
+
+    const newFriendlyIndex =
+      survivingFriendlyUnitIndexes[
+        Math.floor(Math.random() * survivingFriendlyUnitIndexes.length)
+      ];
+    const newEnemyIndex =
+      survivingEnemyUnitIndexes[
+        Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
+      ];
+
+    const preCombatEvent: PreCombatEvent = {
+      type: "preCombat",
+      data: {
+        friendly: {
+          name: combatUnits[newFriendlyIndex].name,
+          id: combatUnits[newFriendlyIndex].id,
+        },
+        enemy: {
+          name: combatEnemyUnits[newEnemyIndex].name,
+          id: combatEnemyUnits[newEnemyIndex].id,
+        },
+      },
+    };
+    /* FIXME: Chooses randomly from possible messages when two units face off */
+    const eventIndex =
+      // picks any array index except index of 0
+      Math.floor(Math.random() * (messages.preCombat.length - 1)) + 1;
+    const combatState = { event: preCombatEvent, idx: eventIndex };
+    // experimenting with appending to top
+    setCombatEvents([combatState, ...combatEvents]);
+
+    // if both armies remain, select new units
+    setFriendlyIndex(newFriendlyIndex);
+    setEnemyIndex(newEnemyIndex);
+  };
+
   const damageUnits = () => {
     // chosen units attack each other
 
@@ -179,6 +185,7 @@ export default function Combat({
       data: {
         friendly: {
           name: combatUnits[friendlyIndex].name,
+          unitType: combatUnits[friendlyIndex].unitType,
           attack: combatUnits[friendlyIndex].attack,
           maxHealth: combatUnits[friendlyIndex].maxHealth,
           // used copy to avoid state update's async issues
@@ -187,6 +194,7 @@ export default function Combat({
         },
         enemy: {
           name: combatEnemyUnits[enemyIndex].name,
+          unitType: combatEnemyUnits[enemyIndex].unitType,
           attack: combatEnemyUnits[enemyIndex].attack,
           maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
           // used copy to avoid state update's async issues
@@ -196,7 +204,7 @@ export default function Combat({
       },
     };
     /* FIXME: Should choose the appropriate message based on context when two units are fighting */
-    const eventIndex = 0;
+    const eventIndex = Math.floor(Math.random() * messages.combat.length);
 
     const combatState = { event: combatEvent, idx: eventIndex };
     // experimenting with appending to top
@@ -229,44 +237,6 @@ export default function Combat({
     const combatState = { event: postCombatEvent, idx: eventIndex };
     // experimenting with appending to top
     setCombatEvents([combatState, ...combatEvents]);
-  };
-
-  const selectNewUnits = () => {
-    // FIXME: Had to use hacky workaround to get state to cooperate with preCombatEvent
-    // suggest refactoring
-
-    const newFriendlyIndex =
-      survivingFriendlyUnitIndexes[
-        Math.floor(Math.random() * survivingFriendlyUnitIndexes.length)
-      ];
-    const newEnemyIndex =
-      survivingEnemyUnitIndexes[
-        Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
-      ];
-
-    const preCombatEvent: PreCombatEvent = {
-      type: "preCombat",
-      data: {
-        friendly: {
-          name: combatUnits[newFriendlyIndex].name,
-          id: combatUnits[newFriendlyIndex].id,
-        },
-        enemy: {
-          name: combatEnemyUnits[newEnemyIndex].name,
-          id: combatEnemyUnits[newEnemyIndex].id,
-        },
-      },
-    };
-    /* FIXME: Should choose randomly from a number of messages, say indexes 1-5, when two units face off */
-    const eventIndex = 1;
-
-    const combatState = { event: preCombatEvent, idx: eventIndex };
-    // experimenting with appending to top
-    setCombatEvents([combatState, ...combatEvents]);
-
-    // if both armies remain, select new units
-    setFriendlyIndex(newFriendlyIndex);
-    setEnemyIndex(newEnemyIndex);
   };
 
   const sendArmiesToPlanning = () => {

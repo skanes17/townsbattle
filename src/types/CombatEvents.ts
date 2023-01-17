@@ -1,9 +1,9 @@
+import { UnitType } from "./Unit";
+
 export interface CombatEvent {
   event: PreCombatEvent | MainCombatEvent | PostCombatEvent;
   idx: number;
 }
-
-// messages[item.event.type][item.idx](item.event);
 
 export interface PreCombatEvent {
   type: "preCombat";
@@ -21,6 +21,7 @@ export interface MainCombatEvent {
   data: {
     friendly: {
       name: string;
+      unitType: UnitType;
       attack: number;
       maxHealth: number;
       currentHealth: number;
@@ -28,6 +29,7 @@ export interface MainCombatEvent {
     };
     enemy: {
       name: string;
+      unitType: UnitType;
       attack: number;
       maxHealth: number;
       currentHealth: number;
