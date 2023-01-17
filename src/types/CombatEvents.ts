@@ -3,6 +3,8 @@ export interface CombatEvent {
   idx: number;
 }
 
+// messages[item.event.type][item.idx](item.event);
+
 export interface PreCombatEvent {
   type: "preCombat";
   data: {

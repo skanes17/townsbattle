@@ -14,7 +14,6 @@ import CombatLog from "./CombatLog";
 import { CombatSnapshot, UnitSnapshot } from "../../types/CombatSnapshots";
 import {
   CombatEvent,
-  EventType,
   MainCombatEvent,
   PostCombatEvent,
   PreCombatEvent,

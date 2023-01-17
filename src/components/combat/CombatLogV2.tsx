@@ -19,20 +19,34 @@ interface CombatLogProps {
 
 /* TODO: Send new text to the top */
 /* TODO: Remove table formatting, make only the newest line colored amber. */
-export default function CombatLog({
+export default function CombatLogV2({
   combatEvents,
   townName,
   defaultTownName,
 }: CombatLogProps) {
   const messages = {
+    // preCombat, mainCombat, postCombat are the types
     preCombat: [
+      // different indexes used for desired events/text
       (event: PreCombatEvent) => {
         return (
           <>
-            {/* TODO: The enemy has reached the gates of {townName || defaultTownName}. */}
-            The enemy has reached the gates.{" "}
-            <span>{event.data.friendly.name}</span> faces off against{" "}
-            <span>{event.data.enemy.name}</span>.
+            <p>
+              <span>
+                {event.data.friendly.name}
+                {event.data.friendly.id}
+              </span>{" "}
+              faces off against{" "}
+              <span>
+                {event.data.enemy.name}
+                {event.data.enemy.id}
+              </span>
+              .
+            </p>
+            <p>
+              {/* TODO: The enemy has reached the gates of {townName || defaultTownName}. */}
+              The enemy has reached the gates.{" "}
+            </p>
           </>
         );
       },
@@ -41,20 +55,34 @@ export default function CombatLog({
     combat: [
       (event: MainCombatEvent) => {
         return (
-          <>
-            <span>{event.data.friendly.name}</span> has attacked{" "}
-            <span>{event.data.enemy.name}</span> for{" "}
-            {event.data.friendly.attack} damage.
-          </>
+          <p>
+            <span>
+              {event.data.friendly.name}
+              {event.data.friendly.id}
+            </span>{" "}
+            has attacked{" "}
+            <span>
+              {event.data.enemy.name}
+              {event.data.enemy.id}
+            </span>{" "}
+            for {event.data.friendly.attack} damage.
+          </p>
         );
       },
       (event: MainCombatEvent) => {
         return (
-          <>
-            <span>{event.data.enemy.name}</span> has attacked{" "}
-            <span>{event.data.friendly.name}</span> for{" "}
-            {event.data.enemy.attack} damage.
-          </>
+          <p>
+            <span>
+              {event.data.enemy.name}
+              {event.data.enemy.id}
+            </span>{" "}
+            has attacked{" "}
+            <span>
+              {event.data.friendly.name}
+              {event.data.friendly.id}
+            </span>{" "}
+            for {event.data.enemy.attack} damage.
+          </p>
         );
       },
     ],
@@ -64,13 +92,14 @@ export default function CombatLog({
       },
       (event: PostCombatEvent) => {
         return (
-          <>
+          <p>
             <span>
               {event.data.friendly.name}
+
               {event.data.friendly.id}
             </span>{" "}
             returns to their army.
-          </>
+          </p>
         );
       },
     ],
@@ -79,7 +108,19 @@ export default function CombatLog({
   return (
     <div className="col-span-12 col-start-1 row-start-1 aspect-video max-h-32 w-full self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4 text-sm sm:col-span-4 sm:col-start-5 sm:row-span-2 sm:row-start-1 sm:h-5/6 sm:max-h-full sm:w-full sm:text-sm lg:text-lg xl:aspect-[5/3]">
       {combatEvents.map((item) => {
-        messages[item.event.type][item.event.idx](item);
+        /* FIXME: There must be a better way to handle the type error present w/o the switch? */
+        switch (item.event.type) {
+          case "preCombat":
+            return messages[item.event.type][item.idx](item.event);
+          case "combat":
+            return messages[item.event.type][item.idx](item.event);
+          case "postCombat":
+            return messages[item.event.type][item.idx](item.event);
+          default:
+            /* TODO: Review this usage */
+            const _exhaustiveCheck: never = item.event;
+            return _exhaustiveCheck;
+        }
       })}
     </div>
   );
