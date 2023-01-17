@@ -1,3 +1,4 @@
+// old system - replaced by Combat Events
 export interface UnitSnapshot {
   name: string;
   id?: number;

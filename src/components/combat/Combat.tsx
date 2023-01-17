@@ -11,14 +11,12 @@ import PostCombatSummary from "./PostCombatSummary";
 import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 import ArmyGrid from "./ArmyGrid";
 import CombatLog from "./CombatLog";
-import { CombatSnapshot, UnitSnapshot } from "../../types/CombatSnapshots";
 import {
   CombatEvent,
   MainCombatEvent,
   PostCombatEvent,
   PreCombatEvent,
 } from "../../types/CombatEvents";
-import CombatLogV2 from "./CombatLogV2";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -52,9 +50,8 @@ export default function Combat({
     ...enemyUnits,
   ]);
 
-  const [combatSnapshots, setCombatSnapshots] = useState<CombatSnapshot[]>([]);
-
   const [combatEvents, setCombatEvents] = useState<CombatEvent[]>([]);
+  const [turnsCompleted, setTurnsCompleted] = useState(0);
 
   /* ======== FOR TESTING ========
   const testMelee: Unit = {
@@ -133,39 +130,8 @@ export default function Combat({
     ]
   );
 
-  const takeSnapshot = () => {
-    const combatSnapshot: CombatSnapshot = {
-      // chosen friendly
-      /* TODO: Rethink this to include copied unit properties here?? Could make combat log displaying easier */
-      friendly: {
-        name: combatUnits[friendlyIndex].name,
-        id: combatUnits[friendlyIndex].id,
-        friendly: true,
-      },
-      // chosen enemy
-      enemy: {
-        name: combatEnemyUnits[enemyIndex].name,
-        id: combatEnemyUnits[enemyIndex].id,
-        friendly: false,
-      },
-      // what happens to the friendly
-      friendlyAction: {
-        effect: "damaged",
-        value: combatEnemyUnits[friendlyIndex].attack,
-      },
-      // what happens to the enemy
-      enemyAction: {
-        effect: "damaged",
-        value: combatUnits[friendlyIndex].attack,
-      },
-    };
-
-    // should I use this instead? (combatSnapshots => {return [...combatSnapshots, combatSnapshot]})
-    setCombatSnapshots([...combatSnapshots, combatSnapshot]);
-  };
-
-  const preCombatEvent = () => {
-    const preCombatEvent: PreCombatEvent = {
+  const initialPreCombatEvent = () => {
+    const initialPreCombatEvent: PreCombatEvent = {
       type: "preCombat",
       data: {
         friendly: {
@@ -178,10 +144,9 @@ export default function Combat({
         },
       },
     };
-    /* FIXME: Should choose randomly from a number of messages, say indexes 1-5, when two units face off */
-    const eventIndex = 0;
 
-    const combatState = { event: preCombatEvent, idx: eventIndex };
+    const eventIndex = 0;
+    const combatState = { event: initialPreCombatEvent, idx: eventIndex };
     // experimenting with appending to top
     setCombatEvents([combatState, ...combatEvents]);
   };
@@ -267,17 +232,41 @@ export default function Combat({
   };
 
   const selectNewUnits = () => {
-    // if both armies remain, select new units
-    setFriendlyIndex(
+    // FIXME: Had to use hacky workaround to get state to cooperate with preCombatEvent
+    // suggest refactoring
+
+    const newFriendlyIndex =
       survivingFriendlyUnitIndexes[
         Math.floor(Math.random() * survivingFriendlyUnitIndexes.length)
-      ]
-    );
-    setEnemyIndex(
+      ];
+    const newEnemyIndex =
       survivingEnemyUnitIndexes[
         Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
-      ]
-    );
+      ];
+
+    const preCombatEvent: PreCombatEvent = {
+      type: "preCombat",
+      data: {
+        friendly: {
+          name: combatUnits[newFriendlyIndex].name,
+          id: combatUnits[newFriendlyIndex].id,
+        },
+        enemy: {
+          name: combatEnemyUnits[newEnemyIndex].name,
+          id: combatEnemyUnits[newEnemyIndex].id,
+        },
+      },
+    };
+    /* FIXME: Should choose randomly from a number of messages, say indexes 1-5, when two units face off */
+    const eventIndex = 1;
+
+    const combatState = { event: preCombatEvent, idx: eventIndex };
+    // experimenting with appending to top
+    setCombatEvents([combatState, ...combatEvents]);
+
+    // if both armies remain, select new units
+    setFriendlyIndex(newFriendlyIndex);
+    setEnemyIndex(newEnemyIndex);
   };
 
   const sendArmiesToPlanning = () => {
@@ -310,8 +299,8 @@ export default function Combat({
   const combatMegaFunction = () => {
     switch (phase) {
       case Phases.PreCombat:
-        // add a preCombat event to the "events" state
-        preCombatEvent();
+        // adds a preCombat event to the "events" state
+        initialPreCombatEvent();
 
         setPhase(Phases.Combat);
         setSubPhase(SubPhases.Fight);
@@ -323,19 +312,23 @@ export default function Combat({
             // combatEvent() happens within damageUnits
             damageUnits();
             // TODO: Add in animation for units attacking each other
-
-            // FIXME: Left off here, Jan16 2023 -- haven't fleshed out CombatLogV2 yet
-
+            setTurnsCompleted(turnsCompleted + 1);
             setSubPhase(SubPhases.VictoryCheck);
             break;
 
           case SubPhases.VictoryCheck:
-            // return the unit to the army and pick a new one, or not
-            // if an army was defeated, end combat
             if (
-              survivingFriendlyUnitIndexes.length === 0 ||
-              survivingEnemyUnitIndexes.length === 0
+              survivingFriendlyUnitIndexes.length !== 0 &&
+              survivingEnemyUnitIndexes.length !== 0
             ) {
+              // return the units to their army and pick new ones
+              // also sets a new preCombatEvent
+              selectNewUnits();
+
+              setSubPhase(SubPhases.Fight);
+            } else {
+              // if an army was defeated, end combat
+
               // TODO: See below
               // calculate all the stats to present on next screen, such as...
               // number of units defeated
@@ -346,9 +339,6 @@ export default function Combat({
               postCombatEvent();
 
               setPhase(Phases.PostCombat);
-            } else {
-              selectNewUnits();
-              setSubPhase(SubPhases.Fight);
             }
             break;
         }
@@ -440,22 +430,11 @@ export default function Combat({
         selectedUnit={combatUnits[friendlyIndex]}
         startColumn="1"
       />
-      <CombatLogV2
+      <CombatLog
         combatEvents={combatEvents}
         townName={townName}
         defaultTownName={defaultTownName}
       />
-      {/* <CombatLog
-        phase={phase}
-        subphase={subPhase}
-        townName={townName}
-        defaultTownName={defaultTownName}
-        combatSnapshots={combatSnapshots}
-        combatUnits={combatUnits}
-        combatEnemyUnits={combatEnemyUnits}
-        friendlyIndex={friendlyIndex}
-        enemyIndex={enemyIndex}
-      /> */}
       <ArmyGrid
         phase={phase}
         army={combatEnemyUnits}
