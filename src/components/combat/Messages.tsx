@@ -4,7 +4,7 @@ import {
   MainCombatEvent,
   PostCombatEvent,
 } from "../../types/CombatEvents";
-import POddStyle from "../POddStyle";
+import POddStyle from "./POddStyle";
 
 /* TODO: Make flavourtexts based on unit type; see below in combat phase */
 

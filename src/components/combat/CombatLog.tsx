@@ -7,7 +7,7 @@ import {
 } from "../../types/CombatEvents";
 import { Phases, SubPhases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
-import POddStyle from "../POddStyle";
+import POddStyle from "./POddStyle";
 import { messages } from "./Messages";
 
 interface CombatLogProps {
