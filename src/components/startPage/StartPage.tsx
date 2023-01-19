@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
-import StartState, { Difficulty } from "../../types/Start";
+import StartState from "../../types/Start";
 import Button from "../buttons/Button";
 import About from "./About";
 import HowToPlay from "./HowToPlay";
@@ -37,7 +37,9 @@ export default function StartPage() {
   const routerLinkStyle =
     "flex w-3/5 flex-row justify-between rounded-md bg-indigo-800 p-1 text-base text-slate-200 hover:bg-indigo-900 active:scale-95 sm:text-xl md:p-2 md:text-2xl lg:text-3xl xl:p-3 xl:text-4xl";
 
-  /* TODO: Set up main page to be "/" */
+  // TODO: 1-Turn the following into a main page with "/"
+  // TODO: 2-Use <Outlet/> to display the common UI, eg MenuTitle, MenuItems, etc
+  // TODO: 3-Once "/play" settings have been set, use <Link state={startState}> to send state to <Game>
   return (
     <>
       <div className="flex h-screen flex-col items-center justify-center">
@@ -64,22 +66,12 @@ export default function StartPage() {
         </div>
       </div>
 
-      {/* TODO: Much repetition within Leaderboards, Options, etc components. Consider DRY it */}
+      {/* TODO: Much repetition within Leaderboards, Options, etc components. Consider DRYing it out */}
       <Routes>
         <Route
           path="/play"
           element={
-            <Play
-              startState={startState}
-              setStartState={setStartState}
-              /* townName={townName}
-              setTownName={setTownName}
-              defaultTownName={defaultTownName}
-              difficulty={difficulty}
-              setDifficulty={setDifficulty}
-              tutorials={tutorials}
-              setTutorials={setTutorials} */
-            />
+            <Play startState={startState} setStartState={setStartState} />
           }
         />
         <Route path="/leaderboards" element={<Leaderboards />} />
