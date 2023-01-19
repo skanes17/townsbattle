@@ -26,12 +26,6 @@ import { buildingsData, buildingCostsData } from "../gameData/buildings";
 import { upgradesData } from "../gameData/upgrades";
 import { BuildingCosts } from "../types/BuildingCosts";
 import { GameContext } from "../context/GameState";
-import MenuItem from "./startPage/MenuItem";
-import MenuTitle from "./startPage/MenuTitle";
-import PopupModal from "./startPage/PopupModal";
-import MenuInput from "./startPage/MenuInput";
-import SubmitButton from "./buttons/SubmitButton";
-import ModalButton from "./buttons/ModalButton";
 import StartPage from "./startPage/StartPage";
 
 // FIXME: Many areas/lists don't have a unique key/id.

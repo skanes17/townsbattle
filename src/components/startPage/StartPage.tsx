@@ -2,18 +2,13 @@ import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { Difficulty } from "../../types/Difficulty";
 import Button from "../buttons/Button";
-import ModalButton from "../buttons/ModalButton";
 import About from "./About";
 import HowToPlay from "./HowToPlay";
 import Leaderboards from "./Leaderboards";
-import MenuInput from "./MenuInput";
 import MenuItem from "./MenuItem";
 import MenuTitle from "./MenuTitle";
 import Options from "./Options";
 import Play from "./Play";
-import PopupModal from "./PopupModal";
-
-/* TODO: Consider using nested routes to show the start page elements while also being able to show each popup */
 
 export default function StartPage() {
   const [onStartPage, setOnStartPage] = useState(true);
