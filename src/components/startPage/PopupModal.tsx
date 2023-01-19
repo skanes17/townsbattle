@@ -1,5 +1,4 @@
 import React from "react";
-import { MenuIcon } from "../../types/Menu";
 
 interface PopupModalProps {
   /* FIXME: Import this icon from the type -- DRY */

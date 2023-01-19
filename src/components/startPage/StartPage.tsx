@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 import Button from "../buttons/Button";
 import ModalButton from "../buttons/ModalButton";
 import MenuInput from "./MenuInput";
 import MenuItem from "./MenuItem";
 import MenuTitle from "./MenuTitle";
+import OptionsPage from "./OptionsPage";
 import PopupModal from "./PopupModal";
+
+/* TODO: Consider using nested routes to show the start page elements while also being able to show each popup */
 
 export default function StartPage() {
   const [onStartPage, setOnStartPage] = useState(true);
@@ -42,9 +46,12 @@ export default function StartPage() {
     setAboutModal(!aboutModal);
   };
 
+  const routerLinkStyle =
+    "flex w-3/5 flex-row justify-between rounded-md bg-indigo-800 p-1 text-base text-slate-200 hover:bg-indigo-900 active:scale-95 sm:text-xl md:p-2 md:text-2xl lg:text-3xl xl:p-3 xl:text-4xl";
+
   return (
     <>
-      <div className=" flex h-screen flex-col items-center justify-center">
+      <div className="flex h-screen flex-col items-center justify-center">
         <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded bg-white/5 p-4 shadow-inherit">
           <MenuTitle title="Townsbattle" subtitle="The Game" />
           <MenuItem text="Start" icon="▶️" onClick={toggleStartModal} />
@@ -53,7 +60,11 @@ export default function StartPage() {
             icon="🏆"
             onClick={toggleLeaderboardModal}
           />
-          <MenuItem text="Options" icon="🔧" onClick={toggleOptionsModal} />
+
+          <Link className={routerLinkStyle} to="/options">
+            <MenuItem text="Options" icon="🔧" />
+          </Link>
+
           <MenuItem
             text="How to Play"
             icon="❓"
@@ -216,25 +227,15 @@ export default function StartPage() {
         </PopupModal>
       )}
 
-      {optionsModal && (
-        <PopupModal headerText="Options" icon="🔧">
-          <p className="mt-2 leading-relaxed text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
-            suscipit fuga impedit explicabo, consequuntur at corrupti, est,
-            culpa nostrum recusandae debitis distinctio odio repellendus
-            voluptatum asperiores harum facilis mollitia.
-          </p>
+      {/* TODO: Continue from here -- was working on getting this routing working properly */}
+      <Routes>
+        <Route
+          path="options"
+          element={<OptionsPage toggleOptionsModal={toggleOptionsModal} />}
+        />
+      </Routes>
 
-          <div className="mt-3 items-center gap-2 sm:flex">
-            <button
-              className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-white outline-none ring-green-600 ring-offset-2 focus:ring-2"
-              onClick={toggleOptionsModal}
-            >
-              Close
-            </button>
-          </div>
-        </PopupModal>
-      )}
+      {/* {optionsModal && <OptionsPage toggleOptionsModal={toggleOptionsModal} />} */}
 
       {howToPlayModal && (
         <PopupModal headerText="How To Play" icon="❓">
