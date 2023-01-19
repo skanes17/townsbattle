@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import { Difficulty } from "../../types/Difficulty";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
+import StartState, { Difficulty } from "../../types/Start";
 import Button from "../buttons/Button";
 import About from "./About";
 import HowToPlay from "./HowToPlay";
@@ -11,20 +11,33 @@ import Options from "./Options";
 import Play from "./Play";
 
 export default function StartPage() {
-  const [onStartPage, setOnStartPage] = useState(true);
+  /* FIXME: How to replace my separate state variables with this? How to update state? */
+  const [startState, setStartState] = useState<StartState>({
+    onStartPage: true,
+    townName: "",
+    defaultTownName: "Townsburg",
+    difficulty: "normal",
+    tutorials: true,
+  });
 
+  /* OLD STRUCTURE - Separate State Variables
   const [townName, setTownName] = useState("");
   const defaultTownName = "Townsburg";
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
+  */
+
+  const [onStartPage, setOnStartPage] = useState(true);
 
   const startGame = () => {
-    setOnStartPage(!onStartPage);
+    setStartState({ ...startState, onStartPage: !onStartPage });
+    /* OLD --> setOnStartPage(!onStartPage); */
   };
 
   const routerLinkStyle =
     "flex w-3/5 flex-row justify-between rounded-md bg-indigo-800 p-1 text-base text-slate-200 hover:bg-indigo-900 active:scale-95 sm:text-xl md:p-2 md:text-2xl lg:text-3xl xl:p-3 xl:text-4xl";
 
+  /* TODO: Set up main page to be "/" */
   return (
     <>
       <div className="flex h-screen flex-col items-center justify-center">
@@ -54,23 +67,25 @@ export default function StartPage() {
       {/* TODO: Much repetition within Leaderboards, Options, etc components. Consider DRY it */}
       <Routes>
         <Route
-          path="play"
+          path="/play"
           element={
             <Play
-              townName={townName}
+              startState={startState}
+              setStartState={setStartState}
+              /* townName={townName}
               setTownName={setTownName}
               defaultTownName={defaultTownName}
               difficulty={difficulty}
               setDifficulty={setDifficulty}
               tutorials={tutorials}
-              setTutorials={setTutorials}
+              setTutorials={setTutorials} */
             />
           }
         />
-        <Route path="leaderboards" element={<Leaderboards />} />
-        <Route path="options" element={<Options />} />
-        <Route path="howtoplay" element={<HowToPlay />} />
-        <Route path="about" element={<About />} />
+        <Route path="/leaderboards" element={<Leaderboards />} />
+        <Route path="/options" element={<Options />} />
+        <Route path="/howtoplay" element={<HowToPlay />} />
+        <Route path="/about" element={<About />} />
       </Routes>
 
       <Button buttonColor="red" onClick={startGame}>

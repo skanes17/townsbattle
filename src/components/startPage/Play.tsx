@@ -1,29 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Difficulty } from "../../types/Difficulty";
+import StartState, { Difficulty } from "../../types/Start";
 import ModalButton from "../buttons/ModalButton";
 import MenuInput from "./MenuInput";
 import PopupModal from "./PopupModal";
 
 interface PlayProps {
-  townName: string;
+  startState: StartState;
+  setStartState: any;
+  /* townName: string;
   setTownName: any;
   defaultTownName: string;
   difficulty: Difficulty;
   setDifficulty: any;
   tutorials: boolean;
-  setTutorials: any;
+  setTutorials: any; */
 }
 
 export default function Play({
-  townName,
+  startState,
+  setStartState,
+}: /* townName,
   setTownName,
   defaultTownName,
   difficulty,
   setDifficulty,
   tutorials,
-  setTutorials,
-}: PlayProps) {
+  setTutorials, */
+PlayProps) {
   return (
     <PopupModal icon="▶️" headerText="How to Play">
       {/* FIXME: Figure out how to get this into component */}
@@ -36,9 +40,12 @@ export default function Play({
         placeholderText="Townsburg"
         // current value of the input box
         // if no name is chosen, a default gets used using {townName || "Townsburg"}
-        value={townName}
+        value={startState.townName}
         // what to do when input is changed
-        onChange={(e) => setTownName(e.target.value)}
+        onChange={(e) =>
+          setStartState({ ...startState, townName: e.target.value })
+        }
+        /* onChange={(e) => setTownName(e.target.value)} */
       />
 
       {/* FIXME: Wrap all in a form; add type="button" to buttons that won't submit data, type="submit" otherwise */}
@@ -47,7 +54,7 @@ export default function Play({
           Difficulty
         </div>
         <div className="mt-3 items-center gap-2 sm:flex">
-          {difficulty === "easy" ? (
+          {startState.difficulty === "easy" ? (
             <ModalButton
               buttonText="Easy"
               buttonColor="green"
@@ -58,10 +65,13 @@ export default function Play({
               buttonText="Easy"
               buttonColor="green"
               isSelected={false}
-              onClick={() => setDifficulty("easy")}
+              onClick={() =>
+                setStartState({ ...startState, difficulty: "easy" })
+              }
+              /* onClick={() => setDifficulty("easy")} */
             />
           )}
-          {difficulty === "normal" ? (
+          {startState.difficulty === "normal" ? (
             <ModalButton
               buttonText="Normal"
               buttonColor="blue"
@@ -72,10 +82,13 @@ export default function Play({
               buttonText="Normal"
               buttonColor="blue"
               isSelected={false}
-              onClick={() => setDifficulty("normal")}
+              onClick={() =>
+                setStartState({ ...startState, difficulty: "normal" })
+              }
+              /* onClick={() => setDifficulty("normal")} */
             />
           )}
-          {difficulty === "hard" ? (
+          {startState.difficulty === "hard" ? (
             <ModalButton
               buttonText="Hard"
               buttonColor="red"
@@ -86,7 +99,10 @@ export default function Play({
               buttonText="Hard"
               buttonColor="red"
               isSelected={false}
-              onClick={() => setDifficulty("hard")}
+              onClick={() =>
+                setStartState({ ...startState, difficulty: "hard" })
+              }
+              /* onClick={() => setDifficulty("hard")} */
             />
           )}
         </div>
@@ -97,13 +113,16 @@ export default function Play({
           Tutorials
         </div>
         <div className="mt-3 items-center gap-2 sm:flex">
-          {tutorials === true ? (
+          {startState.tutorials === true ? (
             <>
               <ModalButton
                 buttonText="Off"
                 buttonColor="blue"
                 isSelected={false}
-                onClick={() => setTutorials(false)}
+                onClick={() =>
+                  setStartState({ ...startState, tutorials: false })
+                }
+                /* onClick={() => setTutorials(false)} */
               />
               <ModalButton
                 buttonText="On"
@@ -122,7 +141,10 @@ export default function Play({
                 buttonText="On"
                 buttonColor="blue"
                 isSelected={false}
-                onClick={() => setTutorials(true)}
+                onClick={() =>
+                  setStartState({ ...startState, tutorials: true })
+                }
+                /* onClick={() => setTutorials(true)} */
               />
             </>
           )}
@@ -134,9 +156,9 @@ export default function Play({
 
       <div className="bg-amber-100 capitalize text-gray-500">
         <p className="font-bold text-gray-800">Summary (DevTool)</p>
-        <p>Town Name: {townName || defaultTownName}</p>
-        <p>Difficulty: {difficulty}</p>
-        <p>Tutorials: {tutorials ? "On" : "Off"}</p>
+        <p>Town Name: {startState.townName || startState.defaultTownName}</p>
+        <p>Difficulty: {startState.difficulty}</p>
+        <p>Tutorials: {startState.tutorials ? "On" : "Off"}</p>
       </div>
 
       <div className="mt-3 items-center gap-2 sm:flex">
