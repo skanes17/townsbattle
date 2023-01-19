@@ -1,11 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PopupModal from "./PopupModal";
 
-interface OptionsPageProps {
-  toggleOptionsModal: () => void;
-}
-
-export default function OptionsPage({ toggleOptionsModal }: OptionsPageProps) {
+export default function Options() {
   return (
     <PopupModal headerText="Options" icon="🔧">
       <p className="mt-2 leading-relaxed text-gray-500">
@@ -16,12 +13,12 @@ export default function OptionsPage({ toggleOptionsModal }: OptionsPageProps) {
       </p>
 
       <div className="mt-3 items-center gap-2 sm:flex">
-        <button
-          className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-white outline-none ring-green-600 ring-offset-2 focus:ring-2"
-          onClick={toggleOptionsModal}
+        <Link
+          className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-center text-white outline-none ring-green-600 ring-offset-2 focus:ring-2"
+          to="/"
         >
           Close
-        </button>
+        </Link>
       </div>
     </PopupModal>
   );

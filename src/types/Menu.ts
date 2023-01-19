@@ -1,7 +1,7 @@
 export interface MenuItemProps {
   // routerLink expects a React Router Link to to={} such as "/play"
   routerLink?: string;
-  text: "Start" | "Leaderboard" | "Options" | "How to Play" | "About";
+  text: "Play" | "Leaderboards" | "Options" | "How to Play" | "About";
   /* TODO: Replace with image */
   icon: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
   onClick?: any;
