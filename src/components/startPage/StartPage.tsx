@@ -2,14 +2,24 @@ import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import StartState from "../../types/Start";
 import Button from "../buttons/Button";
-import About from "./About";
-import HowToPlay from "./HowToPlay";
-import Leaderboards from "./Leaderboards";
+// import About from "./About";
+// import HowToPlay from "./HowToPlay";
+// import Leaderboards from "./Leaderboards";
 //import MenuItem from "./MenuItem";
-import MenuTitle from "./MenuTitle";
-import Options from "./Options";
-import Play from "./Play";
-import { MenuInput, MenuItem } from "../startPage";
+// import MenuTitle from "./MenuTitle";
+//import Options from "./Options";
+// import Play from "./Play";
+import {
+  About,
+  HowToPlay,
+  Leaderboards,
+  MenuInput,
+  MenuItem,
+  MenuTitle,
+  Options,
+  Play,
+  PopupModal,
+} from "../startPage";
 
 export default function StartPage() {
   /* FIXME: How to replace my separate state variables with this? How to update state? */

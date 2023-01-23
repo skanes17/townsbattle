@@ -18,7 +18,6 @@ import {
   PreCombatEvent,
 } from "../../types/CombatEvents";
 import { messages } from "./Messages";
-import { notDeepEqual } from "assert";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
