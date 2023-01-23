@@ -13,7 +13,6 @@ interface DevToolsProps {
   addUnit: any;
   unitBattler: () => void;
   switchPhase: () => void;
-  startGame: () => void;
 }
 
 export default function DevTools({
@@ -24,7 +23,6 @@ export default function DevTools({
   addUnit,
   unitBattler,
   switchPhase,
-  startGame,
 }: DevToolsProps) {
   return (
     <div className="border-t-2 border-amber-500 transition duration-150 ease-in-out hover:filter-none">
@@ -72,9 +70,6 @@ export default function DevTools({
       </div>
       <Button buttonColor="red" onClick={switchPhase}>
         Planning/Combat
-      </Button>
-      <Button buttonColor="red" onClick={startGame}>
-        Back to Start Menu
       </Button>
     </div>
   );

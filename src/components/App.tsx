@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Button from "./buttons/Button";
+import Game from "./Game";
 import { Play, Leaderboards, Options, HowToPlay, About } from "./startPage";
 import SharedStartMenu from "./startPage/SharedStartMenu";
-import StartPage from "./startPage/StartPage";
 
 export default function App() {
   const [onStartPage, setOnStartPage] = useState(true);
@@ -42,11 +42,10 @@ export default function App() {
           <Route path="howtoplay" element={<HowToPlay />} />
           <Route path="about" element={<About />} />
         </Route>
-      </Routes>
 
-      <Button buttonColor="red" onClick={startGame}>
-        Planning/Combat
-      </Button>
+        {/* incorporate some default game state for if /play is bypassed  */}
+        <Route path="/play/game" element={<Game />} />
+      </Routes>
     </div>
   );
 }

@@ -30,6 +30,8 @@ import { BaseUnit, BuildingCosts } from "../types";
 import { GameContext } from "../context/GameState";
 import StartPage from "./startPage/StartPage";
 
+import { useLocation } from "react-router-dom";
+
 // FIXME: Many areas/lists don't have a unique key/id.
 
 // TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
@@ -41,20 +43,10 @@ import StartPage from "./startPage/StartPage";
 // Composition of army could be displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
 export default function Game(props: GameProps) {
-  const [onStartPage, setOnStartPage] = useState(true);
+  // TODO: Implement useLocation(); a React Router hook allowing you to import state data passed through a link
 
-  const [startModal, setStartModal] = useState(false);
   const [townName, setTownName] = useState("");
   const defaultTownName = "Townsburg";
-  const [difficulty, setDifficulty] = useState<"easy" | "normal" | "hard">(
-    "normal"
-  );
-  const [tutorials, setTutorials] = useState(true);
-
-  const [leaderboardModal, setLeaderboardModal] = useState(false);
-  const [optionsModal, setOptionsModal] = useState(false);
-  const [howToPlayModal, setHowToPlayModal] = useState(false);
-  const [aboutModal, setAboutModal] = useState(false);
 
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
@@ -442,26 +434,6 @@ export default function Game(props: GameProps) {
     setInCombat(!inCombat);
   };
 
-  const startGame = () => {
-    setOnStartPage(!onStartPage);
-  };
-
-  const toggleStartModal = () => {
-    setStartModal(!startModal);
-  };
-  const toggleLeaderboardModal = () => {
-    setLeaderboardModal(!leaderboardModal);
-  };
-  const toggleOptionsModal = () => {
-    setOptionsModal(!optionsModal);
-  };
-  const toggleHowToPlayModal = () => {
-    setHowToPlayModal(!howToPlayModal);
-  };
-  const toggleAboutModal = () => {
-    setAboutModal(!aboutModal);
-  };
-
   // How many units you're going to train this turn
   // TODO: How to make this dynamic based on base units?
   const unitsInTraining: UnitCounts = {
@@ -484,9 +456,7 @@ export default function Game(props: GameProps) {
 
   /* TODO: Center all dashboard info in the middle of their grid/div? */
 
-  return onStartPage ? (
-    <StartPage />
-  ) : inCombat ? (
+  return inCombat ? (
     <>
       <Combat
         myUnits={myUnits}
@@ -505,7 +475,6 @@ export default function Game(props: GameProps) {
         addUnit={addUnit}
         unitBattler={unitBattler}
         switchPhase={switchPhase}
-        startGame={startGame}
       />
     </>
   ) : (
@@ -574,7 +543,6 @@ export default function Game(props: GameProps) {
         addUnit={addUnit}
         unitBattler={unitBattler}
         switchPhase={switchPhase}
-        startGame={startGame}
       />
       {/* TODO: Consider merging UnitCount and UnitInTraining components; only the count differs */}
       <div className="sticky bottom-0 z-10 grid auto-cols-auto">

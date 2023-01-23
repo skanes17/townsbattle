@@ -1,18 +1,18 @@
 import React from "react";
 
-interface ModalButtonProps {
+interface MenuButtonProps {
   buttonText: string;
   isSelected: boolean;
   buttonColor: "green" | "blue" | "red";
   onClick?: () => void;
 }
 
-export default function ModalButton({
+export default function MenuButton({
   buttonText,
   isSelected,
   buttonColor,
   onClick,
-}: ModalButtonProps) {
+}: MenuButtonProps) {
   /* TODO: Could colors and color numbers be made into variables, concatenated when used in cLassName? */
   let textStyle: string;
   let buttonColors: string;

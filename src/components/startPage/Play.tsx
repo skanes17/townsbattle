@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Difficulty } from "../../types";
-import ModalButton from "../buttons/ModalButton";
+import MenuButton from "../buttons/MenuButton";
 import MenuInput from "./MenuInput";
 import MenuBox from "./MenuBox";
 
@@ -24,6 +24,20 @@ export default function Play({
   tutorials,
   setTutorials,
 }: PlayProps) {
+  // not working yet
+  let startData;
+  const saveStartData = () => {
+    startData = {
+      townName,
+      setTownName,
+      defaultTownName,
+      difficulty,
+      setDifficulty,
+      tutorials,
+      setTutorials,
+    };
+  };
+
   return (
     <MenuBox icon="▶️" headerText="How to Play">
       {/* FIXME: Figure out how to get this into component */}
@@ -48,13 +62,13 @@ export default function Play({
         </div>
         <div className="mt-3 items-center gap-2 sm:flex">
           {difficulty === "easy" ? (
-            <ModalButton
+            <MenuButton
               buttonText="Easy"
               buttonColor="green"
               isSelected={true}
             />
           ) : (
-            <ModalButton
+            <MenuButton
               buttonText="Easy"
               buttonColor="green"
               isSelected={false}
@@ -62,13 +76,13 @@ export default function Play({
             />
           )}
           {difficulty === "normal" ? (
-            <ModalButton
+            <MenuButton
               buttonText="Normal"
               buttonColor="blue"
               isSelected={true}
             />
           ) : (
-            <ModalButton
+            <MenuButton
               buttonText="Normal"
               buttonColor="blue"
               isSelected={false}
@@ -76,13 +90,9 @@ export default function Play({
             />
           )}
           {difficulty === "hard" ? (
-            <ModalButton
-              buttonText="Hard"
-              buttonColor="red"
-              isSelected={true}
-            />
+            <MenuButton buttonText="Hard" buttonColor="red" isSelected={true} />
           ) : (
-            <ModalButton
+            <MenuButton
               buttonText="Hard"
               buttonColor="red"
               isSelected={false}
@@ -99,13 +109,13 @@ export default function Play({
         <div className="mt-3 items-center gap-2 sm:flex">
           {tutorials === true ? (
             <>
-              <ModalButton
+              <MenuButton
                 buttonText="Off"
                 buttonColor="blue"
                 isSelected={false}
                 onClick={() => setTutorials(false)}
               />
-              <ModalButton
+              <MenuButton
                 buttonText="On"
                 buttonColor="blue"
                 isSelected={true}
@@ -113,12 +123,12 @@ export default function Play({
             </>
           ) : (
             <>
-              <ModalButton
+              <MenuButton
                 buttonText="Off"
                 buttonColor="blue"
                 isSelected={true}
               />
-              <ModalButton
+              <MenuButton
                 buttonText="On"
                 buttonColor="blue"
                 isSelected={false}
@@ -143,15 +153,15 @@ export default function Play({
         <Link
           to="/"
           className="mt-2 w-full flex-1 rounded-md bg-red-600 p-2.5 text-center text-white outline-none ring-red-600 ring-offset-2 focus:ring-2"
-          /* onClick={toggleStartModal} */
         >
           Cancel
         </Link>
         <Link
-          /* FIXME: game page not overhauled yet */
-          to="/game"
+          to="/play/game"
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center text-white outline-none ring-blue-600 ring-offset-2 focus:ring-2"
-          /* onClick={startGame} */
+          /* FIXME: Need to send state data to Game */
+          onClick={saveStartData}
+          state={startData}
         >
           Next
         </Link>
