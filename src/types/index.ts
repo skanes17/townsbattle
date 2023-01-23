@@ -7,7 +7,7 @@ export * from "./CombatSnapshots";
 export * from "./GameProps";
 export * from "./Menu";
 export * from "./Resources";
-export * from "./Start";
+export * from "./Difficulty";
 export * from "./Unit";
 export * from "./UnitCosts";
 export * from "./UnitCounts";

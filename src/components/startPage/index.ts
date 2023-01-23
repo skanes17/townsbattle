@@ -6,4 +6,4 @@ export { default as MenuItem } from "./MenuItem";
 export { default as MenuTitle } from "./MenuTitle";
 export { default as Options } from "./Options";
 export { default as Play } from "./Play";
-export { default as PopupModal } from "./PopupModal";
+export { default as MenuBox } from "./MenuBox";

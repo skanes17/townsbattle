@@ -1,17 +1,13 @@
 import React from "react";
 
-interface PopupModalProps {
+interface MenuBoxProps {
   /* FIXME: Import this icon from the type -- DRY */
   icon: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
   headerText: string;
   children: any;
 }
 
-export default function PopupModal({
-  icon,
-  headerText,
-  children,
-}: PopupModalProps) {
+export default function MenuBox({ icon, headerText, children }: MenuBoxProps) {
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto">
       {/*

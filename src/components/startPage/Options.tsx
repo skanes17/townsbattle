@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PopupModal from "./PopupModal";
+import MenuBox from "./MenuBox";
 
 export default function Options() {
   return (
-    <PopupModal headerText="Options" icon="🔧">
+    <MenuBox headerText="Options" icon="🔧">
       <p className="mt-2 leading-relaxed text-gray-500">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
         suscipit fuga impedit explicabo, consequuntur at corrupti, est, culpa
@@ -20,6 +20,6 @@ export default function Options() {
           Close
         </Link>
       </div>
-    </PopupModal>
+    </MenuBox>
   );
 }

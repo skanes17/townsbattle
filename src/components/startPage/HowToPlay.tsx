@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import PopupModal from "./PopupModal";
+import MenuBox from "./MenuBox";
 
 export default function HowToPlay() {
   return (
-    <PopupModal headerText="How To Play" icon="❓">
+    <MenuBox headerText="How To Play" icon="❓">
       <p className="mt-2 leading-relaxed text-gray-500">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
         suscipit fuga impedit explicabo, consequuntur at corrupti, est, culpa
@@ -19,6 +19,6 @@ export default function HowToPlay() {
           Close
         </Link>
       </div>
-    </PopupModal>
+    </MenuBox>
   );
 }

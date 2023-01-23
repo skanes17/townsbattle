@@ -1,43 +1,23 @@
 export interface Resources {
-  freeworkers: {
-    collected: number;
-    name: string;
-    resourceSymbol: string;
-    description: string;
-  };
-  wood: {
-    collected: number;
-    name: string;
-    resourceSymbol: string;
-    workers: number;
-    workersNeeded: number;
-    workerName: string;
-    workerType: string;
-    workerSymbol: string;
-    description: string;
-  };
-  stone: {
-    collected: number;
-    name: string;
-    resourceSymbol: string;
-    workers: number;
-    workersNeeded: number;
-    workerName: string;
-    workerType: string;
-    workerSymbol: string;
-    description: string;
-  };
-  metal: {
-    collected: number;
-    name: string;
-    resourceSymbol: string;
-    workers: number;
-    workersNeeded: number;
-    workerName: string;
-    workerType: string;
-    workerSymbol: string;
-    description: string;
-  };
+  freeworkers: Pick<
+    ResourceData,
+    "collected" | "name" | "resourceSymbol" | "description"
+  >;
+  wood: ResourceData;
+  stone: ResourceData;
+  metal: ResourceData;
+}
+
+interface ResourceData {
+  collected: number;
+  name: string;
+  resourceSymbol: string;
+  workers: number;
+  workersNeeded: number;
+  workerName: string;
+  workerType: string;
+  workerSymbol: string;
+  description: string;
 }
 
 /* FIXME: Incorporate the following refactoring but fix the associated error in <Game/> */
