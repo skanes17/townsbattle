@@ -28,7 +28,6 @@ import { upgradesData } from "../gameData/upgrades";
 import { BaseUnit, BuildingCosts } from "../types";
 
 import { GameContext } from "../context/GameState";
-import StartPage from "./startPage/StartPage";
 
 import { useLocation } from "react-router-dom";
 

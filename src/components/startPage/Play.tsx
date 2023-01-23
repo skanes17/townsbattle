@@ -1,29 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Difficulty } from "../../types";
 import MenuButton from "../buttons/MenuButton";
 import MenuInput from "./MenuInput";
 import MenuBox from "./MenuBox";
 
-interface PlayProps {
-  townName: string;
-  setTownName: any;
-  defaultTownName: string;
-  difficulty: Difficulty;
-  setDifficulty: any;
-  tutorials: boolean;
-  setTutorials: any;
-}
+export default function Play() {
+  const [townName, setTownName] = useState("");
+  const defaultTownName = "Townsburg";
+  const [difficulty, setDifficulty] = useState<Difficulty>("normal");
+  const [tutorials, setTutorials] = useState(true);
 
-export default function Play({
-  townName,
-  setTownName,
-  defaultTownName,
-  difficulty,
-  setDifficulty,
-  tutorials,
-  setTutorials,
-}: PlayProps) {
   // not working yet
   let startData;
   const saveStartData = () => {
