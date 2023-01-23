@@ -10,7 +10,6 @@ import { TrainingUnit, Unit, UnitType } from "../types/Unit";
 import DevTools from "./devTools/DevTools";
 import { Resources } from "../types/Resources";
 import { UnitCounts } from "../types/UnitCounts";
-import { BaseUnit } from "../types/BaseUnit";
 import DisplayBuildings from "./planning/DisplayBuildings";
 import DisplayResources from "./dashboards/DisplayResources";
 import DisplayUnitCounts from "./dashboards/DisplayUnitCounts";
@@ -24,7 +23,10 @@ import DisplayUnderConstruction from "./dashboards/DisplayUnderConstruction";
 import Combat from "./combat/Combat";
 import { buildingsData, buildingCostsData } from "../gameData/buildings";
 import { upgradesData } from "../gameData/upgrades";
-import { BuildingCosts } from "../types/BuildingCosts";
+// import { BaseUnit } from "../types/BaseUnit";
+// import { BuildingCosts } from "../types/BuildingCosts";
+import { BaseUnit, BuildingCosts } from "../types";
+
 import { GameContext } from "../context/GameState";
 import StartPage from "./startPage/StartPage";
 

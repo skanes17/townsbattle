@@ -18,6 +18,7 @@ import {
   PreCombatEvent,
 } from "../../types/CombatEvents";
 import { messages } from "./Messages";
+import { notDeepEqual } from "assert";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -26,9 +27,11 @@ import { messages } from "./Messages";
 
 interface CombatProps {
   myUnits: Unit[];
+  //setMyUnits: any;
+  setMyUnits: (unit: Unit[]) => void;
   enemyUnits: Unit[];
-  setMyUnits: any;
-  setEnemyUnits: any;
+  // setEnemyUnits: any;
+  setEnemyUnits: (unit: Unit[]) => void;
   townName: string;
   defaultTownName: string;
   switchPhase: () => void;
@@ -249,7 +252,8 @@ export default function Combat({
             return unit;
           }
         })
-        .filter((unit) => unit !== undefined)
+        .filter((unit) => unit !== undefined) as Unit[]
+      // FIXME: Test that "as Unit[]" worked as intended; if not, remove for now
     );
 
     // probably unnecessary at this phase but keeping it anyway; can't hurt?
@@ -260,7 +264,7 @@ export default function Combat({
             return unit;
           }
         })
-        .filter((unit) => unit !== undefined)
+        .filter((unit) => unit !== undefined) as Unit[]
     );
   };
 
