@@ -1,14 +1,14 @@
 import React from "react";
-import { BuildingCosts } from "../../types/BuildingCosts";
-import { Buildings } from "../../types/Buildings";
-import { Resources } from "../../types/Resources";
-import AddRemoveButton from "../buttons/AddRemoveButton";
-import CardDescription from "./CardDescription";
-import CardHeader from "./CardHeader";
-import CardShowCount from "./CardShowCount";
-import CardSymbol from "./CardSymbol";
-import CardTemplate from "./CardTemplate";
-import HorizLine3ColGrid from "./HorizLine3ColGrid";
+import { BuildingCosts, Buildings, Resources } from "../../types/";
+import { AddRemoveButton } from "../buttons";
+import {
+  CardDescription,
+  CardHeader,
+  CardShowCount,
+  CardSymbol,
+  CardTemplate,
+  HorizLine3ColGrid,
+} from "../cards";
 
 interface ConstructBuildingProps {
   buildings: Buildings;

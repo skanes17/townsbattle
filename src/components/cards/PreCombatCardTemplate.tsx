@@ -1,6 +1,5 @@
 import React from "react";
-import { Unit } from "../../types/Unit";
-import { UnitCounts } from "../../types/UnitCounts";
+import { Unit, UnitCounts } from "../../types";
 
 interface PreCombatCardTemplateProps {
   headerText: "Your Army" | "Enemy Army";

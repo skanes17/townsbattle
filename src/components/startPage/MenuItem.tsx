@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuItemProps } from "../../types/Menu";
+import { MenuItemProps } from "../../types";
 
 export default function MenuItem({ text, icon, onClick }: MenuItemProps) {
   return (

@@ -1,6 +1,5 @@
 import React from "react";
-import { Phase, Phases } from "../../types/CombatPhases";
-import { Unit } from "../../types/Unit";
+import { Phases, Unit } from "../../types";
 
 interface UnitTileProps {
   unit: Unit;

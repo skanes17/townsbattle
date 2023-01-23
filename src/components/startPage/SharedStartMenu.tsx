@@ -1,8 +1,7 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { routerLinkStyle } from "../../tailwindStyles/RouterLinkStyle";
-import MenuItem from "./MenuItem";
-import MenuTitle from "./MenuTitle";
+import { MenuItem, MenuTitle } from "../startPage";
 
 export default function SharedStartMenu() {
   return (

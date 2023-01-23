@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { BuildingCosts } from "../../types/BuildingCosts";
-import { Resources } from "../../types/Resources";
-import ConstructBuilding from "../cards/ConstructBuilding";
+import { BuildingCosts, Resources } from "../../types";
+import { ConstructBuilding } from "../cards";
 
 interface BuildingsUIProps {
   buildings: any;

@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  PreCombatEvent,
-  MainCombatEvent,
-  PostCombatEvent,
-  CombatEvent,
-} from "../../types/CombatEvents";
-import { Phases, SubPhases } from "../../types/CombatPhases";
-import { Unit } from "../../types/Unit";
+import { CombatEvent } from "../../types";
 import POddStyle from "./POddStyle";
 import { messages } from "./Messages";
 
@@ -16,8 +9,6 @@ interface CombatLogProps {
   defaultTownName: string;
 }
 
-/* TODO: Send new text to the top */
-/* TODO: Remove table formatting, make only the newest line colored amber. */
 export default function CombatLog({
   combatEvents,
   townName,

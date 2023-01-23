@@ -1,6 +1,5 @@
 import React from "react";
-import { Unit } from "../../types/Unit";
-import { CombatUnitCounts } from "../../types/UnitCounts";
+import { CombatUnitCounts, Unit } from "../../types/";
 
 interface PostCombatSummaryProps {
   friendlyUnits: Unit[];

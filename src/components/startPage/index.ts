@@ -7,6 +7,7 @@ import MenuItem from "./MenuItem";
 import MenuTitle from "./MenuTitle";
 import Options from "./Options";
 import Play from "./Play";
+import SharedStartMenu from "./SharedStartMenu";
 
 export {
   About,
@@ -18,4 +19,5 @@ export {
   MenuTitle,
   Options,
   Play,
+  SharedStartMenu,
 };

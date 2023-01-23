@@ -1,13 +1,12 @@
-// @ts-nocheck
-
 import React from "react";
-import CardFooter from "../cards/CardFooter";
-import CardImage from "../cards/CardImage";
-import CardHeader from "../cards/CardHeader";
-import CardSymbol from "../cards/CardSymbol";
-import HorizLine3ColGrid from "../cards/HorizLine3ColGrid";
-import CardDescription from "../cards/CardDescription";
-import CardTemplate from "../cards/CardTemplate";
+import { Buildings } from "../../types";
+import {
+  CardTemplate,
+  CardHeader,
+  CardSymbol,
+  CardDescription,
+  CardFooter,
+} from "../cards";
 
 interface DisplayBuildingsProps {
   buildings: Buildings;

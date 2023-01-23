@@ -1,8 +1,5 @@
-import { BaseUnit } from "../../types/BaseUnit";
-import { Resources } from "../../types/Resources";
-import { UnitCosts } from "../../types/UnitCosts";
-import { UnitCounts } from "../../types/UnitCounts";
-import TrainUnitCard from "../cards/TrainUnitCard";
+import { UnitCosts, UnitCounts, Resources, BaseUnit } from "../../types";
+import { TrainUnitCard } from "../cards";
 
 interface UnitCreationProps {
   unitCosts: UnitCosts;

@@ -1,6 +1,6 @@
 import React from "react";
-import { Resources } from "../../types/Resources";
-import WorkerCard from "./WorkerCard";
+import { Resources } from "../../types";
+import { WorkerCard } from "../cards";
 
 interface WorkerCardContainerProps {
   resources: Resources;

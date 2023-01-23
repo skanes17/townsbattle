@@ -1,5 +1,5 @@
 import React from "react";
-import { Buildings } from "../../types/Buildings";
+import { Buildings } from "../../types";
 
 interface DisplayUnderConstructionProps {
   buildings: Buildings;

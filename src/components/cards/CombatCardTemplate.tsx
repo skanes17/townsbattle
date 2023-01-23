@@ -1,9 +1,7 @@
 import React from "react";
 import { SubPhases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
-import CombatCardFooter from "./CombatCardFooter";
-import CombatCardHeader from "./CombatCardHeader";
-import CombatCardSymbol from "./CombatCardSymbol";
+import { CombatCardFooter, CombatCardHeader, CombatCardSymbol } from "../cards";
 
 interface CombatCardTemplateProps {
   unit: Unit;

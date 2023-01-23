@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Difficulty } from "../../types";
-import MenuButton from "../buttons/MenuButton";
-import MenuInput from "./MenuInput";
-import MenuBox from "./MenuBox";
+import { MenuButton } from "../buttons";
+import { MenuBox, MenuInput } from "../startPage";
 
 export default function Play() {
   const [townName, setTownName] = useState("");

@@ -1,35 +1,48 @@
 import React, { useState } from "react";
-import { GameProps } from "../types/GameProps";
-import { resourceData } from "../gameData/resources";
-import { baseUnitData, unitCostsData } from "../gameData/units";
-import BuildingsUI from "./planning/BuildingsUI";
+import {
+  baseUnitData,
+  buildingCostsData,
+  buildingsData,
+  resourceData,
+  unitCostsData,
+  upgradesData,
+} from "../gameData";
+import { DisplayBuildings } from "./planning/";
 
-import { TrainingUnit, Unit, UnitType } from "../types/Unit";
-import DevTools from "./devTools/DevTools";
+import { DevTools } from "./devTools";
 
-import DisplayBuildings from "./planning/DisplayBuildings";
-import DisplayResources from "./dashboards/DisplayResources";
-import DisplayUnitCounts from "./dashboards/DisplayUnitCounts";
-import WorkerCardContainer from "./cards/WorkerCardContainer";
-import ConstructBuilding from "./cards/ConstructBuilding";
-import DisplayTraining from "./dashboards/DisplayTraining";
-import TrainingCardContainer from "./cards/TrainingCardContainer";
+import {
+  DisplayResources,
+  DisplayUnitCounts,
+  DisplayTraining,
+  DisplayUnderConstruction,
+} from "./dashboards";
+
+import {
+  ConstructBuilding,
+  TrainingCardContainer,
+  WorkerCardContainer,
+} from "./cards";
+
 import FlexWrapContainer from "./FlexWrapContainer";
-import Button from "./buttons/Button";
-import DisplayUnderConstruction from "./dashboards/DisplayUnderConstruction";
-import Combat from "./combat/Combat";
-import { buildingsData, buildingCostsData } from "../gameData/buildings";
-import { upgradesData } from "../gameData/upgrades";
+import { Button } from "./buttons";
+import { Combat } from "./combat";
+// import { buildingsData, buildingCostsData } from "../gameData/buildings";
+// import { upgradesData } from "../gameData/upgrades";
 // import { BaseUnit } from "../types/BaseUnit";
 // import { BuildingCosts } from "../types/BuildingCosts";
 import {
-  UnitCosts,
-  Buildings,
-  UpgradeCosts,
-  Resources,
-  UnitCounts,
   BaseUnit,
   BuildingCosts,
+  Buildings,
+  GameProps,
+  Resources,
+  TrainingUnit,
+  Unit,
+  UnitCosts,
+  UnitCounts,
+  UnitType,
+  UpgradeCosts,
 } from "../types";
 
 import { GameContext } from "../context/GameState";

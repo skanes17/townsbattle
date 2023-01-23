@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { BaseUnit } from "../../types/BaseUnit";
-import { Resources } from "../../types/Resources";
-import { UnitCosts } from "../../types/UnitCosts";
-import CardShowCount from "./CardShowCount";
-import CardSymbol from "./CardSymbol";
-import CardTemplate from "./CardTemplate";
-import HorizLine3ColGrid from "./HorizLine3ColGrid";
-import AddRemoveButton from "../buttons/AddRemoveButton";
-import TrainUnitCardHeader from "./TrainUnitCardHeader";
-import CardDescription from "./CardDescription";
-import { UnitCounts } from "../../types/UnitCounts";
+import { BaseUnit, Resources, UnitCosts, UnitCounts } from "../../types/";
+import {
+  CardShowCount,
+  CardSymbol,
+  CardTemplate,
+  HorizLine3ColGrid,
+  TrainUnitCardHeader,
+  CardDescription,
+} from "../cards";
+import { AddRemoveButton } from "../buttons";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];

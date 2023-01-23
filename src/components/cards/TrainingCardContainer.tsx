@@ -1,8 +1,5 @@
 import React from "react";
-import { BaseUnit } from "../../types/BaseUnit";
-import { Resources } from "../../types/Resources";
-import { UnitCosts } from "../../types/UnitCosts";
-import { UnitCounts } from "../../types/UnitCounts";
+import { BaseUnit, Resources, UnitCosts, UnitCounts } from "../../types";
 import TrainUnitCard from "./TrainUnitCard";
 
 export interface TrainingCardContainerProps {

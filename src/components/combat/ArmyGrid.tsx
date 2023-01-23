@@ -1,6 +1,5 @@
 import React from "react";
-import { Phase, Phases } from "../../types/CombatPhases";
-import { Unit } from "../../types/Unit";
+import { Phase, Phases, Unit } from "../../types";
 import UnitTile from "./UnitTile";
 
 interface ArmyGridProps {

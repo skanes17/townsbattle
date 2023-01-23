@@ -1,5 +1,5 @@
 import React from "react";
-import { Resources } from "../../types/Resources";
+import { Resources } from "../../types";
 
 interface ResourceProps {
   resources: Resources;

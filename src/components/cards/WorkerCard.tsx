@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { Resources } from "../../types/Resources";
-import CardHeader from "./CardHeader";
-import CardShowCount from "./CardShowCount";
-import CardSymbol from "./CardSymbol";
-import CardTemplate from "./CardTemplate";
-import AddRemoveButton from "../buttons/AddRemoveButton";
-import CardDescription from "./CardDescription";
-
-/* TODO: Consider if it would be cleaner to ditch workers and harvest a resource per click.
-Could have a limit on clicks (energy bar, actions available, etc), each click uses energy.
-Basically the same result since workers are reset each turn. */
+import { Resources } from "../../types";
+import {
+  CardHeader,
+  CardShowCount,
+  CardSymbol,
+  CardTemplate,
+  CardDescription,
+} from "../cards";
+import { AddRemoveButton } from "../buttons";
 
 interface WorkerCardProps {
   /* name: string;
@@ -19,7 +17,6 @@ interface WorkerCardProps {
   resourceType: string;
 }
 
-// @ts-ignore
 export default function WorkerCard({
   /* name,
   workerType, */
@@ -37,7 +34,7 @@ export default function WorkerCard({
 
     if (resources["freeworkers"].collected > 0) {
       const updatedResources = { ...resources };
-      // @ts-ignore
+
       updatedResources["freeworkers"].collected -= 1;
       //@ts-ignore
       updatedResources[resourceType].workers += 1;

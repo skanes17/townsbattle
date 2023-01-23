@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useState } from "react";
-import { UnitCounts } from "../../types/UnitCounts";
+import { UnitCounts } from "../../types";
 
 // TODO: Implement chance to hit? Could be upgraded?
 // TODO: Implement armor? First x units get +1 health, etc

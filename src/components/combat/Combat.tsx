@@ -1,23 +1,17 @@
 import React, { useState } from "react";
-import { Phases, SubPhases } from "../../types/CombatPhases";
-import { Unit } from "../../types/Unit";
-import { UnitCounts } from "../../types/UnitCounts";
-import AutoButton from "../buttons/AutoButton";
-import CombatButton from "../buttons/CombatButton";
-//TODO: Fix this
-// import { AutoButton, CombatButton } from '../buttons';
-import CombatCardTemplate from "../cards/CombatCardTemplate";
-import PostCombatSummary from "./PostCombatSummary";
-import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
-import ArmyGrid from "./ArmyGrid";
-import CombatLog from "./CombatLog";
 import {
   CombatEvent,
   MainCombatEvent,
+  Phases,
   PostCombatEvent,
   PreCombatEvent,
-} from "../../types/CombatEvents";
-import { messages } from "./Messages";
+  SubPhases,
+  Unit,
+  UnitCounts,
+} from "../../types";
+import { AutoButton, CombatButton } from "../buttons";
+import { CombatCardTemplate, PreCombatCardTemplate } from "../cards";
+import { ArmyGrid, CombatLog, messages, PostCombatSummary } from "../combat";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
