@@ -147,7 +147,7 @@ export default function Play() {
           to="/play/game"
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center text-white outline-none ring-blue-600 ring-offset-2 focus:ring-2"
           /* FIXME: Need to send state data to Game */
-          onClick={saveStartData}
+          onClick={() => saveStartData()}
           state={startData}
         >
           Next

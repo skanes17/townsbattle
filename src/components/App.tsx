@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Game from "./Game";
 import { About, HowToPlay, Leaderboards, Options, Play } from "./startPage";
+
+// import { About, HowToPlay, Leaderboards, Options, Play } from "./startPage";
 import SharedStartMenu from "./startPage/SharedStartMenu";
 
 export default function App() {

@@ -3,13 +3,10 @@ import { GameProps } from "../types/GameProps";
 import { resourceData } from "../gameData/resources";
 import { baseUnitData, unitCostsData } from "../gameData/units";
 import BuildingsUI from "./planning/BuildingsUI";
-import { UnitCosts } from "../types/UnitCosts";
-import { Buildings } from "../types/Buildings";
-import { UpgradeCosts } from "../types/UpgradeCosts";
+
 import { TrainingUnit, Unit, UnitType } from "../types/Unit";
 import DevTools from "./devTools/DevTools";
-import { Resources } from "../types/Resources";
-import { UnitCounts } from "../types/UnitCounts";
+
 import DisplayBuildings from "./planning/DisplayBuildings";
 import DisplayResources from "./dashboards/DisplayResources";
 import DisplayUnitCounts from "./dashboards/DisplayUnitCounts";
@@ -25,10 +22,17 @@ import { buildingsData, buildingCostsData } from "../gameData/buildings";
 import { upgradesData } from "../gameData/upgrades";
 // import { BaseUnit } from "../types/BaseUnit";
 // import { BuildingCosts } from "../types/BuildingCosts";
-import { BaseUnit, BuildingCosts } from "../types";
+import {
+  UnitCosts,
+  Buildings,
+  UpgradeCosts,
+  Resources,
+  UnitCounts,
+  BaseUnit,
+  BuildingCosts,
+} from "../types";
 
 import { GameContext } from "../context/GameState";
-
 import { useLocation } from "react-router-dom";
 
 // FIXME: Many areas/lists don't have a unique key/id.
@@ -43,7 +47,10 @@ import { useLocation } from "react-router-dom";
 
 export default function Game(props: GameProps) {
   // TODO: Implement useLocation(); a React Router hook allowing you to import state data passed through a link
+  /* const location = useLocation();
+  const startData = location.state?.data;
 
+  const [townName, setTownName] = useState(startData.townName); */
   const [townName, setTownName] = useState("");
   const defaultTownName = "Townsburg";
 

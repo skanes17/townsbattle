@@ -1,9 +1,21 @@
-export { default as About } from "./About";
-export { default as HowToPlay } from "./HowToPlay";
-export { default as Leaderboards } from "./Leaderboards";
-export { default as MenuInput } from "./MenuInput";
-export { default as MenuItem } from "./MenuItem";
-export { default as MenuTitle } from "./MenuTitle";
-export { default as Options } from "./Options";
-export { default as Play } from "./Play";
-export { default as MenuBox } from "./MenuBox";
+import About from "./About";
+import HowToPlay from "./HowToPlay";
+import Leaderboards from "./Leaderboards";
+import MenuBox from "./MenuBox";
+import MenuInput from "./MenuInput";
+import MenuItem from "./MenuItem";
+import MenuTitle from "./MenuTitle";
+import Options from "./Options";
+import Play from "./Play";
+
+export {
+  About,
+  HowToPlay,
+  Leaderboards,
+  MenuBox,
+  MenuInput,
+  MenuItem,
+  MenuTitle,
+  Options,
+  Play,
+};
