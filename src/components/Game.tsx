@@ -59,13 +59,30 @@ import { useLocation } from "react-router-dom";
 // Composition of army could be displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
 export default function Game(props: GameProps) {
-  // TODO: Implement useLocation(); a React Router hook allowing you to import state data passed through a link
-  /* const location = useLocation();
-  const startData = location.state?.data;
+  // if localStorage values are non-null, use the locally stored values
+  // if storage is null, use some default values so the game still runs
+  const townName =
+    localStorage.getItem("townName") === null
+      ? ""
+      : (localStorage.getItem("townName") as string);
 
-  const [townName, setTownName] = useState(startData.townName); */
-  const [townName, setTownName] = useState("");
-  const defaultTownName = "Townsburg";
+  const defaultTownName =
+    localStorage.getItem("defaultTownName") === null
+      ? "Townsburg"
+      : (localStorage.getItem("defaultTownName") as string);
+
+  const difficulty =
+    localStorage.getItem("difficulty") === null
+      ? "normal"
+      : (localStorage.getItem("difficulty") as string);
+
+  const tutorials =
+    localStorage.getItem("tutorials") === null
+      ? "normal"
+      : // FIXME: Better way to avoid the error than to use non-null assertion?
+        JSON.parse(localStorage.getItem("tutorials")!);
+
+  // const tutorials = JSON.parse(localStorage.getItem("tutorials"));
 
   const [turn, setTurn] = useState(1);
   // combat turn will change over time

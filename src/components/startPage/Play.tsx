@@ -4,24 +4,26 @@ import { Difficulty } from "../../types";
 import { MenuButton } from "../buttons";
 import { MenuBox, MenuInput } from "../startPage";
 
+interface StartData {
+  townName: string;
+  defaultTownName: string;
+  difficulty: Difficulty;
+  tutorials: boolean;
+}
+
 export default function Play() {
   const [townName, setTownName] = useState("");
   const defaultTownName = "Townsburg";
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
 
-  // not working yet
-  let startData;
-  const saveStartData = () => {
-    startData = {
-      townName,
-      setTownName,
-      defaultTownName,
-      difficulty,
-      setDifficulty,
-      tutorials,
-      setTutorials,
-    };
+  /* export data to local storage */
+  const storeStartData = () => {
+    localStorage.setItem("townName", townName);
+    localStorage.setItem("defaultTownName", defaultTownName);
+    localStorage.setItem("difficulty", difficulty);
+    // use JSON.parse to convert back to Boolean when imported
+    localStorage.setItem("tutorials", tutorials.toString());
   };
 
   return (
@@ -146,8 +148,7 @@ export default function Play() {
           to="/play/game"
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center text-white outline-none ring-blue-600 ring-offset-2 focus:ring-2"
           /* FIXME: Need to send state data to Game */
-          onClick={() => saveStartData()}
-          state={startData}
+          onClick={() => storeStartData()}
         >
           Next
         </Link>
