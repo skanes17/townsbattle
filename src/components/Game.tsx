@@ -59,6 +59,7 @@ import { useLocation } from "react-router-dom";
 // Composition of army could be displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
 export default function Game(props: GameProps) {
+  /* -- RETRIEVE LOCALLY-STORED DATA -- */
   // if localStorage values are non-null, use the locally stored values
   // if storage is null, use some default values so the game still runs
   const townName =
@@ -81,8 +82,7 @@ export default function Game(props: GameProps) {
       ? "normal"
       : // FIXME: Better way to avoid the error than to use non-null assertion?
         JSON.parse(localStorage.getItem("tutorials")!);
-
-  // const tutorials = JSON.parse(localStorage.getItem("tutorials"));
+  /* ---------------------------------- */
 
   const [turn, setTurn] = useState(1);
   // combat turn will change over time

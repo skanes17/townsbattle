@@ -117,6 +117,7 @@ export default function PostCombatSummary({
         )}
         %)
       </p>
+      {/* FIXME: Bug with friendly calculation */}
       <p className="col-start-2 row-start-2">
         <span className="text-amber-500">Friendlies injured: </span>
         {friendlyUnitsInjured.total}
