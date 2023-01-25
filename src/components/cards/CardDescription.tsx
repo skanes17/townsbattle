@@ -1,5 +1,5 @@
 interface CardDescriptionProps {
-  descriptionText: any;
+  descriptionText?: string;
 }
 
 export default function CardDescription({
@@ -7,7 +7,7 @@ export default function CardDescription({
 }: CardDescriptionProps) {
   return (
     <div className="margin-auto col-span-3 mx-4 my-2 flex h-auto items-center justify-center rounded-sm border-slate-300 bg-slate-300 p-2 text-center text-sm text-black shadow-md">
-      {descriptionText}
+      {typeof descriptionText === undefined ? "" : descriptionText}
     </div>
   );
 }

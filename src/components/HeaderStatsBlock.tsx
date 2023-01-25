@@ -1,6 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-export default function HeaderResources(headerText: string, children: any) {
+export default function HeaderResources(
+  headerText: string,
+  children: ReactNode
+) {
   return (
     <div>
       <div className="text-lg font-bold">{headerText}</div>

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 export interface ButtonProps {
   buttonColor: "blue" | "red";
   onClick: () => void;
-  children: any;
+  children: ReactNode;
 }
 
 export default function Button({

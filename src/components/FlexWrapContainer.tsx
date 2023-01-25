@@ -1,6 +1,6 @@
-import React from "react";
+import React, { ReactNode } from "react";
 interface FlexWrapContainerProps {
-  children: any;
+  children: ReactNode;
   headerText: string;
 }
 

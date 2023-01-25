@@ -12,12 +12,14 @@ import {
 
 interface ConstructBuildingProps {
   buildings: Buildings;
-  setBuildings: any;
+  setBuildings: (building: Buildings) => void;
   buildingCosts: BuildingCosts;
   buildingType: string;
   resources: Resources;
   setResources: any;
 }
+
+/* setMyUnits: (unit: Unit[]) => void; */
 
 export default function ConstructBuilding({
   buildings,

@@ -1,7 +1,7 @@
 import React from "react";
 
 interface AddRemoveButtonProps {
-  children: any;
+  children: string;
   buttonType: "add" | "remove";
   onClick: () => void;
 }

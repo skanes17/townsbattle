@@ -3,7 +3,7 @@ import React from "react";
 export interface SubmitButtonProps {
   buttonColor: "blue" | "red";
   onClick: () => void;
-  children: any;
+  children: string;
 }
 
 export default function SubmitButton({
