@@ -2,6 +2,8 @@ import React from "react";
 import { BaseUnit, Resources, UnitCosts, UnitCounts } from "../../types";
 import TrainUnitCard from "./TrainUnitCard";
 
+import { UnitType } from "../../types";
+
 export interface TrainingCardContainerProps {
   resources: Resources;
   setResources: (resources: Resources) => void;
@@ -9,7 +11,7 @@ export interface TrainingCardContainerProps {
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
   // TODO: Use more Types like this
-  addTrainingUnit: (unitType: any, friendly: boolean) => void;
+  addTrainingUnit: (unitType: UnitType, friendly: boolean) => void;
   maxTrainingUnits: any;
   removeTrainingUnit: any;
   removeAllTrainingUnits: any;
