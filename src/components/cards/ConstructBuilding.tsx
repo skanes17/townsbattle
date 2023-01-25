@@ -16,7 +16,7 @@ interface ConstructBuildingProps {
   buildingCosts: BuildingCosts;
   buildingType: string;
   resources: Resources;
-  setResources: any;
+  setResources: (resources: Resources) => void;
 }
 
 /* setMyUnits: (unit: Unit[]) => void; */
