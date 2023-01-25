@@ -26,7 +26,6 @@ interface CombatProps {
   // setEnemyUnits: any;
   setEnemyUnits: (unit: Unit[]) => void;
   townName: string;
-  defaultTownName: string;
   switchPhase: () => void;
 }
 
@@ -36,7 +35,6 @@ export default function Combat({
   setMyUnits,
   setEnemyUnits,
   townName,
-  defaultTownName,
   switchPhase,
 }: CombatProps) {
   const [phase, setPhase] = useState<Phases>(Phases.PreCombat);
@@ -397,11 +395,7 @@ export default function Combat({
         selectedUnit={combatUnits[friendlyIndex]}
         startColumn="1"
       />
-      <CombatLog
-        combatEvents={combatEvents}
-        townName={townName}
-        defaultTownName={defaultTownName}
-      />
+      <CombatLog combatEvents={combatEvents} townName={townName} />
       <ArmyGrid
         phase={phase}
         army={combatEnemyUnits}

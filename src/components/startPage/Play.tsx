@@ -11,16 +11,16 @@ interface StartData {
   tutorials: boolean;
 }
 
+export const defaultTownName = "Townsburg";
+
 export default function Play() {
   const [townName, setTownName] = useState("");
-  const defaultTownName = "Townsburg";
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
 
   /* export data to local storage */
   const storeStartData = () => {
     localStorage.setItem("townName", townName);
-    localStorage.setItem("defaultTownName", defaultTownName);
     localStorage.setItem("difficulty", difficulty);
     // use JSON.parse to convert back to Boolean when imported
     localStorage.setItem("tutorials", tutorials.toString());
@@ -35,7 +35,7 @@ export default function Play() {
       </p>
 
       <MenuInput
-        placeholderText="Townsburg"
+        placeholderText={defaultTownName}
         // current value of the input box
         // if no name is chosen, a default gets used using {townName || "Townsburg"}
         value={townName}

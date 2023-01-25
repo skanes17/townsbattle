@@ -47,6 +47,7 @@ import {
 
 import { GameContext } from "../context/GameState";
 import { useLocation } from "react-router-dom";
+import { defaultTownName } from "./startPage/Play";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -64,13 +65,8 @@ export default function Game(props: GameProps) {
   // if storage is null, use some default values so the game still runs
   const townName =
     localStorage.getItem("townName") === null
-      ? ""
+      ? defaultTownName
       : (localStorage.getItem("townName") as string);
-
-  const defaultTownName =
-    localStorage.getItem("defaultTownName") === null
-      ? "Townsburg"
-      : (localStorage.getItem("defaultTownName") as string);
 
   const difficulty =
     localStorage.getItem("difficulty") === null
@@ -500,7 +496,6 @@ export default function Game(props: GameProps) {
         setMyUnits={setMyUnits}
         setEnemyUnits={setEnemyUnits}
         townName={townName}
-        defaultTownName={defaultTownName}
         switchPhase={switchPhase}
       />
       <DevTools
