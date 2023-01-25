@@ -13,10 +13,17 @@ interface StartData {
 
 export const defaultTownName = "Townsburg";
 
+type DifficultyUpdater = (difficulty: Difficulty) => any;
+
 export default function Play() {
   const [townName, setTownName] = useState("");
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
+
+  // FIXME: Pick up from here -- incomplete!
+  /* const difficultyUpdater (difficulty:Difficulty) {
+setDifficulty(difficulty)
+  } */
 
   /* export data to local storage */
   const storeStartData = () => {
