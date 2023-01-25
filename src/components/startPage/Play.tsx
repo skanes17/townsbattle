@@ -20,10 +20,12 @@ export default function Play() {
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
 
-  // FIXME: Pick up from here -- incomplete!
-  /* const difficultyUpdater (difficulty:Difficulty) {
-setDifficulty(difficulty)
-  } */
+  const difficultyUpdater = (difficulty: Difficulty) => {
+    setDifficulty(difficulty);
+  };
+  const tutorialsUpdater = (tutorials: boolean) => {
+    setTutorials(tutorials);
+  };
 
   /* export data to local storage */
   const storeStartData = () => {
@@ -67,7 +69,7 @@ setDifficulty(difficulty)
               buttonText="Easy"
               buttonColor="green"
               isSelected={false}
-              onClick={() => setDifficulty("easy")}
+              onClick={() => difficultyUpdater("easy")}
             />
           )}
           {difficulty === "normal" ? (
@@ -81,7 +83,7 @@ setDifficulty(difficulty)
               buttonText="Normal"
               buttonColor="blue"
               isSelected={false}
-              onClick={() => setDifficulty("normal")}
+              onClick={() => difficultyUpdater("normal")}
             />
           )}
           {difficulty === "hard" ? (
@@ -91,7 +93,7 @@ setDifficulty(difficulty)
               buttonText="Hard"
               buttonColor="red"
               isSelected={false}
-              onClick={() => setDifficulty("hard")}
+              onClick={() => difficultyUpdater("hard")}
             />
           )}
         </div>
@@ -108,7 +110,7 @@ setDifficulty(difficulty)
                 buttonText="Off"
                 buttonColor="blue"
                 isSelected={false}
-                onClick={() => setTutorials(false)}
+                onClick={() => tutorialsUpdater(false)}
               />
               <MenuButton
                 buttonText="On"
@@ -127,7 +129,7 @@ setDifficulty(difficulty)
                 buttonText="On"
                 buttonColor="blue"
                 isSelected={false}
-                onClick={() => setTutorials(true)}
+                onClick={() => tutorialsUpdater(true)}
               />
             </>
           )}
