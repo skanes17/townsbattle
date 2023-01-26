@@ -416,7 +416,7 @@ export default function Game(props: GameProps) {
         </FlexWrapContainer>
         <FlexWrapContainer headerText="Construct Buildings">
           {/* TODO: Match component structure with other cards */}
-          {buildingsToConstruct.map((buildingType: string) => (
+          {buildingsToConstruct.map((buildingType) => (
             <ConstructBuilding
               key={buildingType}
               buildings={buildings}
