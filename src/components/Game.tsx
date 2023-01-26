@@ -192,7 +192,10 @@ export default function Game(props: GameProps) {
     }
   };
 
-  const removeAllTrainingUnits = (unitType: UnitType, friendly: boolean) => {
+  const removeAllTrainingUnits: AddRemoveTrainingUnitFn = (
+    unitType,
+    friendly
+  ) => {
     if (friendly) {
       const _myTrainingUnitsCopy = [...myTrainingUnits];
 

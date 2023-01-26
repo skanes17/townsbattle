@@ -18,7 +18,7 @@ export interface TrainingCardContainerProps {
   addTrainingUnit: AddRemoveTrainingUnitFn;
   maxTrainingUnits: MaxTrainingUnitsFn;
   removeTrainingUnit: AddRemoveTrainingUnitFn;
-  removeAllTrainingUnits: any;
+  removeAllTrainingUnits: AddRemoveTrainingUnitFn;
 }
 
 export default function TrainingCardContainer({
