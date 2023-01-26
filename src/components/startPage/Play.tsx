@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Difficulty } from "../../types";
+import { Difficulty, DifficultyUpdater, TutorialsUpdater } from "../../types";
 import { MenuButton } from "../buttons";
 import { MenuBox, MenuInput } from "../startPage";
 
@@ -13,21 +13,19 @@ interface StartData {
 
 export const defaultTownName = "Townsburg";
 
-type DifficultyUpdater = (difficulty: Difficulty) => any;
-
 export default function Play() {
   const [townName, setTownName] = useState("");
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
 
-  const difficultyUpdater = (difficulty: Difficulty) => {
+  const difficultyUpdater: DifficultyUpdater = (difficulty) => {
     setDifficulty(difficulty);
   };
-  const tutorialsUpdater = (tutorials: boolean) => {
+  const tutorialsUpdater: TutorialsUpdater = (tutorials) => {
     setTutorials(tutorials);
   };
 
-  /* export data to local storage */
+  // exports data to local storage
   const storeStartData = () => {
     localStorage.setItem("townName", townName);
     localStorage.setItem("difficulty", difficulty);

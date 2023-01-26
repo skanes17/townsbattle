@@ -9,7 +9,6 @@ import { UnitCounts } from "../../types";
 export interface ArmyDetailsProps {
   myUnits: Unit[];
   enemyUnits: Unit[];
-  unitBattler: any;
   unitCounts: UnitCounts;
   enemyUnitCounts: UnitCounts;
 }
@@ -17,7 +16,6 @@ export interface ArmyDetailsProps {
 export default function ArmyDetails({
   myUnits,
   enemyUnits,
-  unitBattler,
   unitCounts,
   enemyUnitCounts,
 }: ArmyDetailsProps) {
@@ -25,7 +23,7 @@ export default function ArmyDetails({
     <div>
       <h2 className="text-4xl font-extrabold dark:text-white">Army Details</h2>
       <button
-        onClick={unitBattler}
+        onClick={() => {}}
         className="rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
       >
         Fight!

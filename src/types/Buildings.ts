@@ -21,3 +21,5 @@ export interface Building {
 export interface Buildings {
   [index: string]: Building;
 }
+
+export type BuildingType = keyof Buildings;

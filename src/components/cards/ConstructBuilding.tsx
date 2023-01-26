@@ -1,5 +1,10 @@
 import React from "react";
-import { BuildingCosts, Buildings, Resources } from "../../types/";
+import {
+  BuildingCosts,
+  Buildings,
+  BuildingType,
+  Resources,
+} from "../../types/";
 import { AddRemoveButton } from "../buttons";
 import {
   CardDescription,
@@ -14,7 +19,8 @@ interface ConstructBuildingProps {
   buildings: Buildings;
   setBuildings: (building: Buildings) => void;
   buildingCosts: BuildingCosts;
-  buildingType: string;
+  /* FIXME: Why is this being inferred as a number? */
+  buildingType: BuildingType;
   resources: Resources;
   setResources: (resources: Resources) => void;
 }
@@ -123,9 +129,10 @@ export default function ConstructBuilding({
             buildings[buildingType].underConstruction ? "remove" : "add"
           }
           onClick={
+            /* FIXME: Avoid using "as string" here if possible */
             buildings[buildingType].underConstruction
-              ? () => handleCancelClick(buildingType)
-              : () => handleBuildClick(buildingType)
+              ? () => handleCancelClick(buildingType as string)
+              : () => handleBuildClick(buildingType as string)
           }
         >
           {buildings[buildingType].underConstruction

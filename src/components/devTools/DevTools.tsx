@@ -12,7 +12,6 @@ interface DevToolsProps {
   resourceTypes: string[];
   addResource: AddResourceFn;
   addUnit: AddRemoveUnitFn;
-  unitBattler: () => void;
   switchPhase: () => void;
 }
 
@@ -22,7 +21,6 @@ export default function DevTools({
   resourceTypes,
   addResource,
   addUnit,
-  unitBattler,
   switchPhase,
 }: DevToolsProps) {
   return (
@@ -43,7 +41,8 @@ export default function DevTools({
           />
         ))}
 
-        <Button buttonColor="red" onClick={unitBattler}>
+        {/* FIXME: Avoid passing empty function */}
+        <Button buttonColor="red" onClick={() => {}}>
           Fight!
         </Button>
 

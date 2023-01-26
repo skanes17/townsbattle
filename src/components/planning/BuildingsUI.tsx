@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { BuildingCosts, Resources } from "../../types";
+import { BuildingCosts, Buildings, Resources } from "../../types";
 import { ConstructBuilding } from "../cards";
 
 interface BuildingsUIProps {
-  buildings: any;
+  buildings: Buildings;
   setBuildings: any;
   buildingCosts: BuildingCosts;
   buildingsToConstruct: string[];
@@ -24,7 +24,7 @@ export default function BuildingsUI({
       <h2 className="text-4xl font-extrabold dark:text-white">
         Building Creation
       </h2>
-      {buildingsToConstruct.map((buildingType) => (
+      {buildingsToConstruct.map((buildingType: string) => (
         <ConstructBuilding
           buildings={buildings}
           setBuildings={setBuildings}

@@ -4,7 +4,6 @@ export interface MenuItemProps {
   text: "Play" | "Leaderboards" | "Options" | "How to Play" | "About";
   /* TODO: Replace with image */
   icon: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
-  onClick?: any;
 }
 
 export type MenuText = Pick<MenuItemProps, "text">;

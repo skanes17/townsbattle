@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface MenuBoxProps {
   /* FIXME: Import this icon from the type -- DRY */
   icon: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
   headerText: string;
-  children: any;
+  children: ReactNode;
 }
 
 export default function MenuBox({ icon, headerText, children }: MenuBoxProps) {
