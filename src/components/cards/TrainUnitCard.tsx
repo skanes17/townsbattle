@@ -15,7 +15,7 @@ import {
   CardDescription,
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
-import { AddRemoveTrainingUnitFn, MaxTrainingUnitsFn } from "../../types";
+import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
@@ -25,10 +25,10 @@ export interface TrainUnitCardProps {
   unitCosts: UnitCosts;
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
-  addTrainingUnit: AddRemoveTrainingUnitFn;
+  addTrainingUnit: AddRemoveUnitFn;
   maxTrainingUnits: MaxTrainingUnitsFn;
-  removeTrainingUnit: AddRemoveTrainingUnitFn;
-  removeAllTrainingUnits: AddRemoveTrainingUnitFn;
+  removeTrainingUnit: AddRemoveUnitFn;
+  removeAllTrainingUnits: AddRemoveUnitFn;
   friendly: boolean;
 }
 

@@ -50,7 +50,8 @@ import { GameContext } from "../context/GameState";
 import { useLocation } from "react-router-dom";
 import { defaultTownName } from "./startPage/Play";
 import {
-  AddRemoveTrainingUnitFn,
+  AddRemoveUnitFn,
+  AddResourceFn,
   MaxTrainingUnitsFn,
 } from "../types/FunctionTypes";
 
@@ -147,7 +148,7 @@ export default function Game(props: GameProps) {
 
   /* ===FUNCTIONS=== */
   // ADD units to either army
-  const addTrainingUnit: AddRemoveTrainingUnitFn = (unitType, friendly) => {
+  const addTrainingUnit: AddRemoveUnitFn = (unitType, friendly) => {
     // unitType determines which unit to add
     // shorthand used for object
     const _newUnit = { unitType };
@@ -178,7 +179,7 @@ export default function Game(props: GameProps) {
   };
 
   // REMOVE units from either army
-  const removeTrainingUnit: AddRemoveTrainingUnitFn = (unitType, friendly) => {
+  const removeTrainingUnit: AddRemoveUnitFn = (unitType, friendly) => {
     if (friendly) {
       const _myTrainingUnitsCopy = [...myTrainingUnits];
 
@@ -192,10 +193,7 @@ export default function Game(props: GameProps) {
     }
   };
 
-  const removeAllTrainingUnits: AddRemoveTrainingUnitFn = (
-    unitType,
-    friendly
-  ) => {
+  const removeAllTrainingUnits: AddRemoveUnitFn = (unitType, friendly) => {
     if (friendly) {
       const _myTrainingUnitsCopy = [...myTrainingUnits];
 
@@ -237,7 +235,7 @@ export default function Game(props: GameProps) {
   };
 
   //add resources
-  const addResource = (resourceType: Resource) => {
+  const addResource: AddResourceFn = (resourceType) => {
     const selectedResource = resources[resourceType];
     if (!selectedResource) {
       alert("resource doesn't exist");

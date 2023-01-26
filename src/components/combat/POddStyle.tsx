@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface POddStyleProps {
-  children: any;
+  children: ReactNode;
 }
 
 export default function POddStyle({ children }: POddStyleProps) {

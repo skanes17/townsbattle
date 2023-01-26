@@ -3,7 +3,7 @@ import {
   UnitCounts,
   Resources,
   BaseUnit,
-  AddRemoveTrainingUnitFn,
+  AddRemoveUnitFn,
   MaxTrainingUnitsFn,
 } from "../../types";
 import { TrainUnitCard } from "../cards";
@@ -15,10 +15,10 @@ interface UnitCreationProps {
   resources: Resources;
   setResources: any;
   BASE_UNIT_DATA: BaseUnit;
-  addTrainingUnit: AddRemoveTrainingUnitFn;
+  addTrainingUnit: AddRemoveUnitFn;
   maxTrainingUnits: MaxTrainingUnitsFn;
-  removeTrainingUnit: AddRemoveTrainingUnitFn;
-  removeAllTrainingUnits: AddRemoveTrainingUnitFn;
+  removeTrainingUnit: AddRemoveUnitFn;
+  removeAllTrainingUnits: AddRemoveUnitFn;
 }
 
 export default function UnitCreation({

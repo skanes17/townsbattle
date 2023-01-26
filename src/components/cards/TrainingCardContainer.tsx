@@ -3,10 +3,7 @@ import { BaseUnit, Resources, UnitCosts, UnitCounts } from "../../types";
 import TrainUnitCard from "./TrainUnitCard";
 
 import { UnitType } from "../../types";
-import {
-  AddRemoveTrainingUnitFn,
-  MaxTrainingUnitsFn,
-} from "../../types/FunctionTypes";
+import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types/FunctionTypes";
 
 export interface TrainingCardContainerProps {
   resources: Resources;
@@ -14,10 +11,10 @@ export interface TrainingCardContainerProps {
   unitCosts: UnitCosts;
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
-  addTrainingUnit: AddRemoveTrainingUnitFn;
+  addTrainingUnit: AddRemoveUnitFn;
   maxTrainingUnits: MaxTrainingUnitsFn;
-  removeTrainingUnit: AddRemoveTrainingUnitFn;
-  removeAllTrainingUnits: AddRemoveTrainingUnitFn;
+  removeTrainingUnit: AddRemoveUnitFn;
+  removeAllTrainingUnits: AddRemoveUnitFn;
 }
 
 export default function TrainingCardContainer({

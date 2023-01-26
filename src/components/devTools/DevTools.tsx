@@ -2,15 +2,16 @@ import React from "react";
 import { BaseUnit } from "../../types/BaseUnit";
 import Button from "../buttons/Button";
 import AddUnitButton from "./AddUnitButton";
-import { Resources } from "../../types/Resources";
+import { Resource, Resources } from "../../types/Resources";
 import AddResourceButton from "./AddResourceButton";
+import { AddRemoveUnitFn, AddResourceFn, UnitType } from "../../types";
 
 interface DevToolsProps {
   BASE_UNIT_DATA: BaseUnit;
   resources: Resources;
   resourceTypes: string[];
-  addResource: any;
-  addUnit: any;
+  addResource: AddResourceFn;
+  addUnit: AddRemoveUnitFn;
   unitBattler: () => void;
   switchPhase: () => void;
 }
@@ -34,7 +35,7 @@ export default function DevTools({
         {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
           <AddUnitButton
             addUnit={addUnit}
-            unitType={unitType}
+            unitType={unitType as UnitType}
             name={BASE_UNIT_DATA[unitType].name}
             // choose true for friendly units
             friendly={true}
@@ -49,7 +50,7 @@ export default function DevTools({
         {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
           <AddUnitButton
             addUnit={addUnit}
-            unitType={unitType}
+            unitType={unitType as UnitType}
             name={BASE_UNIT_DATA[unitType].name}
             // choose false for enemy units
             friendly={false}
@@ -60,8 +61,8 @@ export default function DevTools({
       <div>
         {resourceTypes.map((resourceType: string) => (
           <AddResourceButton
-            addResource={addResource} // TODO: Make the function
-            resourceType={resourceType}
+            addResource={addResource}
+            resourceType={resourceType as Resource}
             /* @ts-ignore */
             name={resources[resourceType].name}
             className="rounded border border-gray-400 bg-white py-1 px-2 font-semibold text-gray-800 shadow hover:bg-gray-100"

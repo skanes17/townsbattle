@@ -1,8 +1,9 @@
 import React from "react";
+import { AddRemoveUnitFn, UnitType } from "../../types";
 
 export interface AddUnitButtonProps {
-  addUnit: any;
-  unitType: string;
+  addUnit: AddRemoveUnitFn;
+  unitType: UnitType;
   name: string;
   friendly: boolean;
   className: string;

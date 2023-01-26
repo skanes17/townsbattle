@@ -1,12 +1,9 @@
-import { BaseResource } from "./Resources";
+import { BaseResource, Resource } from "./Resources";
 import { UnitType } from "./Unit";
 
 export type PlaceholderUpdaterFn = any;
 
-export type AddRemoveTrainingUnitFn = (
-  unitType: UnitType,
-  friendly: boolean
-) => void;
+export type AddRemoveUnitFn = (unitType: UnitType, friendly: boolean) => void;
 
 export type MaxTrainingUnitsFn = (
   unitType: UnitType,
@@ -15,3 +12,5 @@ export type MaxTrainingUnitsFn = (
 ) => void;
 
 export type AddRemoveWorkerFn = (resourceType: BaseResource) => void;
+
+export type AddResourceFn = (resourceType: Resource) => void;
