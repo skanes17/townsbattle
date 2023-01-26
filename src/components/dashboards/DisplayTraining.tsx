@@ -1,5 +1,5 @@
 import React from "react";
-import { BaseUnit, UnitCounts } from "../../types/";
+import { BaseUnit, UnitCounts, UnitType } from "../../types/";
 import { UnitInTraining } from "../planning";
 
 interface DisplayTrainingProps {
@@ -19,11 +19,10 @@ export default function DisplayTraining({
         Units in Training
       </div>
       <div className="grid auto-cols-max grid-flow-col justify-center gap-4 transition duration-75 ease-in-out md:text-lg lg:text-2xl">
-        {unitTypes.map((unitType) => (
+        {unitTypes.map((unitType: string) => (
           <UnitInTraining
             BASE_UNIT_DATA={BASE_UNIT_DATA}
-            /* @ts-ignore */
-            unitType={unitType}
+            unitType={unitType as UnitType}
             unitsInTraining={unitsInTraining}
           />
         ))}

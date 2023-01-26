@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BaseResource, Resources, Resource } from "../../types";
+import { BaseResourceType, Resources, ResourceType } from "../../types";
 import {
   CardHeader,
   CardShowCount,
@@ -13,7 +13,7 @@ import { AddRemoveWorkerFn } from "../../types/FunctionTypes";
 interface WorkerCardProps {
   resources: Resources;
   setResources: any;
-  resourceType: BaseResource;
+  resourceType: BaseResourceType;
 }
 
 export default function WorkerCard({

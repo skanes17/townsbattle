@@ -2,7 +2,7 @@ import React from "react";
 import { BaseUnit } from "../../types/BaseUnit";
 import Button from "../buttons/Button";
 import AddUnitButton from "./AddUnitButton";
-import { Resource, Resources } from "../../types/Resources";
+import { ResourceType, Resources } from "../../types/Resources";
 import AddResourceButton from "./AddResourceButton";
 import { AddRemoveUnitFn, AddResourceFn, UnitType } from "../../types";
 
@@ -61,9 +61,8 @@ export default function DevTools({
         {resourceTypes.map((resourceType: string) => (
           <AddResourceButton
             addResource={addResource}
-            resourceType={resourceType as Resource}
-            /* @ts-ignore */
-            name={resources[resourceType].name}
+            resourceType={resourceType as ResourceType}
+            name={resources[resourceType as ResourceType].name}
             className="rounded border border-gray-400 bg-white py-1 px-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
           />
         ))}

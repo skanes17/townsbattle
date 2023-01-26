@@ -1,5 +1,5 @@
 import React from "react";
-import { BaseUnit, UnitCounts } from "../../types";
+import { BaseUnit, UnitCounts, UnitType } from "../../types";
 import { UnitCount } from "../planning";
 
 interface DisplayUnitCountsProps {
@@ -21,11 +21,10 @@ export default function DisplayUnitCounts({
         Army Size
       </div>
       <div className="grid auto-cols-max grid-flow-col justify-center gap-4 transition duration-75 ease-in-out md:text-lg lg:text-2xl">
-        {unitTypes.map((unitType) => (
+        {unitTypes.map((unitType: string) => (
           <UnitCount
             BASE_UNIT_DATA={BASE_UNIT_DATA}
-            /* @ts-ignore */
-            unitType={unitType}
+            unitType={unitType as UnitType}
             unitCounts={unitCounts}
           />
         ))}

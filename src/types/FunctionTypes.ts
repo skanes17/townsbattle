@@ -1,5 +1,5 @@
 import { Difficulty } from "./Difficulty";
-import { BaseResource, Resource } from "./Resources";
+import { BaseResourceType, ResourceType } from "./Resources";
 import { UnitType } from "./Unit";
 
 // unused -- just a reference example
@@ -13,9 +13,9 @@ export type MaxTrainingUnitsFn = (
   maxTrainable: number
 ) => void;
 
-export type AddRemoveWorkerFn = (resourceType: BaseResource) => void;
+export type AddRemoveWorkerFn = (resourceType: BaseResourceType) => void;
 
-export type AddResourceFn = (resourceType: Resource) => void;
+export type AddResourceFn = (resourceType: ResourceType) => void;
 
 export type DifficultyUpdater = (difficulty: Difficulty) => void;
 

@@ -22,8 +22,8 @@ interface ResourceData {
   description: string;
 }
 
-export type Resource = keyof Resources; // Resource includes all the keys of Resources interface
-export type BaseResource = keyof BaseResources; // this excludes "freeworkers"
+export type ResourceType = keyof Resources; // Resource includes all the keys of Resources interface
+export type BaseResourceType = keyof BaseResources; // this excludes "freeworkers"
 
 /* FIXME: Incorporate the following refactoring but fix the associated error in <Game/> */
 // TODO: Continue to improve this type, make it more dynamic, less prescriptive

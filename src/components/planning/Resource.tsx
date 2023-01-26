@@ -1,9 +1,9 @@
 import React from "react";
-import { Resources } from "../../types";
+import { Resources, ResourceType } from "../../types";
 
 interface ResourceProps {
   resources: Resources;
-  resourceType: "wood" | "stone" | "metal";
+  resourceType: ResourceType;
 }
 
 export default function Resource({ resources, resourceType }: ResourceProps) {

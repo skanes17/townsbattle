@@ -1,5 +1,5 @@
 import React from "react";
-import { Resources } from "../../types";
+import { BaseResourceType, Resources, ResourceType } from "../../types";
 import { Resource } from "../planning";
 
 interface DisplayResourcesProps {
@@ -17,9 +17,11 @@ export default function DisplayResources({
         Resources
       </div>
       <div className="grid auto-cols-max grid-flow-col justify-center gap-4 transition duration-75 ease-in-out md:text-lg lg:text-2xl">
-        {resourceTypes.map((resourceType) => (
-          /* @ts-ignore */
-          <Resource resources={resources} resourceType={resourceType} />
+        {resourceTypes.map((resourceType: string) => (
+          <Resource
+            resources={resources}
+            resourceType={resourceType as ResourceType}
+          />
         ))}
       </div>
     </div>

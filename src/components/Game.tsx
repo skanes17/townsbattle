@@ -37,7 +37,7 @@ import {
   Buildings,
   GameProps,
   Resources,
-  Resource,
+  ResourceType,
   TrainingUnit,
   Unit,
   UnitCosts,
@@ -287,7 +287,6 @@ export default function Game(props: GameProps) {
   };
 
   const endTurn = () => {
-    /* @ts-ignore */
     if (resources["freeworkers"].collected > 0) {
       alert("You have not assigned all free workers!");
       return;

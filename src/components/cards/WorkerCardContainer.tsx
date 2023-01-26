@@ -1,5 +1,5 @@
 import React from "react";
-import { BaseResource, Resources } from "../../types";
+import { BaseResourceType, Resources } from "../../types";
 import { WorkerCard } from "../cards";
 
 interface WorkerCardContainerProps {
@@ -20,7 +20,7 @@ export default function WorkerCardContainer({
           <WorkerCard
             resources={resources}
             setResources={setResources}
-            resourceType={resourceType as BaseResource}
+            resourceType={resourceType as BaseResourceType}
           />
         ))}
     </>

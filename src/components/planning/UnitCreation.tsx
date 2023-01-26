@@ -5,6 +5,7 @@ import {
   BaseUnit,
   AddRemoveUnitFn,
   MaxTrainingUnitsFn,
+  UnitType,
 } from "../../types";
 import { TrainUnitCard } from "../cards";
 
@@ -39,8 +40,7 @@ export default function UnitCreation({
 
       {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
         <TrainUnitCard
-          /* @ts-ignore */
-          unitType={unitType}
+          unitType={unitType as UnitType}
           resources={resources}
           setResources={setResources}
           unitCosts={unitCosts}

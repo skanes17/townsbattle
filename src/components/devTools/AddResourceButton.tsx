@@ -1,9 +1,9 @@
 import React from "react";
-import { AddResourceFn, Resource } from "../../types";
+import { AddResourceFn, ResourceType } from "../../types";
 
 export interface AddResourceButtonProps {
   addResource: AddResourceFn;
-  resourceType: Resource;
+  resourceType: ResourceType;
   name: string;
   className: string;
 }
