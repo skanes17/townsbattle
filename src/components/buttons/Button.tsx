@@ -19,7 +19,7 @@ export default function Button({
       } rounded border border-white/40 py-2 px-4 text-xl font-bold text-white ${
         buttonColor === "blue" ? "hover:bg-blue-600" : "hover:bg-red-500"
       } duration-75 active:scale-100`}
-      onClick={onClick}
+      onClick={() => onClick()}
     >
       {children}
     </button>

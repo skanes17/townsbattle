@@ -14,7 +14,6 @@ export default function CardShowCount({ countToShow }: CardShowCountProps) {
     <div
       className={`flex items-center justify-center px-4 text-xl ${countStyle}`}
     >
-      {/* @ts-ignore */}
       {countToShow}
     </div>
   );

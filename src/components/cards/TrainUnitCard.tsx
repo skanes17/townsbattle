@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { BaseUnit, Resources, UnitCosts, UnitCounts } from "../../types/";
+import {
+  BaseUnit,
+  Resources,
+  UnitCosts,
+  UnitCounts,
+  UnitType,
+} from "../../types/";
 import {
   CardShowCount,
   CardSymbol,
@@ -9,22 +15,24 @@ import {
   CardDescription,
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
+import { AddRemoveTrainingUnitFn, MaxTrainingUnitsFn } from "../../types";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
-  unitType: string;
+  unitType: UnitType;
   resources: Resources;
   setResources: any;
   unitCosts: UnitCosts;
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
-  // TODO: Use more Types like this
-  addTrainingUnit: (unitType: any, friendly: boolean) => void;
-  maxTrainingUnits: any;
-  removeTrainingUnit: any;
-  removeAllTrainingUnits: any;
+  addTrainingUnit: AddRemoveTrainingUnitFn;
+  maxTrainingUnits: MaxTrainingUnitsFn;
+  removeTrainingUnit: AddRemoveTrainingUnitFn;
+  removeAllTrainingUnits: AddRemoveTrainingUnitFn;
   friendly: boolean;
 }
+
+// maxTrainingUnits(unitType, friendly, maxTrainable);
 
 export default function TrainUnitCard({
   unitType,
@@ -44,21 +52,16 @@ export default function TrainUnitCard({
   const stoneCost = unitCosts[unitType]["stone"];
   const metalCost = unitCosts[unitType]["metal"];
 
-  const handleZeroClick = (unitType: string, friendly: boolean) => {
-    // @ts-ignore
+  const handleZeroClick = (unitType: UnitType, friendly: boolean) => {
     if (unitsInTraining[unitType] > 0) {
       const updatedResources = { ...resources };
       updatedResources["freeworkers"].collected +=
-        // @ts-ignore
         freeworkerCost * unitsInTraining[unitType];
       updatedResources["wood"].collected +=
-        // @ts-ignore
         woodCost * unitsInTraining[unitType];
       updatedResources["stone"].collected +=
-        // @ts-ignore
         stoneCost * unitsInTraining[unitType];
       updatedResources["metal"].collected +=
-        // @ts-ignore
         metalCost * unitsInTraining[unitType];
       setResources(updatedResources);
 
@@ -67,8 +70,7 @@ export default function TrainUnitCard({
     }
   };
 
-  const handleMinusClick = (unitType: string, friendly: boolean) => {
-    // @ts-ignore
+  const handleMinusClick = (unitType: UnitType, friendly: boolean) => {
     if (unitsInTraining[unitType] > 0) {
       const updatedResources = { ...resources };
       updatedResources["freeworkers"].collected += freeworkerCost;
@@ -82,7 +84,7 @@ export default function TrainUnitCard({
     }
   };
 
-  const handlePlusClick = (unitType: string, friendly: boolean) => {
+  const handlePlusClick = (unitType: UnitType, friendly: boolean) => {
     // TODO: Refactor so no repeats; dynamic
     if (
       resources["freeworkers"].collected >= freeworkerCost &&
@@ -112,8 +114,9 @@ export default function TrainUnitCard({
     Math.floor(resources["stone"].collected / stoneCost),
     Math.floor(resources["metal"].collected / metalCost)
   );
-  const handleMaxClick = (unitType: string, friendly: boolean) => {
+  const handleMaxClick = (unitType: UnitType, friendly: boolean) => {
     // FIXME: Doesn't work if one a resource COST is zero, even if that resource isn't required
+    // TODO: Incorporate logic to check what resources are required for the unitType
 
     if (maxTrainable > 0) {
       const updatedResources = { ...resources };

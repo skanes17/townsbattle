@@ -8,6 +8,8 @@ export interface Resources {
   metal: ResourceData;
 }
 
+type BaseResources = Omit<Resources, "freeworkers">;
+
 interface ResourceData {
   collected: number;
   name: string;
@@ -19,6 +21,9 @@ interface ResourceData {
   workerSymbol: string;
   description: string;
 }
+
+export type Resource = keyof Resources; // Resource includes all the keys of Resources interface
+export type BaseResource = keyof BaseResources; // this excludes "freeworkers"
 
 /* FIXME: Incorporate the following refactoring but fix the associated error in <Game/> */
 // TODO: Continue to improve this type, make it more dynamic, less prescriptive

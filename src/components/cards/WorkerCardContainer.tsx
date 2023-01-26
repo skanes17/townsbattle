@@ -1,5 +1,5 @@
 import React from "react";
-import { Resources } from "../../types";
+import { BaseResource, Resources } from "../../types";
 import { WorkerCard } from "../cards";
 
 interface WorkerCardContainerProps {
@@ -16,7 +16,9 @@ export default function WorkerCardContainer({
       {/* This gets all the keys excluding "freeworkers" */}
       {Object.keys(resources)
         .filter((key) => key !== "freeworkers")
-        .map((resourceType: string) => (
+        /* FIXME: TS is yelling */
+        /* @ts-ignore */
+        .map((resourceType: BaseResource) => (
           <WorkerCard
             resources={resources}
             setResources={setResources}

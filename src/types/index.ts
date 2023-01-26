@@ -4,6 +4,7 @@ export * from "./Buildings";
 export * from "./CombatEvents";
 export * from "./CombatPhases";
 export * from "./CombatSnapshots";
+export * from "./FunctionTypes";
 export * from "./GameProps";
 export * from "./Menu";
 export * from "./Resources";

@@ -3,6 +3,10 @@ import { BaseUnit, Resources, UnitCosts, UnitCounts } from "../../types";
 import TrainUnitCard from "./TrainUnitCard";
 
 import { UnitType } from "../../types";
+import {
+  AddRemoveTrainingUnitFn,
+  MaxTrainingUnitsFn,
+} from "../../types/FunctionTypes";
 
 export interface TrainingCardContainerProps {
   resources: Resources;
@@ -11,9 +15,9 @@ export interface TrainingCardContainerProps {
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
   // TODO: Use more Types like this
-  addTrainingUnit: (unitType: UnitType, friendly: boolean) => void;
-  maxTrainingUnits: any;
-  removeTrainingUnit: any;
+  addTrainingUnit: AddRemoveTrainingUnitFn;
+  maxTrainingUnits: MaxTrainingUnitsFn;
+  removeTrainingUnit: AddRemoveTrainingUnitFn;
   removeAllTrainingUnits: any;
 }
 
@@ -32,6 +36,7 @@ export default function TrainingCardContainer({
     <>
       {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
         <TrainUnitCard
+          /* @ts-ignore */
           unitType={unitType}
           resources={resources}
           setResources={setResources}

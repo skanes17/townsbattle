@@ -37,6 +37,7 @@ import {
   Buildings,
   GameProps,
   Resources,
+  Resource,
   TrainingUnit,
   Unit,
   UnitCosts,
@@ -48,6 +49,10 @@ import {
 import { GameContext } from "../context/GameState";
 import { useLocation } from "react-router-dom";
 import { defaultTownName } from "./startPage/Play";
+import {
+  AddRemoveTrainingUnitFn,
+  MaxTrainingUnitsFn,
+} from "../types/FunctionTypes";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -142,7 +147,7 @@ export default function Game(props: GameProps) {
 
   /* ===FUNCTIONS=== */
   // ADD units to either army
-  const addTrainingUnit = (unitType: string, friendly: boolean) => {
+  const addTrainingUnit: AddRemoveTrainingUnitFn = (unitType, friendly) => {
     // unitType determines which unit to add
     // shorthand used for object
     const _newUnit = { unitType };
@@ -160,10 +165,10 @@ export default function Game(props: GameProps) {
   };
 
   //TODO: Build max training function
-  const maxTrainingUnits = (
-    unitType: string,
-    friendly: boolean,
-    maxTrainable: number
+  const maxTrainingUnits: MaxTrainingUnitsFn = (
+    unitType,
+    friendly,
+    maxTrainable
   ) => {
     if (friendly) {
       // fill an array with the appropriate number of the chosen unit type
@@ -173,7 +178,7 @@ export default function Game(props: GameProps) {
   };
 
   // REMOVE units from either army
-  const removeTrainingUnit = (unitType: string, friendly: boolean) => {
+  const removeTrainingUnit: AddRemoveTrainingUnitFn = (unitType, friendly) => {
     if (friendly) {
       const _myTrainingUnitsCopy = [...myTrainingUnits];
 
@@ -187,7 +192,7 @@ export default function Game(props: GameProps) {
     }
   };
 
-  const removeAllTrainingUnits = (unitType: string, friendly: boolean) => {
+  const removeAllTrainingUnits = (unitType: UnitType, friendly: boolean) => {
     if (friendly) {
       const _myTrainingUnitsCopy = [...myTrainingUnits];
 
@@ -200,7 +205,7 @@ export default function Game(props: GameProps) {
 
   /* ===DEV TOOLS=== */
   // add friendly/enemy units
-  const addUnit = (unitType: string, friendly: boolean) => {
+  const addUnit = (unitType: UnitType, friendly: boolean) => {
     // unitType determines which unit to add
     const baseUnit = BASE_UNIT_DATA[unitType];
 
@@ -229,15 +234,14 @@ export default function Game(props: GameProps) {
   };
 
   //add resources
-  const addResource = (resourceType: string) => {
-    //@ts-ignore
+  const addResource = (resourceType: Resource) => {
     const selectedResource = resources[resourceType];
     if (!selectedResource) {
       alert("resource doesn't exist");
       return;
     }
     const updatedResources = { ...resources };
-    //@ts-ignore
+
     updatedResources[resourceType].collected += 10;
     setResources(updatedResources);
   };
