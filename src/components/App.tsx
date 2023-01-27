@@ -17,12 +17,8 @@ export default function App() {
           <Route path="about" element={<About />} />
         </Route>
 
-        {/* incorporate some default game state for if /play is bypassed  */}
-        {/* could check if Link state data is empty, if so, use the defaults */}
         <Route path="/play/game" element={<Game />} />
       </Routes>
     </div>
   );
 }
-
-// TODO: Once "/play" settings have been set, use <Link state={startState}> to send state to <Game>
