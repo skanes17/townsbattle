@@ -20,10 +20,8 @@ import { ArmyGrid, CombatLog, messages, PostCombatSummary } from "../combat";
 
 interface CombatProps {
   myUnits: Unit[];
-  //setMyUnits: any;
   setMyUnits: (unit: Unit[]) => void;
   enemyUnits: Unit[];
-  // setEnemyUnits: any;
   setEnemyUnits: (unit: Unit[]) => void;
   townName: string;
   switchPhase: () => void;

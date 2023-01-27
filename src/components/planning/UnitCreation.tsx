@@ -11,10 +11,10 @@ import { TrainUnitCard } from "../cards";
 
 interface UnitCreationProps {
   unitCosts: UnitCosts;
-  setUnitCosts: any;
+  setUnitCosts: (unitCosts: UnitCosts) => void;
   unitsInTraining: UnitCounts;
   resources: Resources;
-  setResources: any;
+  setResources: (resources: Resources) => void;
   BASE_UNIT_DATA: BaseUnit;
   addTrainingUnit: AddRemoveUnitFn;
   maxTrainingUnits: MaxTrainingUnitsFn;

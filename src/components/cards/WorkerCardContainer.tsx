@@ -4,7 +4,7 @@ import { WorkerCard } from "../cards";
 
 interface WorkerCardContainerProps {
   resources: Resources;
-  setResources: any;
+  setResources: (resources: Resources) => void;
 }
 
 export default function WorkerCardContainer({

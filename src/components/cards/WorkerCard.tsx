@@ -12,7 +12,7 @@ import { AddRemoveWorkerFn } from "../../types/FunctionTypes";
 
 interface WorkerCardProps {
   resources: Resources;
-  setResources: any;
+  setResources: (resources: Resources) => void;
   resourceType: BaseResourceType;
 }
 

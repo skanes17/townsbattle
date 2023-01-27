@@ -4,11 +4,11 @@ import { ConstructBuilding } from "../cards";
 
 interface BuildingsUIProps {
   buildings: Buildings;
-  setBuildings: any;
+  setBuildings: (buildings: Buildings) => void;
   buildingCosts: BuildingCosts;
   buildingsToConstruct: string[];
   resources: Resources;
-  setResources: any;
+  setResources: (resources: Resources) => void;
 }
 
 export default function BuildingsUI({

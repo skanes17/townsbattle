@@ -21,7 +21,7 @@ export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
   unitType: UnitType;
   resources: Resources;
-  setResources: any;
+  setResources: (resources: Resources) => void;
   unitCosts: UnitCosts;
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
