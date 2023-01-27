@@ -24,7 +24,7 @@ import {
   WorkerCardContainer,
 } from "./cards";
 
-import FlexWrapContainer from "./FlexWrapContainer";
+import FlexWrapContainer from "./layout/FlexWrapContainer";
 import { Button } from "./buttons";
 import { Combat } from "./combat";
 // import { buildingsData, buildingCostsData } from "../gameData/buildings";
