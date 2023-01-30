@@ -340,8 +340,7 @@ export default function Game(props: GameProps) {
     // TODO: Code should choose between multiple army compositions
     const armyComposition = RandomArmyComposition(numberOfUnitTypes);
 
-    /* FIXME: enemyArmy type */
-    const enemyArmy: Unit[] = [];
+    let enemyArmy: Unit[] = [];
     // TODO: Add the appopriate number of each unit to the enemy army
     Object.keys(BASE_UNIT_DATA).map((unit: string, index) => {
       // grab the chosen unit from the base unit data
@@ -357,14 +356,16 @@ export default function Game(props: GameProps) {
       // fill an array with the appropriate number of the chosen unit
       const _newUnits = Array(unitsOfThisTypeToGenerate).fill(_chosenUnit);
       // add those units to the army
-      enemyArmy.concat(_newUnits);
+      enemyArmy = [...enemyArmy, ..._newUnits];
+      console.log(enemyArmy);
     });
 
-    // FIXME: get this working
     // add current health and ID number to new units
     enemyArmy.map((unit) => {
       id += 1;
       unit.currentHealth = unit.maxHealth;
+      /* FIXME: ID not incrementing for every unit */
+      /* FIXME: May have to apply similar method to trainUnits() */
       unit.id = id;
     });
 
