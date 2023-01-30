@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { defaultTownName } from "../../gameData";
 import { Difficulty, DifficultyUpdater, TutorialsUpdater } from "../../types";
 import { MenuButton } from "../buttons";
 import { MenuBox, MenuInput } from "../startPage";
@@ -10,8 +11,6 @@ interface StartData {
   difficulty: Difficulty;
   tutorials: boolean;
 }
-
-export const defaultTownName = "Townsburg";
 
 export default function Play() {
   const [townName, setTownName] = useState("");
@@ -44,7 +43,7 @@ export default function Play() {
       <MenuInput
         placeholderText={defaultTownName}
         // current value of the input box
-        // if no name is chosen, a default gets used using {townName || "Townsburg"}
+        // if no name is chosen, the default gets used
         value={townName}
         // what to do when input is changed
         onChange={(e) => setTownName(e.target.value)}

@@ -24,3 +24,22 @@ Each resource on its own line, perhaps like this:
   🪨 14 / 5
   🔩 2 / 3
 Then you can see how many you have, how many you need.
+
+-TODO-
+-Get post-combat menu calculating properly
+-Change emoji's to images
+-Add a proper popup to replace alerts (eg "not all freeworkers assigned!")
+-Points system
+-Enemy army function-Buffs/traits (systems approach)
+-Get AutoBattler to produce combat log
+-Incorporate taunts in battle
+-Popups/hovertext for Planning cards
+-Redesign/improve main page UI
+--Remove the Summary (DevTool)
+-Fill out Options, How to Play, etc
+-Redesign Planning UI
+-Color scheme overhaul
+-New sprites/names for units/cards
+-Change unit names to variables for easier upkeep (change in one place, should cascade through)
+-
+

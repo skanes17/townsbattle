@@ -48,7 +48,8 @@ import {
 
 import { GameContext } from "../context/GameState";
 import { useLocation } from "react-router-dom";
-import { defaultTownName } from "./startPage/Play";
+/* FIXME: Not sending properly to CombatLog */
+import { defaultTownName } from "../gameData";
 import {
   AddRemoveUnitFn,
   AddResourceFn,
@@ -70,7 +71,9 @@ export default function Game(props: GameProps) {
   // if localStorage values are non-null, use the locally stored values
   // if storage is null, use some default values so the game still runs
   const townName =
-    localStorage.getItem("townName") === null
+    // if the storage is null or the player didn't enter a name, set it as the default
+    localStorage.getItem("townName") === null ||
+    localStorage.getItem("townName") === ""
       ? defaultTownName
       : (localStorage.getItem("townName") as string);
 
