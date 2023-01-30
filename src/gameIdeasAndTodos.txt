@@ -41,5 +41,6 @@ Then you can see how many you have, how many you need.
 -Color scheme overhaul
 -New sprites/names for units/cards
 -Change unit names to variables for easier upkeep (change in one place, should cascade through)
--
+-Convert the End Turn button to multi-purpose
+--On a set turn, it'll also call an GenerateEnemyArmy function that builds out their army
 

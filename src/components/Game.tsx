@@ -168,7 +168,6 @@ export default function Game(props: GameProps) {
     }
   };
 
-  //TODO: Build max training function
   const maxTrainingUnits: MaxTrainingUnitsFn = (
     unitType,
     friendly,
@@ -289,6 +288,109 @@ export default function Game(props: GameProps) {
     });
   };
 
+  let id = unitId;
+  const trainUnits = () => {
+    const units = myTrainingUnits.map((unit) => {
+      // resolve base unit from unit type
+      const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
+      id += 1;
+
+      return {
+        ..._chosenUnit,
+        currentHealth: _chosenUnit.maxHealth,
+        id, // shorthand for when key = value
+      };
+    });
+
+    // bring all the training units into the main army
+    setMyUnits((myUnits) => [...myUnits, ...units]);
+  };
+
+  /* Use to produce randomly distributed army composition */
+  function RandomArmyComposition(numberOfUnitTypes: number) {
+    // create an array of the correct size
+    const _emptyArray = Array(numberOfUnitTypes).fill(null);
+    // fill it with random numbers
+    const _rndArray = _emptyArray.map((element) => Math.random());
+    // get the sum of those numbers
+    const _sum = _rndArray.reduce((a, b) => a + b, 0);
+    // divide each element by their sum -- they're now a prob. distribution
+    const _armyComposition = _rndArray.map((element) => element / _sum);
+    return _armyComposition;
+  }
+
+  /* TODO: Get this working! */
+
+  // units are trained based on the friendly army
+  const trainEnemyUnits = (
+    distributionType: string,
+    numberOfFriendlyUnits: number,
+    turnNumber: number
+  ) => {
+    // TODO: multipler could be based on difficulty
+    const unitMultiplier = 1.0;
+    const _numberOfEnemiesToGenerate = Math.round(
+      numberOfFriendlyUnits * unitMultiplier
+    );
+
+    // check how many unit types there are in the game
+    const numberOfUnitTypes = Object.keys(BASE_UNIT_DATA).length;
+
+    // generate a random composition of units
+    // TODO: Code should choose between multiple army compositions
+    const armyComposition = RandomArmyComposition(numberOfUnitTypes);
+
+    /* FIXME: enemyArmy type */
+    const enemyArmy: Unit[] = [];
+    // TODO: Add the appopriate number of each unit to the enemy army
+    Object.keys(BASE_UNIT_DATA).map((unit: string, index) => {
+      // grab the chosen unit from the base unit data
+      const _chosenUnit = BASE_UNIT_DATA[unit as UnitType];
+
+      // the index is used to call the appropriate ratio from the composition function
+      // that ratio is multiplied by numberOfFriendlyUnits to give a number of units
+      // the result is rounded to the nearest integer
+      const unitsOfThisTypeToGenerate = Math.round(
+        armyComposition[index] * _numberOfEnemiesToGenerate
+      );
+
+      // fill an array with the appropriate number of the chosen unit
+      const _newUnits = Array(unitsOfThisTypeToGenerate).fill(_chosenUnit);
+      // add those units to the army
+      enemyArmy.concat(_newUnits);
+    });
+
+    // FIXME: get this working
+    // add current health and ID number to new units
+    enemyArmy.map((unit) => {
+      id += 1;
+      unit.currentHealth = unit.maxHealth;
+      unit.id = id;
+    });
+
+    // add all the units into the army
+    setEnemyUnits((enemyUnits) => [...enemyUnits, ...enemyArmy]);
+  };
+
+  /* 
+const trainUnits = () => {
+    const units = myTrainingUnits.map((unit) => {
+      // resolve base unit from unit type
+      const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
+      id += 1;
+
+      return {
+        ..._chosenUnit,
+        currentHealth: _chosenUnit.maxHealth,
+        id, // shorthand for when key = value
+      };
+    });
+
+    // bring all the training units into the main army
+    setMyUnits((myUnits) => [...myUnits, ...units]);
+  };
+*/
+
   const endTurn = () => {
     if (resources["freeworkers"].collected > 0) {
       alert("You have not assigned all free workers!");
@@ -309,26 +411,15 @@ export default function Game(props: GameProps) {
     // FIXME: Why can this be removed and apparently still work properly??
     setBuildings(buildingsCopy);
 
-    // Train Units Process
-    let id = unitId;
-    const units = myTrainingUnits.map((unit) => {
-      // resolve base unit from unit type
-      const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
-      id += 1;
+    trainUnits();
 
-      return {
-        ..._chosenUnit,
-        currentHealth: _chosenUnit.maxHealth,
-        id, // shorthand for when key = value
-      };
-    });
-
-    // bring all the training units into the main army
-    setMyUnits((myUnits) => [...myUnits, ...units]);
     // update ID state accordingly
     setUnitId(id);
     // reset units in training back to zero
     setMyTrainingUnits([]);
+
+    // TODO: Generate enemy army here on the appropriate turn; fn(number of friendlies, turn number)
+
     // increment turn
     setTurn(turn + 1);
   };
