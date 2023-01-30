@@ -307,19 +307,17 @@ export default function Game(props: GameProps) {
   };
 
   /* Use to produce randomly distributed army composition */
-  function RandomArmyComposition(numberOfUnitTypes: number) {
-    // create an array of the correct size
-    const _emptyArray = Array(numberOfUnitTypes).fill(null);
-    // fill it with random numbers
-    const _rndArray = _emptyArray.map((element) => Math.random());
+  function generateRandomArmyComposition(numberOfUnitTypes: number) {
+    // create an array of the correct size and fill it with random numbers
+    const randomNumbers = Array(numberOfUnitTypes)
+      .fill(null)
+      .map(() => Math.random());
     // get the sum of those numbers
-    const _sum = _rndArray.reduce((a, b) => a + b, 0);
+    const sum = randomNumbers.reduce((a, b) => a + b, 0);
     // divide each element by their sum -- they're now a prob. distribution
-    const _armyComposition = _rndArray.map((element) => element / _sum);
-    return _armyComposition;
+    const armyComposition = randomNumbers.map((n) => n / sum);
+    return armyComposition;
   }
-
-  /* TODO: Get this working! */
 
   // units are trained based on the friendly army
   const trainEnemyUnits = (
@@ -329,7 +327,7 @@ export default function Game(props: GameProps) {
   ) => {
     // TODO: multipler could be based on difficulty
     const unitMultiplier = 1.0;
-    const _numberOfEnemiesToGenerate = Math.round(
+    const numberOfEnemiesToGenerate = Math.round(
       numberOfFriendlyUnits * unitMultiplier
     );
 
@@ -338,30 +336,29 @@ export default function Game(props: GameProps) {
 
     // generate a random composition of units
     // TODO: Code should choose between multiple army compositions
-    const armyComposition = RandomArmyComposition(numberOfUnitTypes);
+    const armyComposition = generateRandomArmyComposition(numberOfUnitTypes);
 
-    let enemyArmy: Unit[] = [];
-    // TODO: Add the appopriate number of each unit to the enemy army
+    let newEnemyArmy: Unit[] = [];
+    // Add the appopriate number of each unit to the enemy army
     Object.keys(BASE_UNIT_DATA).map((unit: string, index) => {
       // grab the chosen unit from the base unit data
-      const _chosenUnit = BASE_UNIT_DATA[unit as UnitType];
+      const chosenUnit = BASE_UNIT_DATA[unit as UnitType];
 
       // the index is used to call the appropriate ratio from the composition function
       // that ratio is multiplied by numberOfFriendlyUnits to give a number of units
       // the result is rounded to the nearest integer
       const unitsOfThisTypeToGenerate = Math.round(
-        armyComposition[index] * _numberOfEnemiesToGenerate
+        armyComposition[index] * numberOfEnemiesToGenerate
       );
 
       // fill an array with the appropriate number of the chosen unit
-      const _newUnits = Array(unitsOfThisTypeToGenerate).fill(_chosenUnit);
+      const newUnits = Array(unitsOfThisTypeToGenerate).fill(chosenUnit);
       // add those units to the army
-      enemyArmy = [...enemyArmy, ..._newUnits];
-      console.log(enemyArmy);
+      newEnemyArmy = [...newEnemyArmy, ...newUnits];
     });
 
     // add current health and ID number to new units
-    enemyArmy.map((unit) => {
+    newEnemyArmy.map((unit) => {
       id += 1;
       unit.currentHealth = unit.maxHealth;
       /* FIXME: ID not incrementing for every unit */
@@ -370,7 +367,7 @@ export default function Game(props: GameProps) {
     });
 
     // add all the units into the army
-    setEnemyUnits((enemyUnits) => [...enemyUnits, ...enemyArmy]);
+    setEnemyUnits((enemyUnits) => [...enemyUnits, ...newEnemyArmy]);
   };
 
   /* 
