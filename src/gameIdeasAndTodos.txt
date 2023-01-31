@@ -12,6 +12,10 @@ Cheap unit can be 'fodder' and has a higher chance of being selected
 -COMBAT-
 Have an option for autoplay (not the sim) that steps forward every 1/2 seconds or something
 
+-UNITS-
+Make a list of melee, pewpew, tanky names that can be pulled from when units are generated
+-Maybe melee names could be a huge list of fighter names, pewpew could be mage names, tanky could be orc?
+
 -PLANNING-
 Have a log somewhere in planning to hold the alerts (eg. "Not enough resources!")
 --maybe could be a pop-up animation right where you've clicked
@@ -26,21 +30,22 @@ Each resource on its own line, perhaps like this:
 Then you can see how many you have, how many you need.
 
 -TODO-
--Get post-combat menu calculating properly
--Change emoji's to images
--Add a proper popup to replace alerts (eg "not all freeworkers assigned!")
--Points system
--Enemy army function-Buffs/traits (systems approach)
--Get AutoBattler to produce combat log
--Incorporate taunts in battle
--Popups/hovertext for Planning cards
--Redesign/improve main page UI
---Remove the Summary (DevTool)
--Fill out Options, How to Play, etc
--Redesign Planning UI
--Color scheme overhaul
--New sprites/names for units/cards
--Change unit names to variables for easier upkeep (change in one place, should cascade through)
--Convert the End Turn button to multi-purpose
---On a set turn, it'll also call an GenerateEnemyArmy function that builds out their army
+Get post-combat menu calculating properly
+Change emoji's to images
+Add a proper popup to replace alerts (eg "not all freeworkers assigned!")
+Points system
+--Maybe a simple starting approach could be every enemy unit killed adds to total score
+Enemy army function-Buffs/traits (systems approach)
+Get AutoBattler to produce combat log
+Incorporate taunts in battle
+Popups/hovertext for Planning cards
+Redesign/improve main page UI
+-Remove the Summary (DevTool)
+Fill out Options, How to Play, etc
+Redesign Planning UI
+Color scheme overhaul
+New sprites/names for units/cards
+Change unit names to variables for easier upkeep (change in one place, should cascade through)
+Convert the End Turn button to multi-purpose
+-On a set turn, it'll also call an GenerateEnemyArmy function that builds out their army
 

@@ -400,6 +400,12 @@ export default function Combat({
         selectedUnit={combatEnemyUnits[enemyIndex]}
         startColumn="8"
       />
+      {/* TODO: Replace this points placeholder with a call to a proper state variable */}
+      <div>
+        Points:{" "}
+        {combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length *
+          100}
+      </div>
 
       {phase === Phases.PostCombat ? (
         <>
