@@ -306,7 +306,7 @@ export default function Game(props: GameProps) {
     setMyUnits((myUnits) => [...myUnits, ...units]);
   };
 
-  /* Use to produce randomly distributed army composition */
+  /* Used to produce randomly distributed army compositions */
   function generateRandomArmyComposition(numberOfUnitTypes: number) {
     // create an array of the correct size and fill it with random numbers
     const randomNumbers = Array(numberOfUnitTypes)
@@ -319,11 +319,11 @@ export default function Game(props: GameProps) {
     return armyComposition;
   }
 
-  // units are trained based on the friendly army
+  // units are trained based on the composition of friendly army
   const trainEnemyUnits = (
-    distributionType: string,
-    numberOfFriendlyUnits: number,
-    turnNumber: number
+    // distributionType: string,
+    numberOfFriendlyUnits: number
+    // turnNumber: number
   ) => {
     // TODO: multipler could be based on difficulty
     const unitMultiplier = 1.0;
@@ -338,7 +338,7 @@ export default function Game(props: GameProps) {
     // TODO: Code should choose between multiple army compositions
     const armyComposition = generateRandomArmyComposition(numberOfUnitTypes);
 
-    let newEnemyArmy: Unit[] = [];
+    let newEnemyUnits: Unit[] = [];
     // Add the appopriate number of each unit to the enemy army
     Object.keys(BASE_UNIT_DATA).map((unit: string, index) => {
       // grab the chosen unit from the base unit data
@@ -351,43 +351,25 @@ export default function Game(props: GameProps) {
         armyComposition[index] * numberOfEnemiesToGenerate
       );
 
-      // fill an array with the appropriate number of the chosen unit
+      // fill an array with units of the chosen type
       const newUnits = Array(unitsOfThisTypeToGenerate).fill(chosenUnit);
       // add those units to the army
-      newEnemyArmy = [...newEnemyArmy, ...newUnits];
+      newEnemyUnits = [...newEnemyUnits, ...newUnits];
     });
 
     // add current health and ID number to new units
-    newEnemyArmy.map((unit) => {
+    const allNewEnemyUnits = newEnemyUnits.map((unit) => {
       id += 1;
-      unit.currentHealth = unit.maxHealth;
-      /* FIXME: ID not incrementing for every unit */
-      /* FIXME: May have to apply similar method to trainUnits() */
-      unit.id = id;
-    });
-
-    // add all the units into the army
-    setEnemyUnits((enemyUnits) => [...enemyUnits, ...newEnemyArmy]);
-  };
-
-  /* 
-const trainUnits = () => {
-    const units = myTrainingUnits.map((unit) => {
-      // resolve base unit from unit type
-      const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
-      id += 1;
-
       return {
-        ..._chosenUnit,
-        currentHealth: _chosenUnit.maxHealth,
-        id, // shorthand for when key = value
+        ...unit,
+        currentHealth: unit.maxHealth,
+        id,
       };
     });
 
-    // bring all the training units into the main army
-    setMyUnits((myUnits) => [...myUnits, ...units]);
+    // add all the new units into the army
+    setEnemyUnits((enemyUnits) => [...enemyUnits, ...allNewEnemyUnits]);
   };
-*/
 
   const endTurn = () => {
     if (resources["freeworkers"].collected > 0) {
