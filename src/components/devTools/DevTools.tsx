@@ -4,7 +4,7 @@ import Button from "../buttons/Button";
 import AddUnitButton from "./AddUnitButton";
 import { ResourceType, Resources } from "../../types/Resources";
 import AddResourceButton from "./AddResourceButton";
-import { AddRemoveUnitFn, AddResourceFn, UnitType } from "../../types";
+import { AddRemoveUnitFn, AddResourceFn, Unit, UnitType } from "../../types";
 
 interface DevToolsProps {
   BASE_UNIT_DATA: BaseUnit;
@@ -13,6 +13,8 @@ interface DevToolsProps {
   addResource: AddResourceFn;
   addUnit: AddRemoveUnitFn;
   switchPhase: () => void;
+  myUnits: Unit[];
+  trainEnemyUnits: (numberOfFriendlyUnits: number) => void;
 }
 
 export default function DevTools({
@@ -22,6 +24,8 @@ export default function DevTools({
   addResource,
   addUnit,
   switchPhase,
+  myUnits,
+  trainEnemyUnits,
 }: DevToolsProps) {
   return (
     <div className="border-t-2 border-amber-500 transition duration-150 ease-in-out hover:filter-none">
@@ -44,6 +48,12 @@ export default function DevTools({
         {/* FIXME: Avoid passing empty function */}
         <Button buttonColor="red" onClick={() => {}}>
           Fight!
+        </Button>
+        <Button
+          buttonColor="red"
+          onClick={() => trainEnemyUnits(myUnits.length)}
+        >
+          Generate Enemy Army
         </Button>
 
         {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (

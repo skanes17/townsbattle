@@ -1,3 +1,4 @@
+// TODO: Consider how to automate creation of similar distributions
 // these are decimal percentages - each group must add to 1.0
 export const enemyArmyCompositions = {
   stronglyBalanced: [{ melee: 0.333, pewpew: 0.333, tanky: 0.334 }],

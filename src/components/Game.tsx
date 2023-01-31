@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   baseUnitData,
   buildingCostsData,
@@ -335,10 +335,10 @@ export default function Game(props: GameProps) {
     const numberOfUnitTypes = Object.keys(BASE_UNIT_DATA).length;
 
     // generate a random composition of units
-    // TODO: Code should choose between multiple army compositions
+    // TODO: Code should choose between multiple army composition functions
     const armyComposition = generateRandomArmyComposition(numberOfUnitTypes);
 
-    let newEnemyUnits: Unit[] = [];
+    let newUnits: Unit[] = [];
     // Add the appopriate number of each unit to the enemy army
     Object.keys(BASE_UNIT_DATA).map((unit: string, index) => {
       // grab the chosen unit from the base unit data
@@ -351,14 +351,15 @@ export default function Game(props: GameProps) {
         armyComposition[index] * numberOfEnemiesToGenerate
       );
 
-      // fill an array with units of the chosen type
-      const newUnits = Array(unitsOfThisTypeToGenerate).fill(chosenUnit);
-      // add those units to the army
-      newEnemyUnits = [...newEnemyUnits, ...newUnits];
+      // fill an array with units of the chosen type and add those units to the army
+      newUnits = [
+        ...newUnits,
+        ...Array(unitsOfThisTypeToGenerate).fill(chosenUnit),
+      ];
     });
 
     // add current health and ID number to new units
-    const allNewEnemyUnits = newEnemyUnits.map((unit) => {
+    const allNewUnits = newUnits.map((unit) => {
       id += 1;
       return {
         ...unit,
@@ -368,7 +369,7 @@ export default function Game(props: GameProps) {
     });
 
     // add all the new units into the army
-    setEnemyUnits((enemyUnits) => [...enemyUnits, ...allNewEnemyUnits]);
+    setEnemyUnits((enemyUnits) => [...enemyUnits, ...allNewUnits]);
   };
 
   const endTurn = () => {
@@ -447,6 +448,8 @@ export default function Game(props: GameProps) {
         addResource={addResource}
         addUnit={addUnit}
         switchPhase={switchPhase}
+        myUnits={myUnits}
+        trainEnemyUnits={trainEnemyUnits}
       />
     </>
   ) : (
@@ -514,6 +517,8 @@ export default function Game(props: GameProps) {
         addResource={addResource}
         addUnit={addUnit}
         switchPhase={switchPhase}
+        myUnits={myUnits}
+        trainEnemyUnits={trainEnemyUnits}
       />
       {/* TODO: Consider merging UnitCount and UnitInTraining components; only the count differs */}
       <div className="sticky bottom-0 z-10 grid auto-cols-auto">
