@@ -319,6 +319,38 @@ export default function Game(props: GameProps) {
     return armyComposition;
   }
 
+  /* Used to produce semi-randomly distributed army compositions */
+  /* TODO: Allow choice of unit to be weighted */
+  const generateWeightedArmyComposition = (
+    weightOfOneUnitType: number,
+    numberOfUnitTypes: number
+  ) => {
+    // set one unit to have the chosen weight
+    let army = [weightOfOneUnitType];
+    // the rest of the units share the remaining weight
+    let remainingWeight = 1 - weightOfOneUnitType;
+    // generate a weight for every remaining unit type
+    for (let i = 0; i < numberOfUnitTypes - 1; i++) {
+      // generates a random weight
+      let randomUnitWeight = Math.random() * remainingWeight;
+      // pushes it into the array
+      army.push(randomUnitWeight);
+      // decrease the remaining weight
+      remainingWeight -= randomUnitWeight;
+    }
+    // push the final remaining weight into the array
+    army.push(remainingWeight);
+    // shuffle the unit weights -- not truly random, but close enough
+    army.sort(() => Math.random() - 0.5);
+    return army;
+  };
+
+  /* array to to hold army composition functions */
+  const armyCompositions = [
+    generateRandomArmyComposition,
+    generateRandomArmyComposition,
+  ];
+
   // units are trained based on the composition of friendly army
   const trainEnemyUnits = (
     // distributionType: string,
@@ -334,9 +366,12 @@ export default function Game(props: GameProps) {
     // check how many unit types there are in the game
     const numberOfUnitTypes = Object.keys(BASE_UNIT_DATA).length;
 
-    // generate a random composition of units
-    // TODO: Code should choose between multiple army composition functions
-    const armyComposition = generateRandomArmyComposition(numberOfUnitTypes);
+    // choose between functions which determine the composition of units
+    // then the function is called using "(numberOfUnitTypes)" as the argument
+    const armyComposition =
+      armyCompositions[Math.floor(Math.random() * armyCompositions.length)](
+        numberOfUnitTypes
+      );
 
     let newUnits: Unit[] = [];
     // Add the appopriate number of each unit to the enemy army
