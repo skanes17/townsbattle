@@ -307,7 +307,11 @@ export default function Game(props: GameProps) {
   };
 
   /* Used to produce randomly distributed army compositions */
-  function generateRandomArmyComposition(numberOfUnitTypes: number) {
+  function generateRandomArmyComposition(
+    numberOfUnitTypes: number,
+    // FIXME: Find workaround to not have to use wightOfOneUnitType here
+    weightOfOneUnitType: number
+  ) {
     // create an array of the correct size and fill it with random numbers
     const randomNumbers = Array(numberOfUnitTypes)
       .fill(null)
@@ -322,15 +326,15 @@ export default function Game(props: GameProps) {
   /* Used to produce semi-randomly distributed army compositions */
   /* TODO: Allow choice of unit to be weighted */
   const generateWeightedArmyComposition = (
-    weightOfOneUnitType: number,
-    numberOfUnitTypes: number
+    numberOfUnitTypes: number,
+    weightOfOneUnitType: number
   ) => {
     // set one unit to have the chosen weight
     let army = [weightOfOneUnitType];
     // the rest of the units share the remaining weight
     let remainingWeight = 1 - weightOfOneUnitType;
     // generate a weight for every remaining unit type
-    for (let i = 0; i < numberOfUnitTypes - 1; i++) {
+    for (let i = 0; i < numberOfUnitTypes - 2; i++) {
       // generates a random weight
       let randomUnitWeight = Math.random() * remainingWeight;
       // pushes it into the array
@@ -348,7 +352,7 @@ export default function Game(props: GameProps) {
   /* array to to hold army composition functions */
   const armyCompositions = [
     generateRandomArmyComposition,
-    generateRandomArmyComposition,
+    generateWeightedArmyComposition,
   ];
 
   // units are trained based on the composition of friendly army
@@ -366,12 +370,19 @@ export default function Game(props: GameProps) {
     // check how many unit types there are in the game
     const numberOfUnitTypes = Object.keys(BASE_UNIT_DATA).length;
 
-    // choose between functions which determine the composition of units
-    // then the function is called using "(numberOfUnitTypes)" as the argument
-    const armyComposition =
-      armyCompositions[Math.floor(Math.random() * armyCompositions.length)](
-        numberOfUnitTypes
-      );
+    // set max weight for unit
+    const maxWeight = 0.8;
+    // set min weight for unit type
+    const minWeight = 0.5;
+    // choose the unit weight to be somewhere between min and max
+    const unitWeight = Math.random() * (maxWeight - minWeight) + minWeight;
+
+    // the following picks functions from an array which determine the composition of units
+    // then, the function is called using "(numberOfUnitTypes)" as the argument
+    const armyComposition = armyCompositions[
+      Math.floor(Math.random() * armyCompositions.length)
+    ](numberOfUnitTypes, unitWeight);
+    console.log(armyComposition);
 
     let newUnits: Unit[] = [];
     // Add the appopriate number of each unit to the enemy army
