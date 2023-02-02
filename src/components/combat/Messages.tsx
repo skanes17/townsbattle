@@ -92,7 +92,7 @@ export const messages = {
               {event.data.friendly.name}
               {event.data.friendly.id}
             </span>{" "}
-            reluctantly agrees to battle{" "}
+            agrees to battle{" "}
             <span className="text-red-400">
               {event.data.enemy.name}
               {event.data.enemy.id}
@@ -180,7 +180,32 @@ export const messages = {
         </POddStyle>
       );
     },
+    (event: MainCombatEvent) => {
+      return (
+        <POddStyle>
+          <span className="text-green-400">
+            {event.data.friendly.name}
+            {event.data.friendly.id}
+          </span>{" "}
+          does{" "}
+          <span className="text-amber-400">
+            {event.data.friendly.attack} damage
+          </span>{" "}
+          to{" "}
+          <span className="text-red-400">
+            {event.data.enemy.name}
+            {event.data.enemy.id}
+          </span>{" "}
+          and takes{" "}
+          <span className="text-amber-400">
+            {event.data.enemy.attack} damage
+          </span>
+          .
+        </POddStyle>
+      );
+    },
   ],
+  /* TODO: Include at least one message per possiblity (armies both survive, either one dies, both die). */
   postCombat: [
     (event: PostCombatEvent) => {
       return <>Both units survive and return to their armies.</>;
