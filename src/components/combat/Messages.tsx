@@ -84,6 +84,24 @@ export const messages = {
         </>
       );
     },
+    (event: PreCombatEvent) => {
+      return (
+        <>
+          <POddStyle>
+            <span className="text-green-400">
+              {event.data.friendly.name}
+              {event.data.friendly.id}
+            </span>{" "}
+            reluctantly agrees to battle{" "}
+            <span className="text-red-400">
+              {event.data.enemy.name}
+              {event.data.enemy.id}
+            </span>{" "}
+            but they're not happy about it.
+          </POddStyle>
+        </>
+      );
+    },
     /* more alternatives here */
   ],
   combat: [
