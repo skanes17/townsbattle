@@ -25,8 +25,7 @@ interface CombatProps {
   setEnemyUnits: Dispatch<SetStateAction<Unit[]>>;
   townName: string;
   switchPhase: () => void;
-  points: number;
-  setPoints: Dispatch<SetStateAction<number>>;
+  scoreUpdaterFn: (points: number) => void;
 }
 
 export default function Combat({
@@ -36,6 +35,7 @@ export default function Combat({
   setEnemyUnits,
   townName,
   switchPhase,
+  scoreUpdaterFn,
 }: CombatProps) {
   const [phase, setPhase] = useState<Phases>(Phases.PreCombat);
   const [subPhase, setSubPhase] = useState<SubPhases>(SubPhases.Fight);
@@ -310,6 +310,8 @@ export default function Combat({
         break;
       case Phases.PostCombat:
         sendArmiesToPlanning();
+        // add points from this battle to total score
+        scoreUpdaterFn(points);
         switchPhase();
         break;
     }
@@ -385,6 +387,11 @@ export default function Combat({
     setPhase(Phases.PostCombat);
   };
 
+  // simple draft of points sytem is +100 per enemy unit defeated, -50 for friendly unit lost
+  const points =
+    combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100 -
+    combatUnits.filter((unit) => unit.currentHealth === 0).length * 50;
+
   return (
     <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-3 p-4 md:gap-4 lg:gap-5 xl:gap-8">
       {/* ArmyGrid & CombatLog are common components to all phases */}
@@ -403,11 +410,7 @@ export default function Combat({
         startColumn="8"
       />
       {/* TODO: Replace this points placeholder with a call to a proper state variable; could increment the existing points by the final tally */}
-      <div>
-        Points:{" "}
-        {combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length *
-          100}
-      </div>
+      <div>Points: {points}</div>
 
       {phase === Phases.PostCombat ? (
         <>

@@ -94,7 +94,8 @@ export default function Game(props: GameProps) {
   const [combatTurn, setCombatTurn] = useState(4);
   const [inCombat, setInCombat] = useState(false);
 
-  const [points, setPoints] = useState(0);
+  // points from rounds of combat get added to this
+  const [score, setScore] = useState(0);
 
   // TODO: Add food? And/or some resource common to all unit building?
   // Idea: Freeworkers are consumed when used for making units...
@@ -420,6 +421,10 @@ export default function Game(props: GameProps) {
     setEnemyUnits((enemyUnits) => [...enemyUnits, ...allNewUnits]);
   };
 
+  const scoreUpdaterFn = (points: number) => {
+    setScore((prev) => prev + points);
+  };
+
   const endTurn = () => {
     if (resources["freeworkers"].collected > 0) {
       alert("You have not assigned all free workers!");
@@ -488,6 +493,7 @@ export default function Game(props: GameProps) {
         setEnemyUnits={setEnemyUnits}
         townName={townName}
         switchPhase={switchPhase}
+        scoreUpdaterFn={scoreUpdaterFn}
       />
       <DevTools
         BASE_UNIT_DATA={BASE_UNIT_DATA}
@@ -502,6 +508,7 @@ export default function Game(props: GameProps) {
     </>
   ) : (
     <div className="p-1">
+      <div>Score: {score}</div>
       <div className="sticky top-0 z-10 grid auto-cols-auto">
         <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <DisplayResources
