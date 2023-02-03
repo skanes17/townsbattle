@@ -67,7 +67,7 @@ import {
 // Composition of army could be displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
 export default function Game(props: GameProps) {
-  /* -- RETRIEVE LOCALLY-STORED DATA -- */
+  /* -- RETRIEVE LOCALLY-STORED DATA SENT FROM MAIN PAGE -- */
   // if localStorage values are non-null, use the locally stored values
   // if storage is null, use some default values so the game still runs
   const townName =
@@ -93,6 +93,8 @@ export default function Game(props: GameProps) {
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
   const [inCombat, setInCombat] = useState(false);
+
+  const [points, setPoints] = useState(0);
 
   // TODO: Add food? And/or some resource common to all unit building?
   // Idea: Freeworkers are consumed when used for making units...

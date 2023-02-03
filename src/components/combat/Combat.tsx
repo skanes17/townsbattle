@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   CombatEvent,
   MainCombatEvent,
@@ -20,11 +20,13 @@ import { ArmyGrid, CombatLog, messages, PostCombatSummary } from "../combat";
 
 interface CombatProps {
   myUnits: Unit[];
-  setMyUnits: (unit: Unit[]) => void;
+  setMyUnits: Dispatch<SetStateAction<Unit[]>>;
   enemyUnits: Unit[];
-  setEnemyUnits: (unit: Unit[]) => void;
+  setEnemyUnits: Dispatch<SetStateAction<Unit[]>>;
   townName: string;
   switchPhase: () => void;
+  points: number;
+  setPoints: Dispatch<SetStateAction<number>>;
 }
 
 export default function Combat({
@@ -400,7 +402,7 @@ export default function Combat({
         selectedUnit={combatEnemyUnits[enemyIndex]}
         startColumn="8"
       />
-      {/* TODO: Replace this points placeholder with a call to a proper state variable */}
+      {/* TODO: Replace this points placeholder with a call to a proper state variable; could increment the existing points by the final tally */}
       <div>
         Points:{" "}
         {combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length *
