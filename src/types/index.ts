@@ -1,3 +1,4 @@
+export * from "./ArmyColors";
 export * from "./BaseUnit";
 export * from "./BuildingCosts";
 export * from "./Buildings";

@@ -1,19 +1,34 @@
 import React from "react";
-import { Unit, UnitCounts } from "../../types";
+import { enemyColor, friendlyColor } from "../../gameData";
+import { ArmyColors, Unit, UnitCounts } from "../../types";
 
 interface PreCombatCardTemplateProps {
+  color: ArmyColors;
   headerText: "Your Army" | "Enemy Army";
   army: Unit[];
   unitCounts: UnitCounts;
 }
 
 export default function CombatCardTemplate({
+  color,
   headerText,
   army,
   unitCounts,
 }: PreCombatCardTemplateProps) {
+  let borderColor;
+  switch (color) {
+    case friendlyColor:
+      borderColor = "border-indigo-900/50";
+      break;
+    case enemyColor:
+      borderColor = "border-red-900/50";
+      break;
+  }
+
   return (
-    <div className="grid h-full w-full auto-rows-auto grid-cols-1 place-items-center items-center gap-1 overflow-y-auto overflow-x-hidden rounded-md border-4 border-blue-900 bg-white/5 p-2 text-xs text-white shadow-md shadow-gray-500/50 sm:text-xl md:text-2xl lg:text-3xl">
+    <div
+      className={`grid h-full w-full auto-rows-auto grid-cols-1 place-items-center items-center gap-1 overflow-y-auto overflow-x-hidden rounded-md border-4 ${borderColor} bg-white/5 p-2 text-xs text-white shadow-md shadow-gray-500/50 sm:text-xl md:text-2xl lg:text-3xl`}
+    >
       <p className="text-sm font-bold sm:text-2xl md:text-3xl lg:text-4xl">
         {headerText}
       </p>

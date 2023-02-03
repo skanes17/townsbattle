@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { enemyColor, friendlyColor } from "../../gameData";
 import {
   CombatEvent,
   MainCombatEvent,
@@ -397,7 +398,7 @@ export default function Combat({
       {/* ArmyGrid & CombatLog are common components to all phases */}
       {/* TODO: Reduce opacity of army grids when combat is over, put a green outline for winner, red for loser? */}
       <ArmyGrid
-        color="blue"
+        color={friendlyColor}
         phase={phase}
         army={combatUnits}
         selectedUnit={combatUnits[friendlyIndex]}
@@ -405,7 +406,7 @@ export default function Combat({
       />
       <CombatLog combatEvents={combatEvents} townName={townName} />
       <ArmyGrid
-        color="red"
+        color={enemyColor}
         phase={phase}
         army={combatEnemyUnits}
         selectedUnit={combatEnemyUnits[enemyIndex]}
@@ -437,6 +438,7 @@ export default function Combat({
         <div className="card col-span-5 col-start-1 row-start-4 mr-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-end md:mt-0">
           {phase === Phases.PreCombat && (
             <PreCombatCardTemplate
+              color={friendlyColor}
               headerText="Your Army"
               army={combatUnits}
               unitCounts={combatUnitCounts}
@@ -445,6 +447,7 @@ export default function Combat({
           {/* TODO: When HP is 0, show a skull on the combat card */}
           {phase === Phases.Combat && (
             <CombatCardTemplate
+              color={friendlyColor}
               unit={combatUnits[friendlyIndex]}
               subphase={subPhase}
             />
@@ -505,6 +508,7 @@ export default function Combat({
         <div className="card col-span-5 col-start-8 row-start-4 ml-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-start md:mt-0">
           {phase === Phases.PreCombat && (
             <PreCombatCardTemplate
+              color={enemyColor}
               headerText="Enemy Army"
               army={combatEnemyUnits}
               unitCounts={combatEnemyUnitCounts}
@@ -512,6 +516,7 @@ export default function Combat({
           )}
           {phase === Phases.Combat && (
             <CombatCardTemplate
+              color={enemyColor}
               unit={combatEnemyUnits[enemyIndex]}
               subphase={subPhase}
             />
