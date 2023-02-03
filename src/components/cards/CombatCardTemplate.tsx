@@ -21,20 +21,22 @@ export default function CombatCardTemplate({
     fightAnimation = "animate-[jiggleRight 0.25s linear 1]";
   }
 
-  let borderColor;
+  let borderColor, shadowColor;
   switch (color) {
     case friendlyColor:
       borderColor = "border-indigo-900";
+      shadowColor = "shadow-indigo-500/50";
       break;
     case enemyColor:
       borderColor = "border-red-900";
+      shadowColor = "shadow-red-500/50";
       break;
   }
 
   /* TODO: Make animations work */
   return (
     <div
-      className={`${fightAnimation} grid h-full w-full auto-rows-auto grid-cols-3 gap-1 rounded-md border-4 ${borderColor} bg-white/5 p-2 text-white shadow-md shadow-gray-500/50`}
+      className={`${fightAnimation} grid h-full w-full auto-rows-auto grid-cols-3 gap-1 rounded-md border-4 ${borderColor} bg-white/5 p-2 text-white shadow-md ${shadowColor}`}
     >
       <CombatCardHeader unit={unit} />
       <CombatCardSymbol unit={unit} />

@@ -129,7 +129,7 @@ export default function ConstructBuilding({
             buildings[buildingType].underConstruction ? "remove" : "add"
           }
           onClick={
-            /* FIXME: Avoid using "as string" here if possible */
+            /* FIXME: Avoid using "as string" here if possible -- keyof BuildingType? */
             buildings[buildingType].underConstruction
               ? () => handleCancelClick(buildingType as string)
               : () => handleBuildClick(buildingType as string)

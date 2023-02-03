@@ -89,7 +89,7 @@ export default function PostCombatSummary({
   return (
     /* FIXME: Having to define rows!! */
     /* TODO: Once rows are auto-generated, use a list here and make all sections DRY using props */
-    <div className="grid aspect-[4/1] auto-rows-min grid-cols-4 overflow-y-auto overflow-x-hidden rounded-md border-4 border-blue-900 bg-white/5 p-2 text-xs text-white shadow-md shadow-gray-500/50 sm:text-sm md:text-base lg:gap-1 lg:text-lg xl:text-2xl">
+    <div className="grid aspect-[4/1] auto-rows-min grid-cols-4 overflow-y-auto overflow-x-hidden rounded-md border-4 border-gray-500 bg-white/5 p-2 text-xs text-white shadow-md shadow-gray-500/50 sm:text-sm md:text-base lg:gap-1 lg:text-lg xl:text-2xl">
       <p className="col-span-4 text-center font-bold">Battle Summary</p>
       <p className="col-start-1 row-start-2">
         <span className="text-green-500">Enemies Defeated</span>:{" "}

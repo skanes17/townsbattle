@@ -48,7 +48,6 @@ import {
 
 import { GameContext } from "../context/GameState";
 import { useLocation } from "react-router-dom";
-/* FIXME: Not sending properly to CombatLog */
 import { defaultTownName } from "../gameData";
 import {
   AddRemoveUnitFn,
@@ -316,7 +315,7 @@ export default function Game(props: GameProps) {
   /* Used to produce randomly distributed army compositions */
   const generateRandomArmyComposition = (
     numberOfUnitTypes: number,
-    // FIXME: Find workaround to not have to use wightOfOneUnitType here
+    // FIXME: Find workaround to not have to use weightOfOneUnitType here
     weightOfOneUnitType: number
   ) => {
     console.log("random army");

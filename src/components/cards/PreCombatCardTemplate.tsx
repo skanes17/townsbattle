@@ -15,19 +15,21 @@ export default function CombatCardTemplate({
   army,
   unitCounts,
 }: PreCombatCardTemplateProps) {
-  let borderColor;
+  let borderColor, shadowColor;
   switch (color) {
     case friendlyColor:
-      borderColor = "border-indigo-900/50";
+      borderColor = "border-indigo-900";
+      shadowColor = "shadow-indigo-500/50";
       break;
     case enemyColor:
-      borderColor = "border-red-900/50";
+      borderColor = "border-red-900";
+      shadowColor = "shadow-red-500/50";
       break;
   }
 
   return (
     <div
-      className={`grid h-full w-full auto-rows-auto grid-cols-1 place-items-center items-center gap-1 overflow-y-auto overflow-x-hidden rounded-md border-4 ${borderColor} bg-white/5 p-2 text-xs text-white shadow-md shadow-gray-500/50 sm:text-xl md:text-2xl lg:text-3xl`}
+      className={`grid h-full w-full auto-rows-auto grid-cols-1 place-items-center items-center gap-1 overflow-y-auto overflow-x-hidden rounded-md border-4 ${borderColor} bg-white/5 p-2 text-xs text-white shadow-md ${shadowColor} sm:text-xl md:text-2xl lg:text-3xl`}
     >
       <p className="text-sm font-bold sm:text-2xl md:text-3xl lg:text-4xl">
         {headerText}
