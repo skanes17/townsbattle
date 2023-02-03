@@ -397,6 +397,7 @@ export default function Combat({
       {/* ArmyGrid & CombatLog are common components to all phases */}
       {/* TODO: Reduce opacity of army grids when combat is over, put a green outline for winner, red for loser? */}
       <ArmyGrid
+        color="blue"
         phase={phase}
         army={combatUnits}
         selectedUnit={combatUnits[friendlyIndex]}
@@ -404,6 +405,7 @@ export default function Combat({
       />
       <CombatLog combatEvents={combatEvents} townName={townName} />
       <ArmyGrid
+        color="red"
         phase={phase}
         army={combatEnemyUnits}
         selectedUnit={combatEnemyUnits[enemyIndex]}

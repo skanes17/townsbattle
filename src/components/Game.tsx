@@ -89,6 +89,10 @@ export default function Game(props: GameProps) {
         JSON.parse(localStorage.getItem("tutorials")!);
   /* ---------------------------------- */
 
+  /* -- FUNCTIONS TO STORE STATE IN LOCAL STORAGE -- */
+  //const function
+  /* ----------------------------------------------- */
+
   const [turn, setTurn] = useState(1);
   // combat turn will change over time
   const [combatTurn, setCombatTurn] = useState(4);
@@ -310,11 +314,12 @@ export default function Game(props: GameProps) {
   };
 
   /* Used to produce randomly distributed army compositions */
-  function generateRandomArmyComposition(
+  const generateRandomArmyComposition = (
     numberOfUnitTypes: number,
     // FIXME: Find workaround to not have to use wightOfOneUnitType here
     weightOfOneUnitType: number
-  ) {
+  ) => {
+    console.log("random army");
     // create an array of the correct size and fill it with random numbers
     const randomNumbers = Array(numberOfUnitTypes)
       .fill(null)
@@ -324,7 +329,7 @@ export default function Game(props: GameProps) {
     // divide each element by their sum -- they're now a prob. distribution
     const armyComposition = randomNumbers.map((n) => n / sum);
     return armyComposition;
-  }
+  };
 
   /* Used to produce semi-randomly distributed army compositions */
   /* TODO: Allow choice of unit to be weighted */
@@ -332,6 +337,7 @@ export default function Game(props: GameProps) {
     numberOfUnitTypes: number,
     weightOfOneUnitType: number
   ) => {
+    console.log("weighted army");
     // set one unit to have the chosen weight
     let army = [weightOfOneUnitType];
     // the rest of the units share the remaining weight
