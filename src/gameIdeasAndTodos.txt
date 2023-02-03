@@ -1,4 +1,8 @@
-Critcal hit chance (eg 5%)
+-GAME IDEAS-
+Novice Mode: starts with just resources and units, buildings show up as options after 2-3 rounds of combat
+Veteran Mode: starts with buildings already available for construction
+
+Critical hit chance (eg 5%)
 Units who face off against each other have lower hit chance
 -TRAITS-
 Tankys reduce all damage to them by 1 (armor)
@@ -40,7 +44,7 @@ Get AutoBattler to produce combat log
 Incorporate taunts in battle
 Popups/hovertext for Planning cards
 Redesign/improve main page UI
--Remove the Summary (DevTool)
+-Remove the Main Menu Summary (DevTool)
 Fill out Options, How to Play, etc
 Redesign Planning UI
 Color scheme overhaul
