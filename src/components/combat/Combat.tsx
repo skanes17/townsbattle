@@ -256,7 +256,8 @@ export default function Combat({
             return unit;
           }
         })
-        .filter((unit) => unit !== undefined) as Unit[]
+        // Dev changed here
+        .filter((unit) => unit) as Unit[]
     );
   };
 
@@ -325,13 +326,19 @@ export default function Combat({
     // TODO: loop until all units on one or both sides are dead
 
     // gather surviving units
+    // let _survivingFriendlyUnitIndexes = autoFriendlyUnits
+    //   .map((unit, index) => {
+    //     if (unit.currentHealth !== 0) {
+    //       return index;
+    //     } else return -1;
+    //   })
+    //   .filter((index) => index >= 0);
+
+    // CAREFUL -- sometimes doesn't work properly
     let _survivingFriendlyUnitIndexes = autoFriendlyUnits
-      .map((unit, index) => {
-        if (unit.currentHealth !== 0) {
-          return index;
-        } else return -1;
-      })
-      .filter((index) => index >= 0);
+      .map((unit, index) => (unit.currentHealth !== 0 ? index : null))
+      .filter((index) => index) as number[];
+
     let _survivingEnemyUnitIndexes = autoEnemyUnits
       .map((unit, index) => {
         if (unit.currentHealth !== 0) {

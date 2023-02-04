@@ -37,8 +37,6 @@ Then you can see how many you have, how many you need.
 Get post-combat menu calculating properly
 Change emoji's to images
 Add a proper popup to replace alerts (eg "not all freeworkers assigned!")
-Points system
---Maybe a simple starting approach could be every enemy unit killed adds to total score
 Enemy army function-Buffs/traits (systems approach)
 Get AutoBattler to produce combat log
 Incorporate taunts in battle

@@ -76,6 +76,25 @@ export default function Game(props: GameProps) {
       ? defaultTownName
       : (localStorage.getItem("townName") as string);
 
+  // Dev bein a genius
+  /* const town = localStorage.getItem('townName') || defaultTownName
+
+  const foo = {
+    bar: {
+      baz: {
+        val: 'something'
+      }
+    }
+  }
+
+  if (foo && foo.bar && foo.bar.baz && foo.bar.baz.val === 'something') {
+
+  }
+
+  if (foo?.bar?.baz?.val ?? 'something' === 'something') {}
+
+ */
+
   const difficulty =
     localStorage.getItem("difficulty") === null
       ? "normal"
