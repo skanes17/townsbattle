@@ -2,9 +2,13 @@
 Novice Mode: starts with just resources and units, buildings show up as options after 2-3 rounds of combat
 Veteran Mode: starts with buildings already available for construction
 
-Critical hit chance (eg 5%)
-Units who face off against each other have lower hit chance
--TRAITS-
+Can burn resources to trigger a special combat ability? (may require extra work)
+Allow for x number of commands/interventions by the player per turn, trigger special abilities/buffs
+
+Critical hit chance (eg 5%), chance to hit
+
+--UNIT and BUILDING ABILITIES--
+DEVIN's IDEAS
 Tankys reduce all damage to them by 1 (armor)
 Pewpews can attack first before the enemy unit does
 Melee can be base unit
@@ -12,32 +16,48 @@ If a unit survives a round, then it can keep attacking (instead of going back in
 If a unit was to die, it comes back with 1 health instead of dying
 Passively lower the enemy attack by X
 Cheap unit can be 'fodder' and has a higher chance of being selected
+Units who face off against each other have lower hit chance
+Add/subtract damage
+Double/half damage if enemy equals unit type
+Prevent death if building is active
+Unit will always stay active if building is active
 
---UNIT and BUILDING ABILITIES--
 UNITS
 -Attacks twice before being sent back (low attack)
--Can dodge one attack (maybe allowed by a building/upgrade) 
--unit always attacks first, or maybe attacks first when paired against a certain type
--rage/hulking - unit gets +1 atk every time it's damaged (up to a max, eg max +3 attack) 
--Passively reduce enemy attack by x
+-Unit always attacks first, or maybe attacks first when paired against a specific type
+-Rage/hulking - unit gets +1 atk every time it's damaged (up to a max, eg max +3 attack) 
 -Extra armor/hp
--saving throw - if they were gonna die, come back with 1 hp (and maybe decreased damage?) 
--automatically win against enemies with 1 hp (or less than x) 
--weak, cheap unit type that always goes at the beginning of combat
--tough skin - can absorb first hit up to a certain damage (eg need to exceed 3 dmg) 
--ringbearer - 1 hp 1 atk, if it goes x matchups without taking damage it grows in power (eg after waiting in army for x turns it turns into a viable fighter) 
-
+-Bonus to attack when at full health
+-Saving throw - if they were gonna die, come back with 1 hp (and maybe decreased damage?) 
+-Automatically win when facing enemies with low health (eg 1 hp or less than x hp) 
+-Weak, cheap unit type that always goes at the beginning of combat
+-Tough Skin - can absorb first hit up to a certain damage (eg need to exceed 3 dmg) 
+-Cocooned Warrior (bad name) - 1 hp 1 atk, if it goes x matchups without being chosen it grows in power (eg after waiting in army for x turns it turns into a strong fighter)
+-Berserk - double damage for first matchup
+-Shattered/Revenant - Weak unit with a few hp, when it dies, comes back stronger but has 1 hp
+-Firewall - Burns the ground on attack; next 2 units take x damage when they join the combat (complicated?)
+-Absorb/Release damage - Get hit first for X damage, next hit damages for attack + X (maybe can absorb up to a limit)
+-Vicious Mockery/Taunt - Enemy attack +x, but takes +x extra damage
 
 BUILDINGS
 -More resources gathered per worker
 -More health for certain buildings
+-Buff a specific unit type 
+-Buff all units
 -Decrease chance to hit a friendly building
 -Increase chance to hit for certain units (assuming chance to hit does not start at 100%)
--can steal one enemy unit (maybe overly complex...)
--extra points per enemy defeated (maybe expensive to build... like a bank or wonder/monument or something) 
--Can revive x units during combat
+-Allow a unit type to dodge one attack or first attack
+-Allow scouts -- more detailed info given on enemy army before combat
+-Buff the town center (+x health)
+-Can steal/convert x enemy units at start of combat (maybe overly complex...)
+-Extra points per enemy defeated (building maybe expensive to build... like a wonder/monument or something) 
+-Can revive x units during combat (maybe when all units die some can be res'd instead of combat ending)
 -Can heal x units for y hp after combat
 -Units get x amount stronger based on number of times town has survived
+-COMBAT ACTION UNLOCKED: Coinshot - blast coins at the enemy army, dealing 1 damage to x random enemy units
+-COMBAT ACTION UNLOCKED: Reflect - Atk becomes 0, in combat gets hit first, but then damages the enemy for equal HP
+-COMBAT ACTION UNLOCKED: Shriek - spooks the opposing enemy, keeps them from attacking for 1 turn and they are not returned to army
+
 -----
 
 -COMBAT-

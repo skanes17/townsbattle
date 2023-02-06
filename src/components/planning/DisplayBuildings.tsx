@@ -6,6 +6,7 @@ import {
   CardSymbol,
   CardDescription,
   CardFooter,
+  CardImage,
 } from "../cards";
 
 interface DisplayBuildingsProps {
@@ -24,9 +25,8 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
       {constructedBuildings.map((buildingType) => (
         <CardTemplate>
           <CardHeader cardName={buildings[buildingType].name} />
-          <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} />
-          {/* FIXME: Use image
-          <CardImage src={buildings[buildingType].imageSrc} /> */}
+          {/* <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} /> */}
+          <CardImage buildingType={buildingType} />
           <CardDescription
             descriptionText={buildings[buildingType].description}
           />
