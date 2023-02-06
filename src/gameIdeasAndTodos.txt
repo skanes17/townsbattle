@@ -13,6 +13,33 @@ If a unit was to die, it comes back with 1 health instead of dying
 Passively lower the enemy attack by X
 Cheap unit can be 'fodder' and has a higher chance of being selected
 
+--UNIT and BUILDING ABILITIES--
+UNITS
+-Attacks twice before being sent back (low attack)
+-Can dodge one attack (maybe allowed by a building/upgrade) 
+-unit always attacks first, or maybe attacks first when paired against a certain type
+-rage/hulking - unit gets +1 atk every time it's damaged (up to a max, eg max +3 attack) 
+-Passively reduce enemy attack by x
+-Extra armor/hp
+-saving throw - if they were gonna die, come back with 1 hp (and maybe decreased damage?) 
+-automatically win against enemies with 1 hp (or less than x) 
+-weak, cheap unit type that always goes at the beginning of combat
+-tough skin - can absorb first hit up to a certain damage (eg need to exceed 3 dmg) 
+-ringbearer - 1 hp 1 atk, if it goes x matchups without taking damage it grows in power (eg after waiting in army for x turns it turns into a viable fighter) 
+
+
+BUILDINGS
+-More resources gathered per worker
+-More health for certain buildings
+-Decrease chance to hit a friendly building
+-Increase chance to hit for certain units (assuming chance to hit does not start at 100%)
+-can steal one enemy unit (maybe overly complex...)
+-extra points per enemy defeated (maybe expensive to build... like a bank or wonder/monument or something) 
+-Can revive x units during combat
+-Can heal x units for y hp after combat
+-Units get x amount stronger based on number of times town has survived
+-----
+
 -COMBAT-
 Have an option for autoplay (not the sim) that steps forward every 1/2 seconds or something
 
