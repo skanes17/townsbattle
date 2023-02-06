@@ -64,6 +64,22 @@ export const buildingsData = {
     metalCost: 10,
     freeworkerCost: 5,
   },
+  healingChamber: {
+    name: "Healing Chamber",
+    nameSymbol: "🩸",
+    underConstruction: false,
+    constructed: false,
+    tier: 1,
+    attackBonus: 0,
+    healthBonus: 0,
+    armorBonus: 0,
+    description: "Heals units after combat.",
+    health: 2,
+    woodCost: 10,
+    stoneCost: 10,
+    metalCost: 10,
+    freeworkerCost: 5,
+  },
   // for all units
   townCenter: {
     name: "Town Center",
@@ -122,6 +138,12 @@ export const buildingCostsData = {
   },
   // for all units
   mealHall: {
+    freeworkers: 5,
+    wood: 10,
+    stone: 10,
+    metal: 10,
+  },
+  healingChamber: {
     freeworkers: 5,
     wood: 10,
     stone: 10,
