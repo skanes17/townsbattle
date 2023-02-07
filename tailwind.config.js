@@ -3,6 +3,10 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      // may not work
+      backgroundImage: {
+        army: "url('/src/images/homeBackground-01.png')",
+      },
       keyframes: {
         jiggleRight: {
           "50%": { transform: "translate(10px,0)" },
