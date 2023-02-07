@@ -123,6 +123,7 @@ export default function ConstructBuilding({
         )}
       </div>
 
+      {/* TODO: Not enough resources? Gray out the button, add text "Need More Resources" or similar */}
       <div className="col-span-3 flex items-center justify-around">
         <AddRemoveButton
           buttonType={

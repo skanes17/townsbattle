@@ -1,10 +1,11 @@
 import React from "react";
 
 // images this component may need to use -- is there a better way?
+import archeryHut from "../../images/archeryHut-01.png";
 import healingChamber from "../../images/healingChamber-01.png";
-import mealHall from "../../images/meal-hall-01.png";
+import mealHall from "../../images/mealHall-01.png";
 import swordsmithy from "../../images/swordsmithy-01.png";
-import townCenter from "../../images/town-center-01.png";
+import townCenter from "../../images/townCenter-01.png";
 import { BuildingType } from "../../types";
 
 interface CardImageProps {
@@ -16,6 +17,9 @@ interface CardImageProps {
 export default function CardImage({ buildingType }: CardImageProps) {
   let src;
   switch (buildingType) {
+    case "archeryHut":
+      src = archeryHut;
+      break;
     case "healingChamber":
       src = healingChamber;
       break;
@@ -34,7 +38,7 @@ export default function CardImage({ buildingType }: CardImageProps) {
   }
 
   return (
-    <div className="start col-span-3 flex h-28 items-center justify-center">
+    <div className="col-span-3 flex h-28 items-center justify-center">
       <img className="mx-auto w-28" src={src} alt={`building`} />
     </div>
   );

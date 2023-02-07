@@ -395,10 +395,9 @@ export default function Combat({
     setPhase(Phases.PostCombat);
   };
 
-  // simple draft of points sytem is +100 per enemy unit defeated, -50 for friendly unit lost
+  // simple draft of points sytem is +100 per enemy unit defeated
   const points =
-    combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100 -
-    combatUnits.filter((unit) => unit.currentHealth === 0).length * 50;
+    combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100;
 
   return (
     <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-3 p-4 md:gap-4 lg:gap-5 xl:gap-8">

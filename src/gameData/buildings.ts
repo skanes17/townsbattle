@@ -16,15 +16,17 @@ export const buildingsData = {
     freeworkerCost: 5,
   },
   // for pewpew
-  archeryRange: {
-    name: "Archery Range",
+  // TODO: Rename as "archery hut"
+  archeryHut: {
+    name: "Archery Hut",
     nameSymbol: "🎯",
     underConstruction: false,
     constructed: false,
     tier: 1,
     attackBonus: 3,
-    healthBonus: 1,
-    description: "Pewpew units gain +3 to attack, +1 to health.",
+    healthBonus: -1,
+    // include flavourtext about the divine knowledge given
+    description: "Pewpew units gain +3 to attack but get -1 to health.",
     health: 2,
     woodCost: 10,
     stoneCost: 0,
@@ -123,7 +125,7 @@ export const buildingCostsData = {
     metal: 0,
   },
   // for pewpew
-  archeryRange: {
+  archeryHut: {
     freeworkers: 5,
     wood: 10,
     stone: 0,
