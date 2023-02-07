@@ -66,50 +66,30 @@ import {
 // Composition of army could be displayed to UI, for example 20% melee 30% pewpew 50% tanky
 
 export default function Game(props: GameProps) {
-  /* -- RETRIEVE LOCALLY-STORED DATA SENT FROM MAIN PAGE -- */
+  // pull startData from linked Play component
+  const startData = useLocation();
+
+  /* TODO: Add Type safety to startData? */
+
+  const townName = startData.state.townName || defaultTownName;
+  const difficulty = startData.state.difficulty || "normal";
+  // null coalescent used because false is a falsy value, and therefore woudl set tutorials to "true"
+  const tutorials = startData.state.tutorials ?? true;
+
+  console.log(townName, difficulty, tutorials);
+
+  /*
+  // -- PREVIOUSLY IMPLEMENTED METHOD - RETRIEVE LOCALLY-STORED DATA SENT FROM MAIN PAGE
   // if localStorage values are non-null, use the locally stored values
   // if storage is null, use some default values so the game still runs
   const townName =
     // if the storage is null or the player didn't enter a name, set it as the default
-    localStorage.getItem("townName") === null ||
-    localStorage.getItem("townName") === ""
-      ? defaultTownName
-      : (localStorage.getItem("townName") as string);
-
-  // Dev bein a genius
-  /* const town = localStorage.getItem('townName') || defaultTownName
-
-  const foo = {
-    bar: {
-      baz: {
-        val: 'something'
-      }
-    }
-  }
-
-  if (foo && foo.bar && foo.bar.baz && foo.bar.baz.val === 'something') {
-
-  }
-
-  if (foo?.bar?.baz?.val ?? 'something' === 'something') {}
-
- */
-
+    localStorage.getItem("townName") || defaultTownName;
   const difficulty =
-    localStorage.getItem("difficulty") === null
-      ? "normal"
-      : (localStorage.getItem("difficulty") as string);
-
+    (localStorage.getItem("difficulty") as string) || "normal";
   const tutorials =
-    localStorage.getItem("tutorials") === null
-      ? "normal"
-      : // FIXME: Better way to avoid the error than to use non-null assertion?
-        JSON.parse(localStorage.getItem("tutorials")!);
-  /* ---------------------------------- */
-
-  /* -- FUNCTIONS TO STORE STATE IN LOCAL STORAGE -- */
-  //const function
-  /* ----------------------------------------------- */
+  JSON.parse(localStorage.getItem("tutorials")!) || true;
+  */
 
   const [turn, setTurn] = useState(1);
   // combat turn will change over time

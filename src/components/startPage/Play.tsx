@@ -17,6 +17,10 @@ export default function Play() {
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
 
+  // to send as state={} through Router Link
+  const startData = { townName, difficulty, tutorials };
+  console.log(startData);
+
   const difficultyUpdater: DifficultyUpdater = (difficulty) => {
     setDifficulty(difficulty);
   };
@@ -24,13 +28,15 @@ export default function Play() {
     setTutorials(tutorials);
   };
 
-  // exports data to local storage
+  /*
+  // Prior method -- exported data to local storage onClick
   const storeStartData = () => {
     localStorage.setItem("townName", townName);
     localStorage.setItem("difficulty", difficulty);
     // use JSON.parse to convert back to Boolean when imported
     localStorage.setItem("tutorials", tutorials.toString());
   };
+  */
 
   return (
     <MenuBox icon="▶️" headerText="How to Play">
@@ -153,8 +159,7 @@ export default function Play() {
         <Link
           to="/play/game"
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center text-white outline-none ring-blue-600 ring-offset-2 focus:ring-2"
-          /* FIXME: Need to send state data to Game */
-          onClick={() => storeStartData()}
+          state={startData}
         >
           Next
         </Link>
