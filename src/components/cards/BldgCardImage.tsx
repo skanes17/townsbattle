@@ -38,8 +38,8 @@ export default function BldgCardImage({ buildingType }: BldgCardImageProps) {
   }
 
   return (
-    <div className="col-span-3 flex h-28 items-center justify-center">
-      <img className="mx-auto w-28" src={src} alt={`building`} />
+    <div className="col-span-full row-span-2 row-end-3 flex h-28 items-start justify-center">
+      <img className="z-0 mx-auto w-full " src={src} alt={`building`} />
     </div>
   );
 }

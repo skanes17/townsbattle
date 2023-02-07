@@ -6,7 +6,7 @@ interface BldgCardFooterProps {
 
 export default function BldgCardFooter({ tier, health }: BldgCardFooterProps) {
   return (
-    <>
+    <div className="grid auto-cols-auto grid-cols-3 gap-2">
       <div></div>
       <div className="text-md mt-4 flex items-center justify-center rounded-t-lg bg-slate-800 px-1 text-white">
         Tier {tier}
@@ -14,6 +14,6 @@ export default function BldgCardFooter({ tier, health }: BldgCardFooterProps) {
       <div className="text-md mt-4 flex items-center justify-center rounded-tl-lg bg-slate-800 px-1 text-white">
         ❤️{health}
       </div>
-    </>
+    </div>
   );
 }
