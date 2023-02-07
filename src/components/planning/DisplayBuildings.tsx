@@ -1,12 +1,11 @@
 import React from "react";
 import { Buildings } from "../../types";
 import {
-  CardTemplate,
-  CardHeader,
-  CardSymbol,
-  CardDescription,
-  CardFooter,
-  CardImage,
+  BldgCardTemplate,
+  BldgCardFooter,
+  BldgCardHeader,
+  BldgCardImage,
+  BldgCardDescription,
 } from "../cards";
 
 interface DisplayBuildingsProps {
@@ -23,18 +22,18 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   return (
     <>
       {constructedBuildings.map((buildingType) => (
-        <CardTemplate>
-          <CardHeader cardName={buildings[buildingType].name} />
+        <BldgCardTemplate>
+          <BldgCardHeader cardName={buildings[buildingType].name} />
           {/* <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} /> */}
-          <CardImage buildingType={buildingType} />
-          <CardDescription
+          <BldgCardImage buildingType={buildingType} />
+          <BldgCardDescription
             descriptionText={buildings[buildingType].description}
           />
-          <CardFooter
+          <BldgCardFooter
             tier={buildings[buildingType].tier}
             health={buildings[buildingType].health}
           />
-        </CardTemplate>
+        </BldgCardTemplate>
       ))}
     </>
   );
