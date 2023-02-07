@@ -39,7 +39,7 @@ export default function MenuButton({
     <>
       <button
         type="button"
-        className={`w-full flex-1 rounded-md border ${bgColor} ${buttonColors} ${textStyle} p-2.5 outline-none ring-offset-2 `}
+        className={`w-full flex-1 rounded-md border ${bgColor} ${buttonColors} ${textStyle} p-2.5 outline-transparent ring-offset-2 `}
         onClick={onClick}
       >
         {buttonText}

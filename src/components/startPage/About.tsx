@@ -13,7 +13,7 @@ export default function About() {
 
       <div className="mt-3 items-center gap-2 sm:flex">
         <Link
-          className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-center text-white outline-none ring-green-600 ring-offset-2 focus:ring-2"
+          className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-center text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
           to="/"
         >
           Close
