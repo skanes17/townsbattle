@@ -53,9 +53,49 @@ export default function TrainUnitCard({
   const stoneCost = unitCosts[unitType]["stone"];
   const metalCost = unitCosts[unitType]["metal"];
 
+  // function checks how many of each resource type is collected vs. the resources required for that unit, add/reduces them as necessary
+  const updateResources = (
+    resourcesObject: Resources,
+    unitCostsObject: UnitCosts,
+    unitType: UnitType,
+    resourceType: ResourceType,
+    updateType: "plus" | "minus" | "zero" | "max"
+  ) => {
+    switch (updateType) {
+      // consume the amount of a resource type required to train that unit type
+      case "plus":
+        resourcesObject[resourceType].collected -=
+          unitCostsObject[unitType][resourceType];
+        break;
+      // return the amount of a resource type required to stop training that unit type
+      case "minus":
+        resourcesObject[resourceType].collected +=
+          unitCostsObject[unitType][resourceType];
+        break;
+      // return all resources of a given type required by the number of units you are stopping training
+      case "zero":
+        resourcesObject[resourceType].collected +=
+          unitCosts[unitType][resourceType] * unitsInTraining[unitType];
+        break;
+    }
+  };
+
   const handleZeroClick = (unitType: UnitType, friendly: boolean) => {
     if (unitsInTraining[unitType] > 0) {
       const updatedResources = { ...resources };
+
+      // call the updateResources function for each resource
+      Object.keys(updatedResources).map((resourceType) => {
+        updateResources(
+          updatedResources,
+          unitCosts,
+          unitType,
+          resourceType as ResourceType,
+          "zero"
+        );
+      });
+
+      /* // Old approach to updating resources
       updatedResources["freeworkers"].collected +=
         freeworkerCost * unitsInTraining[unitType];
       updatedResources["wood"].collected +=
@@ -63,31 +103,11 @@ export default function TrainUnitCard({
       updatedResources["stone"].collected +=
         stoneCost * unitsInTraining[unitType];
       updatedResources["metal"].collected +=
-        metalCost * unitsInTraining[unitType];
+        metalCost * unitsInTraining[unitType]; */
       setResources(updatedResources);
 
       // updates the myTrainingUnits array as well
       removeAllTrainingUnits(unitType, friendly);
-    }
-  };
-
-  // function checks how many of each resource type is collected vs. the resources required for that unit, add/reduces them as necessary
-  const updateResources = (
-    resourcesObject: Resources,
-    unitCostsObject: UnitCosts,
-    unitType: UnitType,
-    resourceType: ResourceType,
-    updateType: "increase" | "decrease"
-  ) => {
-    switch (updateType) {
-      case "increase":
-        resourcesObject[resourceType].collected +=
-          unitCostsObject[unitType][resourceType];
-        break;
-      case "decrease":
-        resourcesObject[resourceType].collected -=
-          unitCostsObject[unitType][resourceType];
-        break;
     }
   };
 
@@ -102,7 +122,7 @@ export default function TrainUnitCard({
           unitCosts,
           unitType,
           resourceType as ResourceType,
-          "increase"
+          "minus"
         );
       });
 
@@ -136,7 +156,7 @@ export default function TrainUnitCard({
           unitCosts,
           unitType,
           resourceType as ResourceType,
-          "decrease"
+          "plus"
         );
       });
 
