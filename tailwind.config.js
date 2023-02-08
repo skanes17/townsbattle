@@ -3,9 +3,14 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      // may not work
       backgroundImage: {
         army: "url('/src/images/homeBackground-01.png')",
+        townCenter: "url('/src/images/townCenter-01.png')",
+        archeryHut: "url('/src/images/archeryHut-01.png')",
+        healingChamber: "url('/src/images/healingChamber-01.png')",
+        mealHall: "url('/src/images/mealHall-01.png')",
+        swordsmithy: "url('/src/images/swordsmithy-01.png')",
+        townCenter: "url('/src/images/townCenter-01.png')",
       },
       keyframes: {
         jiggleRight: {

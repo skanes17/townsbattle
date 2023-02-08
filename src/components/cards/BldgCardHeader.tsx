@@ -7,7 +7,7 @@ interface BldgCardHeaderProps {
 export default function BldgCardHeader({ cardName }: BldgCardHeaderProps) {
   return (
     <div
-      className={`z-10 col-span-full row-span-1 row-start-1 mx-2 flex h-8 items-center justify-center rounded-b-md bg-indigo-600/75 text-lg font-bold`}
+      className={`z-10 col-span-full row-span-1 row-start-1 mx-2 flex h-8 items-center justify-center rounded-md border border-white/25 bg-neutral-900/30 text-lg font-bold backdrop-blur-sm`}
     >
       {cardName}
     </div>
