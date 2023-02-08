@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   BaseUnit,
   Resources,
+  ResourceType,
   UnitCosts,
   UnitCounts,
   UnitType,
@@ -70,13 +71,46 @@ export default function TrainUnitCard({
     }
   };
 
+  // function checks how many of each resource type is collected vs. the resources required for that unit, add/reduces them as necessary
+  const updateResources = (
+    resourcesObject: Resources,
+    unitCostsObject: UnitCosts,
+    unitType: UnitType,
+    resourceType: ResourceType,
+    updateType: "increase" | "decrease"
+  ) => {
+    switch (updateType) {
+      case "increase":
+        resourcesObject[resourceType].collected +=
+          unitCostsObject[unitType][resourceType];
+        break;
+      case "decrease":
+        resourcesObject[resourceType].collected -=
+          unitCostsObject[unitType][resourceType];
+        break;
+    }
+  };
+
   const handleMinusClick = (unitType: UnitType, friendly: boolean) => {
     if (unitsInTraining[unitType] > 0) {
       const updatedResources = { ...resources };
+
+      // call the updateResources function for each resource
+      Object.keys(updatedResources).map((resourceType) => {
+        updateResources(
+          updatedResources,
+          unitCosts,
+          unitType,
+          resourceType as ResourceType,
+          "increase"
+        );
+      });
+
+      /* // Old approach to updating resources
       updatedResources["freeworkers"].collected += freeworkerCost;
       updatedResources["wood"].collected += woodCost;
       updatedResources["stone"].collected += stoneCost;
-      updatedResources["metal"].collected += metalCost;
+      updatedResources["metal"].collected += metalCost; */
       setResources(updatedResources);
 
       // updates the myTrainingUnits array as well
@@ -94,10 +128,23 @@ export default function TrainUnitCard({
     ) {
       // reduce the resources according to costs
       const updatedResources = { ...resources };
+
+      // call the updateResources function for each resource
+      Object.keys(updatedResources).map((resourceType) => {
+        updateResources(
+          updatedResources,
+          unitCosts,
+          unitType,
+          resourceType as ResourceType,
+          "decrease"
+        );
+      });
+
+      /* Old approach to updating resources
       updatedResources["freeworkers"].collected -= freeworkerCost;
       updatedResources["wood"].collected -= woodCost;
       updatedResources["stone"].collected -= stoneCost;
-      updatedResources["metal"].collected -= metalCost;
+      updatedResources["metal"].collected -= metalCost; */
       setResources(updatedResources);
 
       // updates the myTrainingUnits array as well
@@ -106,6 +153,11 @@ export default function TrainUnitCard({
       alert("Not enough resources!");
     }
   };
+
+  // TODO: Drafting a max button
+  Math.floor(
+    resources["freeworkers"].collected / unitCosts[unitType]["freeworkers"]
+  );
 
   // check all costs and see that at least one unit can be afforded
   const maxTrainable = Math.min(
