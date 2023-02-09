@@ -212,9 +212,10 @@ export default function TrainUnitCard({
       <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
       <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
 
-      <div className="grid auto-rows-auto grid-cols-2">
-        <div className="col-span-1 col-start-1 pl-2 font-bold">Cost</div>
-        <div className="col-span-1 col-start-2 grid auto-rows-auto pr-2 text-lg">
+      {/* FIXME: This section is identical to one in ConstructBuilding. Make a shared component!! */}
+      <div className="grid auto-rows-auto grid-cols-[min-content_1fr] pl-2">
+        <div className="col-span-1 col-start-1 font-bold">Cost</div>
+        <div className="col-span-1 col-start-2 ml-4 grid auto-rows-auto pr-2 text-lg">
           {/* TODO: Refactor to improve nested ternary */}
           {Object.keys(resources).map(
             (resourceType) =>
