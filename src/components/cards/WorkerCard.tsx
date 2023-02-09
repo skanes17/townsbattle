@@ -71,8 +71,8 @@ export default function WorkerCard({
 
         <div className="grid auto-rows-auto grid-cols-2">
           <div className="justify-self-start pl-2 font-bold">Cost</div>
-          <div className={`justify-self-end pr-2 text-lg`}>
-            🛠️{/**/}
+          <div className={`justify-self-start pr-2 text-lg`}>
+            🛠️
             <span className={`${costColor} px-1`}>
               {resources["freeworkers"].collected}
             </span>

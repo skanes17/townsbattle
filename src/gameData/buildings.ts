@@ -26,7 +26,7 @@ export const buildingsData = {
     attackBonus: 3,
     healthBonus: -1,
     // include flavourtext about the divine knowledge given
-    description: "Pewpew units gain +3 to attack but get -1 to health.",
+    description: "Pewpew units gain +3 to attack but -1 health.",
     health: 2,
     woodCost: 10,
     stoneCost: 0,

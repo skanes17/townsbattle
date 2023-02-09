@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 interface GridCardContainerProps {
-  /* color: "blue" | "red" | "orange" | "amber" | "green"; */
   children: ReactNode;
   headerText: string;
 }
