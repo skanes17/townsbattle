@@ -4,9 +4,10 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        army: "url('/src/images/homeBackground-01.png')",
-        townCenter: "url('/src/images/townCenter-01.png')",
         archeryHut: "url('/src/images/archeryHut-01.png')",
+        army: "url('/src/images/homeBackground-01.png')",
+        /* enemyArmy: "url('/src/images/enemyArmy-02.png')",
+        friendlyArmy: "url('/src/images/friendlyArmy-01.png')", */
         healingChamber: "url('/src/images/healingChamber-01.png')",
         mealHall: "url('/src/images/mealHall-01.png')",
         scoutUnit: "url('/src/images/scoutUnit-01.png')",

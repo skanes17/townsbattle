@@ -10,7 +10,7 @@ export default function FlexWrapContainer({
 }: FlexWrapContainerProps) {
   return (
     <div className="p-4">
-      <div className="text-lg font-bold">{headerText}</div>
+      <div className="text-center text-lg font-bold">{headerText}</div>
       <div className="grid auto-cols-auto grid-flow-col gap-1">{children}</div>
     </div>
   );
