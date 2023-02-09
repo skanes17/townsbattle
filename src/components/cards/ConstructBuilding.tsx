@@ -8,6 +8,7 @@ import {
 } from "../../types/";
 import { AddRemoveButton } from "../buttons";
 import {
+  CardCostsInfo,
   CardDescription,
   CardHeader,
   CardShowCount,
@@ -94,36 +95,11 @@ export default function ConstructBuilding({
       <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} />
       <CardDescription descriptionText={buildings[buildingType].description} />
 
-      {/* FIXME: This section is identical to one in TrainUnitCard. Make a shared component!! */}
-      <div className="grid auto-rows-auto grid-cols-[min-content_1fr] pl-2">
-        <div className="col-span-1 col-start-1 font-bold">Cost</div>
-        <div className="col-span-1 col-start-2 ml-4 grid auto-rows-auto pr-2 text-right text-lg">
-          {Object.keys(resources).map(
-            (resourceType) =>
-              /* If this resource is required, show its cost */
-              buildingCosts[buildingType][resourceType as ResourceType] > 0 && (
-                <div>
-                  {resources[resourceType as ResourceType].resourceSymbol}
-                  <span
-                    className={
-                      /* if you have enough resources of that type, show green; otherwise red" */
-                      resources[resourceType as ResourceType].collected <
-                      buildingCosts[buildingType][resourceType as ResourceType]
-                        ? `${redText} px-1`
-                        : `${greenText} px-1`
-                    }
-                  >
-                    {resources[resourceType as ResourceType].collected}
-                  </span>
-                  /
-                  <span className={`px-1`}>
-                    {buildingCosts[buildingType][resourceType as ResourceType]}
-                  </span>
-                </div>
-              )
-          )}
-        </div>
-      </div>
+      <CardCostsInfo
+        resources={resources}
+        costsObject={buildingCosts}
+        type={buildingType}
+      />
 
       {/* TODO: Not enough resources? Make button inactive, add text "Not enough resources!" or similar */}
       <div className="flex items-center justify-around">
