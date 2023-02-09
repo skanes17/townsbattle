@@ -215,18 +215,22 @@ export default function TrainUnitCard({
       {/* FIXME: This section is identical to one in ConstructBuilding. Make a shared component!! */}
       <div className="grid auto-rows-auto grid-cols-[min-content_1fr] pl-2">
         <div className="col-span-1 col-start-1 font-bold">Cost</div>
-        <div className="col-span-1 col-start-2 ml-4 grid auto-rows-auto pr-2 text-lg">
-          {/* TODO: Refactor to improve nested ternary */}
+        <div className="col-span-1 col-start-2 ml-4 grid auto-rows-auto pr-2 text-right text-lg">
           {Object.keys(resources).map(
             (resourceType) =>
               /* If this resource is required, show its cost */
-              unitCosts[unitType][resourceType as ResourceType] > 0 &&
-              // if you don't have enough collected to train the unit, show in red; else green
-              (resources[resourceType as ResourceType].collected <
-              unitCosts[unitType][resourceType as ResourceType] ? (
+              unitCosts[unitType][resourceType as ResourceType] > 0 && (
                 <div>
                   {resources[resourceType as ResourceType].resourceSymbol}
-                  <span className={`${redText} px-1`}>
+                  <span
+                    className={
+                      /* if you have enough resources of that type, show green; otherwise red" */
+                      resources[resourceType as ResourceType].collected <
+                      unitCosts[unitType][resourceType as ResourceType]
+                        ? `${redText} px-1`
+                        : `${greenText} px-1`
+                    }
+                  >
                     {resources[resourceType as ResourceType].collected}
                   </span>
                   /
@@ -234,18 +238,7 @@ export default function TrainUnitCard({
                     {unitCosts[unitType][resourceType as ResourceType]}
                   </span>
                 </div>
-              ) : (
-                <div>
-                  {resources[resourceType as ResourceType].resourceSymbol}
-                  <span className={`${greenText} px-1`}>
-                    {resources[resourceType as ResourceType].collected}
-                  </span>
-                  /
-                  <span className={`px-1`}>
-                    {unitCosts[unitType][resourceType as ResourceType]}
-                  </span>
-                </div>
-              ))
+              )
           )}
         </div>
       </div>

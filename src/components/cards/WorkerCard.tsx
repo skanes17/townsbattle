@@ -69,17 +69,19 @@ export default function WorkerCard({
           descriptionText={resources[resourceType].description}
         />
 
-        <div className="grid auto-rows-auto grid-cols-2">
-          <div className="justify-self-start pl-2 font-bold">Cost</div>
-          <div className={`justify-self-start pr-2 text-lg`}>
-            🛠️
-            <span className={`${costColor} px-1`}>
-              {resources["freeworkers"].collected}
-            </span>
-            /
-            <span className={`px-1`}>
-              {resources[resourceType].workersNeeded}
-            </span>
+        <div className="grid auto-rows-auto grid-cols-[min-content_1fr] pl-2">
+          <div className="col-span-1 col-start-1 font-bold">Cost</div>
+          <div className="col-span-1 col-start-2 ml-4 grid auto-rows-auto pr-2 text-right text-lg">
+            <div>
+              🛠️
+              <span className={`${costColor} px-1`}>
+                {resources["freeworkers"].collected}
+              </span>
+              /
+              <span className={`px-1`}>
+                {resources[resourceType].workersNeeded}
+              </span>
+            </div>
           </div>
         </div>
 
