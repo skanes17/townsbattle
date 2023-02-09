@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { BuildingCosts, Buildings, Resources } from "../../types";
 import { ConstructBuilding } from "../cards";
 
 interface BuildingsUIProps {
   buildings: Buildings;
-  setBuildings: (buildings: Buildings) => void;
+  setBuildings: Dispatch<SetStateAction<Buildings>>;
+  /* setBuildings: (buildings: Buildings) => void; */
   buildingCosts: BuildingCosts;
   buildingsToConstruct: string[];
   resources: Resources;
-  setResources: (resources: Resources) => void;
+  setResources: Dispatch<SetStateAction<Resources>>;
+  /* setResources: (resources: Resources) => void; */
 }
 
 export default function BuildingsUI({
