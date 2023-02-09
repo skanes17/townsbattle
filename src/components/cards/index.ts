@@ -15,7 +15,6 @@ import CombatCardHeader from "./CombatCardHeader";
 import CombatCardSymbol from "./CombatCardSymbol";
 import CombatCardTemplate from "./CombatCardTemplate";
 import ConstructBuilding from "./ConstructBuilding";
-import HorizLine3ColGrid from "./HorizLine3ColGrid";
 import PreCombatCardTemplate from "./PreCombatCardTemplate";
 import TrainingCardContainer from "./TrainingCardContainer";
 import TrainUnitCard from "./TrainUnitCard";
@@ -41,7 +40,6 @@ export {
   CombatCardSymbol,
   CombatCardTemplate,
   ConstructBuilding,
-  HorizLine3ColGrid,
   PreCombatCardTemplate,
   TrainingCardContainer,
   TrainUnitCard,

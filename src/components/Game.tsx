@@ -166,8 +166,6 @@ export default function Game(props: GameProps) {
     }
 
     if (friendly) {
-      /* FIXME: remove the ts-ignore */
-      /* @ts-ignore */
       setMyTrainingUnits((myTrainingUnits) => [...myTrainingUnits, _newUnit]);
     }
   };
@@ -548,20 +546,24 @@ export default function Game(props: GameProps) {
             removeAllTrainingUnits={removeAllTrainingUnits}
           />
         </FlexWrapContainer>
-        <FlexWrapContainer headerText="Construct Buildings">
-          {/* TODO: Match component structure with other cards */}
-          {buildingsToConstruct.map((buildingType) => (
-            <ConstructBuilding
-              key={buildingType}
-              buildings={buildings}
-              setBuildings={setBuildings}
-              buildingCosts={buildingCosts}
-              buildingType={buildingType}
-              resources={resources}
-              setResources={setResources}
-            />
-          ))}
-        </FlexWrapContainer>
+
+        {/* If there are no buildings left to construct, remove the section */}
+        {buildingsToConstruct.length > 0 ? (
+          <FlexWrapContainer headerText="Construct Buildings">
+            {/* TODO: Match component structure with other cards */}
+            {buildingsToConstruct.map((buildingType) => (
+              <ConstructBuilding
+                key={buildingType}
+                buildings={buildings}
+                setBuildings={setBuildings}
+                buildingCosts={buildingCosts}
+                buildingType={buildingType}
+                resources={resources}
+                setResources={setResources}
+              />
+            ))}
+          </FlexWrapContainer>
+        ) : null}
         <FlexWrapContainer headerText="Buildings Constructed">
           {/* TODO: Match component structure with other cards */}
           <DisplayBuildings buildings={buildings} />

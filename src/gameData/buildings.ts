@@ -100,8 +100,8 @@ export const buildingsData = {
     metalCost: 0,
     freeworkerCost: 0,
   },
-  scoutingPost: {
-    name: "Scouting Post",
+  scoutUnit: {
+    name: "Scout Unit",
     nameSymbol: "🔍",
     underConstruction: false,
     constructed: false,
@@ -158,7 +158,7 @@ export const buildingCostsData = {
     stone: 0,
     metal: 0,
   },
-  scoutingPost: {
+  scoutUnit: {
     freeworkers: 10,
     wood: 15,
     stone: 15,

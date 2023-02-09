@@ -21,6 +21,9 @@ export default function BldgCardTemplate({
     case "mealHall":
       bgImage = "bg-mealHall";
       break;
+    case "scoutUnit":
+      bgImage = "bg-scoutUnit";
+      break;
     case "swordsmithy":
       bgImage = "bg-swordsmithy";
       break;
@@ -33,16 +36,19 @@ export default function BldgCardTemplate({
   }
 
   return (
-    /* // FIXME: Get consistent height without it looking weird
-    <div className="grid h-auto w-44 auto-rows-auto grid-cols-3 gap-1 rounded-md border-4 border-blue-900 bg-white pb-2 text-black shadow-md shadow-gray-500/50 transition ease-in-out hover:scale-105"> */
+    /* TODO: Consider setting a minimum height for consistency -- eg. min-h-[16rem]*/
     <div
-      className={`rounded-lg border border-white/10 hover:-translate-y-0.5 ${bgImage} bg-cover bg-center hover:shadow-lg hover:shadow-gray-500/50`}
+      className={`grid w-52 auto-rows-auto gap-1 rounded-lg border-t-4 border-l-4 border-r-4 border-gray-900/50 bg-white/5 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50 ${bgImage} bg-cover bg-center  text-white`}
     >
-      <div
-        className={`grid w-52 auto-rows-auto gap-1 rounded-lg border-t-4 border-l-4 border-r-4 border-gray-900/50 bg-white/5 text-white`}
-      >
-        {children}
-      </div>
+      {children}
     </div>
   );
 }
+
+/*
+// FIXME: Find a way to add a slight border -- see example code which would wrap the card
+<div
+className={`rounded-lg border border-white/10 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50`}
+>
+</div>
+*/

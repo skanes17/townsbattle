@@ -11,7 +11,6 @@ import {
   CardShowCount,
   CardSymbol,
   CardTemplate,
-  HorizLine3ColGrid,
   TrainUnitCardHeader,
   CardDescription,
 } from "../cards";
@@ -220,10 +219,8 @@ export default function TrainUnitCard({
         {Object.keys(resources).map(
           (resourceType) =>
             /* If this resource is required, show its cost */
-
             unitCosts[unitType][resourceType as ResourceType] > 0 &&
             // if you don't have enough collected to train the unit, show in red; else green
-
             (resources[resourceType as ResourceType].collected <
             unitCosts[unitType][resourceType as ResourceType] ? (
               <span className={`${redCost}`}>

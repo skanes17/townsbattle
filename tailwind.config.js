@@ -9,6 +9,7 @@ module.exports = {
         archeryHut: "url('/src/images/archeryHut-01.png')",
         healingChamber: "url('/src/images/healingChamber-01.png')",
         mealHall: "url('/src/images/mealHall-01.png')",
+        scoutUnit: "url('/src/images/scoutUnit-01.png')",
         swordsmithy: "url('/src/images/swordsmithy-01.png')",
         townCenter: "url('/src/images/townCenter-01.png')",
       },
