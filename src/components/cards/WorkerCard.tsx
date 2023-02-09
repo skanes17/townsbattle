@@ -62,27 +62,25 @@ export default function WorkerCard({
 
   return (
     <>
-      <CardTemplate>
+      <CardTemplate color="amber">
         <CardHeader cardName={resources[resourceType].workerName} />
         <CardSymbol cardSymbol={resources[resourceType].workerSymbol} />
         <CardDescription
           descriptionText={resources[resourceType].description}
         />
 
-        <div className="flex justify-start pl-2 align-middle font-bold">
-          Cost (can assign{" "}
-          {resources["freeworkers"].collected /
-            resources[resourceType].workersNeeded}{" "}
-          more)
-        </div>
-
-        {/* Math.floor(resources["freeworkers"].collected / freeworkerCost) */}
-
-        <div
-          className={`flex justify-center align-middle text-lg ${costColor}`}
-        >
-          🛠️{/**/}
-          {resources[resourceType].workersNeeded}
+        <div className="grid auto-rows-auto grid-cols-2">
+          <div className="justify-self-start pl-2 font-bold">Cost</div>
+          <div className={`justify-self-end pr-2 text-lg`}>
+            🛠️{/**/}
+            <span className={`${costColor} px-1`}>
+              {resources["freeworkers"].collected}
+            </span>
+            /
+            <span className={`px-1`}>
+              {resources[resourceType].workersNeeded}
+            </span>
+          </div>
         </div>
 
         <div className="grid grid-cols-3">

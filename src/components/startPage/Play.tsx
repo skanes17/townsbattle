@@ -19,7 +19,6 @@ export default function Play() {
 
   // to send as state={} through Router Link
   const startData = { townName, difficulty, tutorials };
-  console.log(startData);
 
   const difficultyUpdater: DifficultyUpdater = (difficulty) => {
     setDifficulty(difficulty);

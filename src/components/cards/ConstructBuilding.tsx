@@ -89,7 +89,7 @@ export default function ConstructBuilding({
   const greenCost = "text-green-500";
 
   return (
-    <CardTemplate>
+    <CardTemplate color="blue">
       <CardHeader cardName={buildings[buildingType].name} />
       <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} />
       <CardDescription descriptionText={buildings[buildingType].description} />

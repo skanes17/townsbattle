@@ -203,7 +203,7 @@ export default function TrainUnitCard({
   const greenCost = "text-green-500";
 
   return (
-    <CardTemplate>
+    <CardTemplate color="red">
       <TrainUnitCardHeader
         cardName={BASE_UNIT_DATA[unitType].name}
         attack={BASE_UNIT_DATA[unitType].attack}
@@ -235,6 +235,9 @@ export default function TrainUnitCard({
             ))
         )}
       </div>
+
+      {/* TODO: Match the style of the worker card! */}
+
       <div className="grid auto-cols-min grid-cols-5 gap-1">
         <div className="flex items-center justify-center">
           <AddRemoveButton

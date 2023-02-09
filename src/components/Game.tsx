@@ -24,7 +24,7 @@ import {
   WorkerCardContainer,
 } from "./cards";
 
-import FlexWrapContainer from "./layout/FlexWrapContainer";
+import GridCardContainer from "./layout/GridCardContainer";
 import { Button } from "./buttons";
 import { Combat } from "./combat";
 // import { buildingsData, buildingCostsData } from "../gameData/buildings";
@@ -75,8 +75,6 @@ export default function Game(props: GameProps) {
   const difficulty = startData.state.difficulty || "normal";
   // null coalescent used because false is a falsy value, and therefore woudl set tutorials to "true"
   const tutorials = startData.state.tutorials ?? true;
-
-  console.log(townName, difficulty, tutorials);
 
   /*
   // -- PREVIOUSLY IMPLEMENTED METHOD - RETRIEVE LOCALLY-STORED DATA SENT FROM MAIN PAGE
@@ -314,7 +312,6 @@ export default function Game(props: GameProps) {
     // FIXME: Find workaround to not have to use weightOfOneUnitType here
     weightOfOneUnitType: number
   ) => {
-    console.log("random army");
     // create an array of the correct size and fill it with random numbers
     const randomNumbers = Array(numberOfUnitTypes)
       .fill(null)
@@ -332,7 +329,6 @@ export default function Game(props: GameProps) {
     numberOfUnitTypes: number,
     weightOfOneUnitType: number
   ) => {
-    console.log("weighted army");
     // set one unit to have the chosen weight
     let army = [weightOfOneUnitType];
     // the rest of the units share the remaining weight
@@ -386,7 +382,6 @@ export default function Game(props: GameProps) {
     const armyComposition = armyCompositions[
       Math.floor(Math.random() * armyCompositions.length)
     ](numberOfUnitTypes, unitWeight);
-    console.log(armyComposition);
 
     let newUnits: Unit[] = [];
     // Add the appopriate number of each unit to the enemy army
@@ -527,13 +522,14 @@ export default function Game(props: GameProps) {
         </div>
       </div>
       <div className="flex flex-wrap justify-evenly">
-        <FlexWrapContainer headerText="Assign Workers">
+        <GridCardContainer headerText="Assign Workers">
           <WorkerCardContainer
             resources={resources}
             setResources={setResources}
           />
-        </FlexWrapContainer>
-        <FlexWrapContainer headerText="Train Units">
+        </GridCardContainer>
+
+        <GridCardContainer headerText="Train Units">
           <TrainingCardContainer
             resources={resources}
             setResources={setResources}
@@ -545,11 +541,11 @@ export default function Game(props: GameProps) {
             removeTrainingUnit={removeTrainingUnit}
             removeAllTrainingUnits={removeAllTrainingUnits}
           />
-        </FlexWrapContainer>
+        </GridCardContainer>
 
         {/* If there are no buildings left to construct, remove the section */}
         {buildingsToConstruct.length > 0 ? (
-          <FlexWrapContainer headerText="Construct Buildings">
+          <GridCardContainer headerText="Construct Buildings">
             {/* TODO: Match component structure with other cards */}
             {buildingsToConstruct.map((buildingType) => (
               <ConstructBuilding
@@ -562,12 +558,12 @@ export default function Game(props: GameProps) {
                 setResources={setResources}
               />
             ))}
-          </FlexWrapContainer>
+          </GridCardContainer>
         ) : null}
-        <FlexWrapContainer headerText="Buildings Constructed">
+        <GridCardContainer headerText="Buildings Constructed">
           {/* TODO: Match component structure with other cards */}
           <DisplayBuildings buildings={buildings} />
-        </FlexWrapContainer>
+        </GridCardContainer>
       </div>
       <br></br>
       <DevTools
