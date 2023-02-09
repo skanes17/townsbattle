@@ -1,12 +1,12 @@
-interface CardDescriptionProps {
+interface BldgCardDescriptionProps {
   descriptionText?: string;
 }
 
-export default function CardDescription({
+export default function BldgCardDescription({
   descriptionText,
-}: CardDescriptionProps) {
+}: BldgCardDescriptionProps) {
   return (
-    <div className="margin-auto z-10 mx-4 mb-2 mt-28 flex h-auto items-center justify-center rounded-sm border-slate-300 bg-slate-300/80 p-2 text-center text-sm font-semibold text-black shadow-md">
+    <div className="margin-auto mx-4 mb-2 mt-28 flex h-auto items-center justify-center rounded-sm border-slate-300 bg-slate-300/80 p-2 text-center text-sm font-semibold text-black shadow-md">
       {typeof descriptionText === undefined ? "" : descriptionText}
     </div>
   );

@@ -93,10 +93,8 @@ export default function ConstructBuilding({
       <CardHeader cardName={buildings[buildingType].name} />
       <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} />
       <CardDescription descriptionText={buildings[buildingType].description} />
-      <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
-        Cost
-      </div>
-      <div className="col-span-3 flex justify-center align-middle text-lg">
+      <div className="flex justify-start pl-2 align-middle font-bold">Cost</div>
+      <div className="flex justify-center align-middle text-lg">
         {/* TODO: Refactor to improve nested ternary */}
         {Object.keys(resources).map(
           (resourceType) =>
@@ -119,7 +117,7 @@ export default function ConstructBuilding({
       </div>
 
       {/* TODO: Not enough resources? Gray out the button, add text "Need More Resources" or similar */}
-      <div className="col-span-3 flex items-center justify-around">
+      <div className="flex items-center justify-around">
         <AddRemoveButton
           buttonType={
             buildings[buildingType].underConstruction ? "remove" : "add"

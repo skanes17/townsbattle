@@ -211,10 +211,10 @@ export default function TrainUnitCard({
       ></TrainUnitCardHeader>
       <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
       <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
-      <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
+      <div className="flex justify-start pl-2 align-middle font-bold">
         Cost (can train {maxTrainable > 0 ? maxTrainable : "0"} more)
       </div>
-      <div className="col-span-3 flex justify-center align-middle text-lg">
+      <div className="flex justify-center align-middle text-lg">
         {/* TODO: Refactor to improve nested ternary */}
         {Object.keys(resources).map(
           (resourceType) =>
@@ -235,7 +235,7 @@ export default function TrainUnitCard({
             ))
         )}
       </div>
-      <div className="col-span-3 grid auto-cols-min grid-cols-5 gap-1">
+      <div className="grid auto-cols-min grid-cols-5 gap-1">
         <div className="flex items-center justify-center">
           <AddRemoveButton
             buttonType="remove"

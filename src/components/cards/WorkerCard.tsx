@@ -69,7 +69,7 @@ export default function WorkerCard({
           descriptionText={resources[resourceType].description}
         />
 
-        <div className="col-span-3 flex justify-start pl-2 align-middle font-bold">
+        <div className="flex justify-start pl-2 align-middle font-bold">
           Cost (can assign{" "}
           {resources["freeworkers"].collected /
             resources[resourceType].workersNeeded}{" "}
@@ -79,30 +79,30 @@ export default function WorkerCard({
         {/* Math.floor(resources["freeworkers"].collected / freeworkerCost) */}
 
         <div
-          className={`col-span-3 flex justify-center align-middle text-lg ${costColor}`}
+          className={`flex justify-center align-middle text-lg ${costColor}`}
         >
           🛠️{/**/}
           {resources[resourceType].workersNeeded}
         </div>
 
-        <div className="flex items-center justify-end">
-          <AddRemoveButton
-            buttonType="remove"
-            onClick={() => removeWorker(resourceType)}
-          >
-            -
-          </AddRemoveButton>
-        </div>
-
-        <CardShowCount countToShow={resources[resourceType].workers} />
-
-        <div className="flex items-center justify-start">
-          <AddRemoveButton
-            buttonType="add"
-            onClick={() => addWorker(resourceType)}
-          >
-            +
-          </AddRemoveButton>
+        <div className="grid grid-cols-3">
+          <div className="flex items-center justify-end">
+            <AddRemoveButton
+              buttonType="remove"
+              onClick={() => removeWorker(resourceType)}
+            >
+              -
+            </AddRemoveButton>
+          </div>
+          <CardShowCount countToShow={resources[resourceType].workers} />
+          <div className="flex items-center justify-start">
+            <AddRemoveButton
+              buttonType="add"
+              onClick={() => addWorker(resourceType)}
+            >
+              +
+            </AddRemoveButton>
+          </div>
         </div>
       </CardTemplate>
     </>

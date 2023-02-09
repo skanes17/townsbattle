@@ -13,15 +13,19 @@ export default function TrainUnitCardHeader({
 }: TrainUnitCardHeaderProps) {
   return (
     <>
-      <div className={`ml-1 flex h-8 items-center justify-start text-lg`}>
-        🗡️
-        {attack}
-      </div>
-      <div className={`flex h-8 items-center justify-center text-lg font-bold`}>
-        {cardName}
-      </div>
-      <div className={`mr-1 flex h-8 items-center justify-end text-lg`}>
-        ❤️{health}
+      <div className="grid grid-cols-3">
+        <div className={`ml-1 flex h-8 items-center justify-start text-lg`}>
+          🗡️
+          {attack}
+        </div>
+        <div
+          className={`flex h-8 items-center justify-center text-lg font-bold`}
+        >
+          {cardName}
+        </div>
+        <div className={`mr-1 flex h-8 items-center justify-end text-lg`}>
+          ❤️{health}
+        </div>
       </div>
     </>
   );
