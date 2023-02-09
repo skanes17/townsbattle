@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
   BuildingCosts,
   Buildings,
   BuildingType,
   Resources,
+  ResourceType,
 } from "../../types/";
 import { AddRemoveButton } from "../buttons";
 import {
@@ -17,12 +18,14 @@ import {
 
 interface ConstructBuildingProps {
   buildings: Buildings;
-  setBuildings: (building: Buildings) => void;
+  setBuildings: Dispatch<SetStateAction<Buildings>>;
+  /* setBuildings: (buildings: Buildings) => void; */
   buildingCosts: BuildingCosts;
   /* FIXME: Why is this being inferred as a number? */
   buildingType: BuildingType;
   resources: Resources;
-  setResources: (resources: Resources) => void;
+  setResources: Dispatch<SetStateAction<Resources>>;
+  /* setResources: (resources: Resources) => void; */
 }
 
 /* setMyUnits: (unit: Unit[]) => void; */
@@ -99,25 +102,18 @@ export default function ConstructBuilding({
         {Object.keys(resources).map(
           (resourceType) =>
             /* If this resource is required, show its cost */
-            /* @ts-ignore */
-            buildingCosts[buildingType][resourceType] > 0 &&
+            buildingCosts[buildingType][resourceType as ResourceType] > 0 &&
             // if you don't have enough collected to train the unit, show in red; else green
-            /* @ts-ignore */
-            (resources[resourceType].collected <
-            /* @ts-ignore */
-            buildingCosts[buildingType][resourceType] ? (
+            (resources[resourceType as ResourceType].collected <
+            buildingCosts[buildingType][resourceType as ResourceType] ? (
               <span className={`${redCost}`}>
-                {/* @ts-ignore */}
-                {resources[resourceType].resourceSymbol}
-                {/* @ts-ignore */}
-                {buildingCosts[buildingType][resourceType]}{" "}
+                {resources[resourceType as ResourceType].resourceSymbol}
+                {buildingCosts[buildingType][resourceType as ResourceType]}{" "}
               </span>
             ) : (
               <span className={`${greenCost}`}>
-                {/* @ts-ignore */}
-                {resources[resourceType].resourceSymbol}
-                {/* @ts-ignore */}
-                {buildingCosts[buildingType][resourceType]}{" "}
+                {resources[resourceType as ResourceType].resourceSymbol}
+                {buildingCosts[buildingType][resourceType as ResourceType]}{" "}
               </span>
             ))
         )}

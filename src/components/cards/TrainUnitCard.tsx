@@ -56,7 +56,7 @@ export default function TrainUnitCard({
   // function checks how many of each resource type is collected vs. the resources required for that unit, add/reduces them as necessary
   const updateResources = (
     resourcesObject: Resources,
-    unitCostsObject: UnitCosts,
+    costsObject: UnitCosts,
     unitType: UnitType,
     resourceType: ResourceType,
     updateType: "plus" | "minus" | "zero" | "max"
@@ -65,12 +65,12 @@ export default function TrainUnitCard({
       // consume the amount of a resource type required to train that unit type
       case "plus":
         resourcesObject[resourceType].collected -=
-          unitCostsObject[unitType][resourceType];
+          costsObject[unitType][resourceType];
         break;
       // return the amount of a resource type required to stop training that unit type
       case "minus":
         resourcesObject[resourceType].collected +=
-          unitCostsObject[unitType][resourceType];
+          costsObject[unitType][resourceType];
         break;
       // return all resources of a given type required by the number of units you are stopping training
       case "zero":
@@ -174,11 +174,6 @@ export default function TrainUnitCard({
     }
   };
 
-  // TODO: Drafting a max button
-  Math.floor(
-    resources["freeworkers"].collected / unitCosts[unitType]["freeworkers"]
-  );
-
   // check all costs and see that at least one unit can be afforded
   const maxTrainable = Math.min(
     Math.floor(resources["freeworkers"].collected / freeworkerCost),
@@ -225,25 +220,20 @@ export default function TrainUnitCard({
         {Object.keys(resources).map(
           (resourceType) =>
             /* If this resource is required, show its cost */
-            /* @ts-ignore */
-            unitCosts[unitType][resourceType] > 0 &&
+
+            unitCosts[unitType][resourceType as ResourceType] > 0 &&
             // if you don't have enough collected to train the unit, show in red; else green
-            /* @ts-ignore */
-            (resources[resourceType].collected <
-            /* @ts-ignore */
-            unitCosts[unitType][resourceType] ? (
+
+            (resources[resourceType as ResourceType].collected <
+            unitCosts[unitType][resourceType as ResourceType] ? (
               <span className={`${redCost}`}>
-                {/* @ts-ignore */}
-                {resources[resourceType].resourceSymbol}
-                {/* @ts-ignore */}
-                {unitCosts[unitType][resourceType]}{" "}
+                {resources[resourceType as ResourceType].resourceSymbol}
+                {unitCosts[unitType][resourceType as ResourceType]}{" "}
               </span>
             ) : (
               <span className={`${greenCost}`}>
-                {/* @ts-ignore */}
-                {resources[resourceType].resourceSymbol}
-                {/* @ts-ignore */}
-                {unitCosts[unitType][resourceType]}{" "}
+                {resources[resourceType as ResourceType].resourceSymbol}
+                {unitCosts[unitType][resourceType as ResourceType]}{" "}
               </span>
             ))
         )}

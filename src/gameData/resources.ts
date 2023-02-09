@@ -4,7 +4,7 @@ export const resourceData = {
     name: "Freeworker",
     resourceSymbol: "🛠️",
     description:
-      "Used when gathering resources, training units, and constructing buildings",
+      "Used when gathering resources, training units, and constructing buildings.",
   },
   wood: {
     collected: 0,

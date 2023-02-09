@@ -15,5 +15,6 @@ export interface Unit {
 /* // TODO: Use Pick<> here? */
 export interface TrainingUnit {
   unitType: UnitType;
-  tempId: number;
+  /* Can't remember where I was going to use tempId */
+  tempId?: number;
 }
