@@ -7,7 +7,12 @@ import {
   unitCostsData,
   upgradesData,
 } from "../gameData";
-import { DisplayBuildings } from "./planning/";
+import {
+  DisplayBuildings,
+  Resource,
+  UnitCount,
+  UnitInTraining,
+} from "./planning/";
 
 import { DevTools } from "./devTools";
 
@@ -16,6 +21,7 @@ import {
   DisplayUnitCounts,
   DisplayTraining,
   DisplayUnderConstruction,
+  DisplayTemplate,
 } from "./dashboards";
 
 import {
@@ -106,7 +112,9 @@ export default function Game(props: GameProps) {
 
   /* ===RESOURCES AND WORKERS=== */
   const [resources, setResources] = useState<Resources>(resourceData);
-  const resourceTypes = Object.keys(resources);
+  const resourceTypes: ResourceType[] = Object.keys(
+    resources
+  ) as ResourceType[];
   // # of resources harvested per worker
   const [resourceMultipliers, setResourceMultipliers] = useState({
     wood: 1,
@@ -507,18 +515,24 @@ export default function Game(props: GameProps) {
       <div>Score: {score}</div>
       <div className="sticky top-0 z-10 grid auto-cols-auto">
         <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-          <DisplayResources
-            resources={resources}
-            resourceTypes={resourceTypes}
-          />
+          <DisplayTemplate headerText="Resources">
+            {resourceTypes.map((resourceType: ResourceType) => (
+              <Resource resources={resources} resourceType={resourceType} />
+            ))}
+          </DisplayTemplate>
+
           <div className="place-self-center text-xl">
             Train Units to Protect {townName || defaultTownName}!
           </div>
-          <DisplayUnitCounts
-            BASE_UNIT_DATA={BASE_UNIT_DATA}
-            unitTypes={unitTypes}
-            unitCounts={unitCounts}
-          />
+          <DisplayTemplate headerText="Army">
+            {unitTypes.map((unitType: UnitType) => (
+              <UnitCount
+                BASE_UNIT_DATA={BASE_UNIT_DATA}
+                unitType={unitType}
+                unitCounts={unitCounts}
+              />
+            ))}
+          </DisplayTemplate>
         </div>
       </div>
       <div className="flex flex-wrap justify-evenly">
@@ -579,20 +593,27 @@ export default function Game(props: GameProps) {
       {/* TODO: Combine UnitCount and UnitInTraining into one general component; only the count differs */}
       <div className="sticky bottom-0 z-10 grid auto-cols-auto">
         <div className="col-start-1 grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-          <DisplayTraining
-            BASE_UNIT_DATA={BASE_UNIT_DATA}
-            unitTypes={unitTypes}
-            unitsInTraining={unitsInTraining}
-          />
+          <DisplayTemplate headerText="Units in Training">
+            {unitTypes.map((unitType: UnitType) => (
+              <UnitInTraining
+                BASE_UNIT_DATA={BASE_UNIT_DATA}
+                unitType={unitType as UnitType}
+                unitsInTraining={unitsInTraining}
+              />
+            ))}
+          </DisplayTemplate>
+
           <div className="sticky bottom-0 flex items-center justify-center p-0">
             <Button buttonColor="blue" onClick={endTurn}>
               End Turn {turn}
             </Button>
           </div>
-          <DisplayUnderConstruction
-            buildings={buildings}
-            buildingsUnderConstruction={buildingsUnderConstruction}
-          />
+
+          <DisplayTemplate headerText="Buildings Under Construction">
+            {buildingsUnderConstruction.map((building) => (
+              <div>{buildings[building].nameSymbol}</div>
+            ))}
+          </DisplayTemplate>
         </div>
       </div>
     </div>
