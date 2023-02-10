@@ -147,9 +147,9 @@ export default function Game(props: GameProps) {
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
 
-  // FIXME: Is this the best way to coerce the type?
+  // FIXME: Is this the best way to coerce the types?
   const BASE_UNIT_DATA: BaseUnit = baseUnitData as BaseUnit;
-  const unitTypes = Object.keys(BASE_UNIT_DATA);
+  const unitTypes: UnitType[] = Object.keys(BASE_UNIT_DATA) as UnitType[];
 
   /* ===FUNCTIONS=== */
   // ADD units to either army
