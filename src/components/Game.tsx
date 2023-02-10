@@ -10,19 +10,14 @@ import {
 import {
   DisplayBuildings,
   Resource,
+  ResourceToCollect,
   UnitCount,
   UnitInTraining,
 } from "./planning/";
 
 import { DevTools } from "./devTools";
 
-import {
-  DisplayResources,
-  DisplayUnitCounts,
-  DisplayTraining,
-  DisplayUnderConstruction,
-  DisplayTemplate,
-} from "./dashboards";
+import { DisplayTemplate } from "./dashboards";
 
 import {
   ConstructBuilding,
@@ -38,6 +33,7 @@ import { Combat } from "./combat";
 // import { BaseUnit } from "../types/BaseUnit";
 // import { BuildingCosts } from "../types/BuildingCosts";
 import {
+  BaseResourceType,
   BaseUnit,
   BuildingCosts,
   Buildings,
@@ -102,6 +98,7 @@ export default function Game(props: GameProps) {
 
   // points from rounds of combat get added to this
   const [score, setScore] = useState(0);
+  /* TODO: Points for a unit is trained, building built? */
 
   // TODO: Add food? And/or some resource common to all unit building?
   // Idea: Freeworkers are consumed when used for making units...
@@ -115,6 +112,10 @@ export default function Game(props: GameProps) {
   const resourceTypes: ResourceType[] = Object.keys(
     resources
   ) as ResourceType[];
+  const baseResourceTypes: BaseResourceType[] = Object.keys(resources).filter(
+    (resourceType) => resourceType !== "freeworkers"
+  ) as BaseResourceType[];
+
   // # of resources harvested per worker
   const [resourceMultipliers, setResourceMultipliers] = useState({
     wood: 1,
@@ -515,7 +516,7 @@ export default function Game(props: GameProps) {
       <div>Score: {score}</div>
       <div className="sticky top-0 z-10 grid auto-cols-auto">
         <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-          <DisplayTemplate headerText="Resources">
+          <DisplayTemplate headerText="Resources Collected">
             {resourceTypes.map((resourceType: ResourceType) => (
               <Resource resources={resources} resourceType={resourceType} />
             ))}
@@ -593,11 +594,20 @@ export default function Game(props: GameProps) {
       {/* TODO: Combine UnitCount and UnitInTraining into one general component; only the count differs */}
       <div className="sticky bottom-0 z-10 grid auto-cols-auto">
         <div className="col-start-1 grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-          <DisplayTemplate headerText="Units in Training">
-            {unitTypes.map((unitType: UnitType) => (
+          <DisplayTemplate headerText="Resources to Collect">
+            {baseResourceTypes.map((resourceType) => (
+              <ResourceToCollect
+                resources={resources}
+                resourceType={resourceType}
+              />
+            ))}
+          </DisplayTemplate>
+
+          <DisplayTemplate headerText="Units to Train">
+            {unitTypes.map((unitType) => (
               <UnitInTraining
                 BASE_UNIT_DATA={BASE_UNIT_DATA}
-                unitType={unitType as UnitType}
+                unitType={unitType}
                 unitsInTraining={unitsInTraining}
               />
             ))}
