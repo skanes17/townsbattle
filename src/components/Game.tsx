@@ -294,6 +294,7 @@ export default function Game(props: GameProps) {
     newBuildings.map((buildingType) => {
       buildingsCopy[buildingType].underConstruction = false;
       buildingsCopy[buildingType].constructed = true;
+      /* TODO: Check here if that building activates new unit? */
     });
   };
 

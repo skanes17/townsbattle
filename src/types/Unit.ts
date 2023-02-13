@@ -9,7 +9,7 @@ export interface Unit {
   attack: number;
   maxHealth: number;
   currentHealth: number;
-  active: boolean;
+  canBeTrained: boolean;
   id?: number;
 }
 
