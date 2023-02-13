@@ -1,5 +1,5 @@
 import React from "react";
-import { BaseUnit } from "../../types/BaseUnit";
+import { BaseUnit } from "../../types";
 import Button from "../buttons/Button";
 import AddUnitButton from "./AddUnitButton";
 import { ResourceType, Resources } from "../../types/Resources";

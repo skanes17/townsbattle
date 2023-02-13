@@ -1,4 +1,4 @@
-export interface UnitCost {
+/* export interface UnitCost {
   freeworkers: number;
   wood: number;
   stone: number;
@@ -8,3 +8,4 @@ export interface UnitCost {
 export interface UnitCosts {
   [index: string]: UnitCost;
 }
+ */

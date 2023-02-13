@@ -35,14 +35,14 @@ import { Combat } from "./combat";
 import {
   BaseResourceType,
   BaseUnit,
-  BuildingCosts,
+  /* BuildingCosts, */
   Buildings,
   GameProps,
   Resources,
   ResourceType,
   TrainingUnit,
   Unit,
-  UnitCosts,
+  /* UnitCosts, */
   UnitCounts,
   UnitType,
   UpgradeCosts,
@@ -129,8 +129,8 @@ export default function Game(props: GameProps) {
 
   /* ===BUILDINGS=== */
   const [buildings, setBuildings] = useState<Buildings>(buildingsData);
-  const [buildingCosts, setBuildingCosts] =
-    useState<BuildingCosts>(buildingCostsData);
+  /* const [buildingCosts, setBuildingCosts] =
+    useState<BuildingCosts>(buildingCostsData); */
   const buildingsUnderConstruction = Object.keys(buildings).filter(
     (key) => buildings[key].underConstruction
   );
@@ -143,7 +143,7 @@ export default function Game(props: GameProps) {
   const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>(upgradesData);
 
   /* ===UNITS=== */
-  const [unitCosts, setUnitCosts] = useState<UnitCosts>(unitCostsData);
+  /* const [unitCosts, setUnitCosts] = useState<UnitCosts>(unitCostsData); */
   // ids for tracking units
   const [unitId, setUnitId] = useState(0);
   // friendly army
@@ -549,7 +549,7 @@ export default function Game(props: GameProps) {
           <TrainingCardContainer
             resources={resources}
             setResources={setResources}
-            unitCosts={unitCosts}
+            /* unitCosts={unitCosts} */
             unitsInTraining={unitsInTraining}
             BASE_UNIT_DATA={BASE_UNIT_DATA}
             addTrainingUnit={addTrainingUnit}
@@ -568,7 +568,7 @@ export default function Game(props: GameProps) {
                 key={buildingType}
                 buildings={buildings}
                 setBuildings={setBuildings}
-                buildingCosts={buildingCosts}
+                /* buildingCosts={buildingCosts} */
                 buildingType={buildingType}
                 resources={resources}
                 setResources={setResources}

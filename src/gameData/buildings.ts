@@ -10,10 +10,7 @@ export const buildingsData = {
     healthBonus: 2,
     description: "Melee units gain +2 to attack, +2 to health.",
     health: 2,
-    woodCost: 10,
-    stoneCost: 10,
-    metalCost: 0,
-    freeworkerCost: 5,
+    resourceCosts: { freeworkers: 5, wood: 10, stone: 10,
   },
   // for pewpew
   // TODO: Rename as "archery hut"
@@ -28,10 +25,7 @@ export const buildingsData = {
     // include flavourtext about the divine knowledge given
     description: "Pewpew units gain +3 to attack but -1 health.",
     health: 2,
-    woodCost: 10,
-    stoneCost: 0,
-    metalCost: 10,
-    freeworkerCost: 5,
+    resourceCosts: { freeworkers: 5, wood: 10, metal: 10 },
   },
   // for tanky
   armorsmithy: {
@@ -44,6 +38,7 @@ export const buildingsData = {
     healthBonus: 3,
     description: "Tanky units gain +1 to attack, +3 to health.",
     health: 2,
+    resourceCosts: { freeworkers: 5, stone: 10, metal: 10 },
     woodCost: 0,
     stoneCost: 10,
     metalCost: 10,
@@ -61,10 +56,7 @@ export const buildingsData = {
     armorBonus: 0,
     description: "All units gain +2 to health, +2 to armor.",
     health: 2,
-    woodCost: 10,
-    stoneCost: 10,
-    metalCost: 10,
-    freeworkerCost: 5,
+    resourceCosts: { freeworkers: 5, wood: 10, stone: 10, metal: 10 },
   },
   healingChamber: {
     name: "Healing Chamber",
@@ -77,10 +69,7 @@ export const buildingsData = {
     armorBonus: 0,
     description: "Heals units after combat.",
     health: 2,
-    woodCost: 10,
-    stoneCost: 10,
-    metalCost: 10,
-    freeworkerCost: 5,
+    resourceCosts: { freeworkers: 5, wood: 20, stone: 10, metal: 5 },
   },
   // for all units
   townCenter: {
@@ -95,10 +84,7 @@ export const buildingsData = {
     description: "Losing this building means game over!",
     healthBonus: 0,
     health: 3,
-    woodCost: 0,
-    stoneCost: 0,
-    metalCost: 0,
-    freeworkerCost: 0,
+    resourceCosts: {},
   },
   scoutUnit: {
     name: "Scout Unit",
@@ -110,14 +96,11 @@ export const buildingsData = {
     description: "Upgrade intel on the enemy army.",
     healthBonus: 0,
     health: 2,
-    woodCost: 15,
-    stoneCost: 15,
-    metalCost: 15,
-    freeworkerCost: 10,
+    resourceCosts: { freeworkers: 10, wood: 15, stone: 15, metal: 15 },
   },
 };
 
-export const buildingCostsData = {
+/* export const buildingCostsData = {
   swordsmithy: {
     freeworkers: 5,
     wood: 10,
@@ -165,3 +148,4 @@ export const buildingCostsData = {
     metal: 15,
   },
 };
+ */

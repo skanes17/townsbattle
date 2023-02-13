@@ -1,23 +1,23 @@
 import React, { ReactNode } from "react";
 import {
-  BuildingCosts,
+  /* BuildingCosts, */
   BuildingType,
   Resources,
   ResourceType,
-  UnitCosts,
+  /* UnitCosts, */
   UnitType,
 } from "../../types/";
 
 interface CardCostsInfoProps {
   resources: Resources;
-  costsObject: BuildingCosts | UnitCosts;
+  /* costsObject: BuildingCosts | UnitCosts; */
   /* is it a buildingType or unitType? */
   type: BuildingType | UnitType;
 }
 
 export default function CardCostsInfo({
   resources,
-  costsObject,
+  /* costsObject, */
   type,
 }: CardCostsInfoProps) {
   const redText = "text-red-600";

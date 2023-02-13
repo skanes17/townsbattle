@@ -1,3 +1,5 @@
+import { ResourceCosts } from "./ResourceCosts";
+
 export type UnitType = "melee" | "pewpew" | "tanky";
 export type UnitName = "Melee" | "Pewpew" | "Tanky";
 
@@ -10,7 +12,12 @@ export interface Unit {
   maxHealth: number;
   currentHealth: number;
   canBeTrained: boolean;
+  resourceCosts: ResourceCosts;
   id?: number;
+}
+
+export interface BaseUnit {
+  [key: string]: Omit<Unit, "currentHealth">;
 }
 
 /* // TODO: Use Pick<> here? */

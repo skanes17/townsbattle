@@ -1,4 +1,4 @@
-export interface BuildingCost {
+/* export interface BuildingCost {
   freeworkers: number;
   wood: number;
   stone: number;
@@ -7,4 +7,4 @@ export interface BuildingCost {
 
 export interface BuildingCosts {
   [index: string]: BuildingCost;
-}
+} */

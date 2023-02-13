@@ -3,7 +3,7 @@ import {
   BaseUnit,
   Resources,
   ResourceType,
-  UnitCosts,
+  /* UnitCosts, */
   UnitCounts,
   UnitType,
 } from "../../types/";
@@ -23,7 +23,7 @@ export interface TrainUnitCardProps {
   unitType: UnitType;
   resources: Resources;
   setResources: (resources: Resources) => void;
-  unitCosts: UnitCosts;
+  /* unitCosts: UnitCosts; */
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
   addTrainingUnit: AddRemoveUnitFn;
@@ -39,7 +39,7 @@ export default function TrainUnitCard({
   unitType,
   resources,
   setResources,
-  unitCosts,
+  /* unitCosts, */
   unitsInTraining,
   BASE_UNIT_DATA,
   addTrainingUnit,
@@ -53,10 +53,13 @@ export default function TrainUnitCard({
   const stoneCost = unitCosts[unitType]["stone"];
   const metalCost = unitCosts[unitType]["metal"];
 
+  // select the unit to be trained
+  const unitToBeTrained = BASE_UNIT_DATA[unitType];
+
   // function checks how many of each resource type is collected vs. the resources required for that unit, add/reduces them as necessary
   const updateResources = (
     resourcesObject: Resources,
-    costsObject: UnitCosts,
+    /* costsObject: UnitCosts, */
     unitType: UnitType,
     resourceType: ResourceType,
     updateType: "plus" | "minus" | "zero" | "max"
@@ -176,11 +179,38 @@ export default function TrainUnitCard({
 
   // check all costs and see that at least one unit can be afforded
   const maxTrainable = Math.min(
-    Math.floor(resources["freeworkers"].collected / freeworkerCost),
+    Object.keys(unitToBeTrained.resourceCosts).map(
+      (resourceType: string) =>
+        (resources[resourceType as ResourceType].collected ?? 0) /
+          unitToBeTrained.resourceCosts[resourceType as ResourceType] || 0
+    )
+  );
+  // NOTE: Above, ?? is a catch for if resources collected is undefined and || is a catch for a result of NaN
+
+  const stuff = Object.keys(BASE_UNIT_DATA).map((unitType) =>
+    /* @ts-ignore */
+    Object.keys(BASE_UNIT_DATA[unitType].resourceCosts).map(
+      (resourceType) =>
+        /* @ts-ignore */
+        resources[resourceType].collected ??
+        (0 / BASE_UNIT_DATA[unitType].resourceCosts[resourceType] || 0)
+    )
+  );
+
+  /* 
+  const maxTrainable = Math.min(
+  Object.keys(unitToBeTrained.resources).map(
+    (resource) =>
+      pooledResources[resource] ?? 0 / unitToBeTrained.resources[resource]
+  )
+);
+  */
+
+  /* Math.floor(resources["freeworkers"].collected / freeworkerCost),
     Math.floor(resources["wood"].collected / woodCost),
     Math.floor(resources["stone"].collected / stoneCost),
-    Math.floor(resources["metal"].collected / metalCost)
-  );
+    Math.floor(resources["metal"].collected / metalCost) */
+
   const handleMaxClick = (unitType: UnitType, friendly: boolean) => {
     // FIXME: Doesn't work if one a resource COST is zero, even if that resource isn't required
     // TODO: Incorporate logic to check what resources are required for the unitType
@@ -215,7 +245,7 @@ export default function TrainUnitCard({
 
       <CardCostsInfo
         resources={resources}
-        costsObject={unitCosts}
+        /* costsObject={unitCosts} */
         type={unitType}
       />
 

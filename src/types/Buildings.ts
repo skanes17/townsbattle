@@ -1,3 +1,5 @@
+import { ResourceCosts } from "./ResourceCosts";
+
 export interface Building {
   name: string;
   nameSymbol: string;
@@ -12,10 +14,7 @@ export interface Building {
   description?: string;
   bonus?: string;
   health: number;
-  woodCost: number;
-  stoneCost: number;
-  metalCost: number;
-  freeworkerCost: number;
+  resourceCosts: ResourceCosts;
 }
 
 export interface Buildings {
