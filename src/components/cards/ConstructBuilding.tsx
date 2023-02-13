@@ -1,10 +1,11 @@
 import React, { Dispatch, SetStateAction } from "react";
 import {
-  BuildingCosts,
+  /* BuildingCosts, */
   Buildings,
   BuildingType,
   Resources,
   ResourceType,
+  /* ResourceType, */
 } from "../../types/";
 import { AddRemoveButton } from "../buttons";
 import {
@@ -20,7 +21,6 @@ interface ConstructBuildingProps {
   buildings: Buildings;
   setBuildings: Dispatch<SetStateAction<Buildings>>;
   /* setBuildings: (buildings: Buildings) => void; */
-  buildingCosts: BuildingCosts;
   /* FIXME: Why is this being inferred as a number? */
   buildingType: BuildingType;
   resources: Resources;
@@ -33,16 +33,11 @@ interface ConstructBuildingProps {
 export default function ConstructBuilding({
   buildings,
   setBuildings,
-  buildingCosts,
+  /* buildingCosts, */
   buildingType,
   resources,
   setResources,
 }: ConstructBuildingProps) {
-  const freeworkerCost = buildings[buildingType]["freeworkerCost"];
-  const woodCost = buildings[buildingType]["woodCost"];
-  const stoneCost = buildings[buildingType]["stoneCost"];
-  const metalCost = buildings[buildingType]["metalCost"];
-
   // TODO: Toggle Build/Click alternate in UI
   const handleCancelClick = (buildingType: string) => {
     if (buildings[buildingType].underConstruction === true) {
@@ -53,21 +48,32 @@ export default function ConstructBuilding({
 
       // give back resources
       const updatedResources = { ...resources };
-      updatedResources["freeworkers"].collected += freeworkerCost;
-      updatedResources["wood"].collected += woodCost;
-      updatedResources["stone"].collected += stoneCost;
-      updatedResources["metal"].collected += metalCost;
+
+      // null coalescing (??) used in case the resource asked for is undefined
+      Object.keys(updatedResources).map((resourceType: string) => {
+        updatedResources[resourceType as ResourceType].collected +=
+          buildings[buildingType as BuildingType].resourceCosts[
+            resourceType as ResourceType
+          ] ?? 0;
+      });
+
       setResources(updatedResources);
     }
   };
 
-  const handleBuildClick = (buildingType: string) => {
+  const handleBuildClick = (buildingType: BuildingType) => {
+    // check how many resources are collected compared to how many are required
+    // || used to catch instances of undefined, setting falsy return to 0
+    // eg. iteration of resourceType is "metal" but the object doesn't have metal
+    const checkIfEnoughResources = Object.keys(resources).map(
+      (resourceType: string) =>
+        resources[resourceType as ResourceType].collected >=
+          buildings[buildingType].resourceCosts[buildingType] || 0
+    );
+
     if (
       buildings[buildingType].underConstruction === false &&
-      resources["freeworkers"].collected >= freeworkerCost &&
-      resources["wood"].collected >= woodCost &&
-      resources["stone"].collected >= stoneCost &&
-      resources["metal"].collected >= metalCost
+      checkIfEnoughResources.every(Boolean)
     ) {
       // set the building to be constructed
       const updatedBuildings = { ...buildings };
@@ -76,10 +82,14 @@ export default function ConstructBuilding({
 
       // reduce the resources according to costs
       const updatedResources = { ...resources };
-      updatedResources["freeworkers"].collected -= freeworkerCost;
-      updatedResources["wood"].collected -= woodCost;
-      updatedResources["stone"].collected -= stoneCost;
-      updatedResources["metal"].collected -= metalCost;
+      // null coalescing (??) used in case the resource asked for is undefined
+      Object.keys(updatedResources).map((resourceType: string) => {
+        updatedResources[resourceType as ResourceType].collected -=
+          buildings[buildingType as BuildingType].resourceCosts[
+            resourceType as ResourceType
+          ] ?? 0;
+      });
+
       setResources(updatedResources);
     } else {
       alert("Not enough resources!");
@@ -97,8 +107,7 @@ export default function ConstructBuilding({
 
       <CardCostsInfo
         resources={resources}
-        costsObject={buildingCosts}
-        type={buildingType}
+        costsObject={buildings[buildingType].resourceCosts}
       />
 
       {/* TODO: Not enough resources? Make button inactive, add text "Not enough resources!" or similar */}

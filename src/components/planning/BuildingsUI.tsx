@@ -1,12 +1,11 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { BuildingCosts, Buildings, Resources } from "../../types";
+import { Buildings, Resources } from "../../types";
 import { ConstructBuilding } from "../cards";
 
 interface BuildingsUIProps {
   buildings: Buildings;
   setBuildings: Dispatch<SetStateAction<Buildings>>;
   /* setBuildings: (buildings: Buildings) => void; */
-  buildingCosts: BuildingCosts;
   buildingsToConstruct: string[];
   resources: Resources;
   setResources: Dispatch<SetStateAction<Resources>>;
@@ -16,7 +15,6 @@ interface BuildingsUIProps {
 export default function BuildingsUI({
   buildings,
   setBuildings,
-  buildingCosts,
   buildingsToConstruct,
   resources,
   setResources,
@@ -30,7 +28,6 @@ export default function BuildingsUI({
         <ConstructBuilding
           buildings={buildings}
           setBuildings={setBuildings}
-          buildingCosts={buildingCosts}
           buildingType={buildingType}
           resources={resources}
           setResources={setResources}

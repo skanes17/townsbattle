@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   baseUnitData,
-  buildingCostsData,
   buildingsData,
   resourceData,
-  unitCostsData,
   upgradesData,
 } from "../gameData";
 import {
@@ -35,14 +33,12 @@ import { Combat } from "./combat";
 import {
   BaseResourceType,
   BaseUnit,
-  /* BuildingCosts, */
   Buildings,
   GameProps,
   Resources,
   ResourceType,
   TrainingUnit,
   Unit,
-  /* UnitCosts, */
   UnitCounts,
   UnitType,
   UpgradeCosts,

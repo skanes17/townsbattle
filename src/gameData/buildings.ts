@@ -10,7 +10,7 @@ export const buildingsData = {
     healthBonus: 2,
     description: "Melee units gain +2 to attack, +2 to health.",
     health: 2,
-    resourceCosts: { freeworkers: 5, wood: 10, stone: 10,
+    resourceCosts: { freeworkers: 5, wood: 10, stone: 10 },
   },
   // for pewpew
   // TODO: Rename as "archery hut"

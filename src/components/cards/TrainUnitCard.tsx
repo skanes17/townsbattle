@@ -3,8 +3,6 @@ import {
   BaseUnit,
   Resources,
   ResourceType,
-  Unit,
-  /* UnitCosts, */
   UnitCounts,
   UnitType,
 } from "../../types/";
@@ -33,8 +31,6 @@ export interface TrainUnitCardProps {
   friendly: boolean;
 }
 
-// maxTrainingUnits(unitType, friendly, maxTrainable);
-
 export default function TrainUnitCard({
   unitType,
   resources,
@@ -59,17 +55,17 @@ export default function TrainUnitCard({
       // consume the amount of a resource type required to train that unit type
       case "plus":
         resourcesObject[resourceType].collected -=
-          BASE_UNIT_DATA[unitType].resourceCosts[resourceType];
+          BASE_UNIT_DATA[unitType].resourceCosts[resourceType] ?? 0;
         break;
       // return the amount of a resource type required to stop training that unit type
       case "minus":
         resourcesObject[resourceType].collected +=
-          BASE_UNIT_DATA[unitType].resourceCosts[resourceType];
+          BASE_UNIT_DATA[unitType].resourceCosts[resourceType] ?? 0;
         break;
       // return all resources of a given type required by the number of units you are stopping training
       case "zero":
         resourcesObject[resourceType].collected +=
-          BASE_UNIT_DATA[unitType].resourceCosts[resourceType] *
+          (BASE_UNIT_DATA[unitType].resourceCosts[resourceType] ?? 0) *
           unitsInTraining[unitType];
         break;
     }
@@ -119,8 +115,8 @@ export default function TrainUnitCard({
 
   const handlePlusClick = (unitType: UnitType, friendly: boolean) => {
     // check how many resources are collected compared to how many are required
-    // || used to catch instances of undefined
-    // eg. iteration of resourceType is "metal" but melee unit objects don't have metal
+    // || used to catch instances of undefined, setting falsy return to 0
+    // eg. iteration of resourceType is "metal" but the object doesn't have metal
     const checkIfEnoughResources = Object.keys(resources).map(
       (resourceType: string) =>
         resources[resourceType as ResourceType].collected >=
@@ -202,8 +198,7 @@ export default function TrainUnitCard({
 
       <CardCostsInfo
         resources={resources}
-        /* costsObject={unitCosts} */
-        type={unitType}
+        costsObject={BASE_UNIT_DATA[unitType].resourceCosts}
       />
 
       {/* Could use this to display max trainable

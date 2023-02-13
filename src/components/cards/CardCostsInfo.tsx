@@ -12,14 +12,11 @@ import {
 interface CardCostsInfoProps {
   resources: Resources;
   costsObject: ResourceCosts;
-  /* is it a buildingType or unitType? */
-  type: BuildingType | UnitType;
 }
 
 export default function CardCostsInfo({
   resources,
   costsObject,
-  type,
 }: CardCostsInfoProps) {
   const redText = "text-red-600";
   const greenText = "text-green-500";
@@ -35,15 +32,14 @@ export default function CardCostsInfo({
             /* If this resource is required, show its cost */
             /* If the resource is undefined, set the result to 0 */
             /* @ts-ignore */
-            (costsObject[type][resourceType as ResourceType] ?? 0) > 0 && (
+            (costsObject[resourceType as ResourceType] ?? 0) > 0 && (
               <div>
                 {resources[resourceType as ResourceType].resourceSymbol}
                 <span
                   className={
                     /* if you have enough resources of that type, show green; otherwise red" */
                     resources[resourceType as ResourceType].collected >=
-                    /* @ts-ignore */
-                    (costsObject[type][resourceType as ResourceType] ?? 0)
+                    (costsObject[resourceType as ResourceType] ?? 0)
                       ? `${greenText} px-1`
                       : `${redText} px-1`
                   }
@@ -53,7 +49,7 @@ export default function CardCostsInfo({
                 /
                 <span className={`px-1`}>
                   {/* @ts-ignore */}
-                  {costsObject[type][resourceType as ResourceType]}
+                  {costsObject[resourceType as ResourceType]}
                 </span>
               </div>
             )

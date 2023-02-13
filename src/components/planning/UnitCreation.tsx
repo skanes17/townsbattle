@@ -1,5 +1,4 @@
 import {
-  UnitCosts,
   UnitCounts,
   Resources,
   BaseUnit,
@@ -10,8 +9,6 @@ import {
 import { TrainUnitCard } from "../cards";
 
 interface UnitCreationProps {
-  unitCosts: UnitCosts;
-  setUnitCosts: (unitCosts: UnitCosts) => void;
   unitsInTraining: UnitCounts;
   resources: Resources;
   setResources: (resources: Resources) => void;
@@ -23,7 +20,6 @@ interface UnitCreationProps {
 }
 
 export default function UnitCreation({
-  unitCosts,
   unitsInTraining,
   resources,
   setResources,
@@ -43,7 +39,6 @@ export default function UnitCreation({
           unitType={unitType as UnitType}
           resources={resources}
           setResources={setResources}
-          unitCosts={unitCosts}
           unitsInTraining={unitsInTraining}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           addTrainingUnit={addTrainingUnit}
