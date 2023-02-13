@@ -6,6 +6,7 @@ export const baseUnitData = {
     description: "Attack and health are roughly balanced.",
     attack: 6,
     maxHealth: 10,
+    active: true,
   },
   pewpew: {
     unitType: "pewpew",
@@ -14,6 +15,7 @@ export const baseUnitData = {
     description: "Great attack but not much health.",
     attack: 9,
     maxHealth: 7,
+    active: true,
   },
   tanky: {
     unitType: "tanky",
@@ -22,6 +24,7 @@ export const baseUnitData = {
     description: "Low attack but lots of health.",
     attack: 4,
     maxHealth: 15,
+    active: true,
   },
 };
 
