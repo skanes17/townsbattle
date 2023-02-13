@@ -3,6 +3,7 @@ import {
   BaseUnit,
   Resources,
   ResourceType,
+  Unit,
   /* UnitCosts, */
   UnitCounts,
   UnitType,
@@ -23,7 +24,6 @@ export interface TrainUnitCardProps {
   unitType: UnitType;
   resources: Resources;
   setResources: (resources: Resources) => void;
-  /* unitCosts: UnitCosts; */
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
   addTrainingUnit: AddRemoveUnitFn;
@@ -39,7 +39,6 @@ export default function TrainUnitCard({
   unitType,
   resources,
   setResources,
-  /* unitCosts, */
   unitsInTraining,
   BASE_UNIT_DATA,
   addTrainingUnit,
@@ -48,14 +47,6 @@ export default function TrainUnitCard({
   removeAllTrainingUnits,
   friendly,
 }: TrainUnitCardProps) {
-  const freeworkerCost = unitCosts[unitType]["freeworkers"];
-  const woodCost = unitCosts[unitType]["wood"];
-  const stoneCost = unitCosts[unitType]["stone"];
-  const metalCost = unitCosts[unitType]["metal"];
-
-  // select the unit to be trained
-  const unitToBeTrained = BASE_UNIT_DATA[unitType];
-
   // function checks how many of each resource type is collected vs. the resources required for that unit, add/reduces them as necessary
   const updateResources = (
     resourcesObject: Resources,
@@ -68,17 +59,18 @@ export default function TrainUnitCard({
       // consume the amount of a resource type required to train that unit type
       case "plus":
         resourcesObject[resourceType].collected -=
-          costsObject[unitType][resourceType];
+          BASE_UNIT_DATA[unitType].resourceCosts[resourceType];
         break;
       // return the amount of a resource type required to stop training that unit type
       case "minus":
         resourcesObject[resourceType].collected +=
-          costsObject[unitType][resourceType];
+          BASE_UNIT_DATA[unitType].resourceCosts[resourceType];
         break;
       // return all resources of a given type required by the number of units you are stopping training
       case "zero":
         resourcesObject[resourceType].collected +=
-          unitCosts[unitType][resourceType] * unitsInTraining[unitType];
+          BASE_UNIT_DATA[unitType].resourceCosts[resourceType] *
+          unitsInTraining[unitType];
         break;
     }
   };
@@ -91,22 +83,12 @@ export default function TrainUnitCard({
       Object.keys(updatedResources).map((resourceType) => {
         updateResources(
           updatedResources,
-          unitCosts,
           unitType,
           resourceType as ResourceType,
           "zero"
         );
       });
 
-      /* // Old approach to updating resources
-      updatedResources["freeworkers"].collected +=
-        freeworkerCost * unitsInTraining[unitType];
-      updatedResources["wood"].collected +=
-        woodCost * unitsInTraining[unitType];
-      updatedResources["stone"].collected +=
-        stoneCost * unitsInTraining[unitType];
-      updatedResources["metal"].collected +=
-        metalCost * unitsInTraining[unitType]; */
       setResources(updatedResources);
 
       // updates the myTrainingUnits array as well
@@ -122,18 +104,12 @@ export default function TrainUnitCard({
       Object.keys(updatedResources).map((resourceType) => {
         updateResources(
           updatedResources,
-          unitCosts,
           unitType,
           resourceType as ResourceType,
           "minus"
         );
       });
 
-      /* // Old approach to updating resources
-      updatedResources["freeworkers"].collected += freeworkerCost;
-      updatedResources["wood"].collected += woodCost;
-      updatedResources["stone"].collected += stoneCost;
-      updatedResources["metal"].collected += metalCost; */
       setResources(updatedResources);
 
       // updates the myTrainingUnits array as well
@@ -142,13 +118,16 @@ export default function TrainUnitCard({
   };
 
   const handlePlusClick = (unitType: UnitType, friendly: boolean) => {
-    // TODO: Refactor so no repeats; dynamic
-    if (
-      resources["freeworkers"].collected >= freeworkerCost &&
-      resources["wood"].collected >= woodCost &&
-      resources["stone"].collected >= stoneCost &&
-      resources["metal"].collected >= metalCost
-    ) {
+    // check how many resources are collected compared to how many are required
+    // || used to catch instances of undefined
+    // eg. iteration of resourceType is "metal" but melee unit objects don't have metal
+    const checkIfEnoughResources = Object.keys(resources).map(
+      (resourceType: string) =>
+        resources[resourceType as ResourceType].collected >=
+          BASE_UNIT_DATA[unitType].resourceCosts[unitType] || 0
+    );
+    // arr.every() will ceheck that every result of the above map is true; ie enoughResources === true
+    if (checkIfEnoughResources.every(Boolean)) {
       // reduce the resources according to costs
       const updatedResources = { ...resources };
 
@@ -156,18 +135,12 @@ export default function TrainUnitCard({
       Object.keys(updatedResources).map((resourceType) => {
         updateResources(
           updatedResources,
-          unitCosts,
           unitType,
           resourceType as ResourceType,
           "plus"
         );
       });
 
-      /* Old approach to updating resources
-      updatedResources["freeworkers"].collected -= freeworkerCost;
-      updatedResources["wood"].collected -= woodCost;
-      updatedResources["stone"].collected -= stoneCost;
-      updatedResources["metal"].collected -= metalCost; */
       setResources(updatedResources);
 
       // updates the myTrainingUnits array as well
@@ -177,51 +150,35 @@ export default function TrainUnitCard({
     }
   };
 
-  // check all costs and see that at least one unit can be afforded
-  const maxTrainable = Math.min(
-    Object.keys(unitToBeTrained.resourceCosts).map(
-      (resourceType: string) =>
-        (resources[resourceType as ResourceType].collected ?? 0) /
-          unitToBeTrained.resourceCosts[resourceType as ResourceType] || 0
-    )
+  // produce an array to compare resources collected vs. resource cost
+  // this produce an array that holds how many of each unit can be built
+  const minTrainableForEachCost = Object.keys(
+    BASE_UNIT_DATA[unitType].resourceCosts
+  ).map(
+    (resourceType: string) =>
+      (resources[resourceType as ResourceType].collected ??
+        0 /
+          BASE_UNIT_DATA[unitType].resourceCosts[
+            resourceType as ResourceType
+          ]) ||
+      0
   );
+
+  // spread operator is required to use Math.min() on number arrays
+  const maxTrainable = Math.min(...minTrainableForEachCost);
   // NOTE: Above, ?? is a catch for if resources collected is undefined and || is a catch for a result of NaN
 
-  const stuff = Object.keys(BASE_UNIT_DATA).map((unitType) =>
-    /* @ts-ignore */
-    Object.keys(BASE_UNIT_DATA[unitType].resourceCosts).map(
-      (resourceType) =>
-        /* @ts-ignore */
-        resources[resourceType].collected ??
-        (0 / BASE_UNIT_DATA[unitType].resourceCosts[resourceType] || 0)
-    )
-  );
-
-  /* 
-  const maxTrainable = Math.min(
-  Object.keys(unitToBeTrained.resources).map(
-    (resource) =>
-      pooledResources[resource] ?? 0 / unitToBeTrained.resources[resource]
-  )
-);
-  */
-
-  /* Math.floor(resources["freeworkers"].collected / freeworkerCost),
-    Math.floor(resources["wood"].collected / woodCost),
-    Math.floor(resources["stone"].collected / stoneCost),
-    Math.floor(resources["metal"].collected / metalCost) */
-
   const handleMaxClick = (unitType: UnitType, friendly: boolean) => {
-    // FIXME: Doesn't work if one a resource COST is zero, even if that resource isn't required
-    // TODO: Incorporate logic to check what resources are required for the unitType
-
     if (maxTrainable > 0) {
       const updatedResources = { ...resources };
-      updatedResources["freeworkers"].collected -=
-        freeworkerCost * maxTrainable;
-      updatedResources["wood"].collected -= woodCost * maxTrainable;
-      updatedResources["stone"].collected -= stoneCost * maxTrainable;
-      updatedResources["metal"].collected -= metalCost * maxTrainable;
+
+      Object.keys(resources).map(
+        (resourceType: string) =>
+          (updatedResources[resourceType as ResourceType].collected -=
+            BASE_UNIT_DATA[unitType].resourceCosts[
+              resourceType as ResourceType
+            ] * maxTrainable)
+      );
       setResources(updatedResources);
 
       maxTrainingUnits(unitType, friendly, maxTrainable);
