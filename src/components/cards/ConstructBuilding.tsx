@@ -1,12 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
-import {
-  /* BuildingCosts, */
-  Buildings,
-  BuildingType,
-  Resources,
-  ResourceType,
-  /* ResourceType, */
-} from "../../types/";
+import { Buildings, BuildingType, Resources, ResourceType } from "../../types/";
+import { cloneBasicObjectWithJSON, updateResources } from "../../utils";
+import { resourceChecker } from "../../utils/resourceChecker";
 import { AddRemoveButton } from "../buttons";
 import {
   CardCostsInfo,
@@ -28,69 +23,47 @@ interface ConstructBuildingProps {
   /* setResources: (resources: Resources) => void; */
 }
 
-/* setMyUnits: (unit: Unit[]) => void; */
-
 export default function ConstructBuilding({
   buildings,
   setBuildings,
-  /* buildingCosts, */
   buildingType,
   resources,
   setResources,
 }: ConstructBuildingProps) {
-  // TODO: Toggle Build/Click alternate in UI
+  // get the resource costs for the given building type
+  const costsObject = buildings[buildingType].resourceCosts;
+
   const handleCancelClick = (buildingType: string) => {
     if (buildings[buildingType].underConstruction === true) {
       // cancel building construction
-      const updatedBuildings = { ...buildings };
-      updatedBuildings[buildingType].underConstruction = false;
-      setBuildings(updatedBuildings);
+      const clonedBuildingsData = cloneBasicObjectWithJSON(buildings);
+      clonedBuildingsData[buildingType as BuildingType].underConstruction =
+        false;
+      setBuildings(clonedBuildingsData);
 
       // give back resources
-      const updatedResources = { ...resources };
+      const clonedResourceData = cloneBasicObjectWithJSON(resources);
+      updateResources(costsObject, clonedResourceData, -1);
 
-      // null coalescing (??) used in case the resource asked for is undefined
-      Object.keys(updatedResources).map((resourceType: string) => {
-        updatedResources[resourceType as ResourceType].collected +=
-          buildings[buildingType as BuildingType].resourceCosts[
-            resourceType as ResourceType
-          ] ?? 0;
-      });
-
-      setResources(updatedResources);
+      setResources(clonedResourceData);
     }
   };
 
-  const handleBuildClick = (buildingType: BuildingType) => {
-    // check how many resources are collected compared to how many are required
-    // || used to catch instances of undefined, setting falsy return to 0
-    // eg. iteration of resourceType is "metal" but the object doesn't have metal
-    const checkIfEnoughResources = Object.keys(resources).map(
-      (resourceType: string) =>
-        resources[resourceType as ResourceType].collected >=
-          buildings[buildingType].resourceCosts[buildingType] || 0
-    );
+  const handleBuildClick = (buildingType: string) => {
+    // check that you've collected all required resources
+    const resourceCheck = resourceChecker(costsObject, resources);
 
-    if (
-      buildings[buildingType].underConstruction === false &&
-      checkIfEnoughResources.every(Boolean)
-    ) {
+    if (buildings[buildingType].underConstruction === false && resourceCheck) {
       // set the building to be constructed
-      const updatedBuildings = { ...buildings };
-      updatedBuildings[buildingType].underConstruction = true;
-      setBuildings(updatedBuildings);
+      const clonedBuildingsData = cloneBasicObjectWithJSON(buildings);
+      clonedBuildingsData[buildingType].underConstruction = true;
+      setBuildings(clonedBuildingsData);
 
       // reduce the resources according to costs
-      const updatedResources = { ...resources };
-      // null coalescing (??) used in case the resource asked for is undefined
-      Object.keys(updatedResources).map((resourceType: string) => {
-        updatedResources[resourceType as ResourceType].collected -=
-          buildings[buildingType as BuildingType].resourceCosts[
-            resourceType as ResourceType
-          ] ?? 0;
-      });
+      const clonedResourceData = cloneBasicObjectWithJSON(resources);
+      updateResources(costsObject, clonedResourceData, 1);
 
-      setResources(updatedResources);
+      setResources(clonedResourceData);
     } else {
       alert("Not enough resources!");
     }

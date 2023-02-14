@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   BaseUnit,
-  ResourceCosts,
   Resources,
   ResourceType,
   UnitCounts,
@@ -17,7 +16,8 @@ import {
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
 import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types";
-import { cloneBasicObjectWithJSON } from "../../utils";
+import { cloneBasicObjectWithJSON, updateResources } from "../../utils";
+import { resourceChecker } from "../../utils/resourceChecker";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
@@ -46,23 +46,16 @@ export default function TrainUnitCard({
   friendly,
 }: TrainUnitCardProps) {
   // get the resource costs for the given unit type
-  const unitCosts = BASE_UNIT_DATA[unitType].resourceCosts;
+  const costsObject = BASE_UNIT_DATA[unitType].resourceCosts;
+  const numberOfUnitsInTraining = unitsInTraining[unitType];
 
   const handleZeroClick = (unitType: UnitType, friendly: boolean) => {
-    if (unitsInTraining[unitType] === 0) {
+    if (numberOfUnitsInTraining === 0) {
       alert("You aren't training any units!");
       return;
     }
     const clonedResourceData = cloneBasicObjectWithJSON(resources);
-
-    // instead of using Object.keys() we're using Object.entries()
-    // this is used because the key and value were both required
-    // resourceType holds the current key for unitCosts -- "freeworkers", "wood", etc
-    // cost gives the values for the resourceType -- previously called by unitCosts[resourceType]
-    for (const [resourceType, cost] of Object.entries(unitCosts)) {
-      clonedResourceData[resourceType as ResourceType].collected +=
-        (cost ?? 0) * unitsInTraining[unitType];
-    }
+    updateResources(costsObject, clonedResourceData, -numberOfUnitsInTraining);
 
     setResources(clonedResourceData);
     // updates the myTrainingUnits array as well
@@ -71,16 +64,13 @@ export default function TrainUnitCard({
 
   const handleMinusClick = (unitType: UnitType, friendly: boolean) => {
     /* TODO: Find more efficient approach than to consider units in training? */
-    if (unitsInTraining[unitType] === 0) {
+    if (numberOfUnitsInTraining === 0) {
       alert("You aren't training any units!");
       return;
     }
 
     const clonedResourceData = cloneBasicObjectWithJSON(resources);
-
-    for (const [resourceType, cost] of Object.entries(unitCosts)) {
-      clonedResourceData[resourceType as ResourceType].collected += cost ?? 0;
-    }
+    updateResources(costsObject, clonedResourceData, -1);
 
     setResources(clonedResourceData);
     // updates the myTrainingUnits array as well
@@ -88,23 +78,13 @@ export default function TrainUnitCard({
   };
 
   const handlePlusClick = (unitType: UnitType, friendly: boolean) => {
-    // check how many resources are collected compared to how many are required
-    // || used to catch instances of undefined by returning 0
-    // eg. iteration of resourceType is "metal" but the object doesn't have metal
-    const checkIfEnoughResources = Object.keys(unitCosts).map(
-      (resourceType: string) =>
-        resources[resourceType as ResourceType].collected >=
-        unitCosts[resourceType as ResourceType]
-    );
+    // check that you've collected all required resources
+    const resourceCheck = resourceChecker(costsObject, resources);
 
-    // arr.every() will check that every result of the above map is true; ie enoughResources === true
-    if (checkIfEnoughResources.every(Boolean)) {
+    if (resourceCheck) {
       // reduce the resources according to costs
       const clonedResourceData = cloneBasicObjectWithJSON(resources);
-
-      for (const [resourceType, cost] of Object.entries(unitCosts)) {
-        clonedResourceData[resourceType as ResourceType].collected -= cost ?? 0;
-      }
+      updateResources(costsObject, clonedResourceData, 1);
 
       setResources(clonedResourceData);
       // updates the myTrainingUnits array as well
@@ -116,10 +96,10 @@ export default function TrainUnitCard({
 
   // produce an array to compare resources collected vs. resource cost
   // this produce an array that holds how many of each unit can be built
-  const minTrainableForEachCost = Object.keys(unitCosts).map(
+  const minTrainableForEachCost = Object.keys(costsObject).map(
     (resourceType: string) => {
       // get the resource cost to train this unit
-      const cost = unitCosts[resourceType as ResourceType];
+      const cost = costsObject[resourceType as ResourceType];
       // if the cost isn't zero, divide the collected resources by the cost
       // use the floor function to ensure an integer result
       // otherwise, return 0
@@ -139,10 +119,7 @@ export default function TrainUnitCard({
     }
     const clonedResourceData = cloneBasicObjectWithJSON(resources);
 
-    for (const [resourceType, cost] of Object.entries(unitCosts)) {
-      clonedResourceData[resourceType as ResourceType].collected -=
-        cost * maxTrainable;
-    }
+    updateResources(costsObject, clonedResourceData, maxTrainable);
 
     setResources(clonedResourceData);
     maxTrainingUnits(unitType, friendly, maxTrainable);
@@ -160,7 +137,7 @@ export default function TrainUnitCard({
       <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
       <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
 
-      <CardCostsInfo resources={resources} costsObject={unitCosts} />
+      <CardCostsInfo resources={resources} costsObject={costsObject} />
 
       {/* Could use this to display max trainable
       <div className="justify-self-end">
@@ -185,7 +162,7 @@ export default function TrainUnitCard({
             -
           </AddRemoveButton>
         </div>
-        <CardShowCount countToShow={unitsInTraining[unitType]} />
+        <CardShowCount countToShow={numberOfUnitsInTraining} />
         <div className="flex items-center justify-center">
           <AddRemoveButton
             buttonType="add"
