@@ -17,7 +17,6 @@ import {
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
 import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types";
-import { check } from "prettier";
 import { cloneBasicObjectWithJSON } from "../../utils";
 
 export interface TrainUnitCardProps {
@@ -52,8 +51,6 @@ export default function TrainUnitCard({
   // function checks how many of each resource type is collected vs. the resources required for that unit, add/reduces them as necessary
   const updateResources = (
     resourcesObject: Resources,
-    /* costsObject: UnitCosts, */
-    unitType: UnitType,
     resourceType: ResourceType,
     updateType: "plus" | "minus" | "zero" | "max"
   ) => {
@@ -81,15 +78,28 @@ export default function TrainUnitCard({
     }
     const clonedResourceData = cloneBasicObjectWithJSON(resources);
 
-    // call the updateResources function for each resource
-    Object.keys(unitCosts).map((resourceType) => {
+    // instead of using Object.keys() we're using Object.entries()
+    // this is used because the key and value were both required
+    // resourceType holds the current key for unitCosts -- "freeworkers", "wood", etc
+    // cost gives the values for the resourceType -- previously called by unitCosts[resourceType]
+    for (const [resourceType, cost] of Object.entries(unitCosts)) {
+      clonedResourceData[resourceType as ResourceType].collected +=
+        (cost ?? 0) * unitsInTraining[unitType];
+    }
+
+    /* // call the updateResources function for each resource
+    Object.keys(unitCosts).map((resourceType: string) => {
+      clonedResourceData[resourceType as ResourceType].collected +=
+        (unitCosts[resourceType] ?? 0) * unitsInTraining[unitType];
+
+      
+
       updateResources(
         clonedResourceData,
-        unitType,
         resourceType as ResourceType,
         "zero"
       );
-    });
+    }); */
 
     setResources(clonedResourceData);
     // updates the myTrainingUnits array as well
@@ -109,7 +119,6 @@ export default function TrainUnitCard({
     Object.keys(unitCosts).map((resourceType) => {
       updateResources(
         clonedResourceData,
-        unitType,
         resourceType as ResourceType,
         "minus"
       );
@@ -139,7 +148,6 @@ export default function TrainUnitCard({
       Object.keys(unitCosts).map((resourceType) => {
         updateResources(
           clonedResourceData,
-          unitType,
           resourceType as ResourceType,
           "plus"
         );
