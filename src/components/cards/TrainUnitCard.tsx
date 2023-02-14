@@ -82,24 +82,11 @@ export default function TrainUnitCard({
     // this is used because the key and value were both required
     // resourceType holds the current key for unitCosts -- "freeworkers", "wood", etc
     // cost gives the values for the resourceType -- previously called by unitCosts[resourceType]
+
     for (const [resourceType, cost] of Object.entries(unitCosts)) {
       clonedResourceData[resourceType as ResourceType].collected +=
         (cost ?? 0) * unitsInTraining[unitType];
     }
-
-    /* // call the updateResources function for each resource
-    Object.keys(unitCosts).map((resourceType: string) => {
-      clonedResourceData[resourceType as ResourceType].collected +=
-        (unitCosts[resourceType] ?? 0) * unitsInTraining[unitType];
-
-      
-
-      updateResources(
-        clonedResourceData,
-        resourceType as ResourceType,
-        "zero"
-      );
-    }); */
 
     setResources(clonedResourceData);
     // updates the myTrainingUnits array as well
@@ -115,14 +102,9 @@ export default function TrainUnitCard({
 
     const clonedResourceData = cloneBasicObjectWithJSON(resources);
 
-    // call the updateResources function for each required resource
-    Object.keys(unitCosts).map((resourceType) => {
-      updateResources(
-        clonedResourceData,
-        resourceType as ResourceType,
-        "minus"
-      );
-    });
+    for (const [resourceType, cost] of Object.entries(unitCosts)) {
+      clonedResourceData[resourceType as ResourceType].collected += cost ?? 0;
+    }
 
     setResources(clonedResourceData);
     // updates the myTrainingUnits array as well
@@ -144,17 +126,11 @@ export default function TrainUnitCard({
       // reduce the resources according to costs
       const clonedResourceData = cloneBasicObjectWithJSON(resources);
 
-      // call the updateResources function for each required resource
-      Object.keys(unitCosts).map((resourceType) => {
-        updateResources(
-          clonedResourceData,
-          resourceType as ResourceType,
-          "plus"
-        );
-      });
+      for (const [resourceType, cost] of Object.entries(unitCosts)) {
+        clonedResourceData[resourceType as ResourceType].collected -= cost ?? 0;
+      }
 
       setResources(clonedResourceData);
-
       // updates the myTrainingUnits array as well
       addTrainingUnit(unitType, friendly);
     } else {
@@ -187,14 +163,12 @@ export default function TrainUnitCard({
     }
     const clonedResourceData = cloneBasicObjectWithJSON(resources);
 
-    Object.keys(unitCosts).map(
-      (resourceType: string) =>
-        (clonedResourceData[resourceType as ResourceType].collected -=
-          unitCosts[resourceType as ResourceType] * maxTrainable)
-    );
+    for (const [resourceType, cost] of Object.entries(unitCosts)) {
+      clonedResourceData[resourceType as ResourceType].collected -=
+        cost * maxTrainable;
+    }
 
     setResources(clonedResourceData);
-
     maxTrainingUnits(unitType, friendly, maxTrainable);
   };
   const redText = "text-red-600";
