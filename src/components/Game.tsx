@@ -139,7 +139,6 @@ export default function Game(props: GameProps) {
   const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>(upgradesData);
 
   /* ===UNITS=== */
-  /* const [unitCosts, setUnitCosts] = useState<UnitCosts>(unitCostsData); */
   // ids for tracking units
   const [unitId, setUnitId] = useState(0);
   // friendly army

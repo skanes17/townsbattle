@@ -35,7 +35,6 @@ export default function TrainingCardContainer({
           unitType={unitType as UnitType}
           resources={resources}
           setResources={setResources}
-          /* unitCosts={unitCosts} */
           unitsInTraining={unitsInTraining}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           addTrainingUnit={addTrainingUnit}

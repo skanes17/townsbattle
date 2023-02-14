@@ -4,15 +4,15 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        archeryHut: "url('/src/images/archeryHut-01.png')",
-        army: "url('/src/images/homeBackground-01.png')",
-        /* enemyArmy: "url('/src/images/enemyArmy-02.png')",
-        friendlyArmy: "url('/src/images/friendlyArmy-01.png')", */
-        healingChamber: "url('/src/images/healingChamber-01.png')",
-        mealHall: "url('/src/images/mealHall-01.png')",
-        scoutUnit: "url('/src/images/scoutUnit-01.png')",
-        swordsmithy: "url('/src/images/swordsmithy-01.png')",
-        townCenter: "url('/src/images/townCenter-01.png')",
+        archeryHut: "url('/src/assets/images/archeryHut-01.png')",
+        army: "url('/src/assets/images/homeBackground-01.png')",
+        /* enemyArmy: "url('/src/assets/images/enemyArmy-02.png')",
+        friendlyArmy: "url('/src/assets/images/friendlyArmy-01.png')", */
+        healingChamber: "url('/src/assets/images/healingChamber-01.png')",
+        mealHall: "url('/src/assets/images/mealHall-01.png')",
+        scoutUnit: "url('/src/assets/images/scoutUnit-01.png')",
+        swordsmithy: "url('/src/assets/images/swordsmithy-01.png')",
+        townCenter: "url('/src/assets/images/townCenter-01.png')",
       },
       keyframes: {
         jiggleRight: {
