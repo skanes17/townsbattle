@@ -74,46 +74,49 @@ export default function TrainUnitCard({
   };
 
   const handleZeroClick = (unitType: UnitType, friendly: boolean) => {
-    if (unitsInTraining[unitType] > 0) {
-      const updatedResources = { ...resources };
-
-      // call the updateResources function for each resource
-      Object.keys(unitCosts).map((resourceType) => {
-        updateResources(
-          updatedResources,
-          unitType,
-          resourceType as ResourceType,
-          "zero"
-        );
-      });
-
-      setResources(updatedResources);
-
-      // updates the myTrainingUnits array as well
-      removeAllTrainingUnits(unitType, friendly);
+    if (unitsInTraining[unitType] === 0) {
+      alert("You aren't training any units!");
+      return;
     }
+    const updatedResources = { ...resources };
+
+    // call the updateResources function for each resource
+    Object.keys(unitCosts).map((resourceType) => {
+      updateResources(
+        updatedResources,
+        unitType,
+        resourceType as ResourceType,
+        "zero"
+      );
+    });
+
+    setResources(updatedResources);
+    // updates the myTrainingUnits array as well
+    removeAllTrainingUnits(unitType, friendly);
   };
 
   const handleMinusClick = (unitType: UnitType, friendly: boolean) => {
     /* TODO: Find more efficient approach than to consider units in training? */
-    if (unitsInTraining[unitType] > 0) {
-      const updatedResources = { ...resources };
-
-      // call the updateResources function for each required resource
-      Object.keys(unitCosts).map((resourceType) => {
-        updateResources(
-          updatedResources,
-          unitType,
-          resourceType as ResourceType,
-          "minus"
-        );
-      });
-
-      setResources(updatedResources);
-
-      // updates the myTrainingUnits array as well
-      removeTrainingUnit(unitType, friendly);
+    if (unitsInTraining[unitType] === 0) {
+      alert("You aren't training any units!");
+      return;
     }
+
+    const updatedResources = { ...resources };
+
+    // call the updateResources function for each required resource
+    Object.keys(unitCosts).map((resourceType) => {
+      updateResources(
+        updatedResources,
+        unitType,
+        resourceType as ResourceType,
+        "minus"
+      );
+    });
+
+    setResources(updatedResources);
+    // updates the myTrainingUnits array as well
+    removeTrainingUnit(unitType, friendly);
   };
 
   const handlePlusClick = (unitType: UnitType, friendly: boolean) => {
