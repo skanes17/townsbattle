@@ -48,29 +48,6 @@ export default function TrainUnitCard({
   // get the resource costs for the given unit type
   const unitCosts = BASE_UNIT_DATA[unitType].resourceCosts;
 
-  // function checks how many of each resource type is collected vs. the resources required for that unit, add/reduces them as necessary
-  const updateResources = (
-    resourcesObject: Resources,
-    resourceType: ResourceType,
-    updateType: "plus" | "minus" | "zero" | "max"
-  ) => {
-    switch (updateType) {
-      // consume the amount of a resource type required to train that unit type
-      case "plus":
-        resourcesObject[resourceType].collected -= unitCosts[resourceType] ?? 0;
-        break;
-      // return the amount of a resource type required to stop training that unit type
-      case "minus":
-        resourcesObject[resourceType].collected += unitCosts[resourceType] ?? 0;
-        break;
-      // return all resources of a given type required by the number of units you are stopping training
-      case "zero":
-        resourcesObject[resourceType].collected +=
-          (unitCosts[resourceType] ?? 0) * unitsInTraining[unitType];
-        break;
-    }
-  };
-
   const handleZeroClick = (unitType: UnitType, friendly: boolean) => {
     if (unitsInTraining[unitType] === 0) {
       alert("You aren't training any units!");
@@ -82,7 +59,6 @@ export default function TrainUnitCard({
     // this is used because the key and value were both required
     // resourceType holds the current key for unitCosts -- "freeworkers", "wood", etc
     // cost gives the values for the resourceType -- previously called by unitCosts[resourceType]
-
     for (const [resourceType, cost] of Object.entries(unitCosts)) {
       clonedResourceData[resourceType as ResourceType].collected +=
         (cost ?? 0) * unitsInTraining[unitType];
@@ -209,11 +185,7 @@ export default function TrainUnitCard({
             -
           </AddRemoveButton>
         </div>
-        {/* string may not match "melee", "pewpew" etc. Use as "keyof" to say it'll be appropriate */}
-        {/* ! assures TS that this will not be undefined; not ideal general solution */}
-        <CardShowCount
-          countToShow={unitsInTraining[unitType as keyof UnitCounts]!}
-        />
+        <CardShowCount countToShow={unitsInTraining[unitType]} />
         <div className="flex items-center justify-center">
           <AddRemoveButton
             buttonType="add"
