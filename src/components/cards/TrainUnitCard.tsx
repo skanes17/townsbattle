@@ -18,6 +18,7 @@ import {
 import { AddRemoveButton } from "../buttons";
 import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types";
 import { check } from "prettier";
+import { cloneBasicObjectWithJSON } from "../../utils";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
@@ -78,19 +79,19 @@ export default function TrainUnitCard({
       alert("You aren't training any units!");
       return;
     }
-    const updatedResources = { ...resources };
+    const clonedResourceData = cloneBasicObjectWithJSON(resources);
 
     // call the updateResources function for each resource
     Object.keys(unitCosts).map((resourceType) => {
       updateResources(
-        updatedResources,
+        clonedResourceData,
         unitType,
         resourceType as ResourceType,
         "zero"
       );
     });
 
-    setResources(updatedResources);
+    setResources(clonedResourceData);
     // updates the myTrainingUnits array as well
     removeAllTrainingUnits(unitType, friendly);
   };
@@ -102,19 +103,19 @@ export default function TrainUnitCard({
       return;
     }
 
-    const updatedResources = { ...resources };
+    const clonedResourceData = cloneBasicObjectWithJSON(resources);
 
     // call the updateResources function for each required resource
     Object.keys(unitCosts).map((resourceType) => {
       updateResources(
-        updatedResources,
+        clonedResourceData,
         unitType,
         resourceType as ResourceType,
         "minus"
       );
     });
 
-    setResources(updatedResources);
+    setResources(clonedResourceData);
     // updates the myTrainingUnits array as well
     removeTrainingUnit(unitType, friendly);
   };
@@ -132,20 +133,19 @@ export default function TrainUnitCard({
     // arr.every() will check that every result of the above map is true; ie enoughResources === true
     if (checkIfEnoughResources.every(Boolean)) {
       // reduce the resources according to costs
-      const updatedResources = { ...resources };
-      console.log("enough");
+      const clonedResourceData = cloneBasicObjectWithJSON(resources);
 
       // call the updateResources function for each required resource
       Object.keys(unitCosts).map((resourceType) => {
         updateResources(
-          updatedResources,
+          clonedResourceData,
           unitType,
           resourceType as ResourceType,
           "plus"
         );
       });
 
-      setResources(updatedResources);
+      setResources(clonedResourceData);
 
       // updates the myTrainingUnits array as well
       addTrainingUnit(unitType, friendly);
@@ -177,15 +177,15 @@ export default function TrainUnitCard({
       alert("Not enough resources!");
       return;
     }
-    const updatedResources = { ...resources };
+    const clonedResourceData = cloneBasicObjectWithJSON(resources);
 
     Object.keys(unitCosts).map(
       (resourceType: string) =>
-        (updatedResources[resourceType as ResourceType].collected -=
+        (clonedResourceData[resourceType as ResourceType].collected -=
           unitCosts[resourceType as ResourceType] * maxTrainable)
     );
 
-    setResources(updatedResources);
+    setResources(clonedResourceData);
 
     maxTrainingUnits(unitType, friendly, maxTrainable);
   };
