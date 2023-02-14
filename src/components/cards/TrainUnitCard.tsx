@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   BaseUnit,
+  ResourceCosts,
   Resources,
   ResourceType,
   UnitCounts,
@@ -44,6 +45,9 @@ export default function TrainUnitCard({
   removeAllTrainingUnits,
   friendly,
 }: TrainUnitCardProps) {
+  // get the resource costs for the given unit type
+  const unitCosts = BASE_UNIT_DATA[unitType].resourceCosts;
+
   // function checks how many of each resource type is collected vs. the resources required for that unit, add/reduces them as necessary
   const updateResources = (
     resourcesObject: Resources,
@@ -55,19 +59,16 @@ export default function TrainUnitCard({
     switch (updateType) {
       // consume the amount of a resource type required to train that unit type
       case "plus":
-        resourcesObject[resourceType].collected -=
-          BASE_UNIT_DATA[unitType].resourceCosts[resourceType] ?? 0;
+        resourcesObject[resourceType].collected -= unitCosts[resourceType] ?? 0;
         break;
       // return the amount of a resource type required to stop training that unit type
       case "minus":
-        resourcesObject[resourceType].collected +=
-          BASE_UNIT_DATA[unitType].resourceCosts[resourceType] ?? 0;
+        resourcesObject[resourceType].collected += unitCosts[resourceType] ?? 0;
         break;
       // return all resources of a given type required by the number of units you are stopping training
       case "zero":
         resourcesObject[resourceType].collected +=
-          (BASE_UNIT_DATA[unitType].resourceCosts[resourceType] ?? 0) *
-          unitsInTraining[unitType];
+          (unitCosts[resourceType] ?? 0) * unitsInTraining[unitType];
         break;
     }
   };
@@ -77,16 +78,14 @@ export default function TrainUnitCard({
       const updatedResources = { ...resources };
 
       // call the updateResources function for each resource
-      Object.keys(BASE_UNIT_DATA[unitType].resourceCosts).map(
-        (resourceType) => {
-          updateResources(
-            updatedResources,
-            unitType,
-            resourceType as ResourceType,
-            "zero"
-          );
-        }
-      );
+      Object.keys(unitCosts).map((resourceType) => {
+        updateResources(
+          updatedResources,
+          unitType,
+          resourceType as ResourceType,
+          "zero"
+        );
+      });
 
       setResources(updatedResources);
 
@@ -101,16 +100,14 @@ export default function TrainUnitCard({
       const updatedResources = { ...resources };
 
       // call the updateResources function for each required resource
-      Object.keys(BASE_UNIT_DATA[unitType].resourceCosts).map(
-        (resourceType) => {
-          updateResources(
-            updatedResources,
-            unitType,
-            resourceType as ResourceType,
-            "minus"
-          );
-        }
-      );
+      Object.keys(unitCosts).map((resourceType) => {
+        updateResources(
+          updatedResources,
+          unitType,
+          resourceType as ResourceType,
+          "minus"
+        );
+      });
 
       setResources(updatedResources);
 
@@ -123,12 +120,10 @@ export default function TrainUnitCard({
     // check how many resources are collected compared to how many are required
     // || used to catch instances of undefined by returning 0
     // eg. iteration of resourceType is "metal" but the object doesn't have metal
-    const checkIfEnoughResources = Object.keys(
-      BASE_UNIT_DATA[unitType].resourceCosts
-    ).map(
+    const checkIfEnoughResources = Object.keys(unitCosts).map(
       (resourceType: string) =>
         resources[resourceType as ResourceType].collected >=
-        BASE_UNIT_DATA[unitType].resourceCosts[resourceType as ResourceType]
+        unitCosts[resourceType as ResourceType]
     );
 
     // arr.every() will check that every result of the above map is true; ie enoughResources === true
@@ -138,16 +133,14 @@ export default function TrainUnitCard({
       console.log("enough");
 
       // call the updateResources function for each required resource
-      Object.keys(BASE_UNIT_DATA[unitType].resourceCosts).map(
-        (resourceType) => {
-          updateResources(
-            updatedResources,
-            unitType,
-            resourceType as ResourceType,
-            "plus"
-          );
-        }
-      );
+      Object.keys(unitCosts).map((resourceType) => {
+        updateResources(
+          updatedResources,
+          unitType,
+          resourceType as ResourceType,
+          "plus"
+        );
+      });
 
       setResources(updatedResources);
 
@@ -160,50 +153,39 @@ export default function TrainUnitCard({
 
   // produce an array to compare resources collected vs. resource cost
   // this produce an array that holds how many of each unit can be built
-  const minTrainableForEachCost = Object.keys(
-    BASE_UNIT_DATA[unitType].resourceCosts
-  ).map(
+  const minTrainableForEachCost = Object.keys(unitCosts).map(
     (resourceType: string) => {
       // get the resource cost to train this unit
-      const cost =
-        BASE_UNIT_DATA[unitType].resourceCosts[resourceType as ResourceType];
+      const cost = unitCosts[resourceType as ResourceType];
       // if the cost isn't zero, divide the collected resources by the cost
+      // use the floor function to ensure an integer result
       // otherwise, return 0
       return cost !== 0
-        ? (resources[resourceType as ResourceType].collected ?? 0) / cost
+        ? Math.floor(resources[resourceType as ResourceType].collected / cost)
         : 0;
     }
-    /* (resources[resourceType as ResourceType].collected ??
-        0 /
-          BASE_UNIT_DATA[unitType].resourceCosts[
-            resourceType as ResourceType
-          ]) ||
-      0 */
   );
 
   // spread operator is required to use Math.min() on number arrays
   const maxTrainable = Math.min(...minTrainableForEachCost);
-  // NOTE: Above, ?? is a catch for if resources collected is undefined and || is a catch for a result of NaN
 
   const handleMaxClick = (unitType: UnitType, friendly: boolean) => {
-    if (maxTrainable > 0) {
-      const updatedResources = { ...resources };
-
-      Object.keys(BASE_UNIT_DATA[unitType].resourceCosts).map(
-        (resourceType: string) =>
-          (updatedResources[resourceType as ResourceType].collected -=
-            BASE_UNIT_DATA[unitType].resourceCosts[
-              resourceType as ResourceType
-            ] * maxTrainable)
-      );
-      setResources(updatedResources);
-
-      maxTrainingUnits(unitType, friendly, maxTrainable);
-    } else {
+    if (maxTrainable <= 0) {
       alert("Not enough resources!");
+      return;
     }
-  };
+    const updatedResources = { ...resources };
 
+    Object.keys(unitCosts).map(
+      (resourceType: string) =>
+        (updatedResources[resourceType as ResourceType].collected -=
+          unitCosts[resourceType as ResourceType] * maxTrainable)
+    );
+
+    setResources(updatedResources);
+
+    maxTrainingUnits(unitType, friendly, maxTrainable);
+  };
   const redText = "text-red-600";
   const greenText = "text-green-500";
 
@@ -217,10 +199,7 @@ export default function TrainUnitCard({
       <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
       <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
 
-      <CardCostsInfo
-        resources={resources}
-        costsObject={BASE_UNIT_DATA[unitType].resourceCosts}
-      />
+      <CardCostsInfo resources={resources} costsObject={unitCosts} />
 
       {/* Could use this to display max trainable
       <div className="justify-self-end">
