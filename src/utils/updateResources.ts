@@ -11,7 +11,7 @@ export function updateResources(
 ) {
   // instead of using Object.keys() we're using Object.entries()
   // this is used because the key and value are both required
-  // resourceType holds the current key for costsObject, like "freeworkers", "wood", etc
+  // resourceType holds the current key for costsObject, like "workers", "wood", etc
   // "cost" gives the values for the current resourceType key
 
   // null coalescing (??) used in case the resource asked for is undefined

@@ -1,5 +1,5 @@
 export const resourceData = {
-  freeworkers: {
+  workers: {
     collected: 5,
     name: "Freeworker",
     resourceSymbol: "🛠️",
@@ -13,7 +13,6 @@ export const resourceData = {
     workers: 0,
     workersNeeded: 1,
     workerName: "Woodcutters",
-    workerType: "woodcutters",
     workerSymbol: "🪓",
     description: "Collects 1🪵.",
   },
@@ -24,7 +23,6 @@ export const resourceData = {
     workers: 0,
     workersNeeded: 1,
     workerName: "Stonemasons",
-    workerType: "stonemasons",
     workerSymbol: "⚒️",
     description: "Collects 1🪨.",
   },
@@ -35,7 +33,6 @@ export const resourceData = {
     workers: 0,
     workersNeeded: 1,
     workerName: "Metalworkers",
-    workerType: "metalworkers",
     workerSymbol: "🥽",
     description: "Collects 1🔩.",
   },
@@ -45,13 +42,13 @@ export const resourceData = {
 // TODO: Consider a new approach:
 export const resourceData = {
   collected: {
-    freeworkers: 5,
+    workers: 5,
     wood: 0,
     stone: 0,
     metal: 0,
   },
   details: {
-    freeworkers: {
+    workers: {
       name: "Freeworker",
       resourceSymbol: "🛠️",
       description:
@@ -63,7 +60,6 @@ export const resourceData = {
       workers: 0,
       workersNeeded: 1,
       workerName: "Woodcutters",
-      workerType: "woodcutters",
       workerSymbol: "🪓",
       description: "Collects 1🪵.",
     },
@@ -73,7 +69,6 @@ export const resourceData = {
       workers: 0,
       workersNeeded: 1,
       workerName: "Stonemasons",
-      workerType: "stonemasons",
       workerSymbol: "⚒️",
       description: "Collects 1🪨.",
     },
@@ -83,7 +78,6 @@ export const resourceData = {
       workers: 0,
       workersNeeded: 1,
       workerName: "Metalworkers",
-      workerType: "metalworkers",
       workerSymbol: "🥽",
       description: "Collects 1🔩.",
     },

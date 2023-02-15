@@ -83,7 +83,7 @@ Then you can see how many you have, how many you need.
 -TODO-
 Get post-combat menu calculating properly
 Change emoji's to images
-Add a proper popup to replace alerts (eg "not all freeworkers assigned!")
+Add a proper popup to replace alerts (eg "not all workers assigned!")
 Enemy army function-Buffs/traits (systems approach)
 Get AutoBattler to produce combat log
 Incorporate taunts in battle

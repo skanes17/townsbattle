@@ -1,5 +1,5 @@
 export interface Resources {
-  freeworkers: Pick<
+  workers: Pick<
     ResourceData,
     "collected" | "name" | "resourceSymbol" | "description"
   >;
@@ -8,7 +8,7 @@ export interface Resources {
   metal: ResourceData;
 }
 
-type BaseResources = Omit<Resources, "freeworkers">;
+type BaseResources = Omit<Resources, "workers">;
 
 interface ResourceData {
   collected: number;
@@ -17,13 +17,12 @@ interface ResourceData {
   workers: number;
   workersNeeded: number;
   workerName: string;
-  workerType: string;
   workerSymbol: string;
   description: string;
 }
 
 export type ResourceType = keyof Resources; // Resource includes all the keys of Resources interface
-export type BaseResourceType = keyof BaseResources; // this excludes "freeworkers"
+export type BaseResourceType = keyof BaseResources; // this excludes "workers"
 
 /* FIXME: Incorporate the following refactoring but fix the associated error in <Game/> */
 // TODO: Continue to improve this type, make it more dynamic, less prescriptive
@@ -31,7 +30,6 @@ export type BaseResourceType = keyof BaseResources; // this excludes "freeworker
 /* type ResourceName = "Freeworker" | "Wood" | "Stone" | "Metal";
 type ResourceSymbol = "🛠️" | "🪵" | "🪨" | "🔩";
 type WorkerName = "Woodcutters" | "Stonemasons" | "Metalworkers";
-type WorkerType = "woodcutters" | "stonemasons" | "metalworkers";
 type WorkerSymbol = "🪓" | "⚒️" | "🥽";
 
 interface Resource {
@@ -40,7 +38,6 @@ interface Resource {
   resourceSymbol: "🛠️" | "🪵" | "🪨" | "🔩";
   workers: number;
   workerName: "Woodcutters" | "Stonemasons" | "Metalworkers";
-  workerType: "woodcutters" | "stonemasons" | "metalworkers";
   workerSymbol: "🪓" | "⚒️" | "🥽";
   description: string;
 }
@@ -51,7 +48,7 @@ type Freeworker = Pick<
 >;
 
 export interface Resources {
-  freeworkers: Freeworker;
+  workers: Freeworker;
   wood: Resource;
   stone: Resource;
   metal: Resource;

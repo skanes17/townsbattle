@@ -10,7 +10,7 @@ export const buildingsData = {
     healthBonus: 2,
     description: "Melee units gain +2 to attack, +2 to health.",
     health: 2,
-    resourceCosts: { freeworkers: 5, wood: 10, stone: 10 },
+    resourceCosts: { workers: 5, wood: 10, stone: 10 },
   },
   // for pewpew
   // TODO: Rename as "archery hut"
@@ -25,7 +25,7 @@ export const buildingsData = {
     // include flavourtext about the divine knowledge given
     description: "Pewpew units gain +3 to attack but -1 health.",
     health: 2,
-    resourceCosts: { freeworkers: 5, wood: 10, metal: 10 },
+    resourceCosts: { workers: 5, wood: 10, metal: 10 },
   },
   // for tanky
   armorsmithy: {
@@ -38,7 +38,7 @@ export const buildingsData = {
     healthBonus: 3,
     description: "Tanky units gain +1 to attack, +3 to health.",
     health: 2,
-    resourceCosts: { freeworkers: 5, stone: 10, metal: 10 },
+    resourceCosts: { workers: 5, stone: 10, metal: 10 },
     woodCost: 0,
     stoneCost: 10,
     metalCost: 10,
@@ -56,7 +56,7 @@ export const buildingsData = {
     armorBonus: 0,
     description: "All units gain +2 to health, +2 to armor.",
     health: 2,
-    resourceCosts: { freeworkers: 5, wood: 10, stone: 10, metal: 10 },
+    resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 10 },
   },
   healingChamber: {
     name: "Healing Chamber",
@@ -69,7 +69,7 @@ export const buildingsData = {
     armorBonus: 0,
     description: "Heals units after combat.",
     health: 2,
-    resourceCosts: { freeworkers: 5, wood: 20, stone: 10, metal: 5 },
+    resourceCosts: { workers: 5, wood: 20, stone: 10, metal: 5 },
   },
   // for all units
   townCenter: {
@@ -96,53 +96,53 @@ export const buildingsData = {
     description: "Upgrade intel on the enemy army.",
     healthBonus: 0,
     health: 2,
-    resourceCosts: { freeworkers: 10, wood: 15, stone: 15, metal: 15 },
+    resourceCosts: { workers: 10, wood: 15, stone: 15, metal: 15 },
   },
 };
 
 /* export const buildingCostsData = {
   swordsmithy: {
-    freeworkers: 5,
+    workers: 5,
     wood: 10,
     stone: 10,
     metal: 0,
   },
   // for pewpew
   archeryHut: {
-    freeworkers: 5,
+    workers: 5,
     wood: 10,
     stone: 0,
     metal: 10,
   },
   // for tanky
   armorsmithy: {
-    freeworkers: 5,
+    workers: 5,
     wood: 0,
     stone: 10,
     metal: 10,
   },
   // for all units
   mealHall: {
-    freeworkers: 5,
+    workers: 5,
     wood: 10,
     stone: 10,
     metal: 10,
   },
   healingChamber: {
-    freeworkers: 5,
+    workers: 5,
     wood: 10,
     stone: 10,
     metal: 10,
   },
   // for all units
   townCenter: {
-    freeworkers: 0,
+    workers: 0,
     wood: 0,
     stone: 0,
     metal: 0,
   },
   scoutUnit: {
-    freeworkers: 10,
+    workers: 10,
     wood: 15,
     stone: 15,
     metal: 15,

@@ -28,15 +28,15 @@ export default function WorkerCard({
       return;
     }
 
-    if (resources["freeworkers"].collected > 0) {
+    if (resources["workers"].collected > 0) {
       const updatedResources = { ...resources };
 
-      updatedResources["freeworkers"].collected -= 1;
+      updatedResources["workers"].collected -= 1;
       updatedResources[resourceType].workers += 1;
 
       setResources(updatedResources);
     } else {
-      alert("No free workers!");
+      alert("You have no workers left!");
     }
   };
 
@@ -49,14 +49,14 @@ export default function WorkerCard({
 
     if (resources[resourceType].workers > 0) {
       const updatedResources = { ...resources };
-      updatedResources["freeworkers"].collected += 1;
+      updatedResources["workers"].collected += 1;
       updatedResources[resourceType].workers -= 1;
       setResources(updatedResources);
     }
   };
 
   let costColor;
-  resources["freeworkers"].collected < resources[resourceType].workersNeeded
+  resources["workers"].collected < resources[resourceType].workersNeeded
     ? (costColor = "text-red-600")
     : (costColor = "text-green-500");
 
@@ -75,7 +75,7 @@ export default function WorkerCard({
             <div>
               🛠️
               <span className={`${costColor} px-1`}>
-                {resources["freeworkers"].collected}
+                {resources["workers"].collected}
               </span>
               /
               <span className={`px-1`}>

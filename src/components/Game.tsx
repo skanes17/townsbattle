@@ -55,7 +55,7 @@ import {
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
-// TODO: Maybe if you choose not to use a freeworker you can get some gold (points)
+// TODO: Maybe if you choose not to use a worker you can get some gold (points)
 
 // TODO: Call a function to add a set number of enemy units per turn
 // -eg start with an army of 3, one of each
@@ -97,10 +97,10 @@ export default function Game(props: GameProps) {
   /* TODO: Points for a unit is trained, building built? */
 
   // TODO: Add food? And/or some resource common to all unit building?
-  // Idea: Freeworkers are consumed when used for making units...
+  // Idea: Workers are consumed when used for making units...
   // ... but introduce a gold economy which is used for building stuff along with resources
   // .. then you need to choose between basic resources AND gold every turn
-  // maybe freeworkers aren't guaranteed every turn??
+  // maybe workers aren't guaranteed every turn??
   // set number per turn, and a new building adds new ones per turn?
 
   /* ===RESOURCES AND WORKERS=== */
@@ -109,7 +109,7 @@ export default function Game(props: GameProps) {
     resources
   ) as ResourceType[];
   const baseResourceTypes: BaseResourceType[] = Object.keys(resources).filter(
-    (resourceType) => resourceType !== "freeworkers"
+    (resourceType) => resourceType !== "workers"
   ) as BaseResourceType[];
 
   // # of resources harvested per worker
@@ -266,9 +266,9 @@ export default function Game(props: GameProps) {
       resources["metal"].workers * resourceMultipliers.metal;
   };
 
-  const calculateFreeworkers = (resourcesCopy: Resources) => {
-    // calculate freeworkers for next turn
-    resourcesCopy["freeworkers"].collected = BASE_FREEWORKER_COUNT + newWorkers;
+  const calculateWorkers = (resourcesCopy: Resources) => {
+    // calculate workers for next turn
+    resourcesCopy["workers"].collected = BASE_FREEWORKER_COUNT + newWorkers;
     setNewWorkers(newWorkers + 1);
   };
 
@@ -427,8 +427,8 @@ export default function Game(props: GameProps) {
   };
 
   const endTurn = () => {
-    if (resources["freeworkers"].collected > 0) {
-      alert("You have not assigned all free workers!");
+    if (resources["workers"].collected > 0) {
+      alert("You have not assigned all workers!");
       return;
     }
 
@@ -436,7 +436,7 @@ export default function Game(props: GameProps) {
     const resourcesCopy = { ...resources };
 
     collectResources(resourcesCopy);
-    calculateFreeworkers(resourcesCopy);
+    calculateWorkers(resourcesCopy);
     resetWorkers(resourcesCopy);
     setResources(resourcesCopy);
 

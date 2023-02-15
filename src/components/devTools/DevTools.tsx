@@ -86,6 +86,6 @@ export default function DevTools({
 
 /*
 const resourceTypes = Object.keys(resources).filter(
-  (key) => key != "freeworkers"
+  (key) => key != "workers"
 );
 */
