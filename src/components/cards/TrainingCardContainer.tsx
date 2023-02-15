@@ -1,5 +1,5 @@
-import React from "react";
-import { BaseUnit, Resources, /* UnitCosts,  */ UnitCounts } from "../../types";
+import React, { Dispatch, SetStateAction } from "react";
+import { BaseUnit, ResourcePool, Resources, UnitCounts } from "../../types";
 import TrainUnitCard from "./TrainUnitCard";
 
 import { UnitType } from "../../types";
@@ -7,7 +7,8 @@ import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types/FunctionTypes";
 
 export interface TrainingCardContainerProps {
   resources: Resources;
-  setResources: (resources: Resources) => void;
+  resourcePool: ResourcePool;
+  setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
   /* unitCosts: UnitCosts; */
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
@@ -19,8 +20,8 @@ export interface TrainingCardContainerProps {
 
 export default function TrainingCardContainer({
   resources,
-  setResources,
-  /* unitCosts, */
+  resourcePool,
+  setResourcePool,
   unitsInTraining,
   BASE_UNIT_DATA,
   addTrainingUnit,
@@ -34,7 +35,8 @@ export default function TrainingCardContainer({
         <TrainUnitCard
           unitType={unitType as UnitType}
           resources={resources}
-          setResources={setResources}
+          resourcePool={resourcePool}
+          setResourcePool={setResourcePool}
           unitsInTraining={unitsInTraining}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           addTrainingUnit={addTrainingUnit}

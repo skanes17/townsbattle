@@ -1,2 +1,2 @@
 export * from "./cloneWithJSON";
-export * from "./updateResources";
+export * from "./updateResourcePool";

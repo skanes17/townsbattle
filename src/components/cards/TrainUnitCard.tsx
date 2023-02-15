@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   BaseUnit,
   ResourcePool,
+  Resources,
   ResourceType,
   UnitCounts,
   UnitType,
@@ -16,12 +17,16 @@ import {
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
 import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types";
-import { cloneBasicObjectWithJSON, updateResources } from "../../utils";
+import {
+  cloneBasicObjectWithJSON,
+  updateResources as updatedResourcePool,
+} from "../../utils";
 import { resourceChecker } from "../../utils/resourceChecker";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
   unitType: UnitType;
+  resources: Resources;
   resourcePool: ResourcePool;
   setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
   unitsInTraining: UnitCounts;
@@ -35,6 +40,7 @@ export interface TrainUnitCardProps {
 
 export default function TrainUnitCard({
   unitType,
+  resources,
   resourcePool,
   setResourcePool,
   unitsInTraining,
@@ -55,7 +61,11 @@ export default function TrainUnitCard({
       return;
     }
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
-    updateResources(costsObject, clonedResourcePool, -numberOfUnitsInTraining);
+    updatedResourcePool(
+      costsObject,
+      clonedResourcePool,
+      -numberOfUnitsInTraining
+    );
 
     setResourcePool(clonedResourcePool);
     // updates the myTrainingUnits array as well
@@ -69,24 +79,24 @@ export default function TrainUnitCard({
       return;
     }
 
-    const clonedResourceData = cloneBasicObjectWithJSON(resources);
-    updateResources(costsObject, clonedResourceData, -1);
+    const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
+    updatedResourcePool(costsObject, clonedResourcePool, -1);
 
-    setResources(clonedResourceData);
+    setResourcePool(clonedResourcePool);
     // updates the myTrainingUnits array as well
     removeTrainingUnit(unitType, friendly);
   };
 
   const handlePlusClick = (unitType: UnitType, friendly: boolean) => {
     // check that you've collected all required resources
-    const resourceCheck = resourceChecker(costsObject, resources);
+    const resourceCheck = resourceChecker(costsObject, resourcePool);
 
     if (resourceCheck) {
       // reduce the resources according to costs
-      const clonedResourceData = cloneBasicObjectWithJSON(resources);
-      updateResources(costsObject, clonedResourceData, 1);
+      const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
+      updatedResourcePool(costsObject, clonedResourcePool, 1);
 
-      setResources(clonedResourceData);
+      setResourcePool(clonedResourcePool);
       // updates the myTrainingUnits array as well
       addTrainingUnit(unitType, friendly);
     } else {
@@ -104,7 +114,7 @@ export default function TrainUnitCard({
       // use the floor function to ensure an integer result
       // otherwise, return 0
       return cost !== 0
-        ? Math.floor(resources[resourceType as ResourceType].collected / cost)
+        ? Math.floor(resourcePool[resourceType as ResourceType] / cost)
         : 0;
     }
   );
@@ -117,11 +127,11 @@ export default function TrainUnitCard({
       alert("Not enough resources!");
       return;
     }
-    const clonedResourceData = cloneBasicObjectWithJSON(resources);
+    const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
 
-    updateResources(costsObject, clonedResourceData, maxTrainable);
+    updatedResourcePool(costsObject, clonedResourcePool, maxTrainable);
 
-    setResources(clonedResourceData);
+    setResourcePool(clonedResourcePool);
     maxTrainingUnits(unitType, friendly, maxTrainable);
   };
   const redText = "text-red-600";
@@ -137,7 +147,11 @@ export default function TrainUnitCard({
       <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
       <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
 
-      <CardCostsInfo resources={resources} costsObject={costsObject} />
+      <CardCostsInfo
+        resources={resources}
+        resourcePool={resourcePool}
+        costsObject={costsObject}
+      />
 
       {/* Could use this to display max trainable
       <div className="justify-self-end">

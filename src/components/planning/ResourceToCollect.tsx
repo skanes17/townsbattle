@@ -12,7 +12,7 @@ export default function ResourceToCollect({
 }: ResourceToCollectProps) {
   return (
     <div className="hover:text-yellow-300 ">
-      {resources[resourceType].resourceSymbol} {resources[resourceType].workers}
+      {resources[resourceType].symbol} {resources[resourceType].workers}
     </div>
   );
 }

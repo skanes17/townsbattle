@@ -14,7 +14,7 @@ export default function Resource({
 }: ResourceProps) {
   return (
     <div className="hover:text-yellow-300 ">
-      {resources[resourceType].resourceSymbol}
+      {resources[resourceType].symbol}
       {resourcePool[resourceType]}
     </div>
   );

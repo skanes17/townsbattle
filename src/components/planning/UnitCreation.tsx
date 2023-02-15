@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import {
   UnitCounts,
   Resources,
@@ -5,13 +6,15 @@ import {
   AddRemoveUnitFn,
   MaxTrainingUnitsFn,
   UnitType,
+  ResourcePool,
 } from "../../types";
 import { TrainUnitCard } from "../cards";
 
 interface UnitCreationProps {
   unitsInTraining: UnitCounts;
   resources: Resources;
-  setResources: (resources: Resources) => void;
+  resourcePool: ResourcePool;
+  setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
   BASE_UNIT_DATA: BaseUnit;
   addTrainingUnit: AddRemoveUnitFn;
   maxTrainingUnits: MaxTrainingUnitsFn;
@@ -22,7 +25,8 @@ interface UnitCreationProps {
 export default function UnitCreation({
   unitsInTraining,
   resources,
-  setResources,
+  resourcePool,
+  setResourcePool,
   BASE_UNIT_DATA,
   addTrainingUnit,
   maxTrainingUnits,
@@ -38,7 +42,8 @@ export default function UnitCreation({
         <TrainUnitCard
           unitType={unitType as UnitType}
           resources={resources}
-          setResources={setResources}
+          resourcePool={resourcePool}
+          setResourcePool={setResourcePool}
           unitsInTraining={unitsInTraining}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           addTrainingUnit={addTrainingUnit}

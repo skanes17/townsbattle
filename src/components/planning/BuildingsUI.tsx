@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { Buildings, Resources } from "../../types";
+import { Buildings, ResourcePool, Resources } from "../../types";
 import { ConstructBuilding } from "../cards";
 
 interface BuildingsUIProps {
@@ -10,6 +10,8 @@ interface BuildingsUIProps {
   resources: Resources;
   setResources: Dispatch<SetStateAction<Resources>>;
   /* setResources: (resources: Resources) => void; */
+  resourcePool: ResourcePool;
+  setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
 }
 
 export default function BuildingsUI({
@@ -18,6 +20,8 @@ export default function BuildingsUI({
   buildingsToConstruct,
   resources,
   setResources,
+  resourcePool,
+  setResourcePool,
 }: BuildingsUIProps) {
   return (
     <div>
@@ -31,6 +35,8 @@ export default function BuildingsUI({
           buildingType={buildingType}
           resources={resources}
           setResources={setResources}
+          resourcePool={resourcePool}
+          setResourcePool={setResourcePool}
         />
       ))}
       <br></br>

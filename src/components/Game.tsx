@@ -244,41 +244,39 @@ export default function Game(props: GameProps) {
     setUnitId(unitId + 1);
   };
 
-  //add resources
   const addResource: AddResourceFn = (resourceType: ResourceType) => {
-    const selectedResource = resourcePool[resourceType];
-    if (!selectedResource) {
-      alert("resource doesn't exist");
-      return;
-    }
+    /* TODO: Add error catch */
     const clonedResourcePool = { ...resourcePool };
-
     clonedResourcePool[resourceType] += 10;
     setResourcePool(clonedResourcePool);
   };
 
-  const collectResources = (resourcePool: ResourcePool) => {
+  const addResourcesToPool = (resourcePool: ResourcePool) => {
     Object.keys(resources)
       .filter((resourceType) => resourceType !== "workers")
-      .map((resourceType) => {
+      .forEach((resourceType: string) => {
         resourcePool[resourceType as BaseResourceType] +=
           resources[resourceType as BaseResourceType].workers *
-          resourceMultipliers.wood;
+          resourceMultipliers[resourceType as BaseResourceType];
       });
   };
 
-  const calculateWorkers = (resourcePool: ResourcePool) => {
-    // calculate workers for next turn
+  /*
+  resourcesCopy["wood"].collected = resources["wood"].collected + resources["wood"].workers * resourceMultipliers.wood;
+  resourcesCopy["stone"].collected = resources["stone"].collected + resources["stone"].workers * resourceMultipliers.stone;
+  resourcesCopy["metal"].collected = resources["metal"].collected + resources["metal"].workers * resourceMultipliers.metal;
+    */
+
+  const calculateWorkersForNextTurn = (resourcePool: ResourcePool) => {
     resourcePool["workers"] = BASE_FREEWORKER_COUNT + newWorkers;
     setNewWorkers(newWorkers + 1);
   };
 
   const resetWorkers = (resourcePool: ResourcePool) => {
-    // reset workers
     Object.keys(resources)
       .filter((resourceType) => resourceType !== "workers")
       .map((resourceType) => {
-        resourcePool[resourceType as BaseResourceType] = 0;
+        resources[resourceType as BaseResourceType].workers = 0;
       });
   };
 
@@ -438,8 +436,8 @@ export default function Game(props: GameProps) {
     // clone resource pool to preserve state
     const clonedResourcePool = { ...resourcePool };
 
-    collectResources(clonedResourcePool);
-    calculateWorkers(clonedResourcePool);
+    addResourcesToPool(clonedResourcePool);
+    calculateWorkersForNextTurn(clonedResourcePool);
     resetWorkers(clonedResourcePool);
     setResourcePool(clonedResourcePool);
 
@@ -568,8 +566,8 @@ export default function Game(props: GameProps) {
         <GridCardContainer headerText="Train Units">
           <TrainingCardContainer
             resources={resources}
-            setResources={setResources}
-            /* unitCosts={unitCosts} */
+            resourcePool={resourcePool}
+            setResourcePool={setResourcePool}
             unitsInTraining={unitsInTraining}
             BASE_UNIT_DATA={BASE_UNIT_DATA}
             addTrainingUnit={addTrainingUnit}
@@ -592,6 +590,8 @@ export default function Game(props: GameProps) {
                 buildingType={buildingType}
                 resources={resources}
                 setResources={setResources}
+                resourcePool={resourcePool}
+                setResourcePool={setResourcePool}
               />
             ))}
           </GridCardContainer>

@@ -1,21 +1,22 @@
 import React, { ReactNode } from "react";
 import {
-  /* BuildingCosts, */
   BuildingType,
   ResourceCosts,
+  ResourcePool,
   Resources,
   ResourceType,
-  /* UnitCosts, */
   UnitType,
 } from "../../types/";
 
 interface CardCostsInfoProps {
   resources: Resources;
+  resourcePool: ResourcePool;
   costsObject: ResourceCosts;
 }
 
 export default function CardCostsInfo({
   resources,
+  resourcePool,
   costsObject,
 }: CardCostsInfoProps) {
   const redText = "text-red-600";
@@ -34,17 +35,17 @@ export default function CardCostsInfo({
             /* @ts-ignore */
             (costsObject[resourceType as ResourceType] ?? 0) > 0 && (
               <div>
-                {resources[resourceType as ResourceType].resourceSymbol}
+                {resources[resourceType as ResourceType].symbol}
                 <span
                   className={
                     /* if you have enough resources of that type, show green; otherwise red" */
-                    resources[resourceType as ResourceType].collected >=
+                    resourcePool[resourceType as ResourceType] >=
                     (costsObject[resourceType as ResourceType] ?? 0)
                       ? `${greenText} px-1`
                       : `${redText} px-1`
                   }
                 >
-                  {resources[resourceType as ResourceType].collected}
+                  {resourcePool[resourceType as ResourceType]}
                 </span>
                 /
                 <span className={`px-1`}>

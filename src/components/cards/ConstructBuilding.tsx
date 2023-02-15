@@ -1,6 +1,15 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { Buildings, BuildingType, Resources, ResourceType } from "../../types/";
-import { cloneBasicObjectWithJSON, updateResources } from "../../utils";
+import {
+  Buildings,
+  BuildingType,
+  ResourcePool,
+  Resources,
+  ResourceType,
+} from "../../types/";
+import {
+  cloneBasicObjectWithJSON,
+  updateResources as updateResourcePool,
+} from "../../utils";
 import { resourceChecker } from "../../utils/resourceChecker";
 import { AddRemoveButton } from "../buttons";
 import {
@@ -20,6 +29,8 @@ interface ConstructBuildingProps {
   buildingType: BuildingType;
   resources: Resources;
   setResources: Dispatch<SetStateAction<Resources>>;
+  resourcePool: ResourcePool;
+  setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
   /* setResources: (resources: Resources) => void; */
 }
 
@@ -29,6 +40,8 @@ export default function ConstructBuilding({
   buildingType,
   resources,
   setResources,
+  resourcePool,
+  setResourcePool,
 }: ConstructBuildingProps) {
   // get the resource costs for the given building type
   const costsObject = buildings[buildingType].resourceCosts;
@@ -42,16 +55,16 @@ export default function ConstructBuilding({
       setBuildings(clonedBuildingsData);
 
       // give back resources
-      const clonedResourceData = cloneBasicObjectWithJSON(resources);
-      updateResources(costsObject, clonedResourceData, -1);
+      const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
+      updateResourcePool(costsObject, clonedResourcePool, -1);
 
-      setResources(clonedResourceData);
+      setResourcePool(clonedResourcePool);
     }
   };
 
   const handleBuildClick = (buildingType: string) => {
     // check that you've collected all required resources
-    const resourceCheck = resourceChecker(costsObject, resources);
+    const resourceCheck = resourceChecker(costsObject, resourcePool);
 
     if (buildings[buildingType].underConstruction === false && resourceCheck) {
       // set the building to be constructed
@@ -60,10 +73,10 @@ export default function ConstructBuilding({
       setBuildings(clonedBuildingsData);
 
       // reduce the resources according to costs
-      const clonedResourceData = cloneBasicObjectWithJSON(resources);
-      updateResources(costsObject, clonedResourceData, 1);
+      const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
+      updateResourcePool(costsObject, clonedResourcePool, 1);
 
-      setResources(clonedResourceData);
+      setResourcePool(clonedResourcePool);
     } else {
       alert("Not enough resources!");
     }
@@ -80,6 +93,7 @@ export default function ConstructBuilding({
 
       <CardCostsInfo
         resources={resources}
+        resourcePool={resourcePool}
         costsObject={buildings[buildingType].resourceCosts}
       />
 

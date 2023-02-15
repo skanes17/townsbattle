@@ -1,33 +1,27 @@
 export const resourceData = {
   workers: {
-    name: "Freeworker",
-    resourceSymbol: "🛠️",
+    name: "Worker",
+    symbol: "🛠️",
     description:
       "Used when gathering resources, training units, and constructing buildings.",
   },
   wood: {
     name: "Wood",
-    resourceSymbol: "🪵",
+    symbol: "🪵",
     workers: 0,
-    workerName: "Wood",
-    workerSymbol: "🪵",
-    description: "Assign a worker to collect wood.",
+    description: "Collect wood. Costs 1 worker.",
   },
   stone: {
     name: "Stone",
-    resourceSymbol: "🪨",
+    symbol: "🪨",
     workers: 0,
-    workerName: "Stone",
-    workerSymbol: "🪨",
-    description: "Assign a worker to collect stone.",
+    description: "Collect stone. Costs 1 worker.",
   },
   metal: {
     name: "Metal",
-    resourceSymbol: "🔩",
+    symbol: "🔩",
     workers: 0,
-    workerName: "Metal",
-    workerSymbol: "🔩",
-    description: "Assign a worker to collect metal.",
+    description: "Collect metal. Costs 1 worker.",
   },
 };
 
