@@ -1,8 +1,8 @@
-import { ResourceCosts, Resources, ResourceType } from "../types";
+import { ResourceCosts, ResourcePool, ResourceType } from "../types";
 
 export function updateResources(
   costsObject: ResourceCosts,
-  resourcesObject: Resources,
+  resourcePool: ResourcePool,
   // note: thingsToMake determines how many things to create/destroy
   // for example if creating one thing, use thingsToMake = 1
   // if destroying one thing, use thingsToMake = -1
@@ -16,7 +16,7 @@ export function updateResources(
 
   // null coalescing (??) used in case the resource asked for is undefined
   Object.entries(costsObject).forEach(([resourceType, cost]) => {
-    resourcesObject[resourceType as ResourceType].collected +=
+    resourcePool[resourceType as ResourceType] +=
       (cost ?? 0) * -1 * thingsToMake ?? 0;
   });
 }

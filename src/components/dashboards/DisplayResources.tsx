@@ -1,14 +1,16 @@
 import React from "react";
-import { BaseResourceType, Resources, ResourceType } from "../../types";
+import { ResourcePool, Resources, ResourceType } from "../../types";
 import { Resource } from "../planning";
 
 interface DisplayResourcesProps {
   resources: Resources;
+  resourcePool: ResourcePool;
   resourceTypes: string[];
 }
 
 export default function DisplayResources({
   resources,
+  resourcePool,
   resourceTypes,
 }: DisplayResourcesProps) {
   return (
@@ -20,6 +22,7 @@ export default function DisplayResources({
         {resourceTypes.map((resourceType: string) => (
           <Resource
             resources={resources}
+            resourcePool={resourcePool}
             resourceType={resourceType as ResourceType}
           />
         ))}

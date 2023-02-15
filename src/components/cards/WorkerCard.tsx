@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import { BaseResourceType, Resources, ResourceType } from "../../types";
+import React, { Dispatch, SetStateAction, useState } from "react";
+import {
+  BaseResourceType,
+  ResourcePool,
+  Resources,
+  ResourceType,
+} from "../../types";
 import {
   CardHeader,
   CardShowCount,
@@ -10,16 +15,21 @@ import {
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
 import { AddRemoveWorkerFn } from "../../types/FunctionTypes";
+import { cloneBasicObjectWithJSON } from "../../utils";
 
 interface WorkerCardProps {
   resources: Resources;
-  setResources: (resources: Resources) => void;
+  setResources: Dispatch<SetStateAction<Resources>>;
+  resourcePool: ResourcePool;
+  setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
   resourceType: BaseResourceType;
 }
 
 export default function WorkerCard({
   resources,
   setResources,
+  resourcePool,
+  setResourcePool,
   resourceType,
 }: WorkerCardProps) {
   const addWorker: AddRemoveWorkerFn = (resourceType) => {
@@ -29,13 +39,15 @@ export default function WorkerCard({
       return;
     }
 
-    if (resources["workers"].collected > 0) {
-      const updatedResources = { ...resources };
+    if (resourcePool["workers"] > 0) {
+      const clonedResourcePool = { ...resourcePool };
+      const clonedResources = cloneBasicObjectWithJSON(resources);
 
-      updatedResources["workers"].collected -= 1;
-      updatedResources[resourceType].workers += 1;
+      clonedResourcePool["workers"] -= 1;
+      clonedResources[resourceType].workers += 1;
 
-      setResources(updatedResources);
+      setResourcePool(clonedResourcePool);
+      setResources(clonedResources);
     } else {
       alert("You have no workers left!");
     }
@@ -49,15 +61,19 @@ export default function WorkerCard({
     }
 
     if (resources[resourceType].workers > 0) {
-      const updatedResources = { ...resources };
-      updatedResources["workers"].collected += 1;
-      updatedResources[resourceType].workers -= 1;
-      setResources(updatedResources);
+      const clonedResourcePool = { ...resourcePool };
+      const clonedResources = cloneBasicObjectWithJSON(resources);
+
+      clonedResourcePool["workers"] += 1;
+      clonedResources[resourceType].workers -= 1;
+
+      setResourcePool(clonedResourcePool);
+      setResources(clonedResources);
     }
   };
 
   let costColor;
-  resources["workers"].collected < 1
+  resourcePool["workers"] < 1
     ? (costColor = "text-red-600")
     : (costColor = "text-green-500");
 
@@ -76,7 +92,7 @@ export default function WorkerCard({
             <div>
               🛠️
               <span className={`${costColor} px-1`}>
-                {resources["workers"].collected}
+                {resourcePool["workers"]}
               </span>
               /<span className={`px-1`}>1</span>
             </div>

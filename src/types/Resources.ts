@@ -1,8 +1,5 @@
 export interface Resources {
-  workers: Pick<
-    ResourceData,
-    "collected" | "name" | "resourceSymbol" | "description"
-  >;
+  workers: Pick<ResourceData, "name" | "resourceSymbol" | "description">;
   wood: ResourceData;
   stone: ResourceData;
   metal: ResourceData;
@@ -11,7 +8,6 @@ export interface Resources {
 type BaseResources = Omit<Resources, "workers">;
 
 interface ResourceData {
-  collected: number;
   name: string;
   resourceSymbol: string;
   workers: number;
@@ -22,6 +18,10 @@ interface ResourceData {
 
 export type ResourceType = keyof Resources; // Resource includes all the keys of Resources interface
 export type BaseResourceType = keyof BaseResources; // this excludes "workers"
+
+export type ResourcePool = {
+  [key in ResourceType]: number;
+};
 
 /* FIXME: Incorporate the following refactoring but fix the associated error in <Game/> */
 // TODO: Continue to improve this type, make it more dynamic, less prescriptive

@@ -9,7 +9,7 @@ import { AddRemoveUnitFn, AddResourceFn, Unit, UnitType } from "../../types";
 interface DevToolsProps {
   BASE_UNIT_DATA: BaseUnit;
   resources: Resources;
-  resourceTypes: string[];
+  resourceTypes: ResourceType[];
   addResource: AddResourceFn;
   addUnit: AddRemoveUnitFn;
   switchPhase: () => void;
@@ -68,11 +68,11 @@ export default function DevTools({
         ))}
       </div>
       <div>
-        {resourceTypes.map((resourceType: string) => (
+        {resourceTypes.map((resourceType) => (
           <AddResourceButton
             addResource={addResource}
-            resourceType={resourceType as ResourceType}
-            name={resources[resourceType as ResourceType].name}
+            resourceType={resourceType}
+            name={resources[resourceType].name}
             className="rounded border border-gray-400 bg-white py-1 px-2 font-semibold text-gray-800 shadow hover:bg-gray-100"
           />
         ))}

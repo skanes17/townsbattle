@@ -31,7 +31,7 @@ export const resourceData = {
   },
 };
 
-export const resourcePool = {
+export const resourcePoolData = {
   workers: 5,
   wood: 0,
   stone: 0,

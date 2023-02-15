@@ -3,6 +3,7 @@ import {
   baseUnitData,
   buildingsData,
   resourceData,
+  resourcePoolData,
   upgradesData,
 } from "../gameData";
 import {
@@ -35,6 +36,7 @@ import {
   BaseUnit,
   Buildings,
   GameProps,
+  ResourcePool,
   Resources,
   ResourceType,
   TrainingUnit,
@@ -105,6 +107,8 @@ export default function Game(props: GameProps) {
 
   /* ===RESOURCES AND WORKERS=== */
   const [resources, setResources] = useState<Resources>(resourceData);
+  const [resourcePool, setResourcePool] =
+    useState<ResourcePool>(resourcePoolData);
   const resourceTypes: ResourceType[] = Object.keys(
     resources
   ) as ResourceType[];
@@ -241,42 +245,41 @@ export default function Game(props: GameProps) {
   };
 
   //add resources
-  const addResource: AddResourceFn = (resourceType) => {
-    const selectedResource = resources[resourceType];
+  const addResource: AddResourceFn = (resourceType: ResourceType) => {
+    const selectedResource = resourcePool[resourceType];
     if (!selectedResource) {
       alert("resource doesn't exist");
       return;
     }
-    const updatedResources = { ...resources };
+    const clonedResourcePool = { ...resourcePool };
 
-    updatedResources[resourceType].collected += 10;
-    setResources(updatedResources);
+    clonedResourcePool[resourceType] += 10;
+    setResourcePool(clonedResourcePool);
   };
 
-  const collectResources = (resourcesCopy: Resources) => {
-    // TODO: Make this dynamic based on existing resources
-    resourcesCopy["wood"].collected =
-      resources["wood"].collected +
-      resources["wood"].workers * resourceMultipliers.wood;
-    resourcesCopy["stone"].collected =
-      resources["stone"].collected +
-      resources["stone"].workers * resourceMultipliers.stone;
-    resourcesCopy["metal"].collected =
-      resources["metal"].collected +
-      resources["metal"].workers * resourceMultipliers.metal;
+  const collectResources = (resourcePool: ResourcePool) => {
+    Object.keys(resources)
+      .filter((resourceType) => resourceType !== "workers")
+      .map((resourceType) => {
+        resourcePool[resourceType as BaseResourceType] +=
+          resources[resourceType as BaseResourceType].workers *
+          resourceMultipliers.wood;
+      });
   };
 
-  const calculateWorkers = (resourcesCopy: Resources) => {
+  const calculateWorkers = (resourcePool: ResourcePool) => {
     // calculate workers for next turn
-    resourcesCopy["workers"].collected = BASE_FREEWORKER_COUNT + newWorkers;
+    resourcePool["workers"] = BASE_FREEWORKER_COUNT + newWorkers;
     setNewWorkers(newWorkers + 1);
   };
 
-  const resetWorkers = (resourcesCopy: Resources) => {
+  const resetWorkers = (resourcePool: ResourcePool) => {
     // reset workers
-    resourcesCopy["wood"].workers = 0;
-    resourcesCopy["stone"].workers = 0;
-    resourcesCopy["metal"].workers = 0;
+    Object.keys(resources)
+      .filter((resourceType) => resourceType !== "workers")
+      .map((resourceType) => {
+        resourcePool[resourceType as BaseResourceType] = 0;
+      });
   };
 
   const buildingConstructor = (buildingsCopy: Buildings) => {
@@ -427,18 +430,18 @@ export default function Game(props: GameProps) {
   };
 
   const endTurn = () => {
-    if (resources["workers"].collected > 0) {
+    if (resourcePool["workers"] > 0) {
       alert("You have not assigned all workers!");
       return;
     }
 
-    // copy resources to preserve state
-    const resourcesCopy = { ...resources };
+    // clone resource pool to preserve state
+    const clonedResourcePool = { ...resourcePool };
 
-    collectResources(resourcesCopy);
-    calculateWorkers(resourcesCopy);
-    resetWorkers(resourcesCopy);
-    setResources(resourcesCopy);
+    collectResources(clonedResourcePool);
+    calculateWorkers(clonedResourcePool);
+    resetWorkers(clonedResourcePool);
+    setResourcePool(clonedResourcePool);
 
     // copy buildings to preserve state
     const buildingsCopy = { ...buildings };
@@ -517,14 +520,22 @@ export default function Game(props: GameProps) {
               {resourceTypes
                 .filter((resourceType) => resourceType === "workers")
                 .map((resourceType: ResourceType) => (
-                  <Resource resources={resources} resourceType={resourceType} />
+                  <Resource
+                    resources={resources}
+                    resourcePool={resourcePool}
+                    resourceType={resourceType}
+                  />
                 ))}
             </DisplayTemplate>
             <DisplayTemplate headerText="Resources Collected">
               {resourceTypes
                 .filter((resourceType) => resourceType !== "workers")
                 .map((resourceType: ResourceType) => (
-                  <Resource resources={resources} resourceType={resourceType} />
+                  <Resource
+                    resources={resources}
+                    resourcePool={resourcePool}
+                    resourceType={resourceType}
+                  />
                 ))}
             </DisplayTemplate>
           </div>
@@ -549,6 +560,8 @@ export default function Game(props: GameProps) {
           <WorkerCardContainer
             resources={resources}
             setResources={setResources}
+            resourcePool={resourcePool}
+            setResourcePool={setResourcePool}
           />
         </GridCardContainer>
 

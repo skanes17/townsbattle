@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   BaseUnit,
-  Resources,
+  ResourcePool,
   ResourceType,
   UnitCounts,
   UnitType,
@@ -22,8 +22,8 @@ import { resourceChecker } from "../../utils/resourceChecker";
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
   unitType: UnitType;
-  resources: Resources;
-  setResources: (resources: Resources) => void;
+  resourcePool: ResourcePool;
+  setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
   unitsInTraining: UnitCounts;
   BASE_UNIT_DATA: BaseUnit;
   addTrainingUnit: AddRemoveUnitFn;
@@ -35,8 +35,8 @@ export interface TrainUnitCardProps {
 
 export default function TrainUnitCard({
   unitType,
-  resources,
-  setResources,
+  resourcePool,
+  setResourcePool,
   unitsInTraining,
   BASE_UNIT_DATA,
   addTrainingUnit,
@@ -54,10 +54,10 @@ export default function TrainUnitCard({
       alert("You aren't training any units!");
       return;
     }
-    const clonedResourceData = cloneBasicObjectWithJSON(resources);
-    updateResources(costsObject, clonedResourceData, -numberOfUnitsInTraining);
+    const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
+    updateResources(costsObject, clonedResourcePool, -numberOfUnitsInTraining);
 
-    setResources(clonedResourceData);
+    setResourcePool(clonedResourcePool);
     // updates the myTrainingUnits array as well
     removeAllTrainingUnits(unitType, friendly);
   };

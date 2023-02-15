@@ -1,15 +1,19 @@
-import React from "react";
-import { BaseResourceType, Resources } from "../../types";
+import React, { Dispatch, SetStateAction } from "react";
+import { BaseResourceType, ResourcePool, Resources } from "../../types";
 import { WorkerCard } from "../cards";
 
 interface WorkerCardContainerProps {
   resources: Resources;
-  setResources: (resources: Resources) => void;
+  setResources: Dispatch<SetStateAction<Resources>>;
+  resourcePool: ResourcePool;
+  setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
 }
 
 export default function WorkerCardContainer({
   resources,
   setResources,
+  resourcePool,
+  setResourcePool,
 }: WorkerCardContainerProps) {
   return (
     <>
@@ -20,6 +24,8 @@ export default function WorkerCardContainer({
           <WorkerCard
             resources={resources}
             setResources={setResources}
+            resourcePool={resourcePool}
+            setResourcePool={setResourcePool}
             resourceType={resourceType as BaseResourceType}
           />
         ))}

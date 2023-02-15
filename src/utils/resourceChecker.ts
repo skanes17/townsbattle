@@ -1,12 +1,12 @@
-import { ResourceCosts, Resources, ResourceType } from "../types";
+import { ResourceCosts, ResourcePool, ResourceType } from "../types";
 
 export function resourceChecker(
   costsObject: ResourceCosts,
-  resourcesObject: Resources
+  resourcePool: ResourcePool
 ) {
   const resourceChecker = Object.keys(costsObject).map(
     (resourceType: string) =>
-      resourcesObject[resourceType as ResourceType].collected >=
+      resourcePool[resourceType as ResourceType] >=
       costsObject[resourceType as ResourceType]
   );
   // arr.every() will return true if every result of the map is true
