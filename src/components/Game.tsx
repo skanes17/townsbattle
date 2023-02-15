@@ -512,15 +512,27 @@ export default function Game(props: GameProps) {
       <div>Score: {score}</div>
       <div className="sticky top-0 z-10 grid auto-cols-auto">
         <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-          <DisplayTemplate headerText="Resources Collected">
-            {resourceTypes.map((resourceType: ResourceType) => (
-              <Resource resources={resources} resourceType={resourceType} />
-            ))}
-          </DisplayTemplate>
+          <div className="grid auto-cols-auto grid-flow-col">
+            <DisplayTemplate headerText="Workers">
+              {resourceTypes
+                .filter((resourceType) => resourceType === "workers")
+                .map((resourceType: ResourceType) => (
+                  <Resource resources={resources} resourceType={resourceType} />
+                ))}
+            </DisplayTemplate>
+            <DisplayTemplate headerText="Resources Collected">
+              {resourceTypes
+                .filter((resourceType) => resourceType !== "workers")
+                .map((resourceType: ResourceType) => (
+                  <Resource resources={resources} resourceType={resourceType} />
+                ))}
+            </DisplayTemplate>
+          </div>
 
           <div className="place-self-center text-xl">
             Train Units to Protect {townName || defaultTownName}!
           </div>
+
           <DisplayTemplate headerText="Army">
             {unitTypes.map((unitType: UnitType) => (
               <UnitCount
@@ -533,7 +545,7 @@ export default function Game(props: GameProps) {
         </div>
       </div>
       <div className="flex flex-wrap justify-evenly">
-        <GridCardContainer headerText="Assign Workers">
+        <GridCardContainer headerText="Collect Resources">
           <WorkerCardContainer
             resources={resources}
             setResources={setResources}

@@ -6,6 +6,7 @@ import {
   CardSymbol,
   CardTemplate,
   CardDescription,
+  CardCostsInfo,
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
 import { AddRemoveWorkerFn } from "../../types/FunctionTypes";
@@ -56,7 +57,7 @@ export default function WorkerCard({
   };
 
   let costColor;
-  resources["workers"].collected < resources[resourceType].workersNeeded
+  resources["workers"].collected < 1
     ? (costColor = "text-red-600")
     : (costColor = "text-green-500");
 
@@ -77,10 +78,7 @@ export default function WorkerCard({
               <span className={`${costColor} px-1`}>
                 {resources["workers"].collected}
               </span>
-              /
-              <span className={`px-1`}>
-                {resources[resourceType].workersNeeded}
-              </span>
+              /<span className={`px-1`}>1</span>
             </div>
           </div>
         </div>

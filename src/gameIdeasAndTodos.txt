@@ -5,6 +5,8 @@ Veteran Mode: starts with buildings already available for construction
 Can burn resources to trigger a special combat ability? (may require extra work)
 Allow for x number of commands/interventions by the player per turn, trigger special abilities/buffs
 
+-clicking on buildings could display a modal, which will allow you to create units from there and get upgrades
+
 Critical hit chance (eg 5%), chance to hit
 
 --UNIT and BUILDING ABILITIES--
@@ -79,6 +81,23 @@ Each resource on its own line, perhaps like this:
   🪨 14 / 5
   🔩 2 / 3
 Then you can see how many you have, how many you need.
+
+-CARD REFACTOR-
+Consider making them more composable
+Can split the card parts out:
+  <Card image={backgroundimage}>
+    <CardHeader>Barracks</CardHeader>
+    <CardBody>Create a militia unit</CardBody>
+    <CardFooter>
+      <CardButton>+1</CardButton>
+      <CardButton>-1</CardButton>
+    </CardFooter>
+  </Card>
+Then use specialized components to fill it out in a consistent manner.
+CardHeader will always go to the top.
+CardBody always goes to the middle and you can put whatever you want there.
+CardFooter can contain your buttons that you just wire up
+
 
 -TODO-
 Get post-combat menu calculating properly

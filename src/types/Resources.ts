@@ -15,7 +15,6 @@ interface ResourceData {
   name: string;
   resourceSymbol: string;
   workers: number;
-  workersNeeded: number;
   workerName: string;
   workerSymbol: string;
   description: string;

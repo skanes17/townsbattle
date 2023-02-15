@@ -1,41 +1,41 @@
 export const resourceData = {
   workers: {
-    collected: 5,
     name: "Freeworker",
     resourceSymbol: "🛠️",
     description:
       "Used when gathering resources, training units, and constructing buildings.",
   },
   wood: {
-    collected: 0,
     name: "Wood",
     resourceSymbol: "🪵",
     workers: 0,
-    workersNeeded: 1,
-    workerName: "Woodcutters",
-    workerSymbol: "🪓",
-    description: "Collects 1🪵.",
+    workerName: "Wood",
+    workerSymbol: "🪵",
+    description: "Assign a worker to collect wood.",
   },
   stone: {
-    collected: 0,
     name: "Stone",
     resourceSymbol: "🪨",
     workers: 0,
-    workersNeeded: 1,
-    workerName: "Stonemasons",
-    workerSymbol: "⚒️",
-    description: "Collects 1🪨.",
+    workerName: "Stone",
+    workerSymbol: "🪨",
+    description: "Assign a worker to collect stone.",
   },
   metal: {
-    collected: 0,
     name: "Metal",
     resourceSymbol: "🔩",
     workers: 0,
-    workersNeeded: 1,
-    workerName: "Metalworkers",
-    workerSymbol: "🥽",
-    description: "Collects 1🔩.",
+    workerName: "Metal",
+    workerSymbol: "🔩",
+    description: "Assign a worker to collect metal.",
   },
+};
+
+export const resourcePool = {
+  workers: 5,
+  wood: 0,
+  stone: 0,
+  metal: 0,
 };
 
 /*
@@ -58,7 +58,6 @@ export const resourceData = {
       name: "Wood",
       resourceSymbol: "🪵",
       workers: 0,
-      workersNeeded: 1,
       workerName: "Woodcutters",
       workerSymbol: "🪓",
       description: "Collects 1🪵.",
@@ -67,7 +66,6 @@ export const resourceData = {
       name: "Stone",
       resourceSymbol: "🪨",
       workers: 0,
-      workersNeeded: 1,
       workerName: "Stonemasons",
       workerSymbol: "⚒️",
       description: "Collects 1🪨.",
@@ -76,7 +74,6 @@ export const resourceData = {
       name: "Metal",
       resourceSymbol: "🔩",
       workers: 0,
-      workersNeeded: 1,
       workerName: "Metalworkers",
       workerSymbol: "🥽",
       description: "Collects 1🔩.",
