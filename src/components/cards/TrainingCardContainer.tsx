@@ -38,16 +38,6 @@ export default function TrainingCardContainer({
   removeTrainingUnit,
   removeAllTrainingUnits,
 }: TrainingCardContainerProps) {
-  /* const unlockedUnits = Object.keys(buildings)
-    // filter by buildings constructed which are also set up to unlock a unit type
-    .filter(
-      (buildingType) =>
-        buildings[buildingType].constructed &&
-        buildings[buildingType].unlockedUnit !== null &&
-        buildings[buildingType].unlockedUnit !== undefined
-    )
-    // map out the associated unit types
-    .map((building) => buildings[building].unlockedUnit); */
   return (
     <>
       {unlockedUnits.map((unitType) => (
@@ -65,22 +55,6 @@ export default function TrainingCardContainer({
           friendly={true}
         />
       ))}
-
-      {/* {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
-        <TrainUnitCard
-          unitType={unitType as UnitType}
-          resources={resources}
-          resourcePool={resourcePool}
-          setResourcePool={setResourcePool}
-          unitsInTraining={unitsInTraining}
-          BASE_UNIT_DATA={BASE_UNIT_DATA}
-          addTrainingUnit={addTrainingUnit}
-          maxTrainingUnits={maxTrainingUnits}
-          removeTrainingUnit={removeTrainingUnit}
-          removeAllTrainingUnits={removeAllTrainingUnits}
-          friendly={true}
-        />
-      ))} */}
     </>
   );
 }

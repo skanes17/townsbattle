@@ -500,6 +500,9 @@ export default function Game(props: GameProps) {
 
   /* TODO: Center all dashboard info in the middle of their grid/div? */
 
+  /* TODO: Incorporate this on building click */
+  const [toggle, setToggle] = useState(false);
+
   return inCombat ? (
     <>
       <Combat
@@ -523,7 +526,48 @@ export default function Game(props: GameProps) {
       />
     </>
   ) : (
+    // MODAL STUFF -- The TrainingCardContainer would go inside the building card
     <div className="p-1">
+      <div
+        className={`fixed inset-0 z-10 transition-all ${
+          toggle ? "opacity-100" : "invisible opacity-0"
+        } bg-zinc-900/50 duration-500 ease-in-out`}
+      >
+        {/*
+        allows user to click outside to close the modal when paired with an onClick event
+       <div className="fixed inset-0 h-full w-full bg-black opacity-40"></div>
+        */}
+        <div
+          className={`${
+            toggle ? null : "translate-y-full"
+          } z-50 flex min-h-screen items-center px-4 py-8 transition-all duration-500 ease-in-out`}
+        >
+          <div
+            className={
+              "relative mx-auto w-fit max-w-lg rounded-md border border-white bg-zinc-800 p-4 shadow-lg"
+            }
+          >
+            {unlockedUnits.length > 0 ? (
+              <div className="flex items-center justify-center">
+                <TrainingCardContainer
+                  unlockedUnits={unlockedUnits}
+                  buildings={buildings}
+                  resources={resources}
+                  resourcePool={resourcePool}
+                  setResourcePool={setResourcePool}
+                  unitsInTraining={unitsInTraining}
+                  BASE_UNIT_DATA={BASE_UNIT_DATA}
+                  addTrainingUnit={addTrainingUnit}
+                  maxTrainingUnits={maxTrainingUnits}
+                  removeTrainingUnit={removeTrainingUnit}
+                  removeAllTrainingUnits={removeAllTrainingUnits}
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+
       <div>Score: {score}</div>
       <div className="sticky top-0 z-10 grid auto-cols-auto">
         <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
