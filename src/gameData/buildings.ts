@@ -60,7 +60,7 @@ export const buildingsData = {
     healthBonus: 2,
     armorBonus: 0,
     description: "All units gain +2 to health, +2 to armor.",
-    bgImage: "bg-healHall",
+    bgImage: "bg-mealHall",
     health: 2,
     resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 10 },
   },

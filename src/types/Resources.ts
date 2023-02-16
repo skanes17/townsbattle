@@ -1,5 +1,6 @@
 export interface Resources {
   workers: Pick<ResourceData, "name" | "symbol" | "description">;
+  gold: ResourceData;
   wood: ResourceData;
   stone: ResourceData;
   metal: ResourceData;
@@ -19,6 +20,10 @@ export type BaseResourceType = keyof BaseResources; // this excludes "workers"
 
 export type ResourcePool = {
   [key in ResourceType]: number;
+};
+
+export type ResourceMultipliers = {
+  [key in BaseResourceType]: number;
 };
 
 /* FIXME: Incorporate the following refactoring but fix the associated error in <Game/> */

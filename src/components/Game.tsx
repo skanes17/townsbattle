@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   baseUnitData,
   buildingsData,
@@ -36,6 +36,7 @@ import {
   BaseUnit,
   Buildings,
   GameProps,
+  ResourceMultipliers,
   ResourcePool,
   Resources,
   ResourceType,
@@ -119,11 +120,13 @@ export default function Game(props: GameProps) {
   ) as BaseResourceType[];
 
   // # of resources harvested per worker
-  const [resourceMultipliers, setResourceMultipliers] = useState({
-    wood: 1,
-    stone: 1,
-    metal: 1,
-  });
+  const [resourceMultipliers, setResourceMultipliers] =
+    useState<ResourceMultipliers>({
+      gold: 1,
+      wood: 1,
+      stone: 1,
+      metal: 1,
+    });
   // number of workers at start of game (turn 1)
   const BASE_FREEWORKER_COUNT: number = 5;
   // number of new workers per turn increases over time
