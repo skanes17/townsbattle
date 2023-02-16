@@ -1,12 +1,14 @@
 import React, { useId } from "react";
 
 interface MenuInputProps {
+  header: string;
   placeholderText: string;
   value: string;
   onChange: (e: any) => void;
 }
 
 export default function MenuInput({
+  header,
   placeholderText,
   value,
   onChange,
@@ -20,7 +22,7 @@ export default function MenuInput({
         htmlFor={menuInputId}
         className="my-2 block text-lg font-medium text-gray-900 dark:text-white"
       >
-        Name Your Town
+        {header}
       </label>
       {/* Could have nested input within label and removed htmlFor and id */}
       <input

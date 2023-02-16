@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultTownName } from "../../gameData";
+import { playerNames } from "../../gameData/playerNames";
+import { townNames } from "../../gameData/townNames";
 import { Difficulty, DifficultyUpdater, TutorialsUpdater } from "../../types";
 import { MenuButton } from "../buttons";
 import { MenuBox, MenuInput } from "../startPage";
@@ -13,7 +14,14 @@ interface StartData {
 }
 
 export default function Play() {
-  const [townName, setTownName] = useState("");
+  const [defaultPlayerName, setDefaultPlayerName] = useState(
+    playerNames[Math.floor(Math.random() * playerNames.length)]
+  );
+  const [playerName, setPlayerName] = useState();
+  const [defaultTownName, setDefaultTownName] = useState(
+    townNames[Math.floor(Math.random() * townNames.length)]
+  );
+  const [townName, setTownName] = useState();
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
 
@@ -46,10 +54,21 @@ export default function Play() {
       </p>
 
       <MenuInput
+        header={"Player Name"}
+        placeholderText={defaultPlayerName}
+        // current value of the input box
+        // if no name is chosen, the default gets used
+        value={playerName ?? defaultPlayerName}
+        // what to do when input is changed
+        onChange={(e) => setPlayerName(e.target.value)}
+      />
+
+      <MenuInput
+        header={"Name Your Town"}
         placeholderText={defaultTownName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={townName}
+        value={townName ?? defaultTownName}
         // what to do when input is changed
         onChange={(e) => setTownName(e.target.value)}
       />
