@@ -6,7 +6,6 @@ export const baseUnitData = {
     description: "Attack and health are roughly balanced.",
     attack: 6,
     maxHealth: 10,
-    canBeTrained: true,
     resourceCosts: { workers: 1, wood: 2, stone: 2 },
   },
   pewpew: {
@@ -16,7 +15,6 @@ export const baseUnitData = {
     description: "Great attack but not much health.",
     attack: 9,
     maxHealth: 7,
-    canBeTrained: true,
     resourceCosts: { workers: 1, wood: 2, metal: 2 },
   },
   tanky: {
@@ -26,7 +24,6 @@ export const baseUnitData = {
     description: "Low attack but lots of health.",
     attack: 4,
     maxHealth: 15,
-    canBeTrained: true,
     resourceCosts: { workers: 1, stone: 2, metal: 2 },
   },
 };

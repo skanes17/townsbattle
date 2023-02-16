@@ -53,6 +53,7 @@ import {
   AddResourceFn,
   MaxTrainingUnitsFn,
 } from "../types/FunctionTypes";
+import { cloneBasicObjectWithJSON } from "../utils";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -129,6 +130,7 @@ export default function Game(props: GameProps) {
   const [newWorkers, setNewWorkers] = useState(1);
 
   /* ===BUILDINGS=== */
+  /* @ts-ignore -- It is seeing unitToUnlock as a string not UnitType*/
   const [buildings, setBuildings] = useState<Buildings>(buildingsData);
   const buildingsUnderConstruction = Object.keys(buildings).filter(
     (key) => buildings[key].underConstruction
@@ -279,17 +281,16 @@ export default function Game(props: GameProps) {
       });
   };
 
-  const buildingConstructor = (buildingsCopy: Buildings) => {
+  const buildingConstructor = (clonedBuildings: Buildings) => {
     // determine which buildings were under construction
-    const newBuildings = Object.keys(buildings).filter(
+    const buildingsUnderConstruction = Object.keys(buildings).filter(
       (key) => buildings[key].underConstruction
     );
 
     // take them out of construction and set them to constructed
-    newBuildings.map((buildingType) => {
-      buildingsCopy[buildingType].underConstruction = false;
-      buildingsCopy[buildingType].constructed = true;
-      /* TODO: Check here if that building activates new unit? */
+    buildingsUnderConstruction.map((buildingType) => {
+      clonedBuildings[buildingType].underConstruction = false;
+      clonedBuildings[buildingType].constructed = true;
     });
   };
 
@@ -441,10 +442,10 @@ export default function Game(props: GameProps) {
     setResourcePool(clonedResourcePool);
 
     // copy buildings to preserve state
-    const buildingsCopy = { ...buildings };
-    buildingConstructor(buildingsCopy);
+    const clonedBuildings = cloneBasicObjectWithJSON(buildings);
+    buildingConstructor(clonedBuildings);
     // FIXME: Why can this be removed and apparently still work properly??
-    setBuildings(buildingsCopy);
+    setBuildings(clonedBuildings);
 
     trainUnits();
 
@@ -564,6 +565,7 @@ export default function Game(props: GameProps) {
 
         <GridCardContainer headerText="Train Units">
           <TrainingCardContainer
+            buildings={buildings}
             resources={resources}
             resourcePool={resourcePool}
             setResourcePool={setResourcePool}

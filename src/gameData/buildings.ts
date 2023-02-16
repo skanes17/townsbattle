@@ -3,50 +3,56 @@ export const buildingsData = {
   swordsmithy: {
     name: "Swordsmithy",
     nameSymbol: "🗡️",
+    // maybe all additional buildings become available to unlock after their first combat?
+    enabled: true,
     underConstruction: false,
     constructed: false,
     tier: 1,
     attackBonus: 2,
     healthBonus: 2,
-    description: "Melee units gain +2 to attack, +2 to health.",
+    description: "Craft swords. Unlock Fighters.",
     bgImage: "bg-swordsmithy",
-
     health: 2,
     resourceCosts: { workers: 5, wood: 10, stone: 10 },
+    unitToUnlock: "melee",
   },
   // for pewpew
-  // TODO: Rename as "archery hut"
   archeryHut: {
     name: "Archery Hut",
     nameSymbol: "🎯",
+    enabled: false,
     underConstruction: false,
     constructed: false,
     tier: 1,
     attackBonus: 3,
     healthBonus: -1,
-    description: "Recover ancient knowledge... for a price! Unlock Archers.",
+    description: "Recover ancient knowledge, for a price! Unlock Archers.",
     bgImage: "bg-archeryHut",
     health: 2,
     resourceCosts: { workers: 5, wood: 10, metal: 10 },
+    unitToUnlock: "pewpew",
   },
   // for tanky
   smelter: {
     name: "Smelter",
     nameSymbol: "🛡️",
+    enabled: false,
     underConstruction: false,
     constructed: false,
     tier: 1,
     attackBonus: 1,
     healthBonus: 3,
-    description: "Learn to smelt and manipulate metals. Unlock Tanks.",
+    description: "Learn to smelt metals. Unlock Tanks.",
     bgImage: "bg-smelter",
     health: 2,
     resourceCosts: { workers: 5, stone: 10, metal: 10 },
+    unitToUnlock: "tanky",
   },
   // for all units
   mealHall: {
     name: "Meal Hall",
     nameSymbol: "🍖",
+    enabled: false,
     underConstruction: false,
     constructed: false,
     tier: 1,
@@ -61,6 +67,7 @@ export const buildingsData = {
   healingChamber: {
     name: "Healing Chamber",
     nameSymbol: "🩸",
+    enabled: false,
     underConstruction: false,
     constructed: false,
     tier: 1,
@@ -69,7 +76,6 @@ export const buildingsData = {
     armorBonus: 0,
     description: "Heals units after combat.",
     bgImage: "bg-healingChamber",
-
     health: 2,
     resourceCosts: { workers: 5, wood: 20, stone: 10, metal: 5 },
   },
@@ -79,6 +85,7 @@ export const buildingsData = {
     nameSymbol: "🏙️",
     /* FIXME: Path not working */
     imageSrc: "/images/town-center-01.png",
+    enabled: false,
     underConstruction: false,
     constructed: true,
     tier: 1,
@@ -92,6 +99,7 @@ export const buildingsData = {
   scoutUnit: {
     name: "Scout Unit",
     nameSymbol: "🔍",
+    enabled: false,
     underConstruction: false,
     constructed: false,
     tier: 1,

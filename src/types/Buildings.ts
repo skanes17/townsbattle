@@ -1,9 +1,11 @@
 import { ResourceCosts } from "./ResourceCosts";
+import { UnitType } from "./Unit";
 
 export interface Building {
   name: string;
   nameSymbol: string;
   imageSrc?: string;
+  enabled: boolean;
   underConstruction: boolean;
   constructed: boolean;
   tier: number;
@@ -13,6 +15,7 @@ export interface Building {
   bgImage?: string;
   health: number;
   resourceCosts: ResourceCosts;
+  unitToUnlock?: UnitType;
 }
 
 export interface Buildings {

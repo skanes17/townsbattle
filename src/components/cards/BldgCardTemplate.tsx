@@ -10,13 +10,12 @@ export default function BldgCardTemplate({
   bgImage,
   children,
 }: BldgCardTemplateProps) {
-  const newBgImage = bgImage;
-  console.log(newBgImage);
+  const bg = bgImage;
 
   return (
     /* TODO: Consider setting a minimum height for consistency -- eg. min-h-[16rem]*/
     <div
-      className={`grid w-52 auto-rows-auto grid-cols-1 gap-1 rounded-lg border-t-4 border-l-4 border-r-4 border-gray-900/50 bg-white/5 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50 ${newBgImage} bg-cover bg-center  text-white`}
+      className={`grid w-52 auto-rows-auto grid-cols-1 gap-1 rounded-lg border-t-4 border-l-4 border-r-4 border-gray-900/50 bg-white/5 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50 ${bg} bg-cover bg-center  text-white`}
     >
       {children}
     </div>

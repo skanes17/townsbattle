@@ -11,7 +11,6 @@ export interface Unit {
   attack: number;
   maxHealth: number;
   currentHealth: number;
-  canBeTrained: boolean;
   resourceCosts: ResourceCosts;
   id?: number;
 }
