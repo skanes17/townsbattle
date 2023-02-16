@@ -7,7 +7,9 @@ import { MenuButton } from "../buttons";
 import { MenuBox, MenuInput } from "../startPage";
 
 interface StartData {
-  townName: string;
+  playerName: string | undefined;
+  defaultPlayerName: string;
+  townName: string | undefined;
   defaultTownName: string;
   difficulty: Difficulty;
   tutorials: boolean;
@@ -17,16 +19,23 @@ export default function Play() {
   const [defaultPlayerName, setDefaultPlayerName] = useState(
     playerNames[Math.floor(Math.random() * playerNames.length)]
   );
-  const [playerName, setPlayerName] = useState();
+  const [playerName, setPlayerName] = useState<string>();
   const [defaultTownName, setDefaultTownName] = useState(
     townNames[Math.floor(Math.random() * townNames.length)]
   );
-  const [townName, setTownName] = useState();
+  const [townName, setTownName] = useState<string>();
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
 
   // to send as state={} through Router Link
-  const startData = { townName, difficulty, tutorials };
+  const startData: StartData = {
+    defaultPlayerName,
+    playerName,
+    defaultTownName,
+    townName,
+    difficulty,
+    tutorials,
+  };
 
   const difficultyUpdater: DifficultyUpdater = (difficulty) => {
     setDifficulty(difficulty);
@@ -162,7 +171,8 @@ export default function Play() {
 
       <div className="bg-amber-100 capitalize text-gray-500">
         <p className="font-bold text-gray-800">Summary (DevTool)</p>
-        <p>Town Name: {townName || defaultTownName}</p>
+        <p>Player Name: {playerName ?? defaultPlayerName}</p>
+        <p>Town Name: {townName ?? defaultTownName}</p>
         <p>Difficulty: {difficulty}</p>
         <p>Tutorials: {tutorials ? "On" : "Off"}</p>
       </div>

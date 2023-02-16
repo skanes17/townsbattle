@@ -1,44 +1,22 @@
 import React, { ReactNode } from "react";
-import { BuildingType } from "../../types";
+import { Buildings, BuildingType } from "../../types";
 
 interface BldgCardTemplateProps {
-  buildingType: BuildingType;
+  bgImage?: string;
   children: ReactNode;
 }
 
 export default function BldgCardTemplate({
-  buildingType,
+  bgImage,
   children,
 }: BldgCardTemplateProps) {
-  let bgImage;
-  switch (buildingType) {
-    case "archeryHut":
-      bgImage = "bg-archeryHut";
-      break;
-    case "healingChamber":
-      bgImage = "bg-healingChamber";
-      break;
-    case "mealHall":
-      bgImage = "bg-mealHall";
-      break;
-    case "scoutUnit":
-      bgImage = "bg-scoutUnit";
-      break;
-    case "swordsmithy":
-      bgImage = "bg-swordsmithy";
-      break;
-    case "townCenter":
-      bgImage = "bg-townCenter";
-      break;
-    default:
-      bgImage = "";
-      break;
-  }
+  const newBgImage = bgImage;
+  console.log(newBgImage);
 
   return (
     /* TODO: Consider setting a minimum height for consistency -- eg. min-h-[16rem]*/
     <div
-      className={`grid w-52 auto-rows-auto grid-cols-1 gap-1 rounded-lg border-t-4 border-l-4 border-r-4 border-gray-900/50 bg-white/5 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50 ${bgImage} bg-cover bg-center  text-white`}
+      className={`grid w-52 auto-rows-auto grid-cols-1 gap-1 rounded-lg border-t-4 border-l-4 border-r-4 border-gray-900/50 bg-white/5 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50 ${newBgImage} bg-cover bg-center  text-white`}
     >
       {children}
     </div>

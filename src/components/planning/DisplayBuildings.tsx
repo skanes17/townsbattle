@@ -23,7 +23,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   return (
     <>
       {constructedBuildings.map((buildingType) => (
-        <BldgCardTemplate buildingType={buildingType}>
+        <BldgCardTemplate bgImage={buildings[buildingType].bgImage}>
           <BldgCardHeader cardName={buildings[buildingType].name} />
           {/* <CardSymbol cardSymbol={buildings[buildingType].nameSymbol} /> */}
           {/* <BldgCardImage buildingType={buildingType} /> */}

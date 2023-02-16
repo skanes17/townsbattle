@@ -4,15 +4,13 @@ export interface Building {
   name: string;
   nameSymbol: string;
   imageSrc?: string;
-  /* enabled: boolean; */
   underConstruction: boolean;
   constructed: boolean;
   tier: number;
   attackBonus: number;
   healthBonus: number;
-  armorBonus?: number;
-  description?: string;
-  bonus?: string;
+  description: string;
+  bgImage?: string;
   health: number;
   resourceCosts: ResourceCosts;
 }

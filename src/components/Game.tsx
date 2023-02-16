@@ -48,7 +48,6 @@ import {
 
 import { GameContext } from "../context/GameState";
 import { useLocation } from "react-router-dom";
-import { defaultTownName } from "../gameData";
 import {
   AddRemoveUnitFn,
   AddResourceFn,
@@ -71,7 +70,9 @@ export default function Game(props: GameProps) {
 
   /* TODO: Add Type safety to startData? */
 
-  const townName = startData.state.townName || defaultTownName;
+  const playerName =
+    startData.state.playerName || startData.state.defaultPlayerName;
+  const townName = startData.state.townName || startData.state.defaultTownName;
   const difficulty = startData.state.difficulty || "normal";
   // null coalescent used because false is a falsy value, and therefore woudl set tutorials to "true"
   const tutorials = startData.state.tutorials ?? true;
@@ -129,8 +130,6 @@ export default function Game(props: GameProps) {
 
   /* ===BUILDINGS=== */
   const [buildings, setBuildings] = useState<Buildings>(buildingsData);
-  /* const [buildingCosts, setBuildingCosts] =
-    useState<BuildingCosts>(buildingCostsData); */
   const buildingsUnderConstruction = Object.keys(buildings).filter(
     (key) => buildings[key].underConstruction
   );
@@ -539,7 +538,7 @@ export default function Game(props: GameProps) {
           </div>
 
           <div className="place-self-center text-xl">
-            Train Units to Protect {townName || defaultTownName}!
+            Train Units to Protect {townName}!
           </div>
 
           <DisplayTemplate headerText="Army">

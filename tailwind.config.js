@@ -10,7 +10,8 @@ module.exports = {
         friendlyArmy: "url('/src/assets/images/friendlyArmy-01.png')", */
         healingChamber: "url('/src/assets/images/healingChamber-01.png')",
         mealHall: "url('/src/assets/images/mealHall-01.png')",
-        scoutUnit: "url('/src/assets/images/scoutUnit-01.png')",
+        scoutUnit: "url('/src/assets/images/scoutUnit-02.png')",
+        smelter: "url('/src/assets/images/smelter-01.png')",
         swordsmithy: "url('/src/assets/images/swordsmithy-01.png')",
         townCenter: "url('/src/assets/images/townCenter-01.png')",
       },
