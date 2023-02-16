@@ -14,7 +14,7 @@ export const buildingsData = {
     bgImage: "bg-swordsmithy",
     health: 2,
     resourceCosts: { workers: 5, wood: 10, stone: 10 },
-    unitToUnlock: "melee",
+    unlockedUnit: "melee",
   },
   // for pewpew
   archeryHut: {
@@ -30,7 +30,7 @@ export const buildingsData = {
     bgImage: "bg-archeryHut",
     health: 2,
     resourceCosts: { workers: 5, wood: 10, metal: 10 },
-    unitToUnlock: "pewpew",
+    unlockedUnit: "pewpew",
   },
   // for tanky
   smelter: {
@@ -46,7 +46,7 @@ export const buildingsData = {
     bgImage: "bg-smelter",
     health: 2,
     resourceCosts: { workers: 5, stone: 10, metal: 10 },
-    unitToUnlock: "tanky",
+    unlockedUnit: "tanky",
   },
   // for all units
   mealHall: {

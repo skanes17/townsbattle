@@ -146,6 +146,17 @@ export default function Game(props: GameProps) {
   /* ===UNITS=== */
   // ids for tracking units
   const [unitId, setUnitId] = useState(0);
+  const unlockedUnits: (UnitType | undefined)[] = Object.keys(buildings)
+    // filter by buildings constructed which are also set up to unlock a unit type
+    .filter(
+      (buildingType) =>
+        buildings[buildingType].constructed &&
+        buildings[buildingType].unlockedUnit !== null &&
+        buildings[buildingType].unlockedUnit !== undefined
+    )
+    // map out the associated unit types
+    .map((building) => buildings[building].unlockedUnit);
+
   // friendly army
   const [myUnits, setMyUnits] = useState<Unit[]>([]);
   // constant NOT used here so I could clear training each turn
@@ -563,20 +574,23 @@ export default function Game(props: GameProps) {
           />
         </GridCardContainer>
 
-        <GridCardContainer headerText="Train Units">
-          <TrainingCardContainer
-            buildings={buildings}
-            resources={resources}
-            resourcePool={resourcePool}
-            setResourcePool={setResourcePool}
-            unitsInTraining={unitsInTraining}
-            BASE_UNIT_DATA={BASE_UNIT_DATA}
-            addTrainingUnit={addTrainingUnit}
-            maxTrainingUnits={maxTrainingUnits}
-            removeTrainingUnit={removeTrainingUnit}
-            removeAllTrainingUnits={removeAllTrainingUnits}
-          />
-        </GridCardContainer>
+        {unlockedUnits.length > 0 ? (
+          <GridCardContainer headerText="Train Units">
+            <TrainingCardContainer
+              unlockedUnits={unlockedUnits}
+              buildings={buildings}
+              resources={resources}
+              resourcePool={resourcePool}
+              setResourcePool={setResourcePool}
+              unitsInTraining={unitsInTraining}
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
+              addTrainingUnit={addTrainingUnit}
+              maxTrainingUnits={maxTrainingUnits}
+              removeTrainingUnit={removeTrainingUnit}
+              removeAllTrainingUnits={removeAllTrainingUnits}
+            />
+          </GridCardContainer>
+        ) : null}
 
         {/* If there are no buildings left to construct, remove the section */}
         {buildingsToConstruct.length > 0 ? (
