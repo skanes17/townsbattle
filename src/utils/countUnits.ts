@@ -1,4 +1,4 @@
-import { TrainingUnit, Unit, UnitCounts, UnitType } from "../types";
+import { Unit, UnitCounts, UnitType } from "../types";
 
 export const countUnits = (
   unitsArray: Unit[],
@@ -10,6 +10,5 @@ export const countUnits = (
       (unit: Unit) => unit.unitType === unitType
     ).length;
   }
-  console.log(counts);
   return counts;
 };

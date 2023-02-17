@@ -10,6 +10,7 @@ import {
   Unit,
   UnitCounts,
 } from "../../types";
+import { countUnits } from "../../utils";
 import { AutoButton, CombatButton } from "../buttons";
 import { CombatCardTemplate, PreCombatCardTemplate } from "../cards";
 import { ArmyGrid, CombatLog, messages, PostCombatSummary } from "../combat";
@@ -48,6 +49,11 @@ export default function Combat({
 
   const [combatEvents, setCombatEvents] = useState<CombatEvent[]>([]);
   const [turnsCompleted, setTurnsCompleted] = useState(0);
+
+  /* TODO: Incorporate this:
+  const combatUnitCounts = countUnits(combatUnits, unitTypes);
+  const combatEnemyUnitCounts = countUnits(enemyUnits, unitTypes);
+  */
 
   const combatUnitCounts: UnitCounts = {
     melee: combatUnits.filter((unit) => unit.unitType === "melee").length,

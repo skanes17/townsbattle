@@ -147,22 +147,8 @@ export default function Game(props: GameProps) {
   const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>(upgradesData);
 
   /* ===UNITS=== */
-  // ids for tracking units
-  const [unitId, setUnitId] = useState(0);
-  const unlockedUnits: (UnitType | undefined)[] = Object.keys(buildings)
-    // filter by buildings constructed which are also set up to unlock a unit type
-    .filter(
-      (buildingType) =>
-        buildings[buildingType].constructed &&
-        buildings[buildingType].unlockedUnit !== null &&
-        buildings[buildingType].unlockedUnit !== undefined
-    )
-    // map out the associated unit types
-    .map((building) => buildings[building].unlockedUnit);
-
   // friendly army
   const [myUnits, setMyUnits] = useState<Unit[]>([]);
-  // constant NOT used here so I could clear training each turn
   const [myTrainingUnits, setMyTrainingUnits] = useState<TrainingUnit[]>([]);
   // placeholder enemy array for testing
   const [enemyUnits, setEnemyUnits] = useState<Unit[]>([]);
@@ -173,6 +159,19 @@ export default function Game(props: GameProps) {
   // FIXME: Is this the best way to coerce the types?
   const BASE_UNIT_DATA: BaseUnit = baseUnitData as BaseUnit;
   const unitTypes: UnitType[] = Object.keys(BASE_UNIT_DATA) as UnitType[];
+  const unlockedUnits: (UnitType | undefined)[] = Object.keys(buildings)
+    // filter by buildings constructed which are also set up to unlock a unit type
+    // note sure if optional chaining (?.) is necessary here
+    .filter(
+      (buildingType) =>
+        buildings[buildingType].constructed &&
+        buildings[buildingType]?.unlockedUnit
+    )
+    // map out the associated unit types
+    .map((building) => buildings[building].unlockedUnit);
+
+  // ids for tracking units
+  const [unitId, setUnitId] = useState(0);
 
   /* ===FUNCTIONS=== */
   // ADD units to either army
