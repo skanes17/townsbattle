@@ -5,12 +5,6 @@ export const resourceData = {
     description:
       "Used when gathering resources, training units, and constructing buildings.",
   },
-  gold: {
-    name: "Gold",
-    symbol: "🪙",
-    workers: 0,
-    description: "Collect gold. Costs 1 worker.",
-  },
   wood: {
     name: "Wood",
     symbol: "🪵",
@@ -29,14 +23,20 @@ export const resourceData = {
     workers: 0,
     description: "Collect metal. Costs 1 worker.",
   },
+  gold: {
+    name: "Gold",
+    symbol: "🪙",
+    workers: 0,
+    description: "Collect gold, +10 score per gold. Costs 1 worker.",
+  },
 };
 
 export const resourcePoolData = {
   workers: 5,
-  gold: 0,
   wood: 0,
   stone: 0,
   metal: 0,
+  gold: 0,
 };
 
 /*
