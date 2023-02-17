@@ -161,11 +161,10 @@ export default function Game(props: GameProps) {
   const unitTypes: UnitType[] = Object.keys(BASE_UNIT_DATA) as UnitType[];
   const unlockedUnits: (UnitType | undefined)[] = Object.keys(buildings)
     // filter by buildings constructed which are also set up to unlock a unit type
-    // note sure if optional chaining (?.) is necessary here
     .filter(
       (buildingType) =>
-        buildings[buildingType].constructed &&
-        buildings[buildingType]?.unlockedUnit
+        buildings[buildingType].unlockedUnit &&
+        buildings[buildingType].constructed
     )
     // map out the associated unit types
     .map((building) => buildings[building].unlockedUnit);
@@ -327,9 +326,8 @@ export default function Game(props: GameProps) {
 
   /* Used to produce randomly distributed army compositions */
   const generateRandomArmyComposition = (
-    numberOfUnitTypes: number,
+    numberOfUnitTypes: number
     // FIXME: Find workaround to not have to use weightOfOneUnitType here
-    weightOfOneUnitType: number
   ) => {
     // create an array of the correct size and fill it with random numbers
     const randomNumbers = Array(numberOfUnitTypes)
@@ -498,6 +496,7 @@ export default function Game(props: GameProps) {
   return inCombat ? (
     <>
       <Combat
+        unitTypes={unitTypes}
         myUnits={myUnits}
         enemyUnits={enemyUnits}
         setMyUnits={setMyUnits}

@@ -1,9 +1,9 @@
 import { Unit, UnitCounts, UnitType } from "../types";
 
-export const countUnits = (
+export function countUnits(
   unitsArray: Unit[],
   unitTypes: UnitType[]
-): UnitCounts => {
+): UnitCounts {
   const counts: UnitCounts = {};
   for (const unitType of unitTypes) {
     counts[unitType] = unitsArray.filter(
@@ -11,4 +11,4 @@ export const countUnits = (
     ).length;
   }
   return counts;
-};
+}

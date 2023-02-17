@@ -9,8 +9,10 @@ import {
   SubPhases,
   Unit,
   UnitCounts,
+  UnitType,
 } from "../../types";
 import { countUnits } from "../../utils";
+import { getSurvivingUnitIndexes } from "../../utils/getSurvivingUnitIndexes";
 import { AutoButton, CombatButton } from "../buttons";
 import { CombatCardTemplate, PreCombatCardTemplate } from "../cards";
 import { ArmyGrid, CombatLog, messages, PostCombatSummary } from "../combat";
@@ -21,6 +23,7 @@ import { ArmyGrid, CombatLog, messages, PostCombatSummary } from "../combat";
 /* FIXME: Page breaking when army has 0 units */
 
 interface CombatProps {
+  unitTypes: UnitType[];
   myUnits: Unit[];
   setMyUnits: Dispatch<SetStateAction<Unit[]>>;
   enemyUnits: Unit[];
@@ -31,6 +34,7 @@ interface CombatProps {
 }
 
 export default function Combat({
+  unitTypes,
   myUnits,
   enemyUnits,
   setMyUnits,
@@ -50,41 +54,13 @@ export default function Combat({
   const [combatEvents, setCombatEvents] = useState<CombatEvent[]>([]);
   const [turnsCompleted, setTurnsCompleted] = useState(0);
 
-  /* TODO: Incorporate this:
   const combatUnitCounts = countUnits(combatUnits, unitTypes);
   const combatEnemyUnitCounts = countUnits(enemyUnits, unitTypes);
-  */
 
-  const combatUnitCounts: UnitCounts = {
-    melee: combatUnits.filter((unit) => unit.unitType === "melee").length,
-    pewpew: combatUnits.filter((unit) => unit.unitType === "pewpew").length,
-    tanky: combatUnits.filter((unit) => unit.unitType === "tanky").length,
-  };
-
-  const combatEnemyUnitCounts: UnitCounts = {
-    melee: enemyUnits.filter((unit) => unit.unitType === "melee").length,
-    pewpew: enemyUnits.filter((unit) => unit.unitType === "pewpew").length,
-    tanky: enemyUnits.filter((unit) => unit.unitType === "tanky").length,
-  };
-
-  // we only want to choose from units that are alive (health not 0)
-  // we'll first generate an array of indexes for surviving combat units
-  const survivingFriendlyUnitIndexes = combatUnits
-    .map((unit, index) => {
-      if (unit.currentHealth !== 0) {
-        return index;
-      } else return -1;
-      // FIXME: Better way to do this?
-    })
-    .filter((index) => index >= 0);
-
-  const survivingEnemyUnitIndexes = combatEnemyUnits
-    .map((unit, index) => {
-      if (unit.currentHealth !== 0) {
-        return index;
-      } else return -1;
-    })
-    .filter((index) => index >= 0);
+  // We accumulate the indexes of surviving units into an array
+  // The .reduce() method is used to iterate over each unit in the combatUnits array
+  const survivingFriendlyUnitIndexes = getSurvivingUnitIndexes(combatUnits);
+  const survivingEnemyUnitIndexes = getSurvivingUnitIndexes(combatEnemyUnits);
 
   // choose an index at random from the surviving units
   const [friendlyIndex, setFriendlyIndex] = useState(
