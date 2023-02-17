@@ -54,7 +54,7 @@ import {
   AddResourceFn,
   MaxTrainingUnitsFn,
 } from "../types/FunctionTypes";
-import { cloneBasicObjectWithJSON } from "../utils";
+import { cloneBasicObjectWithJSON, countUnits } from "../utils";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -480,6 +480,8 @@ export default function Game(props: GameProps) {
   };
 
   // How many units you're going to train this turn
+  /* FIXME: Modify function to include training unit types */
+  /*   const unitsInTraining = countUnits(myTrainingUnits, unitTypes);  */
   const unitsInTraining: UnitCounts = {};
   for (const unitType of unitTypes) {
     unitsInTraining[unitType] = myTrainingUnits.filter(
@@ -488,19 +490,8 @@ export default function Game(props: GameProps) {
   }
 
   // How many units are in your army
-  const unitCounts: UnitCounts = {};
-  for (const unitType of unitTypes) {
-    unitCounts[unitType] = myUnits.filter(
-      (unit) => unit.unitType === unitType
-    ).length;
-  }
-
-  const enemyUnitCounts: UnitCounts = {};
-  for (const unitType of unitTypes) {
-    enemyUnitCounts[unitType] = myUnits.filter(
-      (unit) => unit.unitType === unitType
-    ).length;
-  }
+  const unitCounts = countUnits(myUnits, unitTypes);
+  const enemyUnitCounts = countUnits(enemyUnits, unitTypes);
 
   /* TODO: Incorporate this on building click */
   const [toggle, setToggle] = useState(false);
