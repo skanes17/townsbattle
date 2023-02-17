@@ -1,5 +1,5 @@
 import React from "react";
-import { CombatUnitCounts, Unit } from "../../types/";
+import { Unit, UnitCounts } from "../../types/";
 
 interface PostCombatSummaryProps {
   friendlyUnits: Unit[];
@@ -11,7 +11,7 @@ export default function PostCombatSummary({
   enemyUnits,
 }: PostCombatSummaryProps) {
   // TODO: make these dynamic??
-  const enemyUnitsDefeated: CombatUnitCounts = {
+  const enemyUnitsDefeated: UnitCounts = {
     melee: enemyUnits.filter(
       (unit) => unit.name === "Melee" && unit.currentHealth === 0
     ).length,
@@ -25,7 +25,7 @@ export default function PostCombatSummary({
   };
 
   // currently unused
-  const enemyUnitsInjured: CombatUnitCounts = {
+  const enemyUnitsInjured: UnitCounts = {
     melee: enemyUnits.filter(
       (unit) =>
         unit.name === "Melee" &&
@@ -49,7 +49,7 @@ export default function PostCombatSummary({
     ).length,
   };
 
-  const friendlyUnitsInjured: CombatUnitCounts = {
+  const friendlyUnitsInjured: UnitCounts = {
     melee: friendlyUnits.filter(
       (unit) =>
         unit.name === "Melee" &&
@@ -73,7 +73,7 @@ export default function PostCombatSummary({
     ).length,
   };
 
-  const friendlyUnitsDefeated: CombatUnitCounts = {
+  const friendlyUnitsDefeated: UnitCounts = {
     melee: friendlyUnits.filter(
       (unit) => unit.name === "Melee" && unit.currentHealth === 0
     ).length,

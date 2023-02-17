@@ -598,19 +598,29 @@ export default function Game(props: GameProps) {
             </DisplayTemplate>
           </div>
 
-          <div className="place-self-center text-xl">
-            Train Units to Protect {townName}!
-          </div>
+          {/* TODO: Only show unit counts once units are unlocked, and only show appropraite counts for unit types unlocked */}
+          {unlockedUnits.length > 0 ? (
+            <DisplayTemplate headerText="Army">
+              {unitTypes.map((unitType: UnitType) => (
+                <UnitCount
+                  BASE_UNIT_DATA={BASE_UNIT_DATA}
+                  unitType={unitType}
+                  unitCounts={unitCounts}
+                />
+              ))}{" "}
+            </DisplayTemplate>
+          ) : null}
 
-          <DisplayTemplate headerText="Army">
-            {unitTypes.map((unitType: UnitType) => (
-              <UnitCount
-                BASE_UNIT_DATA={BASE_UNIT_DATA}
-                unitType={unitType}
-                unitCounts={unitCounts}
-              />
-            ))}
-          </DisplayTemplate>
+          {/* FIXME: Make this into a tooltip, like a question mark circle thing you hover over or click */}
+          {unlockedUnits.length > 0 ? (
+            <div className="place-self-center text-xl">
+              Tip: Train Units to Protect {townName}!
+            </div>
+          ) : (
+            <div className="place-self-center text-xl">
+              Tip: Construct buildings to unlock units!
+            </div>
+          )}
         </div>
       </div>
       <div className="flex flex-wrap justify-evenly">
