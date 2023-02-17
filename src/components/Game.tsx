@@ -122,10 +122,10 @@ export default function Game(props: GameProps) {
   // # of resources harvested per worker
   const [resourceMultipliers, setResourceMultipliers] =
     useState<ResourceMultipliers>({
+      gold: 1,
       wood: 1,
       stone: 1,
       metal: 1,
-      gold: 1,
     });
   // number of workers at start of game (turn 1)
   const BASE_FREEWORKER_COUNT: number = 5;
@@ -454,7 +454,6 @@ export default function Game(props: GameProps) {
     calculateWorkersForNextTurn(clonedResourcePool);
     resetWorkers(clonedResourcePool);
     setResourcePool(clonedResourcePool);
-    setScore((prev) => prev + clonedResourcePool.gold * 10);
 
     // copy buildings to preserve state
     const clonedBuildings = cloneBasicObjectWithJSON(buildings);

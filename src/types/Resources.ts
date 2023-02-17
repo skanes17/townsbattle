@@ -1,9 +1,9 @@
 export interface Resources {
   workers: Pick<ResourceData, "name" | "symbol" | "description">;
+  gold: ResourceData;
   wood: ResourceData;
   stone: ResourceData;
   metal: ResourceData;
-  gold: ResourceData;
 }
 
 type BaseResources = Omit<Resources, "workers">;
