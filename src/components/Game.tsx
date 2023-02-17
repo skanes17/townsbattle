@@ -480,26 +480,27 @@ export default function Game(props: GameProps) {
   };
 
   // How many units you're going to train this turn
-  // TODO: How to make this dynamic based on base units?
-  const unitsInTraining: UnitCounts = {
-    melee: myTrainingUnits.filter((unit) => unit.unitType === "melee").length,
-    pewpew: myTrainingUnits.filter((unit) => unit.unitType === "pewpew").length,
-    tanky: myTrainingUnits.filter((unit) => unit.unitType === "tanky").length,
-  };
+  const unitsInTraining: UnitCounts = {};
+  for (const unitType of unitTypes) {
+    unitsInTraining[unitType] = myTrainingUnits.filter(
+      (unit) => unit.unitType === unitType
+    ).length;
+  }
 
-  const unitCounts: UnitCounts = {
-    melee: myUnits.filter((unit) => unit.unitType === "melee").length,
-    pewpew: myUnits.filter((unit) => unit.unitType === "pewpew").length,
-    tanky: myUnits.filter((unit) => unit.unitType === "tanky").length,
-  };
+  // How many units are in your army
+  const unitCounts: UnitCounts = {};
+  for (const unitType of unitTypes) {
+    unitCounts[unitType] = myUnits.filter(
+      (unit) => unit.unitType === unitType
+    ).length;
+  }
 
-  const enemyUnitCounts: UnitCounts = {
-    melee: enemyUnits.filter((unit) => unit.unitType === "melee").length,
-    pewpew: enemyUnits.filter((unit) => unit.unitType === "pewpew").length,
-    tanky: enemyUnits.filter((unit) => unit.unitType === "tanky").length,
-  };
-
-  /* TODO: Center all dashboard info in the middle of their grid/div? */
+  const enemyUnitCounts: UnitCounts = {};
+  for (const unitType of unitTypes) {
+    enemyUnitCounts[unitType] = myUnits.filter(
+      (unit) => unit.unitType === unitType
+    ).length;
+  }
 
   /* TODO: Incorporate this on building click */
   const [toggle, setToggle] = useState(false);

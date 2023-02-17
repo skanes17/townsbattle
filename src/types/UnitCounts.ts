@@ -1,14 +1,9 @@
 export interface UnitCounts {
-  melee: number;
-  pewpew: number;
-  tanky: number;
-  total?: number;
+  [unitType: string]: number;
 }
 
 export interface CombatUnitCounts {
-  melee: number;
-  pewpew: number;
-  tanky: number;
+  [unitType: string]: number;
   total: number;
 }
 
