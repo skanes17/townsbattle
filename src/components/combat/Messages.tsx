@@ -14,92 +14,82 @@ export const messages = {
     // different indexes used for desired events/text
     (event: PreCombatEvent) => {
       return (
-        <>
-          <POddStyle>
-            <span className="text-green-400">
-              {event.data.friendly.name}
-              {event.data.friendly.id}
-            </span>{" "}
-            faces off against{" "}
-            <span className="text-red-400">
-              {event.data.enemy.name}
-              {event.data.enemy.id}
-            </span>
-            .
-          </POddStyle>
-        </>
+        <POddStyle>
+          <span className="text-green-400">
+            {event.data.friendly.name}
+            {event.data.friendly.id}
+          </span>{" "}
+          faces off against{" "}
+          <span className="text-red-400">
+            {event.data.enemy.name}
+            {event.data.enemy.id}
+          </span>
+          .
+        </POddStyle>
       );
     },
     (event: PreCombatEvent) => {
       return (
-        <>
-          <POddStyle>
-            <span className="text-green-400">
-              {event.data.friendly.name}
-              {event.data.friendly.id}
-            </span>{" "}
-            jumps in and stares down{" "}
-            <span className="text-red-400">
-              {event.data.enemy.name}
-              {event.data.enemy.id}
-            </span>
-            .
-          </POddStyle>
-        </>
+        <POddStyle>
+          <span className="text-green-400">
+            {event.data.friendly.name}
+            {event.data.friendly.id}
+          </span>{" "}
+          jumps in and stares down{" "}
+          <span className="text-red-400">
+            {event.data.enemy.name}
+            {event.data.enemy.id}
+          </span>
+          .
+        </POddStyle>
       );
     },
     (event: PreCombatEvent) => {
       return (
-        <>
-          <POddStyle>
-            <span className="text-green-400">
-              {event.data.friendly.name}
-              {event.data.friendly.id}
-            </span>{" "}
-            wants to try his luck against{" "}
-            <span className="text-red-400">
-              {event.data.enemy.name}
-              {event.data.enemy.id}
-            </span>
-            .
-          </POddStyle>
-        </>
+        <POddStyle>
+          <span className="text-green-400">
+            {event.data.friendly.name}
+            {event.data.friendly.id}
+          </span>{" "}
+          wants to try his luck against{" "}
+          <span className="text-red-400">
+            {event.data.enemy.name}
+            {event.data.enemy.id}
+          </span>
+          .
+        </POddStyle>
       );
     },
     (event: PreCombatEvent) => {
       return (
-        <>
-          <POddStyle>
-            <span className="text-green-400">
-              {event.data.friendly.name}
-              {event.data.friendly.id}
-            </span>{" "}
-            sees{" "}
-            <span className="text-red-400">
-              {event.data.enemy.name}
-              {event.data.enemy.id}
-            </span>{" "}
-            and calls him something nasty.
-          </POddStyle>
-        </>
+        <POddStyle>
+          <span className="text-green-400">
+            {event.data.friendly.name}
+            {event.data.friendly.id}
+          </span>{" "}
+          sees{" "}
+          <span className="text-red-400">
+            {event.data.enemy.name}
+            {event.data.enemy.id}
+          </span>{" "}
+          and calls him something nasty.
+        </POddStyle>
       );
     },
     (event: PreCombatEvent) => {
       return (
-        <>
-          <POddStyle>
-            <span className="text-green-400">
-              {event.data.friendly.name}
-              {event.data.friendly.id}
-            </span>{" "}
-            agrees to battle{" "}
-            <span className="text-red-400">
-              {event.data.enemy.name}
-              {event.data.enemy.id}
-            </span>{" "}
-            but they're not happy about it.
-          </POddStyle>
-        </>
+        <POddStyle>
+          <span className="text-green-400">
+            {event.data.friendly.name}
+            {event.data.friendly.id}
+          </span>{" "}
+          agrees to battle{" "}
+          <span className="text-red-400">
+            {event.data.enemy.name}
+            {event.data.enemy.id}
+          </span>{" "}
+          but they're not happy about it.
+        </POddStyle>
       );
     },
     /* more alternatives here */
