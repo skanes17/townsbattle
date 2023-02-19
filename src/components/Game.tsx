@@ -487,8 +487,8 @@ export default function Game(props: GameProps) {
   }
 
   // How many units are in your army
-  const unitCounts = countUnits(myUnits, unitTypes);
-  const enemyUnitCounts = countUnits(enemyUnits, unitTypes);
+  const unitCounts = countUnits(myUnits, unitTypes, "army");
+  const enemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
 
   /* TODO: Incorporate this on building click */
   const [toggle, setToggle] = useState(false);

@@ -54,8 +54,8 @@ export default function Combat({
   const [combatEvents, setCombatEvents] = useState<CombatEvent[]>([]);
   const [turnsCompleted, setTurnsCompleted] = useState(0);
 
-  const combatUnitCounts = countUnits(combatUnits, unitTypes);
-  const combatEnemyUnitCounts = countUnits(enemyUnits, unitTypes);
+  const combatUnitCounts = countUnits(combatUnits, unitTypes, "army");
+  const combatEnemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
 
   // We accumulate the indexes of surviving units into an array
   // The .reduce() method is used to iterate over each unit in the combatUnits array
@@ -407,6 +407,7 @@ export default function Combat({
         <>
           <div className="center col-span-12 col-start-1 row-start-4 w-5/6 self-center justify-self-center sm:row-start-3 sm:mt-2 md:mt-0">
             <PostCombatSummary
+              unitTypes={unitTypes}
               friendlyUnits={combatUnits}
               enemyUnits={combatEnemyUnits}
             />

@@ -1,90 +1,37 @@
 import React from "react";
-import { Unit, UnitCounts } from "../../types/";
+import { Unit, UnitCounts, UnitType } from "../../types/";
+import { countUnits } from "../../utils";
 
 interface PostCombatSummaryProps {
+  unitTypes: UnitType[];
   friendlyUnits: Unit[];
   enemyUnits: Unit[];
 }
 
 export default function PostCombatSummary({
+  unitTypes,
   friendlyUnits,
   enemyUnits,
 }: PostCombatSummaryProps) {
-  // TODO: make these dynamic??
-  const enemyUnitsDefeated: UnitCounts = {
-    melee: enemyUnits.filter(
-      (unit) => unit.name === "Melee" && unit.currentHealth === 0
-    ).length,
-    pewpew: enemyUnits.filter(
-      (unit) => unit.name === "Pewpew" && unit.currentHealth === 0
-    ).length,
-    tanky: enemyUnits.filter(
-      (unit) => unit.name === "Tanky" && unit.currentHealth === 0
-    ).length,
-    total: enemyUnits.filter((unit) => unit.currentHealth === 0).length,
-  };
-
+  const enemyUnitsDefeated = countUnits(enemyUnits, unitTypes, "defeated");
   // currently unused
-  const enemyUnitsInjured: UnitCounts = {
-    melee: enemyUnits.filter(
-      (unit) =>
-        unit.name === "Melee" &&
-        unit.currentHealth !== 0 &&
-        unit.currentHealth < unit.maxHealth
-    ).length,
-    pewpew: enemyUnits.filter(
-      (unit) =>
-        unit.name === "Pewpew" &&
-        unit.currentHealth !== 0 &&
-        unit.currentHealth < unit.maxHealth
-    ).length,
-    tanky: enemyUnits.filter(
-      (unit) =>
-        unit.name === "Tanky" &&
-        unit.currentHealth !== 0 &&
-        unit.currentHealth < unit.maxHealth
-    ).length,
-    total: enemyUnits.filter(
-      (unit) => unit.currentHealth !== 0 && unit.currentHealth < unit.maxHealth
-    ).length,
-  };
+  const enemyUnitsInjured: UnitCounts = countUnits(
+    enemyUnits,
+    unitTypes,
+    "injured"
+  );
 
-  const friendlyUnitsInjured: UnitCounts = {
-    melee: friendlyUnits.filter(
-      (unit) =>
-        unit.name === "Melee" &&
-        unit.currentHealth !== 0 &&
-        unit.currentHealth < unit.maxHealth
-    ).length,
-    pewpew: friendlyUnits.filter(
-      (unit) =>
-        unit.name === "Pewpew" &&
-        unit.currentHealth !== 0 &&
-        unit.currentHealth < unit.maxHealth
-    ).length,
-    tanky: friendlyUnits.filter(
-      (unit) =>
-        unit.name === "Tanky" &&
-        unit.currentHealth !== 0 &&
-        unit.currentHealth < unit.maxHealth
-    ).length,
-    total: friendlyUnits.filter(
-      (unit) => unit.currentHealth !== 0 && unit.currentHealth < unit.maxHealth
-    ).length,
-  };
+  const friendlyUnitsInjured: UnitCounts = countUnits(
+    friendlyUnits,
+    unitTypes,
+    "injured"
+  );
 
-  const friendlyUnitsDefeated: UnitCounts = {
-    melee: friendlyUnits.filter(
-      (unit) => unit.name === "Melee" && unit.currentHealth === 0
-    ).length,
-    pewpew: friendlyUnits.filter(
-      (unit) => unit.name === "Pewpew" && unit.currentHealth === 0
-    ).length,
-    tanky: friendlyUnits.filter(
-      (unit) => unit.name === "Tanky" && unit.currentHealth === 0
-    ).length,
-    total: friendlyUnits.filter((unit) => unit.currentHealth === 0).length,
-  };
+  const friendlyUnitsDefeated = countUnits(
+    friendlyUnits,
+    unitTypes,
+    "defeated"
+  );
 
   return (
     /* FIXME: Having to define rows!! */
