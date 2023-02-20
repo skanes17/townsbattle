@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.0a63e515.css",
-    "main.js": "/static/js/main.e0dff7d7.js",
+    "main.js": "/static/js/main.5105532d.js",
     "static/media/swordsmithy-01.png": "/static/media/swordsmithy-01.c8443cdf96879757eb2b.png",
     "static/media/townCenter-01.png": "/static/media/townCenter-01.67a5353ee803df4a0212.png",
     "static/media/healingChamber-01.png": "/static/media/healingChamber-01.ef2be51fdff611bfb7fc.png",
@@ -12,10 +12,10 @@
     "static/media/mealHall-01.png": "/static/media/mealHall-01.0dff068353bd7c6e683a.png",
     "index.html": "/index.html",
     "main.0a63e515.css.map": "/static/css/main.0a63e515.css.map",
-    "main.e0dff7d7.js.map": "/static/js/main.e0dff7d7.js.map"
+    "main.5105532d.js.map": "/static/js/main.5105532d.js.map"
   },
   "entrypoints": [
     "static/css/main.0a63e515.css",
-    "static/js/main.e0dff7d7.js"
+    "static/js/main.5105532d.js"
   ]
 }
