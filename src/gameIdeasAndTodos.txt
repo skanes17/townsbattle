@@ -6,6 +6,7 @@ Can burn resources to trigger a special combat ability? (may require extra work)
 Allow for x number of commands/interventions by the player per turn, trigger special abilities/buffs
 
 -clicking on buildings could display a modal, which will allow you to create units from there and get upgrades
+--This has been drafted!
 
 Critical hit chance (eg 5%), chance to hit
 
