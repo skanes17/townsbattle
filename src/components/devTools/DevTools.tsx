@@ -1,10 +1,10 @@
 import React from "react";
 import { BaseUnit } from "../../types";
-import Button from "../buttons/Button";
 import AddUnitButton from "./AddUnitButton";
 import { ResourceType, Resources } from "../../types/Resources";
 import AddResourceButton from "./AddResourceButton";
 import { AddRemoveUnitFn, AddResourceFn, Unit, UnitType } from "../../types";
+import { Button } from "../buttons";
 
 interface DevToolsProps {
   BASE_UNIT_DATA: BaseUnit;
