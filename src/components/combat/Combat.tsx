@@ -180,7 +180,7 @@ export default function Combat({
         },
       },
     };
-    /* FIXME: Should choose the appropriate message based on context when two units are fighting */
+    /* FIXME: Should choose the appropriate message based on context (eg unit types) when two units are fighting */
     const eventIndex = Math.floor(Math.random() * messages.combat.length);
 
     const combatState = { event: combatEvent, idx: eventIndex };
