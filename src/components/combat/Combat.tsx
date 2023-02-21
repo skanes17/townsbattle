@@ -139,49 +139,115 @@ export default function Combat({
     setEnemyIndex(newEnemyIndex);
   };
 
+  const calculatedAttackValue = (attacker: Unit, defender: Unit): number => {
+    // used destructuring to make code more readable
+    const { attack, currentHealth, maxHealth, fullHealthAttackBonus } =
+      attacker;
+    const defense = defender.incomingDmgReduction;
+    // if unit has full health, it does bonus attack damage
+    const attackBonus = currentHealth === maxHealth ? fullHealthAttackBonus : 0;
+    return attack + attackBonus - defense;
+  };
+
   // default behaviour
-  const attackAtSameTime = () => {
+  const unitsFight = () => {
     // chosen units attack each other
-
-    // FIXME: Simplify this? Still hesitant to modify combatUnits directly
     const _friendlyCopy = [...combatUnits];
-    // damage the selected friendly unit; set to 0 if dmg exceeds health
-    _friendlyCopy[friendlyIndex].currentHealth = Math.max(
-      0,
-      _friendlyCopy[friendlyIndex].currentHealth -
-        combatEnemyUnits[enemyIndex].attack
-    );
-
-    // update army with new unit health
-    setCombatUnits(_friendlyCopy);
-
+    const selectedFriendly = _friendlyCopy[friendlyIndex];
     const _enemyCopy = [...combatEnemyUnits];
-    _enemyCopy[enemyIndex].currentHealth = Math.max(
-      0,
-      _enemyCopy[enemyIndex].currentHealth - combatUnits[friendlyIndex].attack
-    );
-    setCombatEnemyUnits(_enemyCopy);
+    const selectedEnemy = _enemyCopy[enemyIndex];
+
+    // INCORPORATE PASSIVE EFFECTS HERE
+    // hitsFirst: boolean;
+    // timesSelectedForCombat: number;
+
+    // only run this if the friendly hits first and the enemy does not
+    if (selectedFriendly.hitsFirst && !selectedEnemy.hitsFirst) {
+      // Enemy gets hit first
+      selectedEnemy.currentHealth = Math.max(
+        0,
+        selectedEnemy.currentHealth -
+          calculatedAttackValue(selectedFriendly, selectedEnemy)
+      );
+      setCombatEnemyUnits(_enemyCopy);
+      // If the enemy survives, it attacks. Else, it's dead and its attack is set to 0.
+      if (selectedEnemy.currentHealth > 0) {
+        selectedFriendly.currentHealth = Math.max(
+          0,
+          selectedFriendly.currentHealth -
+            calculatedAttackValue(selectedEnemy, selectedFriendly)
+        );
+      } else selectedEnemy.attack = 0;
+      setCombatUnits(_friendlyCopy);
+    }
+    // only run this if the enemy hits first and the friendly does not
+    else if (selectedEnemy.hitsFirst && !selectedFriendly.hitsFirst) {
+      // Friendly gets hit first
+      selectedFriendly.currentHealth = Math.max(
+        0,
+        selectedFriendly.currentHealth -
+          calculatedAttackValue(selectedEnemy, selectedFriendly)
+      );
+      setCombatUnits(_friendlyCopy);
+      // If the friendly survives, it attacks. Else, it's dead and its attack is set to 0.
+      if (selectedFriendly.currentHealth > 0) {
+        selectedEnemy.currentHealth = Math.max(
+          0,
+          selectedEnemy.currentHealth -
+            calculatedAttackValue(selectedFriendly, selectedEnemy)
+        );
+      } else selectedFriendly.attack = 0;
+      setCombatEnemyUnits(_enemyCopy);
+    } else {
+      selectedEnemy.currentHealth = Math.max(
+        0,
+        selectedEnemy.currentHealth -
+          calculatedAttackValue(selectedFriendly, selectedEnemy)
+      );
+      setCombatEnemyUnits(_enemyCopy);
+
+      // damage the selected friendly unit; set to 0 if dmg exceeds health
+      selectedFriendly.currentHealth = Math.max(
+        0,
+        selectedFriendly.currentHealth -
+          calculatedAttackValue(selectedEnemy, selectedFriendly)
+      );
+      setCombatUnits(_friendlyCopy);
+    }
 
     // the following adds a combat event for the combat log
+    /* TODO: Add in attack buffs and bonuses to the list so they're useable later */
     const combatEvent: MainCombatEvent = {
       type: "combat",
       data: {
         friendly: {
           name: combatUnits[friendlyIndex].name,
           unitType: combatUnits[friendlyIndex].unitType,
-          attack: combatUnits[friendlyIndex].attack,
+          /* attack: combatUnits[friendlyIndex].attack, */
+          attack: calculatedAttackValue(selectedFriendly, selectedEnemy),
           maxHealth: combatUnits[friendlyIndex].maxHealth,
           // used copy to avoid state update's async issues
-          currentHealth: _friendlyCopy[friendlyIndex].currentHealth,
+          currentHealth: selectedFriendly.currentHealth,
+          /* attackBonus:
+            selectedFriendly.currentHealth === selectedFriendly.maxHealth
+              ? selectedFriendly.fullHealthAttackBonus
+              : 0,
+          incomingDmgReduction: selectedFriendly.incomingDmgReduction, */
           id: combatUnits[friendlyIndex].id,
         },
         enemy: {
           name: combatEnemyUnits[enemyIndex].name,
           unitType: combatEnemyUnits[enemyIndex].unitType,
-          attack: combatEnemyUnits[enemyIndex].attack,
+          /* attack: combatEnemyUnits[enemyIndex].attack, */
+          attack: calculatedAttackValue(selectedEnemy, selectedFriendly),
           maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
           // used copy to avoid state update's async issues
-          currentHealth: _enemyCopy[enemyIndex].currentHealth,
+          currentHealth: selectedEnemy.currentHealth,
+          /* attackBonus:
+            selectedFriendly.currentHealth === selectedFriendly.maxHealth
+              ? selectedFriendly.fullHealthAttackBonus
+              : 0,
+          incomingDmgReduction: selectedFriendly.incomingDmgReduction, */
           id: combatEnemyUnits[enemyIndex].id,
         },
       },
@@ -193,30 +259,32 @@ export default function Combat({
     // experimenting with appending to top
     setCombatEvents([combatState, ...combatEvents]);
   };
+
   const friendlyHitsFirst = () => {
     const _friendlyCopy = [...combatUnits];
+    const selectedFriendly = _friendlyCopy[friendlyIndex];
 
     // enemy gets hit first
     const _enemyCopy = [...combatEnemyUnits];
+    const selectedEnemy = _enemyCopy[enemyIndex];
     // damage the selected enemy unit; set to 0 if dmg exceeds health
-    _enemyCopy[enemyIndex].currentHealth = Math.max(
+    selectedEnemy.currentHealth = Math.max(
       0,
-      _enemyCopy[enemyIndex].currentHealth - combatUnits[friendlyIndex].attack
+      selectedEnemy.currentHealth - combatUnits[friendlyIndex].attack
     );
     setCombatEnemyUnits(_enemyCopy);
 
-    // Enemy survives ? Enemy attacks. Enemy dies? Attack is 0.
-    if (_enemyCopy[enemyIndex].currentHealth > 0) {
-      _friendlyCopy[friendlyIndex].currentHealth = Math.max(
+    // If the enemy survives, it attacks. Else, it's dead and its attack is set to 0.
+    if (selectedEnemy.currentHealth > 0) {
+      selectedFriendly.currentHealth = Math.max(
         0,
-        _friendlyCopy[friendlyIndex].currentHealth -
-          combatEnemyUnits[enemyIndex].attack
+        selectedFriendly.currentHealth - combatEnemyUnits[enemyIndex].attack
       );
-    } else _enemyCopy[enemyIndex].attack = 0;
+    } else selectedEnemy.attack = 0;
     // update army with new unit health
     setCombatUnits(_friendlyCopy);
 
-    // the following adds a combat event for the combat log
+    // FIXME: Adjust accordingly for ranged combat!
     const combatEvent: MainCombatEvent = {
       type: "combat",
       data: {
@@ -226,7 +294,7 @@ export default function Combat({
           attack: combatUnits[friendlyIndex].attack,
           maxHealth: combatUnits[friendlyIndex].maxHealth,
           // used copy to avoid state update's async issues
-          currentHealth: _friendlyCopy[friendlyIndex].currentHealth,
+          currentHealth: selectedFriendly.currentHealth,
           id: combatUnits[friendlyIndex].id,
         },
         enemy: {
@@ -235,7 +303,7 @@ export default function Combat({
           attack: combatEnemyUnits[enemyIndex].attack,
           maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
           // used copy to avoid state update's async issues
-          currentHealth: _enemyCopy[enemyIndex].currentHealth,
+          currentHealth: selectedEnemy.currentHealth,
           id: combatEnemyUnits[enemyIndex].id,
         },
       },
@@ -327,20 +395,15 @@ export default function Combat({
       case Phases.Combat:
         switch (subPhase) {
           case SubPhases.Fight:
-            // combatEvent() happens within attackAtSameTime
+            // combatEvent() happens within unitsFight()
 
             /* TODO: Tankies passively reduce incoming enemy damage by 1 */
             /* TODO: A unit that has extra damage if full health? */
-            /* TODO: A unit that get an extra 1 atk until it's selected for the first time? */
+            /* TODO: A unit that gets +1 to atk each time it is not selected for the first time? */
 
             /* TODO: Refactor for efficiency once more unit traits are developed */
-            if (
-              combatUnits[friendlyIndex].hitsFirst &&
-              combatUnits[friendlyIndex].unitType !==
-                combatEnemyUnits[enemyIndex].unitType
-            ) {
-              friendlyHitsFirst();
-            } else attackAtSameTime();
+
+            unitsFight();
 
             // TODO: Add in animation for units attacking each other
             setTurnsCompleted(turnsCompleted + 1);
@@ -362,9 +425,9 @@ export default function Combat({
 
               // TODO: See below
               // calculate all the stats to present on next screen, such as...
-              // number of units defeated
-              // number of units lost
-              // number of units injured
+              // number of units defeated -- DONE
+              // number of units lost -- DONE
+              // number of units injured -- DONE
               // buildings damaged (and how much?)
 
               postCombatEvent();

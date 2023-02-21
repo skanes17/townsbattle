@@ -8,7 +8,8 @@ export const baseUnitData = {
     maxHealth: 10,
     resourceCosts: { workers: 1, wood: 2, stone: 2 },
     hitsFirst: false,
-    amountToReduceIncomingDamage: 0,
+    incomingDmgReduction: 0,
+    fullHealthAttackBonus: 0,
     timesSelectedForCombat: 0,
   },
   pewpew: {
@@ -18,11 +19,12 @@ export const baseUnitData = {
     description:
       "Low attack, but attacks first if matched against a different unit type.",
     // decrease the attack but it attacks first
-    attack: 3,
+    attack: 4,
     maxHealth: 7,
     resourceCosts: { workers: 1, wood: 2, metal: 2 },
     hitsFirst: true,
-    amountToReduceIncomingDamage: 0,
+    fullHealthAttackBonus: 0,
+    incomingDmgReduction: 0,
     timesSelectedForCombat: 0,
   },
   tanky: {
@@ -34,7 +36,8 @@ export const baseUnitData = {
     maxHealth: 15,
     resourceCosts: { workers: 1, stone: 2, metal: 2 },
     hitsFirst: false,
-    amountToReduceIncomingDamage: 1,
+    fullHealthAttackBonus: 0,
+    incomingDmgReduction: 1,
     timesSelectedForCombat: 0,
   },
 };

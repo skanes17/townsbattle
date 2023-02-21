@@ -16,6 +16,8 @@ export interface PreCombatEvent {
   };
 }
 
+/* TODO: Add in buffs/bonuses into the list! */
+
 export interface MainCombatEvent {
   type: "combat";
   data: {
@@ -25,6 +27,8 @@ export interface MainCombatEvent {
       attack: number;
       maxHealth: number;
       currentHealth: number;
+      /* attackBonus: number;
+      incomingDmgReduction: number; */
       id?: number;
     };
     enemy: {
@@ -33,6 +37,8 @@ export interface MainCombatEvent {
       attack: number;
       maxHealth: number;
       currentHealth: number;
+      /* attackBonus: number;
+      incomingDmgReduction: number; */
       id?: number;
     };
   };
