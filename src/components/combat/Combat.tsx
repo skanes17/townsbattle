@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { enemyColor, friendlyColor } from "../../gameData";
 import {
+  Buildings,
   CombatEvent,
   MainCombatEvent,
   Phases,
@@ -29,6 +30,7 @@ interface CombatProps {
   enemyUnits: Unit[];
   setEnemyUnits: Dispatch<SetStateAction<Unit[]>>;
   townName: string;
+  buildings: Buildings;
   switchPhase: () => void;
   scoreUpdaterFn: (points: number) => void;
 }
@@ -40,6 +42,7 @@ export default function Combat({
   setMyUnits,
   setEnemyUnits,
   townName,
+  buildings,
   switchPhase,
   scoreUpdaterFn,
 }: CombatProps) {
@@ -73,6 +76,8 @@ export default function Combat({
       Math.floor(Math.random() * survivingEnemyUnitIndexes.length)
     ]
   );
+
+  const shouldRestoreUnitHealth = buildings["healingChamber"].constructed;
 
   const initialPreCombatEvent = () => {
     const initialPreCombatEvent: PreCombatEvent = {
@@ -134,6 +139,7 @@ export default function Combat({
     setEnemyIndex(newEnemyIndex);
   };
 
+  // default behaviour
   const attackAtSameTime = () => {
     // chosen units attack each other
 
@@ -270,32 +276,40 @@ export default function Combat({
     setCombatEvents([combatState, ...combatEvents]);
   };
 
-  const sendArmiesToPlanning = () => {
-    // send all all surviving units back to planning
-    // TODO: Top up their health?
-    setMyUnits(
-      combatUnits
+  const determineWhichUnitsToSendToPlanning = (
+    units: Unit[],
+    // this boolean condition should be determined by a building (eg healing chamber built)
+    shouldRestoreUnitHealth: boolean
+  ): Unit[] => {
+    return (
+      units
+        // only return units who have health remaining
+        .filter((unit) => unit.currentHealth > 0)
         .map((unit) => {
-          if (unit.currentHealth !== 0) {
-            unit.currentHealth = unit.maxHealth;
-            return unit;
+          if (shouldRestoreUnitHealth) {
+            return {
+              ...unit,
+              currentHealth: unit.maxHealth,
+            };
           }
+          return unit;
         })
-        .filter((unit) => unit !== undefined) as Unit[]
-      // FIXME: Test that "as Unit[]" worked as intended; if not, remove for now
     );
+  };
 
-    // probably unnecessary at this phase but keeping it anyway; can't hurt?
-    setEnemyUnits(
-      combatEnemyUnits
-        .map((unit) => {
-          if (unit.currentHealth !== 0) {
-            return unit;
-          }
-        })
-        // Dev changed here
-        .filter((unit) => unit) as Unit[]
+  // send all all surviving units back to planning
+  const sendArmiesToPlanning = () => {
+    const friendlyUnitsToSendToPlanning = determineWhichUnitsToSendToPlanning(
+      combatUnits,
+      shouldRestoreUnitHealth
     );
+    setMyUnits(friendlyUnitsToSendToPlanning);
+
+    const enemyUnitsToSendToPlanning = determineWhichUnitsToSendToPlanning(
+      combatEnemyUnits,
+      false
+    );
+    setEnemyUnits(enemyUnitsToSendToPlanning);
   };
 
   // TODO: If you have no units upon combat:
@@ -315,15 +329,13 @@ export default function Combat({
           case SubPhases.Fight:
             // combatEvent() happens within attackAtSameTime
 
-            /* TODO: If they are the same unit type, they hit at the same time */
-            /* TODO: Pewpew vs. not-pewpew? Pewpew hits first */
             /* TODO: Tankies passively reduce incoming enemy damage by 1 */
             /* TODO: A unit that has extra damage if full health? */
             /* TODO: A unit that get an extra 1 atk until it's selected for the first time? */
 
-            // check the current unit type
+            /* TODO: Refactor for efficiency once more unit traits are developed */
             if (
-              combatUnits[friendlyIndex].unitType === "pewpew" &&
+              combatUnits[friendlyIndex].hitsFirst &&
               combatUnits[friendlyIndex].unitType !==
                 combatEnemyUnits[enemyIndex].unitType
             ) {

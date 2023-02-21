@@ -3,7 +3,8 @@ export const buildingsData = {
   swordsmithy: {
     name: "Swordsmithy",
     nameSymbol: "🗡️",
-    // maybe all additional buildings become available to unlock after their first combat?
+    // "enabled" means it can be seen in the game. This feature is not yet active.
+    // Maybe all additional buildings become available to unlock after their first combat?
     enabled: true,
     underConstruction: false,
     constructed: false,

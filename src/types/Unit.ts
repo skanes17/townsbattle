@@ -12,6 +12,8 @@ export interface Unit {
   maxHealth: number;
   currentHealth: number;
   resourceCosts: ResourceCosts;
+  hitsFirst: boolean;
+  amountToReduceIncomingDamage: number;
   timesSelectedForCombat: number;
   id?: number;
 }

@@ -7,6 +7,8 @@ export const baseUnitData = {
     attack: 6,
     maxHealth: 10,
     resourceCosts: { workers: 1, wood: 2, stone: 2 },
+    hitsFirst: false,
+    amountToReduceIncomingDamage: 0,
     timesSelectedForCombat: 0,
   },
   pewpew: {
@@ -19,6 +21,8 @@ export const baseUnitData = {
     attack: 3,
     maxHealth: 7,
     resourceCosts: { workers: 1, wood: 2, metal: 2 },
+    hitsFirst: true,
+    amountToReduceIncomingDamage: 0,
     timesSelectedForCombat: 0,
   },
   tanky: {
@@ -29,6 +33,8 @@ export const baseUnitData = {
     attack: 4,
     maxHealth: 15,
     resourceCosts: { workers: 1, stone: 2, metal: 2 },
+    hitsFirst: false,
+    amountToReduceIncomingDamage: 1,
     timesSelectedForCombat: 0,
   },
 };
