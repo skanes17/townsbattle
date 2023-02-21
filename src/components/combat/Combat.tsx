@@ -134,7 +134,7 @@ export default function Combat({
     setEnemyIndex(newEnemyIndex);
   };
 
-  const damageUnits = () => {
+  const attackAtSameTime = () => {
     // chosen units attack each other
 
     // FIXME: Simplify this? Still hesitant to modify combatUnits directly
@@ -155,6 +155,60 @@ export default function Combat({
       _enemyCopy[enemyIndex].currentHealth - combatUnits[friendlyIndex].attack
     );
     setCombatEnemyUnits(_enemyCopy);
+
+    // the following adds a combat event for the combat log
+    const combatEvent: MainCombatEvent = {
+      type: "combat",
+      data: {
+        friendly: {
+          name: combatUnits[friendlyIndex].name,
+          unitType: combatUnits[friendlyIndex].unitType,
+          attack: combatUnits[friendlyIndex].attack,
+          maxHealth: combatUnits[friendlyIndex].maxHealth,
+          // used copy to avoid state update's async issues
+          currentHealth: _friendlyCopy[friendlyIndex].currentHealth,
+          id: combatUnits[friendlyIndex].id,
+        },
+        enemy: {
+          name: combatEnemyUnits[enemyIndex].name,
+          unitType: combatEnemyUnits[enemyIndex].unitType,
+          attack: combatEnemyUnits[enemyIndex].attack,
+          maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
+          // used copy to avoid state update's async issues
+          currentHealth: _enemyCopy[enemyIndex].currentHealth,
+          id: combatEnemyUnits[enemyIndex].id,
+        },
+      },
+    };
+    /* FIXME: Should choose the appropriate message based on context (eg unit types) when two units are fighting */
+    const eventIndex = Math.floor(Math.random() * messages.combat.length);
+
+    const combatState = { event: combatEvent, idx: eventIndex };
+    // experimenting with appending to top
+    setCombatEvents([combatState, ...combatEvents]);
+  };
+  const friendlyHitsFirst = () => {
+    const _friendlyCopy = [...combatUnits];
+
+    // enemy gets hit first
+    const _enemyCopy = [...combatEnemyUnits];
+    // damage the selected enemy unit; set to 0 if dmg exceeds health
+    _enemyCopy[enemyIndex].currentHealth = Math.max(
+      0,
+      _enemyCopy[enemyIndex].currentHealth - combatUnits[friendlyIndex].attack
+    );
+    setCombatEnemyUnits(_enemyCopy);
+
+    // Enemy survives ? Enemy attacks. Enemy dies? Attack is 0.
+    if (_enemyCopy[enemyIndex].currentHealth > 0) {
+      _friendlyCopy[friendlyIndex].currentHealth = Math.max(
+        0,
+        _friendlyCopy[friendlyIndex].currentHealth -
+          combatEnemyUnits[enemyIndex].attack
+      );
+    } else _enemyCopy[enemyIndex].attack = 0;
+    // update army with new unit health
+    setCombatUnits(_friendlyCopy);
 
     // the following adds a combat event for the combat log
     const combatEvent: MainCombatEvent = {
@@ -223,6 +277,7 @@ export default function Combat({
       combatUnits
         .map((unit) => {
           if (unit.currentHealth !== 0) {
+            unit.currentHealth = unit.maxHealth;
             return unit;
           }
         })
@@ -258,8 +313,23 @@ export default function Combat({
       case Phases.Combat:
         switch (subPhase) {
           case SubPhases.Fight:
-            // combatEvent() happens within damageUnits
-            damageUnits();
+            // combatEvent() happens within attackAtSameTime
+
+            /* TODO: If they are the same unit type, they hit at the same time */
+            /* TODO: Pewpew vs. not-pewpew? Pewpew hits first */
+            /* TODO: Tankies passively reduce incoming enemy damage by 1 */
+            /* TODO: A unit that has extra damage if full health? */
+            /* TODO: A unit that get an extra 1 atk until it's selected for the first time? */
+
+            // check the current unit type
+            if (
+              combatUnits[friendlyIndex].unitType === "pewpew" &&
+              combatUnits[friendlyIndex].unitType !==
+                combatEnemyUnits[enemyIndex].unitType
+            ) {
+              friendlyHitsFirst();
+            } else attackAtSameTime();
+
             // TODO: Add in animation for units attacking each other
             setTurnsCompleted(turnsCompleted + 1);
             setSubPhase(SubPhases.VictoryCheck);
@@ -302,6 +372,7 @@ export default function Combat({
   };
 
   // TODO: Incorporate something like "Auto - 5/10/20 units" or something... so you can batch fights
+  /* FIXME: Doesn't seem to work if only 1 unit in army */
   const autoBattler = () => {
     const autoFriendlyUnits = [...combatUnits];
     const autoEnemyUnits = [...combatEnemyUnits];

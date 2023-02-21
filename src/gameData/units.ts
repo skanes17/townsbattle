@@ -7,15 +7,19 @@ export const baseUnitData = {
     attack: 6,
     maxHealth: 10,
     resourceCosts: { workers: 1, wood: 2, stone: 2 },
+    timesSelectedForCombat: 0,
   },
   pewpew: {
     unitType: "pewpew",
     name: "Pewpew",
     nameSymbol: "🏹",
-    description: "Great attack but not much health.",
-    attack: 9,
+    description:
+      "Low attack, but attacks first if matched against a different unit type.",
+    // decrease the attack but it attacks first
+    attack: 3,
     maxHealth: 7,
     resourceCosts: { workers: 1, wood: 2, metal: 2 },
+    timesSelectedForCombat: 0,
   },
   tanky: {
     unitType: "tanky",
@@ -25,6 +29,7 @@ export const baseUnitData = {
     attack: 4,
     maxHealth: 15,
     resourceCosts: { workers: 1, stone: 2, metal: 2 },
+    timesSelectedForCombat: 0,
   },
 };
 
