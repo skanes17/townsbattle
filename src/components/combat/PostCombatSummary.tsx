@@ -1,4 +1,5 @@
 import React from "react";
+import { PostCombatStatBox } from ".";
 import { Unit, UnitCounts, UnitType } from "../../types/";
 import { countUnits } from "../../utils";
 
@@ -34,89 +35,42 @@ export default function PostCombatSummary({
   );
 
   return (
-    /* FIXME: Having to define rows!! */
-    /* TODO: Once rows are auto-generated, use a list here and make all sections DRY using props */
-    <div className="grid aspect-[4/1] auto-rows-min grid-cols-4 overflow-y-auto overflow-x-hidden rounded-md border-4 border-gray-500 bg-white/5 p-2 text-xs text-white shadow-md shadow-gray-500/50 sm:text-sm md:text-base lg:gap-1 lg:text-lg xl:text-2xl">
-      <p className="col-span-4 text-center font-bold">Battle Summary</p>
-      <p className="col-start-1 row-start-2">
-        <span className="text-green-500">Enemies Defeated</span>:{" "}
-        {enemyUnitsDefeated.total}
-      </p>
-      {unitTypes.map((unitType) => {
-        return (
-          <p className="col-start-1 ml-2 ">
-            {enemyUnitsDefeated[unitType]} {unitType} (
-            {Math.round(
-              (enemyUnitsDefeated[unitType] / enemyUnitsDefeated.total) * 100
-            )}
-            %)
-          </p>
-        );
-      })}
+    <div className="aspect-[4/1] overflow-y-auto overflow-x-hidden rounded-md border-4 border-gray-500 bg-white/5 p-2 text-xs text-white shadow-md shadow-gray-500/50 sm:text-sm md:text-base lg:gap-1 lg:text-lg xl:text-2xl">
+      <p className="pb-2 text-center font-bold">Battle Summary</p>
+      <div className="grid auto-cols-auto grid-flow-col">
+        <PostCombatStatBox
+          headerText="Enemies Defeated"
+          headerTextColor="green"
+          unitCounts={enemyUnitsDefeated}
+          unitTypes={unitTypes}
+        />
 
-      {/* FIXME: Bug with friendly calculation */}
-      <p className="col-start-2 row-start-2">
-        <span className="text-amber-500">Friendlies injured: </span>
-        {friendlyUnitsInjured.total}
-      </p>
-      {friendlyUnitsInjured.total === 0 ? null : (
-        <>
-          <p className="col-start-2 row-start-3 ml-2 ">
-            {friendlyUnitsInjured.melee} melee (
-            {Math.round(
-              (friendlyUnitsInjured.melee / friendlyUnitsInjured.total) * 100
-            )}
-            %)
-          </p>
-          <p className="col-start-2 row-start-4 ml-2 ">
-            {friendlyUnitsInjured.pewpew} pewpew (
-            {Math.round(
-              (friendlyUnitsInjured.pewpew / friendlyUnitsInjured.total) * 100
-            )}
-            %)
-          </p>
-          <p className="col-start-2 row-start-5 ml-2 ">
-            {friendlyUnitsInjured.tanky} tanky (
-            {Math.round(
-              (friendlyUnitsInjured.tanky / friendlyUnitsInjured.total) * 100
-            )}
-            %)
-          </p>
-        </>
-      )}
+        <PostCombatStatBox
+          headerText="Friendlies Injured"
+          headerTextColor="amber"
+          unitCounts={friendlyUnitsInjured}
+          unitTypes={unitTypes}
+        />
 
-      <p className="col-start-3 row-start-2">
-        <span className="text-red-500">Friendlies Lost: </span>{" "}
-        {friendlyUnitsDefeated.total}
-      </p>
-      <p className="col-start-3 row-start-3 ml-2 ">
-        {friendlyUnitsDefeated.melee} melee (
-        {Math.round(
-          (friendlyUnitsDefeated.melee / friendlyUnitsDefeated.total) * 100
-        )}
-        %)
-      </p>
-      <p className="col-start-3 row-start-4 ml-2 ">
-        {friendlyUnitsDefeated.pewpew} pewpew (
-        {Math.round(
-          (friendlyUnitsDefeated.pewpew / friendlyUnitsDefeated.total) * 100
-        )}
-        %)
-      </p>
-      <p className="col-start-3 row-start-5 ml-2 ">
-        {friendlyUnitsDefeated.tanky} tanky (
-        {Math.round(
-          (friendlyUnitsDefeated.tanky / friendlyUnitsDefeated.total) * 100
-        )}
-        %)
-      </p>
-      <p className="col-start-4 row-start-2">
-        <span className="text-red-500">Buildings damaged: </span>4
-      </p>
-      <p className="col-start-4 row-start-3 ml-2">Armorsmith</p>
-      <p className="col-start-4 row-start-4 ml-2">Town Center</p>
-      <p className="col-start-4 row-start-5 ml-2">Meal Hall</p>
-      <p className="col-start-4 row-start-6 ml-2">Scouting Post</p>
+        <PostCombatStatBox
+          headerText="Friendlies Lost"
+          headerTextColor="red"
+          unitCounts={friendlyUnitsDefeated}
+          unitTypes={unitTypes}
+        />
+
+        {/* FIXME: Make building stats dynamic as well */}
+        <div className="grid auto-rows-min">
+          {/* HEADER */}
+          <p>
+            <span className="text-blue-500">Buildings Damaged</span>: 4
+          </p>
+          <p className="ml-2">Armorsmith</p>
+          <p className="ml-2">Town Center</p>
+          <p className="ml-2">Meal Hall</p>
+          <p className="ml-2">Scouting Post</p>
+        </div>
+      </div>
     </div>
   );
 }
