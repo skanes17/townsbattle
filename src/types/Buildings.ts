@@ -9,8 +9,8 @@ export interface Building {
   underConstruction: boolean;
   constructed: boolean;
   tier: number;
-  attackBonus: number;
-  healthBonus: number;
+  /* attackBonus: number;
+  healthBonus: number; */
   description: string;
   bgImage?: string;
   health: number;
