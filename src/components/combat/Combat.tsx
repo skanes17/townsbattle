@@ -100,7 +100,6 @@ export default function Combat({
     setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
   };
 
-  /* TODO: Unfinished */
   const returnUnitsToArmiesEvent = () => {
     const returnUnitsToArmiesEvent: PostCombatEvent = {
       type: "postCombat",
@@ -120,36 +119,32 @@ export default function Combat({
       },
     };
 
-    /* // if they're both dead
+    let eventIndex = 0;
     if (
       combatUnits[friendlyIndex].currentHealth === 0 &&
       combatEnemyUnits[enemyIndex].currentHealth === 0
     ) {
-      // FIXME: Build a message for this
-      const eventIndex = 0;
+      // If both units are defeated
+      eventIndex = 0;
     }
-    // if only the friendly survives
+    // If only the friendly survives
     else if (
       combatUnits[friendlyIndex].currentHealth > 0 &&
       combatEnemyUnits[enemyIndex].currentHealth === 0
     ) {
-      // FIXME: Build a message for this
-      const eventIndex = 0;
+      eventIndex = 1;
     }
-    // if only the enemy survives
+    // If only the enemy survives
     else if (
       combatUnits[friendlyIndex].currentHealth === 0 &&
       combatEnemyUnits[enemyIndex].currentHealth > 0
     ) {
-      // FIXME: Build a message for this
-      const eventIndex = 0;
+      eventIndex = 2;
     }
     // both units survive
     else {
-      const eventIndex = 0;
-    } */
-    /* FIXME: Complete the above! Need to access eventIndex; why can't I? */
-    const eventIndex = 0;
+      eventIndex = 3;
+    }
     const combatState = { event: returnUnitsToArmiesEvent, idx: eventIndex };
     setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
   };
@@ -314,7 +309,7 @@ export default function Combat({
     setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
   };
 
-  /* FIXME: Unfinished! */
+  /* FIXME: Unfinished! Need to choose appropriate index based on situation (units remaining) */
   const postCombatEvent = () => {
     const postCombatEvent: PostCombatEvent = {
       type: "postCombat",
@@ -335,7 +330,8 @@ export default function Combat({
     };
 
     /* FIXME: Should choose the appropriate message based on context post combat */
-    const eventIndex = 0;
+    // FIXME: Need to build the appropriate message in Messages.tsx
+    const eventIndex = 4;
 
     const combatState = { event: postCombatEvent, idx: eventIndex };
     // experimenting with appending to top
@@ -413,7 +409,6 @@ export default function Combat({
               survivingFriendlyUnitIndexes.length > 0 &&
               survivingEnemyUnitIndexes.length > 0
             ) {
-              /* TODO: Unfinished! */
               returnUnitsToArmiesEvent();
 
               selectNewUnits();

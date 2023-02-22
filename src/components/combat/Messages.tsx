@@ -197,28 +197,48 @@ export const messages = {
   ],
   /* TODO: Include at least one message per possiblity (armies both survive, either one dies, both die). */
   postCombat: [
-    // idx: 0 -- armies both survived
+    // idx: 0 -- both units died
     (event: PostCombatEvent) => {
       return (
         <POddStyle>
-          <span className="text-gray-400">
+          <span className="text-red-600">The units defeated each other!</span>
+        </POddStyle>
+      );
+    },
+    // idx: 1 -- only friendlyUnit survives
+    (event: PostCombatEvent) => {
+      return (
+        <POddStyle>
+          <span className="text-green-600">
+            {event.data.friendly.name}
+            {event.data.friendly.id} defeats {event.data.enemy.name}
+            {event.data.enemy.id}!
+          </span>
+        </POddStyle>
+      );
+    },
+    // idx: 2 -- only enemyUnit survives
+    (event: PostCombatEvent) => {
+      return (
+        <POddStyle>
+          <span className="text-red-600">
+            {event.data.friendly.name}
+            {event.data.friendly.id} was defeated by {event.data.enemy.name}
+            {event.data.enemy.id}.
+          </span>
+        </POddStyle>
+      );
+    },
+    // idx: 3
+    (event: PostCombatEvent) => {
+      return (
+        <POddStyle>
+          <span className="text-amber-600">
             Both units survive and return to their armies.
           </span>
         </POddStyle>
       );
     },
-    // idx: 1
-    (event: PostCombatEvent) => {
-      return (
-        <POddStyle>
-          <span className="text-green-400">
-            {event.data.friendly.name}
-            {event.data.friendly.id}
-          </span>{" "}
-          survives the battle with {event.data.friendly.currentHealth} health
-          and returns to their army.
-        </POddStyle>
-      );
-    },
+    // FIXME: Incorporate idx:4 -- build the appropriate message(s) for end of combat
   ],
 };
