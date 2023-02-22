@@ -42,28 +42,18 @@ export default function PostCombatSummary({
         <span className="text-green-500">Enemies Defeated</span>:{" "}
         {enemyUnitsDefeated.total}
       </p>
-      {/* FIXME: Undefined catch here */}
-      <p className="col-start-1 row-start-3 ml-2 ">
-        {enemyUnitsDefeated.melee} melee (
-        {Math.round(
-          (enemyUnitsDefeated.melee / enemyUnitsDefeated.total) * 100
-        )}
-        %)
-      </p>
-      <p className="col-start-1 row-start-4 ml-2 ">
-        {enemyUnitsDefeated.pewpew} pewpew (
-        {Math.round(
-          (enemyUnitsDefeated.pewpew / enemyUnitsDefeated.total) * 100
-        )}
-        %)
-      </p>
-      <p className="col-start-1 row-start-5 ml-2 ">
-        {enemyUnitsDefeated.tanky} tanky (
-        {Math.round(
-          (enemyUnitsDefeated.tanky / enemyUnitsDefeated.total) * 100
-        )}
-        %)
-      </p>
+      {unitTypes.map((unitType) => {
+        return (
+          <p className="col-start-1 ml-2 ">
+            {enemyUnitsDefeated[unitType]} {unitType} (
+            {Math.round(
+              (enemyUnitsDefeated[unitType] / enemyUnitsDefeated.total) * 100
+            )}
+            %)
+          </p>
+        );
+      })}
+
       {/* FIXME: Bug with friendly calculation */}
       <p className="col-start-2 row-start-2">
         <span className="text-amber-500">Friendlies injured: </span>

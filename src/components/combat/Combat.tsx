@@ -190,7 +190,6 @@ export default function Combat({
         selectedEnemy.currentHealth -
           calculatedAttackValue(selectedFriendly, selectedEnemy)
       );
-      setCombatEnemyUnits(_enemyCopy);
       // If the enemy survives, it attacks. Else, it's dead and its attack is set to 0.
       if (selectedEnemy.currentHealth > 0) {
         selectedFriendly.currentHealth = Math.max(
@@ -199,7 +198,6 @@ export default function Combat({
             calculatedAttackValue(selectedEnemy, selectedFriendly)
         );
       } else selectedEnemy.attack = 0;
-      setCombatUnits(_friendlyCopy);
     }
     // only run this if the enemy hits first and the friendly does not
     else if (selectedEnemy.hitsFirst && !selectedFriendly.hitsFirst) {
@@ -209,7 +207,6 @@ export default function Combat({
         selectedFriendly.currentHealth -
           calculatedAttackValue(selectedEnemy, selectedFriendly)
       );
-      setCombatUnits(_friendlyCopy);
       // If the friendly survives, it attacks. Else, it's dead and its attack is set to 0.
       if (selectedFriendly.currentHealth > 0) {
         selectedEnemy.currentHealth = Math.max(
@@ -218,7 +215,6 @@ export default function Combat({
             calculatedAttackValue(selectedFriendly, selectedEnemy)
         );
       } else selectedFriendly.attack = 0;
-      setCombatEnemyUnits(_enemyCopy);
     } else {
       // default fight -- no hitsFirst mechanic
       selectedEnemy.currentHealth = Math.max(
@@ -226,7 +222,6 @@ export default function Combat({
         selectedEnemy.currentHealth -
           calculatedAttackValue(selectedFriendly, selectedEnemy)
       );
-      setCombatEnemyUnits(_enemyCopy);
 
       // damage the selected friendly unit; set to 0 if dmg exceeds health
       selectedFriendly.currentHealth = Math.max(
@@ -234,8 +229,9 @@ export default function Combat({
         selectedFriendly.currentHealth -
           calculatedAttackValue(selectedEnemy, selectedFriendly)
       );
-      setCombatUnits(_friendlyCopy);
     }
+    setCombatEnemyUnits(_enemyCopy);
+    setCombatUnits(_friendlyCopy);
 
     // the following adds a combat event for the combat log
     /* TODO: Add in attack buffs and bonuses to the list so they're useable later */
@@ -413,7 +409,7 @@ export default function Combat({
   };
 
   const combatMegaFunction = () => {
-    // If you have no units upon combat, immediately go to post
+    // If you have no units upon combat, immediately go to postCombat screen
     // TODO: Proper summary calculations for this case
     // TODO: Damage buldings accordingly
     if (combatUnits.length === 0) {
@@ -486,17 +482,9 @@ export default function Combat({
   const autoBattler = () => {
     const autoFriendlyUnits = [...combatUnits];
     const autoEnemyUnits = [...combatEnemyUnits];
-    // TODO: loop until all units on one or both sides are dead
 
+    /* FIXME:  AutoBattler needs to be rebuilt to be based on new combat systems */
     // gather surviving units
-    // let _survivingFriendlyUnitIndexes = autoFriendlyUnits
-    //   .map((unit, index) => {
-    //     if (unit.currentHealth !== 0) {
-    //       return index;
-    //     } else return -1;
-    //   })
-    //   .filter((index) => index >= 0);
-
     // CAREFUL -- sometimes doesn't work properly
     let _survivingFriendlyUnitIndexes = autoFriendlyUnits
       .map((unit, index) => (unit.currentHealth !== 0 ? index : null))
