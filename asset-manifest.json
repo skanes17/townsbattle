@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/React-game/static/css/main.2185ffb9.css",
-    "main.js": "/React-game/static/js/main.e48a08fc.js",
+    "main.css": "/React-game/static/css/main.f6210d14.css",
+    "main.js": "/React-game/static/js/main.22be02c8.js",
     "static/media/swordsmithy-01.png": "/React-game/static/media/swordsmithy-01.c8443cdf96879757eb2b.png",
     "static/media/townCenter-01.png": "/React-game/static/media/townCenter-01.67a5353ee803df4a0212.png",
     "static/media/healingChamber-01.png": "/React-game/static/media/healingChamber-01.ef2be51fdff611bfb7fc.png",
@@ -11,11 +11,11 @@
     "static/media/scoutUnit-02.png": "/React-game/static/media/scoutUnit-02.35130ca10333aa3d6615.png",
     "static/media/mealHall-01.png": "/React-game/static/media/mealHall-01.0dff068353bd7c6e683a.png",
     "index.html": "/React-game/index.html",
-    "main.2185ffb9.css.map": "/React-game/static/css/main.2185ffb9.css.map",
-    "main.e48a08fc.js.map": "/React-game/static/js/main.e48a08fc.js.map"
+    "main.f6210d14.css.map": "/React-game/static/css/main.f6210d14.css.map",
+    "main.22be02c8.js.map": "/React-game/static/js/main.22be02c8.js.map"
   },
   "entrypoints": [
-    "static/css/main.2185ffb9.css",
-    "static/js/main.e48a08fc.js"
+    "static/css/main.f6210d14.css",
+    "static/js/main.22be02c8.js"
   ]
 }
