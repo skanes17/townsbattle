@@ -3,13 +3,15 @@ import {
   PreCombatEvent,
   MainCombatEvent,
   PostCombatEvent,
-} from "../../types/CombatEvents";
+  SummaryEvent,
+  NoArmyEvent,
+} from "../../types";
 import POddStyle from "./POddStyle";
 
 /* TODO: Make flavourtexts based on unit type; see below in combat phase */
 
 export const messages = {
-  // preCombat, mainCombat, postCombat are the types
+  // preCombat, mainCombat, postCombat, summary, noArmy are the types
   preCombat: [
     // different indexes used for desired events/text
     (event: PreCombatEvent) => {
@@ -229,7 +231,7 @@ export const messages = {
         </POddStyle>
       );
     },
-    // idx: 3
+    // idx: 3 -- both units survive
     (event: PostCombatEvent) => {
       return (
         <POddStyle>
@@ -239,6 +241,52 @@ export const messages = {
         </POddStyle>
       );
     },
-    // FIXME: Incorporate idx:4 -- build the appropriate message(s) for end of combat
+  ],
+  summary: [
+    // idx: 0 -- both armies defeated
+    (event: SummaryEvent) => {
+      return (
+        <POddStyle>
+          <span className="font-semibold text-red-600">
+            The armies defeated each other!
+          </span>
+        </POddStyle>
+      );
+    },
+    // idx: 1 -- only friendly army survives
+    (event: SummaryEvent) => {
+      return (
+        <POddStyle>
+          <span className="font-semibold text-green-400">
+            You defeated the enemy, but their army is already regrouping. Time
+            to plan for the next wave!
+          </span>
+        </POddStyle>
+      );
+    },
+    // idx: 2 -- only enemy army survives
+    (event: SummaryEvent) => {
+      return (
+        <POddStyle>
+          <span className="font-semibold text-red-600">
+            The enemy was too strong, and your army was defeated. Buildings were
+            damaged!
+          </span>
+        </POddStyle>
+      );
+    },
+  ],
+  noArmy: [
+    // idx: 0 --  you had no army to begin with
+    (event: NoArmyEvent) => {
+      return (
+        <POddStyle>
+          <span className="font-semibold text-red-600">
+            With no army to fight the enemy, you had no chance. Buildings were
+            damaged!
+          </span>
+        </POddStyle>
+      );
+    },
   ],
 };

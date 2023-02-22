@@ -4,10 +4,12 @@ import {
   Buildings,
   CombatEvent,
   MainCombatEvent,
+  NoArmyEvent,
   Phases,
   PostCombatEvent,
   PreCombatEvent,
   SubPhases,
+  SummaryEvent,
   Unit,
   UnitCounts,
   UnitType,
@@ -79,6 +81,21 @@ export default function Combat({
 
   const shouldRestoreUnitHealth = buildings["healingChamber"].constructed;
 
+  const noArmyEvent = () => {
+    const noArmyEvent: NoArmyEvent = {
+      type: "noArmy",
+      data: {
+        friendly: {
+          unitCount: survivingFriendlyUnitIndexes.length,
+        },
+      },
+    };
+
+    const eventIndex = 0;
+    const combatState = { event: noArmyEvent, idx: eventIndex };
+    setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
+  };
+
   const initialPreCombatEvent = () => {
     const initialPreCombatEvent: PreCombatEvent = {
       type: "preCombat",
@@ -97,55 +114,6 @@ export default function Combat({
     const eventIndex = 0;
     const combatState = { event: initialPreCombatEvent, idx: eventIndex };
     // experimenting with appending to top
-    setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
-  };
-
-  const returnUnitsToArmiesEvent = () => {
-    const returnUnitsToArmiesEvent: PostCombatEvent = {
-      type: "postCombat",
-      data: {
-        friendly: {
-          name: combatUnits[friendlyIndex].name,
-          maxHealth: combatUnits[friendlyIndex].maxHealth,
-          currentHealth: combatUnits[friendlyIndex].currentHealth,
-          id: combatUnits[friendlyIndex].id,
-        },
-        enemy: {
-          name: combatEnemyUnits[enemyIndex].name,
-          maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
-          currentHealth: combatEnemyUnits[enemyIndex].currentHealth,
-          id: combatEnemyUnits[enemyIndex].id,
-        },
-      },
-    };
-
-    let eventIndex = 0;
-    if (
-      combatUnits[friendlyIndex].currentHealth === 0 &&
-      combatEnemyUnits[enemyIndex].currentHealth === 0
-    ) {
-      // If both units are defeated
-      eventIndex = 0;
-    }
-    // If only the friendly survives
-    else if (
-      combatUnits[friendlyIndex].currentHealth > 0 &&
-      combatEnemyUnits[enemyIndex].currentHealth === 0
-    ) {
-      eventIndex = 1;
-    }
-    // If only the enemy survives
-    else if (
-      combatUnits[friendlyIndex].currentHealth === 0 &&
-      combatEnemyUnits[enemyIndex].currentHealth > 0
-    ) {
-      eventIndex = 2;
-    }
-    // both units survive
-    else {
-      eventIndex = 3;
-    }
-    const combatState = { event: returnUnitsToArmiesEvent, idx: eventIndex };
     setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
   };
 
@@ -192,7 +160,7 @@ export default function Combat({
     // used destructuring to make code more readable
     const { attack, currentHealth, maxHealth, fullHealthAttackBonus } =
       attacker;
-    const defense = defender.incomingDmgReduction;
+    const defense = defender.armor;
     // if unit has full health, it does bonus attack damage
     const attackBonus = currentHealth === maxHealth ? fullHealthAttackBonus : 0;
     return attack + attackBonus - defense;
@@ -309,7 +277,7 @@ export default function Combat({
     setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
   };
 
-  /* FIXME: Unfinished! Need to choose appropriate index based on situation (units remaining) */
+  // returning units to their armies and choosing new ones
   const postCombatEvent = () => {
     const postCombatEvent: PostCombatEvent = {
       type: "postCombat",
@@ -329,12 +297,77 @@ export default function Combat({
       },
     };
 
-    /* FIXME: Should choose the appropriate message based on context post combat */
-    // FIXME: Need to build the appropriate message in Messages.tsx
-    const eventIndex = 4;
-
+    let eventIndex;
+    if (
+      combatUnits[friendlyIndex].currentHealth === 0 &&
+      combatEnemyUnits[enemyIndex].currentHealth === 0
+    ) {
+      // If both units are defeated
+      eventIndex = 0;
+    }
+    // If only the friendly survives
+    else if (
+      combatUnits[friendlyIndex].currentHealth > 0 &&
+      combatEnemyUnits[enemyIndex].currentHealth === 0
+    ) {
+      eventIndex = 1;
+    }
+    // If only the enemy survives
+    else if (
+      combatUnits[friendlyIndex].currentHealth === 0 &&
+      combatEnemyUnits[enemyIndex].currentHealth > 0
+    ) {
+      eventIndex = 2;
+    }
+    // both units survive
+    else {
+      eventIndex = 3;
+    }
     const combatState = { event: postCombatEvent, idx: eventIndex };
-    // experimenting with appending to top
+    setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
+  };
+
+  const summaryEvent = () => {
+    const summaryEvent: SummaryEvent = {
+      type: "summary",
+      data: {
+        friendly: {
+          unitCount: survivingFriendlyUnitIndexes.length,
+        },
+        enemy: {
+          unitCount: survivingEnemyUnitIndexes.length,
+        },
+      },
+    };
+
+    let eventIndex;
+    if (
+      survivingFriendlyUnitIndexes.length === 0 &&
+      survivingEnemyUnitIndexes.length === 0
+    ) {
+      // If both armies are defeated
+      eventIndex = 0;
+    }
+    // If only the friendly army survives
+    else if (
+      survivingFriendlyUnitIndexes.length > 0 &&
+      survivingEnemyUnitIndexes.length === 0
+    ) {
+      eventIndex = 1;
+    }
+    // If only the enemy army survives
+    else if (
+      survivingFriendlyUnitIndexes.length === 0 &&
+      survivingEnemyUnitIndexes.length > 0
+    ) {
+      eventIndex = 2;
+    }
+    // error catch
+    else {
+      alert("Oops... there was an error. Please tell the dev!");
+      return;
+    }
+    const combatState = { event: summaryEvent, idx: eventIndex };
     setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
   };
 
@@ -374,14 +407,18 @@ export default function Combat({
     setEnemyUnits(enemyUnitsToSendToPlanning);
   };
 
-  // TODO: If you have no units upon combat:
-  // immediately go to post; buildings are damaged accordingly
   const combatMegaFunction = () => {
+    // If you have no units upon combat, immediately go to post
+    // TODO: Proper summary calculations for this case
+    // TODO: Damage buldings accordingly
+    if (combatUnits.length === 0) {
+      noArmyEvent();
+      setPhase(Phases.PostCombat);
+    }
     switch (phase) {
       case Phases.PreCombat:
         // adds a preCombat event to the "events" state
         initialPreCombatEvent();
-
         setPhase(Phases.Combat);
         setSubPhase(SubPhases.Fight);
 
@@ -391,12 +428,10 @@ export default function Combat({
           case SubPhases.Fight:
             // combatEvent() happens within unitsFight()
 
-            /* TODO: Tankies passively reduce incoming enemy damage by 1 */
             /* TODO: A unit that has extra damage if full health? */
             /* TODO: A unit that gets +1 to atk each time it is not selected for the first time? */
 
             /* TODO: Refactor for efficiency once more unit traits are developed */
-
             unitsFight();
 
             // TODO: Add in animation for units attacking each other
@@ -409,7 +444,7 @@ export default function Combat({
               survivingFriendlyUnitIndexes.length > 0 &&
               survivingEnemyUnitIndexes.length > 0
             ) {
-              returnUnitsToArmiesEvent();
+              postCombatEvent();
 
               selectNewUnits();
               // return the units to their army and pick new ones
@@ -417,7 +452,7 @@ export default function Combat({
 
               setSubPhase(SubPhases.Fight);
             } else {
-              // if an army was defeated, end combat
+              // if one or both armies were defeated, end combat
 
               // TODO: See below
               // calculate all the stats to present on next screen, such as...
@@ -426,8 +461,7 @@ export default function Combat({
               // number of units injured -- DONE
               // buildings damaged (and how much?)
 
-              postCombatEvent();
-
+              summaryEvent();
               setPhase(Phases.PostCombat);
             }
             break;

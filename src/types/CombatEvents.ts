@@ -1,7 +1,12 @@
 import { UnitType } from "./Unit";
 
 export interface CombatEvent {
-  event: PreCombatEvent | MainCombatEvent | PostCombatEvent;
+  event:
+    | PreCombatEvent
+    | MainCombatEvent
+    | PostCombatEvent
+    | SummaryEvent
+    | NoArmyEvent;
   idx: number;
 }
 
@@ -58,6 +63,28 @@ export interface PostCombatEvent {
       maxHealth: number;
       currentHealth: number;
       id?: number;
+    };
+  };
+}
+
+export interface SummaryEvent {
+  type: "summary";
+  data: {
+    friendly: {
+      unitCount: number;
+      /* TODO: Add in buildings info? */
+    };
+    enemy: {
+      unitCount: number;
+    };
+  };
+}
+
+export interface NoArmyEvent {
+  type: "noArmy";
+  data: {
+    friendly: {
+      unitCount: number;
     };
   };
 }

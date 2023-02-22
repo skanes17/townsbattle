@@ -14,7 +14,8 @@ export interface Unit {
   resourceCosts: ResourceCosts;
   hitsFirst: boolean;
   fullHealthAttackBonus: number;
-  incomingDmgReduction: number;
+  // reduce incoming damage
+  armor: number;
   timesSelectedForCombat: number;
   id?: number;
 }
