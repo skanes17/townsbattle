@@ -260,62 +260,6 @@ export default function Combat({
     setCombatEvents([combatState, ...combatEvents]);
   };
 
-  const friendlyHitsFirst = () => {
-    const _friendlyCopy = [...combatUnits];
-    const selectedFriendly = _friendlyCopy[friendlyIndex];
-
-    // enemy gets hit first
-    const _enemyCopy = [...combatEnemyUnits];
-    const selectedEnemy = _enemyCopy[enemyIndex];
-    // damage the selected enemy unit; set to 0 if dmg exceeds health
-    selectedEnemy.currentHealth = Math.max(
-      0,
-      selectedEnemy.currentHealth - combatUnits[friendlyIndex].attack
-    );
-    setCombatEnemyUnits(_enemyCopy);
-
-    // If the enemy survives, it attacks. Else, it's dead and its attack is set to 0.
-    if (selectedEnemy.currentHealth > 0) {
-      selectedFriendly.currentHealth = Math.max(
-        0,
-        selectedFriendly.currentHealth - combatEnemyUnits[enemyIndex].attack
-      );
-    } else selectedEnemy.attack = 0;
-    // update army with new unit health
-    setCombatUnits(_friendlyCopy);
-
-    // FIXME: Adjust accordingly for ranged combat!
-    const combatEvent: MainCombatEvent = {
-      type: "combat",
-      data: {
-        friendly: {
-          name: combatUnits[friendlyIndex].name,
-          unitType: combatUnits[friendlyIndex].unitType,
-          attack: combatUnits[friendlyIndex].attack,
-          maxHealth: combatUnits[friendlyIndex].maxHealth,
-          // used copy to avoid state update's async issues
-          currentHealth: selectedFriendly.currentHealth,
-          id: combatUnits[friendlyIndex].id,
-        },
-        enemy: {
-          name: combatEnemyUnits[enemyIndex].name,
-          unitType: combatEnemyUnits[enemyIndex].unitType,
-          attack: combatEnemyUnits[enemyIndex].attack,
-          maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
-          // used copy to avoid state update's async issues
-          currentHealth: selectedEnemy.currentHealth,
-          id: combatEnemyUnits[enemyIndex].id,
-        },
-      },
-    };
-    /* FIXME: Should choose the appropriate message based on context (eg unit types) when two units are fighting */
-    const eventIndex = Math.floor(Math.random() * messages.combat.length);
-
-    const combatState = { event: combatEvent, idx: eventIndex };
-    // experimenting with appending to top
-    setCombatEvents([combatState, ...combatEvents]);
-  };
-
   /* FIXME: Unfinished! */
   const postCombatEvent = () => {
     const postCombatEvent: PostCombatEvent = {

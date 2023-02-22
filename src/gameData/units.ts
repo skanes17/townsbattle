@@ -31,7 +31,7 @@ export const baseUnitData = {
     unitType: "tanky",
     name: "Tanky",
     nameSymbol: "🛡️",
-    description: "Low attack but lots of health.",
+    description: "Low attack but can take a beating!",
     attack: 4,
     maxHealth: 15,
     resourceCosts: { workers: 1, stone: 2, metal: 2 },

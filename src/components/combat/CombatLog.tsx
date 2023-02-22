@@ -12,6 +12,9 @@ export default function CombatLog({ combatEvents, townName }: CombatLogProps) {
   return (
     <div className="col-span-12 col-start-1 row-start-1 aspect-video max-h-32 w-full self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4 text-sm sm:col-span-4 sm:col-start-5 sm:row-span-2 sm:row-start-1 sm:h-5/6 sm:max-h-full sm:w-full sm:text-sm lg:text-lg xl:aspect-[5/3]">
       {combatEvents.map((item) => {
+        // the item event type is "preCombat", "combat", etc
+        // item index is which messager to choose from the list of these events
+        // item.event takes an item holding friendly+enemy data and formats it in a message
         /* @ts-ignore */
         return messages[item.event.type][item.idx](item.event);
       })}
