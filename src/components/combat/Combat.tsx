@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { enemyColor, friendlyColor } from "../../gameData";
 import {
+  BaseUnit,
   Buildings,
   CombatEvent,
   MainCombatEvent,
@@ -26,7 +27,9 @@ import { ArmyGrid, CombatLog, messages, PostCombatSummary } from "../combat";
 /* FIXME: Page breaking when army has 0 units */
 
 interface CombatProps {
+  BASE_UNIT_DATA: BaseUnit;
   unitTypes: UnitType[];
+  unlockedUnitTypes: (UnitType | undefined)[];
   myUnits: Unit[];
   setMyUnits: Dispatch<SetStateAction<Unit[]>>;
   enemyUnits: Unit[];
@@ -38,7 +41,9 @@ interface CombatProps {
 }
 
 export default function Combat({
+  BASE_UNIT_DATA,
   unitTypes,
+  unlockedUnitTypes,
   myUnits,
   enemyUnits,
   setMyUnits,
@@ -175,7 +180,6 @@ export default function Combat({
     const selectedEnemy = _enemyCopy[enemyIndex];
 
     // INCORPORATE PASSIVE EFFECTS HERE
-    // hitsFirst: boolean;
     // timesSelectedForCombat: number;
 
     // only run this if the friendly hits first and the enemy does not
@@ -216,6 +220,7 @@ export default function Combat({
       } else selectedFriendly.attack = 0;
       setCombatEnemyUnits(_enemyCopy);
     } else {
+      // default fight -- no hitsFirst mechanic
       selectedEnemy.currentHealth = Math.max(
         0,
         selectedEnemy.currentHealth -
@@ -603,13 +608,14 @@ export default function Combat({
         <div className="card col-span-5 col-start-1 row-start-4 mr-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-end md:mt-0">
           {phase === Phases.PreCombat && (
             <PreCombatCardTemplate
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
               color={friendlyColor}
               headerText="Your Army"
               army={combatUnits}
               unitCounts={combatUnitCounts}
+              unlockedUnitTypes={unlockedUnitTypes}
             />
           )}
-          {/* TODO: When HP is 0, show a skull on the combat card */}
           {phase === Phases.Combat && (
             <CombatCardTemplate
               color={friendlyColor}
@@ -675,8 +681,10 @@ export default function Combat({
             <PreCombatCardTemplate
               color={enemyColor}
               headerText="Enemy Army"
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
               army={combatEnemyUnits}
               unitCounts={combatEnemyUnitCounts}
+              unlockedUnitTypes={unlockedUnitTypes}
             />
           )}
           {phase === Phases.Combat && (

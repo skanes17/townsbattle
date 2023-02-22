@@ -159,7 +159,7 @@ export default function Game(props: GameProps) {
   // FIXME: Is this the best way to coerce the types?
   const BASE_UNIT_DATA: BaseUnit = baseUnitData as BaseUnit;
   const unitTypes: UnitType[] = Object.keys(BASE_UNIT_DATA) as UnitType[];
-  const unlockedUnits: (UnitType | undefined)[] = Object.keys(buildings)
+  const unlockedUnitTypes: (UnitType | undefined)[] = Object.keys(buildings)
     // filter by buildings constructed which are also set up to unlock a unit type
     .filter(
       (buildingType) =>
@@ -496,7 +496,9 @@ export default function Game(props: GameProps) {
   return inCombat ? (
     <>
       <Combat
+        BASE_UNIT_DATA={BASE_UNIT_DATA}
         unitTypes={unitTypes}
+        unlockedUnitTypes={unlockedUnitTypes}
         myUnits={myUnits}
         enemyUnits={enemyUnits}
         setMyUnits={setMyUnits}
@@ -539,10 +541,10 @@ export default function Game(props: GameProps) {
               "relative mx-auto w-fit max-w-lg rounded-md border border-white bg-zinc-800 p-4 shadow-lg"
             }
           >
-            {unlockedUnits.length > 0 ? (
+            {unlockedUnitTypes.length > 0 ? (
               <div className="flex items-center justify-center">
                 <TrainingCardContainer
-                  unlockedUnits={unlockedUnits}
+                  unlockedUnitTypes={unlockedUnitTypes}
                   buildings={buildings}
                   resources={resources}
                   resourcePool={resourcePool}
@@ -589,7 +591,7 @@ export default function Game(props: GameProps) {
           </div>
 
           {/* TODO: Only show unit counts once units are unlocked, and only show appropraite counts for unit types unlocked */}
-          {unlockedUnits.length > 0 ? (
+          {unlockedUnitTypes.length > 0 ? (
             <DisplayTemplate headerText="Army">
               {unitTypes.map((unitType: UnitType) => (
                 <UnitCount
@@ -602,7 +604,7 @@ export default function Game(props: GameProps) {
           ) : null}
 
           {/* FIXME: Make this into a tooltip, like a question mark circle thing you hover over or click */}
-          {unlockedUnits.length > 0 ? (
+          {unlockedUnitTypes.length > 0 ? (
             <div className="place-self-center text-xl">
               Tip: Train Units to Protect {townName}!
             </div>
@@ -623,10 +625,10 @@ export default function Game(props: GameProps) {
           />
         </GridCardContainer>
 
-        {unlockedUnits.length > 0 ? (
+        {unlockedUnitTypes.length > 0 ? (
           <GridCardContainer headerText="Train Units">
             <TrainingCardContainer
-              unlockedUnits={unlockedUnits}
+              unlockedUnitTypes={unlockedUnitTypes}
               buildings={buildings}
               resources={resources}
               resourcePool={resourcePool}

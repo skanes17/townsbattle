@@ -1,19 +1,23 @@
 import React from "react";
 import { enemyColor, friendlyColor } from "../../gameData";
-import { ArmyColors, Unit, UnitCounts } from "../../types";
+import { ArmyColors, BaseUnit, Unit, UnitCounts, UnitType } from "../../types";
 
 interface PreCombatCardTemplateProps {
   color: ArmyColors;
   headerText: "Your Army" | "Enemy Army";
+  BASE_UNIT_DATA: BaseUnit;
   army: Unit[];
   unitCounts: UnitCounts;
+  unlockedUnitTypes: (UnitType | undefined)[];
 }
 
-export default function CombatCardTemplate({
+export default function PreCombatCardTemplate({
   color,
   headerText,
+  BASE_UNIT_DATA,
   army,
   unitCounts,
+  unlockedUnitTypes,
 }: PreCombatCardTemplateProps) {
   let borderColor, shadowColor;
   switch (color) {
@@ -34,7 +38,15 @@ export default function CombatCardTemplate({
       <p className="text-sm font-bold sm:text-2xl md:text-3xl lg:text-4xl">
         {headerText}
       </p>
-      {/* TODO: Incorporate DRY here */}
+      {/* FIXME: Incorporate DRY for unlocked unit types */}
+      {/* {Object.keys(unlockedUnitTypes).map((unitType) => {
+        return (
+          <p key={unitType} className="pl-2">
+            {BASE_UNIT_DATA[unitType].nameSymbol} {unitCounts[unitType]}{" "}
+            {unitType}
+          </p>
+        );
+      })} */}
       <p className="pl-2">⚔️ {unitCounts.melee} melee</p>
       <p className="pl-2">🏹 {unitCounts.pewpew} pewpew</p>
       <p className="pl-2">🛡️ {unitCounts.tanky} tanky</p>

@@ -12,7 +12,7 @@ import { UnitType } from "../../types";
 import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types/FunctionTypes";
 
 export interface TrainingCardContainerProps {
-  unlockedUnits: (UnitType | undefined)[];
+  unlockedUnitTypes: (UnitType | undefined)[];
   buildings: Buildings;
   resources: Resources;
   resourcePool: ResourcePool;
@@ -26,7 +26,7 @@ export interface TrainingCardContainerProps {
 }
 
 export default function TrainingCardContainer({
-  unlockedUnits,
+  unlockedUnitTypes,
   buildings,
   resources,
   resourcePool,
@@ -40,7 +40,7 @@ export default function TrainingCardContainer({
 }: TrainingCardContainerProps) {
   return (
     <>
-      {unlockedUnits.map((unitType) => (
+      {unlockedUnitTypes.map((unitType) => (
         <TrainUnitCard
           unitType={unitType as UnitType}
           resources={resources}
