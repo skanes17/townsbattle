@@ -197,9 +197,17 @@ export const messages = {
   ],
   /* TODO: Include at least one message per possiblity (armies both survive, either one dies, both die). */
   postCombat: [
+    // idx: 0 -- armies both survived
     (event: PostCombatEvent) => {
-      return <>Both units survive and return to their armies.</>;
+      return (
+        <POddStyle>
+          <span className="text-gray-400">
+            Both units survive and return to their armies.
+          </span>
+        </POddStyle>
+      );
     },
+    // idx: 1
     (event: PostCombatEvent) => {
       return (
         <POddStyle>
@@ -207,7 +215,8 @@ export const messages = {
             {event.data.friendly.name}
             {event.data.friendly.id}
           </span>{" "}
-          returns to their army.
+          survives the battle with {event.data.friendly.currentHealth} health
+          and returns to their army.
         </POddStyle>
       );
     },

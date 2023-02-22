@@ -97,7 +97,61 @@ export default function Combat({
     const eventIndex = 0;
     const combatState = { event: initialPreCombatEvent, idx: eventIndex };
     // experimenting with appending to top
-    setCombatEvents([combatState, ...combatEvents]);
+    setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
+  };
+
+  /* TODO: Unfinished */
+  const returnUnitsToArmiesEvent = () => {
+    const returnUnitsToArmiesEvent: PostCombatEvent = {
+      type: "postCombat",
+      data: {
+        friendly: {
+          name: combatUnits[friendlyIndex].name,
+          maxHealth: combatUnits[friendlyIndex].maxHealth,
+          currentHealth: combatUnits[friendlyIndex].currentHealth,
+          id: combatUnits[friendlyIndex].id,
+        },
+        enemy: {
+          name: combatEnemyUnits[enemyIndex].name,
+          maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
+          currentHealth: combatEnemyUnits[enemyIndex].currentHealth,
+          id: combatEnemyUnits[enemyIndex].id,
+        },
+      },
+    };
+
+    /* // if they're both dead
+    if (
+      combatUnits[friendlyIndex].currentHealth === 0 &&
+      combatEnemyUnits[enemyIndex].currentHealth === 0
+    ) {
+      // FIXME: Build a message for this
+      const eventIndex = 0;
+    }
+    // if only the friendly survives
+    else if (
+      combatUnits[friendlyIndex].currentHealth > 0 &&
+      combatEnemyUnits[enemyIndex].currentHealth === 0
+    ) {
+      // FIXME: Build a message for this
+      const eventIndex = 0;
+    }
+    // if only the enemy survives
+    else if (
+      combatUnits[friendlyIndex].currentHealth === 0 &&
+      combatEnemyUnits[enemyIndex].currentHealth > 0
+    ) {
+      // FIXME: Build a message for this
+      const eventIndex = 0;
+    }
+    // both units survive
+    else {
+      const eventIndex = 0;
+    } */
+    /* FIXME: Complete the above! Need to access eventIndex; why can't I? */
+    const eventIndex = 0;
+    const combatState = { event: returnUnitsToArmiesEvent, idx: eventIndex };
+    setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
   };
 
   const selectNewUnits = () => {
@@ -126,13 +180,13 @@ export default function Combat({
         },
       },
     };
-    /* FIXME: Chooses randomly from possible messages when two units face off */
+    /* TODO: Add more possible random messages for when two units face off */
     const eventIndex =
       // picks any array index except index of 0
       Math.floor(Math.random() * (messages.preCombat.length - 1)) + 1;
     const combatState = { event: preCombatEvent, idx: eventIndex };
     // experimenting with appending to top
-    setCombatEvents([combatState, ...combatEvents]);
+    setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
 
     // if both armies remain, select new units
     setFriendlyIndex(newFriendlyIndex);
@@ -257,7 +311,7 @@ export default function Combat({
 
     const combatState = { event: combatEvent, idx: eventIndex };
     // experimenting with appending to top
-    setCombatEvents([combatState, ...combatEvents]);
+    setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
   };
 
   /* FIXME: Unfinished! */
@@ -285,7 +339,7 @@ export default function Combat({
 
     const combatState = { event: postCombatEvent, idx: eventIndex };
     // experimenting with appending to top
-    setCombatEvents([combatState, ...combatEvents]);
+    setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
   };
 
   const determineWhichUnitsToSendToPlanning = (
@@ -356,12 +410,15 @@ export default function Combat({
 
           case SubPhases.VictoryCheck:
             if (
-              survivingFriendlyUnitIndexes.length !== 0 &&
-              survivingEnemyUnitIndexes.length !== 0
+              survivingFriendlyUnitIndexes.length > 0 &&
+              survivingEnemyUnitIndexes.length > 0
             ) {
+              /* TODO: Unfinished! */
+              returnUnitsToArmiesEvent();
+
+              selectNewUnits();
               // return the units to their army and pick new ones
               // also sets a new preCombatEvent
-              selectNewUnits();
 
               setSubPhase(SubPhases.Fight);
             } else {
