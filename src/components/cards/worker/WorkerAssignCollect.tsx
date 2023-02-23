@@ -16,6 +16,11 @@ export default function WorkerAssignCollect({
 
   return (
     <>
+      {/* TODO: Add something like this */}
+      {/* <span className="rounded-sm border border-white/25 pl-2 text-center">
+        Tier 1
+      </span> */}
+
       <div className="grid grid-cols-2 pl-2">
         <div className="font-bold">Assigned</div>
         <div className="self-center justify-self-center">
