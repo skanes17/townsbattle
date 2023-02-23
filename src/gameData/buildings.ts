@@ -15,6 +15,7 @@ export const buildingsData = {
     bgImage: "bg-swordsmithy",
     health: 2,
     resourceCosts: { workers: 5, wood: 10, stone: 10 },
+    buildScore: 50,
     unlockedUnit: "melee",
   },
   // for pewpew
@@ -31,6 +32,7 @@ export const buildingsData = {
     bgImage: "bg-archeryHut",
     health: 2,
     resourceCosts: { workers: 5, wood: 10, metal: 10 },
+    buildScore: 50,
     unlockedUnit: "pewpew",
   },
   // for tanky
@@ -47,6 +49,7 @@ export const buildingsData = {
     bgImage: "bg-smelter",
     health: 2,
     resourceCosts: { workers: 5, stone: 10, metal: 10 },
+    buildScore: 50,
     unlockedUnit: "tanky",
   },
   // for all units
@@ -64,6 +67,7 @@ export const buildingsData = {
     bgImage: "bg-mealHall",
     health: 2,
     resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 10 },
+    buildScore: 50,
   },
   healingChamber: {
     name: "Healing Chamber",
@@ -79,6 +83,7 @@ export const buildingsData = {
     bgImage: "bg-healingChamber",
     health: 2,
     resourceCosts: { workers: 5, wood: 20, stone: 10, metal: 5 },
+    buildScore: 75,
   },
   // for all units
   townCenter: {
@@ -93,6 +98,7 @@ export const buildingsData = {
     /* attackBonus: 0,
     healthBonus: 0, */
     description: "Losing this building means game over!",
+    buildScore: 0,
     bgImage: "bg-townCenter",
     health: 3,
     resourceCosts: {},
@@ -110,6 +116,7 @@ export const buildingsData = {
     bgImage: "bg-scoutUnit",
     health: 2,
     resourceCosts: { workers: 10, wood: 15, stone: 15, metal: 15 },
+    buildScore: 100,
   },
 };
 

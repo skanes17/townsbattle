@@ -303,6 +303,10 @@ export default function Game(props: GameProps) {
     buildingsUnderConstruction.map((buildingType) => {
       clonedBuildings[buildingType].underConstruction = false;
       clonedBuildings[buildingType].constructed = true;
+
+      // add to score
+      const buildScore = clonedBuildings[buildingType].buildScore;
+      setScore((prevScore) => prevScore + buildScore);
     });
   };
 
@@ -311,10 +315,10 @@ export default function Game(props: GameProps) {
     const units = myTrainingUnits.map((unit) => {
       // resolve base unit from unit type
       const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
-      const buildScore = _chosenUnit.buildScore;
       id += 1;
 
-      /* FIXME: NOT CHECKED */
+      // add to score
+      const buildScore = _chosenUnit.buildScore;
       setScore((prevScore) => prevScore + buildScore);
 
       return {

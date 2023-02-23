@@ -15,6 +15,7 @@ export interface Building {
   bgImage?: string;
   health: number;
   resourceCosts: ResourceCosts;
+  buildScore: number;
   unlockedUnit?: UnitType;
 }
 
