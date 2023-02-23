@@ -1,10 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import {
-  BaseResourceType,
-  ResourcePool,
-  Resources,
-  ResourceType,
-} from "../../types";
+import { BaseResourceType, ResourcePool, Resources } from "../../types";
 import {
   CardHeader,
   CardShowCount,
@@ -12,10 +7,12 @@ import {
   CardTemplate,
   CardDescription,
   CardCostsInfo,
+  WorkerCardDescription,
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
 import { AddRemoveWorkerFn } from "../../types/FunctionTypes";
 import { cloneBasicObjectWithJSON } from "../../utils";
+import WorkerAssignCollect from "./WorkerAssignCollect";
 
 interface WorkerCardProps {
   resources: Resources;
@@ -72,44 +69,24 @@ export default function WorkerCard({
     }
   };
 
-  /* let costColor;
-  resourcePool["workers"] < 1
-    ? (costColor = "text-red-600")
-    : (costColor = "text-green-500"); */
-
-  let countStyle;
-  if (resources[resourceType].workers > 0) {
-    countStyle = "font-bold text-amber-400";
-  }
-
   return (
     <>
       <CardTemplate color="amber">
         <CardHeader cardName={resources[resourceType].name} />
         <CardSymbol cardSymbol={resources[resourceType].symbol} />
-        <CardDescription
+        {/* <CardDescription
           descriptionText={resources[resourceType].description}
+        /> */}
+
+        <WorkerCardDescription
+          resources={resources}
+          resourceType={resourceType}
         />
 
-        <div className="grid grid-cols-2 pl-2">
-          <div className="font-bold">Assigned</div>
-          <div className="self-center justify-self-center">
-            {resources["workers"].symbol}{" "}
-            <span className={`${countStyle}`}>
-              {resources[resourceType].workers}
-            </span>
-          </div>
-        </div>
-        <div className="grid grid-cols-2 pl-2">
-          <div className="font-bold">To Collect</div>
-          <div className="self-center justify-self-center">
-            {resources[resourceType].symbol}{" "}
-            <span className={`${countStyle}`}>
-              {resources[resourceType].workers *
-                resources[resourceType].multiplier}
-            </span>
-          </div>
-        </div>
+        <WorkerAssignCollect
+          resources={resources}
+          resourceType={resourceType}
+        />
 
         <div className="grid grid-cols-2">
           <div className="flex items-center justify-end px-1">

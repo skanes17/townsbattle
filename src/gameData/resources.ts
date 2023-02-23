@@ -1,37 +1,31 @@
 export const resourceData = {
   workers: {
-    name: "Worker",
+    name: "worker",
     symbol: "🛠️",
-    description:
-      "Used when gathering resources, training units, and constructing buildings.",
   },
   wood: {
-    name: "Wood",
+    name: "wood",
     symbol: "🪵",
     workers: 0,
     multiplier: 1,
-    description: `Collect 1 wood per turn per worker.`,
   },
   stone: {
-    name: "Stone",
+    name: "stone",
     symbol: "🪨",
     workers: 0,
     multiplier: 1,
-    description: "Collect 1 per turn per worker.",
   },
   metal: {
-    name: "Metal",
+    name: "metal",
     symbol: "🔩",
     workers: 0,
     multiplier: 1,
-    description: "Collect 1 per turn per worker.",
   },
   gold: {
-    name: "Gold",
+    name: "gold",
     symbol: "🪙",
     workers: 0,
     multiplier: 1,
-    description: "Collect 1 gold per turn per worker.",
   },
 };
 

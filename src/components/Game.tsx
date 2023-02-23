@@ -119,14 +119,6 @@ export default function Game(props: GameProps) {
     (resourceType) => resourceType !== "workers"
   ) as BaseResourceType[];
 
-  // # of resources harvested per worker
-  const [resourceMultipliers, setResourceMultipliers] =
-    useState<ResourceMultipliers>({
-      wood: 1,
-      stone: 1,
-      metal: 1,
-      gold: 1,
-    });
   // number of workers at start of game (turn 1)
   const BASE_FREEWORKER_COUNT: number = 5;
   // number of new workers per turn increases over time
@@ -270,7 +262,7 @@ export default function Game(props: GameProps) {
       .forEach((resourceType: string) => {
         resourcePool[resourceType as BaseResourceType] +=
           resources[resourceType as BaseResourceType].workers *
-          resourceMultipliers[resourceType as BaseResourceType];
+          resources[resourceType as BaseResourceType].multiplier;
       });
   };
 

@@ -22,6 +22,7 @@ import TrainUnitCard from "./TrainUnitCard";
 import TrainUnitCardHeader from "./TrainUnitCardHeader";
 import WorkerCard from "./WorkerCard";
 import WorkerCardContainer from "./WorkerCardContainer";
+import WorkerCardDescription from "./WorkerCardDescription";
 
 export {
   BldgCardDescription,
@@ -48,4 +49,5 @@ export {
   TrainUnitCardHeader,
   WorkerCard,
   WorkerCardContainer,
+  WorkerCardDescription,
 };

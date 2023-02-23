@@ -1,5 +1,5 @@
 export interface Resources {
-  workers: Pick<ResourceData, "name" | "symbol" | "description">;
+  workers: Pick<ResourceData, "name" | "symbol">;
   wood: ResourceData;
   stone: ResourceData;
   metal: ResourceData;
@@ -13,7 +13,6 @@ interface ResourceData {
   symbol: string;
   workers: number;
   multiplier: number;
-  description: string;
 }
 
 export type ResourceType = keyof Resources; // Resource includes all the keys of Resources interface

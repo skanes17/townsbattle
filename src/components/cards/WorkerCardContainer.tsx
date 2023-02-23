@@ -1,5 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { BaseResourceType, ResourcePool, Resources } from "../../types";
+import {
+  BaseResourceType,
+  ResourceMultipliers,
+  ResourcePool,
+  Resources,
+} from "../../types";
 import { WorkerCard } from "../cards";
 
 interface WorkerCardContainerProps {
