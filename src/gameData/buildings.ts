@@ -30,7 +30,7 @@ export const buildingsData = {
     tier: 1,
     /* attackBonus: 3,
     healthBonus: -1, */
-    description: "Learn the secrets of ranged combat. Unlock Archers.",
+    description: "Learn ranged combat. Unlock Archers.",
     bgImage: "bg-archeryHut",
     health: 2,
     resourceCosts: { workers: 5, wood: 10, metal: 10 },
@@ -54,6 +54,24 @@ export const buildingsData = {
     buildScore: 50,
     unlockedUnit: "tanky",
   },
+  // add workers
+  betterHousing: {
+    name: "Better Housing",
+    symbol: "🏘️",
+    enabled: false,
+    underConstruction: false,
+    constructed: false,
+    tier: 1,
+    /* attackBonus: 0,
+    healthBonus: 2, */
+    description: "More workers available every turn.",
+    bgImage: "bg-betterHousing",
+    health: 2,
+    resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 10 },
+    buildScore: 50,
+    // how many extra workers it provides once constructed
+    workerBonus: 1,
+  },
   // for all units
   mealHall: {
     name: "Meal Hall",
@@ -64,7 +82,6 @@ export const buildingsData = {
     tier: 1,
     /* attackBonus: 0,
     healthBonus: 2, */
-    armorBonus: 0,
     description: "All units gain +2 to health, +2 to armor.",
     bgImage: "bg-mealHall",
     health: 2,
@@ -80,7 +97,6 @@ export const buildingsData = {
     tier: 1,
     /* attackBonus: 0,
     healthBonus: 0, */
-    armorBonus: 0,
     description: "Heals units after combat.",
     bgImage: "bg-healingChamber",
     health: 2,

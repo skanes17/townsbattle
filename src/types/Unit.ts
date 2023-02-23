@@ -5,6 +5,7 @@ export type UnitName = "Melee" | "Pewpew" | "Tanky";
 
 export interface Unit {
   unitType: UnitType;
+  /* FIXME: UnitName not being properly enforced when imported */
   name: UnitName;
   symbol: "⚔️" | "🏹" | "🛡️";
   description?: string;

@@ -6,6 +6,7 @@ module.exports = {
       backgroundImage: {
         archeryHut: "url('/src/assets/images/archeryHut-01.png')",
         army: "url('/src/assets/images/homeBackground-01.png')",
+        betterHousing: "url('/src/assets/images/betterHousing-01.png')",
         /* enemyArmy: "url('/src/assets/images/enemyArmy-02.png')",
         friendlyArmy: "url('/src/assets/images/friendlyArmy-01.png')", */
         healingChamber: "url('/src/assets/images/healingChamber-01.png')",

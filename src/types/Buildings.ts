@@ -17,6 +17,7 @@ export interface Building {
   resourceCosts: ResourceCosts;
   buildScore: number;
   unlockedUnit?: UnitType;
+  workerBonus?: number;
 }
 
 export interface Buildings {
