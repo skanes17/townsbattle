@@ -3,7 +3,7 @@ import { UnitType } from "./Unit";
 
 export interface Building {
   name: string;
-  nameSymbol: string;
+  symbol: string;
   imageSrc?: string;
   enabled: boolean;
   underConstruction: boolean;

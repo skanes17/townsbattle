@@ -144,7 +144,7 @@ export default function TrainUnitCard({
         attack={BASE_UNIT_DATA[unitType].attack}
         health={BASE_UNIT_DATA[unitType].maxHealth}
       ></TrainUnitCardHeader>
-      <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].nameSymbol} />
+      <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].symbol} />
       <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
 
       <CardCostsInfo

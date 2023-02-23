@@ -17,7 +17,7 @@ export default function DisplayUnderConstruction({
       </div>
       <div className="grid auto-cols-max grid-flow-col justify-center gap-4 transition duration-75 ease-in-out hover:text-yellow-300 md:text-lg lg:text-2xl">
         {buildingsUnderConstruction.map((building) => (
-          <div>{buildings[building].nameSymbol}</div>
+          <div>{buildings[building].symbol}</div>
         ))}
       </div>
     </div>
@@ -33,7 +33,7 @@ export default function DisplayUnderConstruction({
     </div>
     <div className="grid auto-cols-max grid-flow-col gap-4 transition duration-75 ease-in-out hover:text-yellow-300 md:text-lg lg:text-2xl">
       {buildingsUnderConstruction.map((building) => (
-        <div>{buildings[building].nameSymbol}</div>
+        <div>{buildings[building].symbol}</div>
       ))}
     </div>
   </>

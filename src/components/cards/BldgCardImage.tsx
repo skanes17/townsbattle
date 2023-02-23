@@ -12,7 +12,7 @@ interface BldgCardImageProps {
   buildingType: BuildingType;
 }
 
-/* FIXME: Devise a way to show nameSymbol if no image path found */
+/* FIXME: Devise a way to show symbol if no image path found */
 
 export default function BldgCardImage({ buildingType }: BldgCardImageProps) {
   let src;

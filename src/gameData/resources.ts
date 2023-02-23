@@ -9,25 +9,25 @@ export const resourceData = {
     name: "Wood",
     symbol: "🪵",
     workers: 0,
-    description: "Collect wood. Costs 1 worker.",
+    description: `Collect 1 wood per turn per worker.`,
   },
   stone: {
     name: "Stone",
     symbol: "🪨",
     workers: 0,
-    description: "Collect stone. Costs 1 worker.",
+    description: "Collect 1 per turn per worker.",
   },
   metal: {
     name: "Metal",
     symbol: "🔩",
     workers: 0,
-    description: "Collect metal. Costs 1 worker.",
+    description: "Collect 1 per turn per worker.",
   },
   gold: {
     name: "Gold",
     symbol: "🪙",
     workers: 0,
-    description: "Collect gold, +10 score per gold. Costs 1 worker.",
+    description: "Collect 1 gold per turn per worker.",
   },
 };
 

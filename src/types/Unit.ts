@@ -6,12 +6,13 @@ export type UnitName = "Melee" | "Pewpew" | "Tanky";
 export interface Unit {
   unitType: UnitType;
   name: UnitName;
-  nameSymbol: "⚔️" | "🏹" | "🛡️";
+  symbol: "⚔️" | "🏹" | "🛡️";
   description?: string;
   attack: number;
   maxHealth: number;
   currentHealth: number;
   resourceCosts: ResourceCosts;
+  buildScore: number;
   hitsFirst: boolean;
   fullHealthAttackBonus: number;
   // reduce incoming damage

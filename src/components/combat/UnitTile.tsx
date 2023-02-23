@@ -78,9 +78,9 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
         className={`square group relative my-auto mx-auto max-w-min snap-center justify-items-center rounded-md ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >
         <div className="pb-1 text-xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl">
-          {unit.nameSymbol}
+          {unit.symbol}
           {/* If you want the skull icon when the unit dies:
-          {unit.currentHealth === 0 ? "💀" : unit.nameSymbol} */}
+          {unit.currentHealth === 0 ? "💀" : unit.symbol} */}
         </div>
         <div
           className={`h-2 ${healthWidth} ${healthBarColor} rounded-sm transition-all duration-500 ease-out`}

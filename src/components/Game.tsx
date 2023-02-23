@@ -98,7 +98,7 @@ export default function Game(props: GameProps) {
   const [inCombat, setInCombat] = useState(false);
 
   // points from rounds of combat get added to this
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(0); // score could potentially be removed from state
   /* TODO: Points for a unit is trained, building built? */
 
   // TODO: Add food? And/or some resource common to all unit building?
@@ -274,18 +274,18 @@ export default function Game(props: GameProps) {
       });
   };
 
-  /*
-  resourcesCopy["wood"].collected = resources["wood"].collected + resources["wood"].workers * resourceMultipliers.wood;
-  resourcesCopy["stone"].collected = resources["stone"].collected + resources["stone"].workers * resourceMultipliers.stone;
-  resourcesCopy["metal"].collected = resources["metal"].collected + resources["metal"].workers * resourceMultipliers.metal;
-    */
+  const addGoldToScore = () => {
+    // score saved to constant in case resources state object is updated before the score state is updated
+    const scoreFromGold = resources["gold"].workers * 10;
+    setScore((prevScore) => prevScore + scoreFromGold);
+  };
 
   const calculateWorkersForNextTurn = (resourcePool: ResourcePool) => {
     resourcePool["workers"] = BASE_FREEWORKER_COUNT + newWorkers;
     setNewWorkers(newWorkers + 1);
   };
 
-  const resetWorkers = (resourcePool: ResourcePool) => {
+  const resetWorkers = () => {
     Object.keys(resources)
       .filter((resourceType) => resourceType !== "workers")
       .map((resourceType) => {
@@ -311,7 +311,11 @@ export default function Game(props: GameProps) {
     const units = myTrainingUnits.map((unit) => {
       // resolve base unit from unit type
       const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
+      const buildScore = _chosenUnit.buildScore;
       id += 1;
+
+      /* FIXME: NOT CHECKED */
+      setScore((prevScore) => prevScore + buildScore);
 
       return {
         ..._chosenUnit,
@@ -448,10 +452,12 @@ export default function Game(props: GameProps) {
     const clonedResourcePool = { ...resourcePool };
 
     addResourcesToPool(clonedResourcePool);
+    addGoldToScore();
     calculateWorkersForNextTurn(clonedResourcePool);
-    resetWorkers(clonedResourcePool);
+    resetWorkers();
     setResourcePool(clonedResourcePool);
-    setScore((prev) => prev + clonedResourcePool.gold * 10);
+    /* TODO: Add collected gold to score */
+    /* setScore((prev) => prev + clonedResourcePool.gold * 10); */
 
     // copy buildings to preserve state
     const clonedBuildings = cloneBasicObjectWithJSON(buildings);
@@ -459,6 +465,7 @@ export default function Game(props: GameProps) {
     // FIXME: Why can this be removed and apparently still work properly??
     setBuildings(clonedBuildings);
 
+    /* TODO: Newly trained units add to score */
     trainUnits();
 
     // update ID state accordingly
@@ -708,7 +715,7 @@ export default function Game(props: GameProps) {
 
           <DisplayTemplate headerText="Buildings Under Construction">
             {buildingsUnderConstruction.map((building) => (
-              <div>{buildings[building].nameSymbol}</div>
+              <div>{buildings[building].symbol}</div>
             ))}
           </DisplayTemplate>
         </div>

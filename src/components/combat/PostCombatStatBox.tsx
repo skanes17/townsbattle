@@ -45,7 +45,7 @@ export default function PostCombatStatBox({
           return (
             unitCounts[unitType] > 0 && (
               <p className="ml-2">
-                {BASE_UNIT_DATA[unitType].nameSymbol} {unitCounts[unitType]}{" "}
+                {BASE_UNIT_DATA[unitType].symbol} {unitCounts[unitType]}{" "}
                 {unitType} (
                 {Math.round((unitCounts[unitType] / unitCounts.total) * 100)}
                 %)

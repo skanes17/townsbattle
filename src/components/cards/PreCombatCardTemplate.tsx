@@ -42,7 +42,7 @@ export default function PreCombatCardTemplate({
       {/* {Object.keys(unlockedUnitTypes).map((unitType) => {
         return (
           <p key={unitType} className="pl-2">
-            {BASE_UNIT_DATA[unitType].nameSymbol} {unitCounts[unitType]}{" "}
+            {BASE_UNIT_DATA[unitType].symbol} {unitCounts[unitType]}{" "}
             {unitType}
           </p>
         );

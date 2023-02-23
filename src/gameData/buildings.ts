@@ -2,7 +2,7 @@ export const buildingsData = {
   // for melee
   swordsmithy: {
     name: "Swordsmithy",
-    nameSymbol: "🗡️",
+    symbol: "🗡️",
     // "enabled" means it can be seen in the game. This feature is not yet active.
     // Maybe all additional buildings become available to unlock after their first combat?
     enabled: true,
@@ -20,7 +20,7 @@ export const buildingsData = {
   // for pewpew
   archeryHut: {
     name: "Archery Hut",
-    nameSymbol: "🎯",
+    symbol: "🎯",
     enabled: false,
     underConstruction: false,
     constructed: false,
@@ -36,7 +36,7 @@ export const buildingsData = {
   // for tanky
   smelter: {
     name: "Smelter",
-    nameSymbol: "🛡️",
+    symbol: "🛡️",
     enabled: false,
     underConstruction: false,
     constructed: false,
@@ -52,7 +52,7 @@ export const buildingsData = {
   // for all units
   mealHall: {
     name: "Meal Hall",
-    nameSymbol: "🍖",
+    symbol: "🍖",
     enabled: false,
     underConstruction: false,
     constructed: false,
@@ -67,7 +67,7 @@ export const buildingsData = {
   },
   healingChamber: {
     name: "Healing Chamber",
-    nameSymbol: "🩸",
+    symbol: "🩸",
     enabled: false,
     underConstruction: false,
     constructed: false,
@@ -83,7 +83,7 @@ export const buildingsData = {
   // for all units
   townCenter: {
     name: "Town Center",
-    nameSymbol: "🏙️",
+    symbol: "🏙️",
     /* FIXME: Path not working */
     imageSrc: "/images/town-center-01.png",
     enabled: false,
@@ -99,7 +99,7 @@ export const buildingsData = {
   },
   scoutUnit: {
     name: "Scout Unit",
-    nameSymbol: "🔍",
+    symbol: "🔍",
     enabled: false,
     underConstruction: false,
     constructed: false,
