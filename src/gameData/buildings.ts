@@ -1,3 +1,5 @@
+/* TODO: Add a building which adds to number of workers per turn */
+
 export const buildingsData = {
   // for melee
   swordsmithy: {

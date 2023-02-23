@@ -1,4 +1,4 @@
-import { BaseResourceType, Resources } from "../../types";
+import { BaseResourceType, Resources } from "../../../types";
 
 interface WorkerAssignCollectProps {
   resources: Resources;

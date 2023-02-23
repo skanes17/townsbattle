@@ -1,11 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
-import {
-  BaseResourceType,
-  ResourceMultipliers,
-  ResourcePool,
-  Resources,
-} from "../../types";
-import { WorkerCard } from "../cards";
+import { WorkerCard } from ".";
+import { Resources, ResourcePool, BaseResourceType } from "../../../types";
 
 interface WorkerCardContainerProps {
   resources: Resources;

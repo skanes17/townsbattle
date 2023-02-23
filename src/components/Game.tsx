@@ -18,11 +18,7 @@ import { DevTools } from "./devTools";
 
 import { DisplayTemplate } from "./dashboards";
 
-import {
-  ConstructBuilding,
-  TrainingCardContainer,
-  WorkerCardContainer,
-} from "./cards";
+import { ConstructBuilding, TrainingCardContainer } from "./cards";
 
 import GridCardContainer from "./layout/GridCardContainer";
 import { Button } from "./buttons";
@@ -55,6 +51,7 @@ import {
   MaxTrainingUnitsFn,
 } from "../types/FunctionTypes";
 import { cloneBasicObjectWithJSON, countUnits } from "../utils";
+import { WorkerCardContainer } from "./cards/worker";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -683,7 +680,7 @@ export default function Game(props: GameProps) {
       />
       {/* TODO: Combine UnitCount and UnitInTraining into one general component; only the count differs */}
       <div className="sticky bottom-0 z-10 grid auto-cols-auto">
-        <div className="col-start-1 grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+        <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <DisplayTemplate headerText="Resources to Collect">
             {baseResourceTypes.map((resourceType) => (
               <ResourceToCollect

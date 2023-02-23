@@ -20,9 +20,6 @@ import PreCombatCardTemplate from "./PreCombatCardTemplate";
 import TrainingCardContainer from "./TrainingCardContainer";
 import TrainUnitCard from "./TrainUnitCard";
 import TrainUnitCardHeader from "./TrainUnitCardHeader";
-import WorkerCard from "./WorkerCard";
-import WorkerCardContainer from "./WorkerCardContainer";
-import WorkerCardDescription from "./WorkerCardDescription";
 
 export {
   BldgCardDescription,
@@ -47,7 +44,4 @@ export {
   TrainingCardContainer,
   TrainUnitCard,
   TrainUnitCardHeader,
-  WorkerCard,
-  WorkerCardContainer,
-  WorkerCardDescription,
 };

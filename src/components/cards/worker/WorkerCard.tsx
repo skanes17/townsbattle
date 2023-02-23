@@ -1,17 +1,18 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { BaseResourceType, ResourcePool, Resources } from "../../types";
+import { WorkerCardDescription } from ".";
+
 import {
-  CardHeader,
-  CardShowCount,
-  CardSymbol,
-  CardTemplate,
-  CardDescription,
-  CardCostsInfo,
-  WorkerCardDescription,
-} from "../cards";
-import { AddRemoveButton } from "../buttons";
-import { AddRemoveWorkerFn } from "../../types/FunctionTypes";
-import { cloneBasicObjectWithJSON } from "../../utils";
+  Resources,
+  ResourcePool,
+  BaseResourceType,
+  AddRemoveWorkerFn,
+} from "../../../types";
+import { cloneBasicObjectWithJSON } from "../../../utils";
+import { AddRemoveButton } from "../../buttons";
+import CardHeader from "../CardHeader";
+import CardSymbol from "../CardSymbol";
+import CardTemplate from "../CardTemplate";
+
 import WorkerAssignCollect from "./WorkerAssignCollect";
 
 interface WorkerCardProps {

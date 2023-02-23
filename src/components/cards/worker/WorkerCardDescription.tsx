@@ -1,4 +1,4 @@
-import { BaseResourceType, Resources } from "../../types";
+import { Resources, BaseResourceType } from "../../../types";
 
 interface WorkerCardDescriptionProps {
   resources: Resources;
