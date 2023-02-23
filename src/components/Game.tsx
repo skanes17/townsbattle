@@ -460,7 +460,7 @@ export default function Game(props: GameProps) {
 
     resetAssignedWorkers(clonedResources);
     setResources(clonedResources);
-    // can't get this to fire when I'd like! Fires late.
+    // FIXME: can't get this to fire when I'd like! Fires late.
     setResourcePool({ ...clonedResourcePool, workers: workersPerTurn });
 
     /* TODO: Newly trained units add to score */
