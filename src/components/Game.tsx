@@ -13,13 +13,9 @@ import {
   UnitCount,
   UnitInTraining,
 } from "./planning/";
-
 import { DevTools } from "./devTools";
-
 import { DisplayTemplate } from "./dashboards";
-
 import { ConstructBuilding, TrainingCardContainer } from "./cards";
-
 import GridCardContainer from "./layout/GridCardContainer";
 import { Button } from "./buttons";
 import { Combat } from "./combat";
@@ -42,7 +38,6 @@ import {
   UnitType,
   UpgradeCosts,
 } from "../types";
-
 import { GameContext } from "../context/GameState";
 import { useLocation } from "react-router-dom";
 import {
@@ -127,10 +122,10 @@ export default function Game(props: GameProps) {
   );
 
   /* ===BUILDING EFFECTS=== */
-  // number of new workers per turn increases when a certain building is built (eg Better Housing)
+  // number of new workers per turn increases when a certain building is built (eg Quality Housing)
   const newWorkers =
-    (buildings["betterHousing"].constructed
-      ? buildings["betterHousing"].workerBonus
+    (buildings["qualityHousing"].constructed
+      ? buildings["qualityHousing"].workerBonus
       : 0) ??
     // returns 0 if it receives an undefined value
     0;

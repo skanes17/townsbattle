@@ -55,8 +55,8 @@ export const buildingsData = {
     unlockedUnit: "tanky",
   },
   // add workers
-  betterHousing: {
-    name: "Better Housing",
+  qualityHousing: {
+    name: "Quality Housing",
     symbol: "🏘️",
     enabled: false,
     underConstruction: false,
@@ -65,7 +65,7 @@ export const buildingsData = {
     /* attackBonus: 0,
     healthBonus: 2, */
     description: "More workers available every turn.",
-    bgImage: "bg-betterHousing",
+    bgImage: "bg-qualityHousing",
     health: 2,
     resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 10 },
     buildScore: 50,
