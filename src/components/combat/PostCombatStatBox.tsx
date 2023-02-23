@@ -1,8 +1,9 @@
-import { UnitCounts, UnitType } from "../../types";
+import { BaseUnit, UnitCounts, UnitType } from "../../types";
 
 interface PostCombatStatBlockProps {
   headerText: string;
   headerTextColor: "red" | "amber" | "green" | "blue";
+  BASE_UNIT_DATA: BaseUnit;
   unitCounts: UnitCounts;
   unitTypes: UnitType[];
 }
@@ -10,6 +11,7 @@ interface PostCombatStatBlockProps {
 export default function PostCombatStatBox({
   headerText,
   headerTextColor,
+  BASE_UNIT_DATA,
   unitCounts,
   unitTypes,
 }: PostCombatStatBlockProps) {
@@ -43,7 +45,8 @@ export default function PostCombatStatBox({
           return (
             unitCounts[unitType] > 0 && (
               <p className="ml-2">
-                {unitCounts[unitType]} {unitType} (
+                {BASE_UNIT_DATA[unitType].nameSymbol} {unitCounts[unitType]}{" "}
+                {unitType} (
                 {Math.round((unitCounts[unitType] / unitCounts.total) * 100)}
                 %)
               </p>

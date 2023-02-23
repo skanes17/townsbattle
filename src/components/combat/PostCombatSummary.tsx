@@ -1,15 +1,17 @@
 import React from "react";
 import { PostCombatStatBox } from ".";
-import { Unit, UnitCounts, UnitType } from "../../types/";
+import { BaseUnit, Unit, UnitCounts, UnitType } from "../../types/";
 import { countUnits } from "../../utils";
 
 interface PostCombatSummaryProps {
+  BASE_UNIT_DATA: BaseUnit;
   unitTypes: UnitType[];
   friendlyUnits: Unit[];
   enemyUnits: Unit[];
 }
 
 export default function PostCombatSummary({
+  BASE_UNIT_DATA,
   unitTypes,
   friendlyUnits,
   enemyUnits,
@@ -41,6 +43,7 @@ export default function PostCombatSummary({
         <PostCombatStatBox
           headerText="Enemies Defeated"
           headerTextColor="green"
+          BASE_UNIT_DATA={BASE_UNIT_DATA}
           unitCounts={enemyUnitsDefeated}
           unitTypes={unitTypes}
         />
@@ -48,6 +51,7 @@ export default function PostCombatSummary({
         <PostCombatStatBox
           headerText="Friendlies Injured"
           headerTextColor="amber"
+          BASE_UNIT_DATA={BASE_UNIT_DATA}
           unitCounts={friendlyUnitsInjured}
           unitTypes={unitTypes}
         />
@@ -55,6 +59,7 @@ export default function PostCombatSummary({
         <PostCombatStatBox
           headerText="Friendlies Lost"
           headerTextColor="red"
+          BASE_UNIT_DATA={BASE_UNIT_DATA}
           unitCounts={friendlyUnitsDefeated}
           unitTypes={unitTypes}
         />

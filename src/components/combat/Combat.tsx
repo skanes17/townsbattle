@@ -576,6 +576,7 @@ export default function Combat({
         <>
           <div className="center col-span-12 col-start-1 row-start-4 w-5/6 self-center justify-self-center sm:row-start-3 sm:mt-2 md:mt-0">
             <PostCombatSummary
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
               unitTypes={unitTypes}
               friendlyUnits={combatUnits}
               enemyUnits={combatEnemyUnits}

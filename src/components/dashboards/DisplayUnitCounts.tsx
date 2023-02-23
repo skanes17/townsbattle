@@ -13,8 +13,6 @@ export default function DisplayUnitCounts({
   unitTypes,
   unitCounts,
 }: DisplayUnitCountsProps) {
-  const armySize = unitCounts.melee + unitCounts.pewpew + unitCounts.tanky;
-
   return (
     <div className="m-1">
       <div className="text-center font-bold sm:text-sm md:text-base lg:text-lg">
