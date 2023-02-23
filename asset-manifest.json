@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/React-game/static/css/main.f3cd90d5.css",
-    "main.js": "/React-game/static/js/main.b0f8fed3.js",
+    "main.css": "/React-game/static/css/main.12495fdc.css",
+    "main.js": "/React-game/static/js/main.39ee28e3.js",
     "static/media/swordsmithy-01.png": "/React-game/static/media/swordsmithy-01.c8443cdf96879757eb2b.png",
+    "static/media/betterHousing-01.png": "/React-game/static/media/betterHousing-01.e0adb4f83dd3b8dcba78.png",
     "static/media/townCenter-01.png": "/React-game/static/media/townCenter-01.67a5353ee803df4a0212.png",
     "static/media/healingChamber-01.png": "/React-game/static/media/healingChamber-01.ef2be51fdff611bfb7fc.png",
     "static/media/homeBackground-01.png": "/React-game/static/media/homeBackground-01.d1873b21268c64ddf31c.png",
@@ -11,11 +12,11 @@
     "static/media/scoutUnit-02.png": "/React-game/static/media/scoutUnit-02.35130ca10333aa3d6615.png",
     "static/media/mealHall-01.png": "/React-game/static/media/mealHall-01.0dff068353bd7c6e683a.png",
     "index.html": "/React-game/index.html",
-    "main.f3cd90d5.css.map": "/React-game/static/css/main.f3cd90d5.css.map",
-    "main.b0f8fed3.js.map": "/React-game/static/js/main.b0f8fed3.js.map"
+    "main.12495fdc.css.map": "/React-game/static/css/main.12495fdc.css.map",
+    "main.39ee28e3.js.map": "/React-game/static/js/main.39ee28e3.js.map"
   },
   "entrypoints": [
-    "static/css/main.f3cd90d5.css",
-    "static/js/main.b0f8fed3.js"
+    "static/css/main.12495fdc.css",
+    "static/js/main.39ee28e3.js"
   ]
 }
