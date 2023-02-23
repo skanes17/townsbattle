@@ -87,15 +87,8 @@ export default function WorkerCard({
         />
 
         <div className="grid auto-rows-auto grid-cols-[min-content_1fr] pl-2">
-          <div className="col-span-1 col-start-1 font-bold">Cost</div>
-          <div className="col-span-1 col-start-2 ml-4 grid auto-rows-auto pr-2 text-right text-lg">
-            <div>
-              🛠️
-              <span className={`${costColor} px-1`}>
-                {resourcePool["workers"]}
-              </span>
-              /<span className={`px-1`}>1</span>
-            </div>
+          <div className="col-span-1 col-start-1 font-bold">
+            Workers Assigned:
           </div>
         </div>
 
@@ -108,7 +101,6 @@ export default function WorkerCard({
               -
             </AddRemoveButton>
           </div>
-          <CardShowCount countToShow={resources[resourceType].workers} />
           <div className="flex items-center justify-start">
             <AddRemoveButton
               buttonType="add"
