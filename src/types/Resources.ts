@@ -12,6 +12,7 @@ interface ResourceData {
   name: string;
   symbol: string;
   workers: number;
+  multiplier: number;
   description: string;
 }
 

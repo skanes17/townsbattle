@@ -72,10 +72,15 @@ export default function WorkerCard({
     }
   };
 
-  let costColor;
+  /* let costColor;
   resourcePool["workers"] < 1
     ? (costColor = "text-red-600")
-    : (costColor = "text-green-500");
+    : (costColor = "text-green-500"); */
+
+  let countStyle;
+  if (resources[resourceType].workers > 0) {
+    countStyle = "font-bold text-amber-400";
+  }
 
   return (
     <>
@@ -86,14 +91,28 @@ export default function WorkerCard({
           descriptionText={resources[resourceType].description}
         />
 
-        <div className="grid auto-rows-auto grid-cols-[min-content_1fr] pl-2">
-          <div className="col-span-1 col-start-1 font-bold">
-            Workers Assigned:
+        <div className="grid grid-cols-2 pl-2">
+          <div className="font-bold">Assigned</div>
+          <div className="self-center justify-self-center">
+            {resources["workers"].symbol}{" "}
+            <span className={`${countStyle}`}>
+              {resources[resourceType].workers}
+            </span>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 pl-2">
+          <div className="font-bold">To Collect</div>
+          <div className="self-center justify-self-center">
+            {resources[resourceType].symbol}{" "}
+            <span className={`${countStyle}`}>
+              {resources[resourceType].workers *
+                resources[resourceType].multiplier}
+            </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-3">
-          <div className="flex items-center justify-end">
+        <div className="grid grid-cols-2">
+          <div className="flex items-center justify-end px-1">
             <AddRemoveButton
               buttonType="remove"
               onClick={() => removeWorker(resourceType)}
@@ -101,7 +120,7 @@ export default function WorkerCard({
               -
             </AddRemoveButton>
           </div>
-          <div className="flex items-center justify-start">
+          <div className="flex items-center justify-start px-1">
             <AddRemoveButton
               buttonType="add"
               onClick={() => addWorker(resourceType)}
