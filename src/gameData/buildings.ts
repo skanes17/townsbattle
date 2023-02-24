@@ -15,7 +15,8 @@ export const buildingsData = {
     healthBonus: 2, */
     description: "Craft swords. Unlock Fighters.",
     bgImage: "bg-swordsmithy",
-    health: 10,
+    maxHealth: 10,
+    currentHealth: 10,
     resourceCosts: { workers: 5, wood: 10, stone: 10 },
     buildScore: 50,
     unlockedUnit: "melee",
@@ -32,7 +33,8 @@ export const buildingsData = {
     healthBonus: -1, */
     description: "Learn ranged combat. Unlock Archers.",
     bgImage: "bg-archeryHut",
-    health: 10,
+    maxHealth: 10,
+    currentHealth: 10,
     resourceCosts: { workers: 5, wood: 10, metal: 10 },
     buildScore: 50,
     unlockedUnit: "pewpew",
@@ -49,7 +51,8 @@ export const buildingsData = {
     healthBonus: 3, */
     description: "Learn to smelt metals. Unlock Tanks.",
     bgImage: "bg-smelter",
-    health: 10,
+    maxHealth: 10,
+    currentHealth: 10,
     resourceCosts: { workers: 5, stone: 10, metal: 10 },
     buildScore: 50,
     unlockedUnit: "tanky",
@@ -66,7 +69,8 @@ export const buildingsData = {
     healthBonus: 2, */
     description: "More workers available every turn.",
     bgImage: "bg-qualityHousing",
-    health: 12,
+    maxHealth: 12,
+    currentHealth: 12,
     resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 10 },
     buildScore: 50,
     // how many extra workers it provides once constructed
@@ -84,7 +88,8 @@ export const buildingsData = {
     healthBonus: 2, */
     description: "All units gain +2 to health, +2 to armor.",
     bgImage: "bg-mealHall",
-    health: 12,
+    maxHealth: 12,
+    currentHealth: 12,
     resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 10 },
     buildScore: 50,
   },
@@ -99,7 +104,8 @@ export const buildingsData = {
     healthBonus: 0, */
     description: "Heals units after combat.",
     bgImage: "bg-healingChamber",
-    health: 15,
+    maxHealth: 15,
+    currentHealth: 15,
     resourceCosts: { workers: 5, wood: 20, stone: 10, metal: 5 },
     buildScore: 75,
   },
@@ -118,7 +124,8 @@ export const buildingsData = {
     description: "Losing this building means game over!",
     buildScore: 0,
     bgImage: "bg-townCenter",
-    health: 20,
+    maxHealth: 20,
+    currentHealth: 20,
     resourceCosts: {},
   },
   scoutUnit: {
@@ -132,7 +139,8 @@ export const buildingsData = {
     healthBonus: 0, */
     description: "Upgrade intel on the enemy army.",
     bgImage: "bg-scoutUnit",
-    health: 10,
+    maxHealth: 10,
+    currentHealth: 10,
     resourceCosts: { workers: 10, wood: 15, stone: 15, metal: 15 },
     buildScore: 100,
   },

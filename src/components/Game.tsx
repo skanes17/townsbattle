@@ -508,6 +508,7 @@ export default function Game(props: GameProps) {
         setEnemyUnits={setEnemyUnits}
         townName={townName}
         buildings={buildings}
+        setBuildings={setBuildings}
         switchPhase={switchPhase}
         scoreUpdaterFn={scoreUpdaterFn}
       />

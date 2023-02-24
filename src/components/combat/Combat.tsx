@@ -15,7 +15,7 @@ import {
   UnitCounts,
   UnitType,
 } from "../../types";
-import { countUnits } from "../../utils";
+import { cloneBasicObjectWithJSON, countUnits } from "../../utils";
 import { getSurvivingUnitIndexes } from "../../utils/getSurvivingUnitIndexes";
 import { AutoButton, CombatButton } from "../buttons";
 import { CombatCardTemplate, PreCombatCardTemplate } from "../cards";
@@ -36,6 +36,7 @@ interface CombatProps {
   setEnemyUnits: Dispatch<SetStateAction<Unit[]>>;
   townName: string;
   buildings: Buildings;
+  setBuildings: Dispatch<SetStateAction<Buildings>>;
   switchPhase: () => void;
   scoreUpdaterFn: (points: number) => void;
 }
@@ -50,6 +51,7 @@ export default function Combat({
   setEnemyUnits,
   townName,
   buildings,
+  setBuildings,
   switchPhase,
   scoreUpdaterFn,
 }: CombatProps) {
@@ -466,6 +468,95 @@ export default function Combat({
               // buildings damaged (and how much?)
 
               /* TODO: Build a function to randomly choose buildings damaged, and by how much! */
+              const clonedBuildings = cloneBasicObjectWithJSON(buildings);
+              const buildingsConstructed = Object.keys(buildings).filter(
+                (key) => clonedBuildings[key].constructed
+              );
+
+              // set up a pool of damage for each constructed building (maybe new object with buildingKey: dmgValue)
+
+              // --POSSIBLE APPROACH--
+              // set up array to hold chosen buildings
+              const chosenBuildings: string[] = [];
+
+              // attack the buildings!
+              survivingEnemyUnitIndexes.forEach((unitIndex) => {
+                // choose a constructed building at random, take its health value and subtract the enemy's attack value from it
+                const chosenBuilding =
+                  buildingsConstructed[
+                    Math.floor(Math.random() * buildingsConstructed.length)
+                  ];
+
+                // if the building is not already added to chosenBuildings[], add it
+                if (!chosenBuildings.includes(chosenBuilding)) {
+                  chosenBuildings.push(chosenBuilding);
+                }
+
+                const enemyAttackValue = combatEnemyUnits[unitIndex].attack;
+
+                console.log("Chosen Building: " + chosenBuilding);
+                console.log(
+                  "Building Health: " +
+                    clonedBuildings[chosenBuilding].currentHealth
+                );
+                console.log(
+                  "Chosen Enemy: " +
+                    combatEnemyUnits[unitIndex].name +
+                    combatEnemyUnits[unitIndex].id
+                );
+                console.log("Enemy Attack: " + enemyAttackValue);
+
+                // TODO: could set up a push to a new "buildingDamagedEvent" messages log here -- ENEMY X attacks BUILDING Y for Z DMG
+
+                clonedBuildings[chosenBuilding].currentHealth = Math.max(
+                  0,
+                  clonedBuildings[chosenBuilding].currentHealth -
+                    enemyAttackValue
+                );
+
+                console.log(
+                  "New Building Health: " +
+                    clonedBuildings[chosenBuilding].currentHealth
+                );
+
+                if (
+                  // get the chosen building's data from the object
+                  // use the index to choose a CONSTRUCTED BUILDING
+                  clonedBuildings[chosenBuilding].currentHealth === 0
+                ) {
+                  // if the building is destroyed (currentHealth === 0), set currentHealth to 0 and constructed to false
+                  clonedBuildings[chosenBuilding].currentHealth = 0;
+                  clonedBuildings[chosenBuilding].constructed = false;
+                }
+              });
+
+              /* TODO: Incorporate this into the summary screen UI */
+              console.log(chosenBuildings);
+              /* TODO: Keep track of the damage dealt! */
+
+              // FIXME: Make this a modal that pops up!
+              if (clonedBuildings["townCenter"].currentHealth === 0) {
+                alert("Your Town Center was destroyed. It's Game Over!");
+              }
+
+              // for each index, take its attack and subtract it from a random constructed building -- keep a separate log of which building was selected!
+              // keep track of total damage somewhere?
+              // can make a set from this after, which just shows the buildings hit
+              // once this is done, check all buildings with health <= 0
+              // if they match this condition, set constructed = false
+              // if town center was destroyed, game over!
+
+              /* buildingsConstructed.forEach(); */
+
+              // --ANOTHER APPROACH--
+              // select surviving enemy unit at random
+              // add that unit's damage to a randomly chosen building's dmgValue pool
+              // reduce each building's health by that much once this process is complete
+              // if the building's health is <= 0, set its health to 0 and destroy it (set constructed = false)
+              // make sure that the related unit is taken out of play (this should handle itself... I think)
+              // if the town center falls, it's game over!
+
+              setBuildings(clonedBuildings);
 
               setPhase(Phases.PostCombat);
             }

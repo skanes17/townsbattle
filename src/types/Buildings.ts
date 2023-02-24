@@ -13,7 +13,8 @@ export interface Building {
   healthBonus: number; */
   description: string;
   bgImage?: string;
-  health: number;
+  maxHealth: number;
+  currentHealth: number;
   resourceCosts: ResourceCosts;
   buildScore: number;
   unlockedUnit?: UnitType;

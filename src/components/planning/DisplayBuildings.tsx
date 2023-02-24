@@ -33,7 +33,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
           />
           <BldgCardFooter
             tier={buildings[buildingType].tier}
-            health={buildings[buildingType].health}
+            health={buildings[buildingType].currentHealth}
           />
         </BldgCardTemplate>
       ))}
@@ -75,7 +75,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
 
             <div className="flex flex-row justify-between">
               <span>Tier {buildings[buildingType].tier}</span>
-              <span>❤️{buildings[buildingType].health}</span>
+              <span>❤️{buildings[buildingType].currentHealth}</span>
             </div>
           </div>
         ))}
