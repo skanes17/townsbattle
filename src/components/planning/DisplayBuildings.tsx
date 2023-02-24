@@ -33,7 +33,8 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
           />
           <BldgCardFooter
             tier={buildings[buildingType].tier}
-            health={buildings[buildingType].currentHealth}
+            currentHealth={buildings[buildingType].currentHealth}
+            maxHealth={buildings[buildingType].maxHealth}
           />
         </BldgCardTemplate>
       ))}
