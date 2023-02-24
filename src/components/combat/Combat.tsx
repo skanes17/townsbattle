@@ -445,6 +445,9 @@ export default function Combat({
               survivingFriendlyUnitIndexes.length > 0 &&
               survivingEnemyUnitIndexes.length > 0
             ) {
+              // do this if both armies have survived
+
+              // determine who won, who lost
               postCombatEvent();
 
               selectNewUnits();
@@ -453,16 +456,17 @@ export default function Combat({
 
               setSubPhase(SubPhases.Fight);
             } else {
-              // if one or both armies were defeated, end combat
+              // else if one or both armies were defeated, end combat
+
+              // send a message to the log to explain the outcome of the battle
+              summaryEvent();
 
               // TODO: See below
               // calculate all the stats to present on next screen, such as...
-              // number of units defeated -- DONE
-              // number of units lost -- DONE
-              // number of units injured -- DONE
               // buildings damaged (and how much?)
 
-              summaryEvent();
+              /* TODO: Build a function to randomly choose buildings damaged, and by how much! */
+
               setPhase(Phases.PostCombat);
             }
             break;

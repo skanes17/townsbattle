@@ -6,7 +6,7 @@ interface BuildingsUIProps {
   buildings: Buildings;
   setBuildings: Dispatch<SetStateAction<Buildings>>;
   /* setBuildings: (buildings: Buildings) => void; */
-  buildingsToConstruct: string[];
+  buildingsLeftToConstruct: string[];
   resources: Resources;
   setResources: Dispatch<SetStateAction<Resources>>;
   /* setResources: (resources: Resources) => void; */
@@ -17,7 +17,7 @@ interface BuildingsUIProps {
 export default function BuildingsUI({
   buildings,
   setBuildings,
-  buildingsToConstruct,
+  buildingsLeftToConstruct,
   resources,
   setResources,
   resourcePool,
@@ -28,7 +28,7 @@ export default function BuildingsUI({
       <h2 className="text-4xl font-extrabold dark:text-white">
         Building Creation
       </h2>
-      {buildingsToConstruct.map((buildingType: string) => (
+      {buildingsLeftToConstruct.map((buildingType: string) => (
         <ConstructBuilding
           buildings={buildings}
           setBuildings={setBuildings}
