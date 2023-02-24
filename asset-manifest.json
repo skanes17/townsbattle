@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/React-game/static/css/main.c28fb661.css",
-    "main.js": "/React-game/static/js/main.8e1b717b.js",
+    "main.js": "/React-game/static/js/main.4f4b9fe9.js",
     "static/media/swordsmithy-01.png": "/React-game/static/media/swordsmithy-01.c8443cdf96879757eb2b.png",
     "static/media/qualityHousing-01.png": "/React-game/static/media/qualityHousing-01.e0adb4f83dd3b8dcba78.png",
     "static/media/townCenter-01.png": "/React-game/static/media/townCenter-01.67a5353ee803df4a0212.png",
@@ -13,10 +13,10 @@
     "static/media/mealHall-01.png": "/React-game/static/media/mealHall-01.0dff068353bd7c6e683a.png",
     "index.html": "/React-game/index.html",
     "main.c28fb661.css.map": "/React-game/static/css/main.c28fb661.css.map",
-    "main.8e1b717b.js.map": "/React-game/static/js/main.8e1b717b.js.map"
+    "main.4f4b9fe9.js.map": "/React-game/static/js/main.4f4b9fe9.js.map"
   },
   "entrypoints": [
     "static/css/main.c28fb661.css",
-    "static/js/main.8e1b717b.js"
+    "static/js/main.4f4b9fe9.js"
   ]
 }
