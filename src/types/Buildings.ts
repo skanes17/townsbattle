@@ -15,6 +15,7 @@ export interface Building {
   bgImage?: string;
   maxHealth: number;
   currentHealth: number;
+  damage: number;
   resourceCosts: ResourceCosts;
   buildScore: number;
   unlockedUnit?: UnitType;

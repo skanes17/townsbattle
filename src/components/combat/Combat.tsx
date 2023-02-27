@@ -1,7 +1,9 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { Link } from "react-router-dom";
 import { enemyColor, friendlyColor } from "../../gameData";
 import {
   BaseUnit,
+  Building,
   Buildings,
   CombatEvent,
   MainCombatEvent,
@@ -167,11 +169,24 @@ export default function Combat({
     // used destructuring to make code more readable
     const { attack, currentHealth, maxHealth, fullHealthAttackBonus } =
       attacker;
-    const defense = defender.armor;
+    // armor reduces incoming attack damage
+    const { armor: defenderArmor } = defender;
     // if unit has full health, it does bonus attack damage
     const attackBonus = currentHealth === maxHealth ? fullHealthAttackBonus : 0;
-    return attack + attackBonus - defense;
+    // Math.max() prevents negative attack values due to high armor
+    return Math.max(0, attack + attackBonus - defenderArmor);
   };
+
+  function updateCurrentHealth(attacker: Unit, defender: Unit) {
+    defender.currentHealth = Math.max(
+      0,
+      defender.currentHealth - calculatedAttackValue(attacker, defender)
+    );
+
+    if (defender.currentHealth === 0) {
+      defender.attack = 0;
+    }
+  }
 
   // default behaviour
   const unitsFight = () => {
@@ -184,6 +199,7 @@ export default function Combat({
     // INCORPORATE PASSIVE EFFECTS HERE
     // timesSelectedForCombat: number;
 
+    /* TODO: Optimize the following conditionals */
     // only run this if the friendly hits first and the enemy does not
     if (selectedFriendly.hitsFirst && !selectedEnemy.hitsFirst) {
       // Enemy gets hit first
@@ -410,6 +426,15 @@ export default function Combat({
     setEnemyUnits(enemyUnitsToSendToPlanning);
   };
 
+  // reset all building damage to 0 once event has been processed in messages
+  const resetBuildingDamageToZero = (buildings: Buildings): Buildings => {
+    const buildingsWithZeroDamage = cloneBasicObjectWithJSON(buildings);
+    Object.keys(buildings).map((key) => {
+      return (buildings[key].damage = 0);
+    });
+    return buildingsWithZeroDamage;
+  };
+
   const combatMegaFunction = () => {
     // If you have no units upon combat, immediately go to postCombat screen
     // TODO: Proper summary calculations for this case
@@ -447,18 +472,17 @@ export default function Combat({
               survivingFriendlyUnitIndexes.length > 0 &&
               survivingEnemyUnitIndexes.length > 0
             ) {
-              // do this if both armies have survived
+              // IF both armies have survived...
 
               // determine who won, who lost
               postCombatEvent();
 
+              // return the units to their army and pick new ones -- also sets a new preCombatEvent
               selectNewUnits();
-              // return the units to their army and pick new ones
-              // also sets a new preCombatEvent
 
               setSubPhase(SubPhases.Fight);
             } else {
-              // else if one or both armies were defeated, end combat
+              // ELSE one or both armies were defeated, end combat
 
               // send a message to the log to explain the outcome of the battle
               summaryEvent();
@@ -467,77 +491,70 @@ export default function Combat({
               // calculate all the stats to present on next screen, such as...
               // buildings damaged (and how much?)
 
-              /* TODO: Build a function to randomly choose buildings damaged, and by how much! */
+              // FIXME: NEW FUNCTION TO START HERE
+              // --ATTACKING BUILDINGS
               const clonedBuildings = cloneBasicObjectWithJSON(buildings);
-              const buildingsConstructed = Object.keys(buildings).filter(
+              let buildingsConstructed = Object.keys(buildings).filter(
                 (key) => clonedBuildings[key].constructed
               );
-
-              // set up a pool of damage for each constructed building (maybe new object with buildingKey: dmgValue)
-
-              // --POSSIBLE APPROACH--
-              // set up array to hold chosen buildings
-              const chosenBuildings: string[] = [];
-
-              // attack the buildings!
-              survivingEnemyUnitIndexes.forEach((unitIndex) => {
-                // choose a constructed building at random, take its health value and subtract the enemy's attack value from it
-                const chosenBuilding =
-                  buildingsConstructed[
-                    Math.floor(Math.random() * buildingsConstructed.length)
+              // this loop to chooses a constructed building at random and subtract enemy attack value from its current health
+              for (const unitIndex of survivingEnemyUnitIndexes) {
+                const buildingAttacked =
+                  clonedBuildings[
+                    buildingsConstructed[
+                      Math.floor(Math.random() * buildingsConstructed.length)
+                    ]
                   ];
 
-                // if the building is not already added to chosenBuildings[], add it
-                if (!chosenBuildings.includes(chosenBuilding)) {
-                  chosenBuildings.push(chosenBuilding);
-                }
+                const enemyUnit = combatEnemyUnits[unitIndex];
+                // TODO: Consider Buffs??
+                const enemyAttackValue = enemyUnit.attack;
 
-                const enemyAttackValue = combatEnemyUnits[unitIndex].attack;
-
-                console.log("Chosen Building: " + chosenBuilding);
+                console.log("Building Attacked: " + buildingAttacked.name);
                 console.log(
-                  "Building Health: " +
-                    clonedBuildings[chosenBuilding].currentHealth
+                  "Building Health: " + buildingAttacked.currentHealth
                 );
-                console.log(
-                  "Chosen Enemy: " +
-                    combatEnemyUnits[unitIndex].name +
-                    combatEnemyUnits[unitIndex].id
-                );
+                console.log("Enemy Chosen: " + enemyUnit.name + enemyUnit.id);
                 console.log("Enemy Attack: " + enemyAttackValue);
 
                 // TODO: could set up a push to a new "buildingDamagedEvent" messages log here -- ENEMY X attacks BUILDING Y for Z DMG
 
-                clonedBuildings[chosenBuilding].currentHealth = Math.max(
+                buildingAttacked.damage += enemyAttackValue;
+                buildingAttacked.currentHealth = Math.max(
                   0,
-                  clonedBuildings[chosenBuilding].currentHealth -
-                    enemyAttackValue
+                  buildingAttacked.currentHealth - enemyAttackValue
                 );
 
                 console.log(
-                  "New Building Health: " +
-                    clonedBuildings[chosenBuilding].currentHealth
+                  "New Building Health: " + buildingAttacked.currentHealth
+                );
+                console.log(
+                  "Total Damage Dealt to This Building: " +
+                    buildingAttacked.damage
                 );
 
-                if (
-                  // get the chosen building's data from the object
-                  // use the index to choose a CONSTRUCTED BUILDING
-                  clonedBuildings[chosenBuilding].currentHealth === 0
-                ) {
-                  // if the building is destroyed (currentHealth === 0), set currentHealth to 0 and constructed to false
-                  clonedBuildings[chosenBuilding].currentHealth = 0;
-                  clonedBuildings[chosenBuilding].constructed = false;
+                // FIXME: Make this a modal that pops up!
+                if (buildingAttacked.currentHealth === 0) {
+                  // if the building is destroyed, set it to destroyed (constructed = false)
+                  buildingAttacked.constructed = false;
+                  // refill its health (for a future build)
+                  buildingAttacked.currentHealth = buildingAttacked.maxHealth;
+                  // refresh pool of buildings that are to be attacked
+                  buildingsConstructed = Object.keys(buildings).filter(
+                    (key) => clonedBuildings[key].constructed
+                  );
                 }
-              });
+
+                if (
+                  clonedBuildings["townCenter"].currentHealth === 0 ||
+                  buildingsConstructed.length === 0
+                ) {
+                  alert("Your Town Center was destroyed. It's Game Over!");
+                  break;
+                }
+              }
 
               /* TODO: Incorporate this into the summary screen UI */
-              console.log(chosenBuildings);
-              /* TODO: Keep track of the damage dealt! */
-
-              // FIXME: Make this a modal that pops up!
-              if (clonedBuildings["townCenter"].currentHealth === 0) {
-                alert("Your Town Center was destroyed. It's Game Over!");
-              }
 
               // for each index, take its attack and subtract it from a random constructed building -- keep a separate log of which building was selected!
               // keep track of total damage somewhere?
@@ -557,13 +574,15 @@ export default function Combat({
               // if the town center falls, it's game over!
 
               setBuildings(clonedBuildings);
-
               setPhase(Phases.PostCombat);
             }
             break;
         }
         break;
       case Phases.PostCombat:
+        // reset all building damage to 0
+        setBuildings(resetBuildingDamageToZero(buildings));
+
         sendArmiesToPlanning();
         // add points from this battle to total score
         scoreUpdaterFn(points);
@@ -679,13 +698,23 @@ export default function Combat({
           </div>
           {/* FIXME: Should really just call button once!! */}
           <div className="col-span-12 flex items-center justify-end">
-            <button
-              className="text-md rounded border border-white/40 bg-blue-600 p-2 font-bold text-white duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl 
+            {buildings["townCenter"].constructed ? (
+              <button
+                className="text-md rounded border border-white/40 bg-blue-600 p-2 font-bold text-white duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl 
                    xl:text-4xl"
-              onClick={() => combatMegaFunction()}
-            >
-              Return to Planning
-            </button>
+                onClick={() => combatMegaFunction()}
+              >
+                Return to Planning
+              </button>
+            ) : (
+              <Link
+                className="text-md rounded border border-white/40 bg-blue-600 p-2 font-bold text-white duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl 
+          xl:text-4xl"
+                to="/"
+              >
+                End Game
+              </Link>
+            )}
           </div>
         </>
       ) : (
