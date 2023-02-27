@@ -290,3 +290,34 @@ export const messages = {
     },
   ],
 };
+
+// TODO: Update this draft into useable object
+export const scoutMessages = {
+  noScouts: [
+    // different indexes used for desired events/text
+    // @ts-ignore
+    (event: NoScoutEvent) => {
+      return (
+        // stuff, paragraphs etc
+        <></>
+      );
+    },
+
+    /* more alternatives here */
+  ],
+};
+
+// template for this kind of message system:
+export const messagesObjectName = {
+  messageType: [
+    // @ts-ignore
+    (infoToSend: TypeScriptType) => {
+      return <p>Message content to save to state</p>;
+    },
+  ],
+};
+
+// For example, you can call on this using something like messagesObjectName.messageType[0](infoObject).
+// You can save this to a separate state object.
+// That state object will then hold a message containing appropriately formatted stuff based on your argument.
+// Pretty slick. Thanks Devin!
