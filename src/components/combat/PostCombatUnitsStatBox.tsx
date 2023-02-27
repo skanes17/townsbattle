@@ -1,6 +1,6 @@
 import { BaseUnit, UnitCounts, UnitType } from "../../types";
 
-interface PostCombatStatBlockProps {
+interface PostCombatUnitsStatBoxProps {
   headerText: string;
   headerTextColor: "red" | "amber" | "green" | "blue";
   BASE_UNIT_DATA: BaseUnit;
@@ -8,13 +8,13 @@ interface PostCombatStatBlockProps {
   unitTypes: UnitType[];
 }
 
-export default function PostCombatStatBox({
+export default function PostCombatUnitsStatBox({
   headerText,
   headerTextColor,
   BASE_UNIT_DATA,
   unitCounts,
   unitTypes,
-}: PostCombatStatBlockProps) {
+}: PostCombatUnitsStatBoxProps) {
   let textColor;
 
   switch (headerTextColor) {

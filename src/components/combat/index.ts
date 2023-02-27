@@ -3,8 +3,9 @@ import Combat from "./Combat";
 import CombatLog from "./CombatLog";
 import { messages } from "./Messages";
 import POddStyle from "./POddStyle";
-import PostCombatStatBox from "./PostCombatStatBox";
+import PostCombatBldgStatBox from "./PostCombatBldgStatBox";
 import PostCombatSummary from "./PostCombatSummary";
+import PostCombatUnitsStatBox from "./PostCombatUnitsStatBox";
 import UnitTile from "./UnitTile";
 
 export {
@@ -13,7 +14,8 @@ export {
   CombatLog,
   messages,
   POddStyle,
-  PostCombatStatBox,
+  PostCombatBldgStatBox,
   PostCombatSummary,
+  PostCombatUnitsStatBox,
   UnitTile,
 };
