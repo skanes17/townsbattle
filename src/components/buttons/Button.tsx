@@ -14,11 +14,11 @@ export default function Button({
   return (
     <button
       type="button"
-      className={`transition ease-in-out ${
-        buttonColor === "blue" ? "bg-blue-800" : "bg-red-700"
-      } rounded border border-white/40 py-2 px-4 text-xl font-bold text-white ${
-        buttonColor === "blue" ? "hover:bg-blue-600" : "hover:bg-red-500"
-      } duration-75 active:scale-100`}
+      className={`rounded py-2 px-4 text-xl font-bold text-white shadow-md transition duration-75 ease-in-out active:scale-100 ${
+        buttonColor === "blue"
+          ? "bg-blue-800 shadow-blue-800/50 hover:bg-blue-600"
+          : "bg-red-700 shadow-red-800/50 hover:bg-red-500"
+      }`}
       onClick={() => onClick()}
     >
       {children}

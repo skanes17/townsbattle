@@ -19,7 +19,7 @@ export const baseUnitData = {
     symbol: "🏹",
     description: "Attacks first against most unit types.",
     // decrease the attack but it attacks first
-    attack: 4,
+    attack: 5,
     maxHealth: 7,
     resourceCosts: { workers: 1, wood: 2, metal: 2 },
     buildScore: 15,

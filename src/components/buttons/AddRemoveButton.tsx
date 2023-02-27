@@ -11,12 +11,21 @@ export default function AddRemoveButton({
   buttonType,
   onClick,
 }: AddRemoveButtonProps) {
+  let bgColor;
+
+  switch (buttonType) {
+    case "add":
+      bgColor = "bg-emerald-700 shadow-emerald-700/50 hover:bg-emerald-500";
+      break;
+    case "remove":
+      bgColor = "bg-red-700 shadow-red-700/50 hover:bg-red-500";
+      break;
+  }
+
   return (
     <button
       type="button"
-      className={`${buttonType === "add" ? "bg-emerald-900" : "bg-red-900"} ${
-        buttonType === "add" ? "hover:bg-emerald-700" : "hover:bg-red-700"
-      } min-w-full rounded border border-gray-400 py-1 text-xs font-semibold text-white shadow`}
+      className={`shadow ${bgColor} min-w-full rounded py-1 text-xs font-semibold text-white`}
       onClick={() => onClick()}
     >
       {children}
