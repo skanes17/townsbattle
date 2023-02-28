@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         archeryHut: "url('/src/assets/images/archeryHut-01.png')",
-        army: "url('/src/assets/images/homeBackground-01.png')",
+        mainMenu: "url('/src/assets/images/mainMenu-01.png')",
         qualityHousing: "url('/src/assets/images/qualityHousing-01.png')",
         /* enemyArmy: "url('/src/assets/images/enemyArmy-02.png')",
         friendlyArmy: "url('/src/assets/images/friendlyArmy-01.png')", */

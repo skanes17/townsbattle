@@ -60,6 +60,8 @@ export default function Combat({
   const [phase, setPhase] = useState<Phases>(Phases.PreCombat);
   const [subPhase, setSubPhase] = useState<SubPhases>(SubPhases.Fight);
 
+  // TODO: Consider modifying CombatUnits to include attack and health buffs!
+
   const [combatUnits, setCombatUnits] = useState<Unit[]>([...myUnits]);
   const [combatEnemyUnits, setCombatEnemyUnits] = useState<Unit[]>([
     ...enemyUnits,
