@@ -709,15 +709,15 @@ export default function Combat({
 
       {(phase === Phases.PreCombat || phase === Phases.Combat) && (
         <div className="col-span-2 col-start-6 row-start-4 grid auto-rows-min place-content-center gap-2 sm:row-start-3 sm:mt-2 md:mt-0">
-          {phase === Phases.Combat && (
+          {/* {phase === Phases.Combat && (
+            // TODO: Implement a system like this -- Maybe take up 4 columns, pops up as overlap, then fades?
             <div className="mx-auto max-h-24 overflow-y-auto rounded-bl-md rounded-tr-md border border-white/25 p-2 text-center text-xs sm:max-h-full sm:text-sm md:text-base lg:text-lg xl:text-xl">
-              {/* TODO: Maybe make this take up 4 columns, pops up as overlap then fades? */}
               <p>
                 Random taunts when units battle each other, pop up during fight
                 then fade.
               </p>
             </div>
-          )}
+          )} */}
 
           <div className="flex items-end justify-center p-4 pb-0">
             {phase === Phases.PreCombat && (

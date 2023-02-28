@@ -11,13 +11,13 @@ export interface Unit {
   description?: string;
   attack: number;
   maxHealth: number;
+  // reduce incoming damage
+  armor: number;
   currentHealth: number;
   resourceCosts: ResourceCosts;
   buildScore: number;
   hitsFirst: boolean;
   fullHealthAttackBonus: number;
-  // reduce incoming damage
-  armor: number;
   timesSelectedForCombat: number;
   id?: number;
 }

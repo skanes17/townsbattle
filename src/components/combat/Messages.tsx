@@ -105,6 +105,7 @@ export const messages = {
             {event.data.friendly.id}
           </span>{" "}
           {/* TODO: More of this type of conditional flavortext; focus on DRY */}
+          {event.data.friendly.unitType === "farmer" ? "flails at" : null}{" "}
           {event.data.friendly.unitType === "melee" ? "slashes" : null}{" "}
           {event.data.friendly.unitType === "pewpew" ? "shoots at" : null}{" "}
           {event.data.friendly.unitType === "tanky" ? "bashes" : null}{" "}
