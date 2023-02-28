@@ -597,24 +597,26 @@ export default function Game(props: GameProps) {
           {/* TODO: Only show unit counts once units are unlocked, and only show appropraite counts for unit types unlocked */}
           {unlockedUnitTypes.length > 0 ? (
             <DisplayTemplate headerText="Army">
-              {unitTypes.map((unitType: UnitType) => (
-                <UnitCount
-                  BASE_UNIT_DATA={BASE_UNIT_DATA}
-                  unitType={unitType}
-                  unitCounts={unitCounts}
-                />
-              ))}{" "}
+              {unitTypes.map((unitType: UnitType) =>
+                unitCounts[unitType] > 0 ? (
+                  <UnitCount
+                    BASE_UNIT_DATA={BASE_UNIT_DATA}
+                    unitType={unitType}
+                    unitCounts={unitCounts}
+                  />
+                ) : null
+              )}{" "}
             </DisplayTemplate>
           ) : null}
 
           {/* FIXME: Make this into a tooltip, like a question mark circle thing you hover over or click */}
-          {unlockedUnitTypes.length > 0 ? (
+          {unlockedUnitTypes.length > 1 ? (
             <div className="place-self-center text-xl">
               Tip: Train Units to Protect {townName}!
             </div>
           ) : (
             <div className="place-self-center text-xl">
-              Tip: Construct buildings to unlock units!
+              Tip: Construct buildings to unlock new units!
             </div>
           )}
         </div>
@@ -686,22 +688,26 @@ export default function Game(props: GameProps) {
       <div className="sticky bottom-0 z-10 grid auto-cols-auto">
         <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <DisplayTemplate headerText="Resources to Collect">
-            {baseResourceTypes.map((resourceType) => (
-              <ResourceToCollect
-                resources={resources}
-                resourceType={resourceType}
-              />
-            ))}
+            {baseResourceTypes.map((resourceType) =>
+              resources[resourceType].workers > 0 ? (
+                <ResourceToCollect
+                  resources={resources}
+                  resourceType={resourceType}
+                />
+              ) : null
+            )}
           </DisplayTemplate>
 
           <DisplayTemplate headerText="Units to Train">
-            {unitTypes.map((unitType) => (
-              <UnitInTraining
-                BASE_UNIT_DATA={BASE_UNIT_DATA}
-                unitType={unitType}
-                unitsInTraining={unitsInTraining}
-              />
-            ))}
+            {unitTypes.map((unitType) =>
+              unitsInTraining[unitType] > 0 ? (
+                <UnitInTraining
+                  BASE_UNIT_DATA={BASE_UNIT_DATA}
+                  unitType={unitType}
+                  unitsInTraining={unitsInTraining}
+                />
+              ) : null
+            )}
           </DisplayTemplate>
 
           <div className="sticky bottom-0 flex items-center justify-center p-0">
@@ -711,9 +717,11 @@ export default function Game(props: GameProps) {
           </div>
 
           <DisplayTemplate headerText="Buildings Under Construction">
-            {buildingsUnderConstruction.map((building) => (
-              <div>{buildings[building].symbol}</div>
-            ))}
+            {buildingsUnderConstruction.map((building) =>
+              buildingsUnderConstruction.length > 0 ? (
+                <div>{buildings[building].symbol}</div>
+              ) : null
+            )}
           </DisplayTemplate>
         </div>
       </div>

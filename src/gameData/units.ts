@@ -1,4 +1,18 @@
 export const baseUnitData = {
+  farmer: {
+    unitType: "farmer",
+    name: "Farmer",
+    symbol: "🧑🏻‍🌾",
+    description: "Great at farming! Terrible at fighting.",
+    attack: 1,
+    maxHealth: 1,
+    resourceCosts: { workers: 1, wood: 1, stone: 1, metal: 1 },
+    buildScore: 2,
+    hitsFirst: false,
+    armor: 0,
+    fullHealthAttackBonus: 0,
+    timesSelectedForCombat: 0,
+  },
   melee: {
     unitType: "melee",
     name: "Melee",

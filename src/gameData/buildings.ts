@@ -134,6 +134,7 @@ export const buildingsData = {
     currentHealth: 15,
     damage: 0,
     resourceCosts: {},
+    unlockedUnit: "farmer",
   },
   scoutUnit: {
     name: "Scout Unit",

@@ -1,13 +1,13 @@
 import { ResourceCosts } from "./ResourceCosts";
 
-export type UnitType = "melee" | "pewpew" | "tanky";
-export type UnitName = "Melee" | "Pewpew" | "Tanky";
+export type UnitType = "farmer" | "melee" | "pewpew" | "tanky";
+export type UnitName = "Farmer" | "Melee" | "Pewpew" | "Tanky";
 
 export interface Unit {
   unitType: UnitType;
   /* FIXME: UnitName not being properly enforced when imported */
   name: UnitName;
-  symbol: "⚔️" | "🏹" | "🛡️";
+  symbol: "⚔️" | "🏹" | "🛡️" | "🧑🏻‍🌾";
   description?: string;
   attack: number;
   maxHealth: number;
