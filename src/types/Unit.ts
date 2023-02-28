@@ -9,6 +9,7 @@ export interface Unit {
   name: UnitName;
   symbol: "⚔️" | "🏹" | "🛡️" | "🧑🏻‍🌾";
   description?: string;
+  threatLevel: number;
   attack: number;
   maxHealth: number;
   // reduce incoming damage
