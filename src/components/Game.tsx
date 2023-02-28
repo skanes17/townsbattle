@@ -338,6 +338,7 @@ export default function Game(props: GameProps) {
   ) => {
     const unlockedUnits = unlockedUnitTypes ?? [];
 
+    // calculate the friendly army power level (the sum of all the attack, health, and threat levels)
     const { totalAttack, totalHealth, totalThreat } = friendlyUnits.reduce(
       // and an arrow function is called for each unit in friendlyUnits
       (totals, unit) => ({
@@ -354,6 +355,21 @@ export default function Game(props: GameProps) {
     console.log(friendlyPowerLevel);
 
     // generate an enemy army which matches this power level +- some amount
+
+    const difficultyScaler = 1.0; // default
+    // every combat won, the enemy army will grow by this percentage relative to the previous round
+    const growthRate = 0.05; // tweak as necessary for balance
+    // TODO: set this at start of the game based on difficulty
+    const desiredTurnsUntilEnemyMatchesPlayer = 10;
+    // exponential growth formula based on y = s * A(1+r)^(t-D) where...
+    // y = enemy power level, s = scaler, A = friendly power level, t = turns, D = desired turn until match
+    // reference -> https://www.desmos.com/calculator/uli0ce3voh
+    const enemyPowerLevel =
+      difficultyScaler *
+      friendlyPowerLevel *
+      (1 + growthRate) ** (turn - desiredTurnsUntilEnemyMatchesPlayer);
+    console.log(enemyPowerLevel);
+
     // thoughts on enemy progression...
     // if combat turns = 0, generate only farmers
     // if combat turns = 1, generate only farmers and one melee
