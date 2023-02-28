@@ -339,20 +339,30 @@ export default function Game(props: GameProps) {
     const unlockedUnits = unlockedUnitTypes ?? [];
 
     // calculate the friendly army power level (the sum of all the attack, health, and threat levels)
-    const { totalAttack, totalHealth, totalThreat } = friendlyUnits.reduce(
-      // and an arrow function is called for each unit in friendlyUnits
-      (totals, unit) => ({
-        // For each unit, the arrow function adds the unit's attack, health, and threat to each total
-        totalAttack: totals.totalAttack + unit.attack,
-        totalHealth: totals.totalHealth + unit.currentHealth,
-        totalThreat: totals.totalThreat + unit.threatLevel,
-      }),
-      // Initilized values for total attack, total health, and total threat
-      { totalAttack: 0, totalHealth: 0, totalThreat: 0 }
-    );
+    const { totalAttack, totalHealth, totalArmor, totalThreat } =
+      friendlyUnits.reduce(
+        // and an arrow function is called for each unit in friendlyUnits
+        (totals, unit) => ({
+          // For each unit, the arrow function adds the unit's attack, health, and threat to each total
+          totalAttack: totals.totalAttack + unit.attack,
+          totalHealth: totals.totalHealth + unit.currentHealth,
+          totalArmor: totals.totalArmor + unit.armor,
+          totalThreat: totals.totalThreat + unit.threatLevel,
+        }),
+        // Initilized values for total attack, total health, and total threat
+        { totalAttack: 0, totalHealth: 0, totalArmor: 0, totalThreat: 0 }
+      );
 
-    const friendlyPowerLevel = totalAttack + totalHealth + totalThreat;
+    const friendlyPowerLevel =
+      totalAttack + totalHealth + totalArmor + totalThreat;
     console.log(friendlyPowerLevel);
+
+    /* Alternate Method if only Power Level is desired:
+    const friendlyPowerLevel = friendlyUnits.reduce((total, unit) => {
+      return total + unit.attack + unit.currentHealth + unit.armor + unit.threatLevel;
+    }, 0);
+    console.log(friendlyPowerLevel);
+    */
 
     // generate an enemy army which matches this power level +- some amount
 
@@ -364,13 +374,31 @@ export default function Game(props: GameProps) {
     // exponential growth formula based on y = s * A(1+r)^(t-D) where...
     // y = enemy power level, s = scaler, A = friendly power level, t = turns, D = desired turn until match
     // reference -> https://www.desmos.com/calculator/uli0ce3voh
-    const enemyPowerLevel =
+    /* --WANNA TWEAK THE SCALING SYSTEM? TWEAK THIS-- */
+    const desiredEnemyPowerLevel =
       difficultyScaler *
       friendlyPowerLevel *
       (1 + growthRate) ** (turn - desiredTurnsUntilEnemyMatchesPlayer);
-    console.log(enemyPowerLevel);
+    console.log(desiredEnemyPowerLevel);
 
-    // thoughts on enemy progression...
+    const randomEnemyArray = [];
+    let powerLevel = 0;
+    while (powerLevel < desiredEnemyPowerLevel) {
+      // TODO: Tweak enemy composition based on turn here (eg first combat? only farmers!)
+      // second combat? farmers and a melee! (see below)
+      const randomUnitType =
+        unitTypes[Math.floor(Math.random() * unitTypes.length)];
+      const randomUnit = BASE_UNIT_DATA[randomUnitType];
+
+      randomEnemyArray.push(randomUnit);
+      const { attack, maxHealth, threatLevel } = randomUnit;
+
+      powerLevel += attack + maxHealth + threatLevel;
+    }
+    console.log("Power level: " + powerLevel);
+    console.log(randomEnemyArray);
+
+    // thoughts on composition of enemy army...
     // if combat turns = 0, generate only farmers
     // if combat turns = 1, generate only farmers and one melee
     // if combat turns = 2, generate only melees? or farmers and 1-2 melees
