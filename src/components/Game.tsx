@@ -329,6 +329,42 @@ export default function Game(props: GameProps) {
     setMyUnits((myUnits) => [...myUnits, ...units]);
   };
 
+  // consider...
+  // time/turn -- relative army strength -- unlocked units
+  const generateEnemyArmy = (
+    turnNumber: number,
+    friendlyUnits: Unit[],
+    unlockedUnitTypes: (UnitType | undefined)[]
+  ) => {
+    const unlockedUnits = unlockedUnitTypes ?? [];
+
+    const { totalAttack, totalHealth, totalThreat } = friendlyUnits.reduce(
+      // and an arrow function is called for each unit in friendlyUnits
+      (totals, unit) => ({
+        // For each unit, the arrow function adds the unit's attack, health, and threat to each total
+        totalAttack: totals.totalAttack + unit.attack,
+        totalHealth: totals.totalHealth + unit.currentHealth,
+        totalThreat: totals.totalThreat + unit.threatLevel,
+      }),
+      // Initilized values for total attack, total health, and total threat
+      { totalAttack: 0, totalHealth: 0, totalThreat: 0 }
+    );
+
+    const friendlyPowerLevel = totalAttack + totalHealth + totalThreat;
+    console.log(friendlyPowerLevel);
+
+    // generate an enemy army which matches this power level +- some amount
+    // thoughts on enemy progression...
+    // if combat turns = 0, generate only farmers
+    // if combat turns = 1, generate only farmers and one melee
+    // if combat turns = 2, generate only melees? or farmers and 1-2 melees
+    // if combat turns = 3, generate only pewpew
+    // if combat turns = 4, generate melees and pewpew
+    // if combat turns = 5, generate melees, pewpews, 1 tanky
+    // if combat turns = 6, generate any combination
+    // if combat turns = 7, from then on, any combination, unlock a new unit type for enemies after every combat?
+  };
+
   /* array to to hold army composition functions */
   const armyCompositions = [
     generateRandomArmyComposition,
@@ -402,6 +438,8 @@ export default function Game(props: GameProps) {
   };
 
   const endTurn = () => {
+    generateEnemyArmy(turn, myUnits, unlockedUnitTypes);
+
     if (resourcePool["workers"] > 0) {
       alert("You have not assigned all workers!");
       return;
