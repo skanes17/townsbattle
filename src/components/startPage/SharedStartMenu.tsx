@@ -6,8 +6,8 @@ import { MenuItem, MenuTitle } from "../startPage";
 export default function SharedStartMenu() {
   return (
     <>
-      <div className="flex h-screen flex-col items-center justify-center">
-        <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded-3xl bg-white/5 bg-mainMenu bg-cover bg-center p-4 shadow-inherit">
+      <div className="flex h-screen flex-col items-center justify-center bg-mainMenu bg-contain bg-center bg-no-repeat">
+        <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded-3xl p-4 shadow-inherit">
           <MenuTitle title="Townsbattle" subtitle="Rise of the Defenders" />
           <Link className={routerLinkStyle} to="/play">
             <MenuItem text="Play" icon="▶️" />

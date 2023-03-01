@@ -90,11 +90,18 @@ export default function Game(props: GameProps) {
   */
 
   const [turn, setTurn] = useState(1);
-  const [combatTurn, setCombatTurn] = useState(1);
+  const [nextCombatTurn, setCombatTurn] = useState(1);
 
   // combat turn will change over time (increase/decrease, could fluctuate)
-  const [planningTurnToTriggerCombat, setPlanningTurnToTriggerCombat] =
-    useState(5);
+  const [planningTurnToGenerateEnemies, setPlanningTurnToGenerateEnemies] =
+    useState(4);
+
+  // how long to wait after enemies are generated before battle starts
+  let turnsBetweenEnemyArmyGenAndCombat = 1;
+  // on which planning turn combat actually starts
+  const planningTurnToTriggerCombat =
+    planningTurnToGenerateEnemies + turnsBetweenEnemyArmyGenAndCombat;
+
   const [inCombat, setInCombat] = useState(false);
 
   // points from rounds of combat get added to this
@@ -310,6 +317,7 @@ export default function Game(props: GameProps) {
     resourcePool["workers"] = workersPerTurn;
   };
 
+  // TODO: Refactor to make build score incrementation more efficient
   let id = unitId;
   const trainUnits = () => {
     const units = myTrainingUnits.map((unit) => {
@@ -335,12 +343,11 @@ export default function Game(props: GameProps) {
   // consider...
   // time/turn -- relative army strength -- unlocked units
   const generateEnemyArmy = (
-    turnNumber: number,
+    nextCombatTurn: number,
     friendlyUnits: Unit[],
-    unlockedUnitTypes: (UnitType | undefined)[]
+    unlockedUnitTypes: (UnitType | undefined)[],
+    allUnitTypes: UnitType[]
   ) => {
-    const unlockedUnits = unlockedUnitTypes ?? [];
-
     // calculate the friendly army power level (the sum of all the attack, health, and threat levels)
     const { totalAttack, totalHealth, totalArmor, totalThreat } =
       friendlyUnits.reduce(
@@ -367,9 +374,7 @@ export default function Game(props: GameProps) {
     console.log(friendlyPowerLevel);
     */
 
-    // generate an enemy army which matches this power level +- some amount
-
-    // It takes the calculated enemy power level and scales it accordingly.
+    // The following process takes the calculated power level and scales the enemy's power level accordingly.
     const difficultyMultiplier = 1.0; // default 1.0 -- could auto-set based on difficulty
     // every combat won, the enemy army will grow by this percentage relative to the previous round
     const growthRate = 0.05; // tweak if necessary for balance but, generally, don't touch!
@@ -384,25 +389,95 @@ export default function Game(props: GameProps) {
     const desiredEnemyPowerLevel =
       difficultyMultiplier *
       friendlyPowerLevel *
-      Math.pow(1 + growthRate, combatTurn - equalityTurn);
+      Math.pow(1 + growthRate, nextCombatTurn - equalityTurn);
     console.log(desiredEnemyPowerLevel);
 
-    const randomEnemyArray = [];
+    const enemyArmy = [];
     let powerLevel = 0;
     while (powerLevel < desiredEnemyPowerLevel) {
-      // TODO: Tweak enemy composition based on turn here (eg first combat? only farmers!)
-      // second combat? farmers and a melee! (see below)
-      const randomUnitType =
-        unitTypes[Math.floor(Math.random() * unitTypes.length)];
-      const randomUnit = BASE_UNIT_DATA[randomUnitType];
+      // TODO: Tweak enemy composition based on turn here
 
-      randomEnemyArray.push(randomUnit);
-      const { attack, maxHealth, threatLevel } = randomUnit;
+      let unitType: UnitType;
+      if (nextCombatTurn === 1) {
+        // going into first combat? enemies are all farmers
+        unitType = "farmer";
+      } else if (nextCombatTurn === 2) {
+        // going into second combat? there's 1 melee; the rest are farmers
+        // could tweak for this to happen later (eg combat turn 3)
+        switch (powerLevel) {
+          case 0:
+            // add a melee first time around the loop, when power level is 0
+            unitType = "melee";
+            break;
+          default:
+            // default to farmer for the rest
+            unitType = "farmer";
+        }
+      } else if (nextCombatTurn === 3 && powerLevel === 0) {
+        switch (powerLevel) {
+          // introduce 1 ranged enemy
+          case 0:
+            unitType = "pewpew";
+            break;
+          default:
+            // TODO: the rest can be randomly chosen from player's UNLOCKED units
+            // it shouldn't be undefined because farmers are always available at start
+            unitType =
+              unlockedUnitTypes[
+                Math.floor(Math.random() * unlockedUnitTypes.length)
+              ]!;
+            console.log(unitType);
+        }
+      } else if (nextCombatTurn > 3 && nextCombatTurn < 7) {
+        // for now, choose randomly from the unlocked unit types
+        unitType =
+          unlockedUnitTypes[
+            Math.floor(Math.random() * unlockedUnitTypes.length)
+          ]!;
+      }
+      // TODO: Do more manual progression staging here when new units are added!
+      else {
+        // At this point, all units in the game are available for choosing.
+        // TODO: Can utilize the army generator functions here!
+        unitType =
+          allUnitTypes[Math.floor(Math.random() * allUnitTypes.length)];
+      }
+      // enemy units don't get buffs in this version of the game
+      const chosenUnit = BASE_UNIT_DATA[unitType];
+
+      enemyArmy.push(chosenUnit);
+      const { attack, maxHealth, threatLevel } = chosenUnit;
 
       powerLevel += attack + maxHealth + threatLevel;
     }
     console.log("Power level: " + powerLevel);
-    console.log(randomEnemyArray);
+    console.log(enemyArmy);
+
+    // TODO: NEXT -- Use trainUnits() format as template for adding the current health and id to add enemy units
+
+    /* 
+    let id = unitId;
+  const trainUnits = () => {
+    const units = myTrainingUnits.map((unit) => {
+      // resolve base unit from unit type
+      const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
+      id += 1;
+
+      // add to score
+      const buildScore = _chosenUnit.buildScore;
+      setScore((prevScore) => prevScore + buildScore);
+
+      return {
+        ..._chosenUnit,
+        currentHealth: _chosenUnit.maxHealth,
+        id, // shorthand for when key = value
+      };
+    });
+
+    // bring all the training units into the main army
+    setMyUnits((myUnits) => [...myUnits, ...units]);
+  };
+    */
 
     // thoughts on composition of enemy army...
     // if combat turns = 0, generate only farmers
@@ -487,12 +562,19 @@ export default function Game(props: GameProps) {
     setScore((prev) => prev + points);
   };
 
-  const endTurn = () => {
-    generateEnemyArmy(turn, myUnits, unlockedUnitTypes);
+  const switchPhase = () => {
+    setInCombat(!inCombat);
+  };
 
+  const endTurn = () => {
     if (resourcePool["workers"] > 0) {
       alert("You have not assigned all workers!");
       return;
+    }
+
+    if (turn === planningTurnToGenerateEnemies) {
+      generateEnemyArmy(nextCombatTurn, myUnits, unlockedUnitTypes, unitTypes);
+      alert("The enemy army will reach the town next turn!");
     }
 
     // clone resources, resource pool, and buildings to preserve state
@@ -522,12 +604,14 @@ export default function Game(props: GameProps) {
     // TODO: Generate enemy army here on the appropriate turn
     // The function could have parameters such as time passed (eg turn number), available units, relative army strength
 
-    // increment turn
-    setTurn((prevTurn) => prevTurn + 1);
-  };
-
-  const switchPhase = () => {
-    setInCombat(!inCombat);
+    if (turn === planningTurnToTriggerCombat) {
+      switchPhase();
+      // reset turn to 1 (could do this after combat instead, doesn't really matter)
+      setTurn(1);
+    } else {
+      // increment turn
+      setTurn((prevTurn) => prevTurn + 1);
+    }
   };
 
   // How many units you're going to train this turn
