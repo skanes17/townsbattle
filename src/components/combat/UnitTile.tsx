@@ -96,6 +96,7 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
           <div>
             HP: {unit.currentHealth}/{unit.maxHealth}
           </div>
+          <div>{unit.description}</div>
           {unit.armor > 0 ? <div>Armor: {unit.armor}</div> : null}
         </span>
       </div>

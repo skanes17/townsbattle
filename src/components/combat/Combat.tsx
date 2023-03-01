@@ -493,6 +493,10 @@ export default function Combat({
     // TODO: Damage buldings accordingly
     if (combatUnits.length === 0) {
       noArmyEvent();
+
+      // damage buildings
+      const clonedBuildings = attackBuildingsAndReturnClone();
+      setBuildings(clonedBuildings);
       setPhase(Phases.PostCombat);
     }
     switch (phase) {

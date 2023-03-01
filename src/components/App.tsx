@@ -6,7 +6,7 @@ import SharedStartMenu from "./startPage/SharedStartMenu";
 
 export default function App() {
   return (
-    <div className="bg-zinc-900 font-sans text-stone-200">
+    <div className="select-none bg-zinc-900 font-sans text-stone-200">
       <Routes>
         {/* parent Route /, SharedStartMenu is rendered for all children using Outlet */}
         <Route path="/" element={<SharedStartMenu />}>
