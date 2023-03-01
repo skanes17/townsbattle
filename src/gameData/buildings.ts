@@ -77,8 +77,8 @@ export const buildingsData = {
     damage: 0,
     resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 10 },
     buildScore: 50,
-    // how many extra workers it provides once constructed
-    workerBonus: 1,
+    // how many extra workers it provides once constructed -- tweak as necessary
+    workerBonus: 5,
   },
   // for all units
   mealHall: {
@@ -152,6 +152,24 @@ export const buildingsData = {
     damage: 0,
     resourceCosts: { workers: 10, wood: 15, stone: 15, metal: 15 },
     buildScore: 100,
+  },
+  goldHoard: {
+    name: "Gold Hoard",
+    symbol: "🐉",
+    enabled: false,
+    underConstruction: false,
+    constructed: false,
+    tier: 1,
+    /* attackBonus: 0,
+    healthBonus: 0, */
+    description: "Unlocks gold as a resource.",
+    bgImage: "bg-goldHoard",
+    maxHealth: 10,
+    currentHealth: 10,
+    damage: 0,
+    resourceCosts: { workers: 15, wood: 20, stone: 20, metal: 20 },
+    buildScore: 100,
+    unlockedResource: "gold",
   },
 };
 

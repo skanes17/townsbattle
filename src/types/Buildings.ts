@@ -1,4 +1,5 @@
 import { ResourceCosts } from "./ResourceCosts";
+import { BaseResourceType } from "./Resources";
 import { UnitType } from "./Unit";
 
 export interface Building {
@@ -19,6 +20,7 @@ export interface Building {
   resourceCosts: ResourceCosts;
   buildScore: number;
   unlockedUnit?: UnitType;
+  unlockedResource?: BaseResourceType;
   workerBonus?: number;
 }
 

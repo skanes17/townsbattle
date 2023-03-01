@@ -129,9 +129,9 @@ export default function Game(props: GameProps) {
   const resourceTypes: ResourceType[] = Object.keys(
     resources
   ) as ResourceType[];
-  const baseResourceTypes: BaseResourceType[] = Object.keys(resources).filter(
-    (resourceType) => resourceType !== "workers"
-  ) as BaseResourceType[];
+  const allBaseResourceTypesInTheGame: BaseResourceType[] = Object.keys(
+    resources
+  ).filter((resourceType) => resourceType !== "workers") as BaseResourceType[];
 
   /* ===BUILDINGS=== */
   /* @ts-ignore -- It is seeing unitToUnlock as a string not UnitType*/
@@ -174,8 +174,10 @@ export default function Game(props: GameProps) {
   // FIXME: Is this the best way to coerce the types?
   const BASE_UNIT_DATA: BaseUnit = baseUnitData as BaseUnit;
   const unitTypes: UnitType[] = Object.keys(BASE_UNIT_DATA) as UnitType[];
+
+  // ===UNLOCKABLES===
   const unlockedUnitTypes: (UnitType | undefined)[] = Object.keys(buildings)
-    // filter by buildings constructed which are also set up to unlock a unit type
+    // filter by buildings set up to unlock a unit type which are also constructed
     .filter(
       (buildingType) =>
         buildings[buildingType].unlockedUnit &&
@@ -183,6 +185,24 @@ export default function Game(props: GameProps) {
     )
     // map out the associated unit types
     .map((building) => buildings[building].unlockedUnit);
+
+  const resourcesNotYetUnlocked: (BaseResourceType | undefined)[] = Object.keys(
+    buildings
+  )
+    // filter by buildings set up to unlock a resource type but are not yet constructed
+    .filter(
+      (buildingType) =>
+        buildings[buildingType].unlockedResource &&
+        !buildings[buildingType].constructed
+    )
+    // map out the associated resource types
+    .map((building) => buildings[building].unlockedResource);
+
+  // this filter method will filter all locked resourced from the base resources
+  const resourceTypesAvailableToPlayer: (BaseResourceType | undefined)[] =
+    allBaseResourceTypesInTheGame.filter(
+      (resourceType) => !resourcesNotYetUnlocked.includes(resourceType)
+    );
 
   // ids for tracking units
   const [unitId, setUnitId] = useState(0);
@@ -783,7 +803,7 @@ export default function Game(props: GameProps) {
           ) : null}
 
           {/* FIXME: Make this into a tooltip, like a question mark circle thing you hover over or click */}
-          {unlockedUnitTypes.length > 1 ? (
+          {unlockedUnitTypes.length > 2 ? (
             <div className="place-self-center text-xl">
               Tip: Train Units to Protect {townName}!
             </div>
@@ -861,7 +881,7 @@ export default function Game(props: GameProps) {
       <div className="sticky bottom-0 z-10 grid auto-cols-auto">
         <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <DisplayTemplate headerText="Resources to Collect">
-            {baseResourceTypes.map((resourceType) =>
+            {allBaseResourceTypesInTheGame.map((resourceType) =>
               resources[resourceType].workers > 0 ? (
                 <ResourceToCollect
                   resources={resources}

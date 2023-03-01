@@ -25,33 +25,3 @@ export type ResourcePool = {
 export type ResourceMultipliers = {
   [key in BaseResourceType]: number;
 };
-
-/* FIXME: Incorporate the following refactoring but fix the associated error in <Game/> */
-// TODO: Continue to improve this type, make it more dynamic, less prescriptive
-
-/* type ResourceName = "Freeworker" | "Wood" | "Stone" | "Metal";
-type ResourceSymbol = "🛠️" | "🪵" | "🪨" | "🔩";
-type WorkerName = "Woodcutters" | "Stonemasons" | "Metalworkers";
-type WorkerSymbol = "🪓" | "⚒️" | "🥽";
-
-interface Resource {
-  collected: number;
-  name: "Freeworker" | "Wood" | "Stone" | "Metal";
-  resourceSymbol: "🛠️" | "🪵" | "🪨" | "🔩";
-  workers: number;
-  workerName: "Woodcutters" | "Stonemasons" | "Metalworkers";
-  workerSymbol: "🪓" | "⚒️" | "🥽";
-  description: string;
-}
-
-type Freeworker = Pick<
-  Resource,
-  "collected" | "name" | "resourceSymbol" | "description"
->;
-
-export interface Resources {
-  workers: Freeworker;
-  wood: Resource;
-  stone: Resource;
-  metal: Resource;
-} */
