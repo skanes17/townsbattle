@@ -7,6 +7,7 @@ import {
   upgradesData,
 } from "../gameData";
 import {
+  BaseResource,
   DisplayBuildings,
   Resource,
   ResourceToCollect,
@@ -186,7 +187,7 @@ export default function Game(props: GameProps) {
     // map out the associated unit types
     .map((building) => buildings[building].unlockedUnit);
 
-  const resourcesNotYetUnlocked: (BaseResourceType | undefined)[] = Object.keys(
+  const resourcesLockedToPlayer: (BaseResourceType | undefined)[] = Object.keys(
     buildings
   )
     // filter by buildings set up to unlock a resource type but are not yet constructed
@@ -201,7 +202,7 @@ export default function Game(props: GameProps) {
   // this filter method will filter all locked resourced from the base resources
   const resourceTypesAvailableToPlayer: (BaseResourceType | undefined)[] =
     allBaseResourceTypesInTheGame.filter(
-      (resourceType) => !resourcesNotYetUnlocked.includes(resourceType)
+      (resourceType) => !resourcesLockedToPlayer.includes(resourceType)
     );
 
   // ids for tracking units
@@ -775,15 +776,16 @@ export default function Game(props: GameProps) {
                 ))}
             </DisplayTemplate>
             <DisplayTemplate headerText="Resources Collected">
-              {resourceTypes
-                .filter((resourceType) => resourceType !== "workers")
-                .map((resourceType: ResourceType) => (
-                  <Resource
-                    resources={resources}
-                    resourcePool={resourcePool}
-                    resourceType={resourceType}
-                  />
-                ))}
+              {resourceTypesAvailableToPlayer.map(
+                (resourceType: BaseResourceType | undefined) =>
+                  resourcePool[resourceType as BaseResourceType] > 0 ? (
+                    <BaseResource
+                      resources={resources}
+                      resourcePool={resourcePool}
+                      resourceType={resourceType as BaseResourceType}
+                    />
+                  ) : null
+              )}
             </DisplayTemplate>
           </div>
 
@@ -818,6 +820,7 @@ export default function Game(props: GameProps) {
         <GridCardContainer headerText="Collect Resources">
           <WorkerCardContainer
             resources={resources}
+            resourceTypesAvailableToPlayer={resourceTypesAvailableToPlayer}
             setResources={setResources}
             resourcePool={resourcePool}
             setResourcePool={setResourcePool}

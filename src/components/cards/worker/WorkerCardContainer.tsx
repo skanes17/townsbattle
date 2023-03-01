@@ -5,6 +5,7 @@ import { Resources, ResourcePool, BaseResourceType } from "../../../types";
 interface WorkerCardContainerProps {
   resources: Resources;
   setResources: Dispatch<SetStateAction<Resources>>;
+  resourceTypesAvailableToPlayer: (BaseResourceType | undefined)[];
   resourcePool: ResourcePool;
   setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
 }
@@ -12,15 +13,14 @@ interface WorkerCardContainerProps {
 export default function WorkerCardContainer({
   resources,
   setResources,
+  resourceTypesAvailableToPlayer,
   resourcePool,
   setResourcePool,
 }: WorkerCardContainerProps) {
   return (
     <>
-      {/* This gets all the keys excluding "workers" */}
-      {Object.keys(resources)
-        .filter((key) => key !== "workers")
-        .map((resourceType: string) => (
+      {resourceTypesAvailableToPlayer.map(
+        (resourceType: BaseResourceType | undefined) => (
           <WorkerCard
             resources={resources}
             setResources={setResources}
@@ -28,7 +28,8 @@ export default function WorkerCardContainer({
             setResourcePool={setResourcePool}
             resourceType={resourceType as BaseResourceType}
           />
-        ))}
+        )
+      )}
     </>
   );
 }

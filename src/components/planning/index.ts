@@ -1,4 +1,5 @@
 import ArmyDetails from "./ArmyDetails";
+import BaseResource from "./BaseResource";
 import BuildingsUI from "./BuildingsUI";
 import DisplayBuildings from "./DisplayBuildings";
 import Resource from "./Resource";
@@ -10,6 +11,7 @@ import Upgrades from "./Upgrades";
 
 export {
   ArmyDetails,
+  BaseResource,
   BuildingsUI,
   DisplayBuildings,
   Resource,
