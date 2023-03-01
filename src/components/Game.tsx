@@ -93,9 +93,15 @@ export default function Game(props: GameProps) {
   const [turn, setTurn] = useState(1);
   const [nextCombatTurn, setNextCombatTurn] = useState(1);
 
-  // combat turn will change over time (increase/decrease, could fluctuate)
-  const [planningTurnToGenerateEnemies, setPlanningTurnToGenerateEnemies] =
-    useState(4);
+  // enemy will not be generated before reaching this turn number has passed
+  const minimumPlanningTurnsUntilEnemyGen = 4;
+  // after this many COMBATs, you'll get an extra planning turn before enemies are generated
+  const numberOfCombatsUntilEnemyGenGetsDelayedByOne = 3;
+  // this is the turn on which enemies are actually generated
+  const planningTurnToGenerateEnemies =
+    minimumPlanningTurnsUntilEnemyGen +
+    Math.floor(nextCombatTurn / numberOfCombatsUntilEnemyGenGetsDelayedByOne);
+  console.log(planningTurnToGenerateEnemies);
 
   // how long to wait after enemies are generated before battle starts
   let turnsBetweenEnemyArmyGenAndCombat = 2;
