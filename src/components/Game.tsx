@@ -90,8 +90,11 @@ export default function Game(props: GameProps) {
   */
 
   const [turn, setTurn] = useState(1);
-  // combat turn will change over time
-  const [combatTurn, setCombatTurn] = useState(4);
+  const [combatTurn, setCombatTurn] = useState(1);
+
+  // combat turn will change over time (increase/decrease, could fluctuate)
+  const [planningTurnToTriggerCombat, setPlanningTurnToTriggerCombat] =
+    useState(5);
   const [inCombat, setInCombat] = useState(false);
 
   // points from rounds of combat get added to this
@@ -366,19 +369,22 @@ export default function Game(props: GameProps) {
 
     // generate an enemy army which matches this power level +- some amount
 
-    const difficultyScaler = 1.0; // default
+    // It takes the calculated enemy power level and scales it accordingly.
+    const difficultyMultiplier = 1.0; // default 1.0 -- could auto-set based on difficulty
     // every combat won, the enemy army will grow by this percentage relative to the previous round
-    const growthRate = 0.05; // tweak as necessary for balance
-    // TODO: set this at start of the game based on difficulty
-    const desiredTurnsUntilEnemyMatchesPlayer = 10;
-    // exponential growth formula based on y = s * A(1+r)^(t-D) where...
+    const growthRate = 0.05; // tweak if necessary for balance but, generally, don't touch!
+    // TODO: could auto-set this at start of the game based on difficulty
+    // Equality turn is number of combat turns until power levels of both armies are equal
+    const equalityTurn = 10; // default 10
+
+    // exponential growth formula based on E(turns) = M * P(1+r)^(currentTurn-equalityTurn) where...
     // y = enemy power level, s = scaler, A = friendly power level, t = turns, D = desired turn until match
     // reference -> https://www.desmos.com/calculator/uli0ce3voh
     /* --WANNA TWEAK THE SCALING SYSTEM? TWEAK THIS-- */
     const desiredEnemyPowerLevel =
-      difficultyScaler *
+      difficultyMultiplier *
       friendlyPowerLevel *
-      (1 + growthRate) ** (turn - desiredTurnsUntilEnemyMatchesPlayer);
+      Math.pow(1 + growthRate, combatTurn - equalityTurn);
     console.log(desiredEnemyPowerLevel);
 
     const randomEnemyArray = [];
