@@ -1,13 +1,13 @@
 import { ResourceCosts } from "./ResourceCosts";
 
-export type UnitType = "farmer" | "melee" | "pewpew" | "tanky";
-export type UnitName = "Farmer" | "Melee" | "Pewpew" | "Tanky";
+export type UnitType = "farmer" | "melee" | "pewpew" | "tanky" | "mage";
+export type UnitName = "Farmer" | "Melee" | "Pewpew" | "Tanky" | "Mage";
 
 export interface Unit {
   unitType: UnitType;
   /* FIXME: UnitName not being properly enforced when imported */
   name: UnitName;
-  symbol: "⚔️" | "🏹" | "🛡️" | "🧑🏻‍🌾";
+  symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄";
   description?: string;
   threatLevel: number;
   attack: number;

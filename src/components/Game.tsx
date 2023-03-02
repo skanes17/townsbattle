@@ -172,6 +172,8 @@ export default function Game(props: GameProps) {
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
 
+  const data = baseUnitData;
+
   // FIXME: Is this the best way to coerce the types?
   const BASE_UNIT_DATA: BaseUnit = baseUnitData as BaseUnit;
   const unitTypes: UnitType[] = Object.keys(BASE_UNIT_DATA) as UnitType[];
@@ -496,10 +498,11 @@ export default function Game(props: GameProps) {
       }
       // TODO: Do more manual progression staging here when new units are added!
       else {
-        // At this point, all units in the game are available for choosing.
+        // At this point, all units in the game are available for choosing, EXCEPT farmers.
         // TODO: Could utilize the army generator functions here!
-        unitType =
-          allUnitTypes[Math.floor(Math.random() * allUnitTypes.length)];
+        unitType = allUnitTypes.filter((unit) => unit !== "farmer")[
+          Math.floor(Math.random() * allUnitTypes.length)
+        ];
       }
       // enemy units don't get buffs in this version of the game
       const chosenUnit = { ...BASE_UNIT_DATA[unitType] };

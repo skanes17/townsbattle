@@ -21,7 +21,15 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
         className={`self-end text-center text-xl sm:m-3 sm:text-2xl md:text-4xl lg:text-5xl`}
       >
         🗡️
-        {unit.attack}
+        {/* special styling for attack bonus */}
+        {unit.currentHealth === unit.maxHealth &&
+        unit.fullHealthAttackBonus > 0 ? (
+          <span className="text-amber-400">
+            {unit.attack + unit.fullHealthAttackBonus}
+          </span>
+        ) : (
+          unit.attack
+        )}
       </div>
       {/* TODO: Conditional green for full, orange for damaged, red for critical */}
       <div

@@ -9,6 +9,7 @@ module.exports = {
         friendlyArmy: "url('/src/assets/images/friendlyArmy-01.png')", */
         goldHoard: "url('/src/assets/images/gold-01.png')",
         healingChamber: "url('/src/assets/images/healingChamber-01.png')",
+        mageSchool: "url('/src/assets/images/mageSchool-01.png')",
         mainMenu: "url('/src/assets/images/mainMenu-01.png')",
         mealHall: "url('/src/assets/images/mealHall-01.png')",
         qualityHousing: "url('/src/assets/images/qualityHousing-01.png')",

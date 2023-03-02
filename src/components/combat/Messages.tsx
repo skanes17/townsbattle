@@ -109,6 +109,7 @@ export const messages = {
           {event.data.friendly.unitType === "melee" ? "slashes" : null}{" "}
           {event.data.friendly.unitType === "pewpew" ? "shoots at" : null}{" "}
           {event.data.friendly.unitType === "tanky" ? "bashes" : null}{" "}
+          {event.data.friendly.unitType === "mage" ? "casts a spell on" : null}{" "}
           <span className="text-red-400">
             {event.data.enemy.name}
             {event.data.enemy.id}

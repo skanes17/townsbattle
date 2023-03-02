@@ -37,7 +37,7 @@ export const buildingsData = {
     maxHealth: 15,
     currentHealth: 15,
     damage: 0,
-    resourceCosts: { workers: 5, wood: 10, metal: 10 },
+    resourceCosts: { workers: 5, wood: 15, metal: 10 },
     buildScore: 50,
     unlockedUnit: "pewpew",
   },
@@ -51,14 +51,33 @@ export const buildingsData = {
     tier: 1,
     /* attackBonus: 1,
     healthBonus: 3, */
-    description: "Learn to smelt metals. Unlock Tanks.",
+    description: "Learn to smelt metals. Unlock Tankys.",
     bgImage: "bg-smelter",
     maxHealth: 15,
     currentHealth: 15,
     damage: 0,
-    resourceCosts: { workers: 5, stone: 10, metal: 10 },
+    resourceCosts: { workers: 5, stone: 15, metal: 15 },
     buildScore: 50,
     unlockedUnit: "tanky",
+  },
+  // for mages
+  mageSchool: {
+    name: "Mage School",
+    symbol: "🔮",
+    enabled: false,
+    underConstruction: false,
+    constructed: false,
+    tier: 1,
+    /* attackBonus: 1,
+    healthBonus: 3, */
+    description: "Learn magic! Unlock Mages.",
+    bgImage: "bg-mageSchool",
+    maxHealth: 15,
+    currentHealth: 15,
+    damage: 0,
+    resourceCosts: { workers: 5, wood: 15, stone: 15, metal: 10 },
+    buildScore: 75,
+    unlockedUnit: "mage",
   },
   // add workers
   qualityHousing: {
@@ -70,7 +89,7 @@ export const buildingsData = {
     tier: 1,
     /* attackBonus: 0,
     healthBonus: 2, */
-    description: "More workers available every turn.",
+    description: "Increase the number of workers available.",
     bgImage: "bg-qualityHousing",
     maxHealth: 20,
     currentHealth: 20,
