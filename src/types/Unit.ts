@@ -1,13 +1,25 @@
 import { ResourceCosts } from "./ResourceCosts";
 
-export type UnitType = "farmer" | "melee" | "pewpew" | "tanky" | "mage";
-export type UnitName = "Farmer" | "Melee" | "Pewpew" | "Tanky" | "Mage";
+export type UnitType =
+  | "farmer"
+  | "melee"
+  | "pewpew"
+  | "tanky"
+  | "mage"
+  | "bombird";
+export type UnitName =
+  | "Farmer"
+  | "Melee"
+  | "Pewpew"
+  | "Tanky"
+  | "Mage"
+  | "Bombird";
 
 export interface Unit {
   unitType: UnitType;
   /* FIXME: UnitName not being properly enforced when imported */
   name: UnitName;
-  symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄";
+  symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣";
   description?: string;
   threatLevel: number;
   attack: number;
@@ -19,7 +31,9 @@ export interface Unit {
   buildScore: number;
   hitsFirst: boolean;
   fullHealthAttackBonus: number;
-  timesSelectedForCombat: number;
+  chargesBeforeSelection: boolean;
+  // multiply this by times not selected to get added damage
+  chargingMultiplier: number;
   id?: number;
 }
 

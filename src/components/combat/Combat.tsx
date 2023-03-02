@@ -73,6 +73,10 @@ export default function Combat({
   const combatUnitCounts = countUnits(combatUnits, unitTypes, "army");
   const combatEnemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
 
+  // store friendlyIds here and, at end of round, increment by 1
+  const friendlyUnitsNotSelected = new Map<number, number>();
+  const enemyUnitsNotSelected = new Map<number, number>();
+
   // We accumulate the indexes of surviving units into an array
   // The .reduce() method is used to iterate over each unit in the combatUnits array
   const survivingFriendlyUnitIndexes = getSurvivingUnitIndexes(combatUnits);
@@ -169,12 +173,20 @@ export default function Combat({
 
   const calculatedAttackValue = (attacker: Unit, defender: Unit): number => {
     // used destructuring to make code more readable
-    const { attack, currentHealth, maxHealth, fullHealthAttackBonus } =
-      attacker;
+    const {
+      attack,
+      currentHealth,
+      maxHealth,
+      fullHealthAttackBonus,
+      chargingMultiplier,
+    } = attacker;
     // armor reduces incoming attack damage
     const { armor: defenderArmor } = defender;
-    // if unit has full health, it does bonus attack damage
-    const attackBonus = currentHealth === maxHealth ? fullHealthAttackBonus : 0;
+    // if unit has full health, or charges before being selected, it does bonus attack damage
+    const attackBonus =
+      currentHealth === maxHealth
+        ? fullHealthAttackBonus /* + timesNotSelected*chargingMultiplier */
+        : 0;
     // Math.max() prevents negative attack values due to high armor
     return Math.max(0, attack + attackBonus - defenderArmor);
   };
@@ -532,6 +544,8 @@ export default function Combat({
 
               // determine who won, who lost
               postCombatEvent();
+
+              /* TODO: Keep track of all units not selected! */
 
               // return the units to their army and pick new ones -- also sets a new preCombatEvent
               selectNewUnits();

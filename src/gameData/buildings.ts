@@ -79,6 +79,25 @@ export const buildingsData = {
     buildScore: 75,
     unlockedUnit: "mage",
   },
+  // for bombirds
+  explosivesResearch: {
+    name: "Explosives Research",
+    symbol: "🔥",
+    enabled: false,
+    underConstruction: false,
+    constructed: false,
+    tier: 1,
+    /* attackBonus: 1,
+    healthBonus: 3, */
+    description: "Explosives go boom! Unlock Bombirds.",
+    bgImage: "bg-explosivesResearch",
+    maxHealth: 5,
+    currentHealth: 5,
+    damage: 0,
+    resourceCosts: { workers: 5, wood: 15, stone: 15, metal: 10, crystal: 10 },
+    buildScore: 100,
+    unlockedUnit: "bombird",
+  },
   // add workers
   qualityHousing: {
     name: "Quality Housing",

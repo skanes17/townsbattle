@@ -764,6 +764,9 @@ export default function Game(props: GameProps) {
       </div>
 
       <div>Score: {score}</div>
+      {/* TODO: Add a clock */}
+
+      <div></div>
       <div className="sticky top-0 z-10 grid auto-cols-auto">
         <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
           <div className="grid auto-cols-auto grid-flow-col">
