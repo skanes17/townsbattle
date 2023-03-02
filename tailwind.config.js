@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         archeryHut: "url('/src/assets/images/archeryHut-01.png')",
+        crystalQuarry: "url('/src/assets/images/crystalQuarry-01.png')",
         /* enemyArmy: "url('/src/assets/images/enemyArmy-02.png')",
         friendlyArmy: "url('/src/assets/images/friendlyArmy-01.png')", */
         goldHoard: "url('/src/assets/images/gold-01.png')",

@@ -174,7 +174,7 @@ export default function Game(props: GameProps) {
 
   const data = baseUnitData;
 
-  // FIXME: Is this the best way to coerce the types?
+  // FIXME: Must improve type safety coming from baseUnitData
   const BASE_UNIT_DATA: BaseUnit = baseUnitData as BaseUnit;
   const unitTypes: UnitType[] = Object.keys(BASE_UNIT_DATA) as UnitType[];
 
@@ -848,6 +848,11 @@ export default function Game(props: GameProps) {
           </GridCardContainer>
         ) : null}
 
+        <GridCardContainer headerText="Buildings Constructed">
+          {/* TODO: Match component structure with other cards */}
+          <DisplayBuildings buildings={buildings} />
+        </GridCardContainer>
+
         {/* If there are no buildings left to construct, remove the section */}
         {buildingsLeftToConstruct.length > 0 ? (
           <GridCardContainer headerText="Construct Buildings">
@@ -867,10 +872,6 @@ export default function Game(props: GameProps) {
             ))}
           </GridCardContainer>
         ) : null}
-        <GridCardContainer headerText="Buildings Constructed">
-          {/* TODO: Match component structure with other cards */}
-          <DisplayBuildings buildings={buildings} />
-        </GridCardContainer>
       </div>
       <br></br>
       <DevTools

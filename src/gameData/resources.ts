@@ -21,6 +21,12 @@ export const resourceData = {
     workers: 0,
     multiplier: 1,
   },
+  crystal: {
+    name: "crystal",
+    symbol: "💎",
+    workers: 0,
+    multiplier: 1,
+  },
   gold: {
     name: "gold",
     symbol: "🪙",
@@ -34,6 +40,7 @@ export const resourcePoolData = {
   wood: 0,
   stone: 0,
   metal: 0,
+  crystal: 0,
   gold: 0,
 };
 

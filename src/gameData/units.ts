@@ -1,3 +1,5 @@
+// TODO: Add in effect description? eg "Extra damage when unharmed"
+
 export const baseUnitData = {
   farmer: {
     unitType: "farmer",
