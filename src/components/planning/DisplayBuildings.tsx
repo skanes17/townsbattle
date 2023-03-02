@@ -4,7 +4,6 @@ import {
   BldgCardTemplate,
   BldgCardFooter,
   BldgCardHeader,
-  BldgCardImage,
   BldgCardDescription,
 } from "../cards";
 import { SpacerDiv } from "../layout/SpacerDiv";
