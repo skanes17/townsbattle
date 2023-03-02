@@ -97,7 +97,7 @@ export default function Game(props: GameProps) {
   // enemy will not be generated before reaching this turn number has passed
   const minimumPlanningTurnsUntilEnemyGen = 4;
   // after this many COMBATs, you'll get an extra planning turn before enemies are generated
-  const numberOfCombatsUntilEnemyGenGetsDelayedByOne = 3;
+  const numberOfCombatsUntilEnemyGenGetsDelayedByOne = 4;
   // this is the turn on which enemies are actually generated
   const planningTurnToGenerateEnemies =
     minimumPlanningTurnsUntilEnemyGen +
@@ -629,10 +629,10 @@ export default function Game(props: GameProps) {
   };
 
   const endTurn = () => {
-    if (resourcePool["workers"] > 0) {
+    /*     if (resourcePool["workers"] > 0) {
       alert("You have not assigned all workers!");
       return;
-    }
+    } */
 
     if (turn === planningTurnToGenerateEnemies) {
       generateEnemyArmy(nextCombatTurn, myUnits, unlockedUnitTypes, unitTypes);
@@ -917,7 +917,11 @@ export default function Game(props: GameProps) {
           </DisplayTemplate>
 
           <div className="sticky bottom-0 flex items-center justify-center p-0">
-            <Button buttonColor="blue" onClick={endTurn}>
+            <Button
+              buttonColor="blue"
+              onClick={endTurn}
+              disabled={resourcePool["workers"] > 0 ? true : false}
+            >
               End Turn {turn}
             </Button>
           </div>
