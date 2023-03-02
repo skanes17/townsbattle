@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useRef,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import { enemyColor, friendlyColor } from "../../gameData";
 import {
@@ -68,7 +74,7 @@ export default function Combat({
   ]);
 
   const [combatEvents, setCombatEvents] = useState<CombatEvent[]>([]);
-  const [turnsCompleted, setTurnsCompleted] = useState(0);
+  const combatTurnsCompleted = useRef(0);
 
   const combatUnitCounts = countUnits(combatUnits, unitTypes, "army");
   const combatEnemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
@@ -531,7 +537,7 @@ export default function Combat({
             unitsFight();
 
             // TODO: Add in animation for units attacking each other
-            setTurnsCompleted(turnsCompleted + 1);
+            combatTurnsCompleted.current += 1;
             setSubPhase(SubPhases.VictoryCheck);
             break;
 
@@ -545,7 +551,20 @@ export default function Combat({
               // determine who won, who lost
               postCombatEvent();
 
-              /* TODO: Keep track of all units not selected! */
+              let combatTurn = combatTurnsCompleted.current;
+
+              // Keep track of all units NOT selected!
+              /* FIXME: Don't want to refresh it every time... need to bug hunt */
+              survivingFriendlyUnitIndexes.map((index) => {
+                if (index !== friendlyIndex) {
+                  friendlyUnitsNotSelected.set(
+                    combatUnits[index].id!,
+                    combatTurn
+                  );
+                }
+              });
+
+              console.log(friendlyUnitsNotSelected);
 
               // return the units to their army and pick new ones -- also sets a new preCombatEvent
               selectNewUnits();

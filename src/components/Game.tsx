@@ -102,7 +102,6 @@ export default function Game(props: GameProps) {
   const planningTurnToGenerateEnemies =
     minimumPlanningTurnsUntilEnemyGen +
     Math.floor(nextCombatTurn / numberOfCombatsUntilEnemyGenGetsDelayedByOne);
-  console.log(planningTurnToGenerateEnemies);
 
   // how long to wait after enemies are generated before battle starts
   let turnsBetweenEnemyArmyGenAndCombat = 2;
@@ -500,9 +499,13 @@ export default function Game(props: GameProps) {
       else {
         // At this point, all units in the game are available for choosing, EXCEPT farmers.
         // TODO: Could utilize the army generator functions here!
-        unitType = allUnitTypes.filter((unit) => unit !== "farmer")[
-          Math.floor(Math.random() * allUnitTypes.length)
-        ];
+        const allUnitsButFarmers = allUnitTypes.filter(
+          (unit: UnitType) => unit !== "farmer"
+        );
+        unitType =
+          allUnitsButFarmers[
+            Math.floor(Math.random() * allUnitsButFarmers.length)
+          ];
       }
       // enemy units don't get buffs in this version of the game
       const chosenUnit = { ...BASE_UNIT_DATA[unitType] };
