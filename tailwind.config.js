@@ -25,6 +25,10 @@ module.exports = {
         townCenter: "url('/src/assets/images/townCenter-01.png')",
         wood: "url('/src/assets/images/wood-01.png')",
       },
+      colors: {
+        buildingsColor: "#2f3e66",
+        resourcesColor: "#482110",
+      },
       keyframes: {
         jiggleRight: {
           "50%": { transform: "translate(10px,0)" },

@@ -72,8 +72,11 @@ export default function WorkerCard({
 
   return (
     <>
-      <CardTemplate color="amber">
-        <CardHeader cardName={resources[resourceType].name} />
+      <CardTemplate color="resources">
+        <CardHeader
+          bgColor="resources"
+          cardName={resources[resourceType].name}
+        />
         {/* <CardSymbol cardSymbol={resources[resourceType].symbol} /> */}
         {/* <CardDescription
           descriptionText={resources[resourceType].description}

@@ -87,7 +87,7 @@ export default function ConstructBuilding({
 
   return (
     <CardTemplate color="blue">
-      <CardHeader cardName={buildings[buildingType].name} />
+      <CardHeader bgColor="buildings" cardName={buildings[buildingType].name} />
       <CardSymbol cardSymbol={buildings[buildingType].symbol} />
       <CardDescription descriptionText={buildings[buildingType].description} />
 
