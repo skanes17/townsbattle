@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   baseUnitData,
   buildingsData,
@@ -69,27 +69,31 @@ export default function Game(props: GameProps) {
   // pull startData from linked Play component
   const startData = useLocation();
 
-  /* TODO: Add Type safety to startData? */
-
-  const playerName =
+  // grab data from state/useLocation (sent through Link)
+  const startDataPlayerName: string =
     startData.state.playerName || startData.state.defaultPlayerName;
-  const townName = startData.state.townName || startData.state.defaultTownName;
-  const difficulty: Difficulty = startData.state.difficulty || "normal";
-  // null coalescent used because false is a falsy value, and therefore would set tutorials to "true"
-  const tutorials: boolean = startData.state.tutorials ?? true;
+  const startDataTownName: string =
+    startData.state.townName || startData.state.defaultTownName;
+  const startDataDifficulty: Difficulty = startData.state.difficulty;
+  const startDataTutorials: boolean = startData.state.tutorials;
 
-  /*
-  // -- PREVIOUSLY IMPLEMENTED METHOD - RETRIEVE LOCALLY-STORED DATA SENT FROM MAIN PAGE
+  // setting player options
+  // from state first, or local storage second, or defaults as backup
+  const playerName =
+    startDataPlayerName || localStorage.getItem("playerName") || "Player";
+  const townName =
+    startDataTownName || localStorage.getItem("townName") || "Townsburg";
+  const difficulty: Difficulty =
+    startDataDifficulty ||
+    (localStorage.getItem("difficulty") as string) ||
+    "normal";
+  const tutorials =
+    startDataTutorials ??
+    JSON.parse(localStorage.getItem("tutorials") ?? "true");
+
+  // -- NOTE ON RETRIEVING LOCALLY-STORED DATA SENT FROM MAIN PAGE IF NECESSARY
   // if localStorage values are non-null, use the locally stored values
   // if storage is null, use some default values so the game still runs
-  const townName =
-    // if the storage is null or the player didn't enter a name, set it as the default
-    localStorage.getItem("townName") || defaultTownName;
-  const difficulty =
-    (localStorage.getItem("difficulty") as string) || "normal";
-  const tutorials =
-  JSON.parse(localStorage.getItem("tutorials")!) || true;
-  */
 
   const [turn, setTurn] = useState(1);
   const [nextCombatTurn, setNextCombatTurn] = useState(1);

@@ -20,7 +20,7 @@ export default function Play() {
     playerNames[Math.floor(Math.random() * playerNames.length)]
   );
   const [playerName, setPlayerName] = useState<string>();
-  const [defaultTownName, setDefaultTownName] = useState(
+  const [defaultTownName, setDefeaultTownName] = useState(
     townNames[Math.floor(Math.random() * townNames.length)]
   );
   const [townName, setTownName] = useState<string>();
@@ -44,15 +44,14 @@ export default function Play() {
     setTutorials(tutorials);
   };
 
-  /*
-  // Prior method -- exported data to local storage onClick
+  // exporting data to local storage onClick, in case game page is refreshed while skipping menu
   const storeStartData = () => {
-    localStorage.setItem("townName", townName);
+    localStorage.setItem("playerName", playerName || defaultPlayerName);
+    localStorage.setItem("townName", townName || defaultTownName);
     localStorage.setItem("difficulty", difficulty);
     // use JSON.parse to convert back to Boolean when imported
     localStorage.setItem("tutorials", tutorials.toString());
   };
-  */
 
   return (
     <MenuBox icon="▶️" headerText="How to Play">
@@ -188,6 +187,7 @@ export default function Play() {
           to="/play/game"
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center text-white outline-transparent ring-blue-600 ring-offset-2 focus:ring-2"
           state={startData}
+          onClick={() => storeStartData()}
         >
           Next
         </Link>
