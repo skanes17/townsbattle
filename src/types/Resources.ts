@@ -11,6 +11,7 @@ type BaseResources = Omit<Resources, "workers">;
 interface ResourceData {
   name: string;
   symbol: string;
+  bgImage: string;
   workers: number;
   multiplier: number;
 }

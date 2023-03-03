@@ -12,7 +12,7 @@ export default function SharedStartMenu() {
           <Link className={routerLinkStyle} to="/play">
             <MenuItem text="Play" icon="▶️" />
           </Link>
-          <Link className={routerLinkStyle} to="/leaderboards">
+          {/* <Link className={routerLinkStyle} to="/leaderboards">
             <MenuItem text="Leaderboards" icon="🏆" />
           </Link>
           <Link className={routerLinkStyle} to="/options">
@@ -23,7 +23,7 @@ export default function SharedStartMenu() {
           </Link>
           <Link className={routerLinkStyle} to="/about">
             <MenuItem text="About" icon="⭐" />
-          </Link>
+          </Link> */}
         </div>
       </div>
 

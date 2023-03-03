@@ -201,7 +201,7 @@ export const buildingsData = {
     /* attackBonus: 0,
     healthBonus: 0, */
     description: "Unlocks crystal as a resource.",
-    bgImage: "bg-crystalQuarry",
+    bgImage: "bg-crystal",
     maxHealth: 5,
     currentHealth: 5,
     damage: 0,
@@ -219,7 +219,7 @@ export const buildingsData = {
     /* attackBonus: 0,
     healthBonus: 0, */
     description: "Unlocks gold as a resource.",
-    bgImage: "bg-goldHoard",
+    bgImage: "bg-gold",
     maxHealth: 10,
     currentHealth: 10,
     damage: 0,
