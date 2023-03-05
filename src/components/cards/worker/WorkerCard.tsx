@@ -76,24 +76,9 @@ export default function WorkerCard({
   return (
     <>
       <CardTemplate color="resources">
-        {/* <CardHeader
-          bgColor="resources"
-          cardName={resources[resourceType].name}
-        /> */}
         <CardImageHeaderDescriptionContainer
           cardName={resources[resourceType].name}
           bgImage={resources[resourceType].bgImage}
-          resources={resources}
-          resourceType={resourceType}
-        />
-
-        {/* <WorkerCardDescription
-          bgImage={resources[resourceType].bgImage}
-          resources={resources}
-          resourceType={resourceType}
-        /> */}
-
-        <WorkerAssignCollect
           resources={resources}
           resourceType={resourceType}
         />

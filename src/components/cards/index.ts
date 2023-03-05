@@ -1,6 +1,6 @@
 import BldgCardDescription from "./BldgCardDescription";
 import BldgCardFooter from "./BldgCardFooter";
-import BldgCardHeader from "./BldgCardHeader";
+import NewCardHeader from "./NewCardHeader";
 import BldgCardImage from "./BldgCardImage";
 import BldgCardTemplate from "./BldgCardTemplate";
 import CardDescription from "./CardDescription";
@@ -24,7 +24,7 @@ import TrainUnitCardHeader from "./TrainUnitCardHeader";
 export {
   BldgCardDescription,
   BldgCardFooter,
-  BldgCardHeader,
+  NewCardHeader,
   BldgCardImage,
   BldgCardTemplate,
   CardDescription,

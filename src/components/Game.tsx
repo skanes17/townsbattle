@@ -789,14 +789,13 @@ export default function Game(props: GameProps) {
             </DisplayTemplate>
             <DisplayTemplate headerText="Resources Collected">
               {resourceTypesAvailableToPlayer.map(
-                (resourceType: BaseResourceType | undefined) =>
-                  resourcePool[resourceType as BaseResourceType] > 0 ? (
-                    <BaseResource
-                      resources={resources}
-                      resourcePool={resourcePool}
-                      resourceType={resourceType as BaseResourceType}
-                    />
-                  ) : null
+                (resourceType: BaseResourceType | undefined) => (
+                  <BaseResource
+                    resources={resources}
+                    resourcePool={resourcePool}
+                    resourceType={resourceType as BaseResourceType}
+                  />
+                )
               )}
             </DisplayTemplate>
           </div>

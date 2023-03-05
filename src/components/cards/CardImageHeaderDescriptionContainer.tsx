@@ -1,5 +1,9 @@
 import React from "react";
 import { BaseResourceType, Resources } from "../../types";
+import CardBgWithImage from "./CardBgWithImage";
+import NewCardHeader from "./NewCardHeader";
+import WorkerAssignCollect from "./worker/WorkerAssignCollect";
+import WorkerCardHoverText from "./worker/WorkerCardHoverText";
 
 interface CardImageHeaderDescriptionContainerProps {
   cardName: string;
@@ -14,27 +18,23 @@ export default function CardImageHeaderDescriptionContainer({
   resources,
   resourceType,
 }: CardImageHeaderDescriptionContainerProps) {
-  const bg = bgImage;
-
   return (
-    <div className={`${bg} h-52 w-52 rounded-lg bg-wood bg-cover bg-center`}>
-      <div
-        className={`mx-2 flex h-8 items-center justify-center rounded-lg border border-white/25 bg-neutral-900/30
-text-lg font-bold capitalize backdrop-blur-sm`}
-      >
-        {cardName}
-      </div>
-      <div className="m-auto flex w-3/4 place-items-center items-center justify-center rounded-sm border-slate-300 bg-slate-300/90 p-2 text-center text-sm font-semibold text-black opacity-0 shadow-md backdrop-grayscale transition-all ease-in-out group-hover:opacity-100 group-active:opacity-100">
-        Gather {resources[resourceType].multiplier}{" "}
-        {resources[resourceType].name} for every worker.
-      </div>
-    </div>
+    <>
+      <CardBgWithImage bgImage={bgImage}>
+        <NewCardHeader cardName={cardName} />
+        <WorkerCardHoverText
+          resources={resources}
+          resourceType={resourceType}
+        />
+      </CardBgWithImage>
+      <WorkerAssignCollect resources={resources} resourceType={resourceType} />
+    </>
   );
 }
 
 //TODO: Next, try centering the div somehow in the remaining space
 
-// BldgCardHeader
+// NewCardHeader
 /* `mx-2 flex h-8 items-center justify-center rounded-lg border border-white/25
 bg-neutral-900/30 text-lg font-bold backdrop-blur-sm` */
 
