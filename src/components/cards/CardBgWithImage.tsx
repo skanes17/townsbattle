@@ -13,7 +13,7 @@ export default function CardBgWithImage({
 
   return (
     <div
-      className={`${bg} h-52 w-52 rounded-lg border border-transparent bg-wood bg-cover bg-center bg-no-repeat`}
+      className={`${bg} grid h-52 w-52 grid-rows-5 rounded-lg border border-transparent bg-wood bg-cover bg-center bg-no-repeat`}
     >
       {children}
     </div>
