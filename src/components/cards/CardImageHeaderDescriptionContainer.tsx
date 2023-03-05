@@ -14,8 +14,10 @@ export default function CardImageHeaderDescriptionContainer({
   resources,
   resourceType,
 }: CardImageHeaderDescriptionContainerProps) {
+  const bg = bgImage;
+
   return (
-    <div className={`h-52 w-52 rounded-lg bg-wood bg-cover bg-center`}>
+    <div className={`${bg} h-52 w-52 rounded-lg bg-wood bg-cover bg-center`}>
       <div
         className={`mx-2 flex h-8 items-center justify-center rounded-lg border border-white/25 bg-neutral-900/30
 text-lg font-bold capitalize backdrop-blur-sm`}
