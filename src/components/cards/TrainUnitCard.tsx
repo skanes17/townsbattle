@@ -14,6 +14,7 @@ import {
   TrainUnitCardHeader,
   CardDescription,
   CardCostsInfo,
+  NewCardHeader,
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
 import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types";
@@ -22,6 +23,8 @@ import {
   updateResources as updatedResourcePool,
 } from "../../utils";
 import { resourceChecker } from "../../utils/resourceChecker";
+import CardBgWithImage from "./CardBgWithImage";
+import CardHoverText from "./CardHoverText";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
@@ -139,6 +142,11 @@ export default function TrainUnitCard({
 
   return (
     <CardTemplate color="red">
+      {/* <CardBgWithImage bgImage={bgImage}>
+        <NewCardHeader cardName={cardName} />
+        <CardHoverText>{children}</CardHoverText>
+      </CardBgWithImage> */}
+
       <TrainUnitCardHeader
         cardName={BASE_UNIT_DATA[unitType].name}
         attack={BASE_UNIT_DATA[unitType].attack}

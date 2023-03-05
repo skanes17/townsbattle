@@ -22,7 +22,7 @@ export default function CardCostsInfo({
   const redText = "text-red-600";
   const greenText = "text-green-500";
 
-  /* FIXME: ts-ignores below!! Refactor with null coalescing untested as of Feb 13 2023 */
+  /* FIXME: ts-ignores below!! */
 
   return (
     <div className="grid auto-rows-auto grid-cols-[min-content_1fr] self-start px-2">

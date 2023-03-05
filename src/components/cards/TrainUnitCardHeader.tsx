@@ -12,21 +12,16 @@ export default function TrainUnitCardHeader({
   health,
 }: TrainUnitCardHeaderProps) {
   return (
-    <>
-      <div className="grid grid-cols-3">
-        <div className={`ml-1 flex h-8 items-center justify-start text-lg`}>
-          🗡️
-          {attack}
-        </div>
-        <div
-          className={`flex h-8 items-center justify-center text-lg font-bold`}
-        >
-          {cardName}
-        </div>
-        <div className={`mr-1 flex h-8 items-center justify-end text-lg`}>
-          ❤️{health}
-        </div>
-      </div>
-    </>
+    <div
+      className={`m-1 flex h-8 flex-row items-center justify-between rounded-lg border border-white/25 bg-black/25 px-1
+text-lg font-bold capitalize backdrop-blur-sm`}
+    >
+      <span>
+        🗡️
+        {attack}
+      </span>
+      <span>{cardName}</span>
+      <span>❤️{health}</span>
+    </div>
   );
 }
