@@ -6,7 +6,7 @@ import BldgCardTemplate from "./BldgCardTemplate";
 import CardDescription from "./CardDescription";
 import CardFooter from "./CardFooter";
 import CardHeader from "./CardHeader";
-import CardImage from "./CardImage";
+import CardImage from "./CardImageHeaderDescriptionContainer";
 import CardShowCount from "./CardShowCount";
 import CardSymbol from "./CardSymbol";
 import CardTemplate from "./CardTemplate";

@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { WorkerCardDescription } from ".";
 
 import {
   Resources,
@@ -10,10 +9,14 @@ import {
 import { cloneBasicObjectWithJSON } from "../../../utils";
 import { AddRemoveButton } from "../../buttons";
 import CardHeader from "../CardHeader";
+import CardImageHeaderDescriptionContainer from "../CardImageHeaderDescriptionContainer";
+import CardImageAndDescriptionContainer from "../CardImageHeaderDescriptionContainer";
+import CardImage from "../CardImageHeaderDescriptionContainer";
 import CardSymbol from "../CardSymbol";
 import CardTemplate from "../CardTemplate";
 
 import WorkerAssignCollect from "./WorkerAssignCollect";
+import WorkerCardDescription from "./WorkerCardDescription";
 
 interface WorkerCardProps {
   resources: Resources;
@@ -73,28 +76,30 @@ export default function WorkerCard({
   return (
     <>
       <CardTemplate color="resources">
-        <CardHeader
+        {/* <CardHeader
           bgColor="resources"
           cardName={resources[resourceType].name}
-        />
-        {/* <CardSymbol cardSymbol={resources[resourceType].symbol} /> */}
-        {/* <CardDescription
-          descriptionText={resources[resourceType].description}
         /> */}
-
-        <WorkerCardDescription
+        <CardImageHeaderDescriptionContainer
+          cardName={resources[resourceType].name}
           bgImage={resources[resourceType].bgImage}
           resources={resources}
           resourceType={resourceType}
         />
+
+        {/* <WorkerCardDescription
+          bgImage={resources[resourceType].bgImage}
+          resources={resources}
+          resourceType={resourceType}
+        /> */}
 
         <WorkerAssignCollect
           resources={resources}
           resourceType={resourceType}
         />
 
-        <div className="grid grid-cols-2">
-          <div className="flex items-center justify-end px-1">
+        <div className="grid grid-cols-2 px-1">
+          <div className="flex items-center justify-end pr-1">
             <AddRemoveButton
               buttonType="remove"
               onClick={() => removeWorker(resourceType)}
@@ -102,7 +107,7 @@ export default function WorkerCard({
               -
             </AddRemoveButton>
           </div>
-          <div className="flex items-center justify-start px-1">
+          <div className="flex items-center justify-start pl-1">
             <AddRemoveButton
               buttonType="add"
               onClick={() => addWorker(resourceType)}

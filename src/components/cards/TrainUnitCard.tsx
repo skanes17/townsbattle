@@ -159,7 +159,7 @@ export default function TrainUnitCard({
       </div>
       */}
 
-      <div className="grid auto-cols-min grid-cols-5 gap-1">
+      <div className="grid auto-cols-min grid-cols-5 gap-1 px-1">
         <div className="flex items-center justify-center">
           <AddRemoveButton
             buttonType="remove"

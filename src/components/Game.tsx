@@ -53,7 +53,7 @@ import {
   generateRandomArmyComposition,
   generateWeightedArmyComposition,
 } from "../utils";
-import { WorkerCardContainer } from "./cards/worker";
+import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
