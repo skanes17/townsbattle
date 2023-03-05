@@ -11,7 +11,7 @@ export default function GridCardContainer({
   return (
     <div className={`m-1 rounded-lg border border-transparent p-1`}>
       <div className="text-center text-lg font-bold">{headerText}</div>
-      <div className="flex flex-wrap space-x-1 space-y-1">{children}</div>
+      <div className="flex flex-wrap">{children}</div>
     </div>
   );
 }
