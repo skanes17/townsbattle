@@ -1,33 +1,26 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { BaseResourceType, Resources } from "../../types";
 import CardBgWithImage from "./CardBgWithImage";
 import NewCardHeader from "./NewCardHeader";
-import WorkerAssignCollect from "./worker/WorkerAssignCollect";
-import WorkerCardHoverText from "./worker/WorkerCardHoverText";
+import CardHoverText from "./CardHoverText";
 
 interface CardImageHeaderDescriptionContainerProps {
   cardName: string;
-  bgImage: string;
-  resources: Resources;
-  resourceType: BaseResourceType;
+  bgImage?: string;
+  children: ReactNode;
 }
 
 export default function CardImageHeaderDescriptionContainer({
   cardName,
   bgImage,
-  resources,
-  resourceType,
+  children,
 }: CardImageHeaderDescriptionContainerProps) {
   return (
     <>
       <CardBgWithImage bgImage={bgImage}>
         <NewCardHeader cardName={cardName} />
-        <WorkerCardHoverText
-          resources={resources}
-          resourceType={resourceType}
-        />
+        <CardHoverText>{children}</CardHoverText>
       </CardBgWithImage>
-      <WorkerAssignCollect resources={resources} resourceType={resourceType} />
     </>
   );
 }

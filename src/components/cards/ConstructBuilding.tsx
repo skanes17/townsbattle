@@ -20,6 +20,7 @@ import {
   CardSymbol,
   CardTemplate,
 } from "../cards";
+import CardImageHeaderDescriptionContainer from "./CardImageHeaderDescriptionContainer";
 
 interface ConstructBuildingProps {
   buildings: Buildings;
@@ -87,9 +88,12 @@ export default function ConstructBuilding({
 
   return (
     <CardTemplate color="blue">
-      <CardHeader bgColor="buildings" cardName={buildings[buildingType].name} />
-      <CardSymbol cardSymbol={buildings[buildingType].symbol} />
-      <CardDescription descriptionText={buildings[buildingType].description} />
+      <CardImageHeaderDescriptionContainer
+        cardName={buildings[buildingType].name}
+        bgImage={buildings[buildingType].bgImage}
+      >
+        {buildings[buildingType].description}
+      </CardImageHeaderDescriptionContainer>
 
       <CardCostsInfo
         resources={resources}

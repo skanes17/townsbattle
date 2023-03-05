@@ -25,7 +25,7 @@ export default function AddRemoveButton({
   return (
     <button
       type="button"
-      className={`shadow ${bgColor} mb-1 min-w-full rounded py-1 text-xs font-semibold text-white`}
+      className={`shadow ${bgColor} mb-1 min-w-full self-end rounded py-1 text-xs font-semibold text-white`}
       onClick={() => onClick()}
     >
       {children}

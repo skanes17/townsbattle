@@ -25,9 +25,9 @@ export default function CardCostsInfo({
   /* FIXME: ts-ignores below!! Refactor with null coalescing untested as of Feb 13 2023 */
 
   return (
-    <div className="grid auto-rows-auto grid-cols-[min-content_1fr] pl-2">
-      <div className="col-span-1 col-start-1 font-bold">Cost</div>
-      <div className="col-span-1 col-start-2 ml-4 grid auto-rows-auto pr-2 text-right text-lg">
+    <div className="grid auto-rows-auto grid-cols-[min-content_1fr] self-start px-2">
+      <div className="col-start-1 font-bold">Cost</div>
+      <div className="col-start-2 grid auto-rows-auto text-right text-lg">
         {Object.keys(resources).map(
           (resourceType: string) =>
             /* If this resource is required, show its cost */

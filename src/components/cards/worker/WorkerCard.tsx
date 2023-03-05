@@ -79,6 +79,12 @@ export default function WorkerCard({
         <CardImageHeaderDescriptionContainer
           cardName={resources[resourceType].name}
           bgImage={resources[resourceType].bgImage}
+        >
+          Gather {resources[resourceType].multiplier}{" "}
+          {resources[resourceType].name} for every worker.
+        </CardImageHeaderDescriptionContainer>
+
+        <WorkerAssignCollect
           resources={resources}
           resourceType={resourceType}
         />
