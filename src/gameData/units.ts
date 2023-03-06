@@ -18,12 +18,12 @@ export const baseUnitData = {
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
   },
-  melee: {
-    unitType: "melee",
-    name: "Melee",
+  fighter: {
+    unitType: "fighter",
+    name: "Fighter",
     symbol: "⚔️",
     description: "Simple. Effective.",
-    bgImage: "bg-knight",
+    bgImage: "bg-fighter",
     threatLevel: 1,
     attack: 6,
     maxHealth: 10,
@@ -35,9 +35,9 @@ export const baseUnitData = {
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
   },
-  pewpew: {
-    unitType: "pewpew",
-    name: "Pewpew",
+  archer: {
+    unitType: "archer",
+    name: "Archer",
     symbol: "🏹",
     description: "Attacks first against most unit types.",
     bgImage: "bg-archer",
@@ -53,15 +53,15 @@ export const baseUnitData = {
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
   },
-  tanky: {
-    unitType: "tanky",
-    name: "Tanky",
+  knight: {
+    unitType: "knight",
+    name: "Knight",
     symbol: "🛡️",
     description: "Uses armor to reduce incoming damage.",
     bgImage: "bg-knight",
     threatLevel: 1.5,
     attack: 4,
-    maxHealth: 15,
+    maxHealth: 11,
     armor: 1,
     resourceCosts: { workers: 1, stone: 3, metal: 3 },
     buildScore: 15,
@@ -108,19 +108,19 @@ export const baseUnitData = {
 };
 
 /* export const unitCostsData = {
-  melee: {
+  fighter: {
     workers: 1,
     wood: 2,
     stone: 2,
     metal: 0,
   },
-  pewpew: {
+  archer: {
     workers: 1,
     wood: 2,
     stone: 0,
     metal: 2,
   },
-  tanky: {
+  knight: {
     workers: 1,
     wood: 0,
     stone: 2,

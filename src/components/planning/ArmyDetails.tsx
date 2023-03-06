@@ -32,15 +32,15 @@ export default function ArmyDetails({
         <div>
           <p>Your army size is {myUnits.length}.</p>
           <p>
-            {unitCounts.melee} melee, {unitCounts.pewpew} pewpew,{" "}
-            {unitCounts.tanky} tanky.
+            {unitCounts.fighter} fighter, {unitCounts.archer} archer,{" "}
+            {unitCounts.knight} knight.
           </p>
         </div>
         <div>
           <p>The enemy army has {enemyUnits.length} units.</p>
           <p>
-            {enemyUnitCounts.melee} melee, {enemyUnitCounts.pewpew} pewpew,{" "}
-            {enemyUnitCounts.tanky} tanky.
+            {enemyUnitCounts.fighter} fighter, {enemyUnitCounts.archer} archer,{" "}
+            {enemyUnitCounts.knight} knight.
             {/* TODO: Make these percents? */}
           </p>
         </div>

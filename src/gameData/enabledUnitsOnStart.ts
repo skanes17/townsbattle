@@ -1,6 +1,6 @@
 // currently unused
 export const enabledUnitsOnStart = {
-  melee: false,
-  pewpew: false,
-  tanky: false,
+  fighter: false,
+  archer: false,
+  knight: false,
 };

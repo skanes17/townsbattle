@@ -63,7 +63,7 @@ import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 // -eg start with an army of 3, one of each
 // After first wave, the number is increased by some amount each time
 // -eg 7 units for second wave, enemy units randomly chosen
-// Composition of army could be displayed to UI, for example 20% melee 30% pewpew 50% tanky
+// Composition of army could be displayed to UI, for example 20% fighter 30% archer 50% knight
 
 export default function Game(props: GameProps) {
   // pull startData from linked Play component
@@ -465,12 +465,12 @@ export default function Game(props: GameProps) {
         // going into first combat? enemies are all farmers
         unitType = "farmer";
       } else if (nextCombatTurn === 2) {
-        // going into second combat? there's 1 melee; the rest are farmers
+        // going into second combat? there's 1 fighter; the rest are farmers
         // could tweak for this to happen later (eg combat turn 3)
         switch (powerLevel) {
           case 0:
-            // add a melee first time around the loop, when power level is 0
-            unitType = "melee";
+            // add a fighter first time around the loop, when power level is 0
+            unitType = "fighter";
             break;
           default:
             // default to farmer for the rest
@@ -480,7 +480,7 @@ export default function Game(props: GameProps) {
         switch (powerLevel) {
           // introduce 1 ranged enemy
           case 0:
-            unitType = "pewpew";
+            unitType = "archer";
             break;
           default:
             // TODO: the rest can be randomly chosen from player's UNLOCKED units
@@ -547,11 +547,11 @@ export default function Game(props: GameProps) {
 
     // thoughts on composition of enemy army...
     // if combat turns = 0, generate only farmers
-    // if combat turns = 1, generate only farmers and one melee
-    // if combat turns = 2, generate only melees? or farmers and 1-2 melees
-    // if combat turns = 3, generate only pewpew
-    // if combat turns = 4, generate melees and pewpew
-    // if combat turns = 5, generate melees, pewpews, 1 tanky
+    // if combat turns = 1, generate only farmers and one fighter
+    // if combat turns = 2, generate only fighters? or farmers and 1-2 fighters
+    // if combat turns = 3, generate only archer
+    // if combat turns = 4, generate fighters and archer
+    // if combat turns = 5, generate fighters, archers, 1 knight
     // if combat turns = 6, generate any combination
     // if combat turns = 7, from then on, any combination, unlock a new unit type for enemies after every combat?
   };

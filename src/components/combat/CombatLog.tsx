@@ -29,17 +29,17 @@ REFERENCE
             The enemy army has reached Gabenfort!
           </p>
           <p className="text-amber-400 odd:bg-white/5">
-            Gary Longshanks (melee) faces off against Orga Thrung (tanky).
+            Gary Longshanks (fighter) faces off against Orga Thrung (knight).
           </p>
           <p className="text-green-400  odd:bg-white/5">
-            Gary Longshanks does 3 damage to the enemy tanky.
+            Gary Longshanks does 3 damage to the enemy knight.
           </p>
           <p className="text-red-600  odd:bg-white/5">
             Orga Thrung retaliates with a savage 7 damage.
           </p>
           <p className="text-red-300  odd:bg-white/5">Gary Longshanks falls!</p>
           <p className="text-amber-400  odd:bg-white/5">
-            Peter Whislequill (pewpew) faces off against Gygor Grunch(melee).
+            Peter Whislequill (archer) faces off against Gygor Grunch(fighter).
           </p>
           <p className="text-green-400">
             Peter Whislequill does 7 damage to Gygor Grunch.

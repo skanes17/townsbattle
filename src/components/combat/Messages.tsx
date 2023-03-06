@@ -106,9 +106,9 @@ export const messages = {
           </span>{" "}
           {/* TODO: More of this type of conditional flavortext; focus on DRY */}
           {event.data.friendly.unitType === "farmer" ? "flails at" : null}{" "}
-          {event.data.friendly.unitType === "melee" ? "slashes" : null}{" "}
-          {event.data.friendly.unitType === "pewpew" ? "shoots at" : null}{" "}
-          {event.data.friendly.unitType === "tanky" ? "bashes" : null}{" "}
+          {event.data.friendly.unitType === "fighter" ? "slashes" : null}{" "}
+          {event.data.friendly.unitType === "archer" ? "shoots at" : null}{" "}
+          {event.data.friendly.unitType === "knight" ? "bashes" : null}{" "}
           {event.data.friendly.unitType === "mage" ? "casts a spell on" : null}{" "}
           <span className="text-red-400">
             {event.data.enemy.name}

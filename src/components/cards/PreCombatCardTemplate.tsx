@@ -47,11 +47,11 @@ export default function PreCombatCardTemplate({
           </p>
         );
       })} */}
-      <p className="pl-2">⚔️ {unitCounts.melee} melee</p>
-      <p className="pl-2">🏹 {unitCounts.pewpew} pewpew</p>
-      <p className="pl-2">🛡️ {unitCounts.tanky} tanky</p>
+      <p className="pl-2">⚔️ {unitCounts.fighter} fighter</p>
+      <p className="pl-2">🏹 {unitCounts.archer} archer</p>
+      <p className="pl-2">🛡️ {unitCounts.knight} knight</p>
       <p className="pl-2 opacity-50">
-        ({unitCounts.melee + unitCounts.pewpew + unitCounts.tanky} total)
+        ({unitCounts.fighter + unitCounts.archer + unitCounts.knight} total)
       </p>
     </div>
   );

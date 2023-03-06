@@ -15,6 +15,7 @@ module.exports = {
         explosivesResearch:
           "url('/src/assets/images/explosivesResearch-01.png')",
         farmer: "url('/src/assets/images/farmer-01.png')",
+        fighter: "url('/src/assets/images/fighter-01.png')",
         gold: "url('/src/assets/images/goldHoard-01.png')",
         healingChamber: "url('/src/assets/images/healingChamber-01.png')",
         knight: "url('/src/assets/images/knight-01.png')",

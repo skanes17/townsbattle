@@ -2,16 +2,16 @@ import { ResourceCosts } from "./ResourceCosts";
 
 export type UnitType =
   | "farmer"
-  | "melee"
-  | "pewpew"
-  | "tanky"
+  | "fighter"
+  | "archer"
+  | "knight"
   | "mage"
   | "bombird";
 export type UnitName =
   | "Farmer"
-  | "Melee"
-  | "Pewpew"
-  | "Tanky"
+  | "Fighter"
+  | "Archer"
+  | "Knight"
   | "Mage"
   | "Bombird";
 

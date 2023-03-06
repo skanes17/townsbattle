@@ -12,9 +12,9 @@ Critical hit chance (eg 5%), chance to hit
 
 --UNIT and BUILDING ABILITIES--
 DEVIN's IDEAS
-Tankys reduce all damage to them by 1 (armor)
-Pewpews can attack first before the enemy unit does
-Melee can be base unit
+Knights reduce all damage to them by 1 (armor)
+Archers can attack first before the enemy unit does
+Fighter can be base unit
 If a unit survives a round, then it can keep attacking (instead of going back into the army)
 If a unit was to die, it comes back with 1 health instead of dying
 Passively lower the enemy attack by X
@@ -67,8 +67,8 @@ BUILDINGS
 Have an option for autoplay (not the sim) that steps forward every 1/2 seconds or something
 
 -UNITS-
-Make a list of melee, pewpew, tanky names that can be pulled from when units are generated
--Maybe melee names could be a huge list of fighter names, pewpew could be mage names, tanky could be orc?
+Make a list of fighter, archer, knight names that can be pulled from when units are generated
+-Maybe fighter names could be a huge list of fighter names, archer could be mage names, knight could be orc?
 
 -PLANNING-
 Have a log somewhere in planning to hold the alerts (eg. "Not enough resources!")

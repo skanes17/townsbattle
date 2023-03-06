@@ -22,7 +22,7 @@ export const buildingsData = {
     resourceCosts: {},
     unlockedUnit: "farmer",
   },
-  // for melee
+  // for fighter
   swordsmithy: {
     name: "Swordsmithy",
     symbol: "🗡️",
@@ -41,9 +41,9 @@ export const buildingsData = {
     damage: 0,
     resourceCosts: { workers: 5, wood: 10, stone: 10 },
     buildScore: 50,
-    unlockedUnit: "melee",
+    unlockedUnit: "fighter",
   },
-  // for pewpew
+  // for archer
   archeryHut: {
     name: "Archery Hut",
     symbol: "🎯",
@@ -60,9 +60,9 @@ export const buildingsData = {
     damage: 0,
     resourceCosts: { workers: 5, wood: 15, metal: 10 },
     buildScore: 50,
-    unlockedUnit: "pewpew",
+    unlockedUnit: "archer",
   },
-  // for tanky
+  // for knight
   smelter: {
     name: "Smelter",
     symbol: "🛡️",
@@ -72,14 +72,14 @@ export const buildingsData = {
     tier: 1,
     /* attackBonus: 1,
     healthBonus: 3, */
-    description: "Learn to smelt metals. Unlock Tankys.",
+    description: "Learn to smelt metals. Unlock Knights.",
     bgImage: "bg-smelter",
     maxHealth: 15,
     currentHealth: 15,
     damage: 0,
     resourceCosts: { workers: 5, stone: 15, metal: 15 },
     buildScore: 50,
-    unlockedUnit: "tanky",
+    unlockedUnit: "knight",
   },
   // for mages
   mageSchool: {
@@ -236,14 +236,14 @@ export const buildingsData = {
     stone: 10,
     metal: 0,
   },
-  // for pewpew
+  // for archer
   archeryHut: {
     workers: 5,
     wood: 10,
     stone: 0,
     metal: 10,
   },
-  // for tanky
+  // for knight
   armorsmithy: {
     workers: 5,
     wood: 0,
