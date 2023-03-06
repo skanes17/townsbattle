@@ -729,7 +729,7 @@ export default function Game(props: GameProps) {
     </>
   ) : (
     // MODAL STUFF -- The TrainingCardContainer would go inside the building card
-    <div className="p-1">
+    <div className="bg-brown bg-contain bg-center p-1">
       <div
         className={`fixed inset-0 z-10 transition-all ${
           toggle ? "opacity-100" : "invisible opacity-0"

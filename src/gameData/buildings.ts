@@ -1,6 +1,27 @@
 /* TODO: Add a building which adds to number of workers per turn */
 
 export const buildingsData = {
+  // for all units
+  townCenter: {
+    name: "Town Center",
+    symbol: "🏙️",
+    /* FIXME: Path not working */
+    imageSrc: "/images/town-center-01.png",
+    enabled: false,
+    underConstruction: false,
+    constructed: true,
+    tier: 1,
+    /* attackBonus: 0,
+    healthBonus: 0, */
+    description: "Losing this building means game over!",
+    buildScore: 0,
+    bgImage: "bg-townCenter",
+    maxHealth: 15,
+    currentHealth: 15,
+    damage: 0,
+    resourceCosts: {},
+    unlockedUnit: "farmer",
+  },
   // for melee
   swordsmithy: {
     name: "Swordsmithy",
@@ -152,27 +173,6 @@ export const buildingsData = {
     damage: 0,
     resourceCosts: { workers: 5, wood: 20, stone: 10, metal: 5 },
     buildScore: 75,
-  },
-  // for all units
-  townCenter: {
-    name: "Town Center",
-    symbol: "🏙️",
-    /* FIXME: Path not working */
-    imageSrc: "/images/town-center-01.png",
-    enabled: false,
-    underConstruction: false,
-    constructed: true,
-    tier: 1,
-    /* attackBonus: 0,
-    healthBonus: 0, */
-    description: "Losing this building means game over!",
-    buildScore: 0,
-    bgImage: "bg-townCenter",
-    maxHealth: 15,
-    currentHealth: 15,
-    damage: 0,
-    resourceCosts: {},
-    unlockedUnit: "farmer",
   },
   scoutUnit: {
     name: "Scout Unit",

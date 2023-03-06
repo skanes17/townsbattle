@@ -4,14 +4,21 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
+        archer: "url('/src/assets/images/archer-01.png')",
         archeryHut: "url('/src/assets/images/archeryHut-01.png')",
+        bomber: "url('/src/assets/images/bomber-01.png')",
+        brown: "url('/src/assets/images/brown.png')",
+        dirt: "url('/src/assets/images/dirt.png')",
         crystal: "url('/src/assets/images/crystalQuarry-01.png')",
         /* enemyArmy: "url('/src/assets/images/enemyArmy-02.png')",
         friendlyArmy: "url('/src/assets/images/friendlyArmy-01.png')", */
         explosivesResearch:
           "url('/src/assets/images/explosivesResearch-01.png')",
+        farmer: "url('/src/assets/images/farmer-01.png')",
         gold: "url('/src/assets/images/goldHoard-01.png')",
         healingChamber: "url('/src/assets/images/healingChamber-01.png')",
+        knight: "url('/src/assets/images/knight-01.png')",
+        mage: "url('/src/assets/images/mage-01.png')",
         mageSchool: "url('/src/assets/images/mageSchool-01.png')",
         mainMenu: "url('/src/assets/images/mainMenu-01.png')",
         mealHall: "url('/src/assets/images/mealHall-01.png')",
@@ -40,6 +47,11 @@ module.exports = {
       animation: {
         "attack-right": "jiggleRight 0.25s linear 1",
         "attack-left": "jiggleLeft 0.25s linear 1",
+      },
+      saturate: {
+        25: ".25",
+        75: ".75",
+        125: "1.25",
       },
     },
   },

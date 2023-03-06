@@ -6,6 +6,7 @@ import {
   NewCardHeader,
   BldgCardDescription,
 } from "../cards";
+import CardHoverText from "../cards/CardHoverText";
 import { SpacerDiv } from "../layout/SpacerDiv";
 
 interface DisplayBuildingsProps {
@@ -24,9 +25,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
       {constructedBuildings.map((buildingType) => (
         <BldgCardTemplate bgImage={buildings[buildingType].bgImage}>
           <NewCardHeader cardName={buildings[buildingType].name} />
-          {/* <CardSymbol cardSymbol={buildings[buildingType].symbol} /> */}
-          {/* <BldgCardImage buildingType={buildingType} /> */}
-          {/* <SpacerDiv></SpacerDiv> */}
+          {/* <CardHoverText>{buildings[buildingType].description}</CardHoverText> */}
           <BldgCardDescription
             descriptionText={buildings[buildingType].description}
           />

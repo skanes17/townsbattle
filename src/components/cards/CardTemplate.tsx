@@ -17,13 +17,13 @@ export default function CardTemplate({ color, children }: CardTemplateProps) {
 
   switch (color) {
     case "blue":
-      bgColor = "bg-blue-800/5";
+      bgColor = "bg-gradient-to-r from-slate-800/70 to-slate-900/70";
       break;
     case "red":
-      bgColor = "bg-red-800/5";
+      bgColor = "bg-gradient-to-r from-red-700/30 to-red-900/30";
       break;
     case "orange":
-      bgColor = "bg-orange-800/5";
+      bgColor = "bg-gradient-to-r from-orange-600/30 to-orange-900/30";
       break;
     case "amber":
       bgColor = "bg-amber-800/5";
@@ -43,7 +43,7 @@ export default function CardTemplate({ color, children }: CardTemplateProps) {
     /* TODO: Different colored borders backgrounds and blur as necessary */
     // only difference between this and BldfCardTemplate is border-b-0 in BldgCardTemplate
     <div
-      className={`group m-[2px] grid w-52 auto-rows-auto justify-around rounded-lg bg-zinc-800 text-white hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50`}
+      className={`group m-1 grid w-52 auto-rows-auto justify-around rounded-lg ${bgColor} text-white hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50`}
     >
       {children}
     </div>

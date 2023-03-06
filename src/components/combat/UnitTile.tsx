@@ -74,6 +74,7 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
 
   return (
     <>
+      {/* TODO: Replace with proper images */}
       <div
         className={`square group relative my-auto mx-auto max-w-min snap-center justify-items-center rounded-md ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >

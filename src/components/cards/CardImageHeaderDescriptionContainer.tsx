@@ -5,19 +5,21 @@ import NewCardHeader from "./NewCardHeader";
 import CardHoverText from "./CardHoverText";
 
 interface CardImageHeaderDescriptionContainerProps {
+  saturation: "oversaturated" | "normal" | "half" | "quarter" | "zero";
   cardName: string;
   bgImage?: string;
   children: ReactNode;
 }
 
 export default function CardImageHeaderDescriptionContainer({
+  saturation,
   cardName,
   bgImage,
   children,
 }: CardImageHeaderDescriptionContainerProps) {
   return (
     <>
-      <CardBgWithImage bgImage={bgImage}>
+      <CardBgWithImage saturation={saturation} bgImage={bgImage}>
         <NewCardHeader cardName={cardName} />
         <CardHoverText>{children}</CardHoverText>
       </CardBgWithImage>

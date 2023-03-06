@@ -21,6 +21,7 @@ export interface Unit {
   name: UnitName;
   symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣";
   description?: string;
+  bgImage: string;
   threatLevel: number;
   attack: number;
   maxHealth: number;

@@ -89,6 +89,7 @@ export default function ConstructBuilding({
   return (
     <CardTemplate color="blue">
       <CardImageHeaderDescriptionContainer
+        saturation="quarter"
         cardName={buildings[buildingType].name}
         bgImage={buildings[buildingType].bgImage}
       >

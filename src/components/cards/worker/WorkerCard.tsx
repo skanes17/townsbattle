@@ -75,8 +75,9 @@ export default function WorkerCard({
 
   return (
     <>
-      <CardTemplate color="resources">
+      <CardTemplate color="orange">
         <CardImageHeaderDescriptionContainer
+          saturation="oversaturated"
           cardName={resources[resourceType].name}
           bgImage={resources[resourceType].bgImage}
         >
@@ -89,6 +90,7 @@ export default function WorkerCard({
           resourceType={resourceType}
         />
 
+        {/* TODO: Add Zero -5 -+5 Max buttons! */}
         <div className="grid grid-cols-2 px-1">
           <div className="flex items-center justify-end pr-1">
             <AddRemoveButton

@@ -142,18 +142,17 @@ export default function TrainUnitCard({
 
   return (
     <CardTemplate color="red">
-      {/* <CardBgWithImage bgImage={bgImage}>
-        <NewCardHeader cardName={cardName} />
-        <CardHoverText>{children}</CardHoverText>
-      </CardBgWithImage> */}
-
-      <TrainUnitCardHeader
-        cardName={BASE_UNIT_DATA[unitType].name}
-        attack={BASE_UNIT_DATA[unitType].attack}
-        health={BASE_UNIT_DATA[unitType].maxHealth}
-      ></TrainUnitCardHeader>
-      <CardSymbol cardSymbol={BASE_UNIT_DATA[unitType].symbol} />
-      <CardDescription descriptionText={BASE_UNIT_DATA[unitType].description} />
+      <CardBgWithImage
+        saturation={"oversaturated"}
+        bgImage={BASE_UNIT_DATA[unitType].bgImage}
+      >
+        <TrainUnitCardHeader
+          cardName={BASE_UNIT_DATA[unitType].name}
+          attack={BASE_UNIT_DATA[unitType].attack}
+          health={BASE_UNIT_DATA[unitType].maxHealth}
+        ></TrainUnitCardHeader>
+        <CardHoverText>{BASE_UNIT_DATA[unitType].description}</CardHoverText>
+      </CardBgWithImage>
 
       <CardCostsInfo
         resources={resources}
