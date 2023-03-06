@@ -55,6 +55,7 @@ import {
 } from "../utils";
 import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
+import { NavButtons, NavButtonType } from "../types/NavButtons";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -67,7 +68,7 @@ import NavButton from "./navbar/NavButton";
 // Composition of army could be displayed to UI, for example 20% fighter 30% archer 50% knight
 
 export default function Game(props: GameProps) {
-  const devToolsOn = false;
+  const [devTools, setDevTools] = useState(false);
 
   // pull startData from linked Play component
   const startData = useLocation();
@@ -703,7 +704,29 @@ export default function Game(props: GameProps) {
   /* TODO: Incorporate this on building click */
   const [toggle, setToggle] = useState(false);
 
-  const [showResources, setShowResources] = useState(false);
+  const [activeNavButtons, setActiveNavButtons] = useState<NavButtons>({
+    score: false,
+    resources: false,
+    buildings: false,
+    army: false,
+    tips: false,
+  });
+
+  const navButtonOn = (navButtonType: NavButtonType) => {
+    // if falsy (undefined, etc), bail
+    if (!navButtonType) {
+      return;
+    }
+
+    const clonedActiveNavButtons = { ...activeNavButtons };
+
+    // check the activeNavButtons keys against the desired navButton to "turn on"
+    for (const key in clonedActiveNavButtons) {
+      navButtonType === key
+        ? (clonedActiveNavButtons[key] = true)
+        : (clonedActiveNavButtons[key] = false);
+    }
+  };
 
   return inCombat ? (
     <>
@@ -721,7 +744,7 @@ export default function Game(props: GameProps) {
         switchPhase={switchPhase}
         scoreUpdaterFn={scoreUpdaterFn}
       />
-      {devToolsOn ? (
+      {devTools ? (
         <DevTools
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           resources={resources}
@@ -737,25 +760,21 @@ export default function Game(props: GameProps) {
   ) : (
     <>
       <div className="bg-brown bg-contain bg-center">
-        <nav className="fixed top-0 left-0 z-40 grid h-screen w-64 -translate-x-full grid-rows-[auto_repeat(1fr)_auto] text-3xl transition-transform sm:translate-x-0">
-          <NavButton buttonStyle="score" stateTrigger={showResources}>
-            Score: {score}
-          </NavButton>
-          <NavButton buttonStyle="default" stateTrigger={showResources}>
-            Resources
-          </NavButton>
-          <NavButton buttonStyle="default" stateTrigger={showResources}>
-            Units
-          </NavButton>
-          <NavButton buttonStyle="default" stateTrigger={showResources}>
-            Buildings
-          </NavButton>
-          <NavButton buttonStyle="default" stateTrigger={showResources}>
-            Army
-          </NavButton>
-          <NavButton buttonStyle="tips" stateTrigger={showResources}>
-            Tips
-          </NavButton>
+        <nav className="fixed top-0 left-0 z-40 grid h-screen w-64 -translate-x-full grid-rows-[auto_repeat(1fr)_auto] overflow-y-auto text-3xl transition-transform sm:translate-x-0">
+          <>
+            {Object.keys(activeNavButtons).map((key) => {
+              return (
+                <NavButton
+                  buttonStyle={key as NavButtonType}
+                  stateTrigger={activeNavButtons[key]}
+                  navButtonOn={navButtonOn}
+                  navButtonType={key as NavButtonType}
+                >
+                  {key === "score" ? `Score: ${score}` : key}
+                </NavButton>
+              );
+            })}
+          </>
         </nav>
 
         <div className="sm:ml-64">
@@ -865,7 +884,7 @@ export default function Game(props: GameProps) {
             ) : null}
           </div>
           <br></br>
-          {devToolsOn ? (
+          {devTools ? (
             <DevTools
               BASE_UNIT_DATA={BASE_UNIT_DATA}
               resources={resources}

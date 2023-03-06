@@ -1,23 +1,23 @@
 import React, { ReactNode } from "react";
+import { NavButtonType } from "../../types/NavButtons";
 
 interface NavButtonProps {
-  buttonStyle: "default" | "score" | "tips";
+  buttonStyle: NavButtonType;
   stateTrigger: boolean;
+  navButtonOn: (navButtonType: NavButtonType) => void;
+  navButtonType: NavButtonType;
   children: ReactNode;
 }
 
 export default function NavButton({
   buttonStyle,
   stateTrigger,
+  navButtonOn,
+  navButtonType,
   children,
 }: NavButtonProps) {
   let style;
   switch (buttonStyle) {
-    case "default":
-      style = `hover:bg-zinc-700 ${
-        stateTrigger ? `translate-x-5 rounded-lg bg-zinc-700` : `rounded-r-lg`
-      }`;
-      break;
     case "score":
       style = `hover:bg-green-400 hover:text-white ${
         stateTrigger
@@ -26,21 +26,22 @@ export default function NavButton({
       }`;
       break;
     case "tips":
-      style = `hover:bg-amber-500 hover:text-white ${
+      style = `cursor-pointer hover:bg-amber-500 hover:text-white ${
         stateTrigger
           ? `text-white translate-x-5 rounded-lg bg-amber-500`
           : `text-amber-500 rounded-r-lg`
       }`;
       break;
     default:
-      style = `hover:bg-zinc-700 ${
+      style = `cursor-pointer hover:bg-zinc-700 ${
         stateTrigger ? `translate-x-5 rounded-lg bg-zinc-700` : `rounded-r-lg`
       }`;
   }
 
   return (
     <div
-      className={`flex items-center justify-center border border-zinc-900/50 bg-zinc-800 transition duration-75 ease-in-out ${style}`}
+      className={`flex flex-wrap items-center justify-center overflow-x-auto border border-zinc-900/50 bg-zinc-800 capitalize transition duration-75 ease-in-out ${style}`}
+      onClick={() => navButtonOn(navButtonType)}
     >
       {children}
     </div>
