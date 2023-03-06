@@ -726,6 +726,8 @@ export default function Game(props: GameProps) {
         ? (clonedActiveNavButtons[key] = true)
         : (clonedActiveNavButtons[key] = false);
     }
+
+    setActiveNavButtons(clonedActiveNavButtons);
   };
 
   return inCombat ? (
@@ -759,8 +761,12 @@ export default function Game(props: GameProps) {
     </>
   ) : (
     <>
-      <div className="bg-brown bg-contain bg-center">
-        <nav className="fixed top-0 left-0 z-40 grid h-screen w-64 -translate-x-full grid-rows-[auto_repeat(1fr)_auto] overflow-y-auto text-3xl transition-transform sm:translate-x-0">
+      {/*
+      Reference - https://flowbite.com/docs/components/sidebar/
+      Also use this reference for incorporating a mini sidebar
+      */}
+      <div className="z-0 bg-brown bg-contain bg-center">
+        <nav className="fixed top-0 left-0 z-20 grid h-screen w-64 -translate-x-full grid-rows-[1fr_5fr_5fr_5fr_1.5fr] text-3xl transition-transform sm:translate-x-0">
           <>
             {Object.keys(activeNavButtons).map((key) => {
               return (

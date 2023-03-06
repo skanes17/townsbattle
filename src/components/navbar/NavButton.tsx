@@ -19,29 +19,29 @@ export default function NavButton({
   let style;
   switch (buttonStyle) {
     case "score":
-      style = `hover:bg-green-400 hover:text-white ${
-        stateTrigger
-          ? `text-white translate-x-5 rounded-lg bg-green-400`
-          : `text-green-400 rounded-r-lg`
+      style = `justify-start text-xl hover:bg-green-400 rounded-r-lg hover:text-white ${
+        stateTrigger ? `text-white bg-green-400` : `text-green-400`
       }`;
       break;
     case "tips":
-      style = `cursor-pointer hover:bg-amber-500 hover:text-white ${
+      style = `cursor-pointer rounded-r-lg hover:bg-amber-500 hover:text-white ${
         stateTrigger
-          ? `text-white translate-x-5 rounded-lg bg-amber-500`
-          : `text-amber-500 rounded-r-lg`
+          ? `translate-x-3 text-white bg-amber-500`
+          : `text-amber-500`
       }`;
       break;
     default:
       style = `cursor-pointer hover:bg-zinc-700 ${
-        stateTrigger ? `translate-x-5 rounded-lg bg-zinc-700` : `rounded-r-lg`
+        stateTrigger ? `translate-x-3 rounded-lg bg-zinc-700` : `rounded-r-lg`
       }`;
   }
 
   return (
     <div
-      className={`flex flex-wrap items-center justify-center overflow-x-auto border border-zinc-900/50 bg-zinc-800 capitalize transition duration-75 ease-in-out ${style}`}
-      onClick={() => navButtonOn(navButtonType)}
+      className={`z-50 flex flex-wrap items-center justify-center overflow-x-auto border border-zinc-900/50 bg-zinc-800 capitalize transition duration-75 ease-in-out ${style}`}
+      onClick={() =>
+        navButtonType === "score" ? null : navButtonOn(navButtonType)
+      }
     >
       {children}
     </div>
