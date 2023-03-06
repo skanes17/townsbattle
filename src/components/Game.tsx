@@ -54,6 +54,7 @@ import {
   generateWeightedArmyComposition,
 } from "../utils";
 import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
+import NavButton from "./navbar/NavButton";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -66,6 +67,8 @@ import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 // Composition of army could be displayed to UI, for example 20% fighter 30% archer 50% knight
 
 export default function Game(props: GameProps) {
+  const devToolsOn = false;
+
   // pull startData from linked Play component
   const startData = useLocation();
 
@@ -700,6 +703,8 @@ export default function Game(props: GameProps) {
   /* TODO: Incorporate this on building click */
   const [toggle, setToggle] = useState(false);
 
+  const [showResources, setShowResources] = useState(false);
+
   return inCombat ? (
     <>
       <Combat
@@ -716,41 +721,110 @@ export default function Game(props: GameProps) {
         switchPhase={switchPhase}
         scoreUpdaterFn={scoreUpdaterFn}
       />
-      <DevTools
-        BASE_UNIT_DATA={BASE_UNIT_DATA}
-        resources={resources}
-        resourceTypes={resourceTypes}
-        addResource={addResource}
-        addUnit={addUnit}
-        switchPhase={switchPhase}
-        myUnits={myUnits}
-        trainEnemyUnits={trainEnemyUnits}
-      />
+      {devToolsOn ? (
+        <DevTools
+          BASE_UNIT_DATA={BASE_UNIT_DATA}
+          resources={resources}
+          resourceTypes={resourceTypes}
+          addResource={addResource}
+          addUnit={addUnit}
+          switchPhase={switchPhase}
+          myUnits={myUnits}
+          trainEnemyUnits={trainEnemyUnits}
+        />
+      ) : null}
     </>
   ) : (
-    // MODAL STUFF -- The TrainingCardContainer would go inside the building card
-    <div className="bg-brown bg-contain bg-center p-1">
-      <div
-        className={`fixed inset-0 z-10 transition-all ${
-          toggle ? "opacity-100" : "invisible opacity-0"
-        } bg-zinc-900/50 duration-500 ease-in-out`}
-      >
-        {/*
-        allows user to click outside to close the modal when paired with an onClick event
-       <div className="fixed inset-0 h-full w-full bg-black opacity-40"></div>
-        */}
-        <div
-          className={`${
-            toggle ? null : "translate-y-full"
-          } z-50 flex min-h-screen items-center px-4 py-8 transition-all duration-500 ease-in-out`}
-        >
-          <div
-            className={
-              "relative mx-auto w-fit max-w-lg rounded-md border border-white bg-zinc-800 p-4 shadow-lg"
-            }
-          >
+    <>
+      <div className="bg-brown bg-contain bg-center">
+        <nav className="fixed top-0 left-0 z-40 grid h-screen w-64 -translate-x-full grid-rows-[auto_repeat(1fr)_auto] text-3xl transition-transform sm:translate-x-0">
+          <NavButton buttonStyle="score" stateTrigger={showResources}>
+            Score: {score}
+          </NavButton>
+          <NavButton buttonStyle="default" stateTrigger={showResources}>
+            Resources
+          </NavButton>
+          <NavButton buttonStyle="default" stateTrigger={showResources}>
+            Units
+          </NavButton>
+          <NavButton buttonStyle="default" stateTrigger={showResources}>
+            Buildings
+          </NavButton>
+          <NavButton buttonStyle="default" stateTrigger={showResources}>
+            Army
+          </NavButton>
+          <NavButton buttonStyle="tips" stateTrigger={showResources}>
+            Tips
+          </NavButton>
+        </nav>
+
+        <div className="sm:ml-64">
+          {/* TODO: Add a clock */}
+          <div className="sticky top-0 z-10 grid auto-cols-auto">
+            <div className="mx-1 grid auto-cols-fr grid-flow-col justify-end rounded-b-md border border-t-0 border-slate-500 bg-slate-900  px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+              <div className="grid auto-cols-auto grid-flow-col">
+                <DisplayTemplate headerText="Workers">
+                  {resourceTypes
+                    .filter((resourceType) => resourceType === "workers")
+                    .map((resourceType: ResourceType) => (
+                      <Resource
+                        resources={resources}
+                        resourcePool={resourcePool}
+                        resourceType={resourceType}
+                      />
+                    ))}
+                </DisplayTemplate>
+                <DisplayTemplate headerText="Resource Pool">
+                  {resourceTypesAvailableToPlayer.map(
+                    (resourceType: BaseResourceType | undefined) => (
+                      <BaseResource
+                        resources={resources}
+                        resourcePool={resourcePool}
+                        resourceType={resourceType as BaseResourceType}
+                      />
+                    )
+                  )}
+                </DisplayTemplate>
+              </div>
+              {/* TODO: Only show unit counts once units are unlocked, and only show appropraite counts for unit types unlocked */}
+              {unlockedUnitTypes.length > 0 ? (
+                <DisplayTemplate headerText="Army">
+                  {unitTypes.map((unitType: UnitType) =>
+                    unitCounts[unitType] > 0 ? (
+                      <UnitCount
+                        BASE_UNIT_DATA={BASE_UNIT_DATA}
+                        unitType={unitType}
+                        unitCounts={unitCounts}
+                      />
+                    ) : null
+                  )}{" "}
+                </DisplayTemplate>
+              ) : null}
+              {/* FIXME: Make this into a tooltip, like a question mark circle thing you hover over or click */}
+              {unlockedUnitTypes.length > 2 ? (
+                <div className="place-self-center text-xl">
+                  Tip: Train Units to Protect {townName}!
+                </div>
+              ) : (
+                <div className="place-self-center text-xl">
+                  Tip: Construct buildings to unlock new units!
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap justify-evenly">
+            <GridCardContainer headerText="Collect Resources">
+              <WorkerCardContainer
+                resources={resources}
+                resourceTypesAvailableToPlayer={resourceTypesAvailableToPlayer}
+                setResources={setResources}
+                resourcePool={resourcePool}
+                setResourcePool={setResourcePool}
+              />
+            </GridCardContainer>
             {unlockedUnitTypes.length > 0 ? (
-              <div className="flex items-center justify-center">
+              <GridCardContainer headerText="Train Units">
                 <TrainingCardContainer
                   unlockedUnitTypes={unlockedUnitTypes}
                   buildings={buildings}
@@ -764,179 +838,130 @@ export default function Game(props: GameProps) {
                   removeTrainingUnit={removeTrainingUnit}
                   removeAllTrainingUnits={removeAllTrainingUnits}
                 />
-              </div>
+              </GridCardContainer>
             ) : null}
-          </div>
-        </div>
-      </div>
-
-      <div>Score: {score}</div>
-      {/* TODO: Add a clock */}
-
-      <div className="sticky top-0 z-10 grid auto-cols-auto">
-        <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-          <div className="grid auto-cols-auto grid-flow-col">
-            <DisplayTemplate headerText="Workers">
-              {resourceTypes
-                .filter((resourceType) => resourceType === "workers")
-                .map((resourceType: ResourceType) => (
-                  <Resource
+            <GridCardContainer headerText="Buildings Constructed">
+              {/* TODO: Match component structure with other cards */}
+              <DisplayBuildings buildings={buildings} />
+            </GridCardContainer>
+            {/* If there are no buildings left to construct, remove the section */}
+            {buildingsLeftToConstruct.length > 0 ? (
+              <GridCardContainer headerText="Construct Buildings">
+                {/* TODO: Match component structure with other cards */}
+                {buildingsLeftToConstruct.map((buildingType) => (
+                  <ConstructBuilding
+                    key={buildingType}
+                    buildings={buildings}
+                    setBuildings={setBuildings}
+                    /* buildingCosts={buildingCosts} */
+                    buildingType={buildingType}
                     resources={resources}
+                    setResources={setResources}
                     resourcePool={resourcePool}
-                    resourceType={resourceType}
+                    setResourcePool={setResourcePool}
                   />
                 ))}
-            </DisplayTemplate>
-            <DisplayTemplate headerText="Resources Collected">
-              {resourceTypesAvailableToPlayer.map(
-                (resourceType: BaseResourceType | undefined) => (
-                  <BaseResource
-                    resources={resources}
-                    resourcePool={resourcePool}
-                    resourceType={resourceType as BaseResourceType}
-                  />
-                )
-              )}
-            </DisplayTemplate>
+              </GridCardContainer>
+            ) : null}
           </div>
-
-          {/* TODO: Only show unit counts once units are unlocked, and only show appropraite counts for unit types unlocked */}
-          {unlockedUnitTypes.length > 0 ? (
-            <DisplayTemplate headerText="Army">
-              {unitTypes.map((unitType: UnitType) =>
-                unitCounts[unitType] > 0 ? (
-                  <UnitCount
-                    BASE_UNIT_DATA={BASE_UNIT_DATA}
-                    unitType={unitType}
-                    unitCounts={unitCounts}
-                  />
-                ) : null
-              )}{" "}
-            </DisplayTemplate>
-          ) : null}
-
-          {/* FIXME: Make this into a tooltip, like a question mark circle thing you hover over or click */}
-          {unlockedUnitTypes.length > 2 ? (
-            <div className="place-self-center text-xl">
-              Tip: Train Units to Protect {townName}!
-            </div>
-          ) : (
-            <div className="place-self-center text-xl">
-              Tip: Construct buildings to unlock new units!
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="flex flex-wrap justify-evenly">
-        <GridCardContainer headerText="Collect Resources">
-          <WorkerCardContainer
-            resources={resources}
-            resourceTypesAvailableToPlayer={resourceTypesAvailableToPlayer}
-            setResources={setResources}
-            resourcePool={resourcePool}
-            setResourcePool={setResourcePool}
-          />
-        </GridCardContainer>
-
-        {unlockedUnitTypes.length > 0 ? (
-          <GridCardContainer headerText="Train Units">
-            <TrainingCardContainer
-              unlockedUnitTypes={unlockedUnitTypes}
-              buildings={buildings}
-              resources={resources}
-              resourcePool={resourcePool}
-              setResourcePool={setResourcePool}
-              unitsInTraining={unitsInTraining}
+          <br></br>
+          {devToolsOn ? (
+            <DevTools
               BASE_UNIT_DATA={BASE_UNIT_DATA}
-              addTrainingUnit={addTrainingUnit}
-              maxTrainingUnits={maxTrainingUnits}
-              removeTrainingUnit={removeTrainingUnit}
-              removeAllTrainingUnits={removeAllTrainingUnits}
+              resources={resources}
+              resourceTypes={resourceTypes}
+              addResource={addResource}
+              addUnit={addUnit}
+              switchPhase={switchPhase}
+              myUnits={myUnits}
+              trainEnemyUnits={trainEnemyUnits}
             />
-          </GridCardContainer>
-        ) : null}
-
-        <GridCardContainer headerText="Buildings Constructed">
-          {/* TODO: Match component structure with other cards */}
-          <DisplayBuildings buildings={buildings} />
-        </GridCardContainer>
-
-        {/* If there are no buildings left to construct, remove the section */}
-        {buildingsLeftToConstruct.length > 0 ? (
-          <GridCardContainer headerText="Construct Buildings">
-            {/* TODO: Match component structure with other cards */}
-            {buildingsLeftToConstruct.map((buildingType) => (
-              <ConstructBuilding
-                key={buildingType}
-                buildings={buildings}
-                setBuildings={setBuildings}
-                /* buildingCosts={buildingCosts} */
-                buildingType={buildingType}
-                resources={resources}
-                setResources={setResources}
-                resourcePool={resourcePool}
-                setResourcePool={setResourcePool}
-              />
-            ))}
-          </GridCardContainer>
-        ) : null}
-      </div>
-      <br></br>
-      <DevTools
-        BASE_UNIT_DATA={BASE_UNIT_DATA}
-        resources={resources}
-        resourceTypes={resourceTypes}
-        addResource={addResource}
-        addUnit={addUnit}
-        switchPhase={switchPhase}
-        myUnits={myUnits}
-        trainEnemyUnits={trainEnemyUnits}
-      />
-      {/* TODO: Combine UnitCount and UnitInTraining into one general component; only the count differs */}
-      <div className="sticky bottom-0 z-10 grid auto-cols-auto">
-        <div className="grid auto-cols-fr grid-flow-col justify-end rounded-md border border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-          <DisplayTemplate headerText="Resources to Collect">
-            {allBaseResourceTypesInTheGame.map((resourceType) =>
-              resources[resourceType].workers > 0 ? (
-                <ResourceToCollect
-                  resources={resources}
-                  resourceType={resourceType}
-                />
-              ) : null
-            )}
-          </DisplayTemplate>
-
-          <DisplayTemplate headerText="Units to Train">
-            {unitTypes.map((unitType) =>
-              unitsInTraining[unitType] > 0 ? (
-                <UnitInTraining
-                  BASE_UNIT_DATA={BASE_UNIT_DATA}
-                  unitType={unitType}
-                  unitsInTraining={unitsInTraining}
-                />
-              ) : null
-            )}
-          </DisplayTemplate>
-
-          <div className="sticky bottom-0 flex items-center justify-center p-0">
-            <Button
-              buttonColor="blue"
-              onClick={endTurn}
-              disabled={resourcePool["workers"] > 0 ? true : false}
-            >
-              End Turn {turn}
-            </Button>
+          ) : null}
+          {/* TODO: Combine UnitCount and UnitInTraining into one general component; only the count differs */}
+          <div className="sticky bottom-0 z-10 grid auto-cols-auto">
+            <div className="mx-1 grid auto-cols-fr grid-flow-col justify-end rounded-t-md border border-b-0 border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+              <DisplayTemplate headerText="Resources Being Collected">
+                {allBaseResourceTypesInTheGame.map((resourceType) =>
+                  resources[resourceType].workers > 0 ? (
+                    <ResourceToCollect
+                      resources={resources}
+                      resourceType={resourceType}
+                    />
+                  ) : null
+                )}
+              </DisplayTemplate>
+              <DisplayTemplate headerText="Units in Training">
+                {unitTypes.map((unitType) =>
+                  unitsInTraining[unitType] > 0 ? (
+                    <UnitInTraining
+                      BASE_UNIT_DATA={BASE_UNIT_DATA}
+                      unitType={unitType}
+                      unitsInTraining={unitsInTraining}
+                    />
+                  ) : null
+                )}
+              </DisplayTemplate>
+              <div className="sticky bottom-0 flex items-center justify-center p-0">
+                <Button
+                  buttonColor="blue"
+                  onClick={endTurn}
+                  disabled={resourcePool["workers"] > 0 ? true : false}
+                >
+                  End Turn {turn}
+                </Button>
+              </div>
+              <DisplayTemplate headerText="Buildings Under Construction">
+                {buildingsUnderConstruction.map((building) =>
+                  buildingsUnderConstruction.length > 0 ? (
+                    <div>{buildings[building].symbol}</div>
+                  ) : null
+                )}
+              </DisplayTemplate>
+            </div>
           </div>
 
-          <DisplayTemplate headerText="Buildings Under Construction">
-            {buildingsUnderConstruction.map((building) =>
-              buildingsUnderConstruction.length > 0 ? (
-                <div>{buildings[building].symbol}</div>
-              ) : null
-            )}
-          </DisplayTemplate>
+          {/* // MODAL STUFF -- The TrainingCardContainer would go inside the building */}
+          <div
+            className={`fixed inset-0 z-10 transition-all ${
+              toggle ? "opacity-100" : "invisible opacity-0"
+            } bg-zinc-900/50 duration-500 ease-in-out`}
+          >
+            {/*
+          allows user to click outside to close the modal when paired with an onClick event
+         <div className="fixed inset-0 h-full w-full bg-black opacity-40"></div>
+          */}
+            <div
+              className={`${
+                toggle ? null : "translate-y-full"
+              } z-50 flex min-h-screen items-center px-4 py-8 transition-all duration-500 ease-in-out`}
+            >
+              <div
+                className={
+                  "relative mx-auto w-fit max-w-lg rounded-md border border-white bg-zinc-800 p-4 shadow-lg"
+                }
+              >
+                {unlockedUnitTypes.length > 0 ? (
+                  <div className="flex items-center justify-center">
+                    <TrainingCardContainer
+                      unlockedUnitTypes={unlockedUnitTypes}
+                      buildings={buildings}
+                      resources={resources}
+                      resourcePool={resourcePool}
+                      setResourcePool={setResourcePool}
+                      unitsInTraining={unitsInTraining}
+                      BASE_UNIT_DATA={BASE_UNIT_DATA}
+                      addTrainingUnit={addTrainingUnit}
+                      maxTrainingUnits={maxTrainingUnits}
+                      removeTrainingUnit={removeTrainingUnit}
+                      removeAllTrainingUnits={removeAllTrainingUnits}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
