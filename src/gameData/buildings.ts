@@ -6,7 +6,7 @@ export const buildingsData = {
     name: "Town Center",
     symbol: "🏙️",
     /* FIXME: Path not working */
-    imageSrc: "/images/town-center-01.png",
+    imageSrc: "/images/town-center-01.jpg",
     enabled: false,
     underConstruction: false,
     constructed: true,

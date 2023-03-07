@@ -1,11 +1,11 @@
 import React from "react";
 
 // images this component may need to use -- is there a better way?
-import archeryHut from "../../assets/images/archeryHut-01.png";
-import healingChamber from "../../assets/images/healingChamber-01.png";
-import mealHall from "../../assets/images/mealHall-01.png";
-import swordsmithy from "../../assets/images/swordsmithy-01.png";
-import townCenter from "../../assets/images/townCenter-01.png";
+import archeryHut from "../../assets/images/archeryHut-01.jpg";
+import healingChamber from "../../assets/images/healingChamber-01.jpg";
+import mealHall from "../../assets/images/mealHall-01.jpg";
+import swordsmithy from "../../assets/images/swordsmithy-01.jpg";
+import townCenter from "../../assets/images/townCenter-01.jpg";
 import { BuildingType } from "../../types";
 
 interface BldgCardImageProps {
