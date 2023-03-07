@@ -1,5 +1,8 @@
 import React, { ReactNode } from "react";
+import useSound from "use-sound";
 import { NavButtonType } from "../../types/NavButtons";
+/* @ts-ignore */
+import cardSlideSfx from "../../assets/sounds/cardSlide.mp3";
 
 interface NavButtonProps {
   navButtonType: NavButtonType;
@@ -47,15 +50,18 @@ export default function NavButton({
       : `bg-black/50 backdrop-blur-[1px] hover:bg-black/25 hover:backdrop-blur-none`
   } ${navButtonType === `score` ? `justify-start` : `justify-center`}`;
 
+  const [play] = useSound(cardSlideSfx);
+
   return (
     <div
       className={`${bg} ${bgContainerStyle} ${specialStyleBasedOnButtonType}`}
     >
       <div
         className={`${overlayStyle}`}
-        onClick={() =>
-          navButtonType === "score" ? null : navButtonOn(navButtonType)
-        }
+        onClick={() => {
+          navButtonType === "score" ? null : navButtonOn(navButtonType);
+          play();
+        }}
       >
         {children}
       </div>

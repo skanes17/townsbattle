@@ -851,7 +851,7 @@ export default function Game(props: GameProps) {
                 </DisplayTemplate>
               ) : null}
               {/* FIXME: Make this into a tooltip, like a question mark circle thing you hover over or click */}
-              {unlockedUnitTypes.length > 2 ? (
+              {/* unlockedUnitTypes.length > 2 ? (
                 <div className="place-self-center text-xl">
                   Tip: Train Units to Protect {townName}!
                 </div>
@@ -859,7 +859,7 @@ export default function Game(props: GameProps) {
                 <div className="place-self-center text-xl">
                   Tip: Construct buildings to unlock new units!
                 </div>
-              )}
+              ) */}
             </div>
           </div>
 
@@ -971,6 +971,13 @@ export default function Game(props: GameProps) {
                   ) : null
                 )}
               </DisplayTemplate>
+              <DisplayTemplate headerText="Buildings Under Construction">
+                {buildingsUnderConstruction.map((building) =>
+                  buildingsUnderConstruction.length > 0 ? (
+                    <div>{buildings[building].symbol}</div>
+                  ) : null
+                )}
+              </DisplayTemplate>
               <div className="sticky bottom-0 flex items-center justify-center p-0">
                 <Button
                   buttonColor="blue"
@@ -980,13 +987,6 @@ export default function Game(props: GameProps) {
                   End Turn {turn}
                 </Button>
               </div>
-              <DisplayTemplate headerText="Buildings Under Construction">
-                {buildingsUnderConstruction.map((building) =>
-                  buildingsUnderConstruction.length > 0 ? (
-                    <div>{buildings[building].symbol}</div>
-                  ) : null
-                )}
-              </DisplayTemplate>
             </div>
           </div>
 
