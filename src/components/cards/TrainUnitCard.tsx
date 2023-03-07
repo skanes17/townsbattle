@@ -182,6 +182,7 @@ export default function TrainUnitCard({
             -
           </AddRemoveButton>
         </div>
+        {/* FIXME: Sizing on mobile */}
         <CardShowCount countToShow={numberOfUnitsInTraining} />
         <div className="flex items-center justify-center">
           <AddRemoveButton
