@@ -22,8 +22,8 @@ export default function WorkerAssignCollect({
       </span> */}
 
       <div className="grid grid-cols-2 pl-2">
-        <div className="self-center font-bold">Assigned</div>
-        <div className="self-center justify-self-center text-lg">
+        <div className="self-center text-sm font-bold sm:text-lg">Assigned</div>
+        <div className="self-center justify-self-center text-sm sm:text-lg">
           {resources["workers"].symbol}{" "}
           <span className={`${countStyle}`}>
             {resources[resourceType].workers}
@@ -31,8 +31,10 @@ export default function WorkerAssignCollect({
         </div>
       </div>
       <div className="grid grid-cols-2 pl-2">
-        <div className="self-center font-bold">To Collect</div>
-        <div className="self-center justify-self-center text-lg">
+        <div className="self-center text-sm font-bold sm:text-lg">
+          Collecting
+        </div>
+        <div className="self-center justify-self-center text-sm sm:text-lg">
           {resources[resourceType].symbol}{" "}
           <span className={`${countStyle}`}>
             {resources[resourceType].workers *

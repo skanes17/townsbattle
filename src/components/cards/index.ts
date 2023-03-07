@@ -3,7 +3,6 @@ import BldgCardFooter from "./BldgCardFooter";
 import NewCardHeader from "./NewCardHeader";
 import BldgCardImage from "./BldgCardImage";
 import BldgCardTemplate from "./BldgCardTemplate";
-import CardDescription from "./CardDescription";
 import CardFooter from "./CardFooter";
 import CardHeader from "./CardHeader";
 import CardImage from "./CardImageHeaderDescriptionContainer";
@@ -27,7 +26,6 @@ export {
   NewCardHeader,
   BldgCardImage,
   BldgCardTemplate,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardImage,

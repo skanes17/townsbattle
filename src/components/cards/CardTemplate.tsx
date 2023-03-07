@@ -43,7 +43,7 @@ export default function CardTemplate({ color, children }: CardTemplateProps) {
     /* TODO: Different colored borders backgrounds and blur as necessary */
     // only difference between this and BldfCardTemplate is border-b-0 in BldgCardTemplate
     <div
-      className={`group m-2 grid w-52 auto-rows-auto justify-around rounded-lg ${bgColor} text-white hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50`}
+      className={`group m-1 grid w-32 auto-rows-auto justify-around rounded-lg sm:m-2 sm:w-52 ${bgColor} text-white hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gray-500/50`}
     >
       {children}
     </div>

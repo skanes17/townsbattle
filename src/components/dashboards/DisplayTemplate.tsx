@@ -19,7 +19,7 @@ export default function DisplayTemplate({
       <div className="text-center font-bold sm:text-sm md:text-base lg:text-lg">
         {headerText}
       </div>
-      <div className="grid auto-cols-max grid-flow-col justify-center gap-4 transition duration-75 ease-in-out md:text-lg lg:text-2xl">
+      <div className="grid auto-cols-max grid-flow-col justify-center transition duration-75 ease-in-out md:text-lg lg:gap-4 lg:text-2xl">
         {/* the mapping of symbol and counts gets sent here */}
         {children}
       </div>

@@ -29,25 +29,34 @@ export default function NavButton({
   switch (navButtonType) {
     // special styling for just the score
     case "score":
-      specialStyleBasedOnButtonType = `opacity-50 hover:opacity-100 sm:opacity-100 justify-start rounded-r-lg text-xs sm:text-sm lg:text-lg xl:text-xl text-green-400 hover:text-white`;
+      specialStyleBasedOnButtonType = `w-[72px] justify-start overflow-x-auto
+      rounded-r-lg bg-green-900 text-start text-xs text-green-400 hover:text-white
+      sm:w-36 sm:text-sm md:w-64 lg:text-lg xl:text-xl`;
       break;
     // all other buttons have this as a base style
     default:
-      specialStyleBasedOnButtonType = `cursor-pointer lg:text-3xl sm:text-2xl text-md hover:bg-zinc-700 ${
+      specialStyleBasedOnButtonType = `text-md cursor-pointer hover:bg-zinc-700
+      sm:text-2xl lg:text-3xl ${
         stateTrigger
           ? // if this navButton is selected, it'll have this style
-            `lg:translate-x-8 active:translate-x-0 sm:active:translate-x-4 hover-translate-x-0 sm:hover:translate-x-4 hover:translate-x-0 -translate-x-1/2 sm:translate-x-4 rounded-lg bg-zinc-700 font-semibold text-transparent saturate-150 hover:text-inherit`
+            `hover-translate-x-0 -translate-x-1/2 rounded-lg bg-zinc-700 font-semibold
+            text-transparent saturate-150 hover:translate-x-0 hover:text-inherit
+            active:translate-x-0 sm:translate-x-4 sm:hover:translate-x-4
+            sm:active:translate-x-4 lg:translate-x-8`
           : // when unselected, it'll have this style
-            `hover:translate-x-0 -translate-x-3/4 active:text-inherit hover:text-inherit text-transparent sm:text-inherit active:translate-0 rounded-r-lg`
+            `active:translate-0 -translate-x-3/4 rounded-r-lg text-transparent
+            hover:translate-x-0 hover:text-inherit active:text-inherit sm:text-inherit`
       }`;
   }
 
   // container styling, it has the image and is in the back
-  const bgContainerStyle = `sm:translate-x-0 z-30 flex flex-wrap items-center justify-center border-2 border-zinc-900 bg-cover bg-top md:bg-center capitalize transition ease-in-out`;
+  const bgContainerStyle = `z-30 flex flex-wrap items-center justify-center border-2
+  border-zinc-900 bg-cover bg-top transition ease-in-out sm:translate-x-0 md:bg-center`;
   // overlay styling, it sits on top of the container and holds the text and transparent background
-  const overlayStyle = `z-50 flex h-full w-full items-center p-1 lg:p-2 transition duration-75 ease-in-out ${
+  const overlayStyle = `z-50 flex h-full w-full items-center p-1 capitalize transition
+  duration-75 ease-in-out lg:p-2 ${
     stateTrigger
-      ? `bg-black/0 rounded-lg`
+      ? `rounded-lg bg-black/0`
       : `bg-black/50 backdrop-blur-[1px] hover:bg-black/25 hover:backdrop-blur-none`
   } ${navButtonType === `score` ? `justify-start` : `justify-center`}`;
 
@@ -57,7 +66,8 @@ export default function NavButton({
     <div
       className={`${bg} ${bgContainerStyle} ${specialStyleBasedOnButtonType}`}
     >
-      <div
+      <button
+        type="button"
         className={`${overlayStyle}`}
         /* FIXME: Would like to only play sound when a card slides out, not always when clicked */
         onClick={() => {
@@ -68,7 +78,7 @@ export default function NavButton({
         }}
       >
         {children}
-      </div>
+      </button>
     </div>
   );
 }

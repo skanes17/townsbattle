@@ -12,7 +12,8 @@ export default function CardShowCount({ countToShow }: CardShowCountProps) {
 
   return (
     <div
-      className={`flex items-center justify-center px-4 text-xl ${countStyle}`}
+      className={`flex items-center justify-center px-4 text-sm 
+      sm:text-xl ${countStyle}`}
     >
       {countToShow}
     </div>

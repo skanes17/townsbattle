@@ -12,7 +12,6 @@ import {
   CardSymbol,
   CardTemplate,
   TrainUnitCardHeader,
-  CardDescription,
   CardCostsInfo,
   NewCardHeader,
 } from "../cards";

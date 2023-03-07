@@ -825,7 +825,7 @@ export default function Game(props: GameProps) {
           </>
         </nav>
 
-        <div className="ml-8 min-h-screen sm:ml-36 md:ml-64">
+        <div className="ml-[72px] min-h-screen sm:ml-36 md:ml-64">
           {/* TODO: Add a clock */}
           <div className="sticky top-0 z-10 grid auto-cols-auto">
             <div className="mx-1 grid auto-cols-fr grid-flow-col justify-end rounded-b-md border border-t-0 border-slate-500 bg-slate-900 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
@@ -890,7 +890,7 @@ export default function Game(props: GameProps) {
             </div>
           </div>
 
-          <div className="mx-8 my-2 flex flex-wrap justify-center">
+          <div className="mx-1 my-1 flex flex-wrap justify-center sm:mx-8 sm:my-2">
             {(activeNavButtons.planning.active ||
               activeNavButtons.resources.active) && (
               <GridCardContainer headerText="Resources">

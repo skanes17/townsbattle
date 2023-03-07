@@ -14,7 +14,7 @@ export default function TrainUnitCardHeader({
   return (
     <div
       className={`m-1 flex h-8 flex-row items-center justify-between rounded-lg border border-white/25 bg-black/25 px-1
-text-lg font-bold capitalize backdrop-blur-sm`}
+      text-xs font-bold capitalize backdrop-blur-[1px] sm:text-lg sm:backdrop-blur-sm`}
     >
       <span>
         🗡️

@@ -14,7 +14,6 @@ import { resourceChecker } from "../../utils/resourceChecker";
 import { AddRemoveButton } from "../buttons";
 import {
   CardCostsInfo,
-  CardDescription,
   CardHeader,
   CardShowCount,
   CardSymbol,

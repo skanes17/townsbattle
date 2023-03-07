@@ -36,7 +36,7 @@ export default function CardBgWithImage({
 
   return (
     <div
-      className={`${bg} saturate- grid h-52 w-52 grid-rows-5 rounded-lg bg-cover bg-center bg-no-repeat ${saturate}`}
+      className={`${bg} grid h-28 w-32 grid-rows-5 rounded-lg bg-cover bg-center bg-no-repeat sm:h-52 sm:w-52 ${saturate}`}
     >
       {children}
     </div>
