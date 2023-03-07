@@ -25,14 +25,14 @@ export default function NavButton({
   switch (navButtonType) {
     // special styling for just the score
     case "score":
-      specialStyleBasedOnButtonType = `justify-start text-xl text-green-400 rounded-r-lg hover:bg-green-400 hover:text-white`;
+      specialStyleBasedOnButtonType = `justify-start rounded-r-lg text-xl text-green-400 hover:bg-green-400 hover:text-white`;
       break;
     // all other buttons have this as a base style
     default:
       specialStyleBasedOnButtonType = `cursor-pointer hover:bg-zinc-700 ${
         stateTrigger
           ? // if this navButton is selected, it'll have this style
-            `font-semibold text-transparent saturate-150 translate-x-8 rounded-lg bg-zinc-700 hover:text-inherit`
+            `translate-x-8 rounded-lg bg-zinc-700 font-semibold text-transparent saturate-150 hover:text-inherit`
           : // when unselected, it'll have this style
             `rounded-r-lg`
       }`;

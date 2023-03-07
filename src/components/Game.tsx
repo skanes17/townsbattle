@@ -710,7 +710,7 @@ export default function Game(props: GameProps) {
       bgImage: "bg-score",
     },
     resources: {
-      active: false,
+      active: true,
       bgImage: "bg-resources",
     },
     training: {
@@ -808,7 +808,7 @@ export default function Game(props: GameProps) {
           </>
         </nav>
 
-        <div className="sm:ml-64">
+        <div className="flex min-h-screen flex-col justify-between sm:ml-64">
           {/* TODO: Add a clock */}
           <div className="sticky top-0 z-10 grid auto-cols-auto">
             <div className="mx-1 grid auto-cols-fr grid-flow-col justify-end rounded-b-md border border-t-0 border-slate-500 bg-slate-900  px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
@@ -863,18 +863,22 @@ export default function Game(props: GameProps) {
             </div>
           </div>
 
-          <div className="mx-8 my-2 flex flex-wrap justify-evenly">
-            <GridCardContainer headerText="Collect Resources">
-              <WorkerCardContainer
-                resources={resources}
-                resourceTypesAvailableToPlayer={resourceTypesAvailableToPlayer}
-                setResources={setResources}
-                resourcePool={resourcePool}
-                setResourcePool={setResourcePool}
-              />
-            </GridCardContainer>
-            {unlockedUnitTypes.length > 0 ? (
-              <GridCardContainer headerText="Train Units">
+          <div className="mx-8 my-2 flex flex-wrap justify-center">
+            {activeNavButtons.resources.active && (
+              <GridCardContainer headerText="Resources">
+                <WorkerCardContainer
+                  resources={resources}
+                  resourceTypesAvailableToPlayer={
+                    resourceTypesAvailableToPlayer
+                  }
+                  setResources={setResources}
+                  resourcePool={resourcePool}
+                  setResourcePool={setResourcePool}
+                />
+              </GridCardContainer>
+            )}
+            {activeNavButtons.training.active && (
+              <GridCardContainer headerText="Training">
                 <TrainingCardContainer
                   unlockedUnitTypes={unlockedUnitTypes}
                   buildings={buildings}
@@ -889,13 +893,17 @@ export default function Game(props: GameProps) {
                   removeAllTrainingUnits={removeAllTrainingUnits}
                 />
               </GridCardContainer>
-            ) : null}
-            <GridCardContainer headerText="Buildings Constructed">
-              {/* TODO: Match component structure with other cards */}
-              <DisplayBuildings buildings={buildings} />
-            </GridCardContainer>
-            {/* If there are no buildings left to construct, remove the section */}
-            {buildingsLeftToConstruct.length > 0 ? (
+            )}
+
+            {activeNavButtons.buildings.active && (
+              <GridCardContainer headerText="Buildings Constructed">
+                {/* TODO: Match component structure with other cards */}
+                <DisplayBuildings buildings={buildings} />
+              </GridCardContainer>
+            )}
+            {activeNavButtons.buildings.active &&
+            /* If there are no buildings left to construct, remove the section */
+            buildingsLeftToConstruct.length > 0 ? (
               <GridCardContainer headerText="Construct Buildings">
                 {/* TODO: Match component structure with other cards */}
                 {buildingsLeftToConstruct.map((buildingType) => (
@@ -914,6 +922,7 @@ export default function Game(props: GameProps) {
               </GridCardContainer>
             ) : null}
           </div>
+
           <br></br>
           {devTools ? (
             <DevTools
