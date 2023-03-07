@@ -3,8 +3,8 @@ import { Phases, Unit } from "../../types";
 
 interface UnitTileProps {
   unit: Unit;
-  selectedUnit: Unit;
-  phase: Phases;
+  selectedUnit?: Unit;
+  phase?: Phases;
 }
 
 export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {

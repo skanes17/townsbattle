@@ -19,7 +19,7 @@ import { DisplayTemplate } from "./dashboards";
 import { ConstructBuilding, TrainingCardContainer } from "./cards";
 import GridCardContainer from "./layout/GridCardContainer";
 import { Button } from "./buttons";
-import { Combat } from "./combat";
+import { ArmyGrid, Combat } from "./combat";
 // import { buildingsData, buildingCostsData } from "../gameData/buildings";
 // import { upgradesData } from "../gameData/upgrades";
 // import { BaseUnit } from "../types/BaseUnit";
@@ -810,7 +810,7 @@ export default function Game(props: GameProps) {
 
         <div className="flex min-h-screen flex-col justify-between sm:ml-64">
           {/* TODO: Add a clock */}
-          <div className="sticky top-0 z-10 grid auto-cols-auto">
+          <div className="z-10 grid auto-cols-auto">
             <div className="mx-1 grid auto-cols-fr grid-flow-col justify-end rounded-b-md border border-t-0 border-slate-500 bg-slate-900  px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
               <div className="grid auto-cols-auto grid-flow-col">
                 <DisplayTemplate headerText="Workers">
@@ -864,7 +864,8 @@ export default function Game(props: GameProps) {
           </div>
 
           <div className="mx-8 my-2 flex flex-wrap justify-center">
-            {activeNavButtons.resources.active && (
+            {(activeNavButtons.planning.active ||
+              activeNavButtons.resources.active) && (
               <GridCardContainer headerText="Resources">
                 <WorkerCardContainer
                   resources={resources}
@@ -877,7 +878,10 @@ export default function Game(props: GameProps) {
                 />
               </GridCardContainer>
             )}
-            {activeNavButtons.training.active && (
+
+            {/* TODO: Show all units to be built, but their art is blurred and it says "Need X to train this unit" */}
+            {(activeNavButtons.planning.active ||
+              activeNavButtons.training.active) && (
               <GridCardContainer headerText="Training">
                 <TrainingCardContainer
                   unlockedUnitTypes={unlockedUnitTypes}
@@ -895,13 +899,17 @@ export default function Game(props: GameProps) {
               </GridCardContainer>
             )}
 
-            {activeNavButtons.buildings.active && (
+            {(activeNavButtons.planning.active ||
+              activeNavButtons.buildings.active) && (
               <GridCardContainer headerText="Buildings Constructed">
                 {/* TODO: Match component structure with other cards */}
                 <DisplayBuildings buildings={buildings} />
               </GridCardContainer>
             )}
-            {activeNavButtons.buildings.active &&
+
+            {/* TODO: Show all buildings to be built, but their art is blurred and it says "Need X resource to build this" */}
+            {(activeNavButtons.planning.active ||
+              activeNavButtons.buildings.active) &&
             /* If there are no buildings left to construct, remove the section */
             buildingsLeftToConstruct.length > 0 ? (
               <GridCardContainer headerText="Construct Buildings">
@@ -921,6 +929,9 @@ export default function Game(props: GameProps) {
                 ))}
               </GridCardContainer>
             ) : null}
+
+            {(activeNavButtons.planning.active ||
+              activeNavButtons.army.active) && <ArmyGrid army={myUnits} />}
           </div>
 
           <br></br>
@@ -937,7 +948,7 @@ export default function Game(props: GameProps) {
             />
           ) : null}
           {/* TODO: Combine UnitCount and UnitInTraining into one general component; only the count differs */}
-          <div className="sticky bottom-0 z-10 grid auto-cols-auto">
+          <div className="z-10 grid auto-cols-auto">
             <div className="mx-1 grid auto-cols-fr grid-flow-col justify-end rounded-t-md border border-b-0 border-slate-500 bg-slate-900/90 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
               <DisplayTemplate headerText="Resources Being Collected">
                 {allBaseResourceTypesInTheGame.map((resourceType) =>
