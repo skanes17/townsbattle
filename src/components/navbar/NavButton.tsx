@@ -17,26 +17,30 @@ export default function NavButton({
   bgImage,
   children,
 }: NavButtonProps) {
+  // sets the background image based on the button type
   const bg = bgImage;
 
+  // these styles are dependent on the type of button you'd like to render
   let specialStyleBasedOnButtonType;
   switch (navButtonType) {
+    // special styling for just the score
     case "score":
-      specialStyleBasedOnButtonType = `justify-start text-xl hover:bg-green-400 rounded-r-lg hover:text-white ${
-        stateTrigger
-          ? `font-semibold saturate-150 text-white bg-green-400`
-          : `text-green-400`
-      }`;
+      specialStyleBasedOnButtonType = `justify-start text-xl text-green-400 rounded-r-lg hover:bg-green-400 hover:text-white`;
       break;
+    // all other buttons have this as a base style
     default:
       specialStyleBasedOnButtonType = `cursor-pointer hover:bg-zinc-700 ${
         stateTrigger
-          ? `font-semibold saturate-150 translate-x-8 rounded-lg bg-zinc-700`
-          : `rounded-r-lg`
+          ? // if this navButton is selected, it'll have this style
+            `font-semibold text-transparent saturate-150 translate-x-8 rounded-lg bg-zinc-700 hover:text-inherit`
+          : // when unselected, it'll have this style
+            `rounded-r-lg`
       }`;
   }
 
+  // container styling, it has the image and is in the back
   const bgContainerStyle = `z-30 flex flex-wrap items-center justify-center overflow-x-auto border-2 border-zinc-900 bg-cover bg-center capitalize transition ease-in-out`;
+  // overlay styling, it sits on top of the container and holds the text and transparent background
   const overlayStyle = `z-50 flex h-full w-full items-center p-2 transition duration-75 ease-in-out ${
     stateTrigger
       ? `bg-black/0`
