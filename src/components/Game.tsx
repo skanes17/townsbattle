@@ -713,6 +713,10 @@ export default function Game(props: GameProps) {
       active: false,
       bgImage: "bg-resources",
     },
+    training: {
+      active: false,
+      bgImage: "bg-training",
+    },
     buildings: {
       active: false,
       bgImage: "bg-buildings",
@@ -786,7 +790,7 @@ export default function Game(props: GameProps) {
       */}
       <div className="z-0 bg-brown bg-contain bg-center">
         {/* TODO: Make grid-rows-[1fr_repeat(4,5fr)_1.5fr] more responsive by making the repeat dynamic, somehow */}
-        <nav className="fixed top-0 left-0 z-20 grid h-screen w-64 -translate-x-full grid-rows-[1fr_repeat(4,5fr)_1.5fr] text-3xl transition-transform sm:translate-x-0">
+        <nav className="fixed top-0 left-0 z-20 grid h-screen w-64 -translate-x-full grid-rows-[1fr_repeat(5,5fr)_1.5fr] text-3xl transition-transform sm:translate-x-0">
           <>
             {Object.keys(activeNavButtons).map((key) => {
               return (

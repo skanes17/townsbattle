@@ -31,10 +31,11 @@ module.exports = {
         resources: "url('/src/assets/images/resources-01.png')",
         scoutUnit: "url('/src/assets/images/scoutUnit-02.png')",
         smelter: "url('/src/assets/images/smelter-01.png')",
-        stone: "url('/src/assets/images/stone-01.png')",
+        stone: "url('/src/assets/images/stone-02.png')",
         swordsmithy: "url('/src/assets/images/swordsmithy-01.png')",
         tips: "url('/src/assets/images/tips-01.png')",
         townCenter: "url('/src/assets/images/townCenter-01.png')",
+        training: "url('/src/assets/images/training-01.png')",
         wood: "url('/src/assets/images/wood-01.png')",
       },
       colors: {

@@ -8,7 +8,7 @@ export interface NavButtons {
 export type NavButtonType =
   | "score"
   | "resources"
-  | "units"
+  | "training"
   | "army"
   | "tips"
   | "planning";
