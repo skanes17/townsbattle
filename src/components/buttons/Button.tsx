@@ -16,7 +16,7 @@ export default function Button({
   return (
     <button
       type="button"
-      className={`rounded py-2 px-4 text-xl font-bold text-white ${
+      className={`m-2 rounded py-2 px-4 text-xl font-bold text-white ${
         disabled ? `opacity-40` : null
       } shadow-md transition duration-75 ease-in-out active:scale-100 ${
         buttonColor === "blue"
