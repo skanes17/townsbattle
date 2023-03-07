@@ -705,11 +705,30 @@ export default function Game(props: GameProps) {
   const [toggle, setToggle] = useState(false);
 
   const [activeNavButtons, setActiveNavButtons] = useState<NavButtons>({
-    score: false,
-    resources: false,
-    buildings: false,
-    army: false,
-    tips: false,
+    score: {
+      active: false,
+      bgImage: "bg-score",
+    },
+    resources: {
+      active: false,
+      bgImage: "bg-resources",
+    },
+    buildings: {
+      active: false,
+      bgImage: "bg-buildings",
+    },
+    army: {
+      active: false,
+      bgImage: "bg-army",
+    },
+    planning: {
+      active: false,
+      bgImage: "bg-planning",
+    },
+    tips: {
+      active: false,
+      bgImage: "bg-tips",
+    },
   });
 
   const navButtonOn = (navButtonType: NavButtonType) => {
@@ -718,13 +737,13 @@ export default function Game(props: GameProps) {
       return;
     }
 
-    const clonedActiveNavButtons = { ...activeNavButtons };
+    const clonedActiveNavButtons = cloneBasicObjectWithJSON(activeNavButtons);
 
     // check the activeNavButtons keys against the desired navButton to "turn on"
     for (const key in clonedActiveNavButtons) {
       navButtonType === key
-        ? (clonedActiveNavButtons[key] = true)
-        : (clonedActiveNavButtons[key] = false);
+        ? (clonedActiveNavButtons[key].active = true)
+        : (clonedActiveNavButtons[key].active = false);
     }
 
     setActiveNavButtons(clonedActiveNavButtons);
@@ -766,15 +785,17 @@ export default function Game(props: GameProps) {
       Also use this reference for incorporating a mini sidebar
       */}
       <div className="z-0 bg-brown bg-contain bg-center">
-        <nav className="fixed top-0 left-0 z-20 grid h-screen w-64 -translate-x-full grid-rows-[1fr_5fr_5fr_5fr_1.5fr] text-3xl transition-transform sm:translate-x-0">
+        {/* TODO: Make grid-rows-[1fr_repeat(4,5fr)_1.5fr] more responsive by making the repeat dynamic, somehow */}
+        <nav className="fixed top-0 left-0 z-20 grid h-screen w-64 -translate-x-full grid-rows-[1fr_repeat(4,5fr)_1.5fr] text-3xl transition-transform sm:translate-x-0">
           <>
             {Object.keys(activeNavButtons).map((key) => {
               return (
                 <NavButton
-                  buttonStyle={key as NavButtonType}
-                  stateTrigger={activeNavButtons[key]}
-                  navButtonOn={navButtonOn}
                   navButtonType={key as NavButtonType}
+                  buttonStyle={key as NavButtonType}
+                  stateTrigger={activeNavButtons[key].active}
+                  navButtonOn={navButtonOn}
+                  bgImage={activeNavButtons[key].bgImage}
                 >
                   {key === "score" ? `Score: ${score}` : key}
                 </NavButton>
@@ -838,7 +859,7 @@ export default function Game(props: GameProps) {
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-evenly">
+          <div className="mx-8 my-2 flex flex-wrap justify-evenly">
             <GridCardContainer headerText="Collect Resources">
               <WorkerCardContainer
                 resources={resources}

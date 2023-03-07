@@ -1,5 +1,14 @@
 export interface NavButtons {
-  [key: string]: boolean;
+  [key: string]: {
+    active: boolean;
+    bgImage: string;
+  };
 }
 
-export type NavButtonType = "score" | "resources" | "units" | "army" | "tips";
+export type NavButtonType =
+  | "score"
+  | "resources"
+  | "units"
+  | "army"
+  | "tips"
+  | "planning";
