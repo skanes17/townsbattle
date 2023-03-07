@@ -794,7 +794,7 @@ export default function Game(props: GameProps) {
       */}
       <div className="z-0 bg-brown bg-contain bg-center">
         {/* TODO: Make grid-rows-[1fr_repeat(4,5fr)_1.5fr] more responsive by making the repeat dynamic, somehow */}
-        <nav className="fixed top-0 left-0 z-20 grid h-screen w-64 -translate-x-full grid-rows-[1fr_repeat(5,5fr)_1.5fr] text-3xl transition-transform sm:translate-x-0">
+        <nav className="fixed top-0 left-0 z-20 grid h-screen w-8 -translate-x-full grid-rows-[1fr_repeat(5,5fr)_1.5fr] text-3xl transition-transform sm:w-36 sm:translate-x-0 md:w-64">
           <>
             {Object.keys(activeNavButtons).map((key) => {
               return (
@@ -812,7 +812,7 @@ export default function Game(props: GameProps) {
           </>
         </nav>
 
-        <div className="min-h-screen sm:ml-64">
+        <div className="ml-8 min-h-screen sm:ml-36 md:ml-64">
           {/* TODO: Add a clock */}
           <div className="sticky top-0 z-10 grid auto-cols-auto">
             <div className="mx-1 grid auto-cols-fr grid-flow-col justify-end rounded-b-md border border-t-0 border-slate-500 bg-slate-900  px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
