@@ -25,24 +25,25 @@ export default function NavButton({
 
   // these styles are dependent on the type of button you'd like to render
   let specialStyleBasedOnButtonType;
+  /* TODO: Refactor eventually so score is taken out of this component and made into its own */
   switch (navButtonType) {
     // special styling for just the score
     case "score":
-      specialStyleBasedOnButtonType = `justify-start rounded-r-lg lg:text-lg md:text-md sm:text-sm xl:text-xl text-green-400 hover:bg-green-400 hover:text-white`;
+      specialStyleBasedOnButtonType = `opacity-50 hover:opacity-100 sm:opacity-100 justify-start rounded-r-lg text-xs sm:text-sm lg:text-lg xl:text-xl text-green-400 hover:text-white`;
       break;
     // all other buttons have this as a base style
     default:
       specialStyleBasedOnButtonType = `cursor-pointer lg:text-3xl sm:text-2xl text-md hover:bg-zinc-700 ${
         stateTrigger
           ? // if this navButton is selected, it'll have this style
-            `lg:translate-x-8 translate-x-4 rounded-lg bg-zinc-700 font-semibold text-transparent saturate-150 hover:text-inherit`
+            `lg:translate-x-8 active:translate-x-0 sm:active:translate-x-4 hover-translate-x-0 sm:hover:translate-x-4 hover:translate-x-0 -translate-x-1/2 sm:translate-x-4 rounded-lg bg-zinc-700 font-semibold text-transparent saturate-150 hover:text-inherit`
           : // when unselected, it'll have this style
-            `rounded-r-lg`
+            `hover:translate-x-0 -translate-x-3/4 active:text-inherit hover:text-inherit text-transparent sm:text-inherit active:translate-0 rounded-r-lg`
       }`;
   }
 
   // container styling, it has the image and is in the back
-  const bgContainerStyle = `z-30 flex flex-wrap items-center justify-center border-2 border-zinc-900 bg-cover bg-top md:bg-center capitalize transition ease-in-out`;
+  const bgContainerStyle = `sm:translate-x-0 z-30 flex flex-wrap items-center justify-center border-2 border-zinc-900 bg-cover bg-top md:bg-center capitalize transition ease-in-out`;
   // overlay styling, it sits on top of the container and holds the text and transparent background
   const overlayStyle = `z-50 flex h-full w-full items-center p-1 lg:p-2 transition duration-75 ease-in-out ${
     stateTrigger

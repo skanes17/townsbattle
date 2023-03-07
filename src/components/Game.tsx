@@ -757,6 +757,18 @@ export default function Game(props: GameProps) {
     setActiveNavButtons(clonedActiveNavButtons);
   };
 
+  // Listener for checking window width
+  const [width, setWidth] = React.useState(window.innerWidth);
+  const breakpoint = 640;
+
+  React.useEffect(() => {
+    const handleWindowResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowResize);
+
+    // Return a function from the effect that removes the event listener
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, []);
+
   return inCombat ? (
     <>
       <Combat
@@ -792,9 +804,10 @@ export default function Game(props: GameProps) {
       Reference - https://flowbite.com/docs/components/sidebar/
       Also use this reference for incorporating a mini sidebar
       */}
+      {/* TODO: Center items vertically somehow */}
       <div className="z-0 bg-brown bg-contain bg-center">
         {/* TODO: Make grid-rows-[1fr_repeat(4,5fr)_1.5fr] more responsive by making the repeat dynamic, somehow */}
-        <nav className="fixed top-0 left-0 z-20 grid h-screen w-8 -translate-x-full grid-rows-[1fr_repeat(5,5fr)_1.5fr] text-3xl transition-transform sm:w-36 sm:translate-x-0 md:w-64">
+        <nav className="fixed top-0 left-0 z-20 grid h-screen w-36 grid-rows-[1fr_repeat(5,2fr)_1.5fr] text-lg transition-transform sm:grid-rows-[1fr_repeat(5,5fr)_1.5fr] md:w-64 md:grid-rows-[1fr_repeat(5,3fr)_1.5fr]">
           <>
             {Object.keys(activeNavButtons).map((key) => {
               return (
@@ -815,44 +828,46 @@ export default function Game(props: GameProps) {
         <div className="ml-8 min-h-screen sm:ml-36 md:ml-64">
           {/* TODO: Add a clock */}
           <div className="sticky top-0 z-10 grid auto-cols-auto">
-            <div className="mx-1 grid auto-cols-fr grid-flow-col justify-end rounded-b-md border border-t-0 border-slate-500 bg-slate-900  px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
-              <div className="grid auto-cols-auto grid-flow-col">
-                <DisplayTemplate headerText="Workers">
-                  {resourceTypes
-                    .filter((resourceType) => resourceType === "workers")
-                    .map((resourceType: ResourceType) => (
-                      <Resource
-                        resources={resources}
-                        resourcePool={resourcePool}
-                        resourceType={resourceType}
-                      />
-                    ))}
-                </DisplayTemplate>
-                <DisplayTemplate headerText="Resource Pool">
-                  {resourceTypesAvailableToPlayer.map(
-                    (resourceType: BaseResourceType | undefined) => (
-                      <BaseResource
-                        resources={resources}
-                        resourcePool={resourcePool}
-                        resourceType={resourceType as BaseResourceType}
-                      />
-                    )
-                  )}
-                </DisplayTemplate>
-              </div>
+            <div className="mx-1 grid auto-cols-fr grid-flow-col justify-end rounded-b-md border border-t-0 border-slate-500 bg-slate-900 px-4 hover:bg-slate-900 sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+              <DisplayTemplate headerText="Workers">
+                {resourceTypes
+                  .filter((resourceType) => resourceType === "workers")
+                  .map((resourceType: ResourceType) => (
+                    <Resource
+                      resources={resources}
+                      resourcePool={resourcePool}
+                      resourceType={resourceType}
+                    />
+                  ))}
+              </DisplayTemplate>
+              <DisplayTemplate headerText="Resource Pool">
+                {resourceTypesAvailableToPlayer.map(
+                  (resourceType: BaseResourceType | undefined) => (
+                    <BaseResource
+                      resources={resources}
+                      resourcePool={resourcePool}
+                      resourceType={resourceType as BaseResourceType}
+                    />
+                  )
+                )}
+              </DisplayTemplate>
+
               {/* TODO: Only show unit counts once units are unlocked, and only show appropraite counts for unit types unlocked */}
 
-              <DisplayTemplate headerText="Army">
-                {unitTypes.map((unitType: UnitType) =>
-                  unitCounts[unitType] > 0 ? (
-                    <UnitCount
-                      BASE_UNIT_DATA={BASE_UNIT_DATA}
-                      unitType={unitType}
-                      unitCounts={unitCounts}
-                    />
-                  ) : null
-                )}{" "}
-              </DisplayTemplate>
+              {/* only show army details if screen is big enough */}
+              {width > breakpoint && (
+                <DisplayTemplate headerText="Army">
+                  {unitTypes.map((unitType: UnitType) =>
+                    unitCounts[unitType] > 0 ? (
+                      <UnitCount
+                        BASE_UNIT_DATA={BASE_UNIT_DATA}
+                        unitType={unitType}
+                        unitCounts={unitCounts}
+                      />
+                    ) : null
+                  )}
+                </DisplayTemplate>
+              )}
 
               <Button
                 buttonColor="blue"
