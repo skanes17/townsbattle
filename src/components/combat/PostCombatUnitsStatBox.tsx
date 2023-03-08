@@ -5,7 +5,7 @@ interface PostCombatUnitsStatBoxProps {
   headerTextColor: "red" | "amber" | "green" | "blue";
   BASE_UNIT_DATA: BaseUnit;
   unitCounts: UnitCounts;
-  unitTypes: UnitType[];
+  unitTypes: (UnitType | undefined)[];
 }
 
 export default function PostCombatUnitsStatBox({
@@ -32,6 +32,7 @@ export default function PostCombatUnitsStatBox({
       break;
   }
 
+  /* FIXME: unitType assertions below */
   return (
     <>
       <div className="grid auto-rows-min">
@@ -40,15 +41,14 @@ export default function PostCombatUnitsStatBox({
           {unitCounts.total}
         </p>
         {/* BODY */}
-        {unitTypes.map((unitType) => {
+        {unitTypes!.map((unitType) => {
           // only show unit types that were defeated
           return (
-            unitCounts[unitType] > 0 && (
+            unitCounts[unitType!] > 0 && (
               <p className="ml-2">
-                {BASE_UNIT_DATA[unitType].symbol} {unitCounts[unitType]}{" "}
-                {unitType} (
-                {Math.round((unitCounts[unitType] / unitCounts.total) * 100)}
-                %)
+                {BASE_UNIT_DATA[unitType!].symbol} {unitCounts[unitType!]}{" "}
+                {unitType}
+                {unitCounts[unitType!] > 1 && `s`}
               </p>
             )
           );

@@ -57,7 +57,7 @@ import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
 import { NavButtons, NavButtonType } from "../types/NavButtons";
 import ArmyGrid from "./planning/ArmyGrid";
-import { Combat } from "./combat";
+import { Combat, PostCombatUnitsStatBox } from "./combat";
 import DashboardImageAndCount from "./planning/DashboardImageAndCount";
 
 // FIXME: Many areas/lists don't have a unique key/id.
@@ -961,7 +961,20 @@ export default function Game(props: GameProps) {
             ) : null}
 
             {(activeNavButtons.planning.active ||
-              activeNavButtons.army.active) && <ArmyGrid army={myUnits} />}
+              activeNavButtons.army.active) && (
+              <>
+                <div className="m-2 rounded-md bg-white/5 p-2 text-base text-white backdrop-blur-[1px] sm:text-lg lg:text-2xl">
+                  <PostCombatUnitsStatBox
+                    BASE_UNIT_DATA={BASE_UNIT_DATA}
+                    headerText={"Unit Counts"}
+                    unitCounts={unitCounts}
+                    unitTypes={unlockedUnitTypes}
+                    headerTextColor="blue"
+                  />
+                </div>
+                <ArmyGrid army={myUnits} />
+              </>
+            )}
           </div>
 
           <br></br>
