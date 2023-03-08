@@ -966,7 +966,7 @@ export default function Game(props: GameProps) {
                 <div className="m-2 rounded-md bg-white/5 p-2 text-base text-white backdrop-blur-[1px] sm:text-lg lg:text-2xl">
                   <PostCombatUnitsStatBox
                     BASE_UNIT_DATA={BASE_UNIT_DATA}
-                    headerText={"Unit Counts"}
+                    headerText={"Units"}
                     unitCounts={unitCounts}
                     unitTypes={unlockedUnitTypes}
                     headerTextColor="blue"

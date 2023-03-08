@@ -32,13 +32,18 @@ export default function PostCombatUnitsStatBox({
       break;
   }
 
+  const totalUnitCount = Object.values(unitCounts).reduce(
+    (acc, cur) => acc + cur,
+    0
+  );
+
   /* FIXME: unitType assertions below */
   return (
     <>
       <div className="grid auto-rows-min">
         <p>
           <span className={`${textColor}`}>{headerText}</span>:{" "}
-          {unitCounts.total}
+          {unitCounts.total ?? totalUnitCount}
         </p>
         {/* BODY */}
         {unitTypes!.map((unitType) => {
