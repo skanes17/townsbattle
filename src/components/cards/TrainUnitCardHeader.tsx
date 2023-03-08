@@ -13,7 +13,7 @@ export default function TrainUnitCardHeader({
 }: TrainUnitCardHeaderProps) {
   return (
     <div
-      className={`m-1 flex h-6 flex-row items-center justify-between rounded-lg border border-white/25 bg-black/25 px-1
+      className={`m-1 flex h-6 flex-row items-center justify-between rounded-lg border border-white/25 bg-black/40 px-1
       text-xs font-bold capitalize backdrop-blur-[1px] sm:text-lg sm:backdrop-blur-sm`}
     >
       <span>

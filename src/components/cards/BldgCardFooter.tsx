@@ -10,17 +10,49 @@ export default function BldgCardFooter({
   currentHealth,
   maxHealth,
 }: BldgCardFooterProps) {
+  const percentHealth = (currentHealth / maxHealth) * 100;
+
+  let healthTextColor;
+  if (percentHealth <= 25) {
+    healthTextColor = "text-red-600";
+  } else if (percentHealth < 100) {
+    healthTextColor = "text-amber-600";
+  }
+
+  const tierIcon = "⭐";
+  const stars = Array(tier).fill(tierIcon);
+  // If tier is less than 4, show the stars. Otherwise show one star and the number
+  const tierDisplay = tier < 4 ? stars.join(``) : `${tierIcon}${tier}`;
+
   return (
     /* FIXME: Text breaking on mobile */
-    <div className="grid h-7 auto-cols-auto grid-cols-3  gap-1 border-t border-white/10 pt-1 text-xs backdrop-blur-sm sm:h-8 sm:gap-2 sm:text-lg">
-      <div></div>
-      <div className="flex items-center justify-center rounded-t-lg bg-black/50 px-1 text-white">
-        Tier {tier}
+    <div className="grid h-7 grid-flow-col gap-1 border-t border-white/10 pt-1 text-base backdrop-blur-[2px] sm:h-8 sm:gap-2 sm:text-lg">
+      <div className="relative rounded-tr-lg rounded-bl-lg bg-black/50 px-1 text-center text-white">
+        <div>{tierDisplay}</div>
+        {/* aligned to bottom of the container, then shifted up by its height */}
+        <div className="absolute bottom-0 h-7 -translate-y-1/2 text-xs font-bold opacity-0 transition-all ease-in-out group-hover:opacity-100 sm:-translate-y-full sm:pl-2 sm:text-lg">
+          Tier {tier}
+        </div>
       </div>
-      <div className="flex items-center justify-center rounded-lg bg-black/50 px-1 text-white">
-        {/* TODO: Make this health change color when damaged (like army grid colors) */}
-        ❤️{currentHealth}
+      <div className="rounded-tl-lg rounded-br-lg bg-black/50 px-1 text-center text-white">
+        ❤️
+        <span
+          className={`${
+            percentHealth < 100 ? `font-semibold` : null
+          } ${healthTextColor}`}
+        >
+          {currentHealth}
+        </span>
+        <span className="text-xs sm:text-sm">/{maxHealth}</span>
       </div>
     </div>
   );
 }
+
+{
+  /* 
+      <div className="rounded-lg bg-black/50 px-1 text-white"> */
+}
+/* ❤️<span className={`${healthTextColor}`}>{currentHealth}</span>
+        <span className="text-xs sm:text-sm">/{maxHealth}</span>
+      </div> */

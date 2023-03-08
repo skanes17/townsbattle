@@ -165,16 +165,8 @@ export default function TrainUnitCard({
       </div>
       */}
 
-      <div className="grid auto-cols-min grid-cols-5 gap-1 px-1">
-        <div className="flex items-center justify-center font-bold">
-          <AddRemoveButton
-            buttonType="remove"
-            onClick={() => handleZeroClick(unitType, friendly)}
-          >
-            Zero
-          </AddRemoveButton>
-        </div>
-        <div className="flex items-center justify-center">
+      <div className="grid auto-cols-min grid-cols-6 gap-1 px-1 sm:grid-cols-5">
+        <div className="col-span-2 row-start-1 flex items-center justify-center sm:col-span-1 sm:col-start-2">
           <AddRemoveButton
             buttonType="remove"
             onClick={() => handleMinusClick(unitType, friendly)}
@@ -184,7 +176,7 @@ export default function TrainUnitCard({
         </div>
         {/* FIXME: Sizing on mobile */}
         <CardShowCount countToShow={numberOfUnitsInTraining} />
-        <div className="flex items-center justify-center">
+        <div className="col-span-2 row-start-1 flex items-center justify-center sm:col-span-1 sm:col-start-4">
           <AddRemoveButton
             buttonType="add"
             onClick={() => handlePlusClick(unitType, friendly)}
@@ -192,7 +184,15 @@ export default function TrainUnitCard({
             +
           </AddRemoveButton>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="col-span-3 row-start-2 flex items-center justify-center font-bold sm:col-span-1 sm:col-start-1 sm:row-start-1">
+          <AddRemoveButton
+            buttonType="remove"
+            onClick={() => handleZeroClick(unitType, friendly)}
+          >
+            Zero
+          </AddRemoveButton>
+        </div>
+        <div className="col-span-3 row-start-2 flex items-center justify-center sm:col-span-1 sm:col-start-5 sm:row-start-1">
           <AddRemoveButton
             buttonType="add"
             onClick={() => handleMaxClick(unitType, friendly)}

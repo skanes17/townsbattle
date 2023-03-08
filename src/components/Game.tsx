@@ -68,7 +68,7 @@ import { NavButtons, NavButtonType } from "../types/NavButtons";
 // Composition of army could be displayed to UI, for example 20% fighter 30% archer 50% knight
 
 export default function Game(props: GameProps) {
-  const [devTools, setDevTools] = useState(false);
+  const [devTools, setDevTools] = useState(true);
 
   // pull startData from linked Play component
   const startData = useLocation();
