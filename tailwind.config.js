@@ -8,7 +8,7 @@ module.exports = {
         archeryHut: "url('/src/assets/images/archeryHut-01.jpg')",
         army: "url('/src/assets/images/army-01.jpg')",
         bomber: "url('/src/assets/images/bomber-01.jpg')",
-        brown: "url('/src/assets/images/brown.png')",
+        brown: "url('/src/assets/images/brown-01.png')",
         buildings: "url('/src/assets/images/buildings-01.jpg')",
         dirt: "url('/src/assets/images/dirt.jpg')",
         crystal: "url('/src/assets/images/crystalQuarry-01.jpg')",
