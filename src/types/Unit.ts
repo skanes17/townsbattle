@@ -1,14 +1,14 @@
 import { ResourceCosts } from "./ResourceCosts";
 
 export type UnitType =
-  | "farmer"
+  | "villager"
   | "fighter"
   | "archer"
   | "knight"
   | "mage"
   | "bombird";
 export type UnitName =
-  | "Farmer"
+  | "Villager"
   | "Fighter"
   | "Archer"
   | "Knight"
@@ -22,6 +22,9 @@ export interface Unit {
   symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣";
   description?: string;
   bgImage: string;
+  bgImageSm: string;
+  bgImageMd: string;
+  bgImageLg: string;
   threatLevel: number;
   attack: number;
   maxHealth: number;

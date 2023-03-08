@@ -13,7 +13,10 @@ export interface Building {
   /* attackBonus: number;
   healthBonus: number; */
   description: string;
-  bgImage?: string;
+  bgImage: string;
+  bgImageSm: string;
+  bgImageMd: string;
+  bgImageLg: string;
   maxHealth: number;
   currentHealth: number;
   damage: number;

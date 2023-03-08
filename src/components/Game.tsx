@@ -19,7 +19,7 @@ import { DisplayTemplate } from "./dashboards";
 import { ConstructBuilding, TrainingCardContainer } from "./cards";
 import GridCardContainer from "./layout/GridCardContainer";
 import { Button } from "./buttons";
-import { ArmyGrid, Combat } from "./combat";
+
 // import { buildingsData, buildingCostsData } from "../gameData/buildings";
 // import { upgradesData } from "../gameData/upgrades";
 // import { BaseUnit } from "../types/BaseUnit";
@@ -56,6 +56,9 @@ import {
 import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
 import { NavButtons, NavButtonType } from "../types/NavButtons";
+import ArmyGrid from "./planning/ArmyGrid";
+import { Combat } from "./combat";
+import DashboardImageAndCount from "./planning/DashboardImageAndCount";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -466,10 +469,10 @@ export default function Game(props: GameProps) {
 
       let unitType: UnitType;
       if (nextCombatTurn === 1) {
-        // going into first combat? enemies are all farmers
-        unitType = "farmer";
+        // going into first combat? enemies are all workers
+        unitType = "villager";
       } else if (nextCombatTurn === 2) {
-        // going into second combat? there's 1 fighter; the rest are farmers
+        // going into second combat? there's 1 fighter; the rest are villagers
         // could tweak for this to happen later (eg combat turn 3)
         switch (powerLevel) {
           case 0:
@@ -477,8 +480,8 @@ export default function Game(props: GameProps) {
             unitType = "fighter";
             break;
           default:
-            // default to farmer for the rest
-            unitType = "farmer";
+            // default to villager for the rest
+            unitType = "villager";
         }
       } else if (nextCombatTurn === 3) {
         switch (powerLevel) {
@@ -488,7 +491,7 @@ export default function Game(props: GameProps) {
             break;
           default:
             // TODO: the rest can be randomly chosen from player's UNLOCKED units
-            // it shouldn't be undefined because farmers are always available at start
+            // it shouldn't be undefined because villagers are always available at start
             console.log(unlockedUnitTypes);
             unitType =
               unlockedUnitTypes[
@@ -505,14 +508,14 @@ export default function Game(props: GameProps) {
       }
       // TODO: Do more manual progression staging here when new units are added!
       else {
-        // At this point, all units in the game are available for choosing, EXCEPT farmers.
+        // At this point, all units in the game are available for choosing, EXCEPT workers.
         // TODO: Could utilize the army generator functions here!
-        const allUnitsButFarmers = allUnitTypes.filter(
-          (unit: UnitType) => unit !== "farmer"
+        const allUnitsButworkers = allUnitTypes.filter(
+          (unit: UnitType) => unit !== "villager"
         );
         unitType =
-          allUnitsButFarmers[
-            Math.floor(Math.random() * allUnitsButFarmers.length)
+          allUnitsButworkers[
+            Math.floor(Math.random() * allUnitsButworkers.length)
           ];
       }
       // enemy units don't get buffs in this version of the game
@@ -550,9 +553,9 @@ export default function Game(props: GameProps) {
     setEnemyUnits(enemyArmy);
 
     // thoughts on composition of enemy army...
-    // if combat turns = 0, generate only farmers
-    // if combat turns = 1, generate only farmers and one fighter
-    // if combat turns = 2, generate only fighters? or farmers and 1-2 fighters
+    // if combat turns = 0, generate only workers
+    // if combat turns = 1, generate only workers and one fighter
+    // if combat turns = 2, generate only fighters? or workers and 1-2 fighters
     // if combat turns = 3, generate only archer
     // if combat turns = 4, generate fighters and archer
     // if combat turns = 5, generate fighters, archers, 1 knight
@@ -828,25 +831,25 @@ export default function Game(props: GameProps) {
         <div className="ml-[4.5rem] min-h-screen sm:ml-40 sm:mr-3 md:ml-[17rem] md:mr-4 lg:ml-72">
           {/* TODO: Add a clock */}
           <div className="sticky top-0 z-10 grid auto-cols-auto">
-            <div className="mx-1 grid grid-flow-row grid-cols-[1fr_4fr] justify-end rounded-b-md border border-t-0 border-slate-500 bg-slate-900 px-4 hover:bg-slate-900 sm:grid-cols-[1fr_3fr_4fr] sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
+            <div className="mx-1 grid grid-flow-row grid-cols-[1fr_4fr] justify-items-center rounded-b-md border border-t-0 border-slate-500 bg-slate-900 px-4 hover:bg-slate-900 sm:grid-cols-[1fr_3fr_4fr] sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
               <DisplayTemplate headerText="Workers">
                 {resourceTypes
                   .filter((resourceType) => resourceType === "workers")
                   .map((resourceType: ResourceType) => (
-                    <Resource
-                      resources={resources}
-                      resourcePool={resourcePool}
-                      resourceType={resourceType}
+                    <DashboardImageAndCount
+                      dataObject={resources}
+                      countsObject={resourcePool}
+                      type={resourceType}
                     />
                   ))}
               </DisplayTemplate>
               <DisplayTemplate headerText="Resource Pool">
                 {resourceTypesAvailableToPlayer.map(
                   (resourceType: BaseResourceType | undefined) => (
-                    <BaseResource
-                      resources={resources}
-                      resourcePool={resourcePool}
-                      resourceType={resourceType as BaseResourceType}
+                    <DashboardImageAndCount
+                      dataObject={resources}
+                      countsObject={resourcePool}
+                      type={resourceType as BaseResourceType}
                     />
                   )
                 )}
@@ -859,10 +862,10 @@ export default function Game(props: GameProps) {
                 <DisplayTemplate headerText="Army">
                   {unitTypes.map((unitType: UnitType) =>
                     unitCounts[unitType] > 0 ? (
-                      <UnitCount
-                        BASE_UNIT_DATA={BASE_UNIT_DATA}
-                        unitType={unitType}
-                        unitCounts={unitCounts}
+                      <DashboardImageAndCount
+                        dataObject={BASE_UNIT_DATA}
+                        countsObject={unitCounts}
+                        type={unitType}
                       />
                     ) : null
                   )}

@@ -12,6 +12,9 @@ interface ResourceData {
   name: string;
   symbol: string;
   bgImage: string;
+  bgImageSm: string;
+  bgImageMd: string;
+  bgImageLg: string;
   workers: number;
   multiplier: number;
 }

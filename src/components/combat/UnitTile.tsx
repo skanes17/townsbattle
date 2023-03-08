@@ -91,7 +91,8 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
           {/* TODO: Add space for randomly generated name */}
           <div>Unit Name</div>
           <div>
-            {unit.name}_{unit.id}
+            {unit.name}
+            {unit.id}
           </div>
           <div>Attack: {unit.attack}</div>
           <div>

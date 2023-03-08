@@ -90,7 +90,8 @@ export default function ConstructBuilding({
       <CardImageHeaderDescriptionContainer
         saturation="quarter"
         cardName={buildings[buildingType].name}
-        bgImage={buildings[buildingType].bgImage}
+        /* TODO: FIX SWORDSMITHY */
+        bgImage={buildings[buildingType].bgImageLg}
       >
         {buildings[buildingType].description}
       </CardImageHeaderDescriptionContainer>

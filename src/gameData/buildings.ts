@@ -16,11 +16,14 @@ export const buildingsData = {
     description: "Losing this building means game over!",
     buildScore: 0,
     bgImage: "bg-townCenter",
+    bgImageSm: "bg-townCenterSm",
+    bgImageMd: "bg-townCenterMd",
+    bgImageLg: "bg-townCenterLg",
     maxHealth: 15,
     currentHealth: 15,
     damage: 0,
     resourceCosts: {},
-    unlockedUnit: "farmer",
+    unlockedUnit: "villager",
   },
   // for fighter
   swordsmithy: {
@@ -36,6 +39,9 @@ export const buildingsData = {
     healthBonus: 2, */
     description: "Craft swords. Unlock Fighters.",
     bgImage: "bg-swordsmithy",
+    bgImageSm: "bg-swordsmithySm",
+    bgImageMd: "bg-swordsmithyMd",
+    bgImageLg: "bg-swordsmithyLg",
     maxHealth: 15,
     currentHealth: 15,
     damage: 0,
@@ -55,6 +61,9 @@ export const buildingsData = {
     healthBonus: -1, */
     description: "Learn ranged combat. Unlock Archers.",
     bgImage: "bg-archeryHut",
+    bgImageSm: "bg-archeryHutSm",
+    bgImageMd: "bg-archeryHutMd",
+    bgImageLg: "bg-archeryHutLg",
     maxHealth: 15,
     currentHealth: 15,
     damage: 0,
@@ -74,6 +83,9 @@ export const buildingsData = {
     healthBonus: 3, */
     description: "Learn to smelt metals. Unlock Knights.",
     bgImage: "bg-smelter",
+    bgImageSm: "bg-smelterSm",
+    bgImageMd: "bg-smelterMd",
+    bgImageLg: "bg-smelterLg",
     maxHealth: 15,
     currentHealth: 15,
     damage: 0,
@@ -93,6 +105,9 @@ export const buildingsData = {
     healthBonus: 3, */
     description: "Learn magic! Unlock Mages.",
     bgImage: "bg-mageSchool",
+    bgImageSm: "bg-mageSchoolSm",
+    bgImageMd: "bg-mageSchoolMd",
+    bgImageLg: "bg-mageSchoolLg",
     maxHealth: 15,
     currentHealth: 15,
     damage: 0,
@@ -112,6 +127,9 @@ export const buildingsData = {
     healthBonus: 3, */
     description: "Explosives go boom! Unlock Bombirds.",
     bgImage: "bg-explosivesResearch",
+    bgImageSm: "bg-explosivesResearchSm",
+    bgImageMd: "bg-explosivesResearchMd",
+    bgImageLg: "bg-explosivesResearchLg",
     maxHealth: 5,
     currentHealth: 5,
     damage: 0,
@@ -131,6 +149,9 @@ export const buildingsData = {
     healthBonus: 2, */
     description: "Increase the number of workers available.",
     bgImage: "bg-qualityHousing",
+    bgImageSm: "bg-qualityHousingSm",
+    bgImageMd: "bg-qualityHousingMd",
+    bgImageLg: "bg-qualityHousingLg",
     maxHealth: 20,
     currentHealth: 20,
     damage: 0,
@@ -151,6 +172,9 @@ export const buildingsData = {
     healthBonus: 2, */
     description: "All units gain +2 to health, +2 to armor.",
     bgImage: "bg-mealHall",
+    bgImageSm: "bg-mealHallSm",
+    bgImageMd: "bg-mealHallMd",
+    bgImageLg: "bg-mealHallLg",
     maxHealth: 20,
     currentHealth: 20,
     damage: 0,
@@ -168,6 +192,9 @@ export const buildingsData = {
     healthBonus: 0, */
     description: "Heals units after combat.",
     bgImage: "bg-healingChamber",
+    bgImageSm: "bg-healingChamberSm",
+    bgImageMd: "bg-healingChamberMd",
+    bgImageLg: "bg-healingChamberLg",
     maxHealth: 25,
     currentHealth: 25,
     damage: 0,
@@ -185,6 +212,9 @@ export const buildingsData = {
     healthBonus: 0, */
     description: "Upgrade intel on the enemy army.",
     bgImage: "bg-scoutUnit",
+    bgImageSm: "bg-scoutUnitSm",
+    bgImageMd: "bg-scoutUnitMd",
+    bgImageLg: "bg-scoutUnitLg",
     maxHealth: 10,
     currentHealth: 10,
     damage: 0,
@@ -202,6 +232,9 @@ export const buildingsData = {
     healthBonus: 0, */
     description: "Unlocks crystal as a resource.",
     bgImage: "bg-crystal",
+    bgImageSm: "bg-crystalSm",
+    bgImageMd: "bg-crystalMd",
+    bgImageLg: "bg-crystalLg",
     maxHealth: 5,
     currentHealth: 5,
     damage: 0,
@@ -220,6 +253,9 @@ export const buildingsData = {
     healthBonus: 0, */
     description: "Unlocks gold as a resource.",
     bgImage: "bg-gold",
+    bgImageSm: "bg-goldSm",
+    bgImageMd: "bg-goldMd",
+    bgImageLg: "bg-goldLg",
     maxHealth: 10,
     currentHealth: 10,
     damage: 0,

@@ -1,6 +1,7 @@
 import React from "react";
 import { BaseUnit, UnitCounts, UnitType } from "../../types";
 import { UnitCount } from "../planning";
+import DashboardImageAndCount from "../planning/DashboardImageAndCount";
 
 interface DisplayUnitCountsProps {
   BASE_UNIT_DATA: BaseUnit;
@@ -20,10 +21,10 @@ export default function DisplayUnitCounts({
       </div>
       <div className="grid auto-cols-max grid-flow-col justify-center gap-4 transition duration-75 ease-in-out md:text-lg lg:text-2xl">
         {unitTypes.map((unitType: string) => (
-          <UnitCount
-            BASE_UNIT_DATA={BASE_UNIT_DATA}
-            unitType={unitType as UnitType}
-            unitCounts={unitCounts}
+          <DashboardImageAndCount
+            dataObject={BASE_UNIT_DATA}
+            countsObject={unitCounts}
+            type={unitType as UnitType}
           />
         ))}
       </div>
