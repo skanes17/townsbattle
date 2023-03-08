@@ -166,7 +166,7 @@ export default function TrainUnitCard({
       */}
 
       <div className="grid auto-cols-min grid-cols-5 gap-1 px-1">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center font-bold">
           <AddRemoveButton
             buttonType="remove"
             onClick={() => handleZeroClick(unitType, friendly)}
