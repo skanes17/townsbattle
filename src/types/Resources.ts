@@ -1,8 +1,9 @@
 export interface Resources {
-  workers: Pick<ResourceData, "name" | "symbol">;
+  workers: Omit<ResourceData, "workers" | "multiplier">;
   wood: ResourceData;
   stone: ResourceData;
   metal: ResourceData;
+  crystal: ResourceData;
   gold: ResourceData;
 }
 

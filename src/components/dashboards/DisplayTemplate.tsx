@@ -14,12 +14,15 @@ export default function DisplayTemplate({
   headerText,
   children,
 }: DisplayTemplateProps) {
+  /* TODO: Fix this catch with more robust code */
+  const hideArmyOnMobile = headerText === `Army` ? `hidden` : `inline-flex`;
+
   return (
-    <div className="m-1">
-      <div className="text-center font-bold sm:text-sm md:text-base lg:text-lg">
-        {headerText}
-      </div>
-      <div className="inline-flex flex-wrap justify-center gap-1 transition duration-75 ease-in-out sm:gap-2 md:gap-3 md:text-lg lg:gap-4 lg:text-2xl">
+    <div className="m-1 text-base sm:text-lg lg:text-2xl">
+      <div className="mb-1 text-center font-bold">{headerText}</div>
+      <div
+        className={`${hideArmyOnMobile} flex-wrap justify-center gap-1 transition duration-75 ease-in-out sm:inline-flex sm:gap-2 md:gap-3 lg:gap-4`}
+      >
         {/* the mapping of symbol and counts gets sent here */}
         {children}
       </div>

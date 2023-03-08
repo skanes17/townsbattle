@@ -19,18 +19,27 @@ export default function DashboardImageAndCount({
   countsObject,
   type,
 }: DashboardImageAndCount) {
+  // if it's a resource, don't show the background
+  // TODO: if a better image is found, could use it
+  const isAResource = Object.keys(countsObject).includes("wood");
+
   /* @ts-ignore */
-  const bg: string = dataObject[type].bgImageSm;
+  const bg: string = isAResource ? `` : dataObject[type].bgImageSm;
+  const border = isAResource ? `border-0` : `border`;
 
   return (
-    <div className="group flex flex-row align-middle md:h-8 lg:h-9">
+    <div className="group flex h-7 flex-row align-middle sm:h-8 lg:h-9">
+      {/* Could add bgImage here later if desired */}
       <div
-        className={`mr-2 rounded-lg border border-zinc-700 group-hover:border-yellow-300 md:h-8 md:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
-      ></div>
+        className={`mr-2 h-7 w-7 rounded-lg ${border} border-zinc-700 group-hover:border-yellow-300 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
+      >
+        {/* FIXME: */}
+        {/* @ts-ignore */}
+        {isAResource && dataObject[type].symbol}
+      </div>
       <div className="text-right group-hover:text-yellow-300">
         {/* @ts-ignore */}
         {countsObject[type]}
-        {/* {resourcePool[resourceType]}   {resourcePool[resourceType]}   {unitCounts[unitType]} */}
       </div>
     </div>
   );
