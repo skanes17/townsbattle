@@ -15,6 +15,9 @@ export default function CardBgWithImage({
 }: CardBgWithImageProps) {
   const bg = bgImage;
 
+  let dimensions =
+    cardStyle == "combat" ? `w-full h-full` : `h-28 w-32 sm:h-52 sm:w-52 `;
+
   let saturate;
   switch (saturation) {
     case "oversaturated":
@@ -38,7 +41,7 @@ export default function CardBgWithImage({
 
   return (
     <div
-      className={`${bg} grid h-28 w-32 grid-rows-5 rounded-lg bg-cover bg-center bg-no-repeat sm:h-52 sm:w-52 ${saturate}`}
+      className={`${bg} ${dimensions} grid grid-rows-5 rounded-lg bg-cover bg-center bg-no-repeat ${saturate}`}
     >
       {children}
     </div>

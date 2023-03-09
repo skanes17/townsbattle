@@ -7,13 +7,13 @@ import { CombatCardFooter, CombatCardHeader, CombatCardSymbol } from "../cards";
 import CardBgWithImage from "../cards/CardBgWithImage";
 
 interface CombatCardTemplateProps {
-  color: ArmyColors;
+  armyStyle: "friendly" | "enemy";
   unit: Unit;
   subphase: SubPhases;
 }
 
 export default function CombatCardTemplate({
-  color,
+  armyStyle,
   unit,
   subphase,
 }: CombatCardTemplateProps) {
@@ -23,12 +23,12 @@ export default function CombatCardTemplate({
   }
 
   let borderColor, shadowColor;
-  switch (color) {
-    case friendlyColor:
+  switch (armyStyle) {
+    case "friendly":
       borderColor = "border-indigo-900";
       shadowColor = "shadow-indigo-500/50";
       break;
-    case enemyColor:
+    case "enemy":
       borderColor = "border-red-900";
       shadowColor = "shadow-red-500/50";
       break;
@@ -37,9 +37,8 @@ export default function CombatCardTemplate({
   /* TODO: Make animations work */
   return (
     <div
-      className={`${
-        fightAnimation ?? ``
-      } grid grid-rows-[1fr_3fr_1.5fr] place-items-center items-center justify-center overflow-y-auto overflow-x-hidden rounded-md border-4 align-middle sm:h-1/2 sm:w-28 md:h-3/5 md:w-[8.5rem] lg:h-4/5 lg:w-48 xl:h-full xl:w-60 ${borderColor} bg-white/5 p-2 text-white shadow-md ${shadowColor} text-xs sm:text-sm lg:text-3xl xl:text-4xl`}
+      className={`${fightAnimation ?? ``} ${borderColor}
+      ${shadowColor} grid grid-rows-[1fr_3fr_1.5fr] place-items-center justify-center place-self-center overflow-x-hidden rounded-md border-4 bg-white/5 p-2 align-middle text-xs text-white shadow-md sm:h-1/2 sm:w-28 sm:text-sm md:h-3/5 md:w-[8.5rem] lg:h-4/5 lg:w-48 lg:text-3xl xl:h-full xl:w-60 xl:text-4xl`}
     >
       <CombatCardHeader unit={unit} />
       <CardBgWithImage

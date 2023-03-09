@@ -21,7 +21,7 @@ export default function UnitTile({
     borderColor,
     bgColor;
 
-  const bg = unit.bgImageSm ?? ``;
+  const bg = unit.bgImageMd ?? ``;
 
   const percentHealth = (unit.currentHealth / unit.maxHealth) * 100;
 

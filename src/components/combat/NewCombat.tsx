@@ -683,55 +683,82 @@ export default function Combat({
           selectedUnit={combatUnits[friendlyIndex]}
         />
       </div>
-      <div className="col-start-1 row-start-2">Nothing</div>
-      <div className="col-start-2 row-span-2 row-start-1 grid h-full w-full grid-cols-[1fr] grid-rows-[1fr_4.5fr_2.5fr_1fr]">
+      <div className="col-start-1 row-start-2">{/* Empty Cell */}</div>
+      <div className="place- col-start-2 row-span-2 row-start-1 grid h-full w-full grid-cols-[1fr] grid-rows-[1fr_4.5fr_2.5fr_1fr]">
         <div className="row-start-1 self-center justify-self-center">
           {/* Taunts, etc */}
         </div>
         {/* cards */}
-        <div className="row-span-1 row-start-2 grid h-full grid-cols-[1fr_1fr] grid-rows-[1fr] overflow-y-auto border border-white p-3">
-          <div className="h-full w-full self-center justify-self-center overflow-y-auto p-2">
-            {phase === Phases.PreCombat && (
-              <PreCombatCardTemplate
-                BASE_UNIT_DATA={BASE_UNIT_DATA}
-                color={friendlyColor}
-                headerText="Your Army"
-                army={combatUnits}
-                unitCounts={combatUnitCounts}
-                unitTypes={unitTypes}
-              />
-            )}
-            {phase === Phases.Combat && (
-              <CombatCardTemplate
-                color={friendlyColor}
-                unit={combatUnits[friendlyIndex]}
-                subphase={subPhase}
-              />
-            )}
-          </div>
-          <div className="h-full w-full self-center justify-self-center overflow-y-auto p-2">
-            {phase === Phases.PreCombat && (
-              <PreCombatCardTemplate
-                BASE_UNIT_DATA={BASE_UNIT_DATA}
-                color={enemyColor}
-                headerText="Enemy Army"
-                army={combatEnemyUnits}
-                unitCounts={combatEnemyUnitCounts}
-                unitTypes={unitTypes}
-              />
-            )}
-            {phase === Phases.Combat && (
-              <CombatCardTemplate
-                color={enemyColor}
-                unit={combatEnemyUnits[enemyIndex]}
-                subphase={subPhase}
-              />
-            )}
-          </div>
+        <div className="row-span-1 row-start-2 grid h-full grid-cols-[1fr_1fr] grid-rows-[1fr] place-content-between overflow-y-auto p-3">
+          {phase === Phases.PreCombat && (
+            <PreCombatCardTemplate
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
+              armyStyle="friendly"
+              headerText="Your Army"
+              army={combatUnits}
+              unitCounts={combatUnitCounts}
+              unitTypes={unitTypes}
+            />
+          )}
+          {phase === Phases.Combat && (
+            <CombatCardTemplate
+              armyStyle="friendly"
+              unit={combatUnits[friendlyIndex]}
+              subphase={subPhase}
+            />
+          )}
+
+          {phase === Phases.PreCombat && (
+            <PreCombatCardTemplate
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
+              armyStyle="enemy"
+              headerText="Enemy Army"
+              army={combatEnemyUnits}
+              unitCounts={combatEnemyUnitCounts}
+              unitTypes={unitTypes}
+            />
+          )}
+          {phase === Phases.Combat && (
+            <CombatCardTemplate
+              armyStyle="enemy"
+              unit={combatEnemyUnits[enemyIndex]}
+              subphase={subPhase}
+            />
+          )}
         </div>
-        <div className="row-start-3 self-center justify-self-center">Log</div>
-        <div className="row-start-4 h-full w-full border border-white">
-          Main Button
+        <div className="row-start-3 h-full w-full self-center justify-self-center overflow-y-auto p-4">
+          <CombatLog combatEvents={combatEvents} townName={townName} />
+        </div>
+        <div className="row-start-4 h-full w-full">
+        {(phase === Phases.PreCombat || phase === Phases.Combat) && (
+phase === Phases.PreCombat && (
+  <CombatButton
+    buttonText="Start"
+    onClick={() => combatMegaFunction()}
+  />
+)
+
+          /* TODO: Contiue from here, comparing to Combat! */
+          {phase === Phases.Combat && subPhase === SubPhases.Fight ? (
+            <CombatButton
+              buttonText="Fight"
+              onClick={() => combatMegaFunction()}
+            />
+          ) : (
+            phase === Phases.Combat &&
+            subPhase === SubPhases.VictoryCheck && (
+              /* FIXME: Make name depend on state of army (select, summary, etc) */
+              <CombatButton
+                buttonText={
+                  survivingFriendlyUnitIndexes.length === 0 ||
+                  survivingEnemyUnitIndexes.length === 0
+                    ? "Summary"
+                    : "Again!"
+                }
+                onClick={() => combatMegaFunction()}
+              />
+            )
+          )}
         </div>
       </div>
       <div className="col-start-3 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-red-900/50 bg-red-500/5">
@@ -743,7 +770,6 @@ export default function Combat({
           selectedUnit={combatEnemyUnits[enemyIndex]}
         />
       </div>
-      <div className="col-start-3 row-start-2">Nothing</div>
     </div>
   );
 }

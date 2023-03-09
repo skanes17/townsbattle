@@ -6,7 +6,6 @@ import {
   SummaryEvent,
   NoArmyEvent,
 } from "../../types";
-import POddStyle from "./POddStyle";
 
 /* TODO: Make flavourtexts based on unit type; see below in combat phase */
 
@@ -16,7 +15,7 @@ export const messages = {
     // different indexes used for desired events/text
     (event: PreCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-400">
             {event.data.friendly.name}
             {event.data.friendly.id}
@@ -27,12 +26,12 @@ export const messages = {
             {event.data.enemy.id}
           </span>
           .
-        </POddStyle>
+        </p>
       );
     },
     (event: PreCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-400">
             {event.data.friendly.name}
             {event.data.friendly.id}
@@ -43,12 +42,12 @@ export const messages = {
             {event.data.enemy.id}
           </span>
           .
-        </POddStyle>
+        </p>
       );
     },
     (event: PreCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-400">
             {event.data.friendly.name}
             {event.data.friendly.id}
@@ -59,12 +58,12 @@ export const messages = {
             {event.data.enemy.id}
           </span>
           .
-        </POddStyle>
+        </p>
       );
     },
     (event: PreCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-400">
             {event.data.friendly.name}
             {event.data.friendly.id}
@@ -75,12 +74,12 @@ export const messages = {
             {event.data.enemy.id}
           </span>{" "}
           and calls him something nasty.
-        </POddStyle>
+        </p>
       );
     },
     (event: PreCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-400">
             {event.data.friendly.name}
             {event.data.friendly.id}
@@ -91,7 +90,7 @@ export const messages = {
             {event.data.enemy.id}
           </span>{" "}
           but they're not happy about it.
-        </POddStyle>
+        </p>
       );
     },
     /* more alternatives here */
@@ -99,7 +98,7 @@ export const messages = {
   combat: [
     (event: MainCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-400">
             {event.data.friendly.name}
             {event.data.friendly.id}
@@ -123,12 +122,12 @@ export const messages = {
             {event.data.enemy.attack} damage
           </span>
           .
-        </POddStyle>
+        </p>
       );
     },
     (event: MainCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-400">
             {event.data.friendly.name}
             {event.data.friendly.id}
@@ -147,12 +146,12 @@ export const messages = {
             {event.data.enemy.attack} damage
           </span>
           .
-        </POddStyle>
+        </p>
       );
     },
     (event: MainCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-400">
             {event.data.friendly.name}
             {event.data.friendly.id}
@@ -171,12 +170,12 @@ export const messages = {
             {event.data.enemy.attack} damage
           </span>{" "}
           in return.
-        </POddStyle>
+        </p>
       );
     },
     (event: MainCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-400">
             {event.data.friendly.name}
             {event.data.friendly.id}
@@ -195,7 +194,7 @@ export const messages = {
             {event.data.enemy.attack} damage
           </span>
           .
-        </POddStyle>
+        </p>
       );
     },
   ],
@@ -204,43 +203,43 @@ export const messages = {
     // idx: 0 -- both units died
     (event: PostCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-red-600">The units defeated each other!</span>
-        </POddStyle>
+        </p>
       );
     },
     // idx: 1 -- only friendlyUnit survives
     (event: PostCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-green-600">
             {event.data.friendly.name}
             {event.data.friendly.id} defeats {event.data.enemy.name}
             {event.data.enemy.id}!
           </span>
-        </POddStyle>
+        </p>
       );
     },
     // idx: 2 -- only enemyUnit survives
     (event: PostCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-red-600">
             {event.data.friendly.name}
             {event.data.friendly.id} was defeated by {event.data.enemy.name}
             {event.data.enemy.id}.
           </span>
-        </POddStyle>
+        </p>
       );
     },
     // idx: 3 -- both units survive
     (event: PostCombatEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="text-amber-600">
             Both units survive and return to their armies.
           </span>
-        </POddStyle>
+        </p>
       );
     },
   ],
@@ -248,33 +247,33 @@ export const messages = {
     // idx: 0 -- both armies defeated
     (event: SummaryEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="font-semibold text-red-600">
             The armies defeated each other!
           </span>
-        </POddStyle>
+        </p>
       );
     },
     // idx: 1 -- only friendly army survives
     (event: SummaryEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="font-semibold text-green-400">
             You defeated the enemy, but their army is already regrouping. Time
             to plan for the next wave!
           </span>
-        </POddStyle>
+        </p>
       );
     },
     // idx: 2 -- only enemy army survives
     (event: SummaryEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="font-semibold text-red-600">
             The enemy was too strong, and your army was defeated. Buildings were
             damaged!
           </span>
-        </POddStyle>
+        </p>
       );
     },
   ],
@@ -282,12 +281,12 @@ export const messages = {
     // idx: 0 --  you had no army to begin with
     (event: NoArmyEvent) => {
       return (
-        <POddStyle>
+        <p>
           <span className="font-semibold text-red-600">
             With no army to fight the enemy, you had no chance. Buildings were
             damaged!
           </span>
-        </POddStyle>
+        </p>
       );
     },
   ],

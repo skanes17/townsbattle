@@ -16,7 +16,7 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
   }
 
   return (
-    <div className="col-span-3 flex justify-between">
+    <div className="flex justify-between">
       <div className={`self-end text-center`}>
         🗡️
         {/* special styling for attack bonus */}
