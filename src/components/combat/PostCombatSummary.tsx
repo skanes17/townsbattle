@@ -39,7 +39,7 @@ export default function PostCombatSummary({
   );
 
   return (
-    <div className="aspect-[4/1] overflow-y-auto overflow-x-hidden rounded-md border-4 border-gray-500 bg-white/5 p-2 text-xs text-white shadow-md shadow-gray-500/50 sm:text-sm md:text-base lg:gap-1 lg:text-lg xl:text-2xl">
+    <div className="aspect-[4/1] overflow-y-auto overflow-x-hidden rounded-md border-4 border-gray-500 bg-white/5 p-2 text-xs capitalize text-white shadow-md shadow-gray-500/50 sm:text-sm md:text-base lg:gap-1 lg:text-lg xl:text-2xl">
       <p className="pb-2 text-center font-bold">Battle Summary</p>
       <div className="grid auto-cols-auto grid-flow-col">
         <PostCombatUnitsStatBox

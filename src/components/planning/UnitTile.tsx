@@ -46,20 +46,23 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
   } else healthWidth = "w-[100%]";
 
   if (percentHealth <= 25) {
-    healthBarColor = "bg-red-400";
-    hoverBorder = "hover:border-red-300/100";
+    healthBarColor = "bg-red-500";
+    hoverBorder = "hover:border-red-500/100";
   } else if (percentHealth <= 50) {
+    healthBarColor = "bg-red-400";
+    hoverBorder = "hover:border-red-400/100";
+  } else if (percentHealth <= 75) {
     healthBarColor = "bg-orange-400";
-    hoverBorder = "hover:border-orange-300/100";
+    hoverBorder = "hover:border-orange-400/100";
   } else {
     healthBarColor = "bg-green-400";
-    hoverBorder = "hover:border-green-300/100";
+    hoverBorder = "hover:border-green-400/100";
   }
 
   if (phase === Phases.Combat && unit === selectedUnit) {
     borderWidth = "border-2";
     if (percentHealth <= 25) {
-      borderColor = "border-red-400/80";
+      borderColor = "border-red-500/80";
     } else if (percentHealth <= 50) {
       borderColor = "border-orange-400/80";
     } else {
@@ -82,16 +85,15 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
         className={`${bg} group relative h-20 w-[3.33rem] snap-center justify-items-center rounded-md bg-cover bg-center sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >
         <div
-          className={`absolute bottom-1 h-2 w-[2.58rem] rounded-sm sm:w-[3.25rem] md:h-3 md:w-[4.25rem]`}
+          className={`absolute left-0 right-0 bottom-[2.5%] mx-auto h-2 w-[95%] rounded-sm bg-black/80 backdrop-blur-[1px] md:h-3`}
         >
-          {/* FIXME: Implement this!
-           <div
-            className={`h-2 md:h-3 ${healthWidth} ${healthBarColor} absolute bottom-1 rounded-sm transition-all duration-500 ease-out`}
-          ></div> */}
+          <div
+            className={`h-3 ${healthWidth} ${healthBarColor} rounded-sm transition-all duration-500 ease-out`}
+          ></div>
         </div>
         {/* Popup text */}
         <span className="pointer-events-none absolute top-16 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded bg-black/80 px-2 py-1 text-center text-xs text-white opacity-0 before:absolute before:border-transparent before:border-t-black group-hover:opacity-100 sm:text-xs lg:text-sm xl:text-sm">
-          {/* TODO: Add space for randomly generated name */}
+          {/* TODO: Add randomly generated name */}
           <div>
             {unit.name}
             {unit.id}

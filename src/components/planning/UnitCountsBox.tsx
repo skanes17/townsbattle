@@ -52,7 +52,7 @@ export default function UnitCountsBox({
           // only show unit types that were defeated
           return (
             unitCounts[unitType as UnitType as UnitType] > 0 && (
-              <div className="mt-1 inline-flex">
+              <div className="mt-1 inline-flex capitalize">
                 <div
                   className={`group mr-2 h-7 w-7 rounded-lg border border-zinc-700 group-hover:border-yellow-300 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
                 ></div>
