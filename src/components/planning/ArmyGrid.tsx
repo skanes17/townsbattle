@@ -3,41 +3,42 @@ import { Phase, Phases, Unit } from "../../types";
 import UnitTile from "./UnitTile";
 
 interface ArmyGridProps {
-  color?: "blue" | "red";
+  gridStyle: "planning" | "combat";
+  armyStyle?: "friendly" | "enemy";
   phase?: Phases;
   army: Unit[];
   selectedUnit?: Unit;
-  startColumn?: "1" | "8";
 }
 
 export default function ArmyGrid({
-  color,
+  gridStyle,
+  armyStyle,
   phase,
   army,
   selectedUnit,
-  startColumn,
 }: ArmyGridProps) {
-  let borderColor, bgColor;
-  switch (color) {
-    case "blue":
-      borderColor = "border border-indigo-900/50";
-      bgColor = "bg-indigo-500/5";
+  let style;
+  switch (gridStyle) {
+    case "planning":
+      style = `w-4/5`;
       break;
-    case "red":
-      borderColor = "border border-red-900/50";
-      bgColor = "bg-red-500/5";
+    case "combat":
+      style = `w-full overflow-y-auto`;
       break;
     default:
-      borderColor = ``;
-      bgColor = ``;
+      style = `w-4/5`;
   }
 
-  let colStart;
-  if (startColumn === "1") {
-    colStart = "col-start-1";
-  }
-  if (startColumn === "8") {
-    colStart = "col-start-8";
+  let armyFlow;
+  switch (armyStyle) {
+    case "friendly":
+      armyFlow = ``;
+      break;
+    case "enemy":
+      armyFlow = ``;
+      break;
+    default:
+      armyFlow = ``;
   }
 
   return (
@@ -46,7 +47,7 @@ export default function ArmyGrid({
     /* FIXME: Grid collapsing when empty */
     /* TODO: Maybe add background image to grid */
     <div
-      className={`relative grid w-4/5 grid-flow-dense grid-cols-[repeat(auto-fit,minmax(3.33rem,1fr))] justify-items-center gap-1 overflow-hidden rounded p-2 sm:grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(5rem,1fr))] ${borderColor} ${bgColor}`}
+      className={` ${style} relative grid h-full grid-flow-dense grid-cols-[repeat(auto-fit,minmax(3.33rem,1fr))] justify-items-center gap-1 overflow-hidden rounded p-2 sm:grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]`}
     >
       {army.map((unit) => (
         <UnitTile unit={unit} selectedUnit={selectedUnit} phase={phase} />

@@ -59,6 +59,9 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
     hoverBorder = "hover:border-green-400/100";
   }
 
+  let healthBarBackgroundColor =
+    unit.currentHealth > 0 ? `bg-black/80` : `bg-red-500/40`;
+
   if (phase === Phases.Combat && unit === selectedUnit) {
     borderWidth = "border-2";
     if (percentHealth <= 25) {
@@ -85,7 +88,7 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
         className={`${bg} group relative h-20 w-[3.33rem] snap-center justify-items-center rounded-md bg-cover bg-center sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >
         <div
-          className={`absolute left-0 right-0 bottom-[2.5%] mx-auto h-2 w-[95%] rounded-sm bg-black/80 backdrop-blur-[1px] md:h-3`}
+          className={`absolute left-0 right-0 bottom-[2.5%] mx-auto h-2 w-[95%] rounded-sm ${healthBarBackgroundColor} backdrop-blur-[1px] md:h-3`}
         >
           <div
             className={`h-3 ${healthWidth} ${healthBarColor} rounded-sm transition-all duration-500 ease-out`}

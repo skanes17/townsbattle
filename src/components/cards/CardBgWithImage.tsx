@@ -1,12 +1,14 @@
 import React, { ReactNode } from "react";
 
 interface CardBgWithImageProps {
+  cardStyle: "planning" | "combat";
   saturation: "oversaturated" | "normal" | "half" | "quarter" | "zero";
   bgImage?: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function CardBgWithImage({
+  cardStyle,
   saturation,
   bgImage,
   children,

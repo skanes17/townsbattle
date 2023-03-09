@@ -19,7 +19,11 @@ export default function CardImageHeaderDescriptionContainer({
 }: CardImageHeaderDescriptionContainerProps) {
   return (
     <>
-      <CardBgWithImage saturation={saturation} bgImage={bgImage}>
+      <CardBgWithImage
+        cardStyle="planning"
+        saturation={saturation}
+        bgImage={bgImage}
+      >
         <NewCardHeader cardName={cardName} />
         <CardHoverText>{children}</CardHoverText>
       </CardBgWithImage>

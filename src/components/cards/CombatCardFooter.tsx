@@ -17,9 +17,7 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
 
   return (
     <div className="col-span-3 flex justify-between">
-      <div
-        className={`self-end text-center text-xl sm:m-3 sm:text-2xl md:text-4xl lg:text-5xl`}
-      >
+      <div className={`self-end text-center`}>
         🗡️
         {/* special styling for attack bonus */}
         {unit.currentHealth === unit.maxHealth &&
@@ -32,11 +30,9 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
         )}
       </div>
       {/* TODO: Conditional green for full, orange for damaged, red for critical */}
-      <div
-        className={`self-end text-center text-xl sm:m-3 sm:text-2xl md:text-4xl lg:text-5xl`}
-      >
+      <div className={`self-end text-center`}>
         ❤️<span className={`${healthTextColor}`}>{unit.currentHealth}</span>
-        <span className="text-xs sm:text-sm md:text-base lg:text-lg">
+        <span className="text-xs sm:text-xs md:text-base lg:text-lg">
           /{unit.maxHealth}
         </span>
       </div>

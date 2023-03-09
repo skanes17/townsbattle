@@ -28,11 +28,11 @@ export default function DevTools({
   trainEnemyUnits,
 }: DevToolsProps) {
   return (
-    <div className="border-t-2 border-amber-500 transition duration-150 ease-in-out hover:filter-none">
+    <div className="flex flex-wrap border-t-2 border-amber-500 transition duration-150 ease-in-out hover:filter-none">
       <h2 className="font-extrabold text-amber-500 dark:text-white">
         Dev Tools
       </h2>{" "}
-      <div className="flex items-center justify-evenly">
+      <div className="flex flex-wrap items-center justify-evenly">
         {/* Get all base unit types, dynamically create a button for each */}
         {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
           <AddUnitButton

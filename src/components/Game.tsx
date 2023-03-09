@@ -57,9 +57,10 @@ import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
 import { NavButtons, NavButtonType } from "../types/NavButtons";
 import ArmyGrid from "./planning/ArmyGrid";
-import { Combat, PostCombatUnitsStatBox } from "./combat";
+import { PostCombatUnitsStatBox } from "./combat";
 import DashboardImageAndCount from "./planning/DashboardImageAndCount";
 import UnitCountsBox from "./planning/UnitCountsBox";
+import Combat from "./combat/NewCombat";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -72,7 +73,7 @@ import UnitCountsBox from "./planning/UnitCountsBox";
 // Composition of army could be displayed to UI, for example 20% fighter 30% archer 50% knight
 
 export default function Game(props: GameProps) {
-  const [devTools, setDevTools] = useState(false);
+  const [devTools, setDevTools] = useState(true);
 
   // pull startData from linked Play component
   const startData = useLocation();
@@ -775,20 +776,22 @@ export default function Game(props: GameProps) {
 
   return inCombat ? (
     <>
-      <Combat
-        BASE_UNIT_DATA={BASE_UNIT_DATA}
-        unitTypes={unitTypes}
-        unlockedUnitTypes={unlockedUnitTypes}
-        myUnits={myUnits}
-        enemyUnits={enemyUnits}
-        setMyUnits={setMyUnits}
-        setEnemyUnits={setEnemyUnits}
-        townName={townName}
-        buildings={buildings}
-        setBuildings={setBuildings}
-        switchPhase={switchPhase}
-        scoreUpdaterFn={scoreUpdaterFn}
-      />
+      <div className="h-screen">
+        <Combat
+          BASE_UNIT_DATA={BASE_UNIT_DATA}
+          unitTypes={unitTypes}
+          unlockedUnitTypes={unlockedUnitTypes}
+          myUnits={myUnits}
+          enemyUnits={enemyUnits}
+          setMyUnits={setMyUnits}
+          setEnemyUnits={setEnemyUnits}
+          townName={townName}
+          buildings={buildings}
+          setBuildings={setBuildings}
+          switchPhase={switchPhase}
+          scoreUpdaterFn={scoreUpdaterFn}
+        />
+      </div>
       {devTools ? (
         <DevTools
           BASE_UNIT_DATA={BASE_UNIT_DATA}
@@ -973,7 +976,7 @@ export default function Game(props: GameProps) {
                     headerTextColor="blue"
                   />
                 </div>
-                <ArmyGrid army={myUnits} />
+                <ArmyGrid gridStyle="planning" army={myUnits} />
               </>
             )}
           </div>

@@ -142,6 +142,7 @@ export default function TrainUnitCard({
   return (
     <CardTemplate color="red">
       <CardBgWithImage
+        cardStyle="planning"
         saturation={"oversaturated"}
         bgImage={BASE_UNIT_DATA[unitType].bgImage}
       >

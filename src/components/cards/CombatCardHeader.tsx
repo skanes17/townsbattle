@@ -7,9 +7,7 @@ interface CombatCardHeader {
 
 export default function CombatCardHeader({ unit }: CombatCardHeader) {
   return (
-    <div
-      className={`col-span-3 self-center text-center text-base font-bold sm:text-3xl md:text-4xl lg:text-5xl`}
-    >
+    <div className={`col-span-3 self-center text-center font-bold`}>
       {unit.name}
       {unit.id}
     </div>
