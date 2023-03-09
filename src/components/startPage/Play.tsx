@@ -83,9 +83,7 @@ export default function Play() {
 
       {/* FIXME: Wrap all in a form; add type="button" to buttons that won't submit data, type="submit" otherwise */}
       <div>
-        <div className="mt-6 text-lg font-medium text-gray-900 dark:text-white">
-          Difficulty
-        </div>
+        <div className="mt-6 text-lg font-medium text-gray-900">Difficulty</div>
         <div className="mt-3 items-center gap-2 sm:flex">
           {difficulty === "easy" ? (
             <MenuButton
@@ -129,9 +127,7 @@ export default function Play() {
       </div>
 
       <div>
-        <div className="mt-6 text-lg font-medium text-gray-900 dark:text-white">
-          Tutorials
-        </div>
+        <div className="mt-6 text-lg font-medium text-gray-900">Tutorials</div>
         <div className="mt-3 items-center gap-2 sm:flex">
           {tutorials === true ? (
             <>
