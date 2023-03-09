@@ -879,7 +879,7 @@ export default function Game(props: GameProps) {
               <Button
                 buttonColor="blue"
                 onClick={endTurn}
-                disabled={resourcePool["workers"] > 0 ? true : false}
+                disabled={resourcePool["workers"] > 0}
               >
                 End Turn {turn}
               </Button>

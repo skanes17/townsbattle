@@ -10,7 +10,7 @@ export default function CombatButton({
   return (
     <button
       type="button"
-      className="text-md h-8 w-16 rounded bg-blue-600 font-bold text-white shadow-md shadow-blue-600/50 duration-75 hover:bg-blue-800 sm:h-12 sm:w-20 sm:text-lg md:h-16 md:w-24 md:text-2xl lg:h-20 lg:w-32 lg:text-3xl xl:h-24 xl:w-40
+      className="text-md h-8 w-full rounded bg-blue-600 font-bold text-white shadow-md shadow-blue-600/50 duration-75 hover:bg-blue-800 sm:h-12 sm:text-lg md:h-16 md:text-2xl lg:h-20 lg:text-3xl xl:h-24
                    xl:text-4xl"
       onClick={() => onClick()}
     >

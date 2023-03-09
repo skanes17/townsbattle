@@ -729,16 +729,14 @@ export default function Combat({
         <div className="row-start-3 h-full w-full self-center justify-self-center overflow-y-auto p-4">
           <CombatLog combatEvents={combatEvents} townName={townName} />
         </div>
-        <div className="row-start-4 h-full w-full">
-        {(phase === Phases.PreCombat || phase === Phases.Combat) && (
-phase === Phases.PreCombat && (
-  <CombatButton
-    buttonText="Start"
-    onClick={() => combatMegaFunction()}
-  />
-)
-
-          /* TODO: Contiue from here, comparing to Combat! */
+        <div className="row-start-4 h-full w-full p-4">
+          {phase === Phases.PreCombat && (
+            <CombatButton
+              buttonText="Start"
+              onClick={() => combatMegaFunction()}
+            />
+          )}
+          {/* FIXME: Must be a cleaner way?? */}
           {phase === Phases.Combat && subPhase === SubPhases.Fight ? (
             <CombatButton
               buttonText="Fight"
