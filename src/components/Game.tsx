@@ -976,7 +976,11 @@ export default function Game(props: GameProps) {
                     headerTextColor="blue"
                   />
                 </div>
-                <ArmyGrid gridStyle="planning" army={myUnits} />
+                <ArmyGrid
+                  armyStyle="friendly"
+                  gridStyle="planning"
+                  army={myUnits}
+                />
               </>
             )}
           </div>

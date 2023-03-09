@@ -2,12 +2,18 @@ import React from "react";
 import { Phases, Unit } from "../../types";
 
 interface UnitTileProps {
+  armyStyle: "friendly" | "enemy";
   unit: Unit;
   selectedUnit?: Unit;
   phase?: Phases;
 }
 
-export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
+export default function UnitTile({
+  armyStyle,
+  unit,
+  selectedUnit,
+  phase,
+}: UnitTileProps) {
   let healthWidth,
     healthBarColor,
     hoverBorder,
@@ -64,12 +70,13 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
 
   if (phase === Phases.Combat && unit === selectedUnit) {
     borderWidth = "border-2";
-    if (percentHealth <= 25) {
-      borderColor = "border-red-500/80";
-    } else if (percentHealth <= 50) {
-      borderColor = "border-orange-400/80";
-    } else {
-      borderColor = "border-green-400/80";
+    switch (armyStyle) {
+      case "friendly":
+        borderColor = "border-indigo-400/80 shadow-sm shadow-indigo-500";
+        break;
+      case "enemy":
+        borderColor = "border-red-400/80 shadow-sm shadow-red-500";
+        break;
     }
   } else {
     borderWidth = "border-2";
@@ -85,7 +92,7 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
     <>
       {/* TODO: Replace with proper images */}
       <div
-        className={`${bg} group relative h-20 w-[3.33rem] snap-center justify-items-center rounded-md bg-cover bg-center sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
+        className={`${bg} group  relative h-20 w-[3.33rem] snap-center justify-items-center rounded-md bg-cover bg-center sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >
         <div
           className={`absolute left-0 right-0 bottom-[2.5%] mx-auto h-2 w-[95%] rounded-sm ${healthBarBackgroundColor} backdrop-blur-[1px] md:h-3`}
