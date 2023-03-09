@@ -12,7 +12,7 @@ export default function BldgCardFooter({
 }: BldgCardFooterProps) {
   const percentHealth = (currentHealth / maxHealth) * 100;
 
-  let healthTextColor;
+  let healthTextColor = "text-white";
   if (percentHealth <= 25) {
     healthTextColor = "text-red-600";
   } else if (percentHealth < 100) {
@@ -26,11 +26,11 @@ export default function BldgCardFooter({
 
   return (
     /* FIXME: Text breaking on mobile */
-    <div className="grid h-7 grid-flow-col gap-1 border-t border-white/10 pt-1 text-base backdrop-blur-[2px] sm:h-8 sm:gap-2 sm:text-lg">
-      <div className="relative rounded-tr-lg rounded-bl-lg bg-black/50 px-1 text-center text-white">
-        <div>{tierDisplay}</div>
+    <div className="grid h-7 grid-flow-col gap-1 border-t border-white/10 pt-1 text-sm backdrop-blur-[2px] sm:h-8 sm:gap-2 sm:text-lg">
+      <div className="relative rounded-tr-lg rounded-bl-lg bg-black/50 px-1 text-center text-white sm:text-xs">
+        <div className="text-[0.5rem] sm:text-lg">{tierDisplay}</div>
         {/* aligned to bottom of the container, then shifted up by its height */}
-        <div className="absolute bottom-0 h-7 -translate-y-1/2 text-xs font-bold opacity-0 transition-all ease-in-out group-hover:opacity-100 sm:-translate-y-full sm:pl-2 sm:text-lg">
+        <div className="absolute bottom-0 h-7 -translate-y-1/2 font-bold opacity-0 transition-all ease-in-out group-hover:opacity-100 sm:-translate-y-full sm:pl-2 sm:text-lg">
           Tier {tier}
         </div>
       </div>
@@ -38,12 +38,12 @@ export default function BldgCardFooter({
         ❤️
         <span
           className={`${
-            percentHealth < 100 ? `font-semibold` : null
+            percentHealth < 100 ? `font-semibold` : ``
           } ${healthTextColor}`}
         >
           {currentHealth}
         </span>
-        <span className="text-xs sm:text-sm">/{maxHealth}</span>
+        <span className="text-[0.5rem] sm:text-sm">/{maxHealth}</span>
       </div>
     </div>
   );
