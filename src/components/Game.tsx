@@ -59,6 +59,7 @@ import { NavButtons, NavButtonType } from "../types/NavButtons";
 import ArmyGrid from "./planning/ArmyGrid";
 import { Combat, PostCombatUnitsStatBox } from "./combat";
 import DashboardImageAndCount from "./planning/DashboardImageAndCount";
+import UnitCountsBox from "./planning/UnitCountsBox";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -964,11 +965,11 @@ export default function Game(props: GameProps) {
               activeNavButtons.army.active) && (
               <>
                 <div className="m-2 rounded-md bg-white/5 p-2 text-base text-white backdrop-blur-[1px] sm:text-lg lg:text-2xl">
-                  <PostCombatUnitsStatBox
+                  <UnitCountsBox
                     BASE_UNIT_DATA={BASE_UNIT_DATA}
                     headerText={"Units"}
                     unitCounts={unitCounts}
-                    unitTypes={unlockedUnitTypes}
+                    unitTypes={unitTypes}
                     headerTextColor="blue"
                   />
                 </div>

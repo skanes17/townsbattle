@@ -31,7 +31,9 @@ export default function DashboardImageAndCount({
     <div className="group flex h-7 flex-row align-middle sm:h-8 lg:h-9">
       {/* Could add bgImage here later if desired */}
       <div
-        className={`mr-2 h-7 w-7 rounded-lg ${border} border-zinc-700 group-hover:border-yellow-300 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
+        className={`${
+          !isAResource && `mr-2`
+        } h-7 w-7 rounded-lg ${border} border-zinc-700 group-hover:border-yellow-300 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
       >
         {/* FIXME: */}
         {/* @ts-ignore */}

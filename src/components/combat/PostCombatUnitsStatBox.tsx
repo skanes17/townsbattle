@@ -46,6 +46,7 @@ export default function PostCombatUnitsStatBox({
           {unitCounts.total ?? totalUnitCount}
         </p>
         {/* BODY */}
+
         {unitTypes!.map((unitType) => {
           // only show unit types that were defeated
           return (

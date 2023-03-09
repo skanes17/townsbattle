@@ -3,7 +3,7 @@
 export const baseUnitData = {
   villager: {
     unitType: "villager",
-    name: "villager",
+    name: "Villager",
     symbol: "🧑🏻‍🌾",
     description: "Untrained, but courageous! Terrible at fighting.",
     bgImage: "bg-villager",
