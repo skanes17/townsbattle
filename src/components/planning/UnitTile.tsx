@@ -92,18 +92,18 @@ export default function UnitTile({ unit, selectedUnit, phase }: UnitTileProps) {
           ></div>
         </div>
         {/* Popup text */}
-        <span className="pointer-events-none absolute top-16 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded bg-black/80 px-2 py-1 text-center text-xs text-white opacity-0 before:absolute before:border-transparent before:border-t-black group-hover:opacity-100 sm:text-xs lg:text-sm xl:text-sm">
+        <span className="pointer-events-none fixed z-50 w-1/4 -translate-x-1/2 whitespace-normal rounded-lg bg-black/80 px-2 py-1 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:text-base">
           {/* TODO: Add randomly generated name */}
-          <div>
+          <p>
             {unit.name}
             {unit.id}
-          </div>
-          <div>Attack: {unit.attack}</div>
-          <div>
+          </p>
+          <p>Attack: {unit.attack}</p>
+          <p>
             HP: {unit.currentHealth}/{unit.maxHealth}
-          </div>
-          {unit.armor > 0 ? <div>Armor: {unit.armor}</div> : null}
-          <div>{unit.description}</div>
+          </p>
+          {unit.armor > 0 ? <p>Armor: {unit.armor}</p> : null}
+          <p>{unit.description}</p>
         </span>
       </div>
     </>

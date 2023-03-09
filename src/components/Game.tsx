@@ -829,7 +829,7 @@ export default function Game(props: GameProps) {
           </>
         </nav>
 
-        <div className="ml-[4.5rem] min-h-screen sm:ml-40 sm:mr-3 md:ml-[17rem] md:mr-4 lg:ml-72">
+        <div className="z-0 ml-[4.5rem] min-h-screen sm:ml-40 sm:mr-3 md:ml-[17rem] md:mr-4 lg:ml-72">
           {/* TODO: Add a clock */}
           <div className="sticky top-0 z-10 grid auto-cols-auto">
             <div className="mx-1 grid grid-flow-row grid-cols-[1fr_4fr] justify-items-center rounded-b-md border border-t-0 border-slate-500 bg-slate-900 px-4 hover:bg-slate-900 sm:grid-cols-[1fr_3fr_4fr] sm:gap-x-4 md:gap-x-8 lg:gap-x-16">

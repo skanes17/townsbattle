@@ -87,7 +87,7 @@ export const baseUnitData = {
     unitType: "mage",
     name: "Mage",
     symbol: "🪄",
-    description: "A fragile ward makes them fearsome while unharmed.",
+    description: "Magic increases their attack power while unharmed.",
     bgImage: "bg-mage",
     bgImageSm: "bg-mageSm",
     bgImageMd: "bg-mageMd",
