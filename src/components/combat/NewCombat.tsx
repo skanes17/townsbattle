@@ -673,8 +673,8 @@ export default function Combat({
 
   return (
     /* whole screen */
-    <div className="grid h-screen max-h-screen p-2 text-base transition-transform ease-in-out md:grid-cols-[2.5fr_4fr_2.5fr] md:grid-rows-[9fr_1fr] lg:text-lg xl:text-xl">
-      <div className="h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5 md:col-start-1 md:row-start-1">
+    <div className="grid h-screen max-h-screen grid-cols-2 grid-rows-[2.1fr_0.3fr_1.3fr_0.3fr] p-2 text-base  transition-transform ease-in-out md:grid-cols-[2.5fr_4fr_2.5fr] md:grid-rows-[9fr_1fr] lg:text-lg xl:text-xl">
+      <div className="col-start-1 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5 md:col-start-1 md:row-start-1">
         <ArmyGrid
           gridStyle="combat"
           armyStyle="friendly"
@@ -683,8 +683,10 @@ export default function Combat({
           selectedUnit={combatUnits[friendlyIndex]}
         />
       </div>
-      <div className="md:col-start-1 md:row-start-2">{/* Empty Cell */}</div>
-      <div className="grid h-full w-full md:col-start-2 md:row-span-2 md:row-start-1 md:grid-cols-[1fr] md:grid-rows-[1fr_4.5fr_2.5fr_1fr]">
+      <div className="md:col-start-1 md:row-start-2">
+        {/* Empty Cell FIXME: On mobile if necessaey */}
+      </div>
+      <div className=" col-start-2 row-start-1 grid h-full w-full md:col-start-2 md:row-span-2 md:row-start-1 md:grid-cols-[1fr] md:grid-rows-[1fr_4.5fr_2.5fr_1fr]">
         {phase === Phases.PostCombat && (
           <div className="row-span-2 row-start-1 grid h-full w-full p-4">
             <PostCombatSummary
