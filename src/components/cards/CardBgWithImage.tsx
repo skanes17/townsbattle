@@ -16,7 +16,9 @@ export default function CardBgWithImage({
   const bg = bgImage;
 
   let dimensions =
-    cardStyle == "combat" ? `w-full h-full` : `h-28 w-32 sm:h-52 sm:w-52 `;
+    cardStyle == "combat"
+      ? `sm:w-24 md:w-28 lg:w-44 xl:w-56  h-full`
+      : `h-28 w-32 sm:h-52 sm:w-52 `;
 
   let saturate;
   switch (saturation) {
@@ -46,4 +48,15 @@ export default function CardBgWithImage({
       {children}
     </div>
   );
+}
+
+/* TODO: Add health bar */
+{
+  /* <div
+  className={`absolute left-0 right-0 bottom-[2.5%] mx-auto h-2 w-[95%] rounded-sm ${healthBarBackgroundColor} backdrop-blur-[1px] md:h-3`}
+>
+  <div
+    className={`h-3 ${healthWidth} ${healthBarColor} rounded-sm transition-all duration-500 ease-out`}
+  ></div>
+</div> */
 }
