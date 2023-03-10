@@ -41,21 +41,27 @@ export default function PostCombatUnitsStatBox({
   return (
     <>
       <div className="grid auto-rows-min">
-        <p className={`${textColor}`}>{headerText}</p>
+        <p className={`font-bold ${textColor}`}>{headerText}</p>
         <p className="ml-2 font-semibold">
           {unitCounts.total ?? totalUnitCount} total
         </p>
         {/* BODY */}
 
         {unitTypes!.map((unitType) => {
+          const bg = BASE_UNIT_DATA[unitType as UnitType].bgImageSm ?? ``;
+
           // only show unit types that were defeated
           return (
             unitCounts[unitType!] > 0 && (
-              <p className="ml-2">
-                {BASE_UNIT_DATA[unitType!].symbol} {unitCounts[unitType!]}{" "}
-                {unitType}
-                {unitCounts[unitType!] > 1 && `s`}
-              </p>
+              <div className="mt-1 inline-flex flex-wrap capitalize sm:flex-nowrap">
+                <div
+                  className={`group mr-2 h-7 w-7 rounded-lg border border-zinc-700 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
+                ></div>
+                <span>
+                  {unitCounts[unitType as UnitType]} {unitType}
+                  {unitCounts[unitType as UnitType] > 1 && `s`}
+                </span>
+              </div>
             )
           );
         })}

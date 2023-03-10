@@ -100,7 +100,7 @@ export default function UnitTile({
           className={`absolute left-0 right-0 bottom-[2.5%] mx-auto h-2 w-[95%] rounded-sm ${healthBarBackgroundColor} backdrop-blur-[1px] transition-all duration-500 ease-out md:h-3`}
         >
           <div
-            className={`h-3 ${healthWidth} ${healthBarColor} rounded-sm transition-all duration-500 ease-out`}
+            className={`h-2 md:h-3 ${healthWidth} ${healthBarColor} rounded-sm transition-all duration-500 ease-out`}
           ></div>
         </div>
         {/* Popup text */}

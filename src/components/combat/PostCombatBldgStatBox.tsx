@@ -32,15 +32,22 @@ export default function PostCombatBldgStatBox({
     (key) => buildings[key].damage > 0
   );
 
+  let buildingsDamagedTextColor;
+  (damagedBuildings.length ?? 0) === 0
+    ? (buildingsDamagedTextColor = `text-green-500`)
+    : (buildingsDamagedTextColor = ``);
+
   /* TODO: Add hover info on which units damaged the building? */
   return (
     <>
       <div className="grid auto-rows-min">
         {/* HEADER */}
-        <p>
-          {/*  total number of damaged buildings */}
-          <span className={`${textColor}`}>{headerText}</span>:{" "}
-          {damagedBuildings.length}
+
+        <p className={`font-bold ${textColor}`}>{headerText}</p>
+        <p className={`${buildingsDamagedTextColor} ml-2 font-semibold`}>
+          {damagedBuildings.length ?? 0 > 0
+            ? `${damagedBuildings.length} total`
+            : `None!`}
         </p>
         {/* BODY */}
         {damagedBuildings.map((buildingType) => {

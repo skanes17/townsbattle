@@ -42,7 +42,7 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
         <p>❤️</p>
         <p>
           <span className={`${healthTextColor}`}>{unit.currentHealth}</span>
-          <span className="text-xs sm:text-xs md:text-base lg:text-lg">
+          <span className="text-[0.33rem] sm:text-xs md:text-base lg:text-lg">
             /{unit.maxHealth}
           </span>
         </p>

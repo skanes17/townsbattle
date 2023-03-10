@@ -673,8 +673,8 @@ export default function Combat({
 
   return (
     /* whole screen */
-    <div className="grid h-screen max-h-screen grid-cols-2 grid-rows-[2.1fr_0.3fr_1.3fr_0.3fr] p-2 text-base  transition-transform ease-in-out md:grid-cols-[2.5fr_4fr_2.5fr] md:grid-rows-[9fr_1fr] lg:text-lg xl:text-xl">
-      <div className="col-start-1 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5 md:col-start-1 md:row-start-1">
+    <div className="grid h-screen max-h-screen grid-cols-[2.5fr_4fr_2.5fr] grid-rows-[9fr_1fr] p-2 text-xs transition-transform ease-in-out sm:text-base lg:text-lg xl:text-xl">
+      <div className="col-start-1 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5">
         <ArmyGrid
           gridStyle="combat"
           armyStyle="friendly"
@@ -683,12 +683,10 @@ export default function Combat({
           selectedUnit={combatUnits[friendlyIndex]}
         />
       </div>
-      <div className="md:col-start-1 md:row-start-2">
-        {/* Empty Cell FIXME: On mobile if necessaey */}
-      </div>
-      <div className=" col-start-2 row-start-1 grid h-full w-full md:col-start-2 md:row-span-2 md:row-start-1 md:grid-cols-[1fr] md:grid-rows-[1fr_4.5fr_2.5fr_1fr]">
+      <div className="col-start-1 row-start-2">{/* Empty Cell */}</div>
+      <div className="col-start-2 row-span-2 row-start-1 grid h-full w-full grid-cols-[1fr] grid-rows-[1fr_4.5fr_2.5fr_1fr]">
         {phase === Phases.PostCombat && (
-          <div className="row-span-2 row-start-1 grid h-full w-full p-4">
+          <div className="row-span-3 row-start-1 grid h-full w-full p-4">
             <PostCombatSummary
               BASE_UNIT_DATA={BASE_UNIT_DATA}
               buildings={buildings}
@@ -701,12 +699,12 @@ export default function Combat({
 
         {phase === Phases.PreCombat ||
           (phase === Phases.Combat && (
-            <div className="self-center justify-self-center md:row-start-1">
+            <div className="row-start-1 self-center justify-self-center">
               {/* Taunts, etc */}
             </div>
           ))}
         {/* cards */}
-        <div className="grid h-full place-content-between overflow-y-auto p-3 md:row-span-1 md:row-start-2 md:grid-cols-[1fr_1fr] md:grid-rows-[1fr]">
+        <div className="row-span-1 row-start-2 grid h-full grid-cols-[1fr_1fr] grid-rows-[1fr] place-content-between overflow-y-auto p-0 sm:p-3">
           {phase === Phases.PreCombat && (
             <PreCombatCardTemplate
               BASE_UNIT_DATA={BASE_UNIT_DATA}
@@ -717,14 +715,6 @@ export default function Combat({
               unitTypes={unitTypes}
             />
           )}
-          {phase === Phases.Combat && (
-            <CombatCardTemplate
-              armyStyle="friendly"
-              unit={combatUnits[friendlyIndex]}
-              subphase={subPhase}
-            />
-          )}
-
           {phase === Phases.PreCombat && (
             <PreCombatCardTemplate
               BASE_UNIT_DATA={BASE_UNIT_DATA}
@@ -737,6 +727,13 @@ export default function Combat({
           )}
           {phase === Phases.Combat && (
             <CombatCardTemplate
+              armyStyle="friendly"
+              unit={combatUnits[friendlyIndex]}
+              subphase={subPhase}
+            />
+          )}
+          {phase === Phases.Combat && (
+            <CombatCardTemplate
               armyStyle="enemy"
               unit={combatEnemyUnits[enemyIndex]}
               subphase={subPhase}
@@ -745,12 +742,14 @@ export default function Combat({
         </div>
         {/* Log */}
 
-        <div className="h-full w-full self-center justify-self-center overflow-y-auto p-4 md:row-start-3">
-          <CombatLog combatEvents={combatEvents} townName={townName} />
-        </div>
+        {phase !== Phases.PostCombat && (
+          <div className="row-start-3 h-full w-full self-center justify-self-center overflow-y-auto p-4">
+            <CombatLog combatEvents={combatEvents} townName={townName} />
+          </div>
+        )}
         {/* Button */}
 
-        <div className="h-full w-full p-4 md:row-start-4">
+        <div className="row-start-4 h-full w-full p-4">
           {phase === Phases.PreCombat && (
             <CombatButton
               buttonText="Start"

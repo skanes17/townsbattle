@@ -17,7 +17,7 @@ export default function CardBgWithImage({
 
   let dimensions =
     cardStyle == "combat"
-      ? `sm:w-24 md:w-28 lg:w-44 xl:w-56  h-full`
+      ? `w-14 sm:w-24 md:w-28 lg:w-44 xl:w-56 h-full`
       : `h-28 w-32 sm:h-52 sm:w-52 `;
 
   let saturate;

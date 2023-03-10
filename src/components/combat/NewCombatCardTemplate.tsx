@@ -38,7 +38,7 @@ export default function CombatCardTemplate({
   return (
     <div
       className={`${fightAnimation ?? ``} ${borderColor}
-      ${shadowColor} grid grid-rows-[1fr_3fr_1.5fr] place-items-center justify-center place-self-center overflow-x-hidden rounded-md border-4 bg-white/5 p-2 align-middle text-xs text-white shadow-md sm:h-1/2 sm:w-28 sm:text-sm md:h-3/5 md:w-[8.5rem] lg:h-4/5 lg:w-48 lg:text-3xl xl:h-full xl:w-60 xl:text-4xl`}
+      ${shadowColor} grid w-16 grid-rows-[1fr_3fr_1.5fr] place-items-center justify-center place-self-center overflow-x-hidden rounded-md border-4 bg-white/5 p-0 align-middle text-[0.66rem] text-white shadow-md sm:h-1/2 sm:w-28 sm:p-2 sm:text-sm md:h-3/5 md:w-[8.5rem] lg:h-4/5 lg:w-48 lg:text-3xl xl:h-full xl:w-60 xl:text-4xl`}
     >
       <CombatCardHeader unit={unit} />
       <CardBgWithImage
