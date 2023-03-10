@@ -57,10 +57,9 @@ import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
 import { NavButtons, NavButtonType } from "../types/NavButtons";
 import ArmyGrid from "./planning/ArmyGrid";
-import { PostCombatUnitsStatBox } from "./combat";
+import { Combat, PostCombatUnitsStatBox } from "./combat";
 import DashboardImageAndCount from "./planning/DashboardImageAndCount";
 import UnitCountsBox from "./planning/UnitCountsBox";
-import Combat from "./combat/NewCombat";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 

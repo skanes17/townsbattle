@@ -8,15 +8,9 @@ import {
 } from "../../../types";
 import { cloneBasicObjectWithJSON } from "../../../utils";
 import { AddRemoveButton } from "../../buttons";
-import CardHeader from "../CardHeader";
 import CardImageHeaderDescriptionContainer from "../CardImageHeaderDescriptionContainer";
-import CardImageAndDescriptionContainer from "../CardImageHeaderDescriptionContainer";
-import CardImage from "../CardImageHeaderDescriptionContainer";
-import CardSymbol from "../CardSymbol";
 import CardTemplate from "../CardTemplate";
-
 import WorkerAssignCollect from "./WorkerAssignCollect";
-import WorkerCardDescription from "./WorkerCardDescription";
 
 interface WorkerCardProps {
   resources: Resources;

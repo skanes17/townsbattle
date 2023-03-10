@@ -1,6 +1,6 @@
 import BldgCardDescription from "./BldgCardDescription";
 import BldgCardFooter from "./BldgCardFooter";
-import NewCardHeader from "./NewCardHeader";
+import NewCardHeader from "./CardHeader";
 import BldgCardImage from "./BldgCardImage";
 import BldgCardTemplate from "./BldgCardTemplate";
 import CardFooter from "./CardFooter";

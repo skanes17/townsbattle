@@ -26,8 +26,11 @@ import {
 import { cloneBasicObjectWithJSON, countUnits } from "../../utils";
 import { getSurvivingUnitIndexes } from "../../utils/getSurvivingUnitIndexes";
 import { AutoButton, CombatButton } from "../buttons";
-import { CombatCardTemplate, PreCombatCardTemplate } from "../cards";
-import { ArmyGrid, CombatLog, messages, PostCombatSummary } from "../combat";
+import {} from "../cards";
+import { CombatLog, messages, PostCombatSummary } from ".";
+import ArmyGrid from "../planning/ArmyGrid";
+import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
+import CombatCardTemplate from "../cards/CombatCardTemplate";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -669,30 +672,21 @@ export default function Combat({
     combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100;
 
   return (
-    <body className="grid auto-rows-min grid-cols-12 place-content-stretch gap-3 p-4 md:gap-4 lg:gap-5 xl:gap-8">
-      {/* ArmyGrid & CombatLog are common components to all phases */}
-      {/* TODO: Reduce opacity of army grids when combat is over, put a green outline for winner, red for loser? */}
-      <ArmyGrid
-        color={friendlyColor}
-        phase={phase}
-        army={combatUnits}
-        selectedUnit={combatUnits[friendlyIndex]}
-        startColumn="1"
-      />
-      <CombatLog combatEvents={combatEvents} townName={townName} />
-      <ArmyGrid
-        color={enemyColor}
-        phase={phase}
-        army={combatEnemyUnits}
-        selectedUnit={combatEnemyUnits[enemyIndex]}
-        startColumn="8"
-      />
-      {/* TODO: Replace this points placeholder with a call to a proper state variable; could increment the existing points by the final tally */}
-      <div>Points: {points}</div>
-
-      {phase === Phases.PostCombat ? (
-        <>
-          <div className="center col-span-12 col-start-1 row-start-4 w-5/6 self-center justify-self-center sm:row-start-3 sm:mt-2 md:mt-0">
+    /* whole screen */
+    <div className="grid h-screen max-h-screen grid-cols-[2.5fr_4fr_2.5fr] grid-rows-[9fr_1fr] p-2 text-xs transition-transform ease-in-out sm:text-base lg:text-lg xl:text-xl">
+      <div className="col-start-1 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5">
+        <ArmyGrid
+          gridStyle="combat"
+          armyStyle="friendly"
+          phase={phase}
+          army={combatUnits}
+          selectedUnit={combatUnits[friendlyIndex]}
+        />
+      </div>
+      <div className="col-start-1 row-start-2">{/* Empty Cell */}</div>
+      <div className="col-start-2 row-span-2 row-start-1 grid h-full w-full grid-cols-[1fr] grid-rows-[1fr_4.5fr_2.5fr_1fr]">
+        {phase === Phases.PostCombat && (
+          <div className="row-span-3 row-start-1 grid h-full w-full p-4">
             <PostCombatSummary
               BASE_UNIT_DATA={BASE_UNIT_DATA}
               buildings={buildings}
@@ -701,119 +695,114 @@ export default function Combat({
               enemyUnits={combatEnemyUnits}
             />
           </div>
-          {/* FIXME: Should really just call button once!! */}
-          <div className="col-span-12 flex items-center justify-end">
-            {buildings["townCenter"].constructed ? (
-              <button
-                className="text-md rounded border border-white/40 bg-blue-600 p-2 font-bold text-white duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl 
-                   xl:text-4xl"
-                onClick={() => combatMegaFunction()}
-              >
-                Return to Planning
-              </button>
-            ) : (
-              <Link
-                className="text-md rounded border border-white/40 bg-blue-600 p-2 font-bold text-white duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl 
-          xl:text-4xl"
-                to="/"
-              >
-                End Game
-              </Link>
-            )}
-          </div>
-        </>
-      ) : (
-        <div className="card col-span-5 col-start-1 row-start-4 mr-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-end md:mt-0">
+        )}
+
+        {phase === Phases.PreCombat ||
+          (phase === Phases.Combat && (
+            <div className="row-start-1 self-center justify-self-center">
+              {/* Taunts, etc */}
+            </div>
+          ))}
+        {/* cards */}
+        <div className="row-span-1 row-start-2 grid h-full grid-cols-[1fr_1fr] grid-rows-[1fr] place-content-between overflow-y-auto p-0 sm:p-3">
           {phase === Phases.PreCombat && (
             <PreCombatCardTemplate
               BASE_UNIT_DATA={BASE_UNIT_DATA}
-              color={friendlyColor}
+              armyStyle="friendly"
               headerText="Your Army"
               army={combatUnits}
               unitCounts={combatUnitCounts}
-              unlockedUnitTypes={unlockedUnitTypes}
+              unitTypes={unitTypes}
+            />
+          )}
+          {phase === Phases.PreCombat && (
+            <PreCombatCardTemplate
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
+              armyStyle="enemy"
+              headerText="Enemy Army"
+              army={combatEnemyUnits}
+              unitCounts={combatEnemyUnitCounts}
+              unitTypes={unitTypes}
             />
           )}
           {phase === Phases.Combat && (
             <CombatCardTemplate
-              color={friendlyColor}
+              armyStyle="friendly"
               unit={combatUnits[friendlyIndex]}
               subphase={subPhase}
             />
           )}
-        </div>
-      )}
-
-      {(phase === Phases.PreCombat || phase === Phases.Combat) && (
-        <div className="col-span-2 col-start-6 row-start-4 grid auto-rows-min place-content-center gap-2 sm:row-start-3 sm:mt-2 md:mt-0">
-          {/* {phase === Phases.Combat && (
-            // TODO: Implement a system like this -- Maybe take up 4 columns, pops up as overlap, then fades?
-            <div className="mx-auto max-h-24 overflow-y-auto rounded-bl-md rounded-tr-md border border-white/25 p-2 text-center text-xs sm:max-h-full sm:text-sm md:text-base lg:text-lg xl:text-xl">
-              <p>
-                Random taunts when units battle each other, pop up during fight
-                then fade.
-              </p>
-            </div>
-          )} */}
-
-          <div className="flex items-end justify-center p-4 pb-0">
-            {phase === Phases.PreCombat && (
-              <CombatButton
-                buttonText="Start"
-                onClick={() => combatMegaFunction()}
-              />
-            )}
-            {/* FIXME: Must be a cleaner way?? */}
-            {phase === Phases.Combat && subPhase === SubPhases.Fight ? (
-              <CombatButton
-                buttonText="Fight!"
-                onClick={() => combatMegaFunction()}
-              />
-            ) : (
-              phase === Phases.Combat &&
-              subPhase === SubPhases.VictoryCheck && (
-                /* FIXME: Make name depend on state of army (select, summary, etc) */
-                <CombatButton
-                  buttonText={
-                    survivingFriendlyUnitIndexes.length === 0 ||
-                    survivingEnemyUnitIndexes.length === 0
-                      ? "Summary"
-                      : "New Selection"
-                  }
-                  onClick={() => combatMegaFunction()}
-                />
-              )
-            )}
-          </div>
-          {phase === Phases.Combat && (
-            <div className="flex items-start justify-center p-4 pt-0">
-              <AutoButton buttonText="Auto" onClick={() => autoBattler()} />
-            </div>
-          )}
-        </div>
-      )}
-
-      {phase !== Phases.PostCombat && (
-        <div className="card col-span-5 col-start-8 row-start-4 ml-4 w-4/5 max-w-xs self-center justify-self-center sm:row-start-3 sm:mt-2 sm:justify-self-start md:mt-0">
-          {phase === Phases.PreCombat && (
-            <PreCombatCardTemplate
-              color={enemyColor}
-              headerText="Enemy Army"
-              BASE_UNIT_DATA={BASE_UNIT_DATA}
-              army={combatEnemyUnits}
-              unitCounts={combatEnemyUnitCounts}
-              unlockedUnitTypes={unlockedUnitTypes}
-            />
-          )}
           {phase === Phases.Combat && (
             <CombatCardTemplate
-              color={enemyColor}
+              armyStyle="enemy"
               unit={combatEnemyUnits[enemyIndex]}
               subphase={subPhase}
             />
           )}
         </div>
-      )}
-    </body>
+        {/* Log */}
+
+        {phase !== Phases.PostCombat && (
+          <div className="row-start-3 h-full w-full self-center justify-self-center overflow-y-auto p-4">
+            <CombatLog combatEvents={combatEvents} townName={townName} />
+          </div>
+        )}
+        {/* Button */}
+
+        <div className="row-start-4 h-full w-full p-4">
+          {phase === Phases.PreCombat && (
+            <CombatButton
+              buttonText="Start"
+              onClick={() => combatMegaFunction()}
+            />
+          )}
+          {phase === Phases.Combat && subPhase === SubPhases.Fight ? (
+            <CombatButton
+              buttonText="Fight!"
+              onClick={() => combatMegaFunction()}
+            />
+          ) : (
+            phase === Phases.Combat &&
+            subPhase === SubPhases.VictoryCheck && (
+              /* FIXME: Make name depend on state of army (select, summary, etc) */
+              <CombatButton
+                buttonText={
+                  survivingFriendlyUnitIndexes.length === 0 ||
+                  survivingEnemyUnitIndexes.length === 0
+                    ? "Summary"
+                    : "New Selection"
+                }
+                onClick={() => combatMegaFunction()}
+              />
+            )
+          )}
+        </div>
+      </div>
+      <div className="col-start-3 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-red-900/50 bg-red-500/5">
+        <ArmyGrid
+          gridStyle="combat"
+          armyStyle="enemy"
+          phase={phase}
+          army={combatEnemyUnits}
+          selectedUnit={combatEnemyUnits[enemyIndex]}
+        />
+      </div>
+      <div className="col-start-3 row-start-2 p-4">
+        {phase === Phases.PostCombat &&
+          (buildings["townCenter"].constructed ? (
+            <CombatButton
+              buttonText="Return to Planning"
+              onClick={() => combatMegaFunction()}
+            />
+          ) : (
+            <Link
+              className="text-md h-full w-full rounded bg-red-600 font-bold text-white shadow-md shadow-red-600/50 duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+              to="/"
+            >
+              End Game
+            </Link>
+          ))}
+      </div>
+    </div>
   );
 }

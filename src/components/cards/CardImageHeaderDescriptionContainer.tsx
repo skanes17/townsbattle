@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { BaseResourceType, Resources } from "../../types";
 import CardBgWithImage from "./CardBgWithImage";
-import NewCardHeader from "./NewCardHeader";
+import NewCardHeader from "./CardHeader";
 import CardHoverText from "./CardHoverText";
 
 interface CardImageHeaderDescriptionContainerProps {

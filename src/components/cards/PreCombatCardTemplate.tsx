@@ -3,29 +3,29 @@ import { enemyColor, friendlyColor } from "../../gameData";
 import { ArmyColors, BaseUnit, Unit, UnitCounts, UnitType } from "../../types";
 
 interface PreCombatCardTemplateProps {
-  color: ArmyColors;
+  armyStyle: "friendly" | "enemy";
   headerText: "Your Army" | "Enemy Army";
   BASE_UNIT_DATA: BaseUnit;
   army: Unit[];
   unitCounts: UnitCounts;
-  unlockedUnitTypes: (UnitType | undefined)[];
+  unitTypes: UnitType[];
 }
 
 export default function PreCombatCardTemplate({
-  color,
+  armyStyle,
   headerText,
   BASE_UNIT_DATA,
   army,
   unitCounts,
-  unlockedUnitTypes,
+  unitTypes,
 }: PreCombatCardTemplateProps) {
-  let borderColor, shadowColor;
-  switch (color) {
-    case friendlyColor:
+  let borderColor, shadowColor, placeSelfStartOrEnd;
+  switch (armyStyle) {
+    case "friendly":
       borderColor = "border-indigo-900";
       shadowColor = "shadow-indigo-500/50";
       break;
-    case enemyColor:
+    case "enemy":
       borderColor = "border-red-900";
       shadowColor = "shadow-red-500/50";
       break;
@@ -33,26 +33,29 @@ export default function PreCombatCardTemplate({
 
   return (
     <div
-      className={`grid h-full w-full auto-rows-auto grid-cols-1 place-items-center items-center gap-1 overflow-y-auto overflow-x-hidden rounded-md border-4 ${borderColor} bg-white/5 p-2 text-xs text-white shadow-md ${shadowColor} sm:text-xl md:text-2xl lg:text-3xl`}
+      className={`flex h-full w-16 flex-col items-center justify-center place-self-center overflow-y-auto overflow-x-hidden align-middle sm:h-1/2 sm:w-28 md:h-3/5 md:w-[8.5rem] lg:h-4/5 lg:w-48 xl:h-full xl:w-60 ${borderColor} rounded-lg border-4 bg-white/5 p-0 text-white shadow-md sm:p-2 ${shadowColor} text-xs sm:text-sm lg:text-3xl xl:text-4xl `}
     >
-      <p className="text-sm font-bold sm:text-2xl md:text-3xl lg:text-4xl">
-        {headerText}
-      </p>
-      {/* FIXME: Incorporate DRY for unlocked unit types */}
-      {/* {Object.keys(unlockedUnitTypes).map((unitType) => {
-        return (
-          <p key={unitType} className="pl-2">
-            {BASE_UNIT_DATA[unitType].symbol} {unitCounts[unitType]}{" "}
-            {unitType}
-          </p>
-        );
-      })} */}
-      <p className="pl-2">⚔️ {unitCounts.fighter} fighter</p>
-      <p className="pl-2">🏹 {unitCounts.archer} archer</p>
-      <p className="pl-2">🛡️ {unitCounts.knight} knight</p>
-      <p className="pl-2 opacity-50">
-        ({unitCounts.fighter + unitCounts.archer + unitCounts.knight} total)
-      </p>
+      <p className="font-bold">{headerText}</p>
+      {/* // Extract into component with Army Grid in Planning */}
+      <div className="grid auto-rows-min">
+        {unitTypes.map((unitType) => {
+          const bg = BASE_UNIT_DATA[unitType as UnitType].bgImageSm ?? ``;
+          // only show unit types that were defeated
+          return (
+            unitCounts[unitType as UnitType as UnitType] > 0 && (
+              <div className="mt-1 inline-flex flex-wrap capitalize sm:flex-nowrap">
+                <div
+                  className={`group mr-2 h-7 w-7 rounded-lg border border-zinc-700 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
+                ></div>
+                <span>
+                  {unitCounts[unitType as UnitType]} {unitType}
+                  {unitCounts[unitType as UnitType] > 1 && `s`}
+                </span>
+              </div>
+            )
+          );
+        })}
+      </div>
     </div>
   );
 }
