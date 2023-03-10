@@ -748,8 +748,9 @@ export default function Combat({
           </div>
         )}
         {/* Button */}
-
-        <div className="row-start-4 h-full w-full p-4">
+      </div>
+      <div className="col-start-2 row-start-2 h-full w-full self-center justify-self-center p-3">
+        <div className="row-start-4 h-full w-full">
           {phase === Phases.PreCombat && (
             <CombatButton
               buttonText="Start"
@@ -787,7 +788,7 @@ export default function Combat({
           selectedUnit={combatEnemyUnits[enemyIndex]}
         />
       </div>
-      <div className="col-start-3 row-start-2 p-4">
+      <div className="col-start-3 row-start-2 h-full w-full self-center justify-self-center p-3">
         {phase === Phases.PostCombat &&
           (buildings["townCenter"].constructed ? (
             <CombatButton
@@ -796,10 +797,10 @@ export default function Combat({
             />
           ) : (
             <Link
-              className="text-md h-full w-full rounded bg-red-600 font-bold text-white shadow-md shadow-red-600/50 duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+              className="text-md flex h-full w-full items-center justify-center rounded bg-red-600 text-center font-bold text-white shadow-md shadow-red-600/50 duration-75 hover:bg-red-800 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl"
               to="/"
             >
-              End Game
+              Return to Start Menu
             </Link>
           ))}
       </div>
