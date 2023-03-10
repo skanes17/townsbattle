@@ -69,7 +69,7 @@ export default function WorkerCard({
 
   return (
     <>
-      <CardTemplate color="orange">
+      <CardTemplate color="resources">
         <CardImageHeaderDescriptionContainer
           saturation="oversaturated"
           cardName={resources[resourceType].name}

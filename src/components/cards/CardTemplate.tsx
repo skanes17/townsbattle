@@ -29,10 +29,10 @@ export default function CardTemplate({ color, children }: CardTemplateProps) {
       bgColor = "bg-amber-800/5";
       break;
     case "green":
-      bgColor = "bg-green-800/5";
+      bgColor = "bg-gradient-to-r from-[#05392C]/70 to-[#02130F]/70";
       break;
     case "resources":
-      bgColor = "bg-resourcesColor";
+      bgColor = "bg-gradient-to-r from-[#431E0F]/70 to-[#210F08]/70";
       break;
     case "buildings":
       bgColor = "bg-buildingsColor";
