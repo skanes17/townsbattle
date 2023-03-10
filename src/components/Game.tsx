@@ -72,7 +72,7 @@ import UnitCountsBox from "./planning/UnitCountsBox";
 // Composition of army could be displayed to UI, for example 20% fighter 30% archer 50% knight
 
 export default function Game(props: GameProps) {
-  const [devTools, setDevTools] = useState(true);
+  const [devTools, setDevTools] = useState(false);
 
   // pull startData from linked Play component
   const startData = useLocation();
@@ -325,7 +325,7 @@ export default function Game(props: GameProps) {
 
   const addGoldToScore = () => {
     // score saved to constant in case resources state object is updated before the score state is updated
-    const scoreFromGold = resources["gold"].workers * 10;
+    const scoreFromGold = resources["gold"].workers * 1000;
     setScore((prevScore) => prevScore + scoreFromGold);
   };
 

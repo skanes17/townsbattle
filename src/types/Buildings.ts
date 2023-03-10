@@ -21,6 +21,7 @@ export interface Building {
   currentHealth: number;
   damage: number;
   resourceCosts: ResourceCosts;
+  // (workers + resources) * 10
   buildScore: number;
   unlockedUnit?: UnitType;
   unlockedResource?: BaseResourceType;
