@@ -39,9 +39,9 @@ export default function PostCombatSummary({
   );
 
   return (
-    <div className="aspect-[4/1] overflow-y-auto overflow-x-hidden rounded-md border-4 border-gray-500 bg-white/5 p-2 text-xs capitalize text-white shadow-md shadow-gray-500/50 sm:text-sm md:text-base lg:gap-1 lg:text-lg xl:text-2xl">
-      <p className="pb-2 text-center font-bold">Battle Summary</p>
-      <div className="grid auto-cols-auto grid-flow-col">
+    <div className="relative h-full w-full self-center overflow-y-auto overflow-x-hidden rounded-md bg-gray-500/10 p-4 capitalize">
+      <p className="sticky top-0 pb-2 text-center font-bold">Battle Summary</p>
+      <p className="grid grid-rows-[1fr_1fr] gap-x-2 gap-y-6 lg:grid-cols-[1fr_1fr] xl:grid-cols-[1fr_1fr_1fr]">
         <PostCombatUnitsStatBox
           headerText="Enemies Defeated"
           headerTextColor="green"
@@ -66,11 +66,13 @@ export default function PostCombatSummary({
           unitTypes={unitTypes}
         />
 
-        <PostCombatBldgStatBox
-          headerText="Buildings Damaged"
-          headerTextColor="blue"
-          buildings={buildings}
-        />
+        <div className="border-t border-white/25 lg:col-span-2 xl:col-span-3">
+          <PostCombatBldgStatBox
+            headerText="Buildings Damaged"
+            headerTextColor="blue"
+            buildings={buildings}
+          />
+        </div>
 
         {/* <div className="grid auto-rows-min">
           <p>
@@ -81,7 +83,7 @@ export default function PostCombatSummary({
           <p className="ml-2">Meal Hall</p>
           <p className="ml-2">Scouting Post</p>
         </div> */}
-      </div>
+      </p>
     </div>
   );
 }

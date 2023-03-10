@@ -673,8 +673,8 @@ export default function Combat({
 
   return (
     /* whole screen */
-    <div className="grid h-screen max-h-screen grid-cols-[2.5fr_4fr_2.5fr] grid-rows-[9fr_1fr]">
-      <div className="col-start-1 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5">
+    <div className="grid h-screen max-h-screen p-2 text-base transition-transform ease-in-out md:grid-cols-[2.5fr_4fr_2.5fr] md:grid-rows-[9fr_1fr] lg:text-lg xl:text-xl">
+      <div className="h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5 md:col-start-1 md:row-start-1">
         <ArmyGrid
           gridStyle="combat"
           armyStyle="friendly"
@@ -683,13 +683,28 @@ export default function Combat({
           selectedUnit={combatUnits[friendlyIndex]}
         />
       </div>
-      <div className="col-start-1 row-start-2">{/* Empty Cell */}</div>
-      <div className="place- col-start-2 row-span-2 row-start-1 grid h-full w-full grid-cols-[1fr] grid-rows-[1fr_4.5fr_2.5fr_1fr]">
-        <div className="row-start-1 self-center justify-self-center">
-          {/* Taunts, etc */}
-        </div>
+      <div className="md:col-start-1 md:row-start-2">{/* Empty Cell */}</div>
+      <div className="grid h-full w-full md:col-start-2 md:row-span-2 md:row-start-1 md:grid-cols-[1fr] md:grid-rows-[1fr_4.5fr_2.5fr_1fr]">
+        {phase === Phases.PostCombat && (
+          <div className="row-span-2 row-start-1 grid h-full w-full p-4">
+            <PostCombatSummary
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
+              buildings={buildings}
+              unitTypes={unitTypes}
+              friendlyUnits={combatUnits}
+              enemyUnits={combatEnemyUnits}
+            />
+          </div>
+        )}
+
+        {phase === Phases.PreCombat ||
+          (phase === Phases.Combat && (
+            <div className="self-center justify-self-center md:row-start-1">
+              {/* Taunts, etc */}
+            </div>
+          ))}
         {/* cards */}
-        <div className="row-span-1 row-start-2 grid h-full grid-cols-[1fr_1fr] grid-rows-[1fr] place-content-between overflow-y-auto p-3">
+        <div className="grid h-full place-content-between overflow-y-auto p-3 md:row-span-1 md:row-start-2 md:grid-cols-[1fr_1fr] md:grid-rows-[1fr]">
           {phase === Phases.PreCombat && (
             <PreCombatCardTemplate
               BASE_UNIT_DATA={BASE_UNIT_DATA}
@@ -726,20 +741,23 @@ export default function Combat({
             />
           )}
         </div>
-        <div className="row-start-3 h-full w-full self-center justify-self-center overflow-y-auto p-4">
+        {/* Log */}
+
+        <div className="h-full w-full self-center justify-self-center overflow-y-auto p-4 md:row-start-3">
           <CombatLog combatEvents={combatEvents} townName={townName} />
         </div>
-        <div className="row-start-4 h-full w-full p-4">
+        {/* Button */}
+
+        <div className="h-full w-full p-4 md:row-start-4">
           {phase === Phases.PreCombat && (
             <CombatButton
               buttonText="Start"
               onClick={() => combatMegaFunction()}
             />
           )}
-          {/* FIXME: Must be a cleaner way?? */}
           {phase === Phases.Combat && subPhase === SubPhases.Fight ? (
             <CombatButton
-              buttonText="Fight"
+              buttonText="Fight!"
               onClick={() => combatMegaFunction()}
             />
           ) : (
@@ -751,15 +769,30 @@ export default function Combat({
                   survivingFriendlyUnitIndexes.length === 0 ||
                   survivingEnemyUnitIndexes.length === 0
                     ? "Summary"
-                    : "Again!"
+                    : "New Selection"
                 }
                 onClick={() => combatMegaFunction()}
               />
             )
           )}
+
+          {phase === Phases.PostCombat &&
+            (buildings["townCenter"].constructed ? (
+              <CombatButton
+                buttonText="Return to Planning"
+                onClick={() => combatMegaFunction()}
+              />
+            ) : (
+              <Link
+                className="text-md h-full w-full rounded bg-red-600 font-bold text-white shadow-md shadow-red-600/50 duration-75 hover:bg-blue-800 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                to="/"
+              >
+                End Game
+              </Link>
+            ))}
         </div>
       </div>
-      <div className="col-start-3 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-red-900/50 bg-red-500/5">
+      <div className="h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-red-900/50 bg-red-500/5 md:col-start-3 md:row-start-1">
         <ArmyGrid
           gridStyle="combat"
           armyStyle="enemy"
@@ -771,48 +804,3 @@ export default function Combat({
     </div>
   );
 }
-
-/* .container {  display: grid;
-  grid-template-columns: 2.5fr 4fr 2.5fr;
-  grid-template-rows: 9fr 1fr;
-  grid-auto-rows: 1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    ". Card-Setup ."
-    ". . .";
-}
-
-.Card-Setup {  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 4fr 2fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "."
-    "Units-Fight"
-    ".";
-  grid-area: Card-Setup;
-}
-
-.Units-Fight {  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "Friendly-Unit .";
-  justify-self: stretch;
-  grid-area: Units-Fight;
-}
-
-.Friendly-Unit {  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    ".";
-  grid-area: Friendly-Unit;
-}
- */

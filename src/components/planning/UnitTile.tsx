@@ -52,21 +52,24 @@ export default function UnitTile({
   } else healthWidth = "w-[100%]";
 
   if (percentHealth <= 25) {
-    healthBarColor = "bg-red-500";
-    hoverBorder = "hover:border-red-500/100";
+    healthBarColor = "bg-red-700";
+    hoverBorder =
+      "hover:border-red-800/100 hover:shadow hover:shadow-red-500/75";
   } else if (percentHealth <= 50) {
     healthBarColor = "bg-red-400";
-    hoverBorder = "hover:border-red-400/100";
+    hoverBorder =
+      "hover:border-red-500/100 hover:shadow hover:shadow-red-500/75";
   } else if (percentHealth <= 75) {
     healthBarColor = "bg-orange-400";
-    hoverBorder = "hover:border-orange-400/100";
+    hoverBorder =
+      "hover:border-orange-500/100 hover:shadow hover:shadow-orange-500/75";
   } else {
     healthBarColor = "bg-green-400";
-    hoverBorder = "hover:border-green-400/100";
+    hoverBorder =
+      "hover:border-green-500/100 hover:shadow hover:shadow-green-500/75";
   }
 
-  let healthBarBackgroundColor =
-    unit.currentHealth > 0 ? `bg-black/80` : `bg-red-500/40`;
+  let healthBarBackgroundColor = /* unit.currentHealth > 0 ?  */ `bg-black/80`; /*  : `bg-red-500/40` */
 
   if (phase === Phases.Combat && unit === selectedUnit) {
     borderWidth = "border-2";
@@ -90,29 +93,28 @@ export default function UnitTile({
 
   return (
     <>
-      {/* TODO: Replace with proper images */}
       <div
-        className={`${bg} group  relative h-20 w-[3.33rem] snap-center justify-items-center rounded-md bg-cover bg-center sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
+        className={`${bg} group relative h-20 w-[3.33rem] snap-y snap-center justify-items-center rounded-md bg-cover bg-center saturate-125 sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >
         <div
-          className={`absolute left-0 right-0 bottom-[2.5%] mx-auto h-2 w-[95%] rounded-sm ${healthBarBackgroundColor} backdrop-blur-[1px] md:h-3`}
+          className={`absolute left-0 right-0 bottom-[2.5%] mx-auto h-2 w-[95%] rounded-sm ${healthBarBackgroundColor} backdrop-blur-[1px] transition-all duration-500 ease-out md:h-3`}
         >
           <div
             className={`h-3 ${healthWidth} ${healthBarColor} rounded-sm transition-all duration-500 ease-out`}
           ></div>
         </div>
         {/* Popup text */}
-        <span className="pointer-events-none fixed z-50 w-1/4 -translate-x-1/2 whitespace-normal rounded-lg bg-black/80 p-2 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:w-1/6 sm:text-base md:w-[10%]">
+        <span className="fixed bottom-[2.5%] max-h-full w-[150%] -translate-x-1/2 overflow-y-auto overflow-x-hidden rounded-lg bg-black/80 p-2 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:text-base">
           {/* TODO: Add randomly generated name */}
           <p>
             {unit.name}
             {unit.id}
           </p>
           <p>🗡️ {unit.attack}</p>
+          {unit.armor > 0 ? <p>🛡️ {unit.armor}</p> : null}
           <p>
             ❤️ {unit.currentHealth}/{unit.maxHealth}
           </p>
-          {unit.armor > 0 ? <p>🛡️ {unit.armor}</p> : null}
         </span>
       </div>
     </>

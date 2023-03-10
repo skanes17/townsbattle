@@ -41,9 +41,9 @@ export default function PostCombatUnitsStatBox({
   return (
     <>
       <div className="grid auto-rows-min">
-        <p>
-          <span className={`${textColor}`}>{headerText}</span>:{" "}
-          {unitCounts.total ?? totalUnitCount}
+        <p className={`${textColor}`}>{headerText}</p>
+        <p className="ml-2 font-semibold">
+          {unitCounts.total ?? totalUnitCount} total
         </p>
         {/* BODY */}
 

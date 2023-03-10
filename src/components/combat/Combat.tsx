@@ -766,7 +766,7 @@ export default function Combat({
             {/* FIXME: Must be a cleaner way?? */}
             {phase === Phases.Combat && subPhase === SubPhases.Fight ? (
               <CombatButton
-                buttonText="Fight"
+                buttonText="Fight!"
                 onClick={() => combatMegaFunction()}
               />
             ) : (
@@ -778,7 +778,7 @@ export default function Combat({
                     survivingFriendlyUnitIndexes.length === 0 ||
                     survivingEnemyUnitIndexes.length === 0
                       ? "Summary"
-                      : "Again!"
+                      : "New Selection"
                   }
                   onClick={() => combatMegaFunction()}
                 />

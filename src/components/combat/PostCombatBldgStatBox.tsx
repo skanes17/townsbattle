@@ -51,7 +51,7 @@ export default function PostCombatBldgStatBox({
                 {buildings[buildingType].name} ({buildings[buildingType].damage}{" "}
                 dmg)
                 {!buildings[buildingType].constructed ? (
-                  <span className="text-red-500"> - Destroyed!</span>
+                  <p className="ml-2 font-semibold text-red-400">Destroyed!</p>
                 ) : null}
               </p>
             )
