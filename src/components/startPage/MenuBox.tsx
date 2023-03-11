@@ -15,8 +15,8 @@ export default function MenuBox({ icon, headerText, children }: MenuBoxProps) {
     <div className="fixed inset-0 h-full w-full bg-black opacity-40"></div>
     */}
       <div className="flex min-h-screen items-center px-4 py-8">
-        <div className="relative mx-auto max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-md bg-white p-4 shadow-lg sm:h-auto">
-          <div className="mt-3 max-h-[90%] p-2 sm:flex">
+        <div className="relative mx-auto max-h-[70vh] w-full max-w-lg overflow-y-auto rounded-md bg-white p-4 shadow-lg sm:h-auto">
+          <div className="mt-3 max-h-[80%] p-2 sm:flex sm:max-h-[90%]">
             <div className="mx-auto flex h-12 w-12 flex-none items-center justify-center rounded-full bg-blue-100">
               {icon}
             </div>
