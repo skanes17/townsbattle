@@ -58,22 +58,44 @@ export default function TrainingCardContainer({
           friendly={true}
         />
       ))}
-      {lockedUnitTypes.map((unitType) => (
-        <TrainUnitCard
-          lockedOrUnlockedUnits="locked"
-          unitType={unitType as UnitType}
-          resources={resources}
-          resourcePool={resourcePool}
-          setResourcePool={setResourcePool}
-          unitsInTraining={unitsInTraining}
-          BASE_UNIT_DATA={BASE_UNIT_DATA}
-          addTrainingUnit={addTrainingUnit}
-          maxTrainingUnits={maxTrainingUnits}
-          removeTrainingUnit={removeTrainingUnit}
-          removeAllTrainingUnits={removeAllTrainingUnits}
-          friendly={true}
-        />
-      ))}
+
+      {lockedUnitTypes.map((unitType) =>
+        buildings["crystalQuarry"].constructed ? (
+          /* If the crystal quarry unlocked? Show all the units */
+          <TrainUnitCard
+            lockedOrUnlockedUnits="locked"
+            unitType={unitType as UnitType}
+            resources={resources}
+            resourcePool={resourcePool}
+            setResourcePool={setResourcePool}
+            unitsInTraining={unitsInTraining}
+            BASE_UNIT_DATA={BASE_UNIT_DATA}
+            addTrainingUnit={addTrainingUnit}
+            maxTrainingUnits={maxTrainingUnits}
+            removeTrainingUnit={removeTrainingUnit}
+            removeAllTrainingUnits={removeAllTrainingUnits}
+            friendly={true}
+          />
+        ) : (
+          /* Crystal quarry NOT unlocked? Hide units requiring crystal */
+          !BASE_UNIT_DATA[unitType as UnitType].resourceCosts.crystal && (
+            <TrainUnitCard
+              lockedOrUnlockedUnits="locked"
+              unitType={unitType as UnitType}
+              resources={resources}
+              resourcePool={resourcePool}
+              setResourcePool={setResourcePool}
+              unitsInTraining={unitsInTraining}
+              BASE_UNIT_DATA={BASE_UNIT_DATA}
+              addTrainingUnit={addTrainingUnit}
+              maxTrainingUnits={maxTrainingUnits}
+              removeTrainingUnit={removeTrainingUnit}
+              removeAllTrainingUnits={removeAllTrainingUnits}
+              friendly={true}
+            />
+          )
+        )
+      )}
     </>
   );
 }
