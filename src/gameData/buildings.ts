@@ -145,7 +145,7 @@ export const buildingsData = {
     tier: 1,
     /* attackBonus: 0,
     healthBonus: 0, */
-    description: "Discover a new resource, and unlock new buildings!",
+    description: "Find a new resource! Unlock new buildings and units.",
     bgImage: "bg-crystal",
     bgImageSm: "bg-crystalSm",
     bgImageMd: "bg-crystalMd",

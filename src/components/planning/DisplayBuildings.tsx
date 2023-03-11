@@ -3,7 +3,7 @@ import { Buildings } from "../../types";
 import {
   BldgCardTemplate,
   BldgCardFooter,
-  NewCardHeader,
+  CardHeader,
   BldgCardDescription,
 } from "../cards";
 import CardHoverText from "../cards/CardHoverText";
@@ -24,7 +24,7 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
     <>
       {constructedBuildings.map((buildingType) => (
         <BldgCardTemplate bgImage={buildings[buildingType].bgImage}>
-          <NewCardHeader cardName={buildings[buildingType].name} />
+          <CardHeader cardName={buildings[buildingType].name} />
           <CardHoverText>{buildings[buildingType].description}</CardHoverText>
           <BldgCardFooter
             tier={buildings[buildingType].tier}

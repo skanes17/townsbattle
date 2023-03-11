@@ -40,6 +40,7 @@ export default function UnitCreation({
 
       {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
         <TrainUnitCard
+          lockedOrUnlockedUnits="unlocked"
           unitType={unitType as UnitType}
           resources={resources}
           resourcePool={resourcePool}

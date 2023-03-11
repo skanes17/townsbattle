@@ -9,11 +9,9 @@ import {
 } from "../../types/";
 import {
   CardShowCount,
-  CardSymbol,
   CardTemplate,
   TrainUnitCardHeader,
   CardCostsInfo,
-  NewCardHeader,
 } from "../cards";
 import { AddRemoveButton } from "../buttons";
 import { AddRemoveUnitFn, MaxTrainingUnitsFn } from "../../types";
@@ -27,6 +25,7 @@ import CardHoverText from "./CardHoverText";
 
 export interface TrainUnitCardProps {
   // TODO: Could use Unit["unitType"];
+  lockedOrUnlockedUnits: "locked" | "unlocked";
   unitType: UnitType;
   resources: Resources;
   resourcePool: ResourcePool;
@@ -41,6 +40,7 @@ export interface TrainUnitCardProps {
 }
 
 export default function TrainUnitCard({
+  lockedOrUnlockedUnits,
   unitType,
   resources,
   resourcePool,
@@ -53,6 +53,8 @@ export default function TrainUnitCard({
   removeAllTrainingUnits,
   friendly,
 }: TrainUnitCardProps) {
+  const lockedOrUnlocked = lockedOrUnlockedUnits;
+
   // get the resource costs for the given unit type
   const costsObject = BASE_UNIT_DATA[unitType].resourceCosts;
   const numberOfUnitsInTraining = unitsInTraining[unitType];
@@ -139,11 +141,17 @@ export default function TrainUnitCard({
   const redText = "text-red-600";
   const greenText = "text-green-500";
 
+  const blurLockedUnitInfo =
+    lockedOrUnlockedUnits === "locked" ? `blur-[1px]` : ``;
+  const preventPointerEventsWithLockedUnits =
+    lockedOrUnlockedUnits === "locked" ? `pointer-events-none` : ``;
+
   return (
-    <CardTemplate color="red">
+    <CardTemplate lockedOrUnlockedUnits={lockedOrUnlocked} color="green">
       <CardBgWithImage
         cardStyle="planning"
-        saturation={"oversaturated"}
+        lockedOrUnlockedUnits={lockedOrUnlocked}
+        saturation={lockedOrUnlocked === "locked" ? "quarter" : "oversaturated"}
         bgImage={BASE_UNIT_DATA[unitType].bgImage}
       >
         <TrainUnitCardHeader
@@ -151,22 +159,30 @@ export default function TrainUnitCard({
           attack={BASE_UNIT_DATA[unitType].attack}
           health={BASE_UNIT_DATA[unitType].maxHealth}
         ></TrainUnitCardHeader>
-        <CardHoverText>{BASE_UNIT_DATA[unitType].description}</CardHoverText>
+
+        {lockedOrUnlocked === "unlocked" && (
+          <CardHoverText lockedOrUnlockedUnits={lockedOrUnlockedUnits}>
+            {BASE_UNIT_DATA[unitType].description}
+          </CardHoverText>
+        )}
       </CardBgWithImage>
 
+      {/* different hoverText if the unit is locked */}
+      {lockedOrUnlocked === "locked" && (
+        <CardHoverText lockedOrUnlockedUnits={lockedOrUnlockedUnits}>
+          {BASE_UNIT_DATA[unitType].lockedText}
+        </CardHoverText>
+      )}
+
       <CardCostsInfo
+        lockedOrUnlockedUnits={lockedOrUnlockedUnits}
         resources={resources}
         resourcePool={resourcePool}
         costsObject={costsObject}
       />
-
-      {/* Could use this to display max trainable
-      <div className="justify-self-end">
-        Can afford: {maxTrainable > 0 ? maxTrainable : "0"}
-      </div>
-      */}
-
-      <div className="grid auto-cols-min grid-cols-6 gap-1 px-1 sm:grid-cols-5">
+      <div
+        className={`${blurLockedUnitInfo} ${preventPointerEventsWithLockedUnits} grid auto-cols-min grid-cols-6 gap-1 px-1 sm:grid-cols-5`}
+      >
         <div className="col-span-2 row-start-1 flex items-center justify-center sm:col-span-1 sm:col-start-2">
           <AddRemoveButton
             buttonType="remove"
@@ -202,6 +218,12 @@ export default function TrainUnitCard({
           </AddRemoveButton>
         </div>
       </div>
+
+      {/* Could use this to display max trainable
+      <div className="justify-self-end">
+        Can afford: {maxTrainable > 0 ? maxTrainable : "0"}
+      </div>
+      */}
     </CardTemplate>
   );
 }

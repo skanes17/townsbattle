@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 
 interface CardBgWithImageProps {
   cardStyle: "planning" | "combat";
+  lockedOrUnlockedUnits?: "locked" | "unlocked";
   saturation: "oversaturated" | "normal" | "half" | "quarter" | "zero";
   bgImage?: string;
   children?: ReactNode;
@@ -9,16 +10,20 @@ interface CardBgWithImageProps {
 
 export default function CardBgWithImage({
   cardStyle,
+  lockedOrUnlockedUnits,
   saturation,
   bgImage,
   children,
 }: CardBgWithImageProps) {
   const bg = bgImage;
 
-  let dimensions =
-    cardStyle == "combat"
+  const blurLockedUnitInfo =
+    lockedOrUnlockedUnits === "locked" ? `blur-sm` : ``;
+
+  const dimensions =
+    cardStyle === "combat"
       ? `w-14 sm:w-24 md:w-28 lg:w-44 xl:w-56 h-full`
-      : `h-28 w-32 sm:h-52 sm:w-52 `;
+      : `h-28 w-32 sm:h-52 sm:w-52`;
 
   let saturate;
   switch (saturation) {
@@ -43,7 +48,7 @@ export default function CardBgWithImage({
 
   return (
     <div
-      className={`${bg} ${dimensions} grid grid-rows-5 rounded-lg bg-cover bg-center bg-no-repeat ${saturate}`}
+      className={`${bg} ${dimensions} ${blurLockedUnitInfo} group grid grid-rows-5 rounded-lg bg-cover bg-center bg-no-repeat ${saturate}`}
     >
       {children}
     </div>

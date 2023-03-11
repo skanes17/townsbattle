@@ -21,6 +21,7 @@ export interface Unit {
   name: UnitName;
   symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣";
   description?: string;
+  lockedText: string;
   bgImage: string;
   bgImageSm: string;
   bgImageMd: string;

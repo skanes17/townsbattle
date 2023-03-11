@@ -200,6 +200,16 @@ export default function Game(props: GameProps) {
     // map out the associated unit types
     .map((building) => buildings[building].unlockedUnit);
 
+  const lockedUnitTypes: (UnitType | undefined)[] = Object.keys(buildings)
+    // filter by units set up to unlock a unit type but are not yet constructed
+    .filter(
+      (buildingType) =>
+        buildings[buildingType].unlockedUnit &&
+        !buildings[buildingType].constructed
+    )
+    // map out the associated unit types
+    .map((building) => buildings[building].unlockedUnit);
+
   const resourcesLockedToPlayer: (BaseResourceType | undefined)[] = Object.keys(
     buildings
   )
@@ -912,12 +922,12 @@ export default function Game(props: GameProps) {
               </GridCardContainer>
             )}
 
-            {/* TODO: Show all units to be built, but their art is blurred and it says "Need X to train this unit" */}
             {(activeNavButtons.planning.active ||
               activeNavButtons.training.active) && (
               <GridCardContainer headerText="Training">
                 <TrainingCardContainer
                   unlockedUnitTypes={unlockedUnitTypes}
+                  lockedUnitTypes={lockedUnitTypes}
                   buildings={buildings}
                   resources={resources}
                   resourcePool={resourcePool}
@@ -947,19 +957,38 @@ export default function Game(props: GameProps) {
             buildingsLeftToConstruct.length > 0 ? (
               <GridCardContainer headerText="Construct Buildings">
                 {/* TODO: Match component structure with other cards */}
-                {buildingsLeftToConstruct.map((buildingType) => (
-                  <ConstructBuilding
-                    key={buildingType}
-                    buildings={buildings}
-                    setBuildings={setBuildings}
-                    /* buildingCosts={buildingCosts} */
-                    buildingType={buildingType}
-                    resources={resources}
-                    setResources={setResources}
-                    resourcePool={resourcePool}
-                    setResourcePool={setResourcePool}
-                  />
-                ))}
+                {buildingsLeftToConstruct.map((buildingType) =>
+                  /* TODO: Make this more efficient/dynamic */
+                  //  if the crystal quarry is constructed, map out all the buildings
+                  buildings["crystalQuarry"].constructed ? (
+                    <ConstructBuilding
+                      key={buildingType}
+                      buildings={buildings}
+                      setBuildings={setBuildings}
+                      /* buildingCosts={buildingCosts} */
+                      buildingType={buildingType}
+                      resources={resources}
+                      setResources={setResources}
+                      resourcePool={resourcePool}
+                      setResourcePool={setResourcePool}
+                    />
+                  ) : (
+                    // if the quarry is NOT constructed, only map buildings that DO NOT need crystal as a resource
+                    !buildings[buildingType].resourceCosts.crystal && (
+                      <ConstructBuilding
+                        key={buildingType}
+                        buildings={buildings}
+                        setBuildings={setBuildings}
+                        /* buildingCosts={buildingCosts} */
+                        buildingType={buildingType}
+                        resources={resources}
+                        setResources={setResources}
+                        resourcePool={resourcePool}
+                        setResourcePool={setResourcePool}
+                      />
+                    )
+                  )
+                )}
               </GridCardContainer>
             ) : null}
 
@@ -1018,10 +1047,11 @@ export default function Game(props: GameProps) {
                   "relative mx-auto w-fit max-w-lg rounded-md border border-white bg-zinc-800 p-4 shadow-lg"
                 }
               >
+                {/*  TODO: Put back in if caused trouble
                 {unlockedUnitTypes.length > 0 ? (
                   <div className="flex items-center justify-center">
                     <TrainingCardContainer
-                      unlockedUnitTypes={unlockedUnitTypes}
+                      unitTypes={unitTypes}
                       buildings={buildings}
                       resources={resources}
                       resourcePool={resourcePool}
@@ -1035,6 +1065,7 @@ export default function Game(props: GameProps) {
                     />
                   </div>
                 ) : null}
+                 */}
               </div>
             </div>
           </div>
