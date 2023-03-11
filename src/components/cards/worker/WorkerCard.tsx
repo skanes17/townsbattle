@@ -43,8 +43,6 @@ export default function WorkerCard({
 
       setResourcePool(clonedResourcePool);
       setResources(clonedResources);
-    } else {
-      alert("You have no workers left!");
     }
   };
 

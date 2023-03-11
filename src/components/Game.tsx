@@ -657,11 +657,6 @@ export default function Game(props: GameProps) {
   };
 
   const endTurn = () => {
-    /*     if (resourcePool["workers"] > 0) {
-      alert("You have not assigned all workers!");
-      return;
-    } */
-
     if (turn === planningTurnToGenerateEnemies) {
       generateEnemyArmy(nextCombatTurn, myUnits, unlockedUnitTypes, unitTypes);
       alert(

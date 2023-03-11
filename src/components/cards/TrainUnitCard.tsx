@@ -60,10 +60,8 @@ export default function TrainUnitCard({
   const numberOfUnitsInTraining = unitsInTraining[unitType];
 
   const handleZeroClick = (unitType: UnitType, friendly: boolean) => {
-    if (numberOfUnitsInTraining === 0) {
-      alert("You aren't training any units!");
-      return;
-    }
+    if (numberOfUnitsInTraining === 0) return;
+
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
     updatedResourcePool(
       costsObject,
@@ -78,10 +76,7 @@ export default function TrainUnitCard({
 
   const handleMinusClick = (unitType: UnitType, friendly: boolean) => {
     /* TODO: Find more efficient approach than to consider units in training? */
-    if (numberOfUnitsInTraining === 0) {
-      alert("You aren't training any units!");
-      return;
-    }
+    if (numberOfUnitsInTraining === 0) return;
 
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
     updatedResourcePool(costsObject, clonedResourcePool, -1);
@@ -103,8 +98,6 @@ export default function TrainUnitCard({
       setResourcePool(clonedResourcePool);
       // updates the myTrainingUnits array as well
       addTrainingUnit(unitType, friendly);
-    } else {
-      alert("Not enough resources!");
     }
   };
 
@@ -127,10 +120,8 @@ export default function TrainUnitCard({
   const maxTrainable = Math.min(...minTrainableForEachCost);
 
   const handleMaxClick = (unitType: UnitType, friendly: boolean) => {
-    if (maxTrainable <= 0) {
-      alert("Not enough resources!");
-      return;
-    }
+    if (maxTrainable <= 0) return;
+
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
 
     updatedResourcePool(costsObject, clonedResourcePool, maxTrainable);

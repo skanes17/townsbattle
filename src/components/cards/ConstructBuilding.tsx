@@ -77,8 +77,6 @@ export default function ConstructBuilding({
       updateResourcePool(costsObject, clonedResourcePool, 1);
 
       setResourcePool(clonedResourcePool);
-    } else {
-      alert("Not enough resources!");
     }
   };
 
