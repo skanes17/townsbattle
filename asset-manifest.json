@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/React-game/static/css/main.6f2b2127.css",
-    "main.js": "/React-game/static/js/main.326cd6f4.js",
+    "main.js": "/React-game/static/js/main.682293b6.js",
     "static/js/845.a7795a01.chunk.js": "/React-game/static/js/845.a7795a01.chunk.js",
     "static/media/brown-01.png": "/React-game/static/media/brown-01.c8f16131efac6caf4f3e.png",
     "static/media/swordsmithy-01.jpg": "/React-game/static/media/swordsmithy-01.df8b0a5fe53d3ea75337.jpg",
@@ -80,11 +80,11 @@
     "static/media/archeryHut-01-256px.jpg": "/React-game/static/media/archeryHut-01-256px.5ff76afc8f7656ae83b6.jpg",
     "index.html": "/React-game/index.html",
     "main.6f2b2127.css.map": "/React-game/static/css/main.6f2b2127.css.map",
-    "main.326cd6f4.js.map": "/React-game/static/js/main.326cd6f4.js.map",
+    "main.682293b6.js.map": "/React-game/static/js/main.682293b6.js.map",
     "845.a7795a01.chunk.js.map": "/React-game/static/js/845.a7795a01.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6f2b2127.css",
-    "static/js/main.326cd6f4.js"
+    "static/js/main.682293b6.js"
   ]
 }
