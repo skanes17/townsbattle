@@ -40,7 +40,7 @@ export default function NavButton({
         stateTrigger
           ? // if this navButton is selected, it'll have this style
             `-translate-x-1/2 rounded-lg bg-zinc-700 font-semibold
-            text-transparent saturate-150 hover:translate-x-0 hover:text-inherit
+            text-amber-200 saturate-150 hover:translate-x-0
             active:translate-x-0 sm:translate-x-4 sm:hover:translate-x-4
             sm:active:translate-x-4 lg:translate-x-8 lg:hover:translate-x-8 lg:active:translate-x-8`
           : // when unselected, it'll have this style
@@ -69,7 +69,6 @@ export default function NavButton({
       <button
         type="button"
         className={`${overlayStyle}`}
-        /* FIXME: Would like to only play sound when a card slides out, not always when clicked */
         onClick={() => {
           navButtonOn(navButtonType);
           if (navButtonType !== "score" && !stateTrigger) {
