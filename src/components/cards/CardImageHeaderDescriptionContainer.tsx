@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { BaseResourceType, Resources } from "../../types";
 import CardBgWithImage from "./CardBgWithImage";
-import CardHeader from "./CardHeader";
+import NewCardHeader from "./CardHeader";
 import CardHoverText from "./CardHoverText";
 
 interface CardImageHeaderDescriptionContainerProps {
@@ -24,7 +24,7 @@ export default function CardImageHeaderDescriptionContainer({
         saturation={saturation}
         bgImage={bgImage}
       >
-        <CardHeader cardName={cardName} />
+        <NewCardHeader cardName={cardName} />
         <CardHoverText>{children}</CardHoverText>
       </CardBgWithImage>
     </>
@@ -33,7 +33,7 @@ export default function CardImageHeaderDescriptionContainer({
 
 //TODO: Next, try centering the div somehow in the remaining space
 
-// CardHeader
+// NewCardHeader
 /* `mx-2 flex h-8 items-center justify-center rounded-lg border border-white/25
 bg-neutral-900/30 text-lg font-bold backdrop-blur-sm` */
 

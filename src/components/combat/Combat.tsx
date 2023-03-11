@@ -17,6 +17,8 @@ import {
   Phases,
   PostCombatEvent,
   PreCombatEvent,
+  Resources,
+  ResourcePool,
   SubPhases,
   SummaryEvent,
   Unit,
@@ -46,6 +48,7 @@ interface CombatProps {
   enemyUnits: Unit[];
   setEnemyUnits: Dispatch<SetStateAction<Unit[]>>;
   townName: string;
+  resourcePool: ResourcePool;
   buildings: Buildings;
   setBuildings: Dispatch<SetStateAction<Buildings>>;
   switchPhase: () => void;
@@ -61,6 +64,7 @@ export default function Combat({
   setMyUnits,
   setEnemyUnits,
   townName,
+  resourcePool,
   buildings,
   setBuildings,
   switchPhase,
@@ -671,6 +675,15 @@ export default function Combat({
   const points =
     combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100;
 
+  const addMoreWorkersPerTurnAfterCombat = (
+    resourcePool: ResourcePool,
+    numberOfExtraWorkersAfterCombat: number
+  ): ResourcePool => {
+    let clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
+    clonedResourcePool.workers += numberOfExtraWorkersAfterCombat;
+    return clonedResourcePool;
+  };
+
   return (
     /* whole screen */
     <div className="grid h-screen max-h-screen grid-cols-[2.5fr_4fr_2.5fr] grid-rows-[9fr_1fr] p-2 text-xs transition-transform ease-in-out sm:text-base lg:text-lg xl:text-xl">
@@ -793,7 +806,11 @@ export default function Combat({
           (buildings["townCenter"].constructed ? (
             <CombatButton
               buttonText="Return to Planning"
-              onClick={() => combatMegaFunction()}
+              onClick={() => {
+                combatMegaFunction();
+                // adds one extra worker when combat is over
+                addMoreWorkersPerTurnAfterCombat(resourcePool, 1);
+              }}
             />
           ) : (
             <Link
