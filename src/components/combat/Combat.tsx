@@ -671,14 +671,9 @@ export default function Combat({
   const points =
     combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100;
 
-  const mobileHeight = `h-[${window.innerHeight}px]`;
-  const maxMobileHeight = `max-h-[${window.innerHeight}px]`;
-
   return (
     /* whole screen */
-    <div
-      className={`grid ${mobileHeight} ${maxMobileHeight} grid-cols-[2.5fr_4fr_2.5fr] grid-rows-[9fr_1fr] p-2 text-xs transition-transform ease-in-out sm:h-screen sm:max-h-screen sm:text-base lg:text-lg xl:text-xl`}
-    >
+    <div className="grid h-screen max-h-screen grid-cols-[2.5fr_4fr_2.5fr] grid-rows-[9fr_1fr] p-2 text-xs transition-transform ease-in-out sm:text-base lg:text-lg xl:text-xl">
       <div className="col-start-1 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5">
         <ArmyGrid
           gridStyle="combat"

@@ -74,10 +74,6 @@ import UnitCountsBox from "./planning/UnitCountsBox";
 export default function Game(props: GameProps) {
   const [devTools, setDevTools] = useState(false);
 
-  // height to set for mobile devices so screen doesn't go nuts
-  const mobileHeight = `h-[${window.innerHeight}px]`;
-  const minMobileHeight = `min-h-[${window.innerHeight}px]`;
-
   // pull startData from linked Play component
   const startData = useLocation();
 
@@ -789,7 +785,7 @@ export default function Game(props: GameProps) {
 
   return inCombat ? (
     <>
-      <div className={`${mobileHeight} sm:h-screen`}>
+      <div className="h-screen">
         <Combat
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           unitTypes={unitTypes}
@@ -827,9 +823,7 @@ export default function Game(props: GameProps) {
       {/* TODO: Center items vertically somehow */}
       <div className="z-0 bg-brown bg-contain bg-center">
         {/* TODO: Make grid-rows-[1fr_repeat(4,5fr)_1.5fr] more responsive by making the repeat dynamic, somehow */}
-        <nav
-          className={`fixed top-0 left-0 z-20 grid ${mobileHeight} w-36 grid-rows-[1fr_repeat(5,2fr)_1.5fr] text-lg transition-transform sm:h-screen sm:grid-rows-[1fr_repeat(5,5fr)_1.5fr] md:w-64 md:grid-rows-[1fr_repeat(5,3fr)_1.5fr]`}
-        >
+        <nav className="fixed top-0 left-0 z-20 grid h-screen w-36 grid-rows-[1fr_repeat(5,2fr)_1.5fr] text-lg transition-transform sm:grid-rows-[1fr_repeat(5,5fr)_1.5fr] md:w-64 md:grid-rows-[1fr_repeat(5,3fr)_1.5fr]">
           <>
             {Object.keys(activeNavButtons).map((key) => {
               return (
@@ -847,9 +841,7 @@ export default function Game(props: GameProps) {
           </>
         </nav>
 
-        <div
-          className={`z-0 ml-[4.5rem] ${minMobileHeight} sm:ml-40 sm:mr-3 sm:min-h-screen md:ml-[17rem] md:mr-4 lg:ml-72`}
-        >
+        <div className="z-0 ml-[4.5rem] min-h-screen sm:ml-40 sm:mr-3 md:ml-[17rem] md:mr-4 lg:ml-72">
           {/* TODO: Add a clock */}
           <div className="sticky top-0 z-10 grid auto-cols-auto">
             <div className="mx-1 grid grid-flow-row grid-cols-[1fr_4fr] justify-items-center rounded-b-md border border-t-0 border-slate-500 bg-slate-900 px-4 hover:bg-slate-900 sm:grid-cols-[1fr_3fr_4fr] sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
@@ -1048,7 +1040,7 @@ export default function Game(props: GameProps) {
             <div
               className={`${
                 toggle ? null : "translate-y-full"
-              } z-50 flex ${minMobileHeight} min-h-screen items-center px-4 py-8 transition-all duration-500 ease-in-out`}
+              } z-50 flex min-h-screen items-center px-4 py-8 transition-all duration-500 ease-in-out`}
             >
               <div
                 className={
