@@ -231,7 +231,10 @@ export default function Combat({
           selectedFriendly.currentHealth -
             calculatedAttackValue(selectedEnemy, selectedFriendly)
         );
-      } else selectedEnemy.attack = 0;
+      } else {
+        /* TODO: If only the enemy gets hit, and the unit is an archer, play the archer sound */
+        selectedEnemy.attack = 0;
+      }
     }
     // only run this if the enemy hits first and the friendly does not
     else if (selectedEnemy.hitsFirst && !selectedFriendly.hitsFirst) {

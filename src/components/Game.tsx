@@ -834,7 +834,7 @@ export default function Game(props: GameProps) {
       {/* TODO: Center items vertically somehow */}
       <div className="z-0 bg-brown bg-contain bg-center">
         {/* TODO: Make grid-rows-[1fr_repeat(4,5fr)_1.5fr] more responsive by making the repeat dynamic, somehow */}
-        <nav className="fixed top-0 left-0 z-20 grid h-screen w-36 grid-rows-[1fr_repeat(5,2fr)_1.5fr] text-lg transition-transform sm:grid-rows-[1fr_repeat(5,5fr)_1.5fr] md:w-64 md:grid-rows-[1fr_repeat(5,3fr)_1.5fr]">
+        <nav className="pointer-events-none fixed top-0 left-0 z-20 grid h-screen w-36 grid-rows-[1fr_repeat(5,2fr)_1.5fr] text-lg transition-transform sm:grid-rows-[1fr_repeat(5,5fr)_1.5fr] md:w-64 md:grid-rows-[1fr_repeat(5,3fr)_1.5fr]">
           <>
             {Object.keys(activeNavButtons).map((key) => {
               return (

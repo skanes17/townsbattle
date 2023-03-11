@@ -35,17 +35,16 @@ export default function NavButton({
       break;
     // all other buttons have this as a base style
     default:
-      specialStyleBasedOnButtonType = `text-md cursor-pointer hover:bg-zinc-700
-      sm:text-2xl lg:text-3xl ${
+      specialStyleBasedOnButtonType = `text-md cursor-pointer 
+      hover:bg-zinc-700 sm:text-2xl lg:text-3xl ${
         stateTrigger
           ? // if this navButton is selected, it'll have this style
-            `-translate-x-1/2 rounded-lg bg-zinc-700 font-semibold
-            text-transparent saturate-150 hover:translate-x-0 hover:text-inherit
-            active:translate-x-0 sm:translate-x-4 sm:hover:translate-x-4
+            `-translate-x-1/2 rounded-lg bg-zinc-700 font-semibold saturate-150
+            text-transparent sm:text-amber-200 hover:text-amber-200 hover:translate-x-0 active:translate-x-0 sm:translate-x-4 sm:hover:translate-x-4
             sm:active:translate-x-4 lg:translate-x-8 lg:hover:translate-x-8 lg:active:translate-x-8`
           : // when unselected, it'll have this style
             `active:translate-0 -translate-x-[60%] rounded-r-lg text-transparent
-            hover:translate-x-0 hover:text-inherit active:text-inherit sm:translate-x-0 sm:text-inherit`
+            hover:translate-x-0 hover:text-amber-400 active:text-amber-400 sm:translate-x-0 sm:text-inherit`
       }`;
   }
 
@@ -64,7 +63,7 @@ export default function NavButton({
 
   return (
     <div
-      className={`${bg} ${bgContainerStyle} ${specialStyleBasedOnButtonType}`}
+      className={`${bg} ${bgContainerStyle} ${specialStyleBasedOnButtonType} pointer-events-auto`}
     >
       <button
         type="button"
