@@ -49,6 +49,7 @@ interface CombatProps {
   setEnemyUnits: Dispatch<SetStateAction<Unit[]>>;
   townName: string;
   resourcePool: ResourcePool;
+  setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
   buildings: Buildings;
   setBuildings: Dispatch<SetStateAction<Buildings>>;
   switchPhase: () => void;
@@ -64,7 +65,6 @@ export default function Combat({
   setMyUnits,
   setEnemyUnits,
   townName,
-  resourcePool,
   buildings,
   setBuildings,
   switchPhase,
@@ -580,7 +580,7 @@ export default function Combat({
             } else {
               // ELSE one or both armies were defeated, end combat
 
-              // send a message to the log to explain the outcome of the battle
+              // send a message to the log to explain the outcome of the combat
               summaryEvent();
               const clonedBuildings = attackBuildingsAndReturnClone();
 
@@ -593,7 +593,6 @@ export default function Combat({
       case Phases.PostCombat:
         // reset all building damage to 0
         setBuildings(resetBuildingDamageToZero(buildings));
-
         sendArmiesToPlanning();
         // add points from this battle to total score
         scoreUpdaterFn(points);
@@ -674,15 +673,6 @@ export default function Combat({
   // simple draft of points sytem is +100 per enemy unit defeated
   const points =
     combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100;
-
-  const addMoreWorkersPerTurnAfterCombat = (
-    resourcePool: ResourcePool,
-    numberOfExtraWorkersAfterCombat: number
-  ): ResourcePool => {
-    let clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
-    clonedResourcePool.workers += numberOfExtraWorkersAfterCombat;
-    return clonedResourcePool;
-  };
 
   return (
     /* whole screen */
@@ -808,8 +798,6 @@ export default function Combat({
               buttonText="Return to Planning"
               onClick={() => {
                 combatMegaFunction();
-                // adds one extra worker when combat is over
-                addMoreWorkersPerTurnAfterCombat(resourcePool, 1);
               }}
             />
           ) : (
