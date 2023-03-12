@@ -233,6 +233,7 @@ export default function Combat({
         );
       } else {
         /* TODO: If only the enemy gets hit, and the unit is an archer, play the archer sound */
+
         selectedEnemy.attack = 0;
       }
     }

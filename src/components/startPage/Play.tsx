@@ -123,6 +123,20 @@ export default function Play() {
               onClick={() => difficultyUpdater("hard")}
             />
           )}
+          {difficulty === "nightmare" ? (
+            <MenuButton
+              buttonText="Nightmare"
+              buttonColor="deepRed"
+              isSelected={true}
+            />
+          ) : (
+            <MenuButton
+              buttonText="Nightmare"
+              buttonColor="deepRed"
+              isSelected={false}
+              onClick={() => difficultyUpdater("nightmare")}
+            />
+          )}
         </div>
       </div>
 

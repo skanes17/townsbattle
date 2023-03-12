@@ -444,7 +444,10 @@ export default function Game(props: GameProps) {
         difficultyMultiplier = 1.0;
         break;
       case "hard":
-        difficultyMultiplier = 1.25;
+        difficultyMultiplier = 1.5;
+        break;
+      case "nightmare":
+        difficultyMultiplier = 2;
         break;
       default:
         difficultyMultiplier = 1.0;

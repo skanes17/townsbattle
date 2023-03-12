@@ -3,7 +3,7 @@ import React from "react";
 interface MenuButtonProps {
   buttonText: string;
   isSelected: boolean;
-  buttonColor: "green" | "blue" | "red";
+  buttonColor: "green" | "blue" | "red" | "deepRed";
   onClick?: () => void;
 }
 
@@ -32,6 +32,10 @@ export default function MenuButton({
     case "red":
       buttonColors = "ring-red-600 active:bg-red-500";
       bgColor = isSelected ? "bg-red-600" : null;
+      break;
+    case "deepRed":
+      buttonColors = "ring-[#9E1A1A] active:bg-[#7B1414]";
+      bgColor = isSelected ? "bg-[#9E1A1A]" : null;
       break;
   }
 
