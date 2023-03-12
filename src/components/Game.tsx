@@ -460,7 +460,7 @@ export default function Game(props: GameProps) {
     const equalityTurn = 5; // default 5
 
     // set a baseline power level for the game -- tweak for balance as necessary
-    const basePowerLevel = 4;
+    const basePowerLevel = 5;
 
     // exponential growth formula based on E(turns) = D * (P(1+r)^(nextCombatTurn-equalityTurn) + (basePowerLevel * nextCombatTurn)) where...
     // y = enemy power level, D = difficulty
