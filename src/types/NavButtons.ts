@@ -9,6 +9,7 @@ export type NavButtonType =
   | "score"
   | "resources"
   | "training"
+  | "buildings"
   | "army"
   | "tips"
   | "planning";
