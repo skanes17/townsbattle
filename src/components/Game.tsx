@@ -478,7 +478,7 @@ export default function Game(props: GameProps) {
     // basePowerLevel * nextCombatTurn is a simple linear function
     const minimumEnemyPowerLevel =
       difficultyMultiplier *
-      (scaledEnemyPowerLevel + basePowerLevel * nextCombatTurn);
+      (scaledEnemyPowerLevel + basePowerLevel * Math.pow(nextCombatTurn, 2));
     console.log(scaledEnemyPowerLevel);
 
     const enemyArmy: Unit[] = [];
