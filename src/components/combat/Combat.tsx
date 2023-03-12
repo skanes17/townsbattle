@@ -33,6 +33,9 @@ import { CombatLog, messages, PostCombatSummary } from ".";
 import ArmyGrid from "../planning/ArmyGrid";
 import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 import CombatCardTemplate from "../cards/CombatCardTemplate";
+import useSound from "use-sound";
+/* @ts-ignore */
+import destroyBldgSfx from "../../assets/sounds/destroyBldgSfx.mp3";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -72,6 +75,8 @@ export default function Combat({
 }: CombatProps) {
   const [phase, setPhase] = useState<Phases>(Phases.PreCombat);
   const [subPhase, setSubPhase] = useState<SubPhases>(SubPhases.Fight);
+
+  const [playDestroyBldgSound] = useSound(destroyBldgSfx);
 
   // TODO: Consider modifying CombatUnits to include attack and health buffs!
 
@@ -484,6 +489,9 @@ export default function Combat({
       if (buildingAttacked.currentHealth === 0) {
         // if the building is destroyed, set it to destroyed (constructed = false)
         buildingAttacked.constructed = false;
+
+        playDestroyBldgSound();
+
         // refill its health (for a future build)
         buildingAttacked.currentHealth = buildingAttacked.maxHealth;
         // refresh pool of buildings that are to be attacked

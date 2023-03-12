@@ -60,6 +60,9 @@ import ArmyGrid from "./planning/ArmyGrid";
 import { Combat, PostCombatUnitsStatBox } from "./combat";
 import DashboardImageAndCount from "./planning/DashboardImageAndCount";
 import UnitCountsBox from "./planning/UnitCountsBox";
+import useSound from "use-sound";
+/* @ts-ignore */
+import constructBldgSfx from "../assets/sounds/constructBldgSfx.mp3";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -95,9 +98,10 @@ export default function Game(props: GameProps) {
     startDataDifficulty ||
     (localStorage.getItem("difficulty") as string) ||
     "normal";
-  const tutorials =
+  const [tutorials, setTutorials] = useState(
     startDataTutorials ??
-    JSON.parse(localStorage.getItem("tutorials") ?? "true");
+      JSON.parse(localStorage.getItem("tutorials") ?? "true")
+  );
 
   // -- NOTE ON RETRIEVING LOCALLY-STORED DATA SENT FROM MAIN PAGE IF NECESSARY
   // if localStorage values are non-null, use the locally stored values
@@ -162,6 +166,8 @@ export default function Game(props: GameProps) {
   const buildingsLeftToConstruct = Object.keys(buildings).filter(
     (key) => !buildings[key].constructed
   );
+
+  const [playConstructBldgSound] = useSound(constructBldgSfx);
 
   /* ===BUILDING EFFECTS=== */
   // number of new workers per turn increases when a certain building is built (eg Quality Housing)
@@ -363,6 +369,8 @@ export default function Game(props: GameProps) {
     buildingsUnderConstruction.map((buildingType) => {
       clonedBuildings[buildingType].underConstruction = false;
       clonedBuildings[buildingType].constructed = true;
+
+      playConstructBldgSound();
 
       // add to score
       const buildScore = clonedBuildings[buildingType].buildScore;
@@ -843,6 +851,7 @@ export default function Game(props: GameProps) {
                   stateTrigger={activeNavButtons[key].active}
                   navButtonOn={navButtonOn}
                   bgImage={activeNavButtons[key].bgImage}
+                  tutorials={tutorials}
                 >
                   {key === "score" ? `Score: ${score}` : key}
                 </NavButton>
