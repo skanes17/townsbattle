@@ -68,7 +68,7 @@ export default function NavButton({
       <button
         type="button"
         className={`${overlayStyle}`}
-        /* FIXME: Would like to only play sound when a card slides out, not always when clicked */
+        // sound only plays for non-score buttons, and when it's not already "on"
         onClick={() => {
           navButtonOn(navButtonType);
           if (navButtonType !== "score" && !stateTrigger) {
