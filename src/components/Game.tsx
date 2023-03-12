@@ -725,6 +725,7 @@ export default function Game(props: GameProps) {
   /* TODO: Incorporate this on building click */
   const [toggle, setToggle] = useState(false);
 
+  // TODO: Consider better way of doing this?
   const [activeNavButtons, setActiveNavButtons] = useState<NavButtons>({
     score: {
       active: false,
@@ -1055,27 +1056,7 @@ export default function Game(props: GameProps) {
                 className={
                   "relative mx-auto w-fit max-w-lg rounded-md border border-white bg-zinc-800 p-4 shadow-lg"
                 }
-              >
-                {/*  TODO: Put back in if caused trouble
-                {unlockedUnitTypes.length > 0 ? (
-                  <div className="flex items-center justify-center">
-                    <TrainingCardContainer
-                      unitTypes={unitTypes}
-                      buildings={buildings}
-                      resources={resources}
-                      resourcePool={resourcePool}
-                      setResourcePool={setResourcePool}
-                      unitsInTraining={unitsInTraining}
-                      BASE_UNIT_DATA={BASE_UNIT_DATA}
-                      addTrainingUnit={addTrainingUnit}
-                      maxTrainingUnits={maxTrainingUnits}
-                      removeTrainingUnit={removeTrainingUnit}
-                      removeAllTrainingUnits={removeAllTrainingUnits}
-                    />
-                  </div>
-                ) : null}
-                 */}
-              </div>
+              ></div>
             </div>
           </div>
         </div>

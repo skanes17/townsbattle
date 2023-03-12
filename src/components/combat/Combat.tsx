@@ -433,11 +433,25 @@ export default function Combat({
 
   const attackBuildingsAndReturnClone = (): Buildings => {
     const clonedBuildings = cloneBasicObjectWithJSON(buildings);
+
     let buildingsConstructed = Object.keys(buildings).filter(
       (key) => clonedBuildings[key].constructed
     );
     // this loop to chooses a constructed building at random and subtract enemy attack value from its current health
     for (const unitIndex of survivingEnemyUnitIndexes) {
+      // if there are any buildings besides the town center, hit them first!
+      if (buildingsConstructed.length > 1) {
+        buildingsConstructed = Object.keys(buildings)
+          .filter((buildingType) => buildingType !== "townCenter")
+          .filter((key) => clonedBuildings[key].constructed);
+        console.log("Avoiding the Town Center!");
+      } else {
+        buildingsConstructed = Object.keys(buildings).filter(
+          (key) => clonedBuildings[key].constructed
+        );
+        console.log("No choice but to hit the Town Center!");
+      }
+
       const buildingAttacked =
         clonedBuildings[
           buildingsConstructed[
@@ -809,7 +823,7 @@ export default function Combat({
               className="text-md flex h-full w-full items-center justify-center rounded bg-red-600 text-center font-bold text-white shadow-md shadow-red-600/50 duration-75 hover:bg-red-800 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl"
               to="/"
             >
-              Return to Start Menu
+              Return to Start
             </Link>
           ))}
       </div>
