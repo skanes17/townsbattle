@@ -1,4 +1,3 @@
-import ArmyGrid from "./ArmyGrid";
 import Combat from "./Combat";
 import CombatLog from "./CombatLog";
 import { messages } from "./Messages";
@@ -9,7 +8,6 @@ import PostCombatUnitsStatBox from "./PostCombatUnitsStatBox";
 import UnitTile from "./UnitTile";
 
 export {
-  ArmyGrid,
   Combat,
   CombatLog,
   messages,

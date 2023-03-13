@@ -33,13 +33,13 @@ import { getSurvivingUnitIndexes } from "../../utils/getSurvivingUnitIndexes";
 import { AutoButton, CombatButton } from "../buttons";
 import {} from "../cards";
 import { CombatLog, messages, PostCombatSummary } from ".";
-import ArmyGrid from "../planning/ArmyGrid";
 import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 import CombatCardTemplate from "../cards/CombatCardTemplate";
 import useSound from "use-sound";
 /* @ts-ignore */
 import destroyBldgSfx from "../../assets/sounds/destroyBldgSfx.mp3";
 import { Modal, ModalHeader, ModalTextContent } from "../planning/tutorials";
+import { ArmyGrid } from "../shared";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 

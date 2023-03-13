@@ -8,7 +8,7 @@ interface UnitTileProps {
   phase?: Phases;
 }
 
-export default function UnitTile({
+export function UnitTile({
   armyStyle,
   unit,
   selectedUnit,

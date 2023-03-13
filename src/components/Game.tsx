@@ -57,7 +57,6 @@ import {
 import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
 import { NavButtons, NavButtonType } from "../types/NavButtons";
-import ArmyGrid from "./planning/ArmyGrid";
 import { Combat, PostCombatUnitsStatBox } from "./combat";
 import DashboardImageAndCount from "./planning/DashboardImageAndCount";
 import UnitCountsBox from "./planning/UnitCountsBox";
@@ -67,6 +66,7 @@ import constructBldgSfx from "../assets/sounds/constructBldgSfx.mp3";
 import { ModalHeader, ModalTextContent } from "./planning/tutorials";
 import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSection";
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
+import { ArmyGrid } from "./shared";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 

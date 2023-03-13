@@ -1,6 +1,6 @@
 import React from "react";
+import { UnitTile } from ".";
 import { Phase, Phases, Unit } from "../../types";
-import UnitTile from "./UnitTile";
 
 interface ArmyGridProps {
   gridStyle: "planning" | "combat";
@@ -10,7 +10,7 @@ interface ArmyGridProps {
   selectedUnit?: Unit;
 }
 
-export default function ArmyGrid({
+export function ArmyGrid({
   gridStyle,
   armyStyle,
   phase,
