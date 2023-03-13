@@ -7,14 +7,14 @@ import { UnitCounts } from "../../types";
 // TODO: Implement TRAITS?
 
 export interface ArmyDetailsProps {
-  myUnits: Unit[];
+  friendlyUnits: Unit[];
   enemyUnits: Unit[];
   unitCounts: UnitCounts;
   enemyUnitCounts: UnitCounts;
 }
 
 export default function ArmyDetails({
-  myUnits,
+  friendlyUnits,
   enemyUnits,
   unitCounts,
   enemyUnitCounts,
@@ -30,7 +30,7 @@ export default function ArmyDetails({
       </button>
       <div>
         <div>
-          <p>Your army size is {myUnits.length}.</p>
+          <p>Your army size is {friendlyUnits.length}.</p>
           <p>
             {unitCounts.fighter} fighter, {unitCounts.archer} archer,{" "}
             {unitCounts.knight} knight.

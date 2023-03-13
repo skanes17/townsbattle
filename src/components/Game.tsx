@@ -193,8 +193,10 @@ export default function Game(props: GameProps) {
 
   /* ===UNITS=== */
   // friendly army
-  const [myUnits, setMyUnits] = useState<Unit[]>([]);
-  const [myTrainingUnits, setMyTrainingUnits] = useState<TrainingUnit[]>([]);
+  const [friendlyUnits, setFriendlyUnits] = useState<Unit[]>([]);
+  const [friendlyTrainingUnits, setFriendlyTrainingUnits] = useState<
+    TrainingUnit[]
+  >([]);
   // placeholder enemy array for testing
   const [enemyUnits, setEnemyUnits] = useState<Unit[]>([]);
   // ===BASE STATS FOR NEW UNITS===
@@ -260,7 +262,10 @@ export default function Game(props: GameProps) {
     }
 
     if (friendly) {
-      setMyTrainingUnits((myTrainingUnits) => [...myTrainingUnits, _newUnit]);
+      setFriendlyTrainingUnits((friendlyTrainingUnits) => [
+        ...friendlyTrainingUnits,
+        _newUnit,
+      ]);
     }
   };
 
@@ -272,32 +277,32 @@ export default function Game(props: GameProps) {
     if (friendly) {
       // fill an array with the appropriate number of the chosen unit type
       const _newUnits = Array(maxTrainable).fill({ unitType });
-      setMyTrainingUnits(myTrainingUnits.concat(_newUnits));
+      setFriendlyTrainingUnits(friendlyTrainingUnits.concat(_newUnits));
     }
   };
 
   // REMOVE units from either army
   const removeTrainingUnit: AddRemoveUnitFn = (unitType, friendly) => {
     if (friendly) {
-      const _myTrainingUnitsCopy = [...myTrainingUnits];
+      const _friendlyTrainingUnitsCopy = [...friendlyTrainingUnits];
 
       // pick the first unit in the array of the selected type
-      const _unitIndex = _myTrainingUnitsCopy.findIndex(
+      const _unitIndex = _friendlyTrainingUnitsCopy.findIndex(
         (unit) => unit.unitType === unitType
       );
       // remove that unit from the array
-      _myTrainingUnitsCopy.splice(_unitIndex, 1);
-      setMyTrainingUnits([..._myTrainingUnitsCopy]);
+      _friendlyTrainingUnitsCopy.splice(_unitIndex, 1);
+      setFriendlyTrainingUnits([..._friendlyTrainingUnitsCopy]);
     }
   };
 
   const removeAllTrainingUnits: AddRemoveUnitFn = (unitType, friendly) => {
     if (friendly) {
-      const _myTrainingUnitsCopy = [...myTrainingUnits];
+      const _friendlyTrainingUnitsCopy = [...friendlyTrainingUnits];
 
       // filter out all units in the array of the selected type
-      setMyTrainingUnits(
-        _myTrainingUnitsCopy.filter((unit) => unit.unitType !== unitType)
+      setFriendlyTrainingUnits(
+        _friendlyTrainingUnitsCopy.filter((unit) => unit.unitType !== unitType)
       );
     }
   };
@@ -321,8 +326,8 @@ export default function Game(props: GameProps) {
 
     friendly
       ? // if friendly, update friendly army
-        setMyUnits((myUnits) => {
-          return [...myUnits, newUnit];
+        setFriendlyUnits((friendlyUnits) => {
+          return [...friendlyUnits, newUnit];
         })
       : // if not friendly, update enemy army
         setEnemyUnits((enemyUnits) => {
@@ -389,7 +394,7 @@ export default function Game(props: GameProps) {
   // TODO: Refactor to make build score incrementation more efficient (sum, set state once outside loop)
   let id = unitId;
   const trainUnits = () => {
-    const units = myTrainingUnits.map((unit) => {
+    const units = friendlyTrainingUnits.map((unit) => {
       // resolve base unit from unit type
       const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
       id += 1;
@@ -406,7 +411,7 @@ export default function Game(props: GameProps) {
     });
 
     // bring all the training units into the main army
-    setMyUnits((myUnits) => [...myUnits, ...units]);
+    setFriendlyUnits((friendlyUnits) => [...friendlyUnits, ...units]);
     // update ID state accordingly
     setUnitId(id);
   };
@@ -713,7 +718,12 @@ alert(
 
   const endTurn = () => {
     if (turn === planningTurnToGenerateEnemies) {
-      generateEnemyArmy(nextCombatTurn, myUnits, unlockedUnitTypes, unitTypes);
+      generateEnemyArmy(
+        nextCombatTurn,
+        friendlyUnits,
+        unlockedUnitTypes,
+        unitTypes
+      );
       /* alert(
         `The enemy army will reach the town in ${turnsBetweenEnemyArmyGenAndCombat} turn${
           turnsBetweenEnemyArmyGenAndCombat > 1 ? "s" : ""
@@ -740,7 +750,7 @@ alert(
     trainUnits();
 
     // reset units in training back to zero
-    setMyTrainingUnits([]);
+    setFriendlyTrainingUnits([]);
 
     if (turn === planningTurnToTriggerCombat) {
       switchPhase();
@@ -758,16 +768,16 @@ alert(
 
   // How many units you're going to train this turn
   /* FIXME: Modify function to include training unit types */
-  /*   const unitsInTraining = countUnits(myTrainingUnits, unitTypes);  */
+  /*   const unitsInTraining = countUnits(friendlyTrainingUnits, unitTypes);  */
   const unitsInTraining: UnitCounts = {};
   for (const unitType of unitTypes) {
-    unitsInTraining[unitType] = myTrainingUnits.filter(
+    unitsInTraining[unitType] = friendlyTrainingUnits.filter(
       (unit) => unit.unitType === unitType
     ).length;
   }
 
   // How many units are in your army
-  const unitCounts = countUnits(myUnits, unitTypes, "army");
+  const unitCounts = countUnits(friendlyUnits, unitTypes, "army");
   const enemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
 
   /* TODO: Incorporate this on building click */
@@ -880,9 +890,9 @@ alert(
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           unitTypes={unitTypes}
           unlockedUnitTypes={unlockedUnitTypes}
-          myUnits={myUnits}
+          friendlyUnits={friendlyUnits}
           enemyUnits={enemyUnits}
-          setMyUnits={setMyUnits}
+          setFriendlyUnits={setFriendlyUnits}
           setEnemyUnits={setEnemyUnits}
           townName={townName}
           resourcePool={resourcePool}
@@ -901,7 +911,7 @@ alert(
           addResource={addResource}
           addUnit={addUnit}
           switchPhase={switchPhase}
-          myUnits={myUnits}
+          friendlyUnits={friendlyUnits}
           trainEnemyUnits={trainEnemyUnits}
         />
       ) : null}
@@ -1120,7 +1130,7 @@ alert(
                 <ArmyGrid
                   armyStyle="friendly"
                   gridStyle="planning"
-                  army={myUnits}
+                  army={friendlyUnits}
                 />
               </>
             )}
@@ -1136,7 +1146,7 @@ alert(
               addResource={addResource}
               addUnit={addUnit}
               switchPhase={switchPhase}
-              myUnits={myUnits}
+              friendlyUnits={friendlyUnits}
               trainEnemyUnits={trainEnemyUnits}
             />
           ) : null}

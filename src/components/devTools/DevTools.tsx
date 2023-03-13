@@ -13,7 +13,7 @@ interface DevToolsProps {
   addResource: AddResourceFn;
   addUnit: AddRemoveUnitFn;
   switchPhase: () => void;
-  myUnits: Unit[];
+  friendlyUnits: Unit[];
   trainEnemyUnits: (numberOfFriendlyUnits: number) => void;
 }
 
@@ -24,7 +24,7 @@ export default function DevTools({
   addResource,
   addUnit,
   switchPhase,
-  myUnits,
+  friendlyUnits,
   trainEnemyUnits,
 }: DevToolsProps) {
   return (
@@ -51,7 +51,7 @@ export default function DevTools({
         </Button>
         <Button
           buttonColor="red"
-          onClick={() => trainEnemyUnits(myUnits.length)}
+          onClick={() => trainEnemyUnits(friendlyUnits.length)}
         >
           Generate Enemy Army
         </Button>

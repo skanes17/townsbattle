@@ -54,8 +54,8 @@ interface CombatProps {
   BASE_UNIT_DATA: BaseUnit;
   unitTypes: UnitType[];
   unlockedUnitTypes: (UnitType | undefined)[];
-  myUnits: Unit[];
-  setMyUnits: Dispatch<SetStateAction<Unit[]>>;
+  friendlyUnits: Unit[];
+  setFriendlyUnits: Dispatch<SetStateAction<Unit[]>>;
   enemyUnits: Unit[];
   setEnemyUnits: Dispatch<SetStateAction<Unit[]>>;
   townName: string;
@@ -75,9 +75,9 @@ export default function Combat({
   BASE_UNIT_DATA,
   unitTypes,
   unlockedUnitTypes,
-  myUnits,
+  friendlyUnits,
   enemyUnits,
-  setMyUnits,
+  setFriendlyUnits,
   setEnemyUnits,
   townName,
   buildings,
@@ -94,7 +94,7 @@ export default function Combat({
 
   // TODO: Consider modifying CombatUnits to include attack and health buffs!
 
-  const [combatUnits, setCombatUnits] = useState<Unit[]>([...myUnits]);
+  const [combatUnits, setCombatUnits] = useState<Unit[]>([...friendlyUnits]);
   const [combatEnemyUnits, setCombatEnemyUnits] = useState<Unit[]>([
     ...enemyUnits,
   ]);
@@ -536,7 +536,7 @@ export default function Combat({
       combatUnits,
       shouldRestoreUnitHealth
     );
-    setMyUnits(friendlyUnitsToSendToPlanning);
+    setFriendlyUnits(friendlyUnitsToSendToPlanning);
 
     const enemyUnitsToSendToPlanning = determineWhichUnitsToSendToPlanning(
       combatEnemyUnits,

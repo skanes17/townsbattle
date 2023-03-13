@@ -70,7 +70,7 @@ export default function TrainUnitCard({
     );
 
     setResourcePool(clonedResourcePool);
-    // updates the myTrainingUnits array as well
+    // updates the friendlyTrainingUnits array as well
     removeAllTrainingUnits(unitType, friendly);
   };
 
@@ -82,7 +82,7 @@ export default function TrainUnitCard({
     updatedResourcePool(costsObject, clonedResourcePool, -1);
 
     setResourcePool(clonedResourcePool);
-    // updates the myTrainingUnits array as well
+    // updates the friendlyTrainingUnits array as well
     removeTrainingUnit(unitType, friendly);
   };
 
@@ -96,7 +96,7 @@ export default function TrainUnitCard({
       updatedResourcePool(costsObject, clonedResourcePool, 1);
 
       setResourcePool(clonedResourcePool);
-      // updates the myTrainingUnits array as well
+      // updates the friendlyTrainingUnits array as well
       addTrainingUnit(unitType, friendly);
     }
   };
