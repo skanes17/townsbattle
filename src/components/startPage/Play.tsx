@@ -16,6 +16,8 @@ interface StartData {
 }
 
 export default function Play() {
+  const [devTools, setDevTools] = useState(false);
+
   const [defaultPlayerName, setDefaultPlayerName] = useState(
     playerNames[Math.floor(Math.random() * playerNames.length)]
   );
@@ -178,13 +180,15 @@ export default function Play() {
       {/* horizontal line */}
       <div className="mt-3 border-t border-gray-300"></div>
 
-      <div className="bg-amber-100 capitalize text-gray-500">
-        <p className="font-bold text-gray-800">Summary (DevTool)</p>
-        <p>Player Name: {playerName ?? defaultPlayerName}</p>
-        <p>Town Name: {townName ?? defaultTownName}</p>
-        <p>Difficulty: {difficulty}</p>
-        <p>Tutorials: {tutorials ? "On" : "Off"}</p>
-      </div>
+      {devTools && (
+        <div className="bg-amber-100 capitalize text-gray-500">
+          <p className="font-bold text-gray-800">Summary (DevTool)</p>
+          <p>Player Name: {playerName ?? defaultPlayerName}</p>
+          <p>Town Name: {townName ?? defaultTownName}</p>
+          <p>Difficulty: {difficulty}</p>
+          <p>Tutorials: {tutorials ? "On" : "Off"}</p>
+        </div>
+      )}
 
       <div className="mt-3 items-center gap-2 sm:flex">
         <Link
