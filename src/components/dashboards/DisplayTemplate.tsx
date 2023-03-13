@@ -18,7 +18,7 @@ export default function DisplayTemplate({
   const hideArmyOnMobile = headerText === `Army` ? `hidden` : `inline-flex`;
 
   return (
-    <div className="m-1 text-base sm:text-lg lg:text-2xl">
+    <div className="m-1">
       <div className="mb-1 text-center font-bold">{headerText}</div>
       <div
         className={`${hideArmyOnMobile} flex-wrap justify-center gap-1 transition duration-75 ease-in-out sm:inline-flex sm:gap-2 md:gap-3 lg:gap-4`}

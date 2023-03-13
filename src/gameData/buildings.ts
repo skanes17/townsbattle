@@ -81,7 +81,7 @@ export const buildingsData = {
     tier: 1,
     /* attackBonus: 0,
         healthBonus: 2, */
-    description: "Increase the number of workers available to 15.",
+    description: "Greatly the number of workers available per turn.",
     bgImage: "bg-qualityHousing",
     bgImageSm: "bg-qualityHousingSm",
     bgImageMd: "bg-qualityHousingMd",

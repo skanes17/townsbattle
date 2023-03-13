@@ -3,10 +3,10 @@ import useSound from "use-sound";
 import { NavButtonType } from "../../types/NavButtons";
 /* @ts-ignore */
 import cardSlideSfx from "../../assets/sounds/cardSlide.mp3";
-import TutorialModal from "../planning/TutorialModal";
 import { TutorialMessages } from "../../gameData";
-import TutorialModalHeader from "../planning/TutorialModalHeader";
-import TutorialModalTextContent from "../planning/TutorialModalTextContent";
+import { Modal, ModalHeader, ModalTextContent } from "../planning/tutorials";
+import { NotificationPing } from "../planning/tutorials/NotificationPing";
+import { TutorialCategory } from "../../types/TutorialTypes";
 
 interface NavButtonProps {
   currentNavButtonType: NavButtonType;
@@ -15,6 +15,8 @@ interface NavButtonProps {
   navButtonOn: (currentNavButtonType: NavButtonType) => void;
   bgImage: string;
   tutorials: boolean;
+  tipSeen: boolean;
+  markTipAsSeen: (currentNavButtonType: TutorialCategory) => void;
   children: ReactNode;
 }
 
@@ -24,10 +26,12 @@ export default function NavButton({
   navButtonOn,
   bgImage,
   tutorials,
+  tipSeen,
+  markTipAsSeen,
   children,
 }: NavButtonProps) {
-  /* TODO: Make sure the tips element renders if tutorials === true OR showTip === true */
-  const [showTip, setShowTip] = useState(true);
+  // tipSeen is false until the tip is seen once, then it's set to true
+  //const [tipSeen, setTipSeen] = useState(false);
 
   // sets the background image based on the button type
   const bg = bgImage;
@@ -73,7 +77,7 @@ export default function NavButton({
   return (
     <>
       <div
-        className={`${bg} ${bgContainerStyle} ${specialStyleBasedOnButtonType} pointer-events-auto`}
+        className={`relative ${bg} ${bgContainerStyle} ${specialStyleBasedOnButtonType} pointer-events-auto`}
       >
         <button
           type="button"
@@ -88,36 +92,36 @@ export default function NavButton({
         >
           {children}
         </button>
+
+        {/* show ping if tutorials are on,
+        the tip is not yet been seen,
+        the button is triggered, and
+        it's not score or tips */}
+        {tutorials &&
+          !tipSeen &&
+          !stateTrigger &&
+          !(
+            currentNavButtonType === "score" || currentNavButtonType === "tips"
+          ) && <NotificationPing />}
       </div>
 
       {tutorials &&
-        showTip &&
+        !tipSeen &&
         stateTrigger &&
-        (currentNavButtonType !== "tips" ? (
+        currentNavButtonType !== "tips" && (
           // for anything but the tips menu, show just the one tutorial message
-          <TutorialModal setShowTip={setShowTip}>
-            <TutorialModalHeader
+          <Modal
+            tutorialCategory={currentNavButtonType}
+            markTipAsSeen={markTipAsSeen}
+          >
+            <ModalHeader
               headerText={TutorialMessages[currentNavButtonType].category}
             />
-            <TutorialModalTextContent
+            <ModalTextContent
               children={TutorialMessages[currentNavButtonType].tutorial}
             />
-          </TutorialModal>
-        ) : (
-          // if tips are selected, show all the tutorial messages
-          <TutorialModal setShowTip={setShowTip}>
-            {Object.keys(TutorialMessages).map((tutorialCategory) => (
-              <>
-                <TutorialModalHeader
-                  headerText={TutorialMessages[tutorialCategory].category}
-                />
-                <TutorialModalTextContent
-                  children={TutorialMessages[tutorialCategory].tutorial}
-                />
-              </>
-            ))}
-          </TutorialModal>
-        ))}
+          </Modal>
+        )}
     </>
   );
 }

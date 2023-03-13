@@ -2,11 +2,12 @@ import React, {
   Dispatch,
   MutableRefObject,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
 } from "react";
 import { Link } from "react-router-dom";
-import { enemyColor, friendlyColor } from "../../gameData";
+import { enemyColor, friendlyColor, TutorialMessages } from "../../gameData";
 import {
   BaseUnit,
   Building,
@@ -24,6 +25,8 @@ import {
   Unit,
   UnitCounts,
   UnitType,
+  TutorialCategory,
+  TipsSeen,
 } from "../../types";
 import { cloneBasicObjectWithJSON, countUnits } from "../../utils";
 import { getSurvivingUnitIndexes } from "../../utils/getSurvivingUnitIndexes";
@@ -36,6 +39,7 @@ import CombatCardTemplate from "../cards/CombatCardTemplate";
 import useSound from "use-sound";
 /* @ts-ignore */
 import destroyBldgSfx from "../../assets/sounds/destroyBldgSfx.mp3";
+import { Modal, ModalHeader, ModalTextContent } from "../planning/tutorials";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -43,6 +47,10 @@ import destroyBldgSfx from "../../assets/sounds/destroyBldgSfx.mp3";
 /* FIXME: Page breaking when army has 0 units */
 
 interface CombatProps {
+  tutorials: boolean;
+  tipsSeen: TipsSeen;
+  markTipAsSeen: (tutorialCategory: TutorialCategory) => void;
+  currentCombatTurn: number;
   BASE_UNIT_DATA: BaseUnit;
   unitTypes: UnitType[];
   unlockedUnitTypes: (UnitType | undefined)[];
@@ -60,6 +68,10 @@ interface CombatProps {
 }
 
 export default function Combat({
+  tutorials,
+  tipsSeen,
+  markTipAsSeen,
+  currentCombatTurn,
   BASE_UNIT_DATA,
   unitTypes,
   unlockedUnitTypes,
@@ -444,6 +456,14 @@ export default function Combat({
     );
     // this loop to chooses a constructed building at random and subtract enemy attack value from its current health
     for (const unitIndex of survivingEnemyUnitIndexes) {
+      if (
+        !clonedBuildings["townCenter"].constructed ||
+        buildingsConstructed.length === 0
+      ) {
+        alert("Your Town Center was destroyed. It's Game Over!");
+        break;
+      }
+
       // if there are any buildings besides the town center, hit them first!
       if (buildingsConstructed.length > 1) {
         buildingsConstructed = Object.keys(buildings)
@@ -498,14 +518,6 @@ export default function Combat({
         buildingsConstructed = Object.keys(buildings).filter(
           (key) => clonedBuildings[key].constructed
         );
-      }
-
-      if (
-        !clonedBuildings["townCenter"].constructed ||
-        buildingsConstructed.length === 0
-      ) {
-        alert("Your Town Center was destroyed. It's Game Over!");
-        break;
       }
     }
     return clonedBuildings;
@@ -702,7 +714,16 @@ export default function Combat({
 
   return (
     /* whole screen */
-    <div className="grid h-screen max-h-screen grid-cols-[2.5fr_4fr_2.5fr] grid-rows-[9fr_1fr] p-2 text-xs transition-transform ease-in-out sm:text-base lg:text-lg xl:text-xl">
+    <div className="relative grid h-screen max-h-screen grid-cols-[2.5fr_4fr_2.5fr] grid-rows-[9fr_1fr] p-2 text-xs transition-transform ease-in-out sm:text-base lg:text-lg xl:text-xl">
+      {/* if tutorials are on, and it'sd your first combat, show the modal when combat is rendered */}
+      {/* closing the <Modal> will set tipsSeen === true */}
+      {tutorials && currentCombatTurn === 1 && !tipsSeen["combat"] && (
+        <Modal tutorialCategory="combat" markTipAsSeen={markTipAsSeen}>
+          <ModalHeader headerText={TutorialMessages["combat"].category} />
+          <ModalTextContent children={TutorialMessages["combat"].tutorial} />
+        </Modal>
+      )}
+
       <div className="col-start-1 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5">
         <ArmyGrid
           gridStyle="combat"

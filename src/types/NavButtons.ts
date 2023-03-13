@@ -2,6 +2,7 @@ export interface NavButtons {
   [key: string]: {
     active: boolean;
     bgImage: string;
+    tipSeen: boolean;
   };
 }
 

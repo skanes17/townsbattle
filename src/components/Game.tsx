@@ -4,6 +4,7 @@ import {
   buildingsData,
   resourceData,
   resourcePoolData,
+  TutorialMessages,
   upgradesData,
 } from "../gameData";
 import {
@@ -63,6 +64,9 @@ import UnitCountsBox from "./planning/UnitCountsBox";
 import useSound from "use-sound";
 /* @ts-ignore */
 import constructBldgSfx from "../assets/sounds/constructBldgSfx.mp3";
+import { ModalHeader, ModalTextContent } from "./planning/tutorials";
+import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSection";
+import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -569,6 +573,44 @@ export default function Game(props: GameProps) {
 
     // new messages if Scout Unit was constructed
     if (buildings["scoutUnit"].constructed) {
+      /* TODO: Call a function here taking the power levels and sizes and returning the Scout's Report! */
+      /* if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel / 2) {
+        alert(
+          `Scout's Report on the Enemy --  Unit Count: We're greatly outnumbered, Unit Types: ${enemyUnitTypes}, Threat Level: Critical!, Summary: The enemy has a larger and much more threatening army than ours.`
+        );
+      } else if ((friendlyUnits.length > enemyUnits.length && friendlyPowerLevel < powerLevel / 2))
+      alert(
+        `Scout's Report on the Enemy --  Unit Count: We outnumber them! Unit Types: ${enemyUnitTypes}, Threat Level: High, Summary: The enemy has a smaller but more threatening army than ours.`
+      )
+    } else if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel){
+    alert(
+      `Scout's Report on the Enemy --  Unit Count: We're outnumbered! Unit Types: ${enemyUnitTypes}, Threat Level: High, Summary: The enemy has a smaller but more threatening army than ours.`
+
+      `Scout Report: Your army seems to be smaller and less threatening than that of the enemy.`
+    )
+  }else if (friendlyUnits.length > enemyUnits.length && friendlyPowerLevel < powerLevel){
+  alert(
+    `Scout Report: Your army seems to be larger than the enemy's, but less threatening!`
+  )} 
+
+
+  else if (friendlyUnits.length < enemyUnits.length && powerLevel < friendlyPowerLevel / 2) {
+    alert(
+      `Scout Report: The enemy army is currently much more threatening than yours, and has more units!`
+    );
+  } else if (friendlyUnits.length > enemyUnits.length && powerLevel < friendlyPowerLevel / 2){
+  alert(
+    `Scout Report: The enemy army is currently smaller than yours, but still seems to be much more threatening!`
+  )
+} else if (friendlyUnits.length < enemyUnits.length && powerLevel < friendlyPowerLevel){
+alert(
+  `Scout Report: Your army seems to be smaller and less threatening than that of the enemy.`
+)
+}else if (friendlyUnits.length > enemyUnits.length && powerLevel < friendlyPowerLevel){
+alert(
+`Scout Report: Your army seems to be larger than the enemy's, but less threatening!`
+)} else  */
+
       alert(
         `Scouts report that the enemy army has ${
           enemyArmy.length
@@ -670,11 +712,11 @@ export default function Game(props: GameProps) {
   const endTurn = () => {
     if (turn === planningTurnToGenerateEnemies) {
       generateEnemyArmy(nextCombatTurn, myUnits, unlockedUnitTypes, unitTypes);
-      alert(
+      /* alert(
         `The enemy army will reach the town in ${turnsBetweenEnemyArmyGenAndCombat} turn${
           turnsBetweenEnemyArmyGenAndCombat > 1 ? "s" : ""
         }!`
-      );
+      ); */
     }
 
     // clone resources, resource pool, and buildings to preserve state
@@ -734,30 +776,37 @@ export default function Game(props: GameProps) {
     score: {
       active: false,
       bgImage: "bg-score",
+      tipSeen: false,
     },
     resources: {
       active: true,
       bgImage: "bg-resources",
+      tipSeen: false,
     },
     training: {
       active: false,
       bgImage: "bg-training",
+      tipSeen: false,
     },
     buildings: {
       active: false,
       bgImage: "bg-buildings",
+      tipSeen: false,
     },
     army: {
       active: false,
       bgImage: "bg-army",
+      tipSeen: false,
     },
     planning: {
       active: false,
       bgImage: "bg-planning",
+      tipSeen: false,
     },
     tips: {
       active: false,
       bgImage: "bg-tips",
+      tipSeen: false,
     },
   });
 
@@ -783,6 +832,29 @@ export default function Game(props: GameProps) {
     setActiveNavButtons(clonedActiveNavButtons);
   };
 
+  const [tipsSeen, setTipsSeen] = useState<TipsSeen>({
+    score: false,
+    resources: false,
+    training: false,
+    buildings: false,
+    army: false,
+    planning: false,
+    tips: false,
+    combat: false,
+  });
+
+  const markTipAsSeen = (tutorialCategory: TutorialCategory) => {
+    if (!tutorialCategory) {
+      return;
+    }
+
+    const clonedTipsSeen = cloneBasicObjectWithJSON(tipsSeen);
+
+    // note that the tip has been seen
+    clonedTipsSeen[tutorialCategory] = true;
+    setTipsSeen(clonedTipsSeen);
+  };
+
   // Listener for checking window width
   const [width, setWidth] = React.useState(window.innerWidth);
   const breakpoint = 640;
@@ -799,6 +871,10 @@ export default function Game(props: GameProps) {
     <>
       <div className="h-screen">
         <Combat
+          tutorials={tutorials}
+          tipsSeen={tipsSeen}
+          markTipAsSeen={markTipAsSeen}
+          currentCombatTurn={numberOfCombatsStarted}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           unitTypes={unitTypes}
           unlockedUnitTypes={unlockedUnitTypes}
@@ -848,6 +924,8 @@ export default function Game(props: GameProps) {
                   navButtonOn={navButtonOn}
                   bgImage={activeNavButtons[key].bgImage}
                   tutorials={tutorials}
+                  tipSeen={tipsSeen[key]}
+                  markTipAsSeen={markTipAsSeen}
                 >
                   {key === "score" ? `Score: ${score}` : key}
                 </NavButton>
@@ -856,7 +934,7 @@ export default function Game(props: GameProps) {
           </>
         </nav>
 
-        <div className="z-0 ml-[4.5rem] min-h-screen sm:ml-40 sm:mr-3 md:ml-[17rem] md:mr-4 lg:ml-72">
+        <div className="z-0 ml-[4.5rem] min-h-screen text-base sm:ml-40 sm:mr-3 sm:text-lg md:ml-[17rem] md:mr-4 lg:ml-72 lg:text-2xl">
           {/* TODO: Add a clock */}
           <div className="sticky top-0 z-10 grid auto-cols-auto">
             <div className="mx-1 grid grid-flow-row grid-cols-[1fr_4fr] justify-items-center rounded-b-md border border-t-0 border-slate-500 bg-slate-900 px-4 hover:bg-slate-900 sm:grid-cols-[1fr_3fr_4fr] sm:gap-x-4 md:gap-x-8 lg:gap-x-16">
@@ -900,6 +978,21 @@ export default function Game(props: GameProps) {
                 </DisplayTemplate>
               )}
 
+              {/* justify-self-auto overrides parent grid positioning of this div */}
+              <div className="align-center col-span-2 grid w-full grid-cols-3 rounded-lg bg-white/5 p-2 text-xs sm:col-span-3 lg:text-lg xl:text-xl">
+                <p>
+                  {width > breakpoint && `Current `}Turn: {turn}
+                </p>
+
+                <p className="sm:text-center">
+                  Turns Left{width > breakpoint && ` until Combat`}:{" "}
+                  {planningTurnToTriggerCombat - turn}
+                </p>
+
+                <p className="sm:text-right">
+                  Battles Survived: {numberOfCombatsStarted}
+                </p>
+              </div>
               <Button
                 buttonColor={
                   turn !== planningTurnToTriggerCombat ? "blue" : "red"
@@ -908,7 +1001,7 @@ export default function Game(props: GameProps) {
                 disabled={resourcePool["workers"] > 0}
               >
                 {turn !== planningTurnToTriggerCombat
-                  ? `End Turn ${turn}`
+                  ? `End Turn`
                   : `Start Combat`}
               </Button>
 
@@ -969,7 +1062,6 @@ export default function Game(props: GameProps) {
               </GridCardContainer>
             )}
 
-            {/* TODO: Show all buildings to be built, but their art is blurred and it says "Need X resource to build this" */}
             {(activeNavButtons.planning.active ||
               activeNavButtons.buildings.active) &&
             /* If there are no buildings left to construct, remove the section */
@@ -1030,6 +1122,7 @@ export default function Game(props: GameProps) {
                 />
               </>
             )}
+            {activeNavButtons.tips.active && <TutorialModalAsSection />}
           </div>
 
           <br></br>
