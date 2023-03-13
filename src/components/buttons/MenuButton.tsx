@@ -20,7 +20,7 @@ export default function MenuButton({
 
   isSelected ? (textStyle = "text-white") : (textStyle = "text-gray-800");
 
-  const defaultBg = "bg-zinc-100";
+  const defaultBg = "bg-zinc-200";
   switch (buttonColor) {
     case "green":
       buttonColors = "ring-green-600 active:bg-green-500";
@@ -44,7 +44,7 @@ export default function MenuButton({
     <>
       <button
         type="button"
-        className={`w-full flex-1 rounded-md border ${bgColor} ${buttonColors} ${textStyle} p-2.5 outline-transparent ring-offset-2 `}
+        className={`w-full flex-1 rounded-md border font-semibold ${bgColor} ${buttonColors} ${textStyle} p-2.5 outline-transparent ring-offset-2 `}
         onClick={onClick}
       >
         {buttonText}

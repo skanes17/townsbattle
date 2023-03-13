@@ -434,6 +434,8 @@ export default function Game(props: GameProps) {
         { totalAttack: 0, totalHealth: 0, totalArmor: 0, totalThreat: 0 }
       );
 
+    /* TODO: Consider adding resources into the mix */
+
     const friendlyPowerLevel =
       totalAttack + totalHealth + totalArmor + totalThreat;
     console.log(friendlyPowerLevel);

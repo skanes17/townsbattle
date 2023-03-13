@@ -453,6 +453,10 @@ export default function Combat({
   const attackBuildingsAndReturnClone = (): Buildings => {
     const clonedBuildings = cloneBasicObjectWithJSON(buildings);
 
+    const initialNumberOfBuildingsConstructed = Object.keys(buildings).filter(
+      (key) => clonedBuildings[key].constructed
+    ).length;
+
     let buildingsConstructed = Object.keys(buildings).filter(
       (key) => clonedBuildings[key].constructed
     );
@@ -512,8 +516,6 @@ export default function Combat({
         // if the building is destroyed, set it to destroyed (constructed = false)
         buildingAttacked.constructed = false;
 
-        playDestroyBldgSound();
-
         // refill its health (for a future build)
         buildingAttacked.currentHealth = buildingAttacked.maxHealth;
         // refresh pool of buildings that are to be attacked
@@ -522,6 +524,9 @@ export default function Combat({
         );
       }
     }
+    // play a sound at end of combat if any building was lost
+    buildingsConstructed.length < initialNumberOfBuildingsConstructed &&
+      playDestroyBldgSound();
     return clonedBuildings;
   };
 

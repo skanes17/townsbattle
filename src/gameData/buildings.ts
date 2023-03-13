@@ -71,6 +71,26 @@ export const buildingsData = {
     buildScore: 300,
     unlockedUnit: "archer",
   },
+  scoutUnit: {
+    name: "Scout Unit",
+    symbol: "🔍",
+    enabled: false,
+    underConstruction: false,
+    constructed: false,
+    tier: 1,
+    /* attackBonus: 0,
+      healthBonus: 0, */
+    description: "Get Scout Reports on the enemy army before each Combat.",
+    bgImage: "bg-scoutUnit",
+    bgImageSm: "bg-scoutUnitSm",
+    bgImageMd: "bg-scoutUnitMd",
+    bgImageLg: "bg-scoutUnitLg",
+    maxHealth: 3,
+    currentHealth: 3,
+    damage: 0,
+    resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 10 },
+    buildScore: 350,
+  },
   // add workers
   qualityHousing: {
     name: "Quality Housing",
@@ -78,7 +98,7 @@ export const buildingsData = {
     enabled: false,
     underConstruction: false,
     constructed: false,
-    tier: 1,
+    tier: 2,
     /* attackBonus: 0,
         healthBonus: 2, */
     description: "Greatly the number of workers available per turn.",
@@ -89,7 +109,7 @@ export const buildingsData = {
     maxHealth: 7,
     currentHealth: 7,
     damage: 0,
-    resourceCosts: { workers: 5, wood: 15, stone: 10, metal: 10 },
+    resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 15 },
     buildScore: 400,
     // how many extra workers it provides once constructed -- tweak as necessary
     workerBonus: 10,
@@ -101,7 +121,7 @@ export const buildingsData = {
     enabled: false,
     underConstruction: false,
     constructed: false,
-    tier: 1,
+    tier: 2,
     /* attackBonus: 1,
     healthBonus: 3, */
     description: "Learn to smelt metals! Unlock Knights.",
@@ -122,7 +142,7 @@ export const buildingsData = {
     enabled: false,
     underConstruction: false,
     constructed: false,
-    tier: 1,
+    tier: 2,
     /* attackBonus: 0,
     healthBonus: 0, */
     description: "Heal all surviving units when combats ends.",
@@ -142,7 +162,7 @@ export const buildingsData = {
     enabled: false,
     underConstruction: false,
     constructed: false,
-    tier: 1,
+    tier: 3,
     /* attackBonus: 0,
     healthBonus: 0, */
     description: "Find a new resource! Unlock new buildings and units.",
@@ -157,26 +177,6 @@ export const buildingsData = {
     buildScore: 1200,
     unlockedResource: "crystal",
   },
-  scoutUnit: {
-    name: "Scout Unit",
-    symbol: "🔍",
-    enabled: false,
-    underConstruction: false,
-    constructed: false,
-    tier: 1,
-    /* attackBonus: 0,
-      healthBonus: 0, */
-    description: "Upgrade intel on the enemy army.",
-    bgImage: "bg-scoutUnit",
-    bgImageSm: "bg-scoutUnitSm",
-    bgImageMd: "bg-scoutUnitMd",
-    bgImageLg: "bg-scoutUnitLg",
-    maxHealth: 3,
-    currentHealth: 3,
-    damage: 0,
-    resourceCosts: { workers: 10, stone: 30, metal: 30, crystal: 30 },
-    buildScore: 1000,
-  },
   // for mages
   mageSchool: {
     name: "Mage School",
@@ -184,7 +184,7 @@ export const buildingsData = {
     enabled: false,
     underConstruction: false,
     constructed: false,
-    tier: 1,
+    tier: 3,
     /* attackBonus: 1,
     healthBonus: 3, */
     description: "Learn magic! Unlock Mages.",
@@ -206,7 +206,7 @@ export const buildingsData = {
     enabled: false,
     underConstruction: false,
     constructed: false,
-    tier: 1,
+    tier: 3,
     /* attackBonus: 1,
     healthBonus: 3, */
     description: "Explosives go boom! Unlock Bombirds.",
@@ -228,7 +228,7 @@ export const buildingsData = {
     enabled: false,
     underConstruction: false,
     constructed: false,
-    tier: 1,
+    tier: 3,
     /* attackBonus: 0,
         healthBonus: 2, */
     description: "+2 to all unit stats.",

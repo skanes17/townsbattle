@@ -9,6 +9,7 @@ export interface Building {
   enabled: boolean;
   underConstruction: boolean;
   constructed: boolean;
+  // right now it's just a scale of relative good-ness; eventually replace with bonuses, or add new bldgs
   tier: number;
   /* attackBonus: number;
   healthBonus: number; */
