@@ -51,7 +51,7 @@ export function ScoutReport(
   }
 }
 
-/* 
+/* Use a combo of the below to check; also check edge cases where they're equal
 function ArmyComparison({ friendlyArmy, enemyArmy }) {
   const enemyIsTwiceAsPowerful = enemyArmy > friendlyArmy * 2;
   const enemyIsApproxSamePower = Math.abs(enemyArmy - friendlyArmy) < 0.1 * friendlyArmy;

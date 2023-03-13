@@ -469,7 +469,7 @@ export default function Game(props: GameProps) {
     const growthRate = 0.05; // tweak if necessary for balance but, generally, don't touch!
     // TODO: could auto-set this at start of the game based on difficulty
     // Equality turn is APPROXIMATE number of combat turns to pass, on normal mode, until power levels of both armies are about equal
-    const equalityTurn = 5; // default 5
+    const equalityTurn = 10; // default 10
 
     // set a baseline power level for the game -- tweak for balance as necessary
     const basePowerLevel = 5;

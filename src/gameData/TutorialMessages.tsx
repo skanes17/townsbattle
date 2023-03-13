@@ -24,13 +24,13 @@ export const TutorialMessages: Tutorials = {
         </p>
         <p>
           To start, use your first turn to{" "}
-          <span className="text-purple-400">assign workers</span> to{" "}
+          <span className="text-purple-400">assign 🛠️ workers</span> to{" "}
           <span className="text-purple-400">collect resources</span>.
         </p>
         <p>
           Use your next turns to collect more resources and/or{" "}
           <span className="text-purple-400">spend resources</span> to{" "}
-          <span className="text-purple-400">train units</span>, and{" "}
+          <span className="text-purple-400">train units</span> and{" "}
           <span className="text-purple-400">construct buildings</span>!
         </p>
         <p className="text-right italic text-green-400">
@@ -71,8 +71,8 @@ export const TutorialMessages: Tutorials = {
         <h3 className="font-semibold text-amber-400">Planning</h3>
         <p>
           Each building constructed will{" "}
-          <span className="font-semibold text-green-400">unlock</span> something
-          (new units, game-changing bonuses, etc).
+          <span className="font-semibold text-green-400">unlock</span>{" "}
+          something, like new units and game-changing bonuses.
         </p>
         <p>Read each card carefully to learn its effects!</p>
         <h3 className="font-semibold text-amber-400">Combat</h3>
@@ -137,13 +137,13 @@ export const TutorialMessages: Tutorials = {
         </p>
         <p>
           Once a pair of units is finished, new units will be randomly selected
-          for the next matchup.
+          for the next matchup. This process continues until an army is
+          defeated!
         </p>
         <p>
-          This process continues until an army is defeated! Winning{" "}
-          <span className="font-semibold text-amber-400">Combat</span> grants
-          you <span className="text-purple-400">1 extra 🛠️ Worker</span> to use
-          per turn.
+          Winning <span className="font-semibold text-amber-400">Combat</span>{" "}
+          grants you <span className="text-purple-400">1 extra 🛠️ Worker</span>{" "}
+          to use per turn.
         </p>
         <p className="mx-4 text-green-400">
           Some units have special abilities that let them change the flow of
