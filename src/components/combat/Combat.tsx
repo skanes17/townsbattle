@@ -90,6 +90,8 @@ export default function Combat({
 
   const [playDestroyBldgSound] = useSound(destroyBldgSfx);
 
+  const basePointsForCompletingCombat = 100;
+
   // TODO: Consider modifying CombatUnits to include attack and health buffs!
 
   const [combatUnits, setCombatUnits] = useState<Unit[]>([...myUnits]);
@@ -632,8 +634,10 @@ export default function Combat({
         // reset all building damage to 0
         setBuildings(resetBuildingDamageToZero(buildings));
         sendArmiesToPlanning();
-        // add points from this battle to total score
-        scoreUpdaterFn(points);
+        // add points from this battle to total score, as well as some extra points based on how many combats completed
+        scoreUpdaterFn(
+          points + currentCombatTurn * basePointsForCompletingCombat
+        );
         switchPhase();
         break;
     }

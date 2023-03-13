@@ -34,7 +34,7 @@ export const TutorialMessages: Tutorials = {
           <span className="text-purple-400">construct buildings</span>!
         </p>
         <p className="text-right italic text-green-400">
-          In the current version of the game you'll always get 1 resource per
+          In the current version of the game, you'll always get 1 resource per
           worker.
         </p>
       </>
@@ -139,11 +139,11 @@ export const TutorialMessages: Tutorials = {
           Once a pair of units is finished, new units will be randomly selected
           for the next matchup.
         </p>
-        <p>This process continues until one of both armies are defeated!</p>
+        <p>This process continues until an army is defeated!</p>
         <p className="mx-4 text-green-400">
           Some units have special abilities that let them change the flow of
           combat. For example, some units may hit their opponent first, and only
-          take damage if their oppoent survives.
+          take damage if their opponent survives.
         </p>
         <p>
           Read each card carefully to learn their mechanics and build your army
