@@ -139,7 +139,12 @@ export const TutorialMessages: Tutorials = {
           Once a pair of units is finished, new units will be randomly selected
           for the next matchup.
         </p>
-        <p>This process continues until an army is defeated!</p>
+        <p>
+          This process continues until an army is defeated! Winning{" "}
+          <span className="font-semibold text-amber-400">Combat</span> grants
+          you <span className="text-purple-400">1 extra 🛠️ Worker</span> to use
+          per turn.
+        </p>
         <p className="mx-4 text-green-400">
           Some units have special abilities that let them change the flow of
           combat. For example, some units may hit their opponent first, and only

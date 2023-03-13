@@ -986,7 +986,7 @@ alert(
 
                 <p className="sm:text-center">
                   Turns Left{width > breakpoint && ` until Combat`}:{" "}
-                  {planningTurnToTriggerCombat - turn}
+                  {planningTurnToTriggerCombat - turn + 1}
                 </p>
 
                 <p className="sm:text-right">
