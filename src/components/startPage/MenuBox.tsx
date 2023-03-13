@@ -2,14 +2,14 @@ import React, { ReactNode } from "react";
 
 interface MenuBoxProps {
   /* FIXME: Import this icon from the type -- DRY */
-  icon: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
+  icon?: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
   headerText: string;
   children: ReactNode;
 }
 
 export default function MenuBox({ icon, headerText, children }: MenuBoxProps) {
   return (
-    <div className="fixed inset-0 z-10 text-sm sm:text-base">
+    <div className="fixed inset-0 z-50 text-sm sm:text-base">
       {/*
     allows user to click outside to close the modal when paired with an onClick event
     <div className="fixed inset-0 h-full w-full bg-black opacity-40"></div>

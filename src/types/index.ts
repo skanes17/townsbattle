@@ -6,6 +6,7 @@ export * from "./CombatSnapshots";
 export * from "./FunctionTypes";
 export * from "./GameProps";
 export * from "./Menu";
+export * from "./Tutorials";
 export * from "./ResourceCosts";
 export * from "./Resources";
 export * from "./Difficulty";

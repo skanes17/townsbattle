@@ -1,8 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import useSound from "use-sound";
 import { NavButtonType } from "../../types/NavButtons";
 /* @ts-ignore */
 import cardSlideSfx from "../../assets/sounds/cardSlide.mp3";
+import TutorialModal from "../planning/TutorialModal";
+import { TutorialMessages } from "../../gameData";
 
 interface NavButtonProps {
   navButtonType: NavButtonType;
@@ -10,6 +12,7 @@ interface NavButtonProps {
   stateTrigger: boolean;
   navButtonOn: (navButtonType: NavButtonType) => void;
   bgImage: string;
+  tutorials: boolean;
   children: ReactNode;
 }
 
@@ -18,8 +21,12 @@ export default function NavButton({
   stateTrigger,
   navButtonOn,
   bgImage,
+  tutorials,
   children,
 }: NavButtonProps) {
+  /* TODO: Make sure the tips element renders if tutorials === true OR showTip === true */
+  const [showTip, setShowTip] = useState(true);
+
   // sets the background image based on the button type
   const bg = bgImage;
 
@@ -62,22 +69,32 @@ export default function NavButton({
   const [play] = useSound(cardSlideSfx);
 
   return (
-    <div
-      className={`${bg} ${bgContainerStyle} ${specialStyleBasedOnButtonType} pointer-events-auto`}
-    >
-      <button
-        type="button"
-        className={`${overlayStyle}`}
-        // sound only plays for non-score buttons, and when it's not already "on"
-        onClick={() => {
-          navButtonOn(navButtonType);
-          if (navButtonType !== "score" && !stateTrigger) {
-            play();
-          }
-        }}
+    <>
+      <div
+        className={`${bg} ${bgContainerStyle} ${specialStyleBasedOnButtonType} pointer-events-auto`}
       >
-        {children}
-      </button>
-    </div>
+        <button
+          type="button"
+          className={`${overlayStyle}`}
+          // sound only plays for non-score buttons, and when it's not already "on"
+          onClick={() => {
+            navButtonOn(navButtonType);
+            if (navButtonType !== "score" && !stateTrigger) {
+              play();
+            }
+          }}
+        >
+          {children}
+        </button>
+      </div>
+      {tutorials && showTip && stateTrigger && (
+        <TutorialModal
+          headerText={TutorialMessages[navButtonType].category}
+          setShowTip={setShowTip}
+        >
+          {TutorialMessages[navButtonType].tutorial}
+        </TutorialModal>
+      )}
+    </>
   );
 }

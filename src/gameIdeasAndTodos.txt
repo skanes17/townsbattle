@@ -76,7 +76,7 @@ Have a log somewhere in planning to hold the alerts (eg. "Not enough resources!"
 • Maybe simplify the card systems... have the names and icons, and when you click it opens
   a menu and you can then choose where to put your resources or something. Something cleaner anyway.
 
--STYLING the COSTS-
+DONE-STYLING the COSTS-
 Each resource on its own line, perhaps like this:
   🪵 15 / 3
   🪨 14 / 5
@@ -101,20 +101,20 @@ CardFooter can contain your buttons that you just wire up
 
 
 -TODO-
-Get post-combat menu calculating properly
-Change emoji's to images
+DONE-Get post-combat menu calculating properly
+DONE-Change emojis to images
 Add a proper popup to replace alerts (eg "not all workers assigned!")
 Enemy army function-Buffs/traits (systems approach)
 Get AutoBattler to produce combat log
 Incorporate taunts in battle
-Popups/hovertext for Planning cards
+DONE-Popups/hovertext for Planning cards
 Redesign/improve main page UI
 -Remove the Main Menu Summary (DevTool)
 Fill out Options, How to Play, etc
-Redesign Planning UI
-Color scheme overhaul
-New sprites/names for units/cards
+DONE-Redesign Planning UI
+DONE-Color scheme overhaul
+DONE-New sprites/names for units/cards
 Change unit names to variables for easier upkeep (change in one place, should cascade through)
 Convert the End Turn button to multi-purpose
--On a set turn, it'll also call an GenerateEnemyArmy function that builds out their army
+DONE-On a set turn, it'll also call an GenerateEnemyArmy function that builds out their army
 

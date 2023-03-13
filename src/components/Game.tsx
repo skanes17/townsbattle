@@ -693,14 +693,10 @@ export default function Game(props: GameProps) {
     // FIXME: can't get this to fire when I'd like! Fires late.
     setResourcePool({ ...clonedResourcePool, workers: workersPerTurn });
 
-    /* TODO: Newly trained units add to score */
     trainUnits();
 
     // reset units in training back to zero
     setMyTrainingUnits([]);
-
-    // TODO: Generate enemy army here on the appropriate turn
-    // The function could have parameters such as time passed (eg turn number), available units, relative army strength
 
     if (turn === planningTurnToTriggerCombat) {
       switchPhase();
@@ -905,11 +901,15 @@ export default function Game(props: GameProps) {
               )}
 
               <Button
-                buttonColor="blue"
+                buttonColor={
+                  turn !== planningTurnToTriggerCombat ? "blue" : "red"
+                }
                 onClick={endTurn}
                 disabled={resourcePool["workers"] > 0}
               >
-                End Turn {turn}
+                {turn !== planningTurnToTriggerCombat
+                  ? `End Turn ${turn}`
+                  : `Start Combat`}
               </Button>
 
               {/* FIXME: Make this into a tooltip, like a question mark circle thing you hover over or click */}
