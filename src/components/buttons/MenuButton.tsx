@@ -20,22 +20,23 @@ export default function MenuButton({
 
   isSelected ? (textStyle = "text-white") : (textStyle = "text-gray-800");
 
+  const defaultBg = "bg-zinc-100";
   switch (buttonColor) {
     case "green":
       buttonColors = "ring-green-600 active:bg-green-500";
-      bgColor = isSelected ? "bg-green-600" : null;
+      bgColor = isSelected ? "bg-green-600" : defaultBg;
       break;
     case "blue":
       buttonColors = "ring-blue-600 active:bg-blue-500";
-      bgColor = isSelected ? "bg-blue-600" : null;
+      bgColor = isSelected ? "bg-blue-600" : defaultBg;
       break;
     case "red":
       buttonColors = "ring-red-600 active:bg-red-500";
-      bgColor = isSelected ? "bg-red-600" : null;
+      bgColor = isSelected ? "bg-red-600" : defaultBg;
       break;
     case "deepRed":
       buttonColors = "ring-[#9E1A1A] active:bg-[#7B1414]";
-      bgColor = isSelected ? "bg-[#9E1A1A]" : null;
+      bgColor = isSelected ? "bg-[#9E1A1A]" : defaultBg;
       break;
   }
 

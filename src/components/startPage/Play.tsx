@@ -58,7 +58,7 @@ export default function Play() {
   return (
     <MenuBox icon="▶️" headerText="How to Play">
       {/* FIXME: Figure out how to get this into component */}
-      <p className="mt-2 leading-relaxed text-gray-500">
+      <p className="mt-2 leading-relaxed text-white">
         Collect resources, train and upgrade an army, and defeat waves of
         enemies. Survive as long as you can!
       </p>
@@ -85,7 +85,7 @@ export default function Play() {
 
       {/* FIXME: Wrap all in a form; add type="button" to buttons that won't submit data, type="submit" otherwise */}
       <div>
-        <div className="mt-6 text-lg font-medium text-gray-900">Difficulty</div>
+        <div className="mt-6 text-lg font-medium text-white">Difficulty</div>
         <div className="mt-3 items-center gap-2 sm:flex">
           {difficulty === "easy" ? (
             <MenuButton
@@ -143,7 +143,7 @@ export default function Play() {
       </div>
 
       <div>
-        <div className="mt-6 text-lg font-medium text-gray-900">Tutorials</div>
+        <div className="mt-6 text-lg font-medium text-white">Tutorials</div>
         <div className="mt-3 items-center gap-2 sm:flex">
           {tutorials === true ? (
             <>

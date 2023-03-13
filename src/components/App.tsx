@@ -18,6 +18,7 @@ export default function App() {
       <Routes>
         {/* parent Route /, SharedStartMenu is rendered for all children using Outlet */}
         <Route path="/" element={<SharedStartMenu />}>
+          {/* TODO: Make a New Game and Load Game, with Load Game disabled if no saves */}
           <Route path="play" element={<Play />} />
           <Route path="leaderboards" element={<Leaderboards />} />
           <Route path="options" element={<Options />} />

@@ -19,7 +19,7 @@ export function Modal({
     <div className="pointer-events-auto fixed inset-0 z-50 text-sm sm:text-base lg:text-xl xl:text-2xl">
       {/* allows user to click outside to close the modal when paired with an onClick event */}
       <div
-        className="fixed inset-0 h-full w-full bg-black/50 backdrop-blur-[2px]"
+        className="fixed inset-0 h-full w-full bg-black/25 backdrop-blur-[2px]"
         /* turns off the tip after it's seen once */
         onClick={() => markTipAsSeen(tutorialCategory)}
       ></div>

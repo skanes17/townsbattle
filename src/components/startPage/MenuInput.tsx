@@ -17,17 +17,14 @@ export default function MenuInput({
   const menuInputId = useId();
 
   return (
-    <div>
-      <label
-        htmlFor={menuInputId}
-        className="my-2 block font-medium text-gray-900"
-      >
+    <div className="text-white">
+      <label htmlFor={menuInputId} className="my-2 block font-medium">
         {header}
       </label>
       {/* Could have nested input within label and removed htmlFor and id */}
       <input
         id={menuInputId}
-        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        className="block w-full rounded-lg border border-gray-300 bg-zinc-600 p-2.5 text-white focus:border-blue-500 focus:ring-blue-500"
         placeholder={placeholderText}
         value={value}
         onChange={onChange}
