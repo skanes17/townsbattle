@@ -842,7 +842,7 @@ export default function Game(props: GameProps) {
             {Object.keys(activeNavButtons).map((key) => {
               return (
                 <NavButton
-                  navButtonType={key as NavButtonType}
+                  currentNavButtonType={key as NavButtonType}
                   buttonStyle={key as NavButtonType}
                   stateTrigger={activeNavButtons[key].active}
                   navButtonOn={navButtonOn}

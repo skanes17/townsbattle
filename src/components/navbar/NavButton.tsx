@@ -5,19 +5,21 @@ import { NavButtonType } from "../../types/NavButtons";
 import cardSlideSfx from "../../assets/sounds/cardSlide.mp3";
 import TutorialModal from "../planning/TutorialModal";
 import { TutorialMessages } from "../../gameData";
+import TutorialModalHeader from "../planning/TutorialModalHeader";
+import TutorialModalTextContent from "../planning/TutorialModalTextContent";
 
 interface NavButtonProps {
-  navButtonType: NavButtonType;
+  currentNavButtonType: NavButtonType;
   buttonStyle: NavButtonType;
   stateTrigger: boolean;
-  navButtonOn: (navButtonType: NavButtonType) => void;
+  navButtonOn: (currentNavButtonType: NavButtonType) => void;
   bgImage: string;
   tutorials: boolean;
   children: ReactNode;
 }
 
 export default function NavButton({
-  navButtonType,
+  currentNavButtonType,
   stateTrigger,
   navButtonOn,
   bgImage,
@@ -33,7 +35,7 @@ export default function NavButton({
   // these styles are dependent on the type of button you'd like to render
   let specialStyleBasedOnButtonType;
   /* TODO: Refactor eventually so score is taken out of this component and made into its own */
-  switch (navButtonType) {
+  switch (currentNavButtonType) {
     // special styling for just the score
     case "score":
       specialStyleBasedOnButtonType = `w-[72px] justify-start overflow-x-auto
@@ -64,7 +66,7 @@ export default function NavButton({
     stateTrigger
       ? `rounded-lg bg-black/0`
       : `bg-black/50 backdrop-blur-[1px] hover:bg-black/25 hover:backdrop-blur-none`
-  } ${navButtonType === `score` ? `justify-start` : `justify-center`}`;
+  } ${currentNavButtonType === `score` ? `justify-start` : `justify-center`}`;
 
   const [play] = useSound(cardSlideSfx);
 
@@ -78,8 +80,8 @@ export default function NavButton({
           className={`${overlayStyle}`}
           // sound only plays for non-score buttons, and when it's not already "on"
           onClick={() => {
-            navButtonOn(navButtonType);
-            if (navButtonType !== "score" && !stateTrigger) {
+            navButtonOn(currentNavButtonType);
+            if (currentNavButtonType !== "score" && !stateTrigger) {
               play();
             }
           }}
@@ -87,14 +89,35 @@ export default function NavButton({
           {children}
         </button>
       </div>
-      {tutorials && showTip && stateTrigger && (
-        <TutorialModal
-          headerText={TutorialMessages[navButtonType].category}
-          setShowTip={setShowTip}
-        >
-          {TutorialMessages[navButtonType].tutorial}
-        </TutorialModal>
-      )}
+
+      {tutorials &&
+        showTip &&
+        stateTrigger &&
+        (currentNavButtonType !== "tips" ? (
+          // for anything but the tips menu, show just the one tutorial message
+          <TutorialModal setShowTip={setShowTip}>
+            <TutorialModalHeader
+              headerText={TutorialMessages[currentNavButtonType].category}
+            />
+            <TutorialModalTextContent
+              children={TutorialMessages[currentNavButtonType].tutorial}
+            />
+          </TutorialModal>
+        ) : (
+          // if tips are selected, show all the tutorial messages
+          <TutorialModal setShowTip={setShowTip}>
+            {Object.keys(TutorialMessages).map((tutorialCategory) => (
+              <>
+                <TutorialModalHeader
+                  headerText={TutorialMessages[tutorialCategory].category}
+                />
+                <TutorialModalTextContent
+                  children={TutorialMessages[tutorialCategory].tutorial}
+                />
+              </>
+            ))}
+          </TutorialModal>
+        ))}
     </>
   );
 }

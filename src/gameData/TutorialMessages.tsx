@@ -43,7 +43,7 @@ export const TutorialMessages: Tutorials = {
           Use your next turns to spend resources, train units, and construct
           buildings!
         </p>
-        <p>
+        <p className="italic">
           Note: In this version of the game you'll always get 1 resource per
           worker.
         </p>
@@ -71,12 +71,14 @@ export const TutorialMessages: Tutorials = {
     tutorial: (
       <>
         <p>
-          Each building constructed will unlock something. Sometimes it's a
-          unit, sometimes it's a game-changing bonus. Read each card carefully!
+          Each building constructed will unlock something. That could be a new
+          unit type, or a game-changing bonus! Read each card carefully to learn
+          its effects.
         </p>
         <p>
-          Each building has health and protects your Town Center during Combat.
-          Your Town Center is your most important building, and if it's
+          Each building has health and protects your{" "}
+          <span className="font-bold text-indigo-400">Town Center</span> during
+          Combat. Your Town Center is your most important building, and if it's
           destroyed it's Game Over.
         </p>
         <p>
@@ -96,8 +98,8 @@ export const TutorialMessages: Tutorials = {
     category: "Army",
     tutorial: (
       <p>
-        This view lets you see your whole army and check health levels, to help
-        you plan for the next Combat.
+        See your whole army and check health levels, to help you plan for the
+        next Combat.
       </p>
     ),
   },
@@ -105,9 +107,9 @@ export const TutorialMessages: Tutorials = {
     category: "Planning",
     tutorial: (
       <p>
-        The Planning view lets you see everything in one place. Want to play the
-        whole game here? Go for it! Want everything separated? You've got that
-        choice too. Fancy!
+        Want everything, everywhere, all at once? Well this view's for you! All{" "}
+        <span className="font-semibold text-amber-400">Planning</span> screens
+        are here.
       </p>
     ),
   },
