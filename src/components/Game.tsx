@@ -521,7 +521,7 @@ export default function Game(props: GameProps) {
 
       let unitType: UnitType;
       if (nextCombatTurn === 1) {
-        // going into first combat? enemies are all workers
+        // going into first combat? enemies are all villagers
         unitType = "villager";
       } else if (nextCombatTurn === 2) {
         // going into second combat? there's 1 fighter; the rest are villagers
@@ -537,12 +537,11 @@ export default function Game(props: GameProps) {
         }
       } else if (nextCombatTurn === 3) {
         switch (powerLevel) {
-          // introduce 1 ranged enemy
           case 0:
-            unitType = "archer";
+            unitType = "fighter";
             break;
           default:
-            // TODO: the rest can be randomly chosen from player's UNLOCKED units
+            // the rest are randomly chosen from player's UNLOCKED units
             // it shouldn't be undefined because villagers are always available at start
             console.log(unlockedUnitTypes);
             unitType =
@@ -551,23 +550,82 @@ export default function Game(props: GameProps) {
               ]!;
             console.log(unitType);
         }
-      } else if (nextCombatTurn > 3 && nextCombatTurn < 7) {
-        // for now, choose randomly from the unlocked unit types
-        unitType =
-          unlockedUnitTypes[
-            Math.floor(Math.random() * unlockedUnitTypes.length)
-          ]!;
+      } else if (nextCombatTurn === 4 || nextCombatTurn === 5) {
+        switch (powerLevel) {
+          // introduce 1 ranged enemy
+          case 0:
+            unitType = "archer";
+            break;
+          default:
+            // again choosing from player's unlocked
+            console.log(unlockedUnitTypes);
+            unitType =
+              unlockedUnitTypes[
+                Math.floor(Math.random() * unlockedUnitTypes.length)
+              ]!;
+            console.log(unitType);
+        }
+      } else if (nextCombatTurn === 6) {
+        switch (powerLevel) {
+          // introduce 1 tanky enemy
+          case 0:
+            unitType = "knight";
+            break;
+          default:
+            console.log(unlockedUnitTypes);
+            unitType =
+              unlockedUnitTypes[
+                Math.floor(Math.random() * unlockedUnitTypes.length)
+              ]!;
+            console.log(unitType);
+        }
+      } else if (nextCombatTurn === 7 || nextCombatTurn === 8) {
+        switch (powerLevel) {
+          // introduce 1 mage enemy
+          case 0:
+            unitType = "mage";
+            break;
+          default:
+            // for now, choose randomly from the unlocked unit types
+            unitType =
+              unlockedUnitTypes[
+                Math.floor(Math.random() * unlockedUnitTypes.length)
+              ]!;
+        }
+      } else if (nextCombatTurn === 9) {
+        switch (powerLevel) {
+          // introduce 1 bombird enemy
+          case 0:
+            unitType = "bombird";
+            break;
+          default:
+            // for now, choose randomly from the unlocked unit types
+            unitType =
+              unlockedUnitTypes[
+                Math.floor(Math.random() * unlockedUnitTypes.length)
+              ]!;
+        }
       }
       // TODO: Do more manual progression staging here when new units are added!
       else {
-        // At this point, all units in the game are available for choosing, EXCEPT workers.
+        // At this point, all units in the game are available for choosing, EXCEPT villagers.
         // TODO: Could utilize the army generator functions here!
         const allUnitsButworkers = allUnitTypes.filter(
           (unit: UnitType) => unit !== "villager"
         );
-        unitType =
+        // pick a non-villager at random
+        const nonVillagerUnitType =
           allUnitsButworkers[
             Math.floor(Math.random() * allUnitsButworkers.length)
+          ];
+
+        // This is just a setup to have villagers be 5% of the army, for funsies
+        const aScatteringOfVillagers: UnitType[] =
+          Array(19).fill(nonVillagerUnitType);
+        aScatteringOfVillagers.push("villager");
+        unitType =
+          aScatteringOfVillagers[
+            Math.floor(Math.random() * aScatteringOfVillagers.length)
           ];
       }
       // enemy units don't get buffs in this version of the game
