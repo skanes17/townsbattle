@@ -33,7 +33,7 @@ export default function PreCombatCardTemplate({
 
   return (
     <div
-      className={`flex h-full w-16 flex-col items-center justify-center place-self-center overflow-y-auto overflow-x-hidden align-middle sm:h-1/2 sm:w-28 md:h-3/5 md:w-[8.5rem] lg:h-4/5 lg:w-48 xl:h-full xl:w-60 ${borderColor} rounded-lg border-4 bg-white/5 p-0 text-white shadow-md sm:p-2 ${shadowColor} text-xs sm:text-sm lg:text-3xl xl:text-4xl `}
+      className={`flex h-full w-16 flex-col items-center justify-center place-self-center overflow-y-auto overflow-x-hidden align-middle sm:h-1/2 sm:w-28 md:h-3/5 md:w-[8.5rem] lg:h-4/5 lg:w-48 xl:h-full xl:w-60 ${borderColor} rounded-lg border-4 bg-white/5 p-0 text-white shadow-md sm:p-2 ${shadowColor} text-xs sm:text-sm lg:text-3xl`}
     >
       <p className="font-bold">{headerText}</p>
       {/* // Extract into component with Army Grid in Planning */}

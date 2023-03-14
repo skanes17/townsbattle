@@ -810,39 +810,27 @@ export default function Combat({
       </div>
 
       <div className="col-start-2 row-start-2 h-full w-full self-center justify-self-center p-3">
-        <div className="h-full w-full">
-          {phase === Phases.PreCombat && (
+        {phase === Phases.PreCombat && (
+          <CombatButton
+            buttonText="Start"
+            onClick={() => combatMegaFunction()}
+          />
+        )}
+        {phase === Phases.Combat && subPhase === SubPhases.Fight && (
+          <CombatButton
+            buttonText="Fight!"
+            onClick={() => combatMegaFunction()}
+          />
+        )}
+        {phase === Phases.Combat &&
+          subPhase === SubPhases.VictoryCheck &&
+          survivingFriendlyUnitIndexes.length !== 0 &&
+          survivingEnemyUnitIndexes.length !== 0 && (
             <CombatButton
-              buttonText="Start"
+              buttonText="New Selection"
               onClick={() => combatMegaFunction()}
             />
           )}
-          {phase === Phases.Combat && subPhase === SubPhases.Fight ? (
-            <CombatButton
-              buttonText="Fight!"
-              onClick={() => combatMegaFunction()}
-            />
-          ) : (
-            phase === Phases.Combat &&
-            subPhase === SubPhases.VictoryCheck &&
-            (survivingFriendlyUnitIndexes.length === 0 ||
-            survivingEnemyUnitIndexes.length === 0 ? (
-              <div className="col-start-3 row-start-2 h-full w-full self-center justify-self-center">
-                <CombatButton
-                  buttonText="Summary"
-                  onClick={() => combatMegaFunction()}
-                />
-              </div>
-            ) : (
-              <div className="col-start-2 row-start-2 h-full w-full self-center justify-self-center">
-                <CombatButton
-                  buttonText="New Selection"
-                  onClick={() => combatMegaFunction()}
-                />
-              </div>
-            ))
-          )}
-        </div>
       </div>
 
       <div className="col-start-3 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-red-900/50 bg-red-500/5">
@@ -854,8 +842,21 @@ export default function Combat({
           selectedUnit={combatEnemyUnits[enemyIndex]}
         />
       </div>
+
+      <div className="col-start-3 row-start-2 h-full w-full self-center justify-self-center p-3">
+        {phase === Phases.Combat &&
+          subPhase === SubPhases.VictoryCheck &&
+          (survivingFriendlyUnitIndexes.length === 0 ||
+            survivingEnemyUnitIndexes.length === 0) && (
+            <CombatButton
+              buttonText="Summary"
+              onClick={() => combatMegaFunction()}
+            />
+          )}
+      </div>
+
       {phase === Phases.PostCombat && (
-        <div className="col-start-3 row-start-2 h-full w-full self-center justify-self-center p-3">
+        <div className="col-start-2 row-start-2 h-full w-full self-center justify-self-center p-3">
           {buildings["townCenter"].constructed ? (
             <CombatButton
               buttonText="Return to Planning"

@@ -454,32 +454,45 @@ export default function Game(props: GameProps) {
 
     // The following process takes the calculated power level and scales the enemy's power level accordingly.
     let difficultyMultiplier;
+    // Baseline power level for the start of the game -- tweak for balance as necessary
+    let basePowerLevel = 3;
+    // Equality turn is APPROXIMATE number of combat turns to pass, on normal mode, until power levels of both armies are about equal
+    let equalityTurn = 10;
+    // every combat won, the enemy army will grow by this percentage relative to the previous round
+    let growthRate = 0.05; // touch this last! Huge effect on army size turn-to-turn
+
     // may not be balanced -- tweak as necessary!
     switch (difficulty) {
       case "easy":
         difficultyMultiplier = 0.5;
+        basePowerLevel = 2;
+        equalityTurn = 20;
+        growthRate = 0.03;
         break;
       case "normal":
         difficultyMultiplier = 1.0;
+        basePowerLevel = 3;
+        equalityTurn = 12;
+        growthRate = 0.05;
         break;
       case "hard":
-        difficultyMultiplier = 1.5;
+        difficultyMultiplier = 1.25;
+        basePowerLevel = 4;
+        equalityTurn = 10;
+        growthRate = 0.05;
         break;
       case "nightmare":
-        difficultyMultiplier = 2;
+        difficultyMultiplier = 1.5;
+        basePowerLevel = 5;
+        equalityTurn = 8;
+        growthRate = 0.075;
         break;
       default:
         difficultyMultiplier = 1.0;
+        basePowerLevel = 3;
+        equalityTurn = 12;
+        growthRate = 0.05;
     }
-
-    // every combat won, the enemy army will grow by this percentage relative to the previous round
-    const growthRate = 0.05; // tweak if necessary for balance but, generally, don't touch!
-    // TODO: could auto-set this at start of the game based on difficulty
-    // Equality turn is APPROXIMATE number of combat turns to pass, on normal mode, until power levels of both armies are about equal
-    const equalityTurn = 10; // default 10
-
-    // set a baseline power level for the game -- tweak for balance as necessary
-    const basePowerLevel = 5;
 
     // exponential growth formula based on E(turns) = D * (P(1+r)^(nextCombatTurn-equalityTurn) + (basePowerLevel * nextCombatTurn)) where...
     // y = enemy power level, D = difficulty
