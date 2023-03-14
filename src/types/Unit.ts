@@ -17,7 +17,6 @@ export type UnitName =
 
 export interface Unit {
   unitType: UnitType;
-  /* FIXME: UnitName not being properly enforced when imported */
   name: UnitName;
   symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣";
   description?: string;
@@ -46,9 +45,6 @@ export interface BaseUnit {
   [key: string]: Omit<Unit, "currentHealth">;
 }
 
-/* // TODO: Use Pick<> here? */
 export interface TrainingUnit {
   unitType: UnitType;
-  /* Can't remember where I was going to use tempId */
-  tempId?: number;
 }
