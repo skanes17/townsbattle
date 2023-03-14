@@ -1,4 +1,6 @@
-export const upgradesData = {
+import { UpgradeCosts } from "../types";
+
+export const upgradesData: UpgradeCosts = {
   axes: {
     woodCost: 20,
     stoneCost: 20,

@@ -1,4 +1,6 @@
-export const resourceData = {
+import { Resources } from "../types";
+
+export const resourceData: Resources = {
   workers: {
     name: "worker",
     symbol: "🛠️",

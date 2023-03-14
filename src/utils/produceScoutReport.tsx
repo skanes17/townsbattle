@@ -97,3 +97,40 @@ const enemyIsApproxSamePower =
   Math.abs(enemyArmy - friendlyArmy) < 0.1 * friendlyArmy;
 const enemyIsHalfPowerful = enemyArmy < 0.5 * friendlyArmy;
 */
+
+/* if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel / 2) {
+        alert(
+          `Scout's Report on the Enemy --  Unit Count: We're greatly outnumbered, Unit Types: ${enemyUnitTypes}, Threat Level: Critical!, Summary: The enemy has a larger and much more threatening army than ours.`
+        );
+      } else if ((friendlyUnits.length > enemyUnits.length && friendlyPowerLevel < powerLevel / 2))
+      alert(
+        `Scout's Report on the Enemy --  Unit Count: We outnumber them! Unit Types: ${enemyUnitTypes}, Threat Level: High, Summary: The enemy has a smaller but more threatening army than ours.`
+      )
+    } else if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel){
+    alert(
+      `Scout's Report on the Enemy --  Unit Count: We're outnumbered! Unit Types: ${enemyUnitTypes}, Threat Level: High, Summary: The enemy has a smaller but more threatening army than ours.`
+
+      `Scout Report: Your army seems to be smaller and less threatening than that of the enemy.`
+    )
+  }else if (friendlyUnits.length > enemyUnits.length && friendlyPowerLevel < powerLevel){
+  alert(
+    `Scout Report: Your army seems to be larger than the enemy's, but less threatening!`
+  )} 
+
+
+  else if (friendlyUnits.length < enemyUnits.length && powerLevel < friendlyPowerLevel / 2) {
+    alert(
+      `Scout Report: The enemy army is currently much more threatening than yours, and has more units!`
+    );
+  } else if (friendlyUnits.length > enemyUnits.length && powerLevel < friendlyPowerLevel / 2){
+  alert(
+    `Scout Report: The enemy army is currently smaller than yours, but still seems to be much more threatening!`
+  )
+} else if (friendlyUnits.length < enemyUnits.length && powerLevel < friendlyPowerLevel){
+alert(
+  `Scout Report: Your army seems to be smaller and less threatening than that of the enemy.`
+)
+}else if (friendlyUnits.length > enemyUnits.length && powerLevel < friendlyPowerLevel){
+alert(
+`Scout Report: Your army seems to be larger than the enemy's, but less threatening!`
+)} else  */

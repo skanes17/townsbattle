@@ -11,18 +11,16 @@ import { SpacerDiv } from "../layout/SpacerDiv";
 
 interface DisplayBuildingsProps {
   buildings: Buildings;
+  buildingsConstructed: string[];
 }
 
-export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
-  // Filter returns the buildings data for constructed buildings
-  // Object.keys(buildings) then returns only the keys (names) for those enabled buildings
-  const constructedBuildings = Object.keys(buildings).filter(
-    (key) => buildings[key].constructed
-  );
-
+export default function DisplayBuildings({
+  buildings,
+  buildingsConstructed,
+}: DisplayBuildingsProps) {
   return (
     <>
-      {constructedBuildings.map((buildingType) => (
+      {buildingsConstructed.map((buildingType) => (
         <BldgCardTemplate bgImage={buildings[buildingType].bgImage}>
           <CardHeader cardName={buildings[buildingType].name} />
           <CardHoverText>{buildings[buildingType].description}</CardHoverText>

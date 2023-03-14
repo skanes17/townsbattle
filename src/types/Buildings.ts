@@ -5,7 +5,6 @@ import { UnitType } from "./Unit";
 export interface Building {
   name: string;
   symbol: string;
-  imageSrc?: string;
   enabled: boolean;
   underConstruction: boolean;
   constructed: boolean;

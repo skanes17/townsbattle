@@ -1,9 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   baseUnitData,
   buildingsData,
+  defaultGameState,
+  playerNames,
   resourceData,
   resourcePoolData,
+  townNames,
   TutorialMessages,
   upgradesData,
 } from "../gameData";
@@ -21,10 +24,6 @@ import { ConstructBuilding, TrainingCardContainer } from "./cards";
 import GridCardContainer from "./layout/GridCardContainer";
 import { Button } from "./buttons";
 
-// import { buildingsData, buildingCostsData } from "../gameData/buildings";
-// import { upgradesData } from "../gameData/upgrades";
-// import { BaseUnit } from "../types/BaseUnit";
-// import { BuildingCosts } from "../types/BuildingCosts";
 import {
   BaseResourceType,
   BaseUnit,
@@ -67,6 +66,7 @@ import { ModalHeader, ModalTextContent } from "./planning/tutorials";
 import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSection";
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
+import { GameState } from "../types/GameState";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -79,9 +79,116 @@ import { ArmyGrid } from "./shared";
 // Composition of army could be displayed to UI, for example 20% fighter 30% archer 50% knight
 
 export default function Game(props: GameProps) {
-  const [devTools, setDevTools] = useState(false);
+  // for choosing the save file -- TODO: allow it to be set in the menu
+  const [chosenGameStateIndex, setChosenGameStateIndex] = useState(1);
 
-  // pull startData from linked Play component
+  const defaultGameState = {
+    devTools: false,
+    score: 0,
+    playerName: playerNames[Math.floor(Math.random() * playerNames.length)],
+    townName: townNames[Math.floor(Math.random() * townNames.length)],
+    difficulty: "normal",
+    tutorials: true,
+    turn: 1,
+    nextCombatTurn: 1,
+    numberOfCombatsStarted: 0,
+    inCombat: false,
+    resources: resourceData,
+    resourcePool: resourcePoolData,
+    buildings: buildingsData,
+    friendlyUnits: [],
+    friendlyTrainingUnits: [],
+    enemyUnits: [],
+    unitId: 0,
+    activeNavButtons: {
+      score: {
+        active: false,
+        bgImage: "bg-score",
+        tipSeen: false,
+      },
+      resources: {
+        active: true,
+        bgImage: "bg-resources",
+        tipSeen: false,
+      },
+      training: {
+        active: false,
+        bgImage: "bg-training",
+        tipSeen: false,
+      },
+      buildings: {
+        active: false,
+        bgImage: "bg-buildings",
+        tipSeen: false,
+      },
+      army: {
+        active: false,
+        bgImage: "bg-army",
+        tipSeen: false,
+      },
+      planning: {
+        active: false,
+        bgImage: "bg-planning",
+        tipSeen: false,
+      },
+      tips: {
+        active: false,
+        bgImage: "bg-tips",
+        tipSeen: false,
+      },
+    },
+    tipsSeen: {
+      score: false,
+      resources: false,
+      training: false,
+      buildings: false,
+      army: false,
+      planning: false,
+      tips: false,
+      combat: false,
+    },
+  };
+
+  const playerGameState: GameState = {
+    devTools: JSON.parse(localStorage.getItem(`devTools`) as string),
+    score: JSON.parse(localStorage.getItem(`score`) as string),
+    playerName: JSON.parse(localStorage.getItem(`playerName`) as string),
+    townName: JSON.parse(localStorage.getItem(`townName`) as string),
+    difficulty: JSON.parse(localStorage.getItem(`difficulty`) as string),
+    tutorials: JSON.parse(localStorage.getItem(`tutorials`) as string),
+    turn: JSON.parse(localStorage.getItem(`turn`) as string),
+    nextCombatTurn: JSON.parse(
+      localStorage.getItem(`nextCombatTurn`) as string
+    ),
+    numberOfCombatsStarted: JSON.parse(
+      localStorage.getItem(`numberOfCombatsStarted`) as string
+    ),
+    inCombat: JSON.parse(localStorage.getItem(`inCombat`) as string),
+    resources: JSON.parse(localStorage.getItem(`resources`) as string),
+    resourcePool: JSON.parse(localStorage.getItem(`resourcePool`) as string),
+    buildings: JSON.parse(localStorage.getItem(`buildings`) as string),
+    friendlyUnits: JSON.parse(localStorage.getItem(`friendlyUnits`) as string),
+    friendlyTrainingUnits: JSON.parse(
+      localStorage.getItem(`friendlyTrainingUnits`) as string
+    ),
+    enemyUnits: JSON.parse(localStorage.getItem(`enemyUnits`) as string),
+    unitId: JSON.parse(localStorage.getItem(`unitId`) as string),
+    activeNavButtons: JSON.parse(
+      localStorage.getItem(`activeNavButtons`) as string
+    ),
+    tipsSeen: JSON.parse(localStorage.getItem(`tipsSeen`) as string),
+  };
+
+  // TODO: Expand this so it's dynamic, user can make a new game or load an old one (say up to 10)
+  const savedGameStates = [
+    defaultGameState,
+    playerGameState ?? defaultGameState,
+  ];
+  const loadedGameState = savedGameStates[chosenGameStateIndex];
+
+  const [devTools, setDevTools] = useState(loadedGameState.devTools);
+
+  /* // FIXME: Put some version of this back in if necessary! -- pull startData from linked Play component
   const startData = useLocation();
 
   // grab data from state/useLocation (sent through Link)
@@ -90,31 +197,31 @@ export default function Game(props: GameProps) {
   const startDataTownName: string =
     startData.state.townName || startData.state.defaultTownName;
   const startDataDifficulty: Difficulty = startData.state.difficulty;
-  const startDataTutorials: boolean = startData.state.tutorials;
+  const startDataTutorials: boolean = startData.state.tutorials; */
 
   // setting player options
   // from state first, or local storage second, or defaults as backup
-  const playerName =
-    startDataPlayerName || localStorage.getItem("playerName") || "Player";
-  const townName =
-    startDataTownName || localStorage.getItem("townName") || "Townsburg";
-  const difficulty: Difficulty =
-    startDataDifficulty ||
-    (localStorage.getItem("difficulty") as string) ||
-    "normal";
-  const [tutorials, setTutorials] = useState(
-    startDataTutorials ??
-      JSON.parse(localStorage.getItem("tutorials") ?? "true")
-  );
-
   // -- NOTE ON RETRIEVING LOCALLY-STORED DATA SENT FROM MAIN PAGE IF NECESSARY
   // if localStorage values are non-null, use the locally stored values
   // if storage is null, use some default values so the game still runs
 
-  const [turn, setTurn] = useState(1);
-  const [nextCombatTurn, setNextCombatTurn] = useState(1);
-
-  const [numberOfCombatsStarted, setNumberOfCombatsStarted] = useState(0);
+  // points from rounds of combat get added to this
+  const [score, setScore] = useState(loadedGameState.score);
+  const [playerName, setPlayerName] = useState(loadedGameState.playerName);
+  const [townName, setTownName] = useState(loadedGameState.townName);
+  // FIXME: why the error here when Type isn't made explicit?
+  const [difficulty, setDifficulty] = useState(
+    loadedGameState.difficulty as Difficulty
+  );
+  const [tutorials, setTutorials] = useState(loadedGameState.tutorials);
+  const [turn, setTurn] = useState(loadedGameState.turn);
+  const [nextCombatTurn, setNextCombatTurn] = useState(
+    loadedGameState.nextCombatTurn
+  );
+  const [numberOfCombatsStarted, setNumberOfCombatsStarted] = useState(
+    loadedGameState.numberOfCombatsStarted
+  );
+  const [inCombat, setInCombat] = useState(loadedGameState.inCombat);
 
   // enemy will not be generated before reaching this turn number has passed
   const minimumPlanningTurnsUntilEnemyGen = 4;
@@ -128,29 +235,17 @@ export default function Game(props: GameProps) {
     );
 
   // how long to wait after enemies are generated before combat starts
-  let turnsBetweenEnemyArmyGenAndCombat = 2;
+  const turnsBetweenEnemyArmyGenAndCombat = 2;
   // planning turn on which combat actually starts
   const planningTurnToTriggerCombat =
     planningTurnToGenerateEnemies + turnsBetweenEnemyArmyGenAndCombat;
 
-  const [inCombat, setInCombat] = useState(false);
-
-  // points from rounds of combat get added to this
-  const [score, setScore] = useState(0); // score could potentially be removed from state
-  /* TODO: Points for a unit is trained, building built? */
-
-  // TODO: Add food? And/or some resource common to all unit building?
-  // Idea: Workers are consumed when used for making units...
-  // ... but introduce a gold economy which is used for building stuff along with resources
-  // .. then you need to choose between basic resources AND gold every turn
-  // maybe workers aren't guaranteed every turn??
-  // set number per turn, and a new building adds new ones per turn?
-
   /* ===RESOURCES AND WORKERS=== */
-  const [resources, setResources] = useState<Resources>(resourceData);
+  const [resources, setResources] = useState(loadedGameState.resources);
   const numberOfWorkersAtStartOfGame = 5;
-  const [resourcePool, setResourcePool] =
-    useState<ResourcePool>(resourcePoolData);
+  const [resourcePool, setResourcePool] = useState(
+    loadedGameState.resourcePool
+  );
   const resourceTypes: ResourceType[] = Object.keys(
     resources
   ) as ResourceType[];
@@ -164,6 +259,8 @@ export default function Game(props: GameProps) {
   const buildingsUnderConstruction = Object.keys(buildings).filter(
     (key) => buildings[key].underConstruction
   );
+  // Filter returns the buildings data for constructed buildings
+  // Object.keys(buildings) then returns only the keys (names) for those enabled buildings
   const buildingsConstructed = Object.keys(buildings).filter(
     (key) => buildings[key].constructed
   );
@@ -189,7 +286,7 @@ export default function Game(props: GameProps) {
 
   /* ===UPGRADES=== */
   // Unused right now -- match buildings structure?
-  const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>(upgradesData);
+  // const [upgradeCosts, setUpgradeCosts] = useState<UpgradeCosts>(upgradesData);
 
   /* ===UNITS=== */
   // friendly army
@@ -652,42 +749,6 @@ export default function Game(props: GameProps) {
     // new messages if Scout Unit was constructed
     if (buildings["scoutUnit"].constructed) {
       /* TODO: Call a function here taking the power levels and sizes and returning the Scout's Report! */
-      /* if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel / 2) {
-        alert(
-          `Scout's Report on the Enemy --  Unit Count: We're greatly outnumbered, Unit Types: ${enemyUnitTypes}, Threat Level: Critical!, Summary: The enemy has a larger and much more threatening army than ours.`
-        );
-      } else if ((friendlyUnits.length > enemyUnits.length && friendlyPowerLevel < powerLevel / 2))
-      alert(
-        `Scout's Report on the Enemy --  Unit Count: We outnumber them! Unit Types: ${enemyUnitTypes}, Threat Level: High, Summary: The enemy has a smaller but more threatening army than ours.`
-      )
-    } else if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel){
-    alert(
-      `Scout's Report on the Enemy --  Unit Count: We're outnumbered! Unit Types: ${enemyUnitTypes}, Threat Level: High, Summary: The enemy has a smaller but more threatening army than ours.`
-
-      `Scout Report: Your army seems to be smaller and less threatening than that of the enemy.`
-    )
-  }else if (friendlyUnits.length > enemyUnits.length && friendlyPowerLevel < powerLevel){
-  alert(
-    `Scout Report: Your army seems to be larger than the enemy's, but less threatening!`
-  )} 
-
-
-  else if (friendlyUnits.length < enemyUnits.length && powerLevel < friendlyPowerLevel / 2) {
-    alert(
-      `Scout Report: The enemy army is currently much more threatening than yours, and has more units!`
-    );
-  } else if (friendlyUnits.length > enemyUnits.length && powerLevel < friendlyPowerLevel / 2){
-  alert(
-    `Scout Report: The enemy army is currently smaller than yours, but still seems to be much more threatening!`
-  )
-} else if (friendlyUnits.length < enemyUnits.length && powerLevel < friendlyPowerLevel){
-alert(
-  `Scout Report: Your army seems to be smaller and less threatening than that of the enemy.`
-)
-}else if (friendlyUnits.length > enemyUnits.length && powerLevel < friendlyPowerLevel){
-alert(
-`Scout Report: Your army seems to be larger than the enemy's, but less threatening!`
-)} else  */
 
       alert(
         `Scouts report that the enemy army has ${
@@ -851,9 +912,6 @@ alert(
   const unitCounts = countUnits(friendlyUnits, unitTypes, "army");
   const enemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
 
-  /* TODO: Incorporate this on building click */
-  const [toggle, setToggle] = useState(false);
-
   // TODO: Consider better way of doing this?
   const [activeNavButtons, setActiveNavButtons] = useState<NavButtons>({
     score: {
@@ -939,16 +997,82 @@ alert(
   };
 
   // Listener for checking window width
-  const [width, setWidth] = React.useState(window.innerWidth);
+  const [width, setWidth] = useState(window.innerWidth);
   const breakpoint = 640;
 
-  React.useEffect(() => {
+  // run only when window is resized
+  useEffect(() => {
     const handleWindowResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleWindowResize);
 
     // Return a function from the effect that removes the event listener
     return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
+
+  /* ==SAVING ALL STATE IN LOCAL STORAGE WHEN ANYTHING IS UPDATED== */
+  useEffect(() => {
+    localStorage.setItem(`devTools`, JSON.stringify(devTools));
+  }, [devTools]);
+  useEffect(() => {
+    localStorage.setItem(`score`, JSON.stringify(score));
+  }, [score]);
+  useEffect(() => {
+    localStorage.setItem(`playerName`, JSON.stringify(playerName));
+  }, [playerName]);
+  useEffect(() => {
+    localStorage.setItem(`townName`, JSON.stringify(townName));
+  }, [townName]);
+  useEffect(() => {
+    localStorage.setItem(`difficulty`, JSON.stringify(difficulty));
+  }, [difficulty]);
+  useEffect(() => {
+    localStorage.setItem(`tutorials`, JSON.stringify(tutorials));
+  }, [tutorials]);
+  useEffect(() => {
+    localStorage.setItem(`turn`, JSON.stringify(turn));
+  }, [turn]);
+  useEffect(() => {
+    localStorage.setItem(`nextCombatTurn`, JSON.stringify(nextCombatTurn));
+  }, [nextCombatTurn]);
+  useEffect(() => {
+    localStorage.setItem(
+      `numberOfCombatsStarted`,
+      JSON.stringify(numberOfCombatsStarted)
+    );
+  }, [numberOfCombatsStarted]);
+  useEffect(() => {
+    localStorage.setItem(`inCombat`, JSON.stringify(inCombat));
+  }, [inCombat]);
+  useEffect(() => {
+    localStorage.setItem(`resources`, JSON.stringify(resources));
+  }, [resources]);
+  useEffect(() => {
+    localStorage.setItem(`resourcePool`, JSON.stringify(resourcePool));
+  }, [resourcePool]);
+  useEffect(() => {
+    localStorage.setItem(`buildings`, JSON.stringify(buildings));
+  }, [buildings]);
+  useEffect(() => {
+    localStorage.setItem(`friendlyUnits`, JSON.stringify(friendlyUnits));
+  }, [friendlyUnits]);
+  useEffect(() => {
+    localStorage.setItem(
+      `friendlyTrainingUnits`,
+      JSON.stringify(friendlyTrainingUnits)
+    );
+  }, [friendlyTrainingUnits]);
+  useEffect(() => {
+    localStorage.setItem(`enemyUnits`, JSON.stringify(enemyUnits));
+  }, [enemyUnits]);
+  useEffect(() => {
+    localStorage.setItem(`unitId`, JSON.stringify(unitId));
+  }, [unitId]);
+  useEffect(() => {
+    localStorage.setItem(`activeNavButtons`, JSON.stringify(activeNavButtons));
+  }, [activeNavButtons]);
+  useEffect(() => {
+    localStorage.setItem(`tipsSeen`, JSON.stringify(tipsSeen));
+  }, [tipsSeen]);
 
   return inCombat ? (
     <>
@@ -1147,7 +1271,10 @@ alert(
               activeNavButtons.buildings.active) && (
               <GridCardContainer headerText="Buildings Constructed">
                 {/* TODO: Match component structure with other cards */}
-                <DisplayBuildings buildings={buildings} />
+                <DisplayBuildings
+                  buildings={buildings}
+                  buildingsConstructed={buildingsConstructed}
+                />
               </GridCardContainer>
             )}
 
