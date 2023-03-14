@@ -5,7 +5,6 @@ import POddStyle from "./POddStyle";
 import PostCombatBldgStatBox from "./PostCombatBldgStatBox";
 import PostCombatSummary from "./PostCombatSummary";
 import PostCombatUnitsStatBox from "./PostCombatUnitsStatBox";
-import UnitTile from "./UnitTile";
 
 export {
   Combat,
@@ -15,5 +14,4 @@ export {
   PostCombatBldgStatBox,
   PostCombatSummary,
   PostCombatUnitsStatBox,
-  UnitTile,
 };

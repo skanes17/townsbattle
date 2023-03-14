@@ -10,7 +10,7 @@ interface CombatLogProps {
 
 export default function CombatLog({ combatEvents, townName }: CombatLogProps) {
   return (
-    <div className="h-full w-full select-text self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4">
+    <div className="h-full max-h-full w-full select-text self-center overflow-y-auto rounded-lg bg-gray-500/10 p-4">
       {combatEvents.map((item) => {
         // the item event type is "preCombat", "combat", etc
         // item index is which message to choose from the list of these events

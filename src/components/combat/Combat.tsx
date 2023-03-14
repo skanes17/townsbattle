@@ -808,8 +808,9 @@ export default function Combat({
         )}
         {/* Button */}
       </div>
+
       <div className="col-start-2 row-start-2 h-full w-full self-center justify-self-center p-3">
-        <div className="row-start-4 h-full w-full">
+        <div className="h-full w-full">
           {phase === Phases.PreCombat && (
             <CombatButton
               buttonText="Start"
@@ -823,21 +824,27 @@ export default function Combat({
             />
           ) : (
             phase === Phases.Combat &&
-            subPhase === SubPhases.VictoryCheck && (
-              /* FIXME: Make name depend on state of army (select, summary, etc) */
-              <CombatButton
-                buttonText={
-                  survivingFriendlyUnitIndexes.length === 0 ||
-                  survivingEnemyUnitIndexes.length === 0
-                    ? "Summary"
-                    : "New Selection"
-                }
-                onClick={() => combatMegaFunction()}
-              />
-            )
+            subPhase === SubPhases.VictoryCheck &&
+            (survivingFriendlyUnitIndexes.length === 0 ||
+            survivingEnemyUnitIndexes.length === 0 ? (
+              <div className="col-start-3 row-start-2 h-full w-full self-center justify-self-center">
+                <CombatButton
+                  buttonText="Summary"
+                  onClick={() => combatMegaFunction()}
+                />
+              </div>
+            ) : (
+              <div className="col-start-2 row-start-2 h-full w-full self-center justify-self-center">
+                <CombatButton
+                  buttonText="New Selection"
+                  onClick={() => combatMegaFunction()}
+                />
+              </div>
+            ))
           )}
         </div>
       </div>
+
       <div className="col-start-3 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-red-900/50 bg-red-500/5">
         <ArmyGrid
           gridStyle="combat"
@@ -847,9 +854,9 @@ export default function Combat({
           selectedUnit={combatEnemyUnits[enemyIndex]}
         />
       </div>
-      <div className="col-start-3 row-start-2 h-full w-full self-center justify-self-center p-3">
-        {phase === Phases.PostCombat &&
-          (buildings["townCenter"].constructed ? (
+      {phase === Phases.PostCombat && (
+        <div className="col-start-3 row-start-2 h-full w-full self-center justify-self-center p-3">
+          {buildings["townCenter"].constructed ? (
             <CombatButton
               buttonText="Return to Planning"
               onClick={() => {
@@ -863,8 +870,9 @@ export default function Combat({
             >
               Return to Start
             </Link>
-          ))}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
