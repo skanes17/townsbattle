@@ -998,19 +998,22 @@ alert(
         {/* TODO: Make grid-rows-[1fr_repeat(4,5fr)_1.5fr] more responsive by making the repeat dynamic, somehow */}
         <nav className="pointer-events-none fixed top-0 left-0 z-20 grid h-screen w-36 grid-rows-[1fr_repeat(5,2fr)_1.5fr] text-lg transition-transform sm:grid-rows-[1fr_repeat(5,5fr)_1.5fr] md:w-64 md:grid-rows-[1fr_repeat(5,3fr)_1.5fr]">
           <>
-            {Object.keys(activeNavButtons).map((key) => {
+            {Object.keys(activeNavButtons).map((navButtonType) => {
               return (
                 <NavButton
-                  currentNavButtonType={key as NavButtonType}
-                  buttonStyle={key as NavButtonType}
-                  stateTrigger={activeNavButtons[key].active}
+                  key={navButtonType}
+                  currentNavButtonType={navButtonType as NavButtonType}
+                  buttonStyle={navButtonType as NavButtonType}
+                  stateTrigger={activeNavButtons[navButtonType].active}
                   navButtonOn={navButtonOn}
-                  bgImage={activeNavButtons[key].bgImage}
+                  bgImage={activeNavButtons[navButtonType].bgImage}
                   tutorials={tutorials}
-                  tipSeen={tipsSeen[key]}
+                  tipSeen={tipsSeen[navButtonType]}
                   markTipAsSeen={markTipAsSeen}
                 >
-                  {key === "score" ? `Score: ${score}` : key}
+                  {navButtonType === "score"
+                    ? `Score: ${score}`
+                    : navButtonType}
                 </NavButton>
               );
             })}
@@ -1026,6 +1029,7 @@ alert(
                   .filter((resourceType) => resourceType === "workers")
                   .map((resourceType: ResourceType) => (
                     <DashboardImageAndCount
+                      key={resourceType}
                       dataObject={resources}
                       countsObject={resourcePool}
                       type={resourceType}
@@ -1036,6 +1040,7 @@ alert(
                 {resourceTypesAvailableToPlayer.map(
                   (resourceType: BaseResourceType | undefined) => (
                     <DashboardImageAndCount
+                      key={resourceType}
                       dataObject={resources}
                       countsObject={resourcePool}
                       type={resourceType as BaseResourceType}
@@ -1052,6 +1057,7 @@ alert(
                   {unitTypes.map((unitType: UnitType) =>
                     unitCounts[unitType] > 0 ? (
                       <DashboardImageAndCount
+                        key={unitType}
                         dataObject={BASE_UNIT_DATA}
                         countsObject={unitCounts}
                         type={unitType}

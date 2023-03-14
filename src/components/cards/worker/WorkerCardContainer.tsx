@@ -22,6 +22,7 @@ export default function WorkerCardContainer({
       {resourceTypesAvailableToPlayer.map(
         (resourceType: BaseResourceType | undefined) => (
           <WorkerCard
+            key={resourceType}
             resources={resources}
             setResources={setResources}
             resourcePool={resourcePool}

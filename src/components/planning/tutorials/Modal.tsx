@@ -41,12 +41,7 @@ export function Modal({
                 stroke="currentColor"
                 aria-label="Close"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>

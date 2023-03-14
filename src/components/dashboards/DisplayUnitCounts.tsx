@@ -22,6 +22,7 @@ export default function DisplayUnitCounts({
       <div className="grid auto-cols-max grid-flow-col justify-center gap-4 transition duration-75 ease-in-out md:text-lg lg:text-2xl">
         {unitTypes.map((unitType: string) => (
           <DashboardImageAndCount
+            key={unitType}
             dataObject={BASE_UNIT_DATA}
             countsObject={unitCounts}
             type={unitType as UnitType}
