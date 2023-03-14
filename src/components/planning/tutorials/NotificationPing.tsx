@@ -8,7 +8,7 @@ export function NotificationPing() {
       {/* relative to the span container, this is the animated transparent background */}
       <span className="relative inline-flex h-4 w-4 animate-ping rounded-full bg-green-400/75"></span>
       {/* absolute to the circle's background, inset is zero to sit it completed within it */}
-      <span className="absolute inset-0 inline-flex h-4 w-4 rounded-full border border-green-200 bg-green-500"></span>
+      <span className="absolute inset-0 inline-flex h-4 w-4 rounded-full border border-green-200/75 bg-gradient-to-tr from-green-400/80 to-green-700/80"></span>
     </span>
   );
 }

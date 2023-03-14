@@ -1221,29 +1221,6 @@ alert(
               trainEnemyUnits={trainEnemyUnits}
             />
           ) : null}
-
-          {/* // MODAL STUFF -- The TrainingCardContainer would go inside the building */}
-          <div
-            className={`fixed inset-0 z-10 transition-all ${
-              toggle ? "opacity-100" : "invisible opacity-0"
-            } bg-zinc-900/50 duration-500 ease-in-out`}
-          >
-            {/*
-          allows user to click outside to close the modal when paired with an onClick event
-         <div className="fixed inset-0 h-full w-full bg-black opacity-40"></div>
-          */}
-            <div
-              className={`${
-                toggle ? null : "translate-y-full"
-              } z-50 flex min-h-screen items-center px-4 py-8 transition-all duration-500 ease-in-out`}
-            >
-              <div
-                className={
-                  "relative mx-auto w-fit max-w-lg rounded-md border border-white bg-zinc-800 p-4 shadow-lg"
-                }
-              ></div>
-            </div>
-          </div>
         </div>
       </div>
     </>
