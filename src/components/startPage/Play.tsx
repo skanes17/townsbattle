@@ -18,7 +18,7 @@ interface StartData {
 export default function Play() {
   const [devTools, setDevTools] = useState(false);
 
-  const [defaultPlayerName, setDefaultPlayerName] = useState(
+  const [defaultPlayerName] = useState(
     playerNames[Math.floor(Math.random() * playerNames.length)]
   );
   const [playerName, setPlayerName] = useState<string>();
@@ -29,16 +29,6 @@ export default function Play() {
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
   const [tutorials, setTutorials] = useState(true);
 
-  // to send as state={} through Router Link
-  const startData: StartData = {
-    defaultPlayerName,
-    playerName,
-    defaultTownName,
-    townName,
-    difficulty,
-    tutorials,
-  };
-
   const difficultyUpdater: DifficultyUpdater = (difficulty) => {
     setDifficulty(difficulty);
   };
@@ -48,11 +38,17 @@ export default function Play() {
 
   // exporting data to local storage onClick, in case game page is refreshed while skipping menu
   const storeStartData = () => {
-    localStorage.setItem("playerName", playerName || defaultPlayerName);
-    localStorage.setItem("townName", townName || defaultTownName);
-    localStorage.setItem("difficulty", difficulty);
+    localStorage.setItem(
+      "playerName",
+      JSON.stringify(playerName || defaultPlayerName)
+    );
+    localStorage.setItem(
+      "townName",
+      JSON.stringify(townName || defaultTownName)
+    );
+    localStorage.setItem("difficulty", JSON.stringify(difficulty));
     // use JSON.parse to convert back to Boolean when imported
-    localStorage.setItem("tutorials", tutorials.toString());
+    localStorage.setItem("tutorials", JSON.stringify(tutorials));
   };
 
   return (
@@ -200,7 +196,6 @@ export default function Play() {
         <Link
           to="/play/game"
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center font-semibold text-white outline-transparent ring-blue-600 ring-offset-2 focus:ring-2"
-          state={startData}
           onClick={() => storeStartData()}
         >
           Next
