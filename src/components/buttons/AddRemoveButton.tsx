@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface AddRemoveButtonProps {
-  children: string;
+  children: ReactNode;
   buttonType: "add" | "remove";
   onClick: () => void;
 }

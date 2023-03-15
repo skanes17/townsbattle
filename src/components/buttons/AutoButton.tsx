@@ -1,5 +1,5 @@
 interface AutoButtonProps {
-  buttonText: "Auto";
+  buttonText: string;
   onClick: () => void;
 }
 
