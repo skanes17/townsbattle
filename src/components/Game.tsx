@@ -2,21 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   baseUnitData,
   buildingsData,
-  playerNames,
+  defaultPlayerName,
+  defaultTownName,
   resourceData,
   resourcePoolData,
-  townNames,
-  TutorialMessages,
-  upgradesData,
 } from "../gameData";
-import {
-  BaseResource,
-  DisplayBuildings,
-  Resource,
-  ResourceToCollect,
-  UnitCount,
-  UnitInTraining,
-} from "./planning/";
+import { DisplayBuildings } from "./planning/";
 import { DevTools } from "./devTools";
 import { DisplayTemplate } from "./dashboards";
 import { ConstructBuilding, TrainingCardContainer } from "./cards";
@@ -25,11 +16,9 @@ import { Button } from "./buttons";
 
 import {
   BaseResourceType,
-  BaseUnit,
   Buildings,
   Difficulty,
   GameProps,
-  ResourceMultipliers,
   ResourcePool,
   Resources,
   ResourceType,
@@ -37,10 +26,7 @@ import {
   Unit,
   UnitCounts,
   UnitType,
-  UpgradeCosts,
 } from "../types";
-import { GameContext } from "../context/GameState";
-import { useLocation } from "react-router-dom";
 import {
   AddRemoveUnitFn,
   AddResourceFn,
@@ -84,8 +70,8 @@ export default function Game(props: GameProps) {
   const defaultGameState = {
     devTools: false,
     score: 0,
-    playerName: playerNames[Math.floor(Math.random() * playerNames.length)],
-    townName: townNames[Math.floor(Math.random() * townNames.length)],
+    playerName: defaultPlayerName,
+    townName: defaultTownName,
     difficulty: "normal",
     tutorials: true,
     turn: 1,
