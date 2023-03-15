@@ -663,7 +663,7 @@ export default function Game(props: GameProps) {
               ]!;
             console.log(unitType);
         }
-      } else if (nextCombatTurn > 5 && nextCombatTurn <= 8) {
+      } else if (nextCombatTurn === 6) {
         switch (powerLevel) {
           // introduce 1 tanky enemy
           case 0:
@@ -677,7 +677,7 @@ export default function Game(props: GameProps) {
               ]!;
             console.log(unitType);
         }
-      } else if (nextCombatTurn > 8 && nextCombatTurn <= 11) {
+      } else if (nextCombatTurn === 7 || nextCombatTurn === 8) {
         switch (powerLevel) {
           // introduce 1 mage enemy
           case 0:
@@ -690,7 +690,7 @@ export default function Game(props: GameProps) {
                 Math.floor(Math.random() * unlockedUnitTypes.length)
               ]!;
         }
-      } else if (nextCombatTurn > 11 && nextCombatTurn <= 14) {
+      } else if (nextCombatTurn === 9) {
         switch (powerLevel) {
           // introduce 1 bombird enemy
           case 0:
