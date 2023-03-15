@@ -1,9 +1,8 @@
 import React, { ReactNode } from "react";
-import { MenuIcon } from "../../types";
 
 interface MenuBoxProps {
-  // TODO: DRY
-  icon: "▶️" | "🆕" | "💾" | "🏆" | "🔧" | "❓" | "⭐";
+  /* FIXME: Import this icon from the type -- DRY */
+  icon?: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
   headerText: string;
   children: ReactNode;
 }

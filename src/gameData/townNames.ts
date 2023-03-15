@@ -100,6 +100,3 @@ export const townNames = [
   "Sapphire",
   "Frostflower",
 ];
-
-export const defaultTownName =
-  townNames[Math.floor(Math.random() * townNames.length)];

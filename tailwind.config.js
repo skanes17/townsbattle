@@ -144,28 +144,16 @@ module.exports = {
         darkResourcesColor: "#210F07",
       },
       keyframes: {
-        jiggleSmall: {
-          "0%": { transform: "scale3d(1, 1, 1);" },
-          "30%": { transform: "scale3d(1.25, 1, 1);" },
-          "40%": {
-            transform: "scale3d(0.75, 1, 1);",
-          },
-          "50%": {
-            transform: "scale3d(1.15, 1, 1);",
-          },
-          "65%": {
-            transform: "scale3d(0.95, 1, 1);",
-          },
-          " 75%": {
-            transform: "scale3d(1.05, 1, 1);",
-          },
-          "100%": {
-            transform: "scale3d(1, 1, 1);",
-          },
+        jiggleRight: {
+          "50%": { transform: "translate(10px,0)" },
+        },
+        jiggleLeft: {
+          "50%": { transform: "translate(10px,0)" },
         },
       },
       animation: {
-        jiggleSmall: "jiggleSmall 0.5s ease-in 1 normal forwards",
+        "attack-right": "jiggleRight 0.25s linear 1",
+        "attack-left": "jiggleLeft 0.25s linear 1",
       },
       saturate: {
         25: ".25",

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultPlayerName, playerNames } from "../../gameData/playerNames";
-import { defaultTownName, townNames } from "../../gameData/townNames";
+import { playerNames } from "../../gameData/playerNames";
+import { townNames } from "../../gameData/townNames";
 import { Difficulty, DifficultyUpdater, TutorialsUpdater } from "../../types";
 import { MenuButton } from "../buttons";
 import { MenuBox, MenuInput } from "../startPage";
-import { MenuButtonContainer } from "./MenuButtonContainer";
 
 interface StartData {
   playerName: string | undefined;
@@ -19,40 +18,38 @@ interface StartData {
 export default function Play() {
   const [devTools, setDevTools] = useState(false);
 
-  const defaultSettings = {
-    playerName: defaultPlayerName,
-    townName: defaultTownName,
-    difficulty: "normal",
-    tutorials: true,
+  const [defaultPlayerName] = useState(
+    playerNames[Math.floor(Math.random() * playerNames.length)]
+  );
+  const [playerName, setPlayerName] = useState<string>();
+  const [defaultTownName, setDefeaultTownName] = useState(
+    townNames[Math.floor(Math.random() * townNames.length)]
+  );
+  const [townName, setTownName] = useState<string>();
+  const [difficulty, setDifficulty] = useState<Difficulty>("normal");
+  const [tutorials, setTutorials] = useState(true);
+
+  const difficultyUpdater: DifficultyUpdater = (difficulty) => {
+    setDifficulty(difficulty);
+  };
+  const tutorialsUpdater: TutorialsUpdater = (tutorials) => {
+    setTutorials(tutorials);
   };
 
-  // Calling from localStorage -- if none found (null) set it to default
-  // ==Names== //
-  const [playerName, setPlayerName] = useState(
-    JSON.parse(localStorage.getItem("playerName") as string) ??
-      defaultSettings.playerName
-  );
-  localStorage.setItem("playerName", JSON.stringify(playerName));
-
-  const [townName, setTownName] = useState(
-    JSON.parse(localStorage.getItem("townName") as string) ??
-      defaultSettings.townName
-  );
-  localStorage.setItem("townName", JSON.stringify(townName));
-
-  // ==Difficulty== //
-  const [difficulty, setDifficulty] = useState<Difficulty>(
-    JSON.parse(localStorage.getItem("difficulty") as string) ??
-      defaultSettings.difficulty
-  );
-  localStorage.setItem("difficulty", JSON.stringify(difficulty));
-
-  // ==Tutorials== //
-  const [tutorials, setTutorials] = useState(
-    JSON.parse(localStorage.getItem("tutorials") as string) ??
-      defaultSettings.tutorials
-  );
-  localStorage.setItem("tutorials", JSON.stringify(tutorials));
+  // exporting data to local storage onClick, in case game page is refreshed while skipping menu
+  const storeStartData = () => {
+    localStorage.setItem(
+      "playerName",
+      JSON.stringify(playerName || defaultPlayerName)
+    );
+    localStorage.setItem(
+      "townName",
+      JSON.stringify(townName || defaultTownName)
+    );
+    localStorage.setItem("difficulty", JSON.stringify(difficulty));
+    // use JSON.parse to convert back to Boolean when imported
+    localStorage.setItem("tutorials", JSON.stringify(tutorials));
+  };
 
   return (
     <MenuBox icon="▶️" headerText="How to Play">
@@ -64,49 +61,144 @@ export default function Play() {
 
       <MenuInput
         header={"Player Name"}
-        placeholderText={playerName}
+        placeholderText={defaultPlayerName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={playerName}
+        value={playerName ?? defaultPlayerName}
         // what to do when input is changed
         onChange={(e) => setPlayerName(e.target.value)}
       />
 
       <MenuInput
         header={"Name Your Town"}
-        placeholderText={townName}
+        placeholderText={defaultTownName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={townName}
+        value={townName ?? defaultTownName}
         // what to do when input is changed
         onChange={(e) => setTownName(e.target.value)}
       />
 
+      {/* FIXME: Wrap all in a form; add type="button" to buttons that won't submit data, type="submit" otherwise */}
+      <div>
+        <div className="mt-6 text-lg font-medium text-white">Difficulty</div>
+        <div className="mt-3 items-center gap-2 sm:flex">
+          {difficulty === "easy" ? (
+            <MenuButton
+              buttonText="Easy"
+              buttonColor="green"
+              isSelected={true}
+            />
+          ) : (
+            <MenuButton
+              buttonText="Easy"
+              buttonColor="green"
+              isSelected={false}
+              onClick={() => difficultyUpdater("easy")}
+            />
+          )}
+          {difficulty === "normal" ? (
+            <MenuButton
+              buttonText="Normal"
+              buttonColor="blue"
+              isSelected={true}
+            />
+          ) : (
+            <MenuButton
+              buttonText="Normal"
+              buttonColor="blue"
+              isSelected={false}
+              onClick={() => difficultyUpdater("normal")}
+            />
+          )}
+          {difficulty === "hard" ? (
+            <MenuButton buttonText="Hard" buttonColor="red" isSelected={true} />
+          ) : (
+            <MenuButton
+              buttonText="Hard"
+              buttonColor="red"
+              isSelected={false}
+              onClick={() => difficultyUpdater("hard")}
+            />
+          )}
+          {difficulty === "nightmare" ? (
+            <MenuButton
+              buttonText="Nightmare"
+              buttonColor="deepRed"
+              isSelected={true}
+            />
+          ) : (
+            <MenuButton
+              buttonText="Nightmare"
+              buttonColor="deepRed"
+              isSelected={false}
+              onClick={() => difficultyUpdater("nightmare")}
+            />
+          )}
+        </div>
+      </div>
+
+      <div>
+        <div className="mt-6 text-lg font-medium text-white">Tutorials</div>
+        <div className="mt-3 items-center gap-2 sm:flex">
+          {tutorials === true ? (
+            <>
+              <MenuButton
+                buttonText="Off"
+                buttonColor="blue"
+                isSelected={false}
+                onClick={() => tutorialsUpdater(false)}
+              />
+              <MenuButton
+                buttonText="On"
+                buttonColor="blue"
+                isSelected={true}
+              />
+            </>
+          ) : (
+            <>
+              <MenuButton
+                buttonText="Off"
+                buttonColor="blue"
+                isSelected={true}
+              />
+              <MenuButton
+                buttonText="On"
+                buttonColor="blue"
+                isSelected={false}
+                onClick={() => tutorialsUpdater(true)}
+              />
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* horizontal line */}
+      <div className="mt-3 border-t border-gray-300"></div>
+
       {devTools && (
         <div className="bg-amber-100 capitalize text-gray-500">
           <p className="font-bold text-gray-800">Summary (DevTool)</p>
-          <p>Player Name: {playerName}</p>
-          <p>Town Name: {townName}</p>
+          <p>Player Name: {playerName ?? defaultPlayerName}</p>
+          <p>Town Name: {townName ?? defaultTownName}</p>
           <p>Difficulty: {difficulty}</p>
           <p>Tutorials: {tutorials ? "On" : "Off"}</p>
         </div>
       )}
 
-      {/* horizontal line */}
-      <div className="my-3 border-t border-gray-300"></div>
-
-      <div className="flex items-center gap-2 p-4">
+      <div className="mt-3 items-center gap-2 sm:flex">
         <Link
           to="/"
-          className="mt-2 inline-flex grow items-center justify-center rounded-md bg-red-600 p-2.5 text-center font-semibold text-white outline-transparent ring-red-600 ring-offset-2 hover:bg-red-500 focus:ring-2"
+          className="mt-2 w-full flex-1 rounded-md bg-red-600 p-2.5 text-center font-semibold text-white outline-transparent ring-red-600 ring-offset-2 focus:ring-2"
         >
           Cancel
         </Link>
         <Link
           to="/play/game"
-          className="mt-2 inline-flex grow items-center justify-center rounded-md bg-green-700 p-2.5 text-center font-semibold text-white outline-transparent ring-green-600 ring-offset-2 hover:bg-green-600 focus:ring-2"
+          className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center font-semibold text-white outline-transparent ring-blue-600 ring-offset-2 focus:ring-2"
+          onClick={() => storeStartData()}
         >
-          Start Game
+          Next
         </Link>
       </div>
     </MenuBox>
