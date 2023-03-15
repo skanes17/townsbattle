@@ -1,12 +1,12 @@
 /* TODO: Add a building which adds to number of workers per turn */
 
-import { Buildings } from "../types";
-
-export const buildingsData: Buildings = {
+export const buildingsData = {
   // for all units
   townCenter: {
     name: "Town Center",
     symbol: "🏙️",
+    /* FIXME: Path not working */
+    imageSrc: "/images/town-center-01.jpg",
     enabled: false,
     underConstruction: false,
     constructed: true,

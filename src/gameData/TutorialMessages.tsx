@@ -118,22 +118,6 @@ export const TutorialMessages: Tutorials = {
       </>
     ),
   },
-  score: {
-    category: "Score",
-    tutorial: (
-      <>
-        <p>
-          <span className="text-green-400">Score</span> increases with every
-          unit trained, building constructed, enemy defeated and battle won. The
-          longer you survive, the higher score you'll get.
-        </p>
-        <p>
-          Your chosen difficulty has a big effect on score.{" "}
-          <span className="text-red-400">High-risk, high-reward!</span>
-        </p>
-      </>
-    ),
-  },
   combat: {
     category: "Combat",
     tutorial: (
@@ -169,6 +153,22 @@ export const TutorialMessages: Tutorials = {
         <p>
           Read each card carefully to learn their mechanics and build your army
           accordingly.
+        </p>
+      </>
+    ),
+  },
+  score: {
+    category: "Score",
+    tutorial: (
+      <>
+        <p>
+          <span className="text-green-400">Score</span> increases with every
+          unit trained, building constructed, enemy defeated and battle won. The
+          longer you survive, the higher score you'll get.
+        </p>
+        <p>
+          Your chosen difficulty has a big effect on score.{" "}
+          <span className="text-red-400">High-risk, high-reward!</span>
         </p>
       </>
     ),

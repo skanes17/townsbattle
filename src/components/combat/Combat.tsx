@@ -641,8 +641,7 @@ export default function Combat({
         sendArmiesToPlanning();
         // add points from this battle to total score, as well as some extra points based on how many combats completed
         scoreUpdaterFn(
-          pointsFromDefeatingUnits +
-            currentCombatTurn * basePointsForCompletingCombat
+          points + currentCombatTurn * basePointsForCompletingCombat
         );
         switchPhase();
         break;
@@ -719,14 +718,8 @@ export default function Combat({
   };
 
   // simple draft of points sytem is +100 per enemy unit defeated
-  /* const points =
-    combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100; */
-
-  const pointsFromDefeatingUnits = combatEnemyUnits
-    // find all the defeated enemies
-    .filter(({ currentHealth }) => currentHealth === 0)
-    // add up all their build scores
-    .reduce((acc, { buildScore }) => acc + buildScore, 0);
+  const points =
+    combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100;
 
   return (
     /* whole screen */
@@ -749,9 +742,7 @@ export default function Combat({
           selectedUnit={combatUnits[friendlyIndex]}
         />
       </div>
-      <div className="col-start-1 row-start-2 self-center py-1 px-4">
-        Combat Points: {pointsFromDefeatingUnits}
-      </div>
+      <div className="col-start-1 row-start-2">{/* Empty Cell */}</div>
       <div className="col-start-2 row-span-2 row-start-1 grid h-full w-full grid-cols-[1fr] grid-rows-[1fr_4.5fr_2.5fr_1fr]">
         {phase === Phases.PostCombat && (
           <div className="row-span-3 row-start-1 grid h-full w-full p-4">
