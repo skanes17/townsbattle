@@ -15,10 +15,10 @@ export default function AddRemoveButton({
 
   switch (buttonType) {
     case "add":
-      bgColor = "bg-emerald-700 shadow-emerald-700/50 hover:bg-emerald-500";
+      bgColor = "bg-emerald-800 shadow-emerald-800/50 hover:bg-emerald-600";
       break;
     case "remove":
-      bgColor = "bg-red-700 shadow-red-700/50 hover:bg-red-500";
+      bgColor = "bg-deepRed shadow-deepRed/50 hover:bg-red-600";
       break;
   }
 

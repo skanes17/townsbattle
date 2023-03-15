@@ -64,9 +64,9 @@ export default function TrainUnitCard({
 
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
     updatedResourcePool(
+      -numberOfUnitsInTraining,
       costsObject,
-      clonedResourcePool,
-      -numberOfUnitsInTraining
+      clonedResourcePool
     );
 
     setResourcePool(clonedResourcePool);
@@ -79,21 +79,25 @@ export default function TrainUnitCard({
     if (numberOfUnitsInTraining === 0) return;
 
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
-    updatedResourcePool(costsObject, clonedResourcePool, -1);
+    updatedResourcePool(-1, costsObject, clonedResourcePool);
 
     setResourcePool(clonedResourcePool);
     // updates the friendlyTrainingUnits array as well
     removeTrainingUnit(unitType, friendly);
   };
 
-  const handlePlusClick = (unitType: UnitType, friendly: boolean) => {
+  const handlePlusClick = (
+    amount: 1 | 5,
+    unitType: UnitType,
+    friendly: boolean
+  ) => {
     // check that you've collected all required resources
-    const resourceCheck = resourceChecker(costsObject, resourcePool);
+    const resourceCheck = resourceChecker(amount, costsObject, resourcePool);
 
     if (resourceCheck) {
       // reduce the resources according to costs
       const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
-      updatedResourcePool(costsObject, clonedResourcePool, 1);
+      updatedResourcePool(1, costsObject, clonedResourcePool);
 
       setResourcePool(clonedResourcePool);
       // updates the friendlyTrainingUnits array as well
@@ -124,7 +128,7 @@ export default function TrainUnitCard({
 
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
 
-    updatedResourcePool(costsObject, clonedResourcePool, maxTrainable);
+    updatedResourcePool(maxTrainable, costsObject, clonedResourcePool);
 
     setResourcePool(clonedResourcePool);
     maxTrainingUnits(unitType, friendly, maxTrainable);
@@ -187,7 +191,7 @@ export default function TrainUnitCard({
         <div className="col-span-2 row-start-1 flex items-center justify-center sm:col-span-1 sm:col-start-4">
           <AddRemoveButton
             buttonType="add"
-            onClick={() => handlePlusClick(unitType, friendly)}
+            onClick={() => handlePlusClick(1, unitType, friendly)}
           >
             +
           </AddRemoveButton>

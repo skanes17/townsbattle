@@ -27,42 +27,40 @@ export default function WorkerCard({
   setResourcePool,
   resourceType,
 }: WorkerCardProps) {
-  const addWorker: AddRemoveWorkerFn = (resourceType) => {
+  const addRemoveWorkers: AddRemoveWorkerFn = (
+    amount,
+    resourceType,
+    operation
+  ) => {
     const selectedResource = resources[resourceType];
     if (!selectedResource) {
       alert("resource doesn't exist");
       return;
     }
 
-    if (resourcePool["workers"] > 0) {
-      const clonedResourcePool = { ...resourcePool };
-      const clonedResources = cloneBasicObjectWithJSON(resources);
+    const clonedResourcePool = { ...resourcePool };
+    const clonedResources = cloneBasicObjectWithJSON(resources);
 
-      clonedResourcePool["workers"] -= 1;
-      clonedResources[resourceType].workers += 1;
-
-      setResourcePool(clonedResourcePool);
-      setResources(clonedResources);
+    switch (operation) {
+      case "add workers to resource":
+        if (clonedResourcePool["workers"] > Math.max(amount - 1, 0)) {
+          clonedResourcePool["workers"] -= amount;
+          clonedResources[resourceType].workers += amount;
+        }
+        break;
+      case "remove workers from resource":
+        if (clonedResources[resourceType].workers > Math.max(amount - 1, 0)) {
+          clonedResourcePool["workers"] += amount;
+          clonedResources[resourceType].workers -= amount;
+        }
+        break;
+      default:
+        alert("invalid operation");
+        return;
     }
-  };
 
-  const removeWorker: AddRemoveWorkerFn = (resourceType) => {
-    const selectedResource = resources[resourceType];
-    if (!selectedResource) {
-      alert("resource doesn't exist");
-      return;
-    }
-
-    if (resources[resourceType].workers > 0) {
-      const clonedResourcePool = { ...resourcePool };
-      const clonedResources = cloneBasicObjectWithJSON(resources);
-
-      clonedResourcePool["workers"] += 1;
-      clonedResources[resourceType].workers -= 1;
-
-      setResourcePool(clonedResourcePool);
-      setResources(clonedResources);
-    }
+    setResourcePool(clonedResourcePool);
+    setResources(clonedResources);
   };
 
   return (
@@ -82,22 +80,84 @@ export default function WorkerCard({
           resourceType={resourceType}
         />
 
-        {/* TODO: Add Zero -5 -+5 Max buttons! */}
-        <div className="grid grid-cols-2 px-1">
-          <div className="flex items-center justify-end pr-1">
+        <div className={`grid auto-rows-auto grid-cols-4 gap-1 px-1`}>
+          <div className="col-span-2 row-start-1 flex items-center justify-center">
             <AddRemoveButton
               buttonType="remove"
-              onClick={() => removeWorker(resourceType)}
+              onClick={() =>
+                addRemoveWorkers(
+                  1,
+                  resourceType,
+                  "remove workers from resource"
+                )
+              }
             >
               -
             </AddRemoveButton>
           </div>
-          <div className="flex items-center justify-start pl-1">
+
+          <div className="col-span-2 row-start-1 flex items-center justify-center">
             <AddRemoveButton
               buttonType="add"
-              onClick={() => addWorker(resourceType)}
+              onClick={() =>
+                addRemoveWorkers(1, resourceType, "add workers to resource")
+              }
             >
               +
+            </AddRemoveButton>
+          </div>
+          <div className="col-start-1 row-start-2 flex items-center justify-center font-bold">
+            <AddRemoveButton
+              buttonType="remove"
+              onClick={() =>
+                addRemoveWorkers(
+                  resources[resourceType].workers,
+                  resourceType,
+                  "remove workers from resource"
+                )
+              }
+            >
+              ZERO
+            </AddRemoveButton>
+          </div>
+          <div className="col-start-2 row-start-2 flex items-center justify-center">
+            <AddRemoveButton
+              buttonType="remove"
+              onClick={() =>
+                addRemoveWorkers(
+                  5,
+                  resourceType,
+                  "remove workers from resource"
+                )
+              }
+            >
+              -5
+            </AddRemoveButton>
+          </div>
+
+          <div className="col-start-3 row-start-2 flex items-center justify-center font-bold">
+            <AddRemoveButton
+              buttonType="add"
+              onClick={() =>
+                addRemoveWorkers(5, resourceType, "add workers to resource")
+              }
+            >
+              +5
+            </AddRemoveButton>
+          </div>
+
+          <div className="col-start-4 row-start-2 flex items-center justify-center">
+            <AddRemoveButton
+              buttonType="add"
+              onClick={() =>
+                addRemoveWorkers(
+                  resourcePool["workers"],
+                  resourceType,
+                  "add workers to resource"
+                )
+              }
+            >
+              MAX
             </AddRemoveButton>
           </div>
         </div>

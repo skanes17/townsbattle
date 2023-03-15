@@ -13,7 +13,15 @@ export type MaxTrainingUnitsFn = (
   maxTrainable: number
 ) => void;
 
-export type AddRemoveWorkerFn = (resourceType: BaseResourceType) => void;
+export type AddRemoveWorkerFn = (
+  amount: number,
+  resourceType: BaseResourceType,
+  operation:
+    | "add workers to resource"
+    | "add MAX workers to resource"
+    | "remove workers from resource"
+    | "remove ALL workers from resource"
+) => void;
 
 export type AddResourceFn = (resourceType: ResourceType) => void;
 
