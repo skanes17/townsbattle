@@ -41,17 +41,31 @@ export default function WorkerCard({
     const clonedResourcePool = { ...resourcePool };
     const clonedResources = cloneBasicObjectWithJSON(resources);
 
+    let changeInWorkers;
     switch (operation) {
       case "add workers to resource":
-        if (clonedResourcePool["workers"] > Math.max(amount - 1, 0)) {
-          clonedResourcePool["workers"] -= amount;
-          clonedResources[resourceType].workers += amount;
+        // if 'amount' to add is more workers than are in the pool, then add what workers are available
+        changeInWorkers =
+          clonedResourcePool["workers"] < amount
+            ? clonedResourcePool["workers"]
+            : amount;
+        if (clonedResourcePool["workers"] > Math.max(changeInWorkers - 1, 0)) {
+          clonedResourcePool["workers"] -= changeInWorkers;
+          clonedResources[resourceType].workers += changeInWorkers;
         }
         break;
       case "remove workers from resource":
-        if (clonedResources[resourceType].workers > Math.max(amount - 1, 0)) {
-          clonedResourcePool["workers"] += amount;
-          clonedResources[resourceType].workers -= amount;
+        // if 'amount' to remove is more workers than are on the resource, then subtract what workers are on the resource
+        changeInWorkers =
+          clonedResources[resourceType].workers < amount
+            ? clonedResources[resourceType].workers
+            : amount;
+        if (
+          clonedResources[resourceType].workers >
+          Math.max(changeInWorkers - 1, 0)
+        ) {
+          clonedResourcePool["workers"] += changeInWorkers;
+          clonedResources[resourceType].workers -= changeInWorkers;
         }
         break;
       default:
