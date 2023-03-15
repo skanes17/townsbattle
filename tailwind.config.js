@@ -142,6 +142,9 @@ module.exports = {
         buildingsColor: "#2f3e66",
         lightResourcesColor: "#32170B",
         darkResourcesColor: "#210F07",
+        deepRed: "#9E1A1A",
+        deepRedLighter: "#D32222",
+        deepRedDarker: "#7B1414",
       },
       keyframes: {
         jiggleRight: {
