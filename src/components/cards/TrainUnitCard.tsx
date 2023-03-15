@@ -64,9 +64,9 @@ export default function TrainUnitCard({
 
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
     updatedResourcePool(
-      -numberOfUnitsInTraining,
       costsObject,
-      clonedResourcePool
+      clonedResourcePool,
+      -numberOfUnitsInTraining
     );
 
     setResourcePool(clonedResourcePool);
@@ -74,34 +74,26 @@ export default function TrainUnitCard({
     removeAllTrainingUnits(unitType, friendly);
   };
 
-  const handleMinusClick = (
-    amount: 1 | 5,
-    unitType: UnitType,
-    friendly: boolean
-  ) => {
+  const handleMinusClick = (unitType: UnitType, friendly: boolean) => {
     /* TODO: Find more efficient approach than to consider units in training? */
     if (numberOfUnitsInTraining === 0) return;
 
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
-    updatedResourcePool(-amount, costsObject, clonedResourcePool);
+    updatedResourcePool(costsObject, clonedResourcePool, -1);
 
     setResourcePool(clonedResourcePool);
     // updates the friendlyTrainingUnits array as well
     removeTrainingUnit(unitType, friendly);
   };
 
-  const handlePlusClick = (
-    amount: 1,
-    unitType: UnitType,
-    friendly: boolean
-  ) => {
+  const handlePlusClick = (unitType: UnitType, friendly: boolean) => {
     // check that you've collected all required resources
-    const resourceCheck = resourceChecker(amount, costsObject, resourcePool);
+    const resourceCheck = resourceChecker(costsObject, resourcePool);
 
     if (resourceCheck) {
       // reduce the resources according to costs
       const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
-      updatedResourcePool(amount, costsObject, clonedResourcePool);
+      updatedResourcePool(costsObject, clonedResourcePool, 1);
 
       setResourcePool(clonedResourcePool);
       // updates the friendlyTrainingUnits array as well
@@ -132,7 +124,7 @@ export default function TrainUnitCard({
 
     const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
 
-    updatedResourcePool(maxTrainable, costsObject, clonedResourcePool);
+    updatedResourcePool(costsObject, clonedResourcePool, maxTrainable);
 
     setResourcePool(clonedResourcePool);
     maxTrainingUnits(unitType, friendly, maxTrainable);
@@ -185,7 +177,7 @@ export default function TrainUnitCard({
         <div className="col-span-2 row-start-1 flex items-center justify-center sm:col-span-1 sm:col-start-2">
           <AddRemoveButton
             buttonType="remove"
-            onClick={() => handleMinusClick(1, unitType, friendly)}
+            onClick={() => handleMinusClick(unitType, friendly)}
           >
             -
           </AddRemoveButton>
@@ -195,7 +187,7 @@ export default function TrainUnitCard({
         <div className="col-span-2 row-start-1 flex items-center justify-center sm:col-span-1 sm:col-start-4">
           <AddRemoveButton
             buttonType="add"
-            onClick={() => handlePlusClick(1, unitType, friendly)}
+            onClick={() => handlePlusClick(unitType, friendly)}
           >
             +
           </AddRemoveButton>

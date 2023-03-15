@@ -35,8 +35,8 @@ export default function MenuButton({
       bgColor = isSelected ? "bg-red-600" : defaultBg;
       break;
     case "deepRed":
-      buttonColors = "ring-deepRed active:bg-deepRed";
-      bgColor = isSelected ? "bg-deepRed" : defaultBg;
+      buttonColors = "ring-[#9E1A1A] active:bg-[#7B1414]";
+      bgColor = isSelected ? "bg-[#9E1A1A]" : defaultBg;
       break;
   }
 

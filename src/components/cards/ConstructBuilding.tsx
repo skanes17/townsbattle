@@ -56,7 +56,7 @@ export default function ConstructBuilding({
 
       // give back resources
       const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
-      updateResourcePool(-1, costsObject, clonedResourcePool);
+      updateResourcePool(costsObject, clonedResourcePool, -1);
 
       setResourcePool(clonedResourcePool);
     }
@@ -64,7 +64,7 @@ export default function ConstructBuilding({
 
   const handleBuildClick = (buildingType: string) => {
     // check that you've collected all required resources
-    const resourceCheck = resourceChecker(1, costsObject, resourcePool);
+    const resourceCheck = resourceChecker(costsObject, resourcePool);
 
     if (buildings[buildingType].underConstruction === false && resourceCheck) {
       // set the building to be constructed
@@ -74,7 +74,7 @@ export default function ConstructBuilding({
 
       // reduce the resources according to costs
       const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
-      updateResourcePool(1, costsObject, clonedResourcePool);
+      updateResourcePool(costsObject, clonedResourcePool, 1);
 
       setResourcePool(clonedResourcePool);
     }

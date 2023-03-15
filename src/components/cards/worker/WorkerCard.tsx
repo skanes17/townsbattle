@@ -27,29 +27,42 @@ export default function WorkerCard({
   setResourcePool,
   resourceType,
 }: WorkerCardProps) {
-  // TODO: Extract functions out of this, consolidate with trainUnit code
-  const addRemoveWorker: AddRemoveWorkerFn = (amount, resourceType) => {
+  const addWorker: AddRemoveWorkerFn = (resourceType) => {
     const selectedResource = resources[resourceType];
     if (!selectedResource) {
       alert("resource doesn't exist");
       return;
     }
 
-    const clonedResourcePool = { ...resourcePool };
-    const clonedResources = cloneBasicObjectWithJSON(resources);
+    if (resourcePool["workers"] > 0) {
+      const clonedResourcePool = { ...resourcePool };
+      const clonedResources = cloneBasicObjectWithJSON(resources);
 
-    if (resourcePool["workers"] >= amount) {
-      clonedResourcePool["workers"] -= amount;
-      clonedResources[resourceType].workers += amount;
-    } else if (resources[resourceType].workers >= amount) {
-      clonedResourcePool["workers"] += amount;
-      clonedResources[resourceType].workers -= amount;
-    } else {
+      clonedResourcePool["workers"] -= 1;
+      clonedResources[resourceType].workers += 1;
+
+      setResourcePool(clonedResourcePool);
+      setResources(clonedResources);
+    }
+  };
+
+  const removeWorker: AddRemoveWorkerFn = (resourceType) => {
+    const selectedResource = resources[resourceType];
+    if (!selectedResource) {
+      alert("resource doesn't exist");
       return;
     }
 
-    setResourcePool(clonedResourcePool);
-    setResources(clonedResources);
+    if (resources[resourceType].workers > 0) {
+      const clonedResourcePool = { ...resourcePool };
+      const clonedResources = cloneBasicObjectWithJSON(resources);
+
+      clonedResourcePool["workers"] += 1;
+      clonedResources[resourceType].workers -= 1;
+
+      setResourcePool(clonedResourcePool);
+      setResources(clonedResources);
+    }
   };
 
   return (
@@ -69,39 +82,22 @@ export default function WorkerCard({
           resourceType={resourceType}
         />
 
-        <div
-          className={`grid auto-cols-min grid-cols-2 gap-1 px-1 sm:grid-cols-4`}
-        >
-          <div className="col-start-1 row-start-1 flex items-center justify-center sm:col-start-2">
+        {/* TODO: Add Zero -5 -+5 Max buttons! */}
+        <div className="grid grid-cols-2 px-1">
+          <div className="flex items-center justify-end pr-1">
             <AddRemoveButton
               buttonType="remove"
-              onClick={() => addRemoveWorker(-1, resourceType)}
+              onClick={() => removeWorker(resourceType)}
             >
-              -1
+              -
             </AddRemoveButton>
           </div>
-          <div className="col-start-2 row-start-1 flex items-center justify-center sm:col-start-3">
+          <div className="flex items-center justify-start pl-1">
             <AddRemoveButton
               buttonType="add"
-              onClick={() => addRemoveWorker(1, resourceType)}
+              onClick={() => addWorker(resourceType)}
             >
-              +1
-            </AddRemoveButton>
-          </div>
-          <div className="col-start-1 row-start-2 flex items-center justify-center font-bold sm:col-start-1 sm:row-start-1">
-            <AddRemoveButton
-              buttonType="minus 5"
-              onClick={() => addRemoveWorker(-5, resourceType)}
-            >
-              -5
-            </AddRemoveButton>
-          </div>
-          <div className="col-start-2 row-start-2 flex items-center justify-center sm:col-start-4 sm:row-start-1">
-            <AddRemoveButton
-              buttonType="plus 5"
-              onClick={() => addRemoveWorker(5, resourceType)}
-            >
-              +5
+              +
             </AddRemoveButton>
           </div>
         </div>
