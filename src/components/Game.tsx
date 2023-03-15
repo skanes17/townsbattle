@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   baseUnitData,
   buildingsData,
+  defaultGameState,
   playerNames,
   resourceData,
   resourcePoolData,
@@ -245,7 +246,6 @@ export default function Game(props: GameProps) {
   const [resourcePool, setResourcePool] = useState(
     loadedGameState.resourcePool
   );
-
   const resourceTypes: ResourceType[] = Object.keys(
     resources
   ) as ResourceType[];
@@ -254,7 +254,8 @@ export default function Game(props: GameProps) {
   ).filter((resourceType) => resourceType !== "workers") as BaseResourceType[];
 
   /* ===BUILDINGS=== */
-  const [buildings, setBuildings] = useState(loadedGameState.buildings);
+  /* @ts-ignore -- It is seeing unitToUnlock as a string not UnitType*/
+  const [buildings, setBuildings] = useState<Buildings>(buildingsData);
   const buildingsUnderConstruction = Object.keys(buildings).filter(
     (key) => buildings[key].underConstruction
   );
@@ -289,24 +290,19 @@ export default function Game(props: GameProps) {
 
   /* ===UNITS=== */
   // friendly army
-  const [friendlyUnits, setFriendlyUnits] = useState(
-    loadedGameState.friendlyUnits as Unit[]
-  );
-  const [friendlyTrainingUnits, setFriendlyTrainingUnits] = useState(
-    loadedGameState.friendlyTrainingUnits as TrainingUnit[]
-  );
+  const [friendlyUnits, setFriendlyUnits] = useState<Unit[]>([]);
+  const [friendlyTrainingUnits, setFriendlyTrainingUnits] = useState<
+    TrainingUnit[]
+  >([]);
   // placeholder enemy array for testing
-  const [enemyUnits, setEnemyUnits] = useState(
-    loadedGameState.enemyUnits as Unit[]
-  );
+  const [enemyUnits, setEnemyUnits] = useState<Unit[]>([]);
   // ===BASE STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
 
-  const BASE_UNIT_DATA = baseUnitData;
-  const unitTypes = Object.keys(BASE_UNIT_DATA) as UnitType[];
-
-  // TODO: CONTINUE FROM HERE!
+  // FIXME: Must improve type safety coming from baseUnitData
+  const BASE_UNIT_DATA: BaseUnit = baseUnitData as BaseUnit;
+  const unitTypes: UnitType[] = Object.keys(BASE_UNIT_DATA) as UnitType[];
 
   // ===UNLOCKABLES===
   const unlockedUnitTypes: (UnitType | undefined)[] = Object.keys(buildings)
@@ -348,7 +344,7 @@ export default function Game(props: GameProps) {
     );
 
   // ids for tracking units
-  const [unitId, setUnitId] = useState(loadedGameState.unitId);
+  const [unitId, setUnitId] = useState(0);
 
   /* ===FUNCTIONS=== */
   // ADD units to either army
@@ -363,7 +359,10 @@ export default function Game(props: GameProps) {
     }
 
     if (friendly) {
-      setFriendlyTrainingUnits((prev) => [...prev, _newUnit]);
+      setFriendlyTrainingUnits((friendlyTrainingUnits) => [
+        ...friendlyTrainingUnits,
+        _newUnit,
+      ]);
     }
   };
 
@@ -913,9 +912,44 @@ export default function Game(props: GameProps) {
   const unitCounts = countUnits(friendlyUnits, unitTypes, "army");
   const enemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
 
-  const [activeNavButtons, setActiveNavButtons] = useState(
-    loadedGameState.activeNavButtons as NavButtons
-  );
+  // TODO: Consider better way of doing this?
+  const [activeNavButtons, setActiveNavButtons] = useState<NavButtons>({
+    score: {
+      active: false,
+      bgImage: "bg-score",
+      tipSeen: false,
+    },
+    resources: {
+      active: true,
+      bgImage: "bg-resources",
+      tipSeen: false,
+    },
+    training: {
+      active: false,
+      bgImage: "bg-training",
+      tipSeen: false,
+    },
+    buildings: {
+      active: false,
+      bgImage: "bg-buildings",
+      tipSeen: false,
+    },
+    army: {
+      active: false,
+      bgImage: "bg-army",
+      tipSeen: false,
+    },
+    planning: {
+      active: false,
+      bgImage: "bg-planning",
+      tipSeen: false,
+    },
+    tips: {
+      active: false,
+      bgImage: "bg-tips",
+      tipSeen: false,
+    },
+  });
 
   const navButtonOn = (navButtonType: NavButtonType) => {
     // if falsy (undefined, etc), bail
@@ -939,9 +973,16 @@ export default function Game(props: GameProps) {
     setActiveNavButtons(clonedActiveNavButtons);
   };
 
-  const [tipsSeen, setTipsSeen] = useState(
-    loadedGameState.tipsSeen as TipsSeen
-  );
+  const [tipsSeen, setTipsSeen] = useState<TipsSeen>({
+    score: false,
+    resources: false,
+    training: false,
+    buildings: false,
+    army: false,
+    planning: false,
+    tips: false,
+    combat: false,
+  });
 
   const markTipAsSeen = (tutorialCategory: TutorialCategory) => {
     if (!tutorialCategory) {
