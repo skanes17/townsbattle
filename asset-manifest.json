@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/React-game/static/css/main.1ca2338a.css",
-    "main.js": "/React-game/static/js/main.58c01f86.js",
+    "main.css": "/React-game/static/css/main.e6e4633a.css",
+    "main.js": "/React-game/static/js/main.9acb71c6.js",
     "static/js/845.a7795a01.chunk.js": "/React-game/static/js/845.a7795a01.chunk.js",
     "static/media/brown-01.png": "/React-game/static/media/brown-01.c8f16131efac6caf4f3e.png",
     "static/media/swordsmithy-01.jpg": "/React-game/static/media/swordsmithy-01.df8b0a5fe53d3ea75337.jpg",
@@ -49,15 +49,15 @@
     "static/media/fighter-01-512px.jpg": "/React-game/static/media/fighter-01-512px.e004ea055aac14f96be5.jpg",
     "static/media/explosivesResearch-01-512px.jpg": "/React-game/static/media/explosivesResearch-01-512px.ab4e39efcbcd602442d8.jpg",
     "static/media/healingChamber-01-512px.jpg": "/React-game/static/media/healingChamber-01-512px.d9f8ff9cd0c7e24dc7eb.jpg",
-    "static/media/destroyBldgSfx.mp3": "/React-game/static/media/destroyBldgSfx.b4b11a6d638eae630cb1.mp3",
+    "static/media/destroyBldgSfx.mp3": "/React-game/static/media/destroyBldgSfx.8e63e967d81db1fa942d.mp3",
     "static/media/bomber-01-512px.jpg": "/React-game/static/media/bomber-01-512px.94e83615f60fbecce9ca.jpg",
     "static/media/smelter-01-512px.jpg": "/React-game/static/media/smelter-01-512px.5d8aa0314f4f9662af9a.jpg",
     "static/media/scoutUnit-01-512px.jpg": "/React-game/static/media/scoutUnit-01-512px.fafd9035bad5ba5f1209.jpg",
     "static/media/gold-01-512px.jpg": "/React-game/static/media/gold-01-512px.a67b1117d8d4e42c8aab.jpg",
     "static/media/archeryHut-01-512px.jpg": "/React-game/static/media/archeryHut-01-512px.a6b5c7ea26798f1a531f.jpg",
-    "static/media/constructBldgSfx.mp3": "/React-game/static/media/constructBldgSfx.b40f4166380cbac361a8.mp3",
+    "static/media/constructBldgSfx.mp3": "/React-game/static/media/constructBldgSfx.f4c38550c8a3e5755bb3.mp3",
     "static/media/mealHall-01-512px.jpg": "/React-game/static/media/mealHall-01-512px.eb5c397f781c01061f15.jpg",
-    "static/media/cardSlide.mp3": "/React-game/static/media/cardSlide.a3cea587f5e46018e684.mp3",
+    "static/media/cardSlide.mp3": "/React-game/static/media/cardSlide.2583841790d63cdafa1f.mp3",
     "static/media/archer-01-256px.jpg": "/React-game/static/media/archer-01-256px.faa08b69ba8299993878.jpg",
     "static/media/swordsmithy-01-256px.jpg": "/React-game/static/media/swordsmithy-01-256px.8469655bdc6095c7a8cd.jpg",
     "static/media/mage-01-256px.jpg": "/React-game/static/media/mage-01-256px.dc03302eac0ea5cbcad2.jpg",
@@ -81,12 +81,12 @@
     "static/media/gold-01-256px.jpg": "/React-game/static/media/gold-01-256px.f2bce2039c79ed5a01ce.jpg",
     "static/media/archeryHut-01-256px.jpg": "/React-game/static/media/archeryHut-01-256px.5ff76afc8f7656ae83b6.jpg",
     "index.html": "/React-game/index.html",
-    "main.1ca2338a.css.map": "/React-game/static/css/main.1ca2338a.css.map",
-    "main.58c01f86.js.map": "/React-game/static/js/main.58c01f86.js.map",
+    "main.e6e4633a.css.map": "/React-game/static/css/main.e6e4633a.css.map",
+    "main.9acb71c6.js.map": "/React-game/static/js/main.9acb71c6.js.map",
     "845.a7795a01.chunk.js.map": "/React-game/static/js/845.a7795a01.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1ca2338a.css",
-    "static/js/main.58c01f86.js"
+    "static/css/main.e6e4633a.css",
+    "static/js/main.9acb71c6.js"
   ]
 }
