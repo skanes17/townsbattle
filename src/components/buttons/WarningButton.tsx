@@ -20,7 +20,7 @@ export default function WarningButton({
       break;
     case 1:
       buttonText = "Are you SURE?";
-      buttonStyle = `animate-jiggleSmall bg-[#9E1A1A] font-bold`;
+      buttonStyle = `animate-jiggleSmall bg-[#9E1A1A] font-bold `;
       break;
     case 2:
       buttonText = "DELETE";
@@ -32,7 +32,7 @@ export default function WarningButton({
       break;
     default:
       buttonText = "⭐ All Saved Data Deleted ⭐";
-      buttonStyle = `bg-green-800 font-semibold`;
+      buttonStyle = `bg-red-600 font-semibold`;
       break;
   }
 
@@ -42,11 +42,10 @@ export default function WarningButton({
         type="button"
         className={`${buttonStyle} w-full flex-1 rounded-md border p-2.5 outline-transparent ring-offset-2 transition-transform ease-in `}
         onClick={
-          counter < 2
+          counter !== 3
             ? () => incrementPopupCounter()
             : () => {
                 localStorage.clear();
-                incrementPopupCounter();
               }
         }
       >

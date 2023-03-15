@@ -146,18 +146,18 @@ module.exports = {
       keyframes: {
         jiggleSmall: {
           "0%": { transform: "scale3d(1, 1, 1);" },
-          "30%": { transform: "scale3d(1.1, 1, 1);" },
+          "30%": { transform: "scale3d(1.25, 1, 1);" },
           "40%": {
-            transform: "scale3d(0.95, 1, 1);",
+            transform: "scale3d(0.75, 1, 1);",
           },
           "50%": {
-            transform: "scale3d(1.05, 1, 1);",
+            transform: "scale3d(1.15, 1, 1);",
           },
           "65%": {
-            transform: "scale3d(0.98, 1, 1);",
+            transform: "scale3d(0.95, 1, 1);",
           },
           " 75%": {
-            transform: "scale3d(1.01, 0.95, 1);",
+            transform: "scale3d(1.05, 1, 1);",
           },
           "100%": {
             transform: "scale3d(1, 1, 1);",
