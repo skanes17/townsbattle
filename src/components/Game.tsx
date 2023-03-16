@@ -72,14 +72,6 @@ import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSect
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
 
-// TODO: Maybe if you choose not to use a worker you can get some gold (points)
-
-// TODO: Call a function to add a set number of enemy units per turn
-// -eg start with an army of 3, one of each
-// After first wave, the number is increased by some amount each time
-// -eg 7 units for second wave, enemy units randomly chosen
-// Composition of army could be displayed to UI, for example 20% fighter 30% archer 50% knight
-
 export default function Game(props: GameProps) {
   const defaultGameState: GameState = {
     devTools: false,
