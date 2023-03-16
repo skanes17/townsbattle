@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultPlayerName, defaultTownName } from "../../gameData";
 import { GameOptions } from "../../types";
 import { MenuBox, MenuInput } from "../startPage";
 import { MenuBoxHeader } from "./MenuBoxHeader";
@@ -70,100 +69,6 @@ export default function Play() {
         }
       />
 
-      {/* FIXME: Wrap all in a form; add type="button" to buttons that won't submit data, type="submit" otherwise */}
-      <div>
-        <div className="mt-6 text-lg font-medium text-white">Difficulty</div>
-        <div className="mt-3 items-center gap-2 sm:flex">
-          {difficulty === "easy" ? (
-            <MenuButton
-              buttonText="Easy"
-              buttonColor="green"
-              isSelected={true}
-            />
-          ) : (
-            <MenuButton
-              buttonText="Easy"
-              buttonColor="green"
-              isSelected={false}
-              onClick={() => difficultyUpdater("easy")}
-            />
-          )}
-          {difficulty === "normal" ? (
-            <MenuButton
-              buttonText="Normal"
-              buttonColor="blue"
-              isSelected={true}
-            />
-          ) : (
-            <MenuButton
-              buttonText="Normal"
-              buttonColor="blue"
-              isSelected={false}
-              onClick={() => difficultyUpdater("normal")}
-            />
-          )}
-          {difficulty === "hard" ? (
-            <MenuButton buttonText="Hard" buttonColor="red" isSelected={true} />
-          ) : (
-            <MenuButton
-              buttonText="Hard"
-              buttonColor="red"
-              isSelected={false}
-              onClick={() => difficultyUpdater("hard")}
-            />
-          )}
-          {difficulty === "nightmare" ? (
-            <MenuButton
-              buttonText="Nightmare"
-              buttonColor="deepRed"
-              isSelected={true}
-            />
-          ) : (
-            <MenuButton
-              buttonText="Nightmare"
-              buttonColor="deepRed"
-              isSelected={false}
-              onClick={() => difficultyUpdater("nightmare")}
-            />
-          )}
-        </div>
-      </div>
-
-      <div>
-        <div className="mt-6 text-lg font-medium text-white">Tutorials</div>
-        <div className="mt-3 items-center gap-2 sm:flex">
-          {tutorials === true ? (
-            <>
-              <MenuButton
-                buttonText="Off"
-                buttonColor="blue"
-                isSelected={false}
-                onClick={() => tutorialsUpdater(false)}
-              />
-              <MenuButton
-                buttonText="On"
-                buttonColor="blue"
-                isSelected={true}
-              />
-            </>
-          ) : (
-            <>
-              <MenuButton
-                buttonText="Off"
-                buttonColor="blue"
-                isSelected={true}
-              />
-              <MenuButton
-                buttonText="On"
-                buttonColor="blue"
-                isSelected={false}
-                onClick={() => tutorialsUpdater(true)}
-              />
-            </>
-          )}
-        </div>
-      </div>
-
       {/* horizontal line */}
       <div className="mt-3 border-t border-gray-300"></div>
 
@@ -187,8 +92,6 @@ export default function Play() {
         <Link
           to="/play/game"
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center font-semibold text-white outline-transparent ring-blue-600 ring-offset-2 focus:ring-2"
-          state={startData}
-          onClick={() => storeStartData()}
         >
           Next
         </Link>
