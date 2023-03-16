@@ -1,7 +1,7 @@
 import { ResourceCosts, ResourcePool, ResourceType } from "../types";
 
 export function resourceChecker(
-  amount: 1 | 5,
+  amount: number,
   costsObject: ResourceCosts,
   resourcePool: ResourcePool
 ) {

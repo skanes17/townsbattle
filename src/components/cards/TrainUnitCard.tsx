@@ -87,7 +87,7 @@ export default function TrainUnitCard({
   };
 
   const handlePlusClick = (
-    amount: 1 | 5,
+    amount: number,
     unitType: UnitType,
     friendly: boolean
   ) => {
@@ -97,7 +97,7 @@ export default function TrainUnitCard({
     if (resourceCheck) {
       // reduce the resources according to costs
       const clonedResourcePool = cloneBasicObjectWithJSON(resourcePool);
-      updatedResourcePool(1, costsObject, clonedResourcePool);
+      updatedResourcePool(amount, costsObject, clonedResourcePool);
 
       setResourcePool(clonedResourcePool);
       // updates the friendlyTrainingUnits array as well
