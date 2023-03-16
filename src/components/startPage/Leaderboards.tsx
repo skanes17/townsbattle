@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { MenuBoxHeader } from ".";
 import MenuBox from "./MenuBox";
-import { MenuBoxHeader } from "./MenuBoxHeader";
 
 export default function Leaderboards() {
   return (

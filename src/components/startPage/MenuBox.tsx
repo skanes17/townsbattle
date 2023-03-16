@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react";
 
 interface MenuBoxProps {
-  /* FIXME: Import this icon from the type -- DRY */
-  icon?: "▶️" | "🏆" | "🔧" | "❓" | "⭐";
+  // TODO: DRY
+  icon: "▶️" | "🆕" | "💾" | "🏆" | "🔧" | "❓" | "⭐";
   headerText: string;
   children: ReactNode;
 }

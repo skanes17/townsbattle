@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
+import { MenuBoxHeader } from ".";
 import MenuBox from "./MenuBox";
-import { MenuBoxHeader } from "./MenuBoxHeader";
 
 export default function HowToPlay() {
   return (

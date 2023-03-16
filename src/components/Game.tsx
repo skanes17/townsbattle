@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   activeNavButtonsData,
   baseUnitData,
@@ -154,19 +154,6 @@ export default function Game(props: GameProps) {
   // planning turn on which combat actually starts
   const planningTurnToTriggerCombat =
     planningTurnToGenerateEnemies + turnsBetweenEnemyArmyGenAndCombat;
-
-  const [inCombat, setInCombat] = useState(false);
-
-  // points from rounds of combat get added to this
-  const [score, setScore] = useState(0); // score could potentially be removed from state
-  /* TODO: Points for a unit is trained, building built? */
-
-  // TODO: Add food? And/or some resource common to all unit building?
-  // Idea: Workers are consumed when used for making units...
-  // ... but introduce a gold economy which is used for building stuff along with resources
-  // .. then you need to choose between basic resources AND gold every turn
-  // maybe workers aren't guaranteed every turn??
-  // set number per turn, and a new building adds new ones per turn?
 
   /* ===RESOURCES AND WORKERS=== */
   const [resources, setResources] = useState(gameState.resources);
