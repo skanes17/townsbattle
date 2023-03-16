@@ -25,7 +25,6 @@ export default function BldgCardFooter({
   const tierDisplay = tier < 4 ? stars.join(``) : `${tierIcon}${tier}`;
 
   return (
-    /* FIXME: Text breaking on mobile */
     <div className="grid h-7 grid-flow-col gap-1 border-t border-white/10 pt-1 text-sm backdrop-blur-[2px] sm:h-8 sm:gap-2 sm:text-lg">
       <div className="relative rounded-tr-lg rounded-bl-lg bg-black/50 px-1 text-center text-white sm:text-xs">
         <div className="text-[0.5rem] sm:text-lg">{tierDisplay}</div>

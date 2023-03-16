@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
+  activeNavButtonsData,
   baseUnitData,
   buildingsData,
   defaultPlayerName,
   defaultTownName,
   resourceData,
   resourcePoolData,
+  tipsSeenData,
 } from "../gameData";
 import { DisplayBuildings } from "./planning/";
 import { DevTools } from "./devTools";
@@ -53,8 +55,6 @@ import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSect
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
 
-// FIXME: Many areas/lists don't have a unique key/id.
-
 // TODO: Maybe if you choose not to use a worker you can get some gold (points)
 
 // TODO: Call a function to add a set number of enemy units per turn
@@ -85,53 +85,8 @@ export default function Game(props: GameProps) {
     friendlyTrainingUnits: [],
     enemyUnits: [],
     unitId: 0,
-    activeNavButtons: {
-      score: {
-        active: false,
-        bgImage: "bg-score",
-        tipSeen: false,
-      },
-      resources: {
-        active: true,
-        bgImage: "bg-resources",
-        tipSeen: false,
-      },
-      training: {
-        active: false,
-        bgImage: "bg-training",
-        tipSeen: false,
-      },
-      buildings: {
-        active: false,
-        bgImage: "bg-buildings",
-        tipSeen: false,
-      },
-      army: {
-        active: false,
-        bgImage: "bg-army",
-        tipSeen: false,
-      },
-      planning: {
-        active: false,
-        bgImage: "bg-planning",
-        tipSeen: false,
-      },
-      tips: {
-        active: false,
-        bgImage: "bg-tips",
-        tipSeen: false,
-      },
-    },
-    tipsSeen: {
-      score: false,
-      resources: false,
-      training: false,
-      buildings: false,
-      army: false,
-      planning: false,
-      tips: false,
-      combat: false,
-    },
+    activeNavButtons: activeNavButtonsData,
+    tipsSeen: tipsSeenData,
   };
 
   const savedGameState: GameState = JSON.parse(
@@ -149,32 +104,11 @@ export default function Game(props: GameProps) {
   */
 
   const [devTools, setDevTools] = useState(gameState.devTools);
-
-  /* // FIXME: Put some version of this back in if necessary! -- pull startData from linked Play component
-  const startData = useLocation();
-
-  // grab data from state/useLocation (sent through Link)
-  const startDataPlayerName: string =
-    startData.state.playerName || startData.state.defaultPlayerName;
-  const startDataTownName: string =
-    startData.state.townName || startData.state.defaultTownName;
-  const startDataDifficulty: Difficulty = startData.state.difficulty;
-  const startDataTutorials: boolean = startData.state.tutorials; */
-
-  // setting player options
-  // from state first, or local storage second, or defaults as backup
-  // -- NOTE ON RETRIEVING LOCALLY-STORED DATA SENT FROM MAIN PAGE IF NECESSARY
-  // if localStorage values are non-null, use the locally stored values
-  // if storage is null, use some default values so the game still runs
-
   // points from rounds of combat get added to this
   const [score, setScore] = useState(gameState.score);
   const [playerName, setPlayerName] = useState(gameState.playerName);
   const [townName, setTownName] = useState(gameState.townName);
-  // FIXME: why the error here when Type isn't made explicit?
-  const [difficulty, setDifficulty] = useState(
-    gameState.difficulty as Difficulty
-  );
+  const [difficulty, setDifficulty] = useState(gameState.difficulty);
   const [tutorials, setTutorials] = useState(gameState.tutorials);
   const [turn, setTurn] = useState(gameState.turn);
   const [nextCombatTurn, setNextCombatTurn] = useState(
@@ -927,6 +861,53 @@ export default function Game(props: GameProps) {
 
   /* ==SAVING ALL STATE IN LOCAL STORAGE WHEN ANYTHING IS UPDATED== */
   useEffect(() => {
+    localStorage.setItem(
+      "savedGameState",
+      JSON.stringify({
+        devTools,
+        score,
+        playerName,
+        townName,
+        difficulty,
+        tutorials,
+        turn,
+        nextCombatTurn,
+        numberOfCombatsStarted,
+        inCombat,
+        resources,
+        resourcePool,
+        buildings,
+        friendlyUnits,
+        friendlyTrainingUnits,
+        enemyUnits,
+        unitId,
+        activeNavButtons,
+        tipsSeen,
+      })
+    );
+  }, [
+    devTools,
+    score,
+    playerName,
+    townName,
+    difficulty,
+    tutorials,
+    turn,
+    nextCombatTurn,
+    numberOfCombatsStarted,
+    inCombat,
+    resources,
+    resourcePool,
+    buildings,
+    friendlyUnits,
+    friendlyTrainingUnits,
+    enemyUnits,
+    unitId,
+    activeNavButtons,
+    tipsSeen,
+  ]);
+
+  /* useEffect(() => {
     localStorage.setItem(`devTools`, JSON.stringify(devTools));
   }, [devTools]);
   useEffect(() => {
@@ -988,7 +969,7 @@ export default function Game(props: GameProps) {
   }, [activeNavButtons]);
   useEffect(() => {
     localStorage.setItem(`tipsSeen`, JSON.stringify(tipsSeen));
-  }, [tipsSeen]);
+  }, [tipsSeen]); */
 
   return inCombat ? (
     <>
@@ -1133,17 +1114,6 @@ export default function Game(props: GameProps) {
                   ? `End Turn`
                   : `Start Combat`}
               </Button>
-
-              {/* FIXME: Make this into a tooltip, like a question mark circle thing you hover over or click */}
-              {/* unlockedUnitTypes.length > 2 ? (
-                <div className="place-self-center text-xl">
-                  Tip: Train Units to Protect {townName}!
-                </div>
-              ) : (
-                <div className="place-self-center text-xl">
-                  Tip: Construct buildings to unlock new units!
-                </div>
-              ) */}
             </div>
           </div>
 

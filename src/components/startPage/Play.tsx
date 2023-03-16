@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { defaultPlayerName, defaultTownName } from "../../gameData";
 import { GameOptions } from "../../types";
 import { MenuBox, MenuInput } from "../startPage";
+import { MenuBoxHeader } from "./MenuBoxHeader";
 
 export default function Play() {
   const [devTools, setDevTools] = useState(false);
@@ -15,12 +16,10 @@ export default function Play() {
   };
 
   // pull existing saved options from local storage
-  // || "{}" used to avoid returning null -- JSON.parse() can't parse null
   const savedOptions: GameOptions = JSON.parse(
     localStorage.getItem("savedOptions") || "{}"
   );
 
-  // set this session's options, rewriting defaults where relevant
   const gameOptions: GameOptions = {
     ...defaultOptions,
     ...savedOptions,
@@ -36,11 +35,10 @@ export default function Play() {
 
   return (
     <MenuBox icon="▶️" headerText="How to Play">
-      {/* FIXME: Figure out how to get this into component */}
-      <p className="mt-2 leading-relaxed text-white">
+      <MenuBoxHeader>
         Collect resources, train and upgrade an army, and defeat waves of
         enemies. Survive as long as you can!
-      </p>
+      </MenuBoxHeader>
 
       <MenuInput
         header={"Player Name"}

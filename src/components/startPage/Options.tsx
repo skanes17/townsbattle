@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { playerNames } from "../../gameData/playerNames";
-import { townNames } from "../../gameData/townNames";
-import { Difficulty, DifficultyUpdater, TutorialsUpdater } from "../../types";
+import { defaultPlayerName, defaultTownName } from "../../gameData";
+import { Difficulty, GameOptions } from "../../types";
 import { MenuButton } from "../buttons";
 import WarningButton from "../buttons/WarningButton";
-import { MenuBox, MenuInput } from "../startPage";
+import { MenuBox } from "../startPage";
+import { MenuBoxHeader } from "./MenuBoxHeader";
 import { MenuButtonContainer } from "./MenuButtonContainer";
 
 export default function Options() {
@@ -14,38 +14,55 @@ export default function Options() {
     setCounter((prev) => prev + 1);
   };
 
-  const [difficulty, setDifficulty] = useState<Difficulty>("normal");
-  const [tutorials, setTutorials] = useState(true);
+  const defaultOptions: GameOptions = {
+    playerName: defaultPlayerName,
+    townName: defaultTownName,
+    difficulty: "normal",
+    tutorials: true,
+  };
+
+  // pull existing saved options from local storage
+  const savedOptions: GameOptions = JSON.parse(
+    localStorage.getItem("savedOptions") || "{}"
+  );
+
+  const gameOptions: GameOptions = {
+    ...defaultOptions,
+    ...savedOptions,
+  };
+
+  const [options, setOptions] = useState(gameOptions);
 
   // update local storage when the buttons are clicked
   useEffect(() => {
-    localStorage.setItem("difficulty", JSON.stringify(difficulty));
-  }, [difficulty]);
-  useEffect(() => {
-    localStorage.setItem("tutorials", JSON.stringify(tutorials));
-  }, [tutorials]);
+    localStorage.setItem("savedOptions", JSON.stringify(options));
+  }, [options]);
 
   return (
     <MenuBox icon="▶️" headerText="Options">
-      {/* FIXME: Figure out how to get this into component */}
-      <p className="mt-2 leading-relaxed text-white">
+      <MenuBoxHeader>
         Tutorials give you in-game tips on game mechanics. Difficulty increases
         the strength and number of enemies, but also greatly increases your
         score!
-      </p>
+      </MenuBoxHeader>
 
       <MenuButtonContainer headerText="Difficulty">
-        {difficulty === "easy" ? (
+        {options.difficulty === "easy" ? (
           <MenuButton buttonText="Easy" buttonColor="green" isSelected={true} />
         ) : (
           <MenuButton
             buttonText="Easy"
             buttonColor="green"
             isSelected={false}
-            onClick={() => setDifficulty("easy")}
+            onClick={() =>
+              setOptions({
+                ...options,
+                difficulty: "easy",
+              })
+            }
           />
         )}
-        {difficulty === "normal" ? (
+        {options.difficulty === "normal" ? (
           <MenuButton
             buttonText="Normal"
             buttonColor="blue"
@@ -56,20 +73,30 @@ export default function Options() {
             buttonText="Normal"
             buttonColor="blue"
             isSelected={false}
-            onClick={() => setDifficulty("normal")}
+            onClick={() =>
+              setOptions({
+                ...options,
+                difficulty: "normal",
+              })
+            }
           />
         )}
-        {difficulty === "hard" ? (
+        {options.difficulty === "hard" ? (
           <MenuButton buttonText="Hard" buttonColor="red" isSelected={true} />
         ) : (
           <MenuButton
             buttonText="Hard"
             buttonColor="red"
             isSelected={false}
-            onClick={() => setDifficulty("hard")}
+            onClick={() =>
+              setOptions({
+                ...options,
+                difficulty: "hard",
+              })
+            }
           />
         )}
-        {difficulty === "nightmare" ? (
+        {options.difficulty === "nightmare" ? (
           <MenuButton
             buttonText="Nightmare"
             buttonColor="deepRed"
@@ -80,19 +107,29 @@ export default function Options() {
             buttonText="Nightmare"
             buttonColor="deepRed"
             isSelected={false}
-            onClick={() => setDifficulty("nightmare")}
+            onClick={() =>
+              setOptions({
+                ...options,
+                difficulty: "nightmare",
+              })
+            }
           />
         )}
       </MenuButtonContainer>
 
       <MenuButtonContainer headerText="Tutorials">
-        {tutorials === true ? (
+        {options.tutorials === true ? (
           <>
             <MenuButton
               buttonText="Off"
               buttonColor="blue"
               isSelected={false}
-              onClick={() => setTutorials(false)}
+              onClick={() =>
+                setOptions({
+                  ...options,
+                  tutorials: false,
+                })
+              }
             />
             <MenuButton buttonText="On" buttonColor="blue" isSelected={true} />
           </>
@@ -103,7 +140,12 @@ export default function Options() {
               buttonText="On"
               buttonColor="blue"
               isSelected={false}
-              onClick={() => setTutorials(true)}
+              onClick={() =>
+                setOptions({
+                  ...options,
+                  tutorials: true,
+                })
+              }
             />
           </>
         )}
