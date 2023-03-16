@@ -100,3 +100,6 @@ export const playerNames = [
   "Ysabel",
   "Zephyr",
 ];
+
+export const defaultPlayerName =
+  playerNames[Math.floor(Math.random() * playerNames.length)];

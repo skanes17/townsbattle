@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { defaultPlayerName, defaultTownName } from "../../gameData";
 import { GameOptions } from "../../types";
@@ -41,9 +41,11 @@ export default function Options() {
   return (
     <MenuBox icon="▶️" headerText="Options">
       <MenuBoxHeader>
-        Tutorials give you in-game tips on game mechanics. Difficulty increases
-        the strength and number of enemies, but also greatly increases your
-        score!
+        <p>Tutorials give you in-game tips on game mechanics.</p>
+        <p>
+          Difficulty increases the strength and number of enemies, but also
+          greatly increases your score!
+        </p>
       </MenuBoxHeader>
 
       <MenuButtonContainer headerText="Difficulty">
