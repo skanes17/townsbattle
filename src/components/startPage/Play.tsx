@@ -1,58 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultPlayerName, playerNames } from "../../gameData/playerNames";
-import { defaultTownName, townNames } from "../../gameData/townNames";
-import { Difficulty, DifficultyUpdater, TutorialsUpdater } from "../../types";
-import { MenuButton } from "../buttons";
+import { defaultPlayerName, defaultTownName } from "../../gameData";
+import { GameOptions } from "../../types";
 import { MenuBox, MenuInput } from "../startPage";
-import { MenuButtonContainer } from "./MenuButtonContainer";
-
-interface StartData {
-  playerName: string | undefined;
-  defaultPlayerName: string;
-  townName: string | undefined;
-  defaultTownName: string;
-  difficulty: Difficulty;
-  tutorials: boolean;
-}
 
 export default function Play() {
   const [devTools, setDevTools] = useState(false);
 
-  const defaultSettings = {
+  const defaultOptions: GameOptions = {
     playerName: defaultPlayerName,
     townName: defaultTownName,
     difficulty: "normal",
     tutorials: true,
   };
 
-  // Calling from localStorage -- if none found (null) set it to default
-  // ==Names== //
-  const [playerName, setPlayerName] = useState(
-    JSON.parse(localStorage.getItem("playerName") as string) ??
-      defaultSettings.playerName
+  // pull existing saved options from local storage
+  // || "{}" used to avoid returning null -- JSON.parse() can't parse null
+  const savedOptions: GameOptions = JSON.parse(
+    localStorage.getItem("savedOptions") || "{}"
   );
-  localStorage.setItem("playerName", JSON.stringify(playerName));
 
-  const [townName, setTownName] = useState(
-    JSON.parse(localStorage.getItem("townName") as string) ??
-      defaultSettings.townName
-  );
-  localStorage.setItem("townName", JSON.stringify(townName));
+  // set this session's options, rewriting defaults where relevant
+  const gameOptions: GameOptions = {
+    ...defaultOptions,
+    ...savedOptions,
+  };
 
-  // ==Difficulty== //
-  const [difficulty, setDifficulty] = useState<Difficulty>(
-    JSON.parse(localStorage.getItem("difficulty") as string) ??
-      defaultSettings.difficulty
-  );
-  localStorage.setItem("difficulty", JSON.stringify(difficulty));
+  // set those options in state
+  const [options, setOptions] = useState(gameOptions);
 
-  // ==Tutorials== //
-  const [tutorials, setTutorials] = useState(
-    JSON.parse(localStorage.getItem("tutorials") as string) ??
-      defaultSettings.tutorials
-  );
-  localStorage.setItem("tutorials", JSON.stringify(tutorials));
+  // save those options to local storage any time there's a change
+  useEffect(() => {
+    localStorage.setItem("savedOptions", JSON.stringify(options));
+  }, [options]);
 
   return (
     <MenuBox icon="▶️" headerText="How to Play">
@@ -64,31 +44,41 @@ export default function Play() {
 
       <MenuInput
         header={"Player Name"}
-        placeholderText={playerName}
+        placeholderText={options.playerName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={playerName}
+        value={options.playerName}
         // what to do when input is changed
-        onChange={(e) => setPlayerName(e.target.value)}
+        onChange={(e) =>
+          setOptions({
+            ...options,
+            playerName: e.target.value,
+          })
+        }
       />
 
       <MenuInput
-        header={"Name Your Town"}
-        placeholderText={townName}
+        header={"Player Name"}
+        placeholderText={options.townName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={townName}
+        value={options.townName}
         // what to do when input is changed
-        onChange={(e) => setTownName(e.target.value)}
+        onChange={(e) =>
+          setOptions({
+            ...options,
+            townName: e.target.value,
+          })
+        }
       />
 
       {devTools && (
         <div className="bg-amber-100 capitalize text-gray-500">
           <p className="font-bold text-gray-800">Summary (DevTool)</p>
-          <p>Player Name: {playerName}</p>
-          <p>Town Name: {townName}</p>
-          <p>Difficulty: {difficulty}</p>
-          <p>Tutorials: {tutorials ? "On" : "Off"}</p>
+          <p>Player Name: {options.playerName}</p>
+          <p>Town Name: {options.townName}</p>
+          <p>Difficulty: {options.difficulty}</p>
+          <p>Tutorials: {options.tutorials ? "On" : "Off"}</p>
         </div>
       )}
 

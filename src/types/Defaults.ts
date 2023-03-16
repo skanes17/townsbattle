@@ -1,5 +1,19 @@
-import { Buildings, Difficulty, ResourcePool, Resources, Unit } from ".";
-import { NavButtons } from "./NavButtons";
+import {
+  Buildings,
+  Difficulty,
+  NavButtons,
+  ResourcePool,
+  Resources,
+  TipsSeen,
+  Unit,
+} from ".";
+
+export interface GameOptions {
+  playerName: string;
+  townName: string;
+  difficulty: Difficulty;
+  tutorials: boolean;
+}
 
 export interface GameState {
   devTools: boolean;
@@ -20,5 +34,5 @@ export interface GameState {
   enemyUnits: Unit[];
   unitId: number;
   activeNavButtons: NavButtons;
-  tipsSeen: boolean;
+  tipsSeen: TipsSeen;
 }

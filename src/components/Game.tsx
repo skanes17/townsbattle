@@ -19,6 +19,7 @@ import {
   Buildings,
   Difficulty,
   GameProps,
+  GameState,
   ResourcePool,
   Resources,
   ResourceType,
@@ -51,7 +52,6 @@ import { ModalHeader, ModalTextContent } from "./planning/tutorials";
 import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSection";
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
-import { GameState } from "../types/GameState";
 
 // FIXME: Many areas/lists don't have a unique key/id.
 
@@ -67,7 +67,7 @@ export default function Game(props: GameProps) {
   // for choosing the save file -- TODO: allow it to be set in the menu
   const [chosenGameStateIndex, setChosenGameStateIndex] = useState(1);
 
-  const defaultGameState = {
+  const defaultGameState: GameState = {
     devTools: false,
     score: 0,
     playerName: defaultPlayerName,
@@ -134,44 +134,21 @@ export default function Game(props: GameProps) {
     },
   };
 
-  const playerGameState: GameState = {
-    devTools: JSON.parse(localStorage.getItem(`devTools`) as string),
-    score: JSON.parse(localStorage.getItem(`score`) as string),
-    playerName: JSON.parse(localStorage.getItem(`playerName`) as string),
-    townName: JSON.parse(localStorage.getItem(`townName`) as string),
-    difficulty: JSON.parse(localStorage.getItem(`difficulty`) as string),
-    tutorials: JSON.parse(localStorage.getItem(`tutorials`) as string),
-    turn: JSON.parse(localStorage.getItem(`turn`) as string),
-    nextCombatTurn: JSON.parse(
-      localStorage.getItem(`nextCombatTurn`) as string
-    ),
-    numberOfCombatsStarted: JSON.parse(
-      localStorage.getItem(`numberOfCombatsStarted`) as string
-    ),
-    inCombat: JSON.parse(localStorage.getItem(`inCombat`) as string),
-    resources: JSON.parse(localStorage.getItem(`resources`) as string),
-    resourcePool: JSON.parse(localStorage.getItem(`resourcePool`) as string),
-    buildings: JSON.parse(localStorage.getItem(`buildings`) as string),
-    friendlyUnits: JSON.parse(localStorage.getItem(`friendlyUnits`) as string),
-    friendlyTrainingUnits: JSON.parse(
-      localStorage.getItem(`friendlyTrainingUnits`) as string
-    ),
-    enemyUnits: JSON.parse(localStorage.getItem(`enemyUnits`) as string),
-    unitId: JSON.parse(localStorage.getItem(`unitId`) as string),
-    activeNavButtons: JSON.parse(
-      localStorage.getItem(`activeNavButtons`) as string
-    ),
-    tipsSeen: JSON.parse(localStorage.getItem(`tipsSeen`) as string),
+  const savedGameState: GameState = JSON.parse(
+    localStorage.getItem("savedGameState") || "{}"
+  );
+
+  const gameState: GameState = {
+    ...defaultGameState,
+    ...savedGameState,
   };
 
   // TODO: Expand this so it's dynamic, user can make a new game or load an old one (say up to 10)
-  const savedGameStates = [
-    defaultGameState,
-    playerGameState ?? defaultGameState,
-  ];
+  /* 
   const loadedGameState = savedGameStates[chosenGameStateIndex];
+  */
 
-  const [devTools, setDevTools] = useState(loadedGameState.devTools);
+  const [devTools, setDevTools] = useState(gameState.devTools);
 
   /* // FIXME: Put some version of this back in if necessary! -- pull startData from linked Play component
   const startData = useLocation();
@@ -191,22 +168,22 @@ export default function Game(props: GameProps) {
   // if storage is null, use some default values so the game still runs
 
   // points from rounds of combat get added to this
-  const [score, setScore] = useState(loadedGameState.score);
-  const [playerName, setPlayerName] = useState(loadedGameState.playerName);
-  const [townName, setTownName] = useState(loadedGameState.townName);
+  const [score, setScore] = useState(gameState.score);
+  const [playerName, setPlayerName] = useState(gameState.playerName);
+  const [townName, setTownName] = useState(gameState.townName);
   // FIXME: why the error here when Type isn't made explicit?
   const [difficulty, setDifficulty] = useState(
-    loadedGameState.difficulty as Difficulty
+    gameState.difficulty as Difficulty
   );
-  const [tutorials, setTutorials] = useState(loadedGameState.tutorials);
-  const [turn, setTurn] = useState(loadedGameState.turn);
+  const [tutorials, setTutorials] = useState(gameState.tutorials);
+  const [turn, setTurn] = useState(gameState.turn);
   const [nextCombatTurn, setNextCombatTurn] = useState(
-    loadedGameState.nextCombatTurn
+    gameState.nextCombatTurn
   );
   const [numberOfCombatsStarted, setNumberOfCombatsStarted] = useState(
-    loadedGameState.numberOfCombatsStarted
+    gameState.numberOfCombatsStarted
   );
-  const [inCombat, setInCombat] = useState(loadedGameState.inCombat);
+  const [inCombat, setInCombat] = useState(gameState.inCombat);
 
   // enemy will not be generated before reaching this turn number has passed
   const minimumPlanningTurnsUntilEnemyGen = 4;
@@ -226,11 +203,9 @@ export default function Game(props: GameProps) {
     planningTurnToGenerateEnemies + turnsBetweenEnemyArmyGenAndCombat;
 
   /* ===RESOURCES AND WORKERS=== */
-  const [resources, setResources] = useState(loadedGameState.resources);
+  const [resources, setResources] = useState(gameState.resources);
   const numberOfWorkersAtStartOfGame = 5;
-  const [resourcePool, setResourcePool] = useState(
-    loadedGameState.resourcePool
-  );
+  const [resourcePool, setResourcePool] = useState(gameState.resourcePool);
 
   const resourceTypes: ResourceType[] = Object.keys(
     resources
@@ -240,7 +215,7 @@ export default function Game(props: GameProps) {
   ).filter((resourceType) => resourceType !== "workers") as BaseResourceType[];
 
   /* ===BUILDINGS=== */
-  const [buildings, setBuildings] = useState(loadedGameState.buildings);
+  const [buildings, setBuildings] = useState(gameState.buildings);
   const buildingsUnderConstruction = Object.keys(buildings).filter(
     (key) => buildings[key].underConstruction
   );
@@ -276,15 +251,13 @@ export default function Game(props: GameProps) {
   /* ===UNITS=== */
   // friendly army
   const [friendlyUnits, setFriendlyUnits] = useState(
-    loadedGameState.friendlyUnits as Unit[]
+    gameState.friendlyUnits as Unit[]
   );
   const [friendlyTrainingUnits, setFriendlyTrainingUnits] = useState(
-    loadedGameState.friendlyTrainingUnits as TrainingUnit[]
+    gameState.friendlyTrainingUnits as TrainingUnit[]
   );
   // placeholder enemy array for testing
-  const [enemyUnits, setEnemyUnits] = useState(
-    loadedGameState.enemyUnits as Unit[]
-  );
+  const [enemyUnits, setEnemyUnits] = useState(gameState.enemyUnits as Unit[]);
   // ===BASE STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
@@ -334,7 +307,7 @@ export default function Game(props: GameProps) {
     );
 
   // ids for tracking units
-  const [unitId, setUnitId] = useState(loadedGameState.unitId);
+  const [unitId, setUnitId] = useState(gameState.unitId);
 
   /* ===FUNCTIONS=== */
   // ADD units to either army
@@ -900,7 +873,7 @@ export default function Game(props: GameProps) {
   const enemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
 
   const [activeNavButtons, setActiveNavButtons] = useState(
-    loadedGameState.activeNavButtons as NavButtons
+    gameState.activeNavButtons as NavButtons
   );
 
   const navButtonOn = (navButtonType: NavButtonType) => {
@@ -925,9 +898,7 @@ export default function Game(props: GameProps) {
     setActiveNavButtons(clonedActiveNavButtons);
   };
 
-  const [tipsSeen, setTipsSeen] = useState(
-    loadedGameState.tipsSeen as TipsSeen
-  );
+  const [tipsSeen, setTipsSeen] = useState(gameState.tipsSeen as TipsSeen);
 
   const markTipAsSeen = (tutorialCategory: TutorialCategory) => {
     if (!tutorialCategory) {

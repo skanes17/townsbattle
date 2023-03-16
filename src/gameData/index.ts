@@ -1,5 +1,6 @@
 export * from "./armyColors";
 export * from "./buildings";
+export * from "./difficultyScoreMultipliers";
 export * from "./enabledUnitsOnStart";
 export * from "./playerNames";
 export * from "./resources";

@@ -9,9 +9,6 @@ import { MenuBox, MenuInput } from "../startPage";
 import { MenuButtonContainer } from "./MenuButtonContainer";
 
 export default function Options() {
-  const [devTools, setDevTools] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
-
   const [counter, setCounter] = useState(0);
   const incrementPopupCounter = () => {
     setCounter((prev) => prev + 1);
