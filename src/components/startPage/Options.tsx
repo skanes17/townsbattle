@@ -3,10 +3,8 @@ import { Link } from "react-router-dom";
 import { defaultPlayerName, defaultTownName } from "../../gameData";
 import { GameOptions } from "../../types";
 import { MenuButton } from "../buttons";
-import WarningButton from "../buttons/WarningButton";
-import { MenuBox } from "../startPage";
+import { MenuBox, MenuButtonContainer } from "../startPage";
 import { MenuBoxHeader } from "./MenuBoxHeader";
-import { MenuButtonContainer } from "./MenuButtonContainer";
 
 export default function Options() {
   const [counter, setCounter] = useState(0);
@@ -41,11 +39,9 @@ export default function Options() {
   return (
     <MenuBox icon="▶️" headerText="Options">
       <MenuBoxHeader>
-        <p>Tutorials give you in-game tips on game mechanics.</p>
-        <p>
-          Difficulty increases the strength and number of enemies, but also
-          greatly increases your score!
-        </p>
+        Tutorials give you in-game tips on game mechanics. Difficulty increases
+        the strength and number of enemies, but also greatly increases your
+        score!
       </MenuBoxHeader>
 
       <MenuButtonContainer headerText="Difficulty">
@@ -166,8 +162,8 @@ export default function Options() {
 
       <div className="flex items-center gap-2 p-4">
         <Link
-          className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-center text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
           to="/"
+          className="mt-2 inline-flex grow items-center justify-center rounded-md bg-red-600 p-2.5 text-center font-semibold text-white outline-transparent ring-red-600 ring-offset-2 hover:bg-red-500 focus:ring-2"
         >
           Close
         </Link>

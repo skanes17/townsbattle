@@ -4,6 +4,6 @@ interface MenuBoxHeaderProps {
   children: string;
 }
 
-export function MenuBoxHeader({ children }: MenuBoxHeaderProps) {
+export default function MenuBoxHeader({ children }: MenuBoxHeaderProps) {
   return <p className="mt-2 leading-relaxed text-white">{children}</p>;
 }

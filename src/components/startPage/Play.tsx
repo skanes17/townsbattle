@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { defaultPlayerName, defaultTownName } from "../../gameData";
 import { GameOptions } from "../../types";
-import { MenuBox, MenuInput } from "../startPage";
-import { MenuBoxHeader } from "./MenuBoxHeader";
+import { MenuBox, MenuBoxHeader, MenuInput } from "../startPage";
 
 export default function Play() {
   const [devTools] = useState(false);

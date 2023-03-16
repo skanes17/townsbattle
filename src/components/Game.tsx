@@ -8,6 +8,8 @@ import {
   TutorialMessages,
   upgradesData,
   tipsSeenData,
+  defaultPlayerName,
+  defaultTownName,
 } from "../gameData";
 import {
   BaseResource,
@@ -79,8 +81,6 @@ import { ArmyGrid } from "./shared";
 // Composition of army could be displayed to UI, for example 20% fighter 30% archer 50% knight
 
 export default function Game(props: GameProps) {
-  const [devTools, setDevTools] = useState(false);
-
   const defaultGameState: GameState = {
     devTools: false,
     score: 0,
