@@ -19,7 +19,7 @@ import { Button } from "./buttons";
 import {
   BaseResourceType,
   Buildings,
-  Difficulty,
+  GameOptions,
   GameProps,
   GameState,
   ResourcePool,
@@ -44,13 +44,12 @@ import {
 import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
 import { NavButtons, NavButtonType } from "../types/NavButtons";
-import { Combat, PostCombatUnitsStatBox } from "./combat";
+import { Combat } from "./combat";
 import DashboardImageAndCount from "./planning/DashboardImageAndCount";
 import UnitCountsBox from "./planning/UnitCountsBox";
 import useSound from "use-sound";
 /* @ts-ignore */
 import constructBldgSfx from "../assets/sounds/constructBldgSfx.mp3";
-import { ModalHeader, ModalTextContent } from "./planning/tutorials";
 import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSection";
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
@@ -89,6 +88,10 @@ export default function Game(props: GameProps) {
     tipsSeen: tipsSeenData,
   };
 
+  const savedOptions: GameOptions = JSON.parse(
+    localStorage.getItem("savedOptions") || "{}"
+  );
+
   const savedGameState: GameState = JSON.parse(
     localStorage.getItem("savedGameState") || "{}"
   );
@@ -96,6 +99,7 @@ export default function Game(props: GameProps) {
   const gameState: GameState = {
     ...defaultGameState,
     ...savedGameState,
+    ...savedOptions,
   };
 
   // TODO: Expand this so it's dynamic, user can make a new game or load an old one (say up to 10)
@@ -103,13 +107,13 @@ export default function Game(props: GameProps) {
   const loadedGameState = savedGameStates[chosenGameStateIndex];
   */
 
-  const [devTools, setDevTools] = useState(gameState.devTools);
+  const [devTools] = useState(gameState.devTools);
   // points from rounds of combat get added to this
   const [score, setScore] = useState(gameState.score);
-  const [playerName, setPlayerName] = useState(gameState.playerName);
-  const [townName, setTownName] = useState(gameState.townName);
-  const [difficulty, setDifficulty] = useState(gameState.difficulty);
-  const [tutorials, setTutorials] = useState(gameState.tutorials);
+  const [playerName] = useState(gameState.playerName);
+  const [townName] = useState(gameState.townName);
+  const [difficulty] = useState(gameState.difficulty);
+  const [tutorials] = useState(gameState.tutorials);
   const [turn, setTurn] = useState(gameState.turn);
   const [nextCombatTurn, setNextCombatTurn] = useState(
     gameState.nextCombatTurn

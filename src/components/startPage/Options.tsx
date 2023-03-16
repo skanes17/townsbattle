@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { defaultPlayerName, defaultTownName } from "../../gameData";
-import { Difficulty, GameOptions } from "../../types";
+import { GameOptions } from "../../types";
 import { MenuButton } from "../buttons";
 import WarningButton from "../buttons/WarningButton";
 import { MenuBox } from "../startPage";

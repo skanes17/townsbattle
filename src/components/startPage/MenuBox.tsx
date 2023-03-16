@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { MenuIcon } from "../../types";
 
 interface MenuBoxProps {
   // TODO: DRY

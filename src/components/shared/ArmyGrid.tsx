@@ -1,6 +1,6 @@
 import React from "react";
 import { UnitTile } from ".";
-import { Phase, Phases, Unit } from "../../types";
+import { Phases, Unit } from "../../types";
 
 interface ArmyGridProps {
   gridStyle: "planning" | "combat";
@@ -29,7 +29,8 @@ export function ArmyGrid({
       style = `w-4/5`;
   }
 
-  let armyFlow;
+  /* TODO: Incorporate ltr-rtl flow of units in grids */
+  /* let armyFlow;
   switch (armyStyle) {
     case "friendly":
       armyFlow = ``;
@@ -39,7 +40,7 @@ export function ArmyGrid({
       break;
     default:
       armyFlow = ``;
-  }
+  } */
 
   return (
     /* could use w-full instead of w-fit here if you want more gaps */

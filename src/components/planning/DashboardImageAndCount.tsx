@@ -8,7 +8,7 @@ import {
   UnitType,
 } from "../../types";
 
-interface DashboardImageAndCount {
+interface DashboardImageAndCountProps {
   dataObject: BaseUnit | Resources;
   countsObject: UnitCounts | ResourcePool;
   type: UnitType | keyof Resources | BaseResourceType;
@@ -18,7 +18,7 @@ export default function DashboardImageAndCount({
   dataObject,
   countsObject,
   type,
-}: DashboardImageAndCount) {
+}: DashboardImageAndCountProps) {
   // if it's a resource, don't show the background
   // TODO: if a better image is found, could use it
   const isAResource = Object.keys(countsObject).includes("wood");

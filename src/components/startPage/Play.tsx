@@ -6,7 +6,7 @@ import { MenuBox, MenuInput } from "../startPage";
 import { MenuBoxHeader } from "./MenuBoxHeader";
 
 export default function Play() {
-  const [devTools, setDevTools] = useState(false);
+  const [devTools] = useState(false);
 
   const defaultOptions: GameOptions = {
     playerName: defaultPlayerName,
@@ -36,7 +36,7 @@ export default function Play() {
   return (
     <MenuBox icon="▶️" headerText="How to Play">
       <MenuBoxHeader>
-        Collect resources, train and upgrade an army, and defeat waves of
+        Collect resources, train units, construct buildings, and defeat waves of
         enemies. Survive as long as you can!
       </MenuBoxHeader>
 
