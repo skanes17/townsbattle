@@ -1,6 +1,6 @@
 import React from "react";
 import { UnitTile } from ".";
-import { Phase, Phases, Unit } from "../../types";
+import { Phases, Unit } from "../../types";
 
 interface ArmyGridProps {
   gridStyle: "planning" | "combat";
@@ -29,7 +29,8 @@ export function ArmyGrid({
       style = `w-4/5`;
   }
 
-  let armyFlow;
+  /* TODO: Incorporate ltr-rtl flow of units in grids */
+  /* let armyFlow;
   switch (armyStyle) {
     case "friendly":
       armyFlow = ``;
@@ -39,12 +40,11 @@ export function ArmyGrid({
       break;
     default:
       armyFlow = ``;
-  }
+  } */
 
   return (
     /* could use w-full instead of w-fit here if you want more gaps */
     /* TODO: Incorporate change in border color and opacity for win/lose state */
-    /* FIXME: Grid collapsing when empty */
     /* TODO: Maybe add background image to grid */
     <div
       className={` ${style} relative grid h-full grid-flow-dense auto-rows-min grid-cols-[repeat(auto-fit,minmax(3.33rem,1fr))] justify-items-center gap-1 overflow-hidden rounded p-2 sm:grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]`}

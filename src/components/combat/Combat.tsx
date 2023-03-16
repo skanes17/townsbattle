@@ -1,16 +1,8 @@
-import React, {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { enemyColor, friendlyColor, TutorialMessages } from "../../gameData";
+import { TutorialMessages } from "../../gameData";
 import {
   BaseUnit,
-  Building,
   Buildings,
   CombatEvent,
   MainCombatEvent,
@@ -18,19 +10,17 @@ import {
   Phases,
   PostCombatEvent,
   PreCombatEvent,
-  Resources,
   ResourcePool,
   SubPhases,
   SummaryEvent,
   Unit,
-  UnitCounts,
   UnitType,
   TutorialCategory,
   TipsSeen,
 } from "../../types";
 import { cloneBasicObjectWithJSON, countUnits } from "../../utils";
 import { getSurvivingUnitIndexes } from "../../utils/getSurvivingUnitIndexes";
-import { AutoButton, CombatButton } from "../buttons";
+import { CombatButton } from "../buttons";
 import {} from "../cards";
 import { CombatLog, messages, PostCombatSummary } from ".";
 import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
@@ -44,7 +34,6 @@ import { ArmyGrid } from "../shared";
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
 /* TODO: Figure out how to place enemy units starting from top right in grid */
-/* FIXME: Page breaking when army has 0 units */
 
 interface CombatProps {
   tutorials: boolean;

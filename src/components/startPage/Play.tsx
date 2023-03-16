@@ -1,86 +1,73 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { playerNames } from "../../gameData/playerNames";
-import { townNames } from "../../gameData/townNames";
-import { Difficulty, DifficultyUpdater, TutorialsUpdater } from "../../types";
-import { MenuButton } from "../buttons";
+import { defaultPlayerName, defaultTownName } from "../../gameData";
+import { GameOptions } from "../../types";
 import { MenuBox, MenuInput } from "../startPage";
-
-interface StartData {
-  playerName: string | undefined;
-  defaultPlayerName: string;
-  townName: string | undefined;
-  defaultTownName: string;
-  difficulty: Difficulty;
-  tutorials: boolean;
-}
+import { MenuBoxHeader } from "./MenuBoxHeader";
 
 export default function Play() {
-  const [devTools, setDevTools] = useState(false);
+  const [devTools] = useState(false);
 
-  const [defaultPlayerName, setDefaultPlayerName] = useState(
-    playerNames[Math.floor(Math.random() * playerNames.length)]
+  const defaultOptions: GameOptions = {
+    playerName: defaultPlayerName,
+    townName: defaultTownName,
+    difficulty: "normal",
+    tutorials: true,
+  };
+
+  // pull existing saved options from local storage
+  const savedOptions: GameOptions = JSON.parse(
+    localStorage.getItem("savedOptions") || "{}"
   );
-  const [playerName, setPlayerName] = useState<string>();
-  const [defaultTownName, setDefeaultTownName] = useState(
-    townNames[Math.floor(Math.random() * townNames.length)]
-  );
-  const [townName, setTownName] = useState<string>();
-  const [difficulty, setDifficulty] = useState<Difficulty>("normal");
-  const [tutorials, setTutorials] = useState(true);
 
-  // to send as state={} through Router Link
-  const startData: StartData = {
-    defaultPlayerName,
-    playerName,
-    defaultTownName,
-    townName,
-    difficulty,
-    tutorials,
+  const gameOptions: GameOptions = {
+    ...defaultOptions,
+    ...savedOptions,
   };
 
-  const difficultyUpdater: DifficultyUpdater = (difficulty) => {
-    setDifficulty(difficulty);
-  };
-  const tutorialsUpdater: TutorialsUpdater = (tutorials) => {
-    setTutorials(tutorials);
-  };
+  // set those options in state
+  const [options, setOptions] = useState(gameOptions);
 
-  // exporting data to local storage onClick, in case game page is refreshed while skipping menu
-  const storeStartData = () => {
-    localStorage.setItem("playerName", playerName || defaultPlayerName);
-    localStorage.setItem("townName", townName || defaultTownName);
-    localStorage.setItem("difficulty", difficulty);
-    // use JSON.parse to convert back to Boolean when imported
-    localStorage.setItem("tutorials", tutorials.toString());
-  };
+  // save those options to local storage any time there's a change
+  useEffect(() => {
+    localStorage.setItem("savedOptions", JSON.stringify(options));
+  }, [options]);
 
   return (
     <MenuBox icon="▶️" headerText="How to Play">
-      {/* FIXME: Figure out how to get this into component */}
-      <p className="mt-2 leading-relaxed text-white">
-        Collect resources, train and upgrade an army, and defeat waves of
+      <MenuBoxHeader>
+        Collect resources, train units, construct buildings, and defeat waves of
         enemies. Survive as long as you can!
-      </p>
+      </MenuBoxHeader>
 
       <MenuInput
         header={"Player Name"}
-        placeholderText={defaultPlayerName}
+        placeholderText={options.playerName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={playerName ?? defaultPlayerName}
+        value={options.playerName}
         // what to do when input is changed
-        onChange={(e) => setPlayerName(e.target.value)}
+        onChange={(e) =>
+          setOptions({
+            ...options,
+            playerName: e.target.value,
+          })
+        }
       />
 
       <MenuInput
-        header={"Name Your Town"}
-        placeholderText={defaultTownName}
+        header={"Player Name"}
+        placeholderText={options.townName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={townName ?? defaultTownName}
+        value={options.townName}
         // what to do when input is changed
-        onChange={(e) => setTownName(e.target.value)}
+        onChange={(e) =>
+          setOptions({
+            ...options,
+            townName: e.target.value,
+          })
+        }
       />
 
       {/* FIXME: Wrap all in a form; add type="button" to buttons that won't submit data, type="submit" otherwise */}
@@ -183,10 +170,10 @@ export default function Play() {
       {devTools && (
         <div className="bg-amber-100 capitalize text-gray-500">
           <p className="font-bold text-gray-800">Summary (DevTool)</p>
-          <p>Player Name: {playerName ?? defaultPlayerName}</p>
-          <p>Town Name: {townName ?? defaultTownName}</p>
-          <p>Difficulty: {difficulty}</p>
-          <p>Tutorials: {tutorials ? "On" : "Off"}</p>
+          <p>Player Name: {options.playerName}</p>
+          <p>Town Name: {options.townName}</p>
+          <p>Difficulty: {options.difficulty}</p>
+          <p>Tutorials: {options.tutorials ? "On" : "Off"}</p>
         </div>
       )}
 

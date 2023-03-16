@@ -1,18 +1,168 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import MenuBox from "./MenuBox";
+import { defaultPlayerName, defaultTownName } from "../../gameData";
+import { GameOptions } from "../../types";
+import { MenuButton } from "../buttons";
+import WarningButton from "../buttons/WarningButton";
+import { MenuBox } from "../startPage";
+import { MenuBoxHeader } from "./MenuBoxHeader";
+import { MenuButtonContainer } from "./MenuButtonContainer";
 
 export default function Options() {
-  return (
-    <MenuBox headerText="Options" icon="🔧">
-      <p className="mt-2 leading-relaxed text-gray-500">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
-        suscipit fuga impedit explicabo, consequuntur at corrupti, est, culpa
-        nostrum recusandae debitis distinctio odio repellendus voluptatum
-        asperiores harum facilis mollitia.
-      </p>
+  const [counter, setCounter] = useState(0);
+  const incrementPopupCounter = () => {
+    setCounter((prev) => prev + 1);
+  };
 
-      <div className="mt-3 items-center gap-2 sm:flex">
+  const defaultOptions: GameOptions = {
+    playerName: defaultPlayerName,
+    townName: defaultTownName,
+    difficulty: "normal",
+    tutorials: true,
+  };
+
+  // pull existing saved options from local storage
+  const savedOptions: GameOptions = JSON.parse(
+    localStorage.getItem("savedOptions") || "{}"
+  );
+
+  const gameOptions: GameOptions = {
+    ...defaultOptions,
+    ...savedOptions,
+  };
+
+  const [options, setOptions] = useState(gameOptions);
+
+  // update local storage when the buttons are clicked
+  useEffect(() => {
+    localStorage.setItem("savedOptions", JSON.stringify(options));
+  }, [options]);
+
+  return (
+    <MenuBox icon="▶️" headerText="Options">
+      <MenuBoxHeader>
+        Tutorials give you in-game tips on game mechanics. Difficulty increases
+        the strength and number of enemies, but also greatly increases your
+        score!
+      </MenuBoxHeader>
+
+      <MenuButtonContainer headerText="Difficulty">
+        {options.difficulty === "easy" ? (
+          <MenuButton buttonText="Easy" buttonColor="green" isSelected={true} />
+        ) : (
+          <MenuButton
+            buttonText="Easy"
+            buttonColor="green"
+            isSelected={false}
+            onClick={() =>
+              setOptions({
+                ...options,
+                difficulty: "easy",
+              })
+            }
+          />
+        )}
+        {options.difficulty === "normal" ? (
+          <MenuButton
+            buttonText="Normal"
+            buttonColor="blue"
+            isSelected={true}
+          />
+        ) : (
+          <MenuButton
+            buttonText="Normal"
+            buttonColor="blue"
+            isSelected={false}
+            onClick={() =>
+              setOptions({
+                ...options,
+                difficulty: "normal",
+              })
+            }
+          />
+        )}
+        {options.difficulty === "hard" ? (
+          <MenuButton buttonText="Hard" buttonColor="red" isSelected={true} />
+        ) : (
+          <MenuButton
+            buttonText="Hard"
+            buttonColor="red"
+            isSelected={false}
+            onClick={() =>
+              setOptions({
+                ...options,
+                difficulty: "hard",
+              })
+            }
+          />
+        )}
+        {options.difficulty === "nightmare" ? (
+          <MenuButton
+            buttonText="Nightmare"
+            buttonColor="deepRed"
+            isSelected={true}
+          />
+        ) : (
+          <MenuButton
+            buttonText="Nightmare"
+            buttonColor="deepRed"
+            isSelected={false}
+            onClick={() =>
+              setOptions({
+                ...options,
+                difficulty: "nightmare",
+              })
+            }
+          />
+        )}
+      </MenuButtonContainer>
+
+      <MenuButtonContainer headerText="Tutorials">
+        {options.tutorials === true ? (
+          <>
+            <MenuButton
+              buttonText="Off"
+              buttonColor="blue"
+              isSelected={false}
+              onClick={() =>
+                setOptions({
+                  ...options,
+                  tutorials: false,
+                })
+              }
+            />
+            <MenuButton buttonText="On" buttonColor="blue" isSelected={true} />
+          </>
+        ) : (
+          <>
+            <MenuButton buttonText="Off" buttonColor="blue" isSelected={true} />
+            <MenuButton
+              buttonText="On"
+              buttonColor="blue"
+              isSelected={false}
+              onClick={() =>
+                setOptions({
+                  ...options,
+                  tutorials: true,
+                })
+              }
+            />
+          </>
+        )}
+      </MenuButtonContainer>
+
+      <MenuButtonContainer headerText="Delete All Saved Data">
+        <WarningButton
+          counter={counter}
+          setCounter={setCounter}
+          incrementPopupCounter={incrementPopupCounter}
+        />
+      </MenuButtonContainer>
+
+      {/* horizontal line */}
+      <div className="my-3 border-t border-gray-300"></div>
+
+      <div className="flex items-center gap-2 p-4">
         <Link
           className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-center text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
           to="/"

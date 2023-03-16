@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import MenuBox from "./MenuBox";
 import { MenuBoxHeader } from "./MenuBoxHeader";
 
-export default function Leaderboards() {
+export default function LoadGame() {
   return (
-    <MenuBox headerText="Leaderboards" icon="🏆">
+    <MenuBox headerText="Load Game" icon="💾">
       <MenuBoxHeader>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
         suscipit fuga impedit explicabo, consequuntur at corrupti, est, culpa
