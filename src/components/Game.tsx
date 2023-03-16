@@ -485,9 +485,9 @@ export default function Game(props: GameProps) {
         break;
       case "nightmare":
         difficultyMultiplier = 1.5;
-        basePowerLevel = 5;
-        equalityTurn = 8;
-        growthRate = 0.075;
+        basePowerLevel = 4;
+        equalityTurn = 10;
+        growthRate = 0.05;
         break;
       default:
         difficultyMultiplier = 1.0;
