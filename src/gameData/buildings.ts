@@ -1,6 +1,8 @@
 /* TODO: Add a building which adds to number of workers per turn */
 
-export const buildingsData = {
+import { Buildings } from "../types";
+
+export const buildingsData: Buildings = {
   // for all units
   townCenter: {
     name: "Town Center",

@@ -1,4 +1,6 @@
-export const resourceData = {
+import { ResourcePool, Resources } from "../types";
+
+export const resourceData: Resources = {
   workers: {
     name: "worker",
     symbol: "🛠️",
@@ -59,7 +61,7 @@ export const resourceData = {
   },
 };
 
-export const resourcePoolData = {
+export const resourcePoolData: ResourcePool = {
   workers: 5,
   wood: 0,
   stone: 0,
