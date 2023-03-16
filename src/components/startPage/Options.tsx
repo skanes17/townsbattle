@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { defaultPlayerName, defaultTownName } from "../../gameData";
 import { GameOptions } from "../../types";
-import { MenuButton } from "../buttons";
-import { MenuBox, MenuButtonContainer } from "../startPage";
-import { MenuBoxHeader } from "./MenuBoxHeader";
+import { MenuButton, WarningButton } from "../buttons";
+import { MenuBox, MenuBoxHeader, MenuButtonContainer } from "../startPage";
 
 export default function Options() {
   const [counter, setCounter] = useState(0);
