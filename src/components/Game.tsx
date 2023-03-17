@@ -74,7 +74,7 @@ import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSect
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
 import { randomNumberBetweenMinAndMax } from "../utils/randomNumberBetweenMinAndMax";
-import { generateScoutReport } from "../utils/produceScoutReport";
+import { generateScoutReport } from "../utils/generateScoutReport";
 
 export default function Game(props: GameProps) {
   const defaultGameState: GameState = {
@@ -473,7 +473,7 @@ export default function Game(props: GameProps) {
       case "easy":
         difficultyMultiplier = 0.5;
         basePowerLevel = 1;
-        equalityTurn = 30;
+        equalityTurn = 25;
         growthRate = 0.03;
         break;
       case "normal":
@@ -635,6 +635,7 @@ export default function Game(props: GameProps) {
             Math.floor(Math.random() * aScatteringOfVillagers.length)
           ];
       }
+
       // enemy units don't get buffs in this version of the game
       const chosenUnit = { ...BASE_UNIT_DATA[unitType] };
       id += 1;
@@ -649,99 +650,191 @@ export default function Game(props: GameProps) {
       // add this unit's power level to the total
       const { attack, maxHealth, threatLevel } = chosenUnitWithCurrentHealth;
       powerLevel += attack + maxHealth + threatLevel;
+    }
+    // end of while loop
 
-      /* console.log("Power level: " + powerLevel); */
-      /* console.log(enemyArmy); */
+    // once army is generated, check how many types it has
+    const types = enemyArmy.map((unit) => unit.unitType);
+    const enemyUnitTypes = new Set(types).size;
 
-      const types = enemyArmy.map((unit) => unit.unitType);
-      const enemyUnitTypes = new Set(types).size;
+    // Scout Report to appear if Scout Unit is constructed -- TODO: tie this to a modal
+    if (buildings["scoutUnit"].constructed) {
+      const scoutReport = generateScoutReport(
+        friendlyUnits,
+        friendlyPowerLevel,
+        enemyArmy,
+        powerLevel
+      );
 
-      // Scout message should appear if Scout Unit is constructed -- TODO: tie this to a modal
-      if (buildings["scoutUnit"].constructed) {
-        const scoutReport = generateScoutReport(
-          friendlyUnits,
-          friendlyPowerLevel,
-          enemyArmy,
-          powerLevel
-        );
-
-        if (scoutReport.relativeSizeOfTheEnemy < 0.5) {
-          if (scoutReport.relativePowerOfTheEnemy < 0.5) {
-            alert(
-              `Scout's Report:  All is well! The enemy army is currently much smaller and much less powerful than ours.`
-            );
-          }
-          /* and so on */
+      if (scoutReport.relativeSizeOfTheEnemy < 0.5) {
+        if (scoutReport.relativePowerOfTheEnemy < 0.5) {
+          alert(
+            `Scout's Report: Nothing to fear! The enemy army is much smaller and much less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 0.8) {
+          alert(
+            `Scout's Report: We have the advantage! The enemy army is much smaller and slightly less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.approxSamePower) {
+          alert(
+            `Scout's Report: We have the advantage, but be careful! The enemy army is much smaller but about the same power as ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 1.2) {
+          alert(
+            `Scout's Report: We have the advantage, but it won't be easy! The enemy army is much smaller but slightly more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else {
+          alert(
+            `Scout's Report: Be cautious! The enemy army is much smaller but much more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
         }
-
-        /* Danger! The enemy army is twice as powerful and twice as large as ours! */
-        /* The enemy army is twice as powerful but about the same size as ours. */
-        /* The enemy army is twice as powerful but only half as large as ours. We have the advantage! */
-        /* The enemy army is about the same size as ours, but twice as powerful. Beware! */
-        /* The enemy army is about the same size and has a similar power level to ours. */
-        /* The enemy army is about the same size but only half as large as ours. We have the upper hand! */
-        /* The enemy army is much smaller than ours, but twice as powerful. We must be careful! */
-        /* The enemy army is much smaller than ours, but has a similar power level to ours. We have a significant advantage! */
-        /* The enemy army is much smaller and only half as powerful as ours. We have a decisive advantage! */
-
-        /* TODO: Call a function here taking the power levels and sizes and returning the Scout's Report! */
-        /* if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel / 2) {
-        alert(
-          `Scout's Report on the Enemy --  Unit Count: We're greatly outnumbered, Unit Types: ${enemyUnitTypes}, Threat Level: Critical!, Summary: The enemy has a larger and much more threatening army than ours.`
-        );
-      } else if ((friendlyUnits.length > enemyUnits.length && friendlyPowerLevel < powerLevel / 2))
-      alert(
-        `Scout's Report on the Enemy --  Unit Count: We outnumber them! Unit Types: ${enemyUnitTypes}, Threat Level: High, Summary: The enemy has a smaller but more threatening army than ours.`
-      )
-    } else if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel){
-    alert(
-      `Scout's Report on the Enemy --  Unit Count: We're outnumbered! Unit Types: ${enemyUnitTypes}, Threat Level: High, Summary: The enemy has a smaller but more threatening army than ours.`
-
-      `Scout Report: Your army seems to be smaller and less threatening than that of the enemy.`
-    )
-  }else if (friendlyUnits.length > enemyUnits.length && friendlyPowerLevel < powerLevel){
-  alert(
-    `Scout Report: Your army seems to be larger than the enemy's, but less threatening!`
-  )} 
-
-
-  else if (friendlyUnits.length < enemyUnits.length && powerLevel < friendlyPowerLevel / 2) {
-    alert(
-      `Scout Report: The enemy army is currently much more threatening than yours, and has more units!`
-    );
-  } else if (friendlyUnits.length > enemyUnits.length && powerLevel < friendlyPowerLevel / 2){
-  alert(
-    `Scout Report: The enemy army is currently smaller than yours, but still seems to be much more threatening!`
-  )
-} else if (friendlyUnits.length < enemyUnits.length && powerLevel < friendlyPowerLevel){
-alert(
-  `Scout Report: Your army seems to be smaller and less threatening than that of the enemy.`
-)
-}else if (friendlyUnits.length > enemyUnits.length && powerLevel < friendlyPowerLevel){
-alert(
-`Scout Report: Your army seems to be larger than the enemy's, but less threatening!`
-)} else  */
-
-        alert(
-          `Scouts report that the enemy army has ${
-            enemyArmy.length
-          } units, with ${enemyUnitTypes} unit type${
-            enemyUnitTypes > 1 ? "s" : ""
-          }.`
-        );
+      } else if (scoutReport.relativeSizeOfTheEnemy < 0.8) {
+        // similar code to previous case, with different flavor text
+        if (scoutReport.relativePowerOfTheEnemy < 0.5) {
+          alert(
+            `Scout's Report: They're outnumbered! The enemy army is slightly smaller and much less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 0.8) {
+          alert(
+            `Scout's Report: We have the edge! The enemy army is slightly smaller and slightly less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.approxSamePower) {
+          alert(
+            `Scout's Report: A close match! The enemy army is slightly smaller but about the same power as ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 1.2) {
+          alert(
+            `Scout's Report: It will be tough, but we can do it! The enemy army is slightly smaller but slightly more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else {
+          alert(
+            `Scout's Report: This could be difficult! The enemy army is slightly smaller but much more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        }
+      } else if (scoutReport.approxSameSize) {
+        // similar code to previous cases, with different flavor text
+        if (scoutReport.relativePowerOfTheEnemy < 0.5) {
+          alert(
+            `Scout's Report: We're evenly matched, but we have the advantage! The enemy army is about the same size but much less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 0.8) {
+          alert(
+            `Scout's Report: We're evenly matched, but we can win this! The enemy army is about the same size and slightly less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.approxSamePower) {
+          alert(
+            `Scout's Report: We're evenly matched! The enemy army is about the same size and power as ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 1.2) {
+          alert(
+            `Scout's Report: We're evenly matched, but this will be tough! The enemy army is about the same size but slightly more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else {
+          alert(
+            `Scout's Report: We're evenly matched, but they have the advantage! The enemy army is about the same size but much more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        }
+      } else if (scoutReport.relativeSizeOfTheEnemy < 1.2) {
+        // similar code to previous cases, with different flavor text
+        if (scoutReport.relativePowerOfTheEnemy < 0.5) {
+          alert(
+            `Scout's Report: This will be tough, but we can do it! The enemy army is slightly larger but much less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 0.8) {
+          alert(
+            `Scout's Report: Prepare for battle! The enemy army is slightly larger and slightly less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.approxSamePower) {
+          alert(
+            `Scout's Report: Prepare for a tough fight! The enemy army is slightly larger but about the same power as ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 1.2) {
+          alert(
+            `Scout's Report: This will be a challenge! The enemy army is slightly larger and slightly more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else {
+          alert(
+            `Scout's Report: We're in trouble! The enemy army is slightly larger and much more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        }
+      } else {
+        // similar code to previous cases, with different flavor text
+        if (scoutReport.relativePowerOfTheEnemy < 0.5) {
+          alert(
+            `Scout's Report: We're outnumbered, but we have the advantage! The enemy army is much larger but much less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 0.8) {
+          alert(
+            `Scout's Report: We're outnumbered, but we can win this! The enemy army is much larger and slightly less powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.approxSamePower) {
+          alert(
+            `Scout's Report: We're outnumbered, this will be tough! The enemy army is much larger but about the same power as ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else if (scoutReport.relativePowerOfTheEnemy < 1.2) {
+          alert(
+            `Scout's Report: We're outnumbered and outmatched! The enemy army is much larger and slightly more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        } else {
+          alert(
+            `Scout's Report: We're in trouble! The enemy army is much larger and much more powerful than ours. We spied ${enemyUnitTypes} unit type${
+              enemyUnitTypes > 1 ? `s` : ``
+            }.`
+          );
+        }
       }
-      setEnemyUnits(enemyArmy);
     }
 
-    // thoughts on composition of enemy army...
-    // if combat turns = 0, generate only workers
-    // if combat turns = 1, generate only workers and one fighter
-    // if combat turns = 2, generate only fighters? or workers and 1-2 fighters
-    // if combat turns = 3, generate only archer
-    // if combat turns = 4, generate fighters and archer
-    // if combat turns = 5, generate fighters, archers, 1 knight
-    // if combat turns = 6, generate any combination
-    // if combat turns = 7, from then on, any combination, unlock a new unit type for enemies after every combat?
+    // set the army in state once it's all said and done
+    setEnemyUnits(enemyArmy);
   };
 
   /* array to to hold army composition functions */
