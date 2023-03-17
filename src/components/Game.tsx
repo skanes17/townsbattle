@@ -54,6 +54,8 @@ import {
   MaxTrainingUnitsFn,
 } from "../types/FunctionTypes";
 import {
+  calcMinPlanningTurnsUntilArmyGen,
+  calcMinTurnsBetweenArmyGenAndCombat,
   cloneBasicObjectWithJSON,
   countUnits,
   generateRandomArmyComposition,
@@ -71,7 +73,7 @@ import constructBldgSfx from "../assets/sounds/constructBldgSfx.mp3";
 import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSection";
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
-import { calculateTurnsToWaitBeforeCombat } from "../utils/calculateTurnsToWaitBeforeCombat";
+import { randomNumberBetweenMinAndMax } from "../utils/randomNumberBetweenMinAndMax";
 
 export default function Game(props: GameProps) {
   const defaultGameState: GameState = {
@@ -131,26 +133,18 @@ export default function Game(props: GameProps) {
   );
   const [inCombat, setInCombat] = useState(gameState.inCombat);
 
-  // enemy will not be generated before reaching this turn number has passed
-  const minimumPlanningTurnsUntilEnemyGen = 4;
+  const planningTurnsUntilEnemyGen = useRef(
+    calcMinPlanningTurnsUntilArmyGen(difficulty)
+  );
+
   // after this many COMBATs, you'll get an extra planning turn before enemies are generated
   const numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne = 2;
   // this is the turn on which enemies are actually generated
   const planningTurnToGenerateEnemies =
-    minimumPlanningTurnsUntilEnemyGen +
+    planningTurnsUntilEnemyGen.current +
     Math.floor(
       nextCombatTurn / numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne
     );
-
-  // how long to wait after enemies are generated before combat starts
-  const turnsBetweenEnemyArmyGenAndCombat = calculateTurnsToWaitBeforeCombat(
-    2,
-    5
-  );
-
-  // planning turn on which combat actually starts
-  const planningTurnToTriggerCombat =
-    planningTurnToGenerateEnemies + turnsBetweenEnemyArmyGenAndCombat;
 
   /* ===RESOURCES AND WORKERS=== */
   const [resources, setResources] = useState(gameState.resources);
@@ -794,6 +788,14 @@ alert(
     setInCombat(!inCombat);
   };
 
+  const turnsBetweenEnemyArmyGenAndCombat = useRef(
+    calcMinTurnsBetweenArmyGenAndCombat(difficulty)
+  );
+
+  // planning turn on which combat actually starts
+  const planningTurnToTriggerCombat =
+    planningTurnToGenerateEnemies + turnsBetweenEnemyArmyGenAndCombat.current;
+
   const endTurn = () => {
     if (turn === planningTurnToGenerateEnemies) {
       generateEnemyArmy(
@@ -802,11 +804,10 @@ alert(
         unlockedUnitTypes,
         unitTypes
       );
-      /* alert(
-        `The enemy army will reach the town in ${turnsBetweenEnemyArmyGenAndCombat} turn${
-          turnsBetweenEnemyArmyGenAndCombat > 1 ? "s" : ""
-        }!`
-      ); */
+
+      // calculate new value for the next planning phase
+      turnsBetweenEnemyArmyGenAndCombat.current =
+        calcMinTurnsBetweenArmyGenAndCombat(difficulty);
     }
 
     // clone resources, resource pool, and buildings to preserve state
@@ -832,6 +833,11 @@ alert(
 
     if (turn === planningTurnToTriggerCombat) {
       switchPhase();
+
+      // change the number of planning turns until enemies are generated for the next turn
+      planningTurnsUntilEnemyGen.current =
+        calcMinPlanningTurnsUntilArmyGen(difficulty);
+
       // Unused -- reset turn to 1
       setTurn(1);
       // increment the number of combats FIXME: Delayed by one

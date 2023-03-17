@@ -1,4 +1,4 @@
-export function calculateTurnsToWaitBeforeCombat(
+export function randomNumberBetweenMinAndMax(
   minTurns: number,
   maxTurns: number
 ): number {
