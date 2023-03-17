@@ -71,6 +71,7 @@ import constructBldgSfx from "../assets/sounds/constructBldgSfx.mp3";
 import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSection";
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
+import { calculateTurnsToWaitBeforeCombat } from "../utils/calculateTurnsToWaitBeforeCombat";
 
 export default function Game(props: GameProps) {
   const defaultGameState: GameState = {
@@ -133,7 +134,7 @@ export default function Game(props: GameProps) {
   // enemy will not be generated before reaching this turn number has passed
   const minimumPlanningTurnsUntilEnemyGen = 4;
   // after this many COMBATs, you'll get an extra planning turn before enemies are generated
-  const numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne = 4;
+  const numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne = 2;
   // this is the turn on which enemies are actually generated
   const planningTurnToGenerateEnemies =
     minimumPlanningTurnsUntilEnemyGen +
@@ -142,7 +143,11 @@ export default function Game(props: GameProps) {
     );
 
   // how long to wait after enemies are generated before combat starts
-  let turnsBetweenEnemyArmyGenAndCombat = 2;
+  const turnsBetweenEnemyArmyGenAndCombat = calculateTurnsToWaitBeforeCombat(
+    2,
+    5
+  );
+
   // planning turn on which combat actually starts
   const planningTurnToTriggerCombat =
     planningTurnToGenerateEnemies + turnsBetweenEnemyArmyGenAndCombat;
@@ -467,36 +472,36 @@ export default function Game(props: GameProps) {
     switch (difficulty) {
       case "easy":
         difficultyMultiplier = 0.5;
-        basePowerLevel = 2;
-        equalityTurn = 20;
+        basePowerLevel = 1;
+        equalityTurn = 30;
         growthRate = 0.03;
         break;
       case "normal":
         difficultyMultiplier = 1.0;
-        basePowerLevel = 3;
-        equalityTurn = 12;
+        basePowerLevel = 2;
+        equalityTurn = 20;
         growthRate = 0.05;
         break;
       case "hard":
         difficultyMultiplier = 1.25;
-        basePowerLevel = 4;
-        equalityTurn = 10;
+        basePowerLevel = 3;
+        equalityTurn = 15;
         growthRate = 0.05;
         break;
       case "nightmare":
         difficultyMultiplier = 1.5;
-        basePowerLevel = 4;
-        equalityTurn = 10;
-        growthRate = 0.05;
+        basePowerLevel = 3;
+        equalityTurn = 12;
+        growthRate = 0.04;
         break;
       default:
         difficultyMultiplier = 1.0;
         basePowerLevel = 3;
-        equalityTurn = 12;
+        equalityTurn = 20;
         growthRate = 0.05;
     }
 
-    // exponential growth formula based on E(turns) = D * (P(1+r)^(nextCombatTurn-equalityTurn) + (basePowerLevel * nextCombatTurn)) where...
+    // exponential growth formula based on E(turns) = D * (P(1+r)^(nextCombatTurn-equalityTurn) + (basePowerLevel * Math.pow(nextCombatTurn, 2)) where...
     // y = enemy power level, D = difficulty
     // P = friendly power level, nextCombatTurn = which combat turn is next
     // equalityTurn = desired turn until match (excluding basePowerLevel)
