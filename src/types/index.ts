@@ -9,6 +9,7 @@ export * from "./GameProps";
 export * from "./Menu";
 export * from "./NavButtons";
 export * from "./Defaults";
+export * from "./ScoutReport";
 export * from "./TutorialTypes";
 export * from "./ResourceCosts";
 export * from "./Resources";

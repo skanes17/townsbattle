@@ -43,7 +43,10 @@ export default function PreCombatCardTemplate({
           // only show unit types that were defeated
           return (
             unitCounts[unitType as UnitType as UnitType] > 0 && (
-              <div className="mt-1 inline-flex flex-wrap capitalize sm:flex-nowrap">
+              <div
+                key={unitType}
+                className="mt-1 inline-flex flex-wrap capitalize sm:flex-nowrap"
+              >
                 <div
                   className={`group mr-2 h-7 w-7 rounded-lg border border-zinc-700 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
                 ></div>

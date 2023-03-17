@@ -38,7 +38,7 @@ export default function CardCostsInfo({
             /* If this resource is required, show its cost */
             /* If the resource is undefined, set the result to 0 */
             (costsObject[resourceType as ResourceType] ?? 0) > 0 && (
-              <div>
+              <div key={resourceType}>
                 {resources[resourceType as ResourceType].symbol}
                 <span
                   className={

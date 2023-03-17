@@ -464,12 +464,12 @@ export default function Combat({
         buildingsConstructed = Object.keys(buildings)
           .filter((buildingType) => buildingType !== "townCenter")
           .filter((key) => clonedBuildings[key].constructed);
-        console.log("Avoiding the Town Center!");
+        /* console.log("Avoiding the Town Center!"); */
       } else {
         buildingsConstructed = Object.keys(buildings).filter(
           (key) => clonedBuildings[key].constructed
         );
-        console.log("No choice but to hit the Town Center!");
+        /* console.log("No choice but to hit the Town Center!"); */
       }
 
       const buildingAttacked =
@@ -483,10 +483,10 @@ export default function Combat({
       // TODO: Consider Buffs??
       const enemyAttackValue = enemyUnit.attack;
 
-      console.log("Building Attacked: " + buildingAttacked.name);
-      console.log("Building Health: " + buildingAttacked.currentHealth);
-      console.log("Enemy Chosen: " + enemyUnit.name + enemyUnit.id);
-      console.log("Enemy Attack: " + enemyAttackValue);
+      /* console.log("Building Attacked: " + buildingAttacked.name); */
+      /* console.log("Building Health: " + buildingAttacked.currentHealth); */
+      /* console.log("Enemy Chosen: " + enemyUnit.name + enemyUnit.id); */
+      /* console.log("Enemy Attack: " + enemyAttackValue); */
 
       // TODO: could set up a push to a new "buildingDamagedEvent" messages log here -- ENEMY X attacks BUILDING Y for Z DMG
 
@@ -496,10 +496,10 @@ export default function Combat({
         buildingAttacked.currentHealth - enemyAttackValue
       );
 
-      console.log("New Building Health: " + buildingAttacked.currentHealth);
+      /* console.log("New Building Health: " + buildingAttacked.currentHealth);
       console.log(
         "Total Damage Dealt to This Building: " + buildingAttacked.damage
-      );
+      ); */
 
       if (buildingAttacked.currentHealth === 0) {
         // if the building is destroyed, set it to destroyed (constructed = false)
@@ -605,7 +605,7 @@ export default function Combat({
                 }
               });
 
-              console.log(friendlyUnitsNotSelected);
+              /* console.log(friendlyUnitsNotSelected); */
 
               // return the units to their army and pick new ones -- also sets a new preCombatEvent
               selectNewUnits();

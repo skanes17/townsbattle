@@ -44,6 +44,7 @@ export default function TrainingCardContainer({
     <>
       {unlockedUnitTypes.map((unitType) => (
         <TrainUnitCard
+          key={unitType}
           lockedOrUnlockedUnits="unlocked"
           unitType={unitType as UnitType}
           resources={resources}
@@ -63,6 +64,7 @@ export default function TrainingCardContainer({
         buildings["crystalQuarry"].constructed ? (
           /* If the crystal quarry unlocked? Show all the units */
           <TrainUnitCard
+            key={unitType}
             lockedOrUnlockedUnits="locked"
             unitType={unitType as UnitType}
             resources={resources}
@@ -80,6 +82,7 @@ export default function TrainingCardContainer({
           /* Crystal quarry NOT unlocked? Hide units requiring crystal */
           !BASE_UNIT_DATA[unitType as UnitType].resourceCosts.crystal && (
             <TrainUnitCard
+              key={unitType}
               lockedOrUnlockedUnits="locked"
               unitType={unitType as UnitType}
               resources={resources}

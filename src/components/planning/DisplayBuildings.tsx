@@ -23,7 +23,10 @@ export default function DisplayBuildings({ buildings }: DisplayBuildingsProps) {
   return (
     <>
       {constructedBuildings.map((buildingType) => (
-        <BldgCardTemplate bgImage={buildings[buildingType].bgImage}>
+        <BldgCardTemplate
+          key={buildingType}
+          bgImage={buildings[buildingType].bgImage}
+        >
           <CardHeader cardName={buildings[buildingType].name} />
           <CardHoverText>{buildings[buildingType].description}</CardHoverText>
           <BldgCardFooter

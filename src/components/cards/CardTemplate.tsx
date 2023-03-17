@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { BuildingType, ResourceType, UnitType } from "../../types";
 
 interface CardTemplateProps {
   lockedOrUnlockedUnits?: "locked" | "unlocked";

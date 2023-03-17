@@ -94,6 +94,7 @@ export function UnitTile({
   return (
     <>
       <div
+        key={`${unit.name}${unit.id}`}
         className={`${bg} group relative h-20 w-[3.33rem] snap-start justify-items-center rounded-lg bg-cover bg-center saturate-125 sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >
         <div

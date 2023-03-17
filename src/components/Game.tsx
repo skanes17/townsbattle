@@ -74,6 +74,7 @@ import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSect
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
 import { randomNumberBetweenMinAndMax } from "../utils/randomNumberBetweenMinAndMax";
+import { generateScoutReport } from "../utils/produceScoutReport";
 
 export default function Game(props: GameProps) {
   const defaultGameState: GameState = {
@@ -426,32 +427,37 @@ export default function Game(props: GameProps) {
     allUnitTypes: UnitType[]
   ) => {
     // calculate the friendly army power level (the sum of all the attack, health, and threat levels)
-    const { totalAttack, totalHealth, totalArmor, totalThreat } =
-      friendlyUnits.reduce(
-        // and an arrow function is called for each unit in friendlyUnits
-        (totals, unit) => ({
-          // For each unit, the arrow function adds the unit's attack, health, and threat to each total
-          totalAttack: totals.totalAttack + unit.attack,
-          totalHealth: totals.totalHealth + unit.currentHealth,
-          totalArmor: totals.totalArmor + unit.armor,
-          totalThreat: totals.totalThreat + unit.threatLevel,
-        }),
-        // Initilized values for total attack, total health, and total threat
-        { totalAttack: 0, totalHealth: 0, totalArmor: 0, totalThreat: 0 }
-      );
+    const {
+      totalAttack,
+      totalHealth,
+      totalArmor,
+      totalAttackBonus,
+      totalThreat,
+    } = friendlyUnits.reduce(
+      // and an arrow function is called for each unit in friendlyUnits
+      (totals, unit) => ({
+        // For each unit, the arrow function adds the unit's attack, health, and threat to each total
+        totalAttack: totals.totalAttack + unit.attack,
+        totalHealth: totals.totalHealth + unit.currentHealth,
+        totalArmor: totals.totalArmor + unit.armor,
+        totalAttackBonus:
+          totals.totalAttackBonus + Math.floor(unit.fullHealthAttackBonus / 2),
+        totalThreat: totals.totalThreat + unit.threatLevel,
+      }),
+      // Initilized values for total attack, total health, and total threat
+      {
+        totalAttack: 0,
+        totalHealth: 0,
+        totalArmor: 0,
+        totalAttackBonus: 0,
+        totalThreat: 0,
+      }
+    );
 
     /* TODO: Consider adding resources into the mix */
-
     const friendlyPowerLevel =
-      totalAttack + totalHealth + totalArmor + totalThreat;
-    console.log(friendlyPowerLevel);
-
-    /* Alternate Method if only Power Level is desired:
-    const friendlyPowerLevel = friendlyUnits.reduce((total, unit) => {
-      return total + unit.attack + unit.currentHealth + unit.armor + unit.threatLevel;
-    }, 0);
-    console.log(friendlyPowerLevel);
-    */
+      totalAttack + totalHealth + totalArmor + totalAttackBonus + totalThreat;
+    /* console.log(friendlyPowerLevel); */
 
     // The following process takes the calculated power level and scales the enemy's power level accordingly.
     let difficultyMultiplier;
@@ -505,14 +511,14 @@ export default function Game(props: GameProps) {
     const scaledEnemyPowerLevel =
       friendlyPowerLevel *
       Math.pow(1 + growthRate, nextCombatTurn - equalityTurn);
-    console.log(scaledEnemyPowerLevel);
+    /* console.log(scaledEnemyPowerLevel); */
 
     // set a minimum power level for enemy army based on how many combats there have been, regardless of player power level
     // basePowerLevel * nextCombatTurn is a simple linear function
     const minimumEnemyPowerLevel =
       difficultyMultiplier *
       (scaledEnemyPowerLevel + basePowerLevel * Math.pow(nextCombatTurn, 2));
-    console.log(scaledEnemyPowerLevel);
+    /* console.log(scaledEnemyPowerLevel); */
 
     const enemyArmy: Unit[] = [];
     let powerLevel = 0;
@@ -544,12 +550,12 @@ export default function Game(props: GameProps) {
           default:
             // the rest are randomly chosen from player's UNLOCKED units
             // it shouldn't be undefined because villagers are always available at start
-            console.log(unlockedUnitTypes);
+            /* console.log(unlockedUnitTypes); */
             unitType =
               unlockedUnitTypes[
                 Math.floor(Math.random() * unlockedUnitTypes.length)
               ]!;
-            console.log(unitType);
+          /* console.log(unitType); */
         }
       } else if (nextCombatTurn === 4 || nextCombatTurn === 5) {
         switch (powerLevel) {
@@ -559,12 +565,12 @@ export default function Game(props: GameProps) {
             break;
           default:
             // again choosing from player's unlocked
-            console.log(unlockedUnitTypes);
+            /* console.log(unlockedUnitTypes); */
             unitType =
               unlockedUnitTypes[
                 Math.floor(Math.random() * unlockedUnitTypes.length)
               ]!;
-            console.log(unitType);
+          /* console.log(unitType); */
         }
       } else if (nextCombatTurn > 5 && nextCombatTurn <= 8) {
         switch (powerLevel) {
@@ -573,12 +579,12 @@ export default function Game(props: GameProps) {
             unitType = "knight";
             break;
           default:
-            console.log(unlockedUnitTypes);
+            /* console.log(unlockedUnitTypes); */
             unitType =
               unlockedUnitTypes[
                 Math.floor(Math.random() * unlockedUnitTypes.length)
               ]!;
-            console.log(unitType);
+          /* console.log(unitType); */
         }
       } else if (nextCombatTurn > 8 && nextCombatTurn <= 11) {
         switch (powerLevel) {
@@ -643,17 +649,43 @@ export default function Game(props: GameProps) {
       // add this unit's power level to the total
       const { attack, maxHealth, threatLevel } = chosenUnitWithCurrentHealth;
       powerLevel += attack + maxHealth + threatLevel;
-    }
-    console.log("Power level: " + powerLevel);
-    console.log(enemyArmy);
 
-    const types = enemyArmy.map((unit) => unit.unitType);
-    const enemyUnitTypes = new Set(types).size;
+      /* console.log("Power level: " + powerLevel); */
+      /* console.log(enemyArmy); */
 
-    // new messages if Scout Unit was constructed
-    if (buildings["scoutUnit"].constructed) {
-      /* TODO: Call a function here taking the power levels and sizes and returning the Scout's Report! */
-      /* if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel / 2) {
+      const types = enemyArmy.map((unit) => unit.unitType);
+      const enemyUnitTypes = new Set(types).size;
+
+      // Scout message should appear if Scout Unit is constructed -- TODO: tie this to a modal
+      if (buildings["scoutUnit"].constructed) {
+        const scoutReport = generateScoutReport(
+          friendlyUnits,
+          friendlyPowerLevel,
+          enemyArmy,
+          powerLevel
+        );
+
+        if (scoutReport.relativeSizeOfTheEnemy < 0.5) {
+          if (scoutReport.relativePowerOfTheEnemy < 0.5) {
+            alert(
+              `Scout's Report:  All is well! The enemy army is currently much smaller and much less powerful than ours.`
+            );
+          }
+          /* and so on */
+        }
+
+        /* Danger! The enemy army is twice as powerful and twice as large as ours! */
+        /* The enemy army is twice as powerful but about the same size as ours. */
+        /* The enemy army is twice as powerful but only half as large as ours. We have the advantage! */
+        /* The enemy army is about the same size as ours, but twice as powerful. Beware! */
+        /* The enemy army is about the same size and has a similar power level to ours. */
+        /* The enemy army is about the same size but only half as large as ours. We have the upper hand! */
+        /* The enemy army is much smaller than ours, but twice as powerful. We must be careful! */
+        /* The enemy army is much smaller than ours, but has a similar power level to ours. We have a significant advantage! */
+        /* The enemy army is much smaller and only half as powerful as ours. We have a decisive advantage! */
+
+        /* TODO: Call a function here taking the power levels and sizes and returning the Scout's Report! */
+        /* if (friendlyUnits.length < enemyUnits.length && friendlyPowerLevel < powerLevel / 2) {
         alert(
           `Scout's Report on the Enemy --  Unit Count: We're greatly outnumbered, Unit Types: ${enemyUnitTypes}, Threat Level: Critical!, Summary: The enemy has a larger and much more threatening army than ours.`
         );
@@ -690,16 +722,16 @@ alert(
 `Scout Report: Your army seems to be larger than the enemy's, but less threatening!`
 )} else  */
 
-      alert(
-        `Scouts report that the enemy army has ${
-          enemyArmy.length
-        } units, with ${enemyUnitTypes} unit type${
-          enemyUnitTypes > 1 ? "s" : ""
-        }.`
-      );
+        alert(
+          `Scouts report that the enemy army has ${
+            enemyArmy.length
+          } units, with ${enemyUnitTypes} unit type${
+            enemyUnitTypes > 1 ? "s" : ""
+          }.`
+        );
+      }
+      setEnemyUnits(enemyArmy);
     }
-
-    setEnemyUnits(enemyArmy);
 
     // thoughts on composition of enemy army...
     // if combat turns = 0, generate only workers

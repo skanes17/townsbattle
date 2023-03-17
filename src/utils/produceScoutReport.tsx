@@ -1,24 +1,33 @@
 import { Unit } from "../types";
 
-export function ScoutReport(
+export function generateScoutReport(
   friendlyArmy: Unit[],
   friendlyPowerLevel: number,
   enemyArmy: Unit[],
-  enemyPowerLevel: number,
-  enemyUnitTypes: number
+  enemyPowerLevel: number
 ) {
-  const enemyIsTwiceAsLarge = enemyArmy.length > 2 * friendlyArmy.length;
-  const enemyIsApproxSameSize =
-    Math.abs(enemyArmy.length - friendlyArmy.length) <
-    0.1 * friendlyArmy.length;
-  const enemyIsHalfSize = enemyArmy.length < 0.5 * friendlyArmy.length;
-  const enemyIsTwiceAsPowerful = enemyPowerLevel > friendlyPowerLevel * 2;
-  const enemyIsApproxSamePower =
-    Math.abs(enemyPowerLevel - friendlyPowerLevel) < 0.1 * friendlyPowerLevel;
-  const enemyIsHalfPowerful = enemyPowerLevel < 0.5 * friendlyPowerLevel;
+  // If the denominator is zero, just calculate as if the denominator is 1.
+  const relativeSizeOfTheEnemy = isNaN(enemyArmy.length / friendlyArmy.length)
+    ? enemyArmy.length
+    : enemyArmy.length / friendlyArmy.length;
+  const relativePowerOfTheEnemy = isNaN(enemyPowerLevel / friendlyPowerLevel)
+    ? enemyPowerLevel
+    : enemyPowerLevel / friendlyPowerLevel;
 
-  /* TODO: Add Nested if statements */
-  if (enemyIsTwiceAsLarge) {
+  const enemyUnitTypes = enemyArmy.map((unit) => unit.unitType);
+  const numberOfDifferentEnemyUnitTypes = new Set(enemyUnitTypes).size;
+
+  const scoutReport = {
+    relativeSizeOfTheEnemy,
+    relativePowerOfTheEnemy,
+    numberOfDifferentEnemyUnitTypes,
+  };
+
+  return scoutReport;
+}
+
+/* TODO: Add Nested if statements */
+/* if (enemyIsTwiceAsLarge) {
     return (
       <div>
         Watch out! The enemy army is twice as large as our friendly army!
@@ -48,8 +57,7 @@ export function ScoutReport(
         Something went wrong with the army comparison. Please check your input.
       </div>
     );
-  }
-}
+  } */
 
 /* Use a combo of the below to check; also check edge cases where they're equal
 function ArmyComparison({ friendlyArmy, enemyArmy }) {
