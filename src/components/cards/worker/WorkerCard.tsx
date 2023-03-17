@@ -131,7 +131,7 @@ export default function WorkerCard({
                 )
               }
             >
-              ZERO
+              Zero
             </AddRemoveButton>
           </div>
           <div className="col-start-2 row-start-2 flex items-center justify-center">
@@ -171,7 +171,7 @@ export default function WorkerCard({
                 )
               }
             >
-              MAX
+              Max
             </AddRemoveButton>
           </div>
         </div>
