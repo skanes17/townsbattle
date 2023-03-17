@@ -19,7 +19,7 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
 
   return (
     <div className="grid-cols-auto grid w-full grid-cols-3 justify-between">
-      <p className={`grid-rows-auto col-start-1 grid text-center`}>
+      <div className={`grid-rows-auto col-start-1 grid text-center`}>
         <p>🗡️</p>
         {/* special styling for attack bonus */}
         {unit.currentHealth === unit.maxHealth &&
@@ -30,15 +30,15 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
         ) : (
           <p>{unit.attack}</p>
         )}
-      </p>
+      </div>
       {unit.armor > 0 ? (
-        <p className={`grid-rows-auto col-start-2 grid text-center`}>
+        <div className={`grid-rows-auto col-start-2 grid text-center`}>
           <p>🛡️</p> <p>{unit.armor}</p>
-        </p>
+        </div>
       ) : null}
 
       {/* TODO: REMOVE?? Health on Card -- Conditional green for full, orange for damaged, red for critical */}
-      <p className={`grid-rows-auto col-start-3 grid text-center`}>
+      <div className={`grid-rows-auto col-start-3 grid text-center`}>
         <p>❤️</p>
         <p>
           <span className={`${healthTextColor}`}>{unit.currentHealth}</span>
@@ -46,7 +46,7 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
             /{unit.maxHealth}
           </span>
         </p>
-      </p>
+      </div>
     </div>
   );
 }
