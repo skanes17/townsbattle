@@ -1,11 +1,17 @@
 import React from "react";
 import { enemyColor, friendlyColor } from "../../gameData";
-import { ArmyColors, BaseUnit, Unit, UnitCounts, UnitType } from "../../types";
+import {
+  ArmyColors,
+  BaseUnitData,
+  Unit,
+  UnitCounts,
+  UnitType,
+} from "../../types";
 
 interface PreCombatCardTemplateProps {
   armyStyle: "friendly" | "enemy";
   headerText: "Your Army" | "Enemy Army";
-  BASE_UNIT_DATA: BaseUnit;
+  BASE_UNIT_DATA: BaseUnitData;
   army: Unit[];
   unitCounts: UnitCounts;
   unitTypes: UnitType[];

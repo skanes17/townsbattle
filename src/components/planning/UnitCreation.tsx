@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import {
   UnitCounts,
   Resources,
-  BaseUnit,
+  BaseUnitData,
   AddRemoveUnitFn,
   MaxTrainingUnitsFn,
   UnitType,
@@ -15,7 +15,7 @@ interface UnitCreationProps {
   resources: Resources;
   resourcePool: ResourcePool;
   setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
-  BASE_UNIT_DATA: BaseUnit;
+  BASE_UNIT_DATA: BaseUnitData;
   addTrainingUnit: AddRemoveUnitFn;
   maxTrainingUnits: MaxTrainingUnitsFn;
   removeTrainingUnit: AddRemoveUnitFn;

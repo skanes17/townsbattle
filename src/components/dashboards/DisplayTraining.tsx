@@ -1,9 +1,9 @@
 import React from "react";
-import { BaseUnit, UnitCounts, UnitType } from "../../types/";
+import { BaseUnitData, UnitCounts, UnitType } from "../../types/";
 import { UnitInTraining } from "../planning";
 
 interface DisplayTrainingProps {
-  BASE_UNIT_DATA: BaseUnit;
+  BASE_UNIT_DATA: BaseUnitData;
   unitTypes: UnitType[];
   unitsInTraining: UnitCounts;
 }

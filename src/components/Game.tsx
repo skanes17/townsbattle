@@ -27,11 +27,12 @@ import { Button } from "./buttons";
 
 // import { buildingsData, buildingCostsData } from "../gameData/buildings";
 // import { upgradesData } from "../gameData/upgrades";
-// import { BaseUnit } from "../types/BaseUnit";
+// import { BaseUnitData } from "../types/BaseUnitData";
 // import { BuildingCosts } from "../types/BuildingCosts";
 import {
   BaseResourceType,
   BaseUnit,
+  BaseUnitData,
   Buildings,
   GameOptions,
   GameProps,
@@ -207,6 +208,15 @@ export default function Game(props: GameProps) {
 
   const BASE_UNIT_DATA = baseUnitData;
   const FRIENDLY_BASE_UNIT_DATA = cloneBasicObjectWithJSON(BASE_UNIT_DATA);
+  // adds bonuses as necessary -- TODO: redo this with a more robust systems approach
+  Object.keys(FRIENDLY_BASE_UNIT_DATA).map((unit: string) => {
+    if (buildings["mealHall"].constructed) {
+      FRIENDLY_BASE_UNIT_DATA[unit as UnitType].attack +=
+        buildings["mealHall"].attackBonus;
+      FRIENDLY_BASE_UNIT_DATA[unit as UnitType].maxHealth +=
+        buildings["mealHall"].healthBonus;
+    }
+  });
   const ENEMY_BASE_UNIT_DATA = cloneBasicObjectWithJSON(BASE_UNIT_DATA);
   const unitTypes = Object.keys(BASE_UNIT_DATA) as UnitType[];
 
@@ -399,7 +409,7 @@ export default function Game(props: GameProps) {
   const trainUnits = () => {
     const units = friendlyTrainingUnits.map((unit) => {
       // resolve base unit from unit type
-      const _chosenUnit = BASE_UNIT_DATA[unit.unitType];
+      const _chosenUnit = FRIENDLY_BASE_UNIT_DATA[unit.unitType];
       id += 1;
 
       // add to score
@@ -638,7 +648,7 @@ export default function Game(props: GameProps) {
       }
 
       // enemy units don't get buffs in this version of the game
-      const chosenUnit = { ...BASE_UNIT_DATA[unitType] };
+      const chosenUnit = { ...ENEMY_BASE_UNIT_DATA[unitType] };
       id += 1;
       // adding a current health key/value and id to the unit
       const chosenUnitWithCurrentHealth: Unit = {
@@ -873,10 +883,10 @@ export default function Game(props: GameProps) {
     ](numberOfUnitTypes, unitWeight);
 
     let newUnits: Unit[] = [];
-    // Add the appopriate number of each unit to the enemy army
+    // Add the appropriate number of each unit to the enemy army
     Object.keys(BASE_UNIT_DATA).map((unit: string, index) => {
       // grab the chosen unit from the base unit data
-      const chosenUnit = BASE_UNIT_DATA[unit as UnitType];
+      const chosenUnit = ENEMY_BASE_UNIT_DATA[unit as UnitType];
 
       // the index is used to call the appropriate ratio from the composition function
       // that ratio is multiplied by numberOfFriendlyUnits to give a number of units
@@ -1327,7 +1337,7 @@ export default function Game(props: GameProps) {
                   resourcePool={resourcePool}
                   setResourcePool={setResourcePool}
                   unitsInTraining={unitsInTraining}
-                  BASE_UNIT_DATA={BASE_UNIT_DATA}
+                  BASE_UNIT_DATA={FRIENDLY_BASE_UNIT_DATA}
                   addTrainingUnit={addTrainingUnit}
                   maxTrainingUnits={maxTrainingUnits}
                   removeTrainingUnit={removeTrainingUnit}

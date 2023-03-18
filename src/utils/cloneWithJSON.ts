@@ -1,4 +1,4 @@
-import { BaseUnit, Buildings, ResourcePool, Resources } from "../types";
+import { BaseUnitData, Buildings, ResourcePool, Resources } from "../types";
 import { NavButtons } from "../types/NavButtons";
 import { TipsSeen } from "../types/TutorialTypes";
 
@@ -12,7 +12,7 @@ export function cloneBasicObjectWithJSON<
     | Buildings
     | NavButtons
     | TipsSeen
-    | BaseUnit
+    | BaseUnitData
 >(objectToClone: T): T {
   const clonedData: T = JSON.parse(JSON.stringify(objectToClone));
   return clonedData;

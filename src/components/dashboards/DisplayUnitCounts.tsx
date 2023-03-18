@@ -1,10 +1,10 @@
 import React from "react";
-import { BaseUnit, UnitCounts, UnitType } from "../../types";
+import { BaseUnitData, UnitCounts, UnitType } from "../../types";
 import { UnitCount } from "../planning";
 import DashboardImageAndCount from "../planning/DashboardImageAndCount";
 
 interface DisplayUnitCountsProps {
-  BASE_UNIT_DATA: BaseUnit;
+  BASE_UNIT_DATA: BaseUnitData;
   unitTypes: string[];
   unitCounts: UnitCounts;
 }

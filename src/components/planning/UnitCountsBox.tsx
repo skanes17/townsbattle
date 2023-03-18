@@ -1,9 +1,9 @@
-import { BaseUnit, UnitCounts, UnitType } from "../../types";
+import { BaseUnitData, UnitCounts, UnitType } from "../../types";
 
 interface UnitCountsBoxProps {
   headerText: string;
   headerTextColor: "red" | "amber" | "green" | "blue";
-  BASE_UNIT_DATA: BaseUnit;
+  BASE_UNIT_DATA: BaseUnitData;
   unitCounts: UnitCounts;
   unitTypes: (UnitType | undefined)[];
 }

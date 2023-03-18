@@ -1,10 +1,16 @@
 import React from "react";
 import { PostCombatBldgStatBox, PostCombatUnitsStatBox } from ".";
-import { BaseUnit, Buildings, Unit, UnitCounts, UnitType } from "../../types/";
+import {
+  BaseUnitData,
+  Buildings,
+  Unit,
+  UnitCounts,
+  UnitType,
+} from "../../types/";
 import { countUnits } from "../../utils";
 
 interface PostCombatSummaryProps {
-  BASE_UNIT_DATA: BaseUnit;
+  BASE_UNIT_DATA: BaseUnitData;
   buildings: Buildings;
   unitTypes: UnitType[];
   friendlyUnits: Unit[];

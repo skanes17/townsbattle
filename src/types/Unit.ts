@@ -42,9 +42,11 @@ export interface Unit {
   id?: number;
 }
 
-export interface BaseUnit {
-  [key: string]: Omit<Unit, "currentHealth">;
+export interface BaseUnitData {
+  [key: string]: BaseUnit;
 }
+
+export type BaseUnit = Omit<Unit, "currentHealth">;
 
 /* // TODO: Use Pick<> here? */
 export interface TrainingUnit {

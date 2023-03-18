@@ -1,7 +1,7 @@
 import React from "react";
 import {
   BaseResourceType,
-  BaseUnit,
+  BaseUnitData,
   ResourcePool,
   Resources,
   UnitCounts,
@@ -9,7 +9,7 @@ import {
 } from "../../types";
 
 interface DashboardImageAndCountProps {
-  dataObject: BaseUnit | Resources;
+  dataObject: BaseUnitData | Resources;
   countsObject: UnitCounts | ResourcePool;
   type: UnitType | keyof Resources | BaseResourceType;
 }

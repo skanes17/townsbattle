@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { TutorialMessages } from "../../gameData";
 import {
-  BaseUnit,
+  BaseUnitData,
   Buildings,
   CombatEvent,
   MainCombatEvent,
@@ -40,7 +40,7 @@ interface CombatProps {
   tipsSeen: TipsSeen;
   markTipAsSeen: (tutorialCategory: TutorialCategory) => void;
   currentCombatTurn: number;
-  BASE_UNIT_DATA: BaseUnit;
+  BASE_UNIT_DATA: BaseUnitData;
   unitTypes: UnitType[];
   unlockedUnitTypes: (UnitType | undefined)[];
   friendlyUnits: Unit[];

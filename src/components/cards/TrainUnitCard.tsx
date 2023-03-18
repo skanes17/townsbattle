@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import {
-  BaseUnit,
+  BaseUnitData,
   ResourcePool,
   Resources,
   ResourceType,
@@ -31,7 +31,7 @@ export interface TrainUnitCardProps {
   resourcePool: ResourcePool;
   setResourcePool: Dispatch<SetStateAction<ResourcePool>>;
   unitsInTraining: UnitCounts;
-  BASE_UNIT_DATA: BaseUnit;
+  BASE_UNIT_DATA: BaseUnitData;
   addTrainingUnit: AddRemoveUnitFn;
   maxTrainingUnits: MaxTrainingUnitsFn;
   removeTrainingUnit: AddRemoveUnitFn;
