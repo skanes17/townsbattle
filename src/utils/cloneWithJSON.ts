@@ -1,4 +1,4 @@
-import { Buildings, ResourcePool, Resources } from "../types";
+import { BaseUnit, Buildings, ResourcePool, Resources } from "../types";
 import { NavButtons } from "../types/NavButtons";
 import { TipsSeen } from "../types/TutorialTypes";
 
@@ -6,7 +6,13 @@ import { TipsSeen } from "../types/TutorialTypes";
 // in this case, it ensures that the argument matches Resources or Buildings types
 // Careful! This JSON deep cloning process won't work for functions or other methods
 export function cloneBasicObjectWithJSON<
-  T extends Resources | ResourcePool | Buildings | NavButtons | TipsSeen
+  T extends
+    | Resources
+    | ResourcePool
+    | Buildings
+    | NavButtons
+    | TipsSeen
+    | BaseUnit
 >(objectToClone: T): T {
   const clonedData: T = JSON.parse(JSON.stringify(objectToClone));
   return clonedData;

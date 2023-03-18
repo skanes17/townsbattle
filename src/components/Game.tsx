@@ -206,6 +206,8 @@ export default function Game(props: GameProps) {
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
 
   const BASE_UNIT_DATA = baseUnitData;
+  const FRIENDLY_BASE_UNIT_DATA = cloneBasicObjectWithJSON(BASE_UNIT_DATA);
+  const ENEMY_BASE_UNIT_DATA = cloneBasicObjectWithJSON(BASE_UNIT_DATA);
   const unitTypes = Object.keys(BASE_UNIT_DATA) as UnitType[];
 
   // ===UNLOCKABLES===
