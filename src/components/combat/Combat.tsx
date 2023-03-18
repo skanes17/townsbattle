@@ -241,7 +241,6 @@ export default function Combat({
         );
       } else {
         /* TODO: If only the enemy gets hit, and the unit is an archer, play the archer sound */
-
         selectedEnemy.attack = 0;
       }
     }
@@ -263,17 +262,21 @@ export default function Combat({
       } else selectedFriendly.attack = 0;
     } else {
       // default fight -- no hitsFirst mechanic
+      // units cloned to preserve fullHealthAttackBonus, etc
+      const clonedFriendly = { ...selectedFriendly };
+      const clonedEnemy = { ...selectedEnemy };
+
       selectedEnemy.currentHealth = Math.max(
         0,
         selectedEnemy.currentHealth -
-          calculatedAttackValue(selectedFriendly, selectedEnemy)
+          calculatedAttackValue(clonedFriendly, clonedEnemy)
       );
 
       // damage the selected friendly unit; set to 0 if dmg exceeds health
       selectedFriendly.currentHealth = Math.max(
         0,
         selectedFriendly.currentHealth -
-          calculatedAttackValue(selectedEnemy, selectedFriendly)
+          calculatedAttackValue(clonedEnemy, clonedFriendly)
       );
     }
     setCombatEnemyUnits(_enemyCopy);
