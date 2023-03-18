@@ -233,7 +233,7 @@ export const buildingsData: Buildings = {
     tier: 3,
     /* attackBonus: 0,
         healthBonus: 2, */
-    description: "+2 to all unit stats.",
+    description: "+5 to all unit stats.",
     bgImage: "bg-mealHall",
     bgImageSm: "bg-mealHallSm",
     bgImageMd: "bg-mealHallMd",

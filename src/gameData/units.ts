@@ -1,6 +1,8 @@
 // TODO: Add in effect description? eg "Extra damage when unharmed"
 
-export const baseUnitData = {
+import { BaseUnit } from "../types";
+
+export const baseUnitData: BaseUnit = {
   villager: {
     unitType: "villager",
     name: "Villager",

@@ -205,9 +205,8 @@ export default function Game(props: GameProps) {
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
 
-  // FIXME: Must improve type safety coming from baseUnitData
-  const BASE_UNIT_DATA: BaseUnit = baseUnitData as BaseUnit;
-  const unitTypes: UnitType[] = Object.keys(BASE_UNIT_DATA) as UnitType[];
+  const BASE_UNIT_DATA = baseUnitData;
+  const unitTypes = Object.keys(BASE_UNIT_DATA) as UnitType[];
 
   // ===UNLOCKABLES===
   const unlockedUnitTypes: (UnitType | undefined)[] = Object.keys(buildings)
