@@ -18,7 +18,12 @@ import {
   TutorialCategory,
   TipsSeen,
 } from "../../types";
-import { cloneBasicObjectWithJSON, countUnits } from "../../utils";
+import {
+  AttackValueType,
+  calculatedAttackValue,
+  cloneBasicObjectWithJSON,
+  countUnits,
+} from "../../utils";
 import { getSurvivingUnitIndexes } from "../../utils/getSurvivingUnitIndexes";
 import { CombatButton } from "../buttons";
 import {} from "../cards";
@@ -192,33 +197,15 @@ export default function Combat({
     setEnemyIndex(newEnemyIndex);
   };
 
-  const calculatedAttackValue = (attacker: Unit, defender: Unit): number => {
-    // used destructuring to make code more readable
-    const {
-      attack,
-      currentHealth,
-      maxHealth,
-      fullHealthAttackBonus,
-      chargingMultiplier,
-    } = attacker;
-    // armor reduces incoming attack damage
-    const { armor: defenderArmor } = defender;
-    // if unit has full health, or charges before being selected, it does bonus attack damage
-    const attackBonus =
-      currentHealth === maxHealth
-        ? fullHealthAttackBonus /* + timesNotSelected*chargingMultiplier */
-        : 0;
-    // Math.max() prevents negative attack values due to high armor
-    return Math.max(0, attack + attackBonus - defenderArmor);
-  };
-
   // default behaviour
   const unitsFight = () => {
     // chosen units attack each other
     const _friendlyCopy = [...combatUnits];
     const selectedFriendly = _friendlyCopy[friendlyIndex];
+    const clonedSelectedFriendly = { ...selectedFriendly };
     const _enemyCopy = [...combatEnemyUnits];
     const selectedEnemy = _enemyCopy[enemyIndex];
+    const clonedSelectedEnemy = { ...selectedEnemy };
 
     // INCORPORATE PASSIVE EFFECTS HERE
     // timesSelectedForCombat: number;
@@ -230,14 +217,22 @@ export default function Combat({
       selectedEnemy.currentHealth = Math.max(
         0,
         selectedEnemy.currentHealth -
-          calculatedAttackValue(selectedFriendly, selectedEnemy)
+          calculatedAttackValue(
+            AttackValueType.toEnemy,
+            selectedFriendly,
+            selectedEnemy
+          )
       );
       // If the enemy survives, it attacks. Else, it's dead and its attack is set to 0.
       if (selectedEnemy.currentHealth > 0) {
         selectedFriendly.currentHealth = Math.max(
           0,
           selectedFriendly.currentHealth -
-            calculatedAttackValue(selectedEnemy, selectedFriendly)
+            calculatedAttackValue(
+              AttackValueType.toEnemy,
+              selectedEnemy,
+              selectedFriendly
+            )
         );
       } else {
         /* TODO: If only the enemy gets hit, and the unit is an archer, play the archer sound */
@@ -250,14 +245,22 @@ export default function Combat({
       selectedFriendly.currentHealth = Math.max(
         0,
         selectedFriendly.currentHealth -
-          calculatedAttackValue(selectedEnemy, selectedFriendly)
+          calculatedAttackValue(
+            AttackValueType.toEnemy,
+            selectedEnemy,
+            selectedFriendly
+          )
       );
       // If the friendly survives, it attacks. Else, it's dead and its attack is set to 0.
       if (selectedFriendly.currentHealth > 0) {
         selectedEnemy.currentHealth = Math.max(
           0,
           selectedEnemy.currentHealth -
-            calculatedAttackValue(selectedFriendly, selectedEnemy)
+            calculatedAttackValue(
+              AttackValueType.toEnemy,
+              selectedFriendly,
+              selectedEnemy
+            )
         );
       } else selectedFriendly.attack = 0;
     } else {
@@ -269,18 +272,24 @@ export default function Combat({
       selectedEnemy.currentHealth = Math.max(
         0,
         selectedEnemy.currentHealth -
-          calculatedAttackValue(clonedFriendly, clonedEnemy)
+          calculatedAttackValue(
+            AttackValueType.toEnemy,
+            clonedFriendly,
+            clonedEnemy
+          )
       );
 
       // damage the selected friendly unit; set to 0 if dmg exceeds health
       selectedFriendly.currentHealth = Math.max(
         0,
         selectedFriendly.currentHealth -
-          calculatedAttackValue(clonedEnemy, clonedFriendly)
+          calculatedAttackValue(
+            AttackValueType.toEnemy,
+            clonedEnemy,
+            clonedFriendly
+          )
       );
     }
-    setCombatEnemyUnits(_enemyCopy);
-    setCombatUnits(_friendlyCopy);
 
     // the following adds a combat event for the combat log
     /* TODO: Add in attack buffs and bonuses to the list so they're useable later */
@@ -291,7 +300,12 @@ export default function Combat({
           name: combatUnits[friendlyIndex].name,
           unitType: combatUnits[friendlyIndex].unitType,
           /* attack: combatUnits[friendlyIndex].attack, */
-          attack: calculatedAttackValue(selectedFriendly, selectedEnemy),
+          // cloned so bonuses are incorporated into the combat log is correct before stats are altered
+          attack: calculatedAttackValue(
+            AttackValueType.toEnemy,
+            clonedSelectedFriendly,
+            clonedSelectedEnemy
+          ),
           maxHealth: combatUnits[friendlyIndex].maxHealth,
           // used copy to avoid state update's async issues
           currentHealth: selectedFriendly.currentHealth,
@@ -306,7 +320,11 @@ export default function Combat({
           name: combatEnemyUnits[enemyIndex].name,
           unitType: combatEnemyUnits[enemyIndex].unitType,
           /* attack: combatEnemyUnits[enemyIndex].attack, */
-          attack: calculatedAttackValue(selectedEnemy, selectedFriendly),
+          attack: calculatedAttackValue(
+            AttackValueType.toEnemy,
+            clonedSelectedEnemy,
+            clonedSelectedFriendly
+          ),
           maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
           // used copy to avoid state update's async issues
           currentHealth: selectedEnemy.currentHealth,
@@ -325,6 +343,9 @@ export default function Combat({
     const combatState = { event: combatEvent, idx: eventIndex };
     // experimenting with appending to top
     setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
+
+    setCombatEnemyUnits(_enemyCopy);
+    setCombatUnits(_friendlyCopy);
   };
 
   // returning units to their armies and choosing new ones

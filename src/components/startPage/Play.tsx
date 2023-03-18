@@ -55,7 +55,7 @@ export default function Play() {
       />
 
       <MenuInput
-        header={"Player Name"}
+        header={"Town Name"}
         placeholderText={options.townName}
         // current value of the input box
         // if no name is chosen, the default gets used

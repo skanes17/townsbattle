@@ -53,10 +53,21 @@ export default function TrainUnitCard({
   removeAllTrainingUnits,
   friendly,
 }: TrainUnitCardProps) {
+  const {
+    resourceCosts,
+    bgImage,
+    name,
+    attack,
+    maxHealth,
+    armor,
+    description,
+    lockedText,
+  } = BASE_UNIT_DATA[unitType];
+
   const lockedOrUnlocked = lockedOrUnlockedUnits;
 
   // get the resource costs for the given unit type
-  const costsObject = BASE_UNIT_DATA[unitType].resourceCosts;
+  const costsObject = resourceCosts;
   const numberOfUnitsInTraining = unitsInTraining[unitType];
 
   const handleZeroClick = (unitType: UnitType, friendly: boolean) => {
@@ -147,17 +158,18 @@ export default function TrainUnitCard({
         cardStyle="planning"
         lockedOrUnlockedUnits={lockedOrUnlocked}
         saturation={lockedOrUnlocked === "locked" ? "quarter" : "oversaturated"}
-        bgImage={BASE_UNIT_DATA[unitType].bgImage}
+        bgImage={bgImage}
       >
         <TrainUnitCardHeader
-          cardName={BASE_UNIT_DATA[unitType].name}
-          attack={BASE_UNIT_DATA[unitType].attack}
-          health={BASE_UNIT_DATA[unitType].maxHealth}
+          cardName={name}
+          attack={attack}
+          health={maxHealth}
+          armor={armor}
         ></TrainUnitCardHeader>
 
         {lockedOrUnlocked === "unlocked" && (
           <CardHoverText lockedOrUnlockedUnits={lockedOrUnlockedUnits}>
-            {BASE_UNIT_DATA[unitType].description}
+            {description}
           </CardHoverText>
         )}
       </CardBgWithImage>
@@ -165,7 +177,7 @@ export default function TrainUnitCard({
       {/* different hoverText if the unit is locked */}
       {lockedOrUnlocked === "locked" && (
         <CardHoverText lockedOrUnlockedUnits={lockedOrUnlockedUnits}>
-          {BASE_UNIT_DATA[unitType].lockedText}
+          {lockedText}
         </CardHoverText>
       )}
 
@@ -183,7 +195,7 @@ export default function TrainUnitCard({
             buttonType="remove"
             onClick={() => handleMinusClick(unitType, friendly)}
           >
-            -
+            -1
           </AddRemoveButton>
         </div>
         <CardShowCount countToShow={numberOfUnitsInTraining} />
@@ -192,7 +204,7 @@ export default function TrainUnitCard({
             buttonType="add"
             onClick={() => handlePlusClick(1, unitType, friendly)}
           >
-            +
+            +1
           </AddRemoveButton>
         </div>
         <div className="col-span-3 row-start-2 flex items-center justify-center font-bold sm:col-span-1 sm:col-start-1 sm:row-start-1">

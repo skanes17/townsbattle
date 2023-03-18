@@ -106,7 +106,7 @@ export default function WorkerCard({
                 )
               }
             >
-              -
+              -1
             </AddRemoveButton>
           </div>
 
@@ -117,7 +117,7 @@ export default function WorkerCard({
                 addRemoveWorkers(1, resourceType, "add workers to resource")
               }
             >
-              +
+              +1
             </AddRemoveButton>
           </div>
           <div className="col-start-1 row-start-2 flex items-center justify-center font-bold">

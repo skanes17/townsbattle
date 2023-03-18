@@ -1,5 +1,7 @@
 import React from "react";
 import { Phases, Unit } from "../../types";
+import { AttackValueType, calculatedAttackValue } from "../../utils";
+import { allAttackBonusesCheck } from "../../utils/attackBonusCheck";
 
 interface UnitTileProps {
   armyStyle: "friendly" | "enemy";
@@ -14,6 +16,18 @@ export function UnitTile({
   selectedUnit,
   phase,
 }: UnitTileProps) {
+  const {
+    bgImageMd,
+    currentHealth,
+    maxHealth,
+    name,
+    id,
+    attack,
+    berserkerAttackMultiplier,
+    fullHealthAttackBonus,
+    armor,
+  } = unit;
+
   let healthWidth,
     healthBarColor,
     hoverBorder,
@@ -21,9 +35,9 @@ export function UnitTile({
     borderColor,
     bgColor;
 
-  const bg = unit.bgImageMd ?? ``;
+  const bg = bgImageMd ?? ``;
 
-  const percentHealth = (unit.currentHealth / unit.maxHealth) * 100;
+  const percentHealth = (currentHealth / maxHealth) * 100;
 
   if (percentHealth === 0) {
     healthWidth = "w-0";
@@ -69,7 +83,7 @@ export function UnitTile({
       "hover:border-green-500/100 hover:shadow hover:shadow-green-500/75";
   }
 
-  let healthBarBackgroundColor = /* unit.currentHealth > 0 ?  */ `bg-black/80`; /*  : `bg-red-500/40` */
+  let healthBarBackgroundColor = /* currentHealth > 0 ?  */ `bg-black/80`; /*  : `bg-red-500/40` */
 
   if (phase === Phases.Combat && unit === selectedUnit) {
     borderWidth = "border-2";
@@ -87,14 +101,16 @@ export function UnitTile({
   }
 
   // if the unit dies, give a red overlay
-  if (unit.currentHealth === 0) {
+  if (currentHealth === 0) {
     bgColor = "bg-red-700/20";
   }
+
+  const totalAttackValue = calculatedAttackValue(AttackValueType.card, unit);
 
   return (
     <>
       <div
-        key={`${unit.name}${unit.id}`}
+        key={`${name}${id}`}
         className={`${bg} group relative h-20 w-[3.33rem] snap-start justify-items-center rounded-lg bg-cover bg-center saturate-125 sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >
         <div
@@ -108,13 +124,20 @@ export function UnitTile({
         <div className="fixed inset-0 flex h-[90%] w-[140%] translate-y-[5%] -translate-x-[20%] flex-col justify-center overflow-y-auto overflow-x-hidden rounded-lg bg-black/80 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:text-base">
           {/* TODO: Add randomly generated name */}
           <p>
-            {unit.name}
-            {unit.id}
+            {name}
+            {id}
           </p>
-          <p>🗡️ {unit.attack}</p>
-          {unit.armor > 0 ? <p>🛡️ {unit.armor}</p> : null}
+          {allAttackBonusesCheck(unit) ? (
+            <p className="font-semibold text-amber-400">
+              🗡️
+              {totalAttackValue}
+            </p>
+          ) : (
+            <p>🗡️{totalAttackValue}</p>
+          )}
+          {armor > 0 ? <p>🛡️{armor}</p> : null}
           <p>
-            ❤️ {unit.currentHealth}/{unit.maxHealth}
+            ❤️{currentHealth}/{maxHealth}
           </p>
         </div>
       </div>

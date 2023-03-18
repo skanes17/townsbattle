@@ -1,12 +1,26 @@
+import { berserkerHealthTrigger } from "../../gameData";
 import { Unit } from "../../types/Unit";
+import { AttackValueType, calculatedAttackValue } from "../../utils";
+import { allAttackBonusesCheck } from "../../utils/attackBonusCheck";
 
 interface CombatCardFooterProps {
   unit: Unit;
 }
 
 export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
+  const {
+    attack,
+    currentHealth,
+    maxHealth,
+    armor,
+    fullHealthBonus,
+    fullHealthAttackBonus,
+    berserker,
+    berserkerAttackMultiplier,
+  } = unit;
+
   /* FIXME: Get this higher up in the chain to flow down, DRY */
-  const percentHealth = (unit.currentHealth / unit.maxHealth) * 100;
+  const percentHealth = (currentHealth / maxHealth) * 100;
 
   let healthTextColor;
   if (percentHealth <= 25) {
@@ -17,33 +31,30 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
     healthTextColor = "text-orange-600";
   }
 
+  const totalAttackValue = calculatedAttackValue(AttackValueType.card, unit);
+
   return (
     <div className="grid-cols-auto grid w-full grid-cols-3 justify-between">
       <div className={`grid-rows-auto col-start-1 grid text-center`}>
         <p>🗡️</p>
-        {/* special styling for attack bonus */}
-        {unit.currentHealth === unit.maxHealth &&
-        unit.fullHealthAttackBonus > 0 ? (
-          <p className="text-amber-400">
-            {unit.attack + unit.fullHealthAttackBonus}
-          </p>
+        {allAttackBonusesCheck(unit) ? (
+          <p className="font-semibold text-amber-400">{totalAttackValue}</p>
         ) : (
-          <p>{unit.attack}</p>
+          <p>{totalAttackValue}</p>
         )}
       </div>
-      {unit.armor > 0 ? (
+      {armor > 0 ? (
         <div className={`grid-rows-auto col-start-2 grid text-center`}>
-          <p>🛡️</p> <p>{unit.armor}</p>
+          <p>🛡️</p> <p>{armor}</p>
         </div>
       ) : null}
 
-      {/* TODO: REMOVE?? Health on Card -- Conditional green for full, orange for damaged, red for critical */}
       <div className={`grid-rows-auto col-start-3 grid text-center`}>
         <p>❤️</p>
         <p>
-          <span className={`${healthTextColor}`}>{unit.currentHealth}</span>
+          <span className={`${healthTextColor}`}>{currentHealth}</span>
           <span className="text-[0.33rem] sm:text-xs md:text-base lg:text-lg">
-            /{unit.maxHealth}
+            /{maxHealth}
           </span>
         </p>
       </div>

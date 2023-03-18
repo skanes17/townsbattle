@@ -10,6 +10,7 @@ import {
   tipsSeenData,
   defaultPlayerName,
   defaultTownName,
+  berserkerHealthTrigger,
 } from "../gameData";
 import {
   BaseResource,
@@ -55,10 +56,12 @@ import {
   MaxTrainingUnitsFn,
 } from "../types/FunctionTypes";
 import {
+  berserkerAttackBonusPowerLevel,
   calcMinPlanningTurnsUntilArmyGen,
   calcMinTurnsBetweenArmyGenAndCombat,
   cloneBasicObjectWithJSON,
   countUnits,
+  fullHealthAttackBonusPowerLevel,
   generateRandomArmyComposition,
   generateWeightedArmyComposition,
 } from "../utils";
@@ -452,7 +455,9 @@ export default function Game(props: GameProps) {
         totalHealth: totals.totalHealth + unit.currentHealth,
         totalArmor: totals.totalArmor + unit.armor,
         totalAttackBonus:
-          totals.totalAttackBonus + Math.floor(unit.fullHealthAttackBonus / 2),
+          totals.totalAttackBonus +
+          fullHealthAttackBonusPowerLevel(unit) +
+          berserkerAttackBonusPowerLevel(unit),
         totalThreat: totals.totalThreat + unit.threatLevel,
       }),
       // Initilized values for total attack, total health, and total threat
@@ -484,25 +489,25 @@ export default function Game(props: GameProps) {
       case "easy":
         difficultyMultiplier = 0.5;
         basePowerLevel = 1;
-        equalityTurn = 25;
+        equalityTurn = 15;
         growthRate = 0.03;
         break;
       case "normal":
         difficultyMultiplier = 1.0;
         basePowerLevel = 2;
-        equalityTurn = 20;
+        equalityTurn = 10;
         growthRate = 0.05;
         break;
       case "hard":
         difficultyMultiplier = 1.25;
         basePowerLevel = 3;
-        equalityTurn = 15;
+        equalityTurn = 8;
         growthRate = 0.05;
         break;
       case "nightmare":
         difficultyMultiplier = 1.5;
         basePowerLevel = 3;
-        equalityTurn = 12;
+        equalityTurn = 8;
         growthRate = 0.04;
         break;
       default:
@@ -1347,14 +1352,6 @@ export default function Game(props: GameProps) {
             )}
 
             {(activeNavButtons.planning.active ||
-              activeNavButtons.buildings.active) && (
-              <GridCardContainer headerText="Buildings Constructed">
-                {/* TODO: Match component structure with other cards */}
-                <DisplayBuildings buildings={buildings} />
-              </GridCardContainer>
-            )}
-
-            {(activeNavButtons.planning.active ||
               activeNavButtons.buildings.active) &&
             /* If there are no buildings left to construct, remove the section */
             buildingsLeftToConstruct.length > 0 ? (
@@ -1394,6 +1391,13 @@ export default function Game(props: GameProps) {
                 )}
               </GridCardContainer>
             ) : null}
+
+            {(activeNavButtons.planning.active ||
+              activeNavButtons.buildings.active) && (
+              <GridCardContainer headerText="Buildings Constructed">
+                <DisplayBuildings buildings={buildings} />
+              </GridCardContainer>
+            )}
 
             {(activeNavButtons.planning.active ||
               activeNavButtons.army.active) && (

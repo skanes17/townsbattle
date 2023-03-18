@@ -20,15 +20,16 @@ export const baseUnitData: BaseUnitData = {
     resourceCosts: { workers: 1, wood: 1, stone: 1, metal: 1 },
     buildScore: 40,
     hitsFirst: false,
-    fullHealthAttackBonus: 0,
+    fullHealthBonus: false,
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
+    berserker: false,
   },
   fighter: {
     unitType: "fighter",
     name: "Fighter",
     symbol: "⚔️",
-    description: "Simple. Effective.",
+    description: "50% damage bonus at half health.",
     lockedText: "Unlocked by Swordsmithy",
     bgImage: "bg-fighter",
     bgImageSm: "bg-fighterSm",
@@ -41,9 +42,11 @@ export const baseUnitData: BaseUnitData = {
     resourceCosts: { workers: 1, wood: 2, stone: 2 },
     buildScore: 50,
     hitsFirst: false,
-    fullHealthAttackBonus: 0,
+    fullHealthBonus: false,
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
+    berserker: true,
+    berserkerAttackMultiplier: 1.5,
   },
   archer: {
     unitType: "archer",
@@ -63,9 +66,10 @@ export const baseUnitData: BaseUnitData = {
     resourceCosts: { workers: 1, wood: 3, metal: 2 },
     buildScore: 60,
     hitsFirst: true,
-    fullHealthAttackBonus: 0,
+    fullHealthBonus: false,
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
+    berserker: false,
   },
   knight: {
     unitType: "knight",
@@ -84,9 +88,10 @@ export const baseUnitData: BaseUnitData = {
     resourceCosts: { workers: 2, stone: 3, metal: 3 },
     buildScore: 80,
     hitsFirst: false,
-    fullHealthAttackBonus: 0,
+    fullHealthBonus: false,
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
+    berserker: false,
   },
   // TODO: Consider allowing an armor buff for first hit, eg no damage when first hit
   mage: {
@@ -106,9 +111,11 @@ export const baseUnitData: BaseUnitData = {
     resourceCosts: { workers: 3, stone: 3, metal: 2, crystal: 4 },
     buildScore: 120,
     hitsFirst: false,
+    fullHealthBonus: true,
     fullHealthAttackBonus: 10,
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
+    berserker: false,
   },
   bombird: {
     unitType: "bombird",
@@ -127,11 +134,14 @@ export const baseUnitData: BaseUnitData = {
     resourceCosts: { workers: 3, wood: 2, stone: 2, metal: 2, crystal: 2 },
     buildScore: 110,
     hitsFirst: false,
-    fullHealthAttackBonus: 0,
+    fullHealthBonus: false,
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
+    berserker: false,
   },
 };
+
+export const berserkerHealthTrigger = 0.5;
 
 /* export const unitCostsData = {
   fighter: {

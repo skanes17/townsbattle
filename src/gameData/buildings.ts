@@ -36,7 +36,8 @@ export const buildingsData: Buildings = {
     tier: 1,
     attackBonus: 0,
     healthBonus: 0,
-    description: "Get Scout Reports on the enemy army before each Combat.",
+    description:
+      "Get reports on the enemy army a few turns before each Combat.",
     bgImage: "bg-scoutUnit",
     bgImageSm: "bg-scoutUnitSm",
     bgImageMd: "bg-scoutUnitMd",

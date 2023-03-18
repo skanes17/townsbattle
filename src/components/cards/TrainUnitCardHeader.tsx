@@ -4,12 +4,14 @@ interface TrainUnitCardHeaderProps {
   cardName: string;
   attack: number;
   health: number;
+  armor: number;
 }
 
 export default function TrainUnitCardHeader({
   cardName,
   attack,
   health,
+  armor,
 }: TrainUnitCardHeaderProps) {
   return (
     <div
@@ -22,6 +24,7 @@ export default function TrainUnitCardHeader({
       </span>
       <span>{cardName}</span>
       <span>❤️{health}</span>
+      {armor > 0 && <span>🛡️{armor}</span>}
     </div>
   );
 }

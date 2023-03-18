@@ -35,10 +35,13 @@ export interface Unit {
   resourceCosts: ResourceCosts;
   buildScore: number;
   hitsFirst: boolean;
-  fullHealthAttackBonus: number;
+  fullHealthBonus: boolean;
+  fullHealthAttackBonus?: number;
   chargesBeforeSelection: boolean;
   // multiply this by times not selected to get added damage
-  chargingMultiplier: number;
+  chargingMultiplier?: number;
+  berserker: boolean;
+  berserkerAttackMultiplier?: number;
   id?: number;
 }
 
