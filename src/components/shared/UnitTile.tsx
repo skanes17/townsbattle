@@ -21,6 +21,7 @@ export function UnitTile({
     currentHealth,
     maxHealth,
     name,
+    randomName,
     id,
     attack,
     berserkerAttackMultiplier,
@@ -123,10 +124,7 @@ export function UnitTile({
         {/* Popup text */}
         <div className="fixed inset-0 flex h-[90%] w-[140%] translate-y-[5%] -translate-x-[20%] flex-col justify-center overflow-y-auto overflow-x-hidden rounded-lg bg-black/80 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:text-base">
           {/* TODO: Add randomly generated name */}
-          <p>
-            {name}
-            {id}
-          </p>
+          <p>{randomName}</p>
           {allAttackBonusesCheck(unit) ? (
             <p className="font-semibold text-amber-400">
               🗡️

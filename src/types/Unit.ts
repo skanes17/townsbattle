@@ -17,8 +17,8 @@ export type UnitName =
 
 export interface Unit {
   unitType: UnitType;
-  /* FIXME: UnitName not being properly enforced when imported */
   name: UnitName;
+  randomName?: string;
   symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣";
   description?: string;
   lockedText: string;

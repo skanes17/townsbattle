@@ -11,6 +11,13 @@ import {
   defaultPlayerName,
   defaultTownName,
   berserkerHealthTrigger,
+  randomUnitNames,
+  mageNames,
+  archerNames,
+  bombirdNames,
+  fighterNames,
+  knightNames,
+  villagerNames,
 } from "../gameData";
 import {
   BaseResource,
@@ -59,6 +66,7 @@ import {
   berserkerAttackBonusPowerLevel,
   calcMinPlanningTurnsUntilArmyGen,
   calcMinTurnsBetweenArmyGenAndCombat,
+  chooseNameByUnitType,
   cloneBasicObjectWithJSON,
   countUnits,
   fullHealthAttackBonusPowerLevel,
@@ -334,9 +342,12 @@ export default function Game(props: GameProps) {
       return;
     }
 
+    let randomName = chooseNameByUnitType(baseUnit.unitType);
+
     const newUnit = {
       ...baseUnit,
       currentHealth: baseUnit.maxHealth,
+      randomName: randomName + id,
       id: unitId,
     };
 
@@ -410,10 +421,13 @@ export default function Game(props: GameProps) {
   // TODO: Refactor to make build score incrementation more efficient (sum, set state once outside loop)
   let id = unitId;
   const trainUnits = () => {
+    let randomName;
     const units = friendlyTrainingUnits.map((unit) => {
       // resolve base unit from unit type
       const _chosenUnit = FRIENDLY_BASE_UNIT_DATA[unit.unitType];
       id += 1;
+
+      let randomName = chooseNameByUnitType(unit.unitType);
 
       // add to score
       const buildScore = _chosenUnit.buildScore;
@@ -422,6 +436,7 @@ export default function Game(props: GameProps) {
       return {
         ..._chosenUnit,
         currentHealth: _chosenUnit.maxHealth,
+        randomName: randomName + id,
         id, // shorthand for when key = value
       };
     });
@@ -655,6 +670,7 @@ export default function Game(props: GameProps) {
       // enemy units don't get buffs in this version of the game
       const chosenUnit = { ...ENEMY_BASE_UNIT_DATA[unitType] };
       id += 1;
+
       // adding a current health key/value and id to the unit
       const chosenUnitWithCurrentHealth: Unit = {
         ...chosenUnit,
@@ -910,9 +926,13 @@ export default function Game(props: GameProps) {
     // add current health and ID number to new units
     const allNewUnits = newUnits.map((unit) => {
       id += 1;
+
+      let randomName = chooseNameByUnitType(unit.unitType);
+
       return {
         ...unit,
         currentHealth: unit.maxHealth,
+        randomName: randomName + id,
         id,
       };
     });

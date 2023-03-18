@@ -1,5 +1,6 @@
 export * from "./armyGenerators";
 export * from "./calculateAttackValues";
+export * from "./chooseNameByUnitType";
 export * from "./cloneWithJSON";
 export * from "./countUnits";
 export * from "./getSurvivingUnitIndexes";
