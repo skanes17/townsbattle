@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/React-game/static/css/main.e5648803.css",
-    "main.js": "/React-game/static/js/main.428fa5d0.js",
+    "main.css": "/React-game/static/css/main.1a3290ed.css",
+    "main.js": "/React-game/static/js/main.8466b79c.js",
     "static/js/845.a7795a01.chunk.js": "/React-game/static/js/845.a7795a01.chunk.js",
     "static/media/brown-01.png": "/React-game/static/media/brown-01.c8f16131efac6caf4f3e.png",
     "static/media/swordsmithy-01.jpg": "/React-game/static/media/swordsmithy-01.df8b0a5fe53d3ea75337.jpg",
@@ -81,12 +81,12 @@
     "static/media/gold-01-256px.jpg": "/React-game/static/media/gold-01-256px.f2bce2039c79ed5a01ce.jpg",
     "static/media/archeryHut-01-256px.jpg": "/React-game/static/media/archeryHut-01-256px.5ff76afc8f7656ae83b6.jpg",
     "index.html": "/React-game/index.html",
-    "main.e5648803.css.map": "/React-game/static/css/main.e5648803.css.map",
-    "main.428fa5d0.js.map": "/React-game/static/js/main.428fa5d0.js.map",
+    "main.1a3290ed.css.map": "/React-game/static/css/main.1a3290ed.css.map",
+    "main.8466b79c.js.map": "/React-game/static/js/main.8466b79c.js.map",
     "845.a7795a01.chunk.js.map": "/React-game/static/js/845.a7795a01.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e5648803.css",
-    "static/js/main.428fa5d0.js"
+    "static/css/main.1a3290ed.css",
+    "static/js/main.8466b79c.js"
   ]
 }
