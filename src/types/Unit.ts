@@ -43,6 +43,7 @@ export interface Unit {
   berserker: boolean;
   berserkerAttackMultiplier?: number;
   id?: number;
+  combatsSurvived?: number;
 }
 
 export interface BaseUnitData {

@@ -112,8 +112,8 @@ export const buildingsData: Buildings = {
     maxHealth: 7,
     currentHealth: 7,
     damage: 0,
-    resourceCosts: { workers: 5, wood: 10, stone: 10, metal: 15 },
-    buildScore: 400,
+    resourceCosts: { workers: 7, wood: 10, stone: 10, metal: 15 },
+    buildScore: 420,
     // how many extra workers it provides once constructed -- tweak as necessary
     workerBonus: 10,
   },

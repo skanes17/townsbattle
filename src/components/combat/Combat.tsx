@@ -19,6 +19,7 @@ import {
   TipsSeen,
 } from "../../types";
 import {
+  addSurvivalPointsToSurvivingUnits,
   AttackValueType,
   calculatedAttackValue,
   cloneBasicObjectWithJSON,
@@ -549,7 +550,11 @@ export default function Combat({
       combatUnits,
       shouldRestoreUnitHealth
     );
-    setFriendlyUnits(friendlyUnitsToSendToPlanning);
+    const unitsWithSurvivalPointsAdded = addSurvivalPointsToSurvivingUnits(
+      friendlyUnitsToSendToPlanning
+    );
+    console.log(unitsWithSurvivalPointsAdded);
+    setFriendlyUnits(unitsWithSurvivalPointsAdded);
 
     const enemyUnitsToSendToPlanning = determineWhichUnitsToSendToPlanning(
       combatEnemyUnits,

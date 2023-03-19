@@ -1,3 +1,5 @@
+import { generateStars } from "../../utils";
+
 interface BldgCardFooterProps {
   /* could add attack here */
   tier: number;
@@ -19,10 +21,7 @@ export default function BldgCardFooter({
     healthTextColor = "text-amber-600";
   }
 
-  const tierIcon = "⭐";
-  const stars = Array(tier).fill(tierIcon);
-  // If tier is less than 4, show the stars. Otherwise show one star and the number
-  const tierDisplay = tier < 4 ? stars.join(``) : `${tierIcon}${tier}`;
+  const tierDisplay = generateStars(tier);
 
   return (
     <div className="grid h-7 grid-flow-col gap-1 border-t border-white/10 pt-1 text-sm backdrop-blur-[2px] sm:h-8 sm:gap-2 sm:text-lg">

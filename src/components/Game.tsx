@@ -671,10 +671,13 @@ export default function Game(props: GameProps) {
       const chosenUnit = { ...ENEMY_BASE_UNIT_DATA[unitType] };
       id += 1;
 
+      let randomName = chooseNameByUnitType(chosenUnit.unitType);
+
       // adding a current health key/value and id to the unit
       const chosenUnitWithCurrentHealth: Unit = {
         ...chosenUnit,
         currentHealth: chosenUnit.maxHealth,
+        randomName: randomName + id,
         id,
       };
       // add it to the army

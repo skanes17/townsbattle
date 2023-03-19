@@ -1,6 +1,10 @@
 import React from "react";
 import { Phases, Unit } from "../../types";
-import { AttackValueType, calculatedAttackValue } from "../../utils";
+import {
+  AttackValueType,
+  calculatedAttackValue,
+  generateStars,
+} from "../../utils";
 import { allAttackBonusesCheck } from "../../utils/attackBonusCheck";
 
 interface UnitTileProps {
@@ -108,6 +112,8 @@ export function UnitTile({
 
   const totalAttackValue = calculatedAttackValue(AttackValueType.card, unit);
 
+  const starDisplay = generateStars(unit.combatsSurvived);
+
   return (
     <>
       <div
@@ -121,22 +127,42 @@ export function UnitTile({
             className={`h-2 md:h-3 ${healthWidth} ${healthBarColor} rounded-sm transition-all duration-500 ease-out`}
           ></div>
         </div>
+        <div className="absolute left-0 bottom-0 mx-auto w-full -translate-y-full bg-zinc-800/80 text-center text-xs">
+          {starDisplay}
+        </div>
         {/* Popup text */}
         <div className="fixed inset-0 flex h-[90%] w-[140%] translate-y-[5%] -translate-x-[20%] flex-col justify-center overflow-y-auto overflow-x-hidden rounded-lg bg-black/80 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:text-base">
           {/* TODO: Add randomly generated name */}
           <p>{randomName}</p>
           {allAttackBonusesCheck(unit) ? (
-            <p className="font-semibold text-amber-400">
-              🗡️
-              {totalAttackValue}
-            </p>
+            <p className="font-semibold text-amber-400">🗡️{totalAttackValue}</p>
           ) : (
-            <p>🗡️{totalAttackValue}</p>
+            <div className="group/attack relative">
+              <p>🗡️{totalAttackValue}</p>
+              <p className="group-hover/attack:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/attack:bg-zinc-800 group-hover/attack:opacity-90">
+                Attack
+              </p>
+            </div>
           )}
           {armor > 0 ? <p>🛡️{armor}</p> : null}
-          <p>
-            ❤️{currentHealth}/{maxHealth}
-          </p>
+
+          <div className="group/health relative">
+            <p>
+              ❤️{currentHealth}/{maxHealth}
+            </p>
+            <p className="group-hover/health:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/health:bg-zinc-800 group-hover/health:opacity-90">
+              Health
+            </p>
+          </div>
+
+          {(unit.combatsSurvived ?? 0) > 0 && (
+            <div className="group/survived relative">
+              <p>⭐{unit.combatsSurvived}</p>
+              <p className="group-hover/survived:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/survived:bg-zinc-800 group-hover/survived:opacity-90">
+                Survived
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
