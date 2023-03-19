@@ -9,10 +9,12 @@ export function fullHealthBonusCheck(unit: Unit) {
 }
 
 export function berserkBonusCheck(unit: Unit) {
-  const { currentHealth, maxHealth } = unit;
+  const { currentHealth, maxHealth, berserker } = unit;
   // unit is alive and it's below a critical health point
   const berserkCheckAttackBonusActive =
-    currentHealth > 0 && currentHealth / maxHealth <= berserkerHealthTrigger;
+    berserker &&
+    currentHealth > 0 &&
+    currentHealth / maxHealth <= berserkerHealthTrigger;
   return berserkCheckAttackBonusActive;
 }
 
