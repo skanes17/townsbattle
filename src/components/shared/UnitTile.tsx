@@ -143,7 +143,9 @@ export function UnitTile({
               </p>
             </div>
           )}
-          {armor > 0 ? <p>🛡️{armor}</p> : null}
+
+          {/* TODO: Add hoverText, and green text if buffed */}
+          {armor > 0 && <p>🛡️{armor}</p>}
 
           <div className="group/health relative">
             <p>
