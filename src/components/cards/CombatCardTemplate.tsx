@@ -45,6 +45,7 @@ export default function CombatCardTemplate({
         cardStyle="combat"
         saturation="oversaturated"
         bgImage={unit.bgImageMd}
+        unit={unit}
       />
       {/* <CombatCardSymbol unit={unit} /> */}
       <CombatCardFooter unit={unit} />

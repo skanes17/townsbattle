@@ -9,6 +9,6 @@ export * from "./getSurvivingUnitIndexes";
 export * from "./minTurnsCalculators";
 export * from "./randomNumberBetweenMinAndMax";
 export * from "./resourceChecker";
-export * from "./resourceChecker";
+export * from "./returnHealthBarStyleObject";
 export * from "./unitPowerLevelCalculators";
 export * from "./updateResourcePool";
