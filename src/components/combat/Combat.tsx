@@ -568,6 +568,24 @@ export default function Combat({
     return clonedBuildings;
   };
 
+  // TODO: In combat, make sure armor is included properly based on this
+  const addSurvivalArmorBonus = (
+    survivingUnits: Unit[],
+    maximumArmor: number
+  ) => {
+    const updatedUnits = survivingUnits.map((unit) => {
+      // if they get armor when surviving combat, add the bonus here, otherwise unchanged
+      if (unit.survivalArmorBonus && unit.armor < maximumArmor) {
+        return {
+          ...unit,
+          armor:
+            BASE_UNIT_DATA[unit.unitType].armor + (unit.combatsSurvived ?? 0),
+        };
+      } else return { ...unit };
+    });
+    return updatedUnits;
+  };
+
   // send all all surviving units back to planning
   const sendArmiesToPlanning = () => {
     const friendlyUnitsToSendToPlanning = determineWhichUnitsToSendToPlanning(
@@ -577,8 +595,15 @@ export default function Combat({
     const unitsWithSurvivalPointsAdded = addSurvivalPointsToSurvivingUnits(
       friendlyUnitsToSendToPlanning
     );
-    console.log(unitsWithSurvivalPointsAdded);
-    setFriendlyUnits(unitsWithSurvivalPointsAdded);
+
+    // could tweak this later
+    const maximumArmor = 4;
+    const unitsWithArmorBonusAdded = addSurvivalArmorBonus(
+      unitsWithSurvivalPointsAdded,
+      maximumArmor
+    );
+    console.log(unitsWithArmorBonusAdded);
+    setFriendlyUnits(unitsWithArmorBonusAdded);
 
     const enemyUnitsToSendToPlanning = determineWhichUnitsToSendToPlanning(
       combatEnemyUnits,

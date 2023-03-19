@@ -39,10 +39,10 @@ export const calculatedAttackValue = (
 
   switch (attackValueType) {
     case AttackValueType.card:
+      return attack + attackBonus;
+    case AttackValueType.toEnemy:
       // armor reduces incoming attack damage
       // Math.max() prevents negative attack values due to high armor
       return Math.max(0, attack + attackBonus - (defender?.armor ?? 0));
-    case AttackValueType.toEnemy:
-      return attack + attackBonus;
   }
 };

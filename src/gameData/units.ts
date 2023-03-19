@@ -24,6 +24,7 @@ export const baseUnitData: BaseUnitData = {
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
     berserker: false,
+    survivalArmorBonus: false,
   },
   fighter: {
     unitType: "fighter",
@@ -47,6 +48,7 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: true,
     berserkerAttackMultiplier: 1.5,
+    survivalArmorBonus: false,
   },
   archer: {
     unitType: "archer",
@@ -70,12 +72,14 @@ export const baseUnitData: BaseUnitData = {
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
     berserker: false,
+    survivalArmorBonus: false,
   },
   knight: {
     unitType: "knight",
     name: "Knight",
     symbol: "🛡️",
-    description: "Uses armor to reduce incoming damage.",
+    description:
+      "Uses armor to reduce incoming damage. Surviving combat increases their armor (max of 4).",
     lockedText: "Unlocked by Smelter",
     bgImage: "bg-knight",
     bgImageSm: "bg-knightSm",
@@ -83,7 +87,7 @@ export const baseUnitData: BaseUnitData = {
     bgImageLg: "bg-knightLg",
     threatLevel: 1.5,
     attack: 6,
-    maxHealth: 10,
+    maxHealth: 7,
     armor: 1,
     resourceCosts: { workers: 2, stone: 3, metal: 3 },
     buildScore: 80,
@@ -92,6 +96,7 @@ export const baseUnitData: BaseUnitData = {
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
     berserker: false,
+    survivalArmorBonus: true,
   },
   // TODO: Consider allowing an armor buff for first hit, eg no damage when first hit
   mage: {
@@ -116,6 +121,7 @@ export const baseUnitData: BaseUnitData = {
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
     berserker: false,
+    survivalArmorBonus: false,
   },
   bombird: {
     unitType: "bombird",
@@ -138,6 +144,7 @@ export const baseUnitData: BaseUnitData = {
     chargesBeforeSelection: false,
     chargingMultiplier: 1,
     berserker: false,
+    survivalArmorBonus: false,
   },
 };
 
