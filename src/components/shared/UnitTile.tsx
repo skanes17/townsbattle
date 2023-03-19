@@ -154,14 +154,14 @@ export function UnitTile({
             </p>
           </div>
 
-          {(unit.combatsSurvived ?? 0) > 0 && (
+          {/*           {(unit.combatsSurvived ?? 0) > 0 && (
             <div className="group/survived relative">
               <p>⭐{unit.combatsSurvived}</p>
               <p className="group-hover/survived:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/survived:bg-zinc-800 group-hover/survived:opacity-90">
                 Survived
               </p>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>
