@@ -8,7 +8,7 @@ interface CombatCardHeader {
 export default function CombatCardHeader({ unit }: CombatCardHeader) {
   return (
     <div className={`self-center text-center font-semibold sm:font-bold`}>
-      {unit.randomName}
+      {unit.randomName && unit.randomName + unit.id}
     </div>
   );
 }

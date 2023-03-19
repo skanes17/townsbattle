@@ -347,7 +347,7 @@ export default function Game(props: GameProps) {
     const newUnit = {
       ...baseUnit,
       currentHealth: baseUnit.maxHealth,
-      randomName: randomName + id,
+      randomName: randomName,
       id: unitId,
     };
 
@@ -436,7 +436,7 @@ export default function Game(props: GameProps) {
       return {
         ..._chosenUnit,
         currentHealth: _chosenUnit.maxHealth,
-        randomName: randomName + id,
+        randomName: randomName,
         id, // shorthand for when key = value
       };
     });
@@ -677,7 +677,7 @@ export default function Game(props: GameProps) {
       const chosenUnitWithCurrentHealth: Unit = {
         ...chosenUnit,
         currentHealth: chosenUnit.maxHealth,
-        randomName: randomName + id,
+        randomName: randomName,
         id,
       };
       // add it to the army
@@ -935,7 +935,7 @@ export default function Game(props: GameProps) {
       return {
         ...unit,
         currentHealth: unit.maxHealth,
-        randomName: randomName + id,
+        randomName: randomName,
         id,
       };
     });
