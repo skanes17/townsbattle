@@ -597,7 +597,7 @@ export default function Combat({
     );
 
     // could tweak this later
-    const maximumArmor = 4;
+    const maximumArmor = 3;
     const unitsWithArmorBonusAdded = addSurvivalArmorBonus(
       unitsWithSurvivalPointsAdded,
       maximumArmor
