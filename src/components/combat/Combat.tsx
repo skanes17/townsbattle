@@ -59,6 +59,8 @@ interface CombatProps {
   buildings: Buildings;
   setBuildings: Dispatch<SetStateAction<Buildings>>;
   switchPhase: () => void;
+  score: number;
+  setScore: Dispatch<SetStateAction<number>>;
   scoreUpdaterFn: (points: number) => void;
 }
 
@@ -78,6 +80,8 @@ export default function Combat({
   buildings,
   setBuildings,
   switchPhase,
+  score,
+  setScore,
   scoreUpdaterFn,
 }: CombatProps) {
   const [phase, setPhase] = useState<Phases>(Phases.PreCombat);
@@ -492,7 +496,15 @@ export default function Combat({
         !clonedBuildings["townCenter"].constructed ||
         buildingsConstructed.length === 0
       ) {
-        alert("Your Town Center was destroyed. It's Game Over!");
+        scoreUpdaterFn(points);
+        alert(
+          `Your Town Center was destroyed. It's Game Over! Your final score is ${
+            score + points
+          }`
+        );
+        switchPhase();
+        // TODO: Remove when saves implemented
+        localStorage.clear();
         break;
       }
 

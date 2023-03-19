@@ -683,8 +683,15 @@ export default function Game(props: GameProps) {
       // add it to the army
       enemyArmy.push(chosenUnitWithCurrentHealth);
       // add this unit's power level to the total
-      const { attack, maxHealth, threatLevel } = chosenUnitWithCurrentHealth;
-      powerLevel += attack + maxHealth + threatLevel;
+      const { attack, maxHealth, armor, threatLevel } =
+        chosenUnitWithCurrentHealth;
+      powerLevel +=
+        attack +
+        maxHealth +
+        armor +
+        fullHealthAttackBonusPowerLevel(chosenUnitWithCurrentHealth) +
+        berserkerAttackBonusPowerLevel(chosenUnitWithCurrentHealth) +
+        threatLevel;
     }
     // end of while loop
 
@@ -1213,6 +1220,8 @@ export default function Game(props: GameProps) {
           buildings={buildings}
           setBuildings={setBuildings}
           switchPhase={switchPhase}
+          score={score}
+          setScore={setScore}
           scoreUpdaterFn={scoreUpdaterFn}
         />
       </div>
