@@ -575,10 +575,15 @@ export default function Combat({
     return clonedBuildings;
   };
 
+  /* TODO: Incorporate something simpler like this for auto battle */
+  const runAutoBattler = () => {
+    while (phase !== Phases.PostCombat) {
+      combatMegaFunction();
+    }
+  };
+
   const combatMegaFunction = () => {
     // If you have no units upon combat, immediately go to postCombat screen
-    // TODO: Proper summary calculations for this case
-    // TODO: Damage buldings accordingly
     if (combatUnits.length === 0) {
       noArmyEvent();
 
