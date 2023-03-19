@@ -1,6 +1,7 @@
 export const playerNames = [
   "Aerin",
   "Alaric",
+  "Allison",
   "Alastair",
   "Aria",
   "Arwen",
@@ -82,6 +83,8 @@ export const playerNames = [
   "Samara",
   "Sariel",
   "Sashka",
+  "Scott",
+  "Wesley",
   "Seraphina",
   "Soren",
   "Sorin",
@@ -205,6 +208,7 @@ export const townNames = [
 ];
 
 export const villagerNames = [
+  "Wesley",
   "Grimbok",
   "Thimble",
   "Puck",
@@ -396,7 +400,6 @@ export const fighterNames = [
   "Roost",
   "Saber",
   "Scratchy",
-  "Combative",
   "Flarewing",
   "Cocker",
   "Swashbuckler",
@@ -408,9 +411,11 @@ export const fighterNames = [
   "Spikeblade",
   "Wingtipper",
   "Talonstomp",
+  "Devin",
 ];
 
 export const archerNames = [
+  "Gabrielle",
   "Adira",
   "Bianca",
   "Calantha",
@@ -514,6 +519,7 @@ export const archerNames = [
 ];
 
 export const knightNames = [
+  "Scott",
   "Galahad",
   "Arthur",
   "Lancelot",
@@ -717,6 +723,7 @@ export const knightNames = [
 ];
 
 export const mageNames = [
+  "Allison",
   "Aelwyn",
   "Belinda",
   "Calantha",
@@ -842,6 +849,7 @@ export const bombirdNames = [
   "Thaddeus",
   "Ulrich",
   "Victor",
+  "Wesley",
   "Wolfgang",
   "Xander",
   "Yorick",

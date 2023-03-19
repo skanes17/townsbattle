@@ -148,7 +148,8 @@ export const buildingsData: Buildings = {
     tier: 2,
     attackBonus: 0,
     healthBonus: 0,
-    description: "Heal all surviving units when combats ends.",
+    description:
+      "Heal all surviving units by 50% max health when combats ends.",
     bgImage: "bg-healingChamber",
     bgImageSm: "bg-healingChamberSm",
     bgImageMd: "bg-healingChamberMd",

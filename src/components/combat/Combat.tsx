@@ -464,7 +464,11 @@ export default function Combat({
           if (shouldRestoreUnitHealth) {
             return {
               ...unit,
-              currentHealth: unit.maxHealth,
+              // restore half their max health
+              currentHealth: Math.min(
+                unit.currentHealth + Math.floor(unit.maxHealth * 0.5),
+                unit.maxHealth
+              ),
             };
           }
           return unit;
