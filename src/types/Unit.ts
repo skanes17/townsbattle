@@ -18,7 +18,7 @@ export type UnitName =
 export interface Unit {
   unitType: UnitType;
   name: UnitName;
-  randomName?: string;
+  randomName: string;
   symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣";
   description?: string;
   lockedText: string;
@@ -50,7 +50,7 @@ export interface BaseUnitData {
   [key: string]: BaseUnit;
 }
 
-export type BaseUnit = Omit<Unit, "currentHealth">;
+export type BaseUnit = Omit<Unit, "currentHealth" | "randomName">;
 
 /* // TODO: Use Pick<> here? */
 export interface TrainingUnit {

@@ -17,12 +17,12 @@ export const messages = {
       return (
         <p>
           <span className="text-green-400">
-            {event.data.friendly.name}
+            {event.data.friendly.randomName}
             {event.data.friendly.id}
           </span>{" "}
           faces off against{" "}
           <span className="text-red-400">
-            {event.data.enemy.name}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}
           </span>
           .
@@ -33,12 +33,12 @@ export const messages = {
       return (
         <p>
           <span className="text-green-400">
-            {event.data.friendly.name}
+            {event.data.friendly.randomName}
             {event.data.friendly.id}
           </span>{" "}
           jumps in and stares down{" "}
           <span className="text-red-400">
-            {event.data.enemy.name}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}
           </span>
           .
@@ -49,12 +49,12 @@ export const messages = {
       return (
         <p>
           <span className="text-green-400">
-            {event.data.friendly.name}
+            {event.data.friendly.randomName}
             {event.data.friendly.id}
           </span>{" "}
           wants to try his luck against{" "}
           <span className="text-red-400">
-            {event.data.enemy.name}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}
           </span>
           .
@@ -65,12 +65,12 @@ export const messages = {
       return (
         <p>
           <span className="text-green-400">
-            {event.data.friendly.name}
+            {event.data.friendly.randomName}
             {event.data.friendly.id}
           </span>{" "}
           sees{" "}
           <span className="text-red-400">
-            {event.data.enemy.name}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}
           </span>{" "}
           and calls him something nasty.
@@ -81,12 +81,12 @@ export const messages = {
       return (
         <p>
           <span className="text-green-400">
-            {event.data.friendly.name}
+            {event.data.friendly.randomName}
             {event.data.friendly.id}
           </span>{" "}
           agrees to battle{" "}
           <span className="text-red-400">
-            {event.data.enemy.name}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}
           </span>{" "}
           but they're not happy about it.
@@ -100,7 +100,7 @@ export const messages = {
       return (
         <p>
           <span className="text-green-400">
-            {event.data.friendly.name}
+            {event.data.friendly.randomName}
             {event.data.friendly.id}
           </span>{" "}
           {/* TODO: More of this type of conditional flavortext; focus on DRY */}
@@ -110,7 +110,7 @@ export const messages = {
           {event.data.friendly.unitType === "knight" ? "bashes" : null}{" "}
           {event.data.friendly.unitType === "mage" ? "casts a spell on" : null}{" "}
           <span className="text-red-400">
-            {event.data.enemy.name}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}
           </span>{" "}
           for{" "}
@@ -129,12 +129,12 @@ export const messages = {
       return (
         <p>
           <span className="text-green-400">
-            {event.data.friendly.name}
+            {event.data.friendly.randomName}
             {event.data.friendly.id}
           </span>{" "}
           injures{" "}
           <span className="text-red-400">
-            {event.data.enemy.name}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}
           </span>{" "}
           for{" "}
@@ -153,7 +153,7 @@ export const messages = {
       return (
         <p>
           <span className="text-green-400">
-            {event.data.friendly.name}
+            {event.data.friendly.randomName}
             {event.data.friendly.id}
           </span>{" "}
           inflicts{" "}
@@ -162,7 +162,7 @@ export const messages = {
           </span>{" "}
           on{" "}
           <span className="text-red-400">
-            {event.data.enemy.name}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}
           </span>
           , taking{" "}
@@ -177,7 +177,7 @@ export const messages = {
       return (
         <p>
           <span className="text-green-400">
-            {event.data.friendly.name}
+            {event.data.friendly.randomName}
             {event.data.friendly.id}
           </span>{" "}
           does{" "}
@@ -186,7 +186,7 @@ export const messages = {
           </span>{" "}
           to{" "}
           <span className="text-red-400">
-            {event.data.enemy.name}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}
           </span>{" "}
           and takes{" "}
@@ -213,8 +213,8 @@ export const messages = {
       return (
         <p>
           <span className="text-green-600">
-            {event.data.friendly.name}
-            {event.data.friendly.id} defeats {event.data.enemy.name}
+            {event.data.friendly.randomName}
+            {event.data.friendly.id} defeats {event.data.enemy.randomName}
             {event.data.enemy.id}!
           </span>
         </p>
@@ -225,8 +225,9 @@ export const messages = {
       return (
         <p>
           <span className="text-red-600">
-            {event.data.friendly.name}
-            {event.data.friendly.id} was defeated by {event.data.enemy.name}
+            {event.data.friendly.randomName}
+            {event.data.friendly.id} was defeated by{" "}
+            {event.data.enemy.randomName}
             {event.data.enemy.id}.
           </span>
         </p>

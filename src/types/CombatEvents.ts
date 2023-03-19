@@ -13,9 +13,10 @@ export interface CombatEvent {
 export interface PreCombatEvent {
   type: "preCombat";
   data: {
-    friendly: { name: string; id?: number };
+    friendly: { name: string; randomName: string; id?: number };
     enemy: {
       name: string;
+      randomName: string;
       id?: number;
     };
   };
@@ -28,6 +29,7 @@ export interface MainCombatEvent {
   data: {
     friendly: {
       name: string;
+      randomName: string;
       unitType: UnitType;
       attack: number;
       maxHealth: number;
@@ -38,6 +40,7 @@ export interface MainCombatEvent {
     };
     enemy: {
       name: string;
+      randomName: string;
       unitType: UnitType;
       attack: number;
       maxHealth: number;
@@ -54,12 +57,14 @@ export interface PostCombatEvent {
   data: {
     friendly: {
       name: string;
+      randomName: string;
       maxHealth: number;
       currentHealth: number;
       id?: number;
     };
     enemy: {
       name: string;
+      randomName: string;
       maxHealth: number;
       currentHealth: number;
       id?: number;

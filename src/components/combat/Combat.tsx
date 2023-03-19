@@ -144,10 +144,12 @@ export default function Combat({
       data: {
         friendly: {
           name: combatUnits[friendlyIndex].name,
+          randomName: combatUnits[friendlyIndex].randomName,
           id: combatUnits[friendlyIndex].id,
         },
         enemy: {
           name: combatEnemyUnits[enemyIndex].name,
+          randomName: combatEnemyUnits[enemyIndex].randomName,
           id: combatEnemyUnits[enemyIndex].id,
         },
       },
@@ -177,10 +179,12 @@ export default function Combat({
       data: {
         friendly: {
           name: combatUnits[newFriendlyIndex].name,
+          randomName: combatUnits[newFriendlyIndex].randomName,
           id: combatUnits[newFriendlyIndex].id,
         },
         enemy: {
           name: combatEnemyUnits[newEnemyIndex].name,
+          randomName: combatEnemyUnits[newEnemyIndex].randomName,
           id: combatEnemyUnits[newEnemyIndex].id,
         },
       },
@@ -299,6 +303,7 @@ export default function Combat({
       data: {
         friendly: {
           name: combatUnits[friendlyIndex].name,
+          randomName: combatUnits[friendlyIndex].randomName,
           unitType: combatUnits[friendlyIndex].unitType,
           /* attack: combatUnits[friendlyIndex].attack, */
           // cloned so bonuses are incorporated into the combat log is correct before stats are altered
@@ -319,6 +324,7 @@ export default function Combat({
         },
         enemy: {
           name: combatEnemyUnits[enemyIndex].name,
+          randomName: combatEnemyUnits[enemyIndex].randomName,
           unitType: combatEnemyUnits[enemyIndex].unitType,
           /* attack: combatEnemyUnits[enemyIndex].attack, */
           attack: calculatedAttackValue(
@@ -356,12 +362,14 @@ export default function Combat({
       data: {
         friendly: {
           name: combatUnits[friendlyIndex].name,
+          randomName: combatUnits[friendlyIndex].randomName,
           maxHealth: combatUnits[friendlyIndex].maxHealth,
           currentHealth: combatUnits[friendlyIndex].currentHealth,
           id: combatUnits[friendlyIndex].id,
         },
         enemy: {
           name: combatEnemyUnits[enemyIndex].name,
+          randomName: combatEnemyUnits[enemyIndex].randomName,
           maxHealth: combatEnemyUnits[enemyIndex].maxHealth,
           currentHealth: combatEnemyUnits[enemyIndex].currentHealth,
           id: combatEnemyUnits[enemyIndex].id,
