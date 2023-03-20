@@ -371,6 +371,8 @@ export default function Combat({
           combatState,
           ...prevCombatEvents,
         ]);
+
+        /* TODO: PICK UP FROM HERE, DO FOR FRIENDLY */
       }
     }
     // if FRIENDLY dies, do this
