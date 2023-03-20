@@ -7,7 +7,7 @@ export default function LoadGame() {
   // TODO: Pull real game saves from loadGameLoader! They'll be in localStorage
   // gameId will come from the game saves
   // that ID will be passed to the <Game /> Route, which lives in <App/>
-  // the <Game /> Route will need its own loader -- that will simply pull the ID from the params and load the  appropriate save from localStorage
+  // the <Game /> Route will need its own loader -- that will simply pull the ID from the params and load the appropriate save from localStorage
   // Note: Play will have to be turned into "New Game" or similar. It will always start a new save, with a new ID. It will be separate/different from this process.
 
   const dummyGameSaves = [

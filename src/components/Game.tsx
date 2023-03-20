@@ -88,10 +88,11 @@ import { ArmyGrid } from "./shared";
 import { randomNumberBetweenMinAndMax } from "../utils/randomNumberBetweenMinAndMax";
 import { generateScoutReport } from "../utils/generateScoutReport";
 import { v4 as uuidv4 } from "uuid";
+import { GameSave } from "../types/GameSaving";
 
 export default function Game(props: GameProps) {
   const { gameId } = useParams();
-
+  console.log(gameId);
   // get gameId from params, else set it as UUID
 
   const defaultGameState: GameState = {
@@ -1092,11 +1093,55 @@ export default function Game(props: GameProps) {
     return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
+
+
+  const currentGameSave:GameSave = {
+    gameId,
+    devTools,
+    score,
+    playerName,
+    townName,
+    difficulty,
+    tutorials,
+    turn,
+    nextCombatTurn,
+    numberOfCombatsStarted,
+    inCombat,
+    resources,
+    resourcePool,
+    buildings,
+    friendlyUnits,
+    friendlyTrainingUnits,
+    enemyUnits,
+    unitId,
+    activeNavButtons,
+    tipsSeen,
+  };
+
+  // get the saves array from local storage
+  const savesArray = JSON.parse(localStorage.getItem("gameSaves") ?? "[]");
+  // return the save if it already exists; else return undefined
+  const oldDataForCurrentGame: GameSave | undefined = savesArray.find(
+    (save: GameSave) => save.gameId === gameId
+  );
+
+
+  /* TODO: CONTINUE FROM HERE, LOTS TO FIGURE OUT */
+  // if there's old data for the current game ? overwrite it : else add it to the saves array
+
+  oldDataForCurrentGame ? oldDataForCurrentGame = currentGamenull : 
+  
+  // if there's old data for the current game ? overwrite it : else add it to the saves array
+  const saveCurrentGame = oldDataforCurrentGame
+    ? savesArray.unshift(oldDataforCurrentGame)
+    : null;
+
   /* ==SAVING ALL STATE IN LOCAL STORAGE WHEN ANYTHING IS UPDATED== */
   useEffect(() => {
     localStorage.setItem(
       "savedGameState",
       JSON.stringify({
+        gameId,
         devTools,
         score,
         playerName,
