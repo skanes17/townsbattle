@@ -1200,6 +1200,7 @@ export default function Game(props: GameProps) {
   }, [tipsSeen]); */
 
   return inCombat ? (
+    /* FIXME: Add background back in to main components */
     <>
       <div className="h-screen">
         <Combat
