@@ -1,4 +1,4 @@
-import { UnitType } from "./Unit";
+import { Unit, UnitType } from "./Unit";
 
 export interface CombatEvent {
   event:
@@ -6,7 +6,8 @@ export interface CombatEvent {
     | MainCombatEvent
     | PostCombatEvent
     | SummaryEvent
-    | NoArmyEvent;
+    | NoArmyEvent
+    | BombirdDeathEvent;
   idx: number;
 }
 
@@ -49,6 +50,15 @@ export interface MainCombatEvent {
       incomingDmgReduction: number; */
       id?: number;
     };
+  };
+}
+
+export interface BombirdDeathEvent {
+  type: "combat";
+  data: {
+    destroyedUnit: Unit;
+    opposingUnit: Unit;
+    numberOfUnitsAffected: number;
   };
 }
 

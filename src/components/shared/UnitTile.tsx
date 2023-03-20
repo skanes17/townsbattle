@@ -133,19 +133,27 @@ export function UnitTile({
         {/* Popup text */}
         <div className="fixed inset-0 flex h-[90%] w-[140%] translate-y-[5%] -translate-x-[20%] flex-col justify-center overflow-y-auto overflow-x-hidden rounded-lg bg-black/80 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:text-base">
           {randomName && <p>{randomName + id}</p>}
-          {allAttackBonusesCheck(unit) ? (
-            <p className="font-semibold text-amber-400">🗡️{totalAttackValue}</p>
-          ) : (
-            <div className="group/attack relative">
-              <p>🗡️{totalAttackValue}</p>
-              <p className="group-hover/attack:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/attack:bg-zinc-800 group-hover/attack:opacity-90">
-                Attack
+
+          {/* TODO: Add in-line amber styling */}
+          <div className="group/attack relative">
+            {allAttackBonusesCheck(unit) ? (
+              <p className="font-semibold text-amber-400">
+                🗡️{totalAttackValue}
               </p>
-            </div>
-          )}
+            ) : (
+              <p>🗡️{totalAttackValue}</p>
+            )}
+            <p className="group-hover/attack:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/attack:bg-zinc-800 group-hover/attack:opacity-90">
+              Attack
+            </p>
+          </div>
 
           {/* TODO: Add hoverText, and green text if buffed */}
-          {armor > 0 && <p>🛡️{armor}</p>}
+          {armor > 0 && (
+            <div>
+              <p>🛡️{armor}</p>
+            </div>
+          )}
 
           <div className="group/health relative">
             <p>

@@ -25,6 +25,8 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: true,
   },
   fighter: {
     unitType: "fighter",
@@ -49,6 +51,8 @@ export const baseUnitData: BaseUnitData = {
     berserker: true,
     berserkerAttackMultiplier: 1.5,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: true,
   },
   archer: {
     unitType: "archer",
@@ -62,7 +66,7 @@ export const baseUnitData: BaseUnitData = {
     bgImageLg: "bg-archerLg",
     threatLevel: 1.5,
     // decrease the attack but it attacks first
-    attack: 4,
+    attack: 3,
     maxHealth: 7,
     armor: 0,
     resourceCosts: { workers: 1, wood: 3, metal: 2 },
@@ -73,6 +77,8 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: true,
   },
   knight: {
     unitType: "knight",
@@ -87,7 +93,7 @@ export const baseUnitData: BaseUnitData = {
     bgImageLg: "bg-knightLg",
     threatLevel: 1.5,
     attack: 6,
-    maxHealth: 7,
+    maxHealth: 6,
     armor: 1,
     resourceCosts: { workers: 2, stone: 3, metal: 3 },
     buildScore: 80,
@@ -97,6 +103,8 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: true,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: true,
   },
   // TODO: Consider allowing an armor buff for first hit, eg no damage when first hit
   mage: {
@@ -122,19 +130,23 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: true,
   },
+  // reimagine -- auto-kill opposing unit, on death does 1/3 of its attack to 2 random units
   bombird: {
     unitType: "bombird",
     name: "Bombird",
     symbol: "💣",
-    description: "Big damage but self-destructs!",
+    description:
+      "Explodes on death, hugely damaging the opposing unit and harming 2 units in the enemy army.",
     lockedText: "Unlocked by Explosives Research",
     bgImage: "bg-bomber",
     bgImageSm: "bg-bomberSm",
     bgImageMd: "bg-bomberMd",
     bgImageLg: "bg-bomberLg",
     threatLevel: 3,
-    attack: 12,
+    attack: 1,
     maxHealth: 1,
     armor: 0,
     resourceCosts: { workers: 3, wood: 2, stone: 2, metal: 2, crystal: 2 },
@@ -145,6 +157,11 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: true,
+    damageToOpponentOnDeath: 25,
+    doesAreaOfEffectDamageOnDeath: true,
+    areaOfEffectDamageOnDeath: 3,
+    numberOfUnitsAffectedByAoeDamageOnDeath: 2,
   },
 };
 

@@ -45,6 +45,11 @@ export interface Unit {
   id?: number;
   combatsSurvived?: number;
   survivalArmorBonus: boolean;
+  damagesOpponentOnDeath: boolean;
+  damageToOpponentOnDeath?: number;
+  doesAreaOfEffectDamageOnDeath: boolean;
+  areaOfEffectDamageOnDeath?: number;
+  numberOfUnitsAffectedByAoeDamageOnDeath?: number;
 }
 
 export interface BaseUnitData {

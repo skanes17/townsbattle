@@ -5,6 +5,7 @@ import {
   PostCombatEvent,
   SummaryEvent,
   NoArmyEvent,
+  BombirdDeathEvent,
 } from "../../types";
 
 /* TODO: Make flavourtexts based on unit type; see below in combat phase */
@@ -18,14 +19,9 @@ export const messages = {
         <p>
           <span className="text-green-400">
             {event.data.friendly.randomName}
-            {event.data.friendly.id}
           </span>{" "}
           faces off against{" "}
-          <span className="text-red-400">
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}
-          </span>
-          .
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
         </p>
       );
     },
@@ -34,14 +30,9 @@ export const messages = {
         <p>
           <span className="text-green-400">
             {event.data.friendly.randomName}
-            {event.data.friendly.id}
           </span>{" "}
           jumps in and stares down{" "}
-          <span className="text-red-400">
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}
-          </span>
-          .
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
         </p>
       );
     },
@@ -50,14 +41,9 @@ export const messages = {
         <p>
           <span className="text-green-400">
             {event.data.friendly.randomName}
-            {event.data.friendly.id}
           </span>{" "}
           wants to try his luck against{" "}
-          <span className="text-red-400">
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}
-          </span>
-          .
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
         </p>
       );
     },
@@ -66,13 +52,9 @@ export const messages = {
         <p>
           <span className="text-green-400">
             {event.data.friendly.randomName}
-            {event.data.friendly.id}
           </span>{" "}
           sees{" "}
-          <span className="text-red-400">
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}
-          </span>{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           and calls him something nasty.
         </p>
       );
@@ -82,13 +64,9 @@ export const messages = {
         <p>
           <span className="text-green-400">
             {event.data.friendly.randomName}
-            {event.data.friendly.id}
           </span>{" "}
           agrees to battle{" "}
-          <span className="text-red-400">
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}
-          </span>{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           but they're not happy about it.
         </p>
       );
@@ -101,7 +79,6 @@ export const messages = {
         <p>
           <span className="text-green-400">
             {event.data.friendly.randomName}
-            {event.data.friendly.id}
           </span>{" "}
           {/* TODO: More of this type of conditional flavortext; focus on DRY */}
           {event.data.friendly.unitType === "villager" ? "flails at" : null}{" "}
@@ -109,10 +86,7 @@ export const messages = {
           {event.data.friendly.unitType === "archer" ? "shoots at" : null}{" "}
           {event.data.friendly.unitType === "knight" ? "bashes" : null}{" "}
           {event.data.friendly.unitType === "mage" ? "casts a spell on" : null}{" "}
-          <span className="text-red-400">
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}
-          </span>{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           for{" "}
           <span className="text-amber-400">
             {event.data.friendly.attack} damage
@@ -130,13 +104,9 @@ export const messages = {
         <p>
           <span className="text-green-400">
             {event.data.friendly.randomName}
-            {event.data.friendly.id}
           </span>{" "}
           injures{" "}
-          <span className="text-red-400">
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}
-          </span>{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           for{" "}
           <span className="text-amber-400">
             {event.data.friendly.attack} damage,
@@ -154,17 +124,12 @@ export const messages = {
         <p>
           <span className="text-green-400">
             {event.data.friendly.randomName}
-            {event.data.friendly.id}
           </span>{" "}
           inflicts{" "}
           <span className="text-amber-400">
             {event.data.friendly.attack} damage
           </span>{" "}
-          on{" "}
-          <span className="text-red-400">
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}
-          </span>
+          on <span className="text-red-400">{event.data.enemy.randomName}</span>
           , taking{" "}
           <span className="text-amber-400">
             {event.data.enemy.attack} damage
@@ -178,22 +143,41 @@ export const messages = {
         <p>
           <span className="text-green-400">
             {event.data.friendly.randomName}
-            {event.data.friendly.id}
           </span>{" "}
           does{" "}
           <span className="text-amber-400">
             {event.data.friendly.attack} damage
           </span>{" "}
-          to{" "}
-          <span className="text-red-400">
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}
-          </span>{" "}
+          to <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           and takes{" "}
           <span className="text-amber-400">
             {event.data.enemy.attack} damage
           </span>
           .
+        </p>
+      );
+    },
+    // idx: 4
+    (event: BombirdDeathEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.destroyedUnit.randomName}
+          </span>{" "}
+          <span className="font-semibold text-red-500">explodes,</span> doing{" "}
+          <span className="text-amber-400">
+            {event.data.destroyedUnit.damageToOpponentOnDeath} damage
+          </span>{" "}
+          to{" "}
+          <span className="text-red-400">
+            {event.data.opposingUnit.randomName}
+          </span>
+          . The blast hits {event.data.numberOfUnitsAffected} units in the
+          opposing army for{" "}
+          <span className="text-amber-400">
+            {event.data.destroyedUnit.areaOfEffectDamageOnDeath}
+          </span>{" "}
+          damage each.
         </p>
       );
     },
@@ -213,9 +197,8 @@ export const messages = {
       return (
         <p>
           <span className="text-green-600">
-            {event.data.friendly.randomName}
-            {event.data.friendly.id} defeats {event.data.enemy.randomName}
-            {event.data.enemy.id}!
+            {event.data.friendly.randomName} defeats{" "}
+            {event.data.enemy.randomName}!
           </span>
         </p>
       );
@@ -225,10 +208,8 @@ export const messages = {
       return (
         <p>
           <span className="text-red-600">
-            {event.data.friendly.randomName}
-            {event.data.friendly.id} was defeated by{" "}
-            {event.data.enemy.randomName}
-            {event.data.enemy.id}.
+            {event.data.friendly.randomName} was defeated by{" "}
+            {event.data.enemy.randomName}.
           </span>
         </p>
       );

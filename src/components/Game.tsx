@@ -461,11 +461,12 @@ export default function Game(props: GameProps) {
       totalHealth,
       totalArmor,
       totalAttackBonus,
+      totalDeathEffectAndAoeDamage,
       totalThreat,
     } = friendlyUnits.reduce(
       // and an arrow function is called for each unit in friendlyUnits
       (totals, unit) => ({
-        // For each unit, the arrow function adds the unit's attack, health, and threat to each total
+        // For each unit, the arrow function adds the unit's attack, health, armor, etc to each total
         totalAttack: totals.totalAttack + unit.attack,
         totalHealth: totals.totalHealth + unit.currentHealth,
         totalArmor: totals.totalArmor + unit.armor,
@@ -473,6 +474,11 @@ export default function Game(props: GameProps) {
           totals.totalAttackBonus +
           fullHealthAttackBonusPowerLevel(unit) +
           berserkerAttackBonusPowerLevel(unit),
+        totalDeathEffectAndAoeDamage:
+          totals.totalDeathEffectAndAoeDamage +
+          (unit.areaOfEffectDamageOnDeath ?? 0) *
+            (unit.numberOfUnitsAffectedByAoeDamageOnDeath ?? 0) +
+          (unit.damageToOpponentOnDeath ?? 0),
         totalThreat: totals.totalThreat + unit.threatLevel,
       }),
       // Initilized values for total attack, total health, and total threat
@@ -481,13 +487,19 @@ export default function Game(props: GameProps) {
         totalHealth: 0,
         totalArmor: 0,
         totalAttackBonus: 0,
+        totalDeathEffectAndAoeDamage: 0,
         totalThreat: 0,
       }
     );
 
     /* TODO: Consider adding resources into the mix */
     const friendlyPowerLevel =
-      totalAttack + totalHealth + totalArmor + totalAttackBonus + totalThreat;
+      totalAttack +
+      totalHealth +
+      totalArmor +
+      totalAttackBonus +
+      totalDeathEffectAndAoeDamage +
+      totalThreat;
     /* console.log(friendlyPowerLevel); */
 
     // The following process takes the calculated power level and scales the enemy's power level accordingly.
@@ -691,6 +703,10 @@ export default function Game(props: GameProps) {
         armor +
         fullHealthAttackBonusPowerLevel(chosenUnitWithCurrentHealth) +
         berserkerAttackBonusPowerLevel(chosenUnitWithCurrentHealth) +
+        (chosenUnitWithCurrentHealth.damageToOpponentOnDeath ?? 0) +
+        (chosenUnitWithCurrentHealth.areaOfEffectDamageOnDeath ?? 0) *
+          (chosenUnitWithCurrentHealth.numberOfUnitsAffectedByAoeDamageOnDeath ??
+            0) +
         threatLevel;
     }
     // end of while loop
