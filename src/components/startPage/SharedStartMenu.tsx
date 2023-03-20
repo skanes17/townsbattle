@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { routerLinkStyle } from "../../tailwindStyles/RouterLinkStyle";
 import { MenuItem, MenuTitle } from "../startPage";
@@ -13,20 +13,19 @@ export default function SharedStartMenu() {
             <MenuItem text="Play" icon="▶️" />
           </Link>
           {/* <Link className={routerLinkStyle} to="/leaderboards">
-            <MenuItem text="Leaderboards" icon="🏆" />
-          </Link> */}
+              <MenuItem text="Leaderboards" icon="🏆" />
+            </Link> */}
           <Link className={routerLinkStyle} to="/options">
             <MenuItem text="Options" icon="🔧" />
           </Link>
           {/* <Link className={routerLinkStyle} to="/howtoplay">
-            <MenuItem text="How to Play" icon="❓" />
-          </Link> */}
+              <MenuItem text="How to Play" icon="❓" />
+            </Link> */}
           {/* <Link className={routerLinkStyle} to="/about">
-            <MenuItem text="About" icon="⭐" />
-          </Link> */}
+              <MenuItem text="About" icon="⭐" />
+            </Link> */}
         </div>
       </div>
-
       {/* Outlet allows for shared components/structure for any child of the parent Route */}
       {/* Child components will render wherever you place Outlet */}
       <Outlet />
