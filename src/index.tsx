@@ -9,6 +9,7 @@ const handleRightClick = (event: MouseEvent<HTMLDivElement>) => {
   event.preventDefault();
 };
 
+/* TODO: Add loaders */
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <div
