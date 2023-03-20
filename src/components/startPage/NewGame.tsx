@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { defaultPlayerName, defaultTownName } from "../../gameData";
 import { GameOptions } from "../../types";
-import { MenuBox, MenuBoxHeader, MenuInput } from "../startPage";
+import { MenuBox, MenuBoxHeader, MenuInput } from ".";
+import { v4 as uuidv4 } from "uuid";
 
-export default function Play() {
+// Rename to "New Game"
+export default function NewGame() {
+  const uniqueGameId = uuidv4();
+
   const [devTools] = useState(false);
 
   const defaultOptions: GameOptions = {
@@ -91,10 +95,10 @@ export default function Play() {
         </Link>
         <Link
           // FIXME: This would be replaced with a NewGame system
-          to="/play/:gameId"
+          to={`/:${uniqueGameId}`}
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center font-semibold text-white outline-transparent ring-blue-600 ring-offset-2 focus:ring-2"
         >
-          Next
+          Play
         </Link>
       </div>
     </MenuBox>

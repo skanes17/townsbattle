@@ -1,8 +1,8 @@
 export interface MenuItemProps {
-  // routerLink expects a React Router Link to to={} such as "/play"
+  // routerLink expects a React Router Link to to={} such as "/newGame"
   routerLink?: string;
   text:
-    | "Play"
+    | "New Game"
     | "Leaderboards"
     | "Options"
     | "How to Play"

@@ -90,8 +90,9 @@ import { generateScoutReport } from "../utils/generateScoutReport";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Game(props: GameProps) {
+  const { gameId } = useParams();
+
   // get gameId from params, else set it as UUID
-  const { gameId } = useParams() ?? uuidv4();
 
   const defaultGameState: GameState = {
     devTools: false,
@@ -1202,6 +1203,41 @@ export default function Game(props: GameProps) {
   useEffect(() => {
     localStorage.setItem(`tipsSeen`, JSON.stringify(tipsSeen));
   }, [tipsSeen]); */
+
+  const uniqueGameId = uuidv4();
+
+  const gameSaves = JSON.parse(localStorage.getItem("gameSaves") ?? "{}");
+
+  const gameSaver = () => {
+    localStorage.setItem(
+      "savedGame",
+      JSON.stringify({
+        // this is the unique ID that'll be called using Load
+        uniqueGameId,
+        devTools,
+        score,
+        playerName,
+        townName,
+        difficulty,
+        tutorials,
+        turn,
+        nextCombatTurn,
+        numberOfCombatsStarted,
+        inCombat,
+        resources,
+        resourcePool,
+        buildings,
+        friendlyUnits,
+        friendlyTrainingUnits,
+        enemyUnits,
+        unitId,
+        activeNavButtons,
+        tipsSeen,
+      })
+    );
+  };
+
+  gameSaver();
 
   return inCombat ? (
     /* FIXME: Add background back in to main components */

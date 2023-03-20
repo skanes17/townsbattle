@@ -10,16 +10,6 @@ export default function LoadGame() {
   // the <Game /> Route will need its own loader -- that will simply pull the ID from the params and load the  appropriate save from localStorage
   // Note: Play will have to be turned into "New Game" or similar. It will always start a new save, with a new ID. It will be separate/different from this process.
 
-  // REMEMBER: Basic Structure is in paper notes
-  // 1 - LoadGame is a Route
-  // That Route will have a loader=loadGameLoader
-  // it loads the saves which are currently found in localStorage (eventually could be fetched by API with backend)
-  // Once those saves are loaded into the component, they'll be accessed then mapped similar to the process seen below
-  // When the Link is clicked, it'll pass the unique ID
-  // That links to a Route which uses dynamic routing -- eg <Route path ="/play/:${save.gameId}" /> or whatever else is needed
-  // Game uses useParams to grab that ID, and it'll get the proper save data to show in the game
-  // That game data is then saved to state immediately upon loading, and the game should pick up in the right place
-
   const dummyGameSaves = [
     {
       gameId: 1234,
@@ -35,6 +25,26 @@ export default function LoadGame() {
     },
   ];
 
+  // this would exist because <Game> would have saved something by now
+  localStorage.setItem("gameSaves", JSON.stringify(dummyGameSaves));
+
+  const loadGameLoader = () => {
+    const savesArray = JSON.parse(localStorage.getItem("gameSaves") ?? "[]");
+    return savesArray;
+  };
+
+  console.log(loadGameLoader());
+
+  // REMEMBER: Basic Structure is in paper notes
+  // LoadGame is a Route
+  // That Route will have a loader=loadGameLoader
+  // it loads the saves which are currently found in localStorage (eventually could be fetched by API with backend)
+  // Once those saves are loaded into the component, they'll be accessed then mapped similar to the process seen below
+  // When the Link is clicked, it'll pass the unique ID
+  // That links to a Route which uses dynamic routing -- eg <Route path ="/:${save.gameId}" /> or whatever else is needed
+  // Game uses useParams to grab that ID, and it'll get the proper save data to show in the game
+  // That game data is then saved to state immediately upon loading, and the game should pick up in the right place
+
   return (
     <MenuBox headerText="Load Game" icon="💾">
       <MenuBoxHeader>
@@ -48,7 +58,7 @@ export default function LoadGame() {
         {dummyGameSaves.map((save, index) => (
           <Link
             className="mt-2 w-full flex-1 rounded-md bg-orange-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
-            to={`/play/:${save.gameId}`}
+            to={`/:${save.gameId}`}
           >
             <div className="grid auto-rows-auto">
               <p>{index + 1}</p>

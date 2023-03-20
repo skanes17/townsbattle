@@ -8,7 +8,7 @@ import MenuInput from "./MenuInput";
 import MenuItem from "./MenuItem";
 import MenuTitle from "./MenuTitle";
 import Options from "./Options";
-import Play from "./Play";
+import Play from "./NewGame";
 import SharedStartMenu from "./SharedStartMenu";
 
 export {

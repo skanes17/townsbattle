@@ -9,8 +9,8 @@ export default function SharedStartMenu() {
       <div className="flex h-screen flex-col items-center justify-center bg-mainMenu bg-contain bg-center bg-no-repeat">
         <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded-3xl p-4 shadow-inherit">
           <MenuTitle title="Townsbattle" subtitle="Rise of the Defenders" />
-          <Link className={routerLinkStyle} to="/play">
-            <MenuItem text="Play" icon="▶️" />
+          <Link className={routerLinkStyle} to="/newGame">
+            <MenuItem text="New Game" icon="▶️" />
           </Link>
           {/* <Link className={routerLinkStyle} to="/leaderboards">
               <MenuItem text="Leaderboards" icon="🏆" />
