@@ -56,7 +56,7 @@ import {
   UpgradeCosts,
 } from "../types";
 import { GameContext } from "../context/GameState";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   AddRemoveUnitFn,
   AddResourceFn,
@@ -87,8 +87,12 @@ import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
 import { randomNumberBetweenMinAndMax } from "../utils/randomNumberBetweenMinAndMax";
 import { generateScoutReport } from "../utils/generateScoutReport";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Game(props: GameProps) {
+  // get gameId from params, else set it as UUID
+  const { gameId } = useParams() ?? uuidv4();
+
   const defaultGameState: GameState = {
     devTools: false,
     score: 0,
@@ -1472,3 +1476,9 @@ export default function Game(props: GameProps) {
     </>
   );
 }
+
+/* export const gameLoader = ({params})=> {
+  const {gameId} = params;
+  const gameSave = gameSaves.find(save => save.gameId === gameId) ?? defaultSave;
+  return gameSave
+} */

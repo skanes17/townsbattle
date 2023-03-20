@@ -18,6 +18,9 @@ export default function SharedStartMenu() {
           <Link className={routerLinkStyle} to="/options">
             <MenuItem text="Options" icon="🔧" />
           </Link>
+          <Link className={routerLinkStyle} to="/loadGame">
+            <MenuItem text="Load Game" icon="💾" />
+          </Link>
           {/* <Link className={routerLinkStyle} to="/howtoplay">
               <MenuItem text="How to Play" icon="❓" />
             </Link> */}

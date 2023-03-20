@@ -90,7 +90,8 @@ export default function Play() {
           Cancel
         </Link>
         <Link
-          to="/play/game"
+          // FIXME: This would be replaced with a NewGame system
+          to="/play/:gameId"
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center font-semibold text-white outline-transparent ring-blue-600 ring-offset-2 focus:ring-2"
         >
           Next
