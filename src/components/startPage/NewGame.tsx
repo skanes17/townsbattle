@@ -1,40 +1,59 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { defaultPlayerName, defaultTownName } from "../../gameData";
-import { GameOptions } from "../../types";
+import { GameOptions, GameSave, GameState } from "../../types";
 import { MenuBox, MenuBoxHeader, MenuInput } from ".";
 import { v4 as uuidv4 } from "uuid";
+import { FunctionType, saveOrLoadGameUsingLocalStorage } from "../../utils";
 
 // Rename to "New Game"
 export default function NewGame() {
-  const uniqueGameId = uuidv4();
+  const newUniqueGameId = uuidv4();
+
+  // TODO: See Notes below
+  // in New Game, there's no loading a save -- it'll be all new EXCEPT options if they've been tweaked
+  // Just set a default and replace the options if relevant
+  // Can then set stuff to state when there's changes (already doing some of this)
+  // Save all this to a save file!
+  // Game will be checking whether it should make a new game or not.
+
+  // set default settings
+  const defaultGameState = useLoaderData() as GameState;
+  // pull existing saved options from local storage, in case they were tweaked
+  const savedOptions: GameOptions = JSON.parse(
+    localStorage.getItem("savedOptions") || "{}"
+  );
+  // overwrite defaults with tweaked options, if relevant
+  const gameState = {
+    ...defaultGameState,
+    ...savedOptions,
+  };
 
   const [devTools] = useState(false);
 
-  const defaultOptions: GameOptions = {
+  /* const defaultOptions: GameOptions = {
     playerName: defaultPlayerName,
     townName: defaultTownName,
     difficulty: "normal",
     tutorials: true,
-  };
+  }; */
 
-  // pull existing saved options from local storage
-  const savedOptions: GameOptions = JSON.parse(
-    localStorage.getItem("savedOptions") || "{}"
-  );
-
-  const gameOptions: GameOptions = {
+  /* const gameOptions: GameOptions = {
     ...defaultOptions,
     ...savedOptions,
-  };
+  }; */
 
   // set those options in state
-  const [options, setOptions] = useState(gameOptions);
+  const [currentGameState, setCurrentGameState] = useState(gameState);
+
+  // FIXME: DO NEXT -- This wasn't fully changed yet -- Save the new settings here!
+  // TODO: Replace this process with ONE save to local storage, once the Play button is clicked.
+  // TODO: This should save the id and timestamp to the object and then be called within Game
 
   // save those options to local storage any time there's a change
   useEffect(() => {
-    localStorage.setItem("savedOptions", JSON.stringify(options));
-  }, [options]);
+    localStorage.setItem("savedOptions", JSON.stringify(currentGameState));
+  }, [currentGameState]);
 
   return (
     <MenuBox icon="▶️" headerText="How to Play">
@@ -45,14 +64,14 @@ export default function NewGame() {
 
       <MenuInput
         header={"Player Name"}
-        placeholderText={options.playerName}
+        placeholderText={currentGameState.playerName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={options.playerName}
+        value={currentGameState.playerName}
         // what to do when input is changed
         onChange={(e) =>
-          setOptions({
-            ...options,
+          setCurrentGameState({
+            ...currentGameState,
             playerName: e.target.value,
           })
         }
@@ -60,14 +79,14 @@ export default function NewGame() {
 
       <MenuInput
         header={"Town Name"}
-        placeholderText={options.townName}
+        placeholderText={currentGameState.townName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={options.townName}
+        value={currentGameState.townName}
         // what to do when input is changed
         onChange={(e) =>
-          setOptions({
-            ...options,
+          setCurrentGameState({
+            ...currentGameState,
             townName: e.target.value,
           })
         }
@@ -79,10 +98,10 @@ export default function NewGame() {
       {devTools && (
         <div className="bg-amber-100 capitalize text-gray-500">
           <p className="font-bold text-gray-800">Summary (DevTool)</p>
-          <p>Player Name: {options.playerName}</p>
-          <p>Town Name: {options.townName}</p>
-          <p>Difficulty: {options.difficulty}</p>
-          <p>Tutorials: {options.tutorials ? "On" : "Off"}</p>
+          <p>Player Name: {currentGameState.playerName}</p>
+          <p>Town Name: {currentGameState.townName}</p>
+          <p>Difficulty: {currentGameState.difficulty}</p>
+          <p>Tutorials: {currentGameState.tutorials ? "On" : "Off"}</p>
         </div>
       )}
 
@@ -94,7 +113,7 @@ export default function NewGame() {
           Cancel
         </Link>
         <Link
-          to={`/:${uniqueGameId}`}
+          to={`/:${newUniqueGameId}`}
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center font-semibold text-white outline-transparent ring-blue-600 ring-offset-2 focus:ring-2"
         >
           Play

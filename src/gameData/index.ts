@@ -1,5 +1,6 @@
 export * from "./armyColors";
 export * from "./buildings";
+export * from "./defaultGameState";
 export * from "./enabledUnitsOnStart";
 export * from "./names";
 export * from "./navButtonsData";

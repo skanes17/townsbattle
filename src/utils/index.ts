@@ -10,5 +10,6 @@ export * from "./minTurnsCalculators";
 export * from "./randomNumberBetweenMinAndMax";
 export * from "./resourceChecker";
 export * from "./returnHealthBarStyleObject";
+export * from "./savingAndLoadingGame";
 export * from "./unitPowerLevelCalculators";
 export * from "./updateResourcePool";

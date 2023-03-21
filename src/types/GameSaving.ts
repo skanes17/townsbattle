@@ -11,6 +11,7 @@ import {
 
 export interface GameSave {
   gameId?: string;
+  timestamp?: string;
   devTools: boolean;
   score: number;
   playerName: string;

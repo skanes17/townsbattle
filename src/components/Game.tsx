@@ -18,6 +18,7 @@ import {
   fighterNames,
   knightNames,
   villagerNames,
+  defaultGameState,
 } from "../gameData";
 import {
   BaseResource,
@@ -56,7 +57,7 @@ import {
   UpgradeCosts,
 } from "../types";
 import { GameContext } from "../context/GameState";
-import { useLocation, useParams } from "react-router-dom";
+import { useLoaderData, useLocation, useParams } from "react-router-dom";
 import {
   AddRemoveUnitFn,
   AddResourceFn,
@@ -70,8 +71,10 @@ import {
   cloneBasicObjectWithJSON,
   countUnits,
   fullHealthAttackBonusPowerLevel,
+  FunctionType,
   generateRandomArmyComposition,
   generateWeightedArmyComposition,
+  saveOrLoadGameUsingLocalStorage,
 } from "../utils";
 import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
@@ -92,32 +95,16 @@ import { GameSave } from "../types/GameSaving";
 
 export default function Game(props: GameProps) {
   const { gameId } = useParams();
-  console.log(gameId);
-  // get gameId from params, else set it as UUID
 
-  const defaultGameState: GameState = {
-    devTools: false,
-    score: 0,
-    playerName: defaultPlayerName,
-    townName: defaultTownName,
-    difficulty: "normal",
-    tutorials: true,
-    turn: 1,
-    nextCombatTurn: 1,
-    numberOfCombatsStarted: 0,
-    inCombat: false,
-    resources: resourceData,
-    resourcePool: resourcePoolData,
-    buildings: buildingsData,
-    friendlyUnits: [],
-    friendlyTrainingUnits: [],
-    enemyUnits: [],
-    unitId: 0,
-    activeNavButtons: activeNavButtonsData,
-    tipsSeen: tipsSeenData,
-  };
+  // set defaults in case newGame screen was skipped
+  //const currentGameSave:GameSave = defaultGameState;
 
-  const savedOptions: GameOptions = JSON.parse(
+  // load the game from localStorage if it exists; else will set it to default settings
+  const currentGameSave = saveOrLoadGameUsingLocalStorage(
+    FunctionType.Load
+  ) as GameSave;
+
+  /*   const savedOptions: GameOptions = JSON.parse(
     localStorage.getItem("savedOptions") || "{}"
   );
 
@@ -126,31 +113,27 @@ export default function Game(props: GameProps) {
   );
 
   const gameState: GameState = {
-    ...defaultGameState,
+    ...defaultGameSettings,
     ...savedGameState,
     ...savedOptions,
-  };
+  }; */
 
-  // TODO: Expand this so it's dynamic, user can make a new game or load an old one (say up to 10)
-  /* 
-  const loadedGameState = savedGameStates[chosenGameStateIndex];
-  */
-
-  const [devTools] = useState(gameState.devTools);
+  /* TODO: Set state using useLoader() data */
+  const [devTools] = useState(currentGameSave.devTools);
   // points from rounds of combat get added to this
-  const [score, setScore] = useState(gameState.score);
-  const [playerName] = useState(gameState.playerName);
-  const [townName] = useState(gameState.townName);
-  const [difficulty] = useState(gameState.difficulty);
-  const [tutorials] = useState(gameState.tutorials);
-  const [turn, setTurn] = useState(gameState.turn);
+  const [score, setScore] = useState(currentGameSave.score);
+  const [playerName] = useState(currentGameSave.playerName);
+  const [townName] = useState(currentGameSave.townName);
+  const [difficulty] = useState(currentGameSave.difficulty);
+  const [tutorials] = useState(currentGameSave.tutorials);
+  const [turn, setTurn] = useState(currentGameSave.turn);
   const [nextCombatTurn, setNextCombatTurn] = useState(
-    gameState.nextCombatTurn
+    currentGameSave.nextCombatTurn
   );
   const [numberOfCombatsStarted, setNumberOfCombatsStarted] = useState(
-    gameState.numberOfCombatsStarted
+    currentGameSave.numberOfCombatsStarted
   );
-  const [inCombat, setInCombat] = useState(gameState.inCombat);
+  const [inCombat, setInCombat] = useState(currentGameSave.inCombat);
 
   const planningTurnsUntilEnemyGen = useRef(
     calcMinPlanningTurnsUntilArmyGen(difficulty)
@@ -166,9 +149,11 @@ export default function Game(props: GameProps) {
     );
 
   /* ===RESOURCES AND WORKERS=== */
-  const [resources, setResources] = useState(gameState.resources);
+  const [resources, setResources] = useState(currentGameSave.resources);
   const numberOfWorkersAtStartOfGame = 5;
-  const [resourcePool, setResourcePool] = useState(gameState.resourcePool);
+  const [resourcePool, setResourcePool] = useState(
+    currentGameSave.resourcePool
+  );
 
   const resourceTypes: ResourceType[] = Object.keys(
     resources
@@ -178,7 +163,7 @@ export default function Game(props: GameProps) {
   ).filter((resourceType) => resourceType !== "workers") as BaseResourceType[];
 
   /* ===BUILDINGS=== */
-  const [buildings, setBuildings] = useState(gameState.buildings);
+  const [buildings, setBuildings] = useState(currentGameSave.buildings);
   const buildingsUnderConstruction = Object.keys(buildings).filter(
     (key) => buildings[key].underConstruction
   );
@@ -212,13 +197,15 @@ export default function Game(props: GameProps) {
   /* ===UNITS=== */
   // friendly army
   const [friendlyUnits, setFriendlyUnits] = useState(
-    gameState.friendlyUnits as Unit[]
+    currentGameSave.friendlyUnits as Unit[]
   );
   const [friendlyTrainingUnits, setFriendlyTrainingUnits] = useState(
-    gameState.friendlyTrainingUnits as TrainingUnit[]
+    currentGameSave.friendlyTrainingUnits as TrainingUnit[]
   );
   // placeholder enemy array for testing
-  const [enemyUnits, setEnemyUnits] = useState(gameState.enemyUnits as Unit[]);
+  const [enemyUnits, setEnemyUnits] = useState(
+    currentGameSave.enemyUnits as Unit[]
+  );
   // ===BASE STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
@@ -277,7 +264,7 @@ export default function Game(props: GameProps) {
     );
 
   // ids for tracking units
-  const [unitId, setUnitId] = useState(gameState.unitId);
+  const [unitId, setUnitId] = useState(currentGameSave.unitId);
 
   /* ===FUNCTIONS=== */
   // ADD units to either army
@@ -1042,7 +1029,7 @@ export default function Game(props: GameProps) {
   const enemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
 
   const [activeNavButtons, setActiveNavButtons] = useState(
-    gameState.activeNavButtons as NavButtons
+    currentGameSave.activeNavButtons as NavButtons
   );
 
   const navButtonOn = (navButtonType: NavButtonType) => {
@@ -1067,7 +1054,9 @@ export default function Game(props: GameProps) {
     setActiveNavButtons(clonedActiveNavButtons);
   };
 
-  const [tipsSeen, setTipsSeen] = useState(gameState.tipsSeen as TipsSeen);
+  const [tipsSeen, setTipsSeen] = useState(
+    currentGameSave.tipsSeen as TipsSeen
+  );
 
   const markTipAsSeen = (tutorialCategory: TutorialCategory) => {
     if (!tutorialCategory) {
@@ -1093,10 +1082,10 @@ export default function Game(props: GameProps) {
     return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
-
-
-  const currentGameSave:GameSave = {
+  const timestamp = new Date().toLocaleString();
+  /* const currentGameSave: GameSave = {
     gameId,
+    timestamp,
     devTools,
     score,
     playerName,
@@ -1116,62 +1105,23 @@ export default function Game(props: GameProps) {
     unitId,
     activeNavButtons,
     tipsSeen,
-  };
+  }; */
 
-  // get the saves array from local storage
-  const savesArray = JSON.parse(localStorage.getItem("gameSaves") ?? "[]");
-  // return the save if it already exists; else return undefined
-  const oldDataForCurrentGame: GameSave | undefined = savesArray.find(
-    (save: GameSave) => save.gameId === gameId
-  );
+  // -----------------------------------------------------
 
-
-  /* TODO: CONTINUE FROM HERE, LOTS TO FIGURE OUT */
-  // if there's old data for the current game ? overwrite it : else add it to the saves array
-
-  oldDataForCurrentGame ? oldDataForCurrentGame = currentGamenull : 
-  
-  // if there's old data for the current game ? overwrite it : else add it to the saves array
-  const saveCurrentGame = oldDataforCurrentGame
-    ? savesArray.unshift(oldDataforCurrentGame)
-    : null;
-
-  /* ==SAVING ALL STATE IN LOCAL STORAGE WHEN ANYTHING IS UPDATED== */
+  /* ==Update the save file at the end of each turn== */
   useEffect(() => {
-    localStorage.setItem(
-      "savedGameState",
-      JSON.stringify({
-        gameId,
-        devTools,
-        score,
-        playerName,
-        townName,
-        difficulty,
-        tutorials,
-        turn,
-        nextCombatTurn,
-        numberOfCombatsStarted,
-        inCombat,
-        resources,
-        resourcePool,
-        buildings,
-        friendlyUnits,
-        friendlyTrainingUnits,
-        enemyUnits,
-        unitId,
-        activeNavButtons,
-        tipsSeen,
-      })
-    );
+    // get the saves array from local storage
+    saveOrLoadGameUsingLocalStorage(FunctionType.Save, gameId, currentGameSave);
   }, [
-    devTools,
+    /*    devTools,
     score,
     playerName,
     townName,
     difficulty,
-    tutorials,
+    tutorials, */
     turn,
-    nextCombatTurn,
+    /*  nextCombatTurn,
     numberOfCombatsStarted,
     inCombat,
     resources,
@@ -1182,107 +1132,8 @@ export default function Game(props: GameProps) {
     enemyUnits,
     unitId,
     activeNavButtons,
-    tipsSeen,
+    tipsSeen, */
   ]);
-
-  /* useEffect(() => {
-    localStorage.setItem(`devTools`, JSON.stringify(devTools));
-  }, [devTools]);
-  useEffect(() => {
-    localStorage.setItem(`score`, JSON.stringify(score));
-  }, [score]);
-  useEffect(() => {
-    localStorage.setItem(`playerName`, JSON.stringify(playerName));
-  }, [playerName]);
-  useEffect(() => {
-    localStorage.setItem(`townName`, JSON.stringify(townName));
-  }, [townName]);
-  useEffect(() => {
-    localStorage.setItem(`difficulty`, JSON.stringify(difficulty));
-  }, [difficulty]);
-  useEffect(() => {
-    localStorage.setItem(`tutorials`, JSON.stringify(tutorials));
-  }, [tutorials]);
-  useEffect(() => {
-    localStorage.setItem(`turn`, JSON.stringify(turn));
-  }, [turn]);
-  useEffect(() => {
-    localStorage.setItem(`nextCombatTurn`, JSON.stringify(nextCombatTurn));
-  }, [nextCombatTurn]);
-  useEffect(() => {
-    localStorage.setItem(
-      `numberOfCombatsStarted`,
-      JSON.stringify(numberOfCombatsStarted)
-    );
-  }, [numberOfCombatsStarted]);
-  useEffect(() => {
-    localStorage.setItem(`inCombat`, JSON.stringify(inCombat));
-  }, [inCombat]);
-  useEffect(() => {
-    localStorage.setItem(`resources`, JSON.stringify(resources));
-  }, [resources]);
-  useEffect(() => {
-    localStorage.setItem(`resourcePool`, JSON.stringify(resourcePool));
-  }, [resourcePool]);
-  useEffect(() => {
-    localStorage.setItem(`buildings`, JSON.stringify(buildings));
-  }, [buildings]);
-  useEffect(() => {
-    localStorage.setItem(`friendlyUnits`, JSON.stringify(friendlyUnits));
-  }, [friendlyUnits]);
-  useEffect(() => {
-    localStorage.setItem(
-      `friendlyTrainingUnits`,
-      JSON.stringify(friendlyTrainingUnits)
-    );
-  }, [friendlyTrainingUnits]);
-  useEffect(() => {
-    localStorage.setItem(`enemyUnits`, JSON.stringify(enemyUnits));
-  }, [enemyUnits]);
-  useEffect(() => {
-    localStorage.setItem(`unitId`, JSON.stringify(unitId));
-  }, [unitId]);
-  useEffect(() => {
-    localStorage.setItem(`activeNavButtons`, JSON.stringify(activeNavButtons));
-  }, [activeNavButtons]);
-  useEffect(() => {
-    localStorage.setItem(`tipsSeen`, JSON.stringify(tipsSeen));
-  }, [tipsSeen]); */
-
-  const uniqueGameId = uuidv4();
-
-  const gameSaves = JSON.parse(localStorage.getItem("gameSaves") ?? "{}");
-
-  const gameSaver = () => {
-    localStorage.setItem(
-      "savedGame",
-      JSON.stringify({
-        // this is the unique ID that'll be called using Load
-        uniqueGameId,
-        devTools,
-        score,
-        playerName,
-        townName,
-        difficulty,
-        tutorials,
-        turn,
-        nextCombatTurn,
-        numberOfCombatsStarted,
-        inCombat,
-        resources,
-        resourcePool,
-        buildings,
-        friendlyUnits,
-        friendlyTrainingUnits,
-        enemyUnits,
-        unitId,
-        activeNavButtons,
-        tipsSeen,
-      })
-    );
-  };
-
-  gameSaver();
 
   return inCombat ? (
     /* FIXME: Add background back in to main components */

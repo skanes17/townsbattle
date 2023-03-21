@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { MenuBoxHeader } from ".";
+import { GameSave } from "../../types";
 import MenuBox from "./MenuBox";
 
 export default function LoadGame() {
@@ -10,7 +11,10 @@ export default function LoadGame() {
   // the <Game /> Route will need its own loader -- that will simply pull the ID from the params and load the appropriate save from localStorage
   // Note: Play will have to be turned into "New Game" or similar. It will always start a new save, with a new ID. It will be separate/different from this process.
 
-  const dummyGameSaves = [
+  // saves should be available from the loader
+  const savesArray = useLoaderData() as GameSave[];
+
+  /* const dummyGameSaves = [
     {
       gameId: 1234,
       playerName: "Scott",
@@ -23,17 +27,7 @@ export default function LoadGame() {
       townName: "Bombirdiosa",
       score: 4400,
     },
-  ];
-
-  // this would exist because <Game> would have saved something by now
-  localStorage.setItem("gameSaves", JSON.stringify(dummyGameSaves));
-
-  const loadGameLoader = () => {
-    const savesArray = JSON.parse(localStorage.getItem("gameSaves") ?? "[]");
-    return savesArray;
-  };
-
-  console.log(loadGameLoader());
+  ]; */
 
   // REMEMBER: Basic Structure is in paper notes
   // LoadGame is a Route
@@ -48,35 +42,34 @@ export default function LoadGame() {
   return (
     <MenuBox headerText="Load Game" icon="💾">
       <MenuBoxHeader>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
-        suscipit fuga impedit explicabo, consequuntur at corrupti, est, culpa
-        nostrum recusandae debitis distinctio odio repellendus voluptatum
-        asperiores harum facilis mollitia.
+        Any game you've started but haven't finished will appear below!
       </MenuBoxHeader>
 
-      <div className="mt-3 items-center gap-2 sm:flex">
-        {dummyGameSaves.map((save, index) => (
-          <Link
-            className="mt-2 w-full flex-1 rounded-md bg-orange-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
-            to={`/:${save.gameId}`}
-          >
-            <div className="grid auto-rows-auto">
-              <p>{index + 1}</p>
-              <p>Player: {save.playerName}</p>
-              <p>Town: {save.townName}</p>
-              <p>Score: {save.score}</p>
-            </div>
-          </Link>
-        ))}
+      {savesArray.length > 0 && (
+        <div className="mt-3 items-center gap-2 sm:flex">
+          {savesArray.map((save, index) => (
+            <Link
+              className="mt-2 w-full flex-1 rounded-md bg-orange-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
+              to={`/:${save.gameId}`}
+            >
+              <div className="grid auto-rows-auto">
+                <p>Player: {save.playerName}</p>
+                <p>Town: {save.townName}</p>
+                <p>Score: {save.score}</p>
+                <p>{save.timestamp}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
 
-        <Link
-          className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
-          to="/"
-          /* onClick={toggleLeaderboardModal} */
-        >
-          Close
-        </Link>
-      </div>
+      <Link
+        className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
+        to="/"
+        /* onClick={toggleLeaderboardModal} */
+      >
+        Close
+      </Link>
     </MenuBox>
   );
 }

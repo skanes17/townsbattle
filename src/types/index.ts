@@ -6,6 +6,7 @@ export * from "./CombatSnapshots";
 export * from "./Defaults";
 export * from "./FunctionTypes";
 export * from "./GameProps";
+export * from "./GameSaving";
 export * from "./Menu";
 export * from "./NavButtons";
 export * from "./Defaults";
