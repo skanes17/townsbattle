@@ -38,6 +38,7 @@ import {
   generateRandomArmyComposition,
   generateWeightedArmyComposition,
   saveGameToLocalStorage,
+  selectFromFilteredUnits,
 } from "../utils";
 import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
@@ -76,7 +77,8 @@ export default function Game(props: GameProps) {
   );
 
   // after this many COMBATs, you'll get an extra planning turn before enemies are generated
-  const numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne = 2;
+  const numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne = 4;
+
   // this is the turn on which enemies are actually generated
   const planningTurnToGenerateEnemies =
     planningTurnsUntilEnemyGen.current +
@@ -199,7 +201,6 @@ export default function Game(props: GameProps) {
     // shorthand used for object
     const _newUnit = { unitType };
 
-    // TODO: Check that this works
     if (!_newUnit) {
       return;
     }
@@ -256,7 +257,6 @@ export default function Game(props: GameProps) {
     // unitType determines which unit to add
     const baseUnit = BASE_UNIT_DATA[unitType];
 
-    // TODO: Check that this works
     if (!baseUnit) {
       return;
     }
@@ -284,7 +284,10 @@ export default function Game(props: GameProps) {
   };
 
   const addResource: AddResourceFn = (resourceType: ResourceType) => {
-    /* TODO: Add error catch */
+    if (!resourceType) {
+      return;
+    }
+
     const clonedResourcePool = { ...resourcePool };
     clonedResourcePool[resourceType] += 10;
     setResourcePool(clonedResourcePool);
@@ -365,8 +368,6 @@ export default function Game(props: GameProps) {
     setUnitId(id);
   };
 
-  // consider...
-  // time/turn -- relative army strength -- unlocked units
   const generateEnemyArmy = (
     nextCombatTurn: number,
     friendlyUnits: Unit[],
@@ -476,6 +477,7 @@ export default function Game(props: GameProps) {
       // TODO: Tweak enemy composition based on turn here
 
       let unitType: UnitType;
+      let numberOfDesiredUnitsTypesInOrder;
       if (nextCombatTurn === 1) {
         // going into first combat? enemies are all villagers
         unitType = "villager";
@@ -492,79 +494,43 @@ export default function Game(props: GameProps) {
             unitType = "villager";
         }
       } else if (nextCombatTurn === 3) {
-        switch (powerLevel) {
-          case 0:
-            unitType = "fighter";
-            break;
-          default:
-            // the rest are randomly chosen from player's UNLOCKED units
-            // it shouldn't be undefined because villagers are always available at start
-            /* console.log(unlockedUnitTypes); */
-            unitType =
-              unlockedUnitTypes[
-                Math.floor(Math.random() * unlockedUnitTypes.length)
-              ]!;
-          /* console.log(unitType); */
-        }
-      } else if (nextCombatTurn === 4 || nextCombatTurn === 5) {
-        switch (powerLevel) {
-          // introduce 1 ranged enemy
-          case 0:
-            unitType = "archer";
-            break;
-          default:
-            // again choosing from player's unlocked
-            /* console.log(unlockedUnitTypes); */
-            unitType =
-              unlockedUnitTypes[
-                Math.floor(Math.random() * unlockedUnitTypes.length)
-              ]!;
-          /* console.log(unitType); */
-        }
-      } else if (nextCombatTurn > 5 && nextCombatTurn <= 8) {
-        switch (powerLevel) {
-          // introduce 1 tanky enemy
-          case 0:
-            unitType = "knight";
-            break;
-          default:
-            /* console.log(unlockedUnitTypes); */
-            unitType =
-              unlockedUnitTypes[
-                Math.floor(Math.random() * unlockedUnitTypes.length)
-              ]!;
-          /* console.log(unitType); */
-        }
-      } else if (nextCombatTurn > 8 && nextCombatTurn <= 11) {
-        switch (powerLevel) {
-          // introduce 1 mage enemy
-          case 0:
-            unitType = "mage";
-            break;
-          default:
-            // for now, choose randomly from the unlocked unit types
-            unitType =
-              unlockedUnitTypes[
-                Math.floor(Math.random() * unlockedUnitTypes.length)
-              ]!;
-        }
-      } else if (nextCombatTurn > 11 && nextCombatTurn <= 14) {
-        switch (powerLevel) {
-          // introduce 1 bombird enemy
-          case 0:
-            unitType = "bombird";
-            break;
-          default:
-            // for now, choose randomly from the unlocked unit types
-            unitType =
-              unlockedUnitTypes[
-                Math.floor(Math.random() * unlockedUnitTypes.length)
-              ]!;
-        }
+        // introduces fighters
+        numberOfDesiredUnitsTypesInOrder = 2;
+        unitType = selectFromFilteredUnits(
+          allUnitTypes,
+          numberOfDesiredUnitsTypesInOrder
+        );
+      } else if (nextCombatTurn < 6) {
+        // introduces archers
+        numberOfDesiredUnitsTypesInOrder = 3;
+        unitType = selectFromFilteredUnits(
+          allUnitTypes,
+          numberOfDesiredUnitsTypesInOrder
+        );
+      } else if (nextCombatTurn < 9) {
+        numberOfDesiredUnitsTypesInOrder = 4;
+        unitType = selectFromFilteredUnits(
+          allUnitTypes,
+          numberOfDesiredUnitsTypesInOrder
+        );
+      } else if (nextCombatTurn < 12) {
+        // introduces mages
+        numberOfDesiredUnitsTypesInOrder = 5;
+        unitType = selectFromFilteredUnits(
+          allUnitTypes,
+          numberOfDesiredUnitsTypesInOrder
+        );
+      } else if (nextCombatTurn < 15) {
+        // introduces bombirds (all of the unit types at this point)
+        numberOfDesiredUnitsTypesInOrder = 5;
+        unitType = selectFromFilteredUnits(
+          allUnitTypes,
+          numberOfDesiredUnitsTypesInOrder
+        );
       }
       // TODO: Do more manual progression staging here when new units are added!
       else {
-        // At this point, all units in the game are available for choosing, EXCEPT villagers.
+        // At this point, all units in the game are available for choosing, with villagers sprinkled in
         // TODO: Could utilize the army generator functions here!
         const allUnitsButworkers = allUnitTypes.filter(
           (unit: UnitType) => unit !== "villager"

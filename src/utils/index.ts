@@ -11,5 +11,6 @@ export * from "./randomNumberBetweenMinAndMax";
 export * from "./resourceChecker";
 export * from "./returnHealthBarStyleObject";
 export * from "./savingAndLoadingGame";
+export * from "./selectFromFilteredUnits";
 export * from "./unitPowerLevelCalculators";
 export * from "./updateResourcePool";

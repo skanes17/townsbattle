@@ -5,25 +5,25 @@ export function calcMinPlanningTurnsUntilArmyGen(
   difficulty: Difficulty
 ): number {
   // enemy will not be generated before reaching this turn number
-  let minPlanningTurnsUntilArmyGenn;
+  let minPlanningTurnsUntilArmyGen;
   switch (difficulty) {
     case "easy":
-      minPlanningTurnsUntilArmyGenn = randomNumberBetweenMinAndMax(5, 8);
+      minPlanningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(3, 4);
       break;
     case "normal":
-      minPlanningTurnsUntilArmyGenn = randomNumberBetweenMinAndMax(4, 6);
+      minPlanningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(2, 3);
       break;
     case "hard":
-      minPlanningTurnsUntilArmyGenn = randomNumberBetweenMinAndMax(3, 5);
+      minPlanningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(2, 3);
       break;
     case "nightmare":
-      minPlanningTurnsUntilArmyGenn = randomNumberBetweenMinAndMax(3, 4);
+      minPlanningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(1, 2);
       break;
     default:
-      minPlanningTurnsUntilArmyGenn = randomNumberBetweenMinAndMax(4, 6);
+      minPlanningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(2, 3);
       break;
   }
-  return minPlanningTurnsUntilArmyGenn;
+  return minPlanningTurnsUntilArmyGen;
 }
 
 export function calcMinTurnsBetweenArmyGenAndCombat(
