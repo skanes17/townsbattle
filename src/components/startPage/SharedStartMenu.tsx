@@ -1,4 +1,3 @@
-import React, { MouseEvent } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { routerLinkStyle } from "../../tailwindStyles/RouterLinkStyle";
 import { MenuItem, MenuTitle } from "../startPage";

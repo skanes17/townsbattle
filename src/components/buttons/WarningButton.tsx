@@ -1,5 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { setInterval } from "timers";
+import { Dispatch, SetStateAction } from "react";
 
 interface WarningButtonProps {
   counter: number;
@@ -15,7 +14,7 @@ export default function WarningButton({
   let buttonText, buttonStyle;
   switch (counter) {
     case 0:
-      buttonText = "Click to Delete ALL Saved Data";
+      buttonText = "Delete";
       buttonStyle = `bg-red-600 font-semibold`;
       break;
     case 1:
@@ -23,7 +22,7 @@ export default function WarningButton({
       buttonStyle = `animate-jiggleSmall bg-[#9E1A1A] font-bold`;
       break;
     case 2:
-      buttonText = "DELETE";
+      buttonText = "Last Chance!";
       buttonStyle = `bg-[#2e1414] font-bold`;
       break;
     case 3:

@@ -1,34 +1,34 @@
 import { defaultGameSave } from "../gameData";
 import { GameSave } from "../types";
-
-export function newGameLoader() {
-  return defaultGameSave;
-}
+import { tidyDateAndTime } from "./tidyDateAndTime";
 
 export function gameSavesLoader() {
   const savesArray: GameSave[] = JSON.parse(
     localStorage.getItem("gameSaves") ?? "[]"
   );
-
   return savesArray;
 }
 
 export function returnIndexOfExistingSaveDataForCurrentGame(
   savesArray: GameSave[],
-  gameId?: string
+  currentGameId?: string
 ) {
   const indexOfExistingSaveDataForCurrentGame = savesArray.findIndex(
-    (save) => save.gameId === gameId
+    (savedGame) => savedGame.gameId === currentGameId
   );
+  /* console.log(
+    indexOfExistingSaveDataForCurrentGame !== -1
+      ? `Found it!`
+      : `No game found for id-${currentGameId}!`
+  ); */
   return indexOfExistingSaveDataForCurrentGame;
 }
 
-export function saveGameToLocalStorage(
-  gameId: string,
-  currentGameSave: GameSave
-) {
-  currentGameSave.gameId = gameId;
-  currentGameSave.timestamp = new Date().toLocaleString();
+export function saveGameToLocalStorage(gameId: string, gameToSave: GameSave) {
+  // set a gameId if not already set
+  gameToSave.gameId = gameId;
+  // stamp the date on the new save file
+  gameToSave.timestamp = tidyDateAndTime(new Date());
 
   const savesArray = gameSavesLoader();
 
@@ -36,13 +36,20 @@ export function saveGameToLocalStorage(
   const indexOfExistingSaveDataForCurrentGame =
     returnIndexOfExistingSaveDataForCurrentGame(savesArray, gameId);
 
-  // if an existing save data for the current game ID exists, overwrite it with the currentGameSave data
-  // otherwise add the currentGameSave data to the beginning of the savesArray
+  // if an existing save data for the current game ID exists, overwrite it with the gameToSave data
+  // otherwise add the gameToSave data to the beginning of the savesArray
   indexOfExistingSaveDataForCurrentGame !== -1
-    ? (savesArray[indexOfExistingSaveDataForCurrentGame] = currentGameSave)
-    : savesArray.unshift(currentGameSave);
-  // update localStorage
-  localStorage.setItem("gameSaves", JSON.stringify(savesArray));
+    ? (savesArray[indexOfExistingSaveDataForCurrentGame] = gameToSave)
+    : savesArray.unshift(gameToSave);
+
+  // update localStorage and return a boolean indicating whether the operation was successful
+  try {
+    localStorage.setItem("gameSaves", JSON.stringify(savesArray));
+    return true;
+  } catch (error) {
+    console.error("Failed to save game to local storage: ", error);
+    return false;
+  }
 }
 
 export function loadDefaultOrExistingGameFromLocalStorage(gameId: string) {
@@ -65,34 +72,21 @@ export function defaultSettingsLoader() {
   return defaultSettings;
 }
 
-/* export function saveOrLoadGameUsingLocalStorage(
-  functionType: FunctionType,
-  gameId?: string,
-  currentGameSave?: GameSave
-) {
+// EXPERIMENT
+/* @ts-ignore */
+export const gameLoader = ({ params }) => {
+  // comes from the URL
+  const gameId: string = params.gameId;
   const savesArray = gameSavesLoader();
 
   // find index of existing save data for the current game (returns -1 if doesn't exist)
   const indexOfExistingSaveDataForCurrentGame =
     returnIndexOfExistingSaveDataForCurrentGame(savesArray, gameId);
 
-  if (functionType === FunctionType.Save && currentGameSave) {
-    // if an existing save data for the current game ID exists, overwrite it with the currentGameSave data
-    // otherwise add the currentGameSave data to the beginning of the savesArray
-    indexOfExistingSaveDataForCurrentGame !== -1
-      ? (savesArray[indexOfExistingSaveDataForCurrentGame] = currentGameSave)
-      : savesArray.unshift(currentGameSave);
-    // update localStorage
-    localStorage.setItem("gameSaves", JSON.stringify(savesArray));
-  }
-
-  if (functionType === FunctionType.Load) {
-    let gameToLoad = defaultGameSave;
-    // if an existing save data for the current game ID exists, use that data as gameSaveToLoad
-    indexOfExistingSaveDataForCurrentGame !== -1 &&
-      (gameToLoad = {
-        ...savesArray[indexOfExistingSaveDataForCurrentGame],
-      });
-    return gameToLoad;
-  }
-} */
+  let gameToLoad;
+  // if an existing save data for the current game ID exists, use it; else load defaults, add the new gameId to the object
+  indexOfExistingSaveDataForCurrentGame !== -1
+    ? (gameToLoad = { ...savesArray[indexOfExistingSaveDataForCurrentGame] })
+    : (gameToLoad = { ...defaultGameSave, gameId: gameId });
+  return gameToLoad;
+};

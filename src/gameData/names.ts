@@ -949,7 +949,7 @@ const randomBombirdName =
   bombirdNames[Math.floor(Math.random() * bombirdNames.length)];
 
 export const randomUnitNames = {
-  villager: villagerNames[Math.floor(Math.random() * villagerNames.length)],
+  villager: randomVillagerName,
   fighter: randomFighterName,
   archer: randomArcherName,
   knight: randomKnightName,

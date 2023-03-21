@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { defaultPlayerName, defaultTownName } from "../../gameData";
 import { GameOptions } from "../../types";
@@ -29,11 +29,6 @@ export default function Options() {
   };
 
   const [options, setOptions] = useState(gameOptions);
-
-  /* // update local storage when the buttons are clicked
-  useEffect(() => {
-    localStorage.setItem("savedOptions", JSON.stringify(options));
-  }, [options]); */
 
   return (
     <MenuBox icon="🔧" headerText="Options">
@@ -176,15 +171,6 @@ export default function Options() {
           Save
         </Link>
       </div>
-      {/* 
-      <div className="flex items-center gap-2 p-4">
-        <Link
-          to="/"
-          className="mt-2 inline-flex grow items-center justify-center rounded-md bg-red-600 p-2.5 text-center font-semibold text-white outline-transparent ring-red-600 ring-offset-2 hover:bg-red-500 focus:ring-2"
-        >
-          Close
-        </Link>
-      </div> */}
     </MenuBox>
   );
 }

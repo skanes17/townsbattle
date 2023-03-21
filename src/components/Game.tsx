@@ -21,7 +21,7 @@ import {
   UnitType,
   UpgradeCosts,
 } from "../types";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import {
   AddRemoveUnitFn,
   AddResourceFn,
@@ -37,7 +37,6 @@ import {
   fullHealthAttackBonusPowerLevel,
   generateRandomArmyComposition,
   generateWeightedArmyComposition,
-  loadDefaultOrExistingGameFromLocalStorage,
   saveGameToLocalStorage,
 } from "../utils";
 import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
@@ -55,45 +54,22 @@ import { ArmyGrid } from "./shared";
 import { generateScoutReport } from "../utils/generateScoutReport";
 
 export default function Game(props: GameProps) {
-  const { gameId } = useParams();
-
-  /* const defaultGameSave = useLoaderData() as GameSave; */
-
-  // load the game from localStorage if it exists; else will set it to default settings
-  const currentGameSave = loadDefaultOrExistingGameFromLocalStorage(
-    gameId as string
-  );
-
-  /*   const savedOptions: GameOptions = JSON.parse(
-    localStorage.getItem("savedOptions") || "{}"
-  );
-
-  const savedGameState: GameState = JSON.parse(
-    localStorage.getItem("savedGameState") || "{}"
-  );
-
-  const gameState: GameState = {
-    ...defaultGameSettings,
-    ...savedGameState,
-    ...savedOptions,
-  }; */
+  const gameSave = useLoaderData() as GameSave;
 
   /* TODO: Set state using useLoader() data */
-  const [devTools] = useState(currentGameSave.devTools);
+  const [devTools] = useState(gameSave.devTools);
   // points from rounds of combat get added to this
-  const [score, setScore] = useState(currentGameSave.score);
-  const [playerName] = useState(currentGameSave.playerName);
-  const [townName] = useState(currentGameSave.townName);
-  const [difficulty] = useState(currentGameSave.difficulty);
-  const [tutorials] = useState(currentGameSave.tutorials);
-  const [turn, setTurn] = useState(currentGameSave.turn);
-  const [nextCombatTurn, setNextCombatTurn] = useState(
-    currentGameSave.nextCombatTurn
-  );
+  const [score, setScore] = useState(gameSave.score);
+  const [playerName] = useState(gameSave.playerName);
+  const [townName] = useState(gameSave.townName);
+  const [difficulty] = useState(gameSave.difficulty);
+  const [tutorials] = useState(gameSave.tutorials);
+  const [turn, setTurn] = useState(gameSave.turn);
+  const [nextCombatTurn, setNextCombatTurn] = useState(gameSave.nextCombatTurn);
   const [numberOfCombatsStarted, setNumberOfCombatsStarted] = useState(
-    currentGameSave.numberOfCombatsStarted
+    gameSave.numberOfCombatsStarted
   );
-  const [inCombat, setInCombat] = useState(currentGameSave.inCombat);
+  const [inCombat, setInCombat] = useState(gameSave.inCombat);
 
   const planningTurnsUntilEnemyGen = useRef(
     calcMinPlanningTurnsUntilArmyGen(difficulty)
@@ -109,11 +85,9 @@ export default function Game(props: GameProps) {
     );
 
   /* ===RESOURCES AND WORKERS=== */
-  const [resources, setResources] = useState(currentGameSave.resources);
+  const [resources, setResources] = useState(gameSave.resources);
   const numberOfWorkersAtStartOfGame = 5;
-  const [resourcePool, setResourcePool] = useState(
-    currentGameSave.resourcePool
-  );
+  const [resourcePool, setResourcePool] = useState(gameSave.resourcePool);
 
   const resourceTypes: ResourceType[] = Object.keys(
     resources
@@ -123,13 +97,7 @@ export default function Game(props: GameProps) {
   ).filter((resourceType) => resourceType !== "workers") as BaseResourceType[];
 
   /* ===BUILDINGS=== */
-  const [buildings, setBuildings] = useState(currentGameSave.buildings);
-  const buildingsUnderConstruction = Object.keys(buildings).filter(
-    (key) => buildings[key].underConstruction
-  );
-  const buildingsConstructed = Object.keys(buildings).filter(
-    (key) => buildings[key].constructed
-  );
+  const [buildings, setBuildings] = useState(gameSave.buildings);
   const buildingsLeftToConstruct = Object.keys(buildings).filter(
     (key) => !buildings[key].constructed
   );
@@ -157,15 +125,13 @@ export default function Game(props: GameProps) {
   /* ===UNITS=== */
   // friendly army
   const [friendlyUnits, setFriendlyUnits] = useState(
-    currentGameSave.friendlyUnits as Unit[]
+    gameSave.friendlyUnits as Unit[]
   );
   const [friendlyTrainingUnits, setFriendlyTrainingUnits] = useState(
-    currentGameSave.friendlyTrainingUnits as TrainingUnit[]
+    gameSave.friendlyTrainingUnits as TrainingUnit[]
   );
   // placeholder enemy array for testing
-  const [enemyUnits, setEnemyUnits] = useState(
-    currentGameSave.enemyUnits as Unit[]
-  );
+  const [enemyUnits, setEnemyUnits] = useState(gameSave.enemyUnits as Unit[]);
   // ===BASE STATS FOR NEW UNITS===
   // TODO: Will have dynamic update of attack and health stats based on building bonuses
   // TODO: Incorporate chance to hit (less when similar units are matched up), 5% chance to crit
@@ -224,7 +190,7 @@ export default function Game(props: GameProps) {
     );
 
   // ids for tracking units
-  const [unitId, setUnitId] = useState(currentGameSave.unitId);
+  const [unitId, setUnitId] = useState(gameSave.unitId);
 
   /* ===FUNCTIONS=== */
   // ADD units to either army
@@ -374,7 +340,6 @@ export default function Game(props: GameProps) {
   // TODO: Refactor to make build score incrementation more efficient (sum, set state once outside loop)
   let id = unitId;
   const trainUnits = () => {
-    let randomName;
     const units = friendlyTrainingUnits.map((unit) => {
       // resolve base unit from unit type
       const _chosenUnit = FRIENDLY_BASE_UNIT_DATA[unit.unitType];
@@ -975,8 +940,6 @@ export default function Game(props: GameProps) {
   };
 
   // How many units you're going to train this turn
-  /* FIXME: Modify function to include training unit types */
-  /*   const unitsInTraining = countUnits(friendlyTrainingUnits, unitTypes);  */
   const unitsInTraining: UnitCounts = {};
   for (const unitType of unitTypes) {
     unitsInTraining[unitType] = friendlyTrainingUnits.filter(
@@ -986,10 +949,10 @@ export default function Game(props: GameProps) {
 
   // How many units are in your army
   const unitCounts = countUnits(friendlyUnits, unitTypes, "army");
-  const enemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
+  // const enemyUnitCounts = countUnits(enemyUnits, unitTypes, "army");
 
   const [activeNavButtons, setActiveNavButtons] = useState(
-    currentGameSave.activeNavButtons as NavButtons
+    gameSave.activeNavButtons as NavButtons
   );
 
   const navButtonOn = (navButtonType: NavButtonType) => {
@@ -1014,9 +977,7 @@ export default function Game(props: GameProps) {
     setActiveNavButtons(clonedActiveNavButtons);
   };
 
-  const [tipsSeen, setTipsSeen] = useState(
-    currentGameSave.tipsSeen as TipsSeen
-  );
+  const [tipsSeen, setTipsSeen] = useState(gameSave.tipsSeen as TipsSeen);
 
   const markTipAsSeen = (tutorialCategory: TutorialCategory) => {
     if (!tutorialCategory) {
@@ -1042,9 +1003,7 @@ export default function Game(props: GameProps) {
     return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
-  /* const currentGameSave: GameSave = {
-    gameId,
-    timestamp,
+  const currentGameSave: GameSave = {
     devTools,
     score,
     playerName,
@@ -1064,34 +1023,14 @@ export default function Game(props: GameProps) {
     unitId,
     activeNavButtons,
     tipsSeen,
-  }; */
+  };
 
   // -----------------------------------------------------
 
   /* ==Update the save file at the end of each turn or when combat starts/ends== */
   useEffect(() => {
-    saveGameToLocalStorage(gameId as string, currentGameSave);
-  }, [
-    /* devTools,
-    score,
-    playerName,
-    townName,
-    difficulty,
-    tutorials, */
-    turn,
-    /* nextCombatTurn,
-    numberOfCombatsStarted, */
-    inCombat,
-    /* resources,
-    resourcePool,
-    buildings,
-    friendlyUnits,
-    friendlyTrainingUnits,
-    enemyUnits,
-    unitId,
-    activeNavButtons,
-    tipsSeen, */
-  ]);
+    saveGameToLocalStorage(gameSave.gameId as string, currentGameSave);
+  }, [turn, inCombat]);
 
   return inCombat ? (
     /* FIXME: Add background back in to main components */

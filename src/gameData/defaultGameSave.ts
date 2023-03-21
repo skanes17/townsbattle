@@ -1,13 +1,9 @@
-import {
-  activeNavButtonsData,
-  buildingsData,
-  defaultPlayerName,
-  defaultTownName,
-  resourceData,
-  resourcePoolData,
-  tipsSeenData,
-} from ".";
 import { GameSave } from "../types";
+import { buildingsData } from "./buildings";
+import { defaultPlayerName, defaultTownName } from "./names";
+import { activeNavButtonsData } from "./navButtonsData";
+import { resourceData, resourcePoolData } from "./resources";
+import { tipsSeenData } from "./tipsSeenData";
 
 export const defaultGameSave: GameSave = {
   devTools: false,
