@@ -1,27 +1,52 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { MenuBoxHeader } from ".";
-import MenuBox from "./MenuBox";
+import { GameSave } from "../../types";
+import { MenuBox, MenuBoxHeader, MenuButtonContainer } from ".";
 
-export default function Leaderboards() {
+export default function LeaderBoards() {
+  const [counter, setCounter] = useState(0);
+  const incrementPopupCounter = () => {
+    setCounter((prev) => prev + 1);
+  };
+
+  // pull existing saved options from local storage
+  const leaderboards: GameSave[] = JSON.parse(
+    localStorage.getItem("leaderboards") || "{}"
+  );
+
+  const sortedLeaderboards = leaderboards.sort((a, b) => a.score - b.score);
+
   return (
     <MenuBox headerText="Leaderboards" icon="🏆">
       <MenuBoxHeader>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vel
-        suscipit fuga impedit explicabo, consequuntur at corrupti, est, culpa
-        nostrum recusandae debitis distinctio odio repellendus voluptatum
-        asperiores harum facilis mollitia.
+        Look back on past games. Try to beat the High score!
       </MenuBoxHeader>
 
-      <div className="mt-3 items-center gap-2 sm:flex">
-        <Link
-          className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
-          to="/"
-          /* onClick={toggleLeaderboardModal} */
-        >
-          Close
-        </Link>
-      </div>
+      {/* // TODO: Add delete save button to each save */}
+      {sortedLeaderboards.length > 0 && (
+        <table className="table-auto font-normal">
+          <thead>
+            <th>Player</th>
+            <th>Town</th>
+            <th>Score</th>
+          </thead>
+          <tbody>
+            {sortedLeaderboards.map((save) => (
+              <tr>
+                <th>{save.playerName}</th>
+                <th>{save.townName}</th>
+                <th>{save.score}</th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      <Link
+        className="mt-2 inline-flex w-1/4 justify-center rounded-md bg-green-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
+        to="/"
+      >
+        Close
+      </Link>
     </MenuBox>
   );
 }
