@@ -47,7 +47,7 @@ export default function NewGame() {
   const [currentGameState, setCurrentGameState] = useState(gameState);
 
   // FIXME: DO NEXT -- This wasn't fully changed yet -- Save the new settings here!
-  // TODO: Replace this process with ONE save to local storage, once the Play button is clicked.
+  // TODO: Likely totally replace this process with ONE save to local storage, once the Play button is clicked.
   // TODO: This should save the id and timestamp to the object and then be called within Game
 
   // save those options to local storage any time there's a change
