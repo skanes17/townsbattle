@@ -6,8 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 import { saveGameToLocalStorage } from "../../utils";
 import { defaultGameSave } from "../../gameData";
 
-// TODO: See Notes at end
-
 export default function NewGame() {
   /* const [devTools] = useState(false); */
 
@@ -85,9 +83,3 @@ export default function NewGame() {
     </MenuBox>
   );
 }
-
-// in New Game, there's no loading a save -- it'll be all new EXCEPT options if they've been tweaked
-// Just set a default and replace the options if relevant
-// Can then set stuff to state when there's changes (already doing some of this)
-// Save all this to a save file!
-// Game will be checking whether it should make a new game or not.

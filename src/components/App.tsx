@@ -15,7 +15,6 @@ export const router = createBrowserRouter(
     <>
       {/* parent Route /, SharedStartMenu is rendered for all children using Outlet */}
       <Route path="/" element={<SharedStartMenu />}>
-        {/* TODO: Make a New Game and Load Game, with Load Game disabled if no saves */}
         <Route path="newGame" element={<NewGame />} />
         <Route path="leaderboards" element={<Leaderboards />} />
         <Route path="options" element={<Options />} />
