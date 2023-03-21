@@ -12,8 +12,6 @@ export default function Options() {
   };
 
   const defaultOptions: GameOptions = {
-    playerName: defaultPlayerName,
-    townName: defaultTownName,
     difficulty: "normal",
     tutorials: true,
   };

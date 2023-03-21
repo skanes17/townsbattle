@@ -16,12 +16,15 @@ export function returnIndexOfExistingSaveDataForCurrentGame(
   const indexOfExistingSaveDataForCurrentGame = savesArray.findIndex(
     (savedGame) => savedGame.gameId === currentGameId
   );
-  /* console.log(
-    indexOfExistingSaveDataForCurrentGame !== -1
-      ? `Found it!`
-      : `No game found for id-${currentGameId}!`
-  ); */
+  // returns -1 if not found
   return indexOfExistingSaveDataForCurrentGame;
+}
+
+export function stringifyGameAndSaveToLocalStorage(
+  gameSave: GameSave[],
+  key: "gameSaves" | "leaderboards"
+) {
+  localStorage.setItem(key, JSON.stringify(gameSave));
 }
 
 export function saveGameToLocalStorage(gameId: string, gameToSave: GameSave) {
@@ -31,8 +34,6 @@ export function saveGameToLocalStorage(gameId: string, gameToSave: GameSave) {
   gameToSave.timestamp = tidyDateAndTime(new Date());
 
   const savesArray = gameSavesLoader();
-
-  // find index of existing save data for the current game (returns -1 if doesn't exist)
   const indexOfExistingSaveDataForCurrentGame =
     returnIndexOfExistingSaveDataForCurrentGame(savesArray, gameId);
 
@@ -42,20 +43,11 @@ export function saveGameToLocalStorage(gameId: string, gameToSave: GameSave) {
     ? (savesArray[indexOfExistingSaveDataForCurrentGame] = gameToSave)
     : savesArray.unshift(gameToSave);
 
-  // update localStorage and return a boolean indicating whether the operation was successful
-  try {
-    localStorage.setItem("gameSaves", JSON.stringify(savesArray));
-    return true;
-  } catch (error) {
-    console.error("Failed to save game to local storage: ", error);
-    return false;
-  }
+  stringifyGameAndSaveToLocalStorage(savesArray, "gameSaves");
 }
 
 export function loadDefaultOrExistingGameFromLocalStorage(gameId: string) {
   const savesArray = gameSavesLoader();
-
-  // find index of existing save data for the current game (returns -1 if doesn't exist)
   const indexOfExistingSaveDataForCurrentGame =
     returnIndexOfExistingSaveDataForCurrentGame(savesArray, gameId);
 
@@ -72,7 +64,6 @@ export function defaultSettingsLoader() {
   return defaultSettings;
 }
 
-// EXPERIMENT
 /* @ts-ignore */
 export const gameLoader = ({ params }) => {
   // comes from the URL
@@ -90,3 +81,28 @@ export const gameLoader = ({ params }) => {
     : (gameToLoad = { ...defaultGameSave, gameId: gameId });
   return gameToLoad;
 };
+
+export function getLeaderboardData() {
+  const leaderboards: GameSave[] = JSON.parse(
+    localStorage.getItem("leaderboards") ?? "[]"
+  );
+  return leaderboards;
+}
+
+export function addResultToLeaderBoardAndDeleteSave(currentGameSave: GameSave) {
+  const leaderboards = getLeaderboardData();
+
+  leaderboards.push(currentGameSave);
+  stringifyGameAndSaveToLocalStorage(leaderboards, "leaderboards");
+
+  const savesArray = gameSavesLoader();
+  const indexOfExistingSaveDataForCurrentGame =
+    returnIndexOfExistingSaveDataForCurrentGame(
+      savesArray,
+      currentGameSave.gameId
+    );
+
+  // remove the save from the array then update local storage
+  savesArray.splice(indexOfExistingSaveDataForCurrentGame, 1);
+  stringifyGameAndSaveToLocalStorage(savesArray, "gameSaves");
+}

@@ -19,6 +19,7 @@ export default function LoadGame() {
         <MenuButtonContainer headerText="Saved Games">
           <div className="mt-3 items-center gap-2 sm:flex">
             {savesArray.map((save, index) => (
+              /* FIXME: Width on mobile */
               <Link
                 className="mt-2 w-full flex-1 rounded-md bg-orange-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
                 to={`/${save.gameId}`}

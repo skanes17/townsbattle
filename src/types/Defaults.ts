@@ -10,8 +10,6 @@ import {
 } from ".";
 
 export interface GameOptions {
-  playerName: string;
-  townName: string;
   difficulty: Difficulty;
   tutorials: boolean;
 }

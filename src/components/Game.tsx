@@ -28,6 +28,7 @@ import {
   MaxTrainingUnitsFn,
 } from "../types/FunctionTypes";
 import {
+  addResultToLeaderBoardAndDeleteSave,
   berserkerAttackBonusPowerLevel,
   calcMinPlanningTurnsUntilArmyGen,
   calcMinTurnsBetweenArmyGenAndCombat,
@@ -1003,6 +1004,7 @@ export default function Game(props: GameProps) {
     <>
       <div className="h-screen">
         <Combat
+          currentGameSave={currentGameSave}
           tutorials={tutorials}
           tipsSeen={tipsSeen}
           markTipAsSeen={markTipAsSeen}

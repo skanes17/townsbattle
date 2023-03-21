@@ -17,8 +17,10 @@ import {
   UnitType,
   TutorialCategory,
   TipsSeen,
+  GameSave,
 } from "../../types";
 import {
+  addResultToLeaderBoardAndDeleteSave,
   addSurvivalPointsToSurvivingUnits,
   AttackValueType,
   calculatedAttackValue,
@@ -42,6 +44,7 @@ import { ArmyGrid } from "../shared";
 /* TODO: Figure out how to place enemy units starting from top right in grid */
 
 interface CombatProps {
+  currentGameSave: GameSave;
   tutorials: boolean;
   tipsSeen: TipsSeen;
   markTipAsSeen: (tutorialCategory: TutorialCategory) => void;
@@ -65,6 +68,7 @@ interface CombatProps {
 }
 
 export default function Combat({
+  currentGameSave,
   tutorials,
   tipsSeen,
   markTipAsSeen,
@@ -424,6 +428,7 @@ export default function Combat({
       },
     };
 
+    /* TODO: Add in a town center destryoed here */
     let eventIndex;
     if (
       survivingFriendlyUnitIndexes.length === 0 &&
@@ -502,9 +507,9 @@ export default function Combat({
             score + points
           }`
         );
-        switchPhase();
+        //  switchPhase();
         // TODO: Remove when saves implemented
-        localStorage.clear();
+        // localStorage.clear();
         break;
       }
 
@@ -939,7 +944,11 @@ export default function Combat({
           ) : (
             <Link
               className="text-md flex h-full w-full items-center justify-center rounded bg-red-600 text-center font-bold text-white shadow-md shadow-red-600/50 duration-75 hover:bg-red-800 sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl"
-              to="/"
+              to="../"
+              onClick={() =>
+                addResultToLeaderBoardAndDeleteSave(currentGameSave)
+              }
+              /* TODO: Function to delete the save here and add it to leaderboard */
             >
               Return to Start
             </Link>
