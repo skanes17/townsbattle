@@ -1,52 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  activeNavButtonsData,
-  baseUnitData,
-  buildingsData,
-  resourceData,
-  resourcePoolData,
-  TutorialMessages,
-  upgradesData,
-  tipsSeenData,
-  defaultPlayerName,
-  defaultTownName,
-  berserkerHealthTrigger,
-  randomUnitNames,
-  mageNames,
-  archerNames,
-  bombirdNames,
-  fighterNames,
-  knightNames,
-  villagerNames,
-  defaultGameState,
-} from "../gameData";
-import {
-  BaseResource,
-  DisplayBuildings,
-  Resource,
-  ResourceToCollect,
-  UnitCount,
-  UnitInTraining,
-} from "./planning/";
+import { baseUnitData, upgradesData } from "../gameData";
+import { DisplayBuildings } from "./planning/";
 import { DevTools } from "./devTools";
 import { DisplayTemplate } from "./dashboards";
 import { ConstructBuilding, TrainingCardContainer } from "./cards";
 import GridCardContainer from "./layout/GridCardContainer";
 import { Button } from "./buttons";
 
-// import { buildingsData, buildingCostsData } from "../gameData/buildings";
-// import { upgradesData } from "../gameData/upgrades";
-// import { BaseUnitData } from "../types/BaseUnitData";
-// import { BuildingCosts } from "../types/BuildingCosts";
 import {
   BaseResourceType,
-  BaseUnit,
-  BaseUnitData,
   Buildings,
-  GameOptions,
   GameProps,
-  GameState,
-  ResourceMultipliers,
+  GameSave,
   ResourcePool,
   Resources,
   ResourceType,
@@ -56,8 +21,7 @@ import {
   UnitType,
   UpgradeCosts,
 } from "../types";
-import { GameContext } from "../context/GameState";
-import { useLoaderData, useLocation, useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import {
   AddRemoveUnitFn,
   AddResourceFn,
@@ -71,10 +35,10 @@ import {
   cloneBasicObjectWithJSON,
   countUnits,
   fullHealthAttackBonusPowerLevel,
-  FunctionType,
   generateRandomArmyComposition,
   generateWeightedArmyComposition,
-  saveOrLoadGameUsingLocalStorage,
+  loadDefaultOrExistingGameFromLocalStorage,
+  saveGameToLocalStorage,
 } from "../utils";
 import WorkerCardContainer from "./cards/worker/WorkerCardContainer";
 import NavButton from "./navbar/NavButton";
@@ -88,21 +52,17 @@ import constructBldgSfx from "../assets/sounds/constructBldgSfx.mp3";
 import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSection";
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
-import { randomNumberBetweenMinAndMax } from "../utils/randomNumberBetweenMinAndMax";
 import { generateScoutReport } from "../utils/generateScoutReport";
-import { v4 as uuidv4 } from "uuid";
-import { GameSave } from "../types/GameSaving";
 
 export default function Game(props: GameProps) {
   const { gameId } = useParams();
 
-  // set defaults in case newGame screen was skipped
-  //const currentGameSave:GameSave = defaultGameState;
+  /* const defaultGameSave = useLoaderData() as GameSave; */
 
   // load the game from localStorage if it exists; else will set it to default settings
-  const currentGameSave = saveOrLoadGameUsingLocalStorage(
-    FunctionType.Load
-  ) as GameSave;
+  const currentGameSave = loadDefaultOrExistingGameFromLocalStorage(
+    gameId as string
+  );
 
   /*   const savedOptions: GameOptions = JSON.parse(
     localStorage.getItem("savedOptions") || "{}"
@@ -1082,7 +1042,6 @@ export default function Game(props: GameProps) {
     return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
-  const timestamp = new Date().toLocaleString();
   /* const currentGameSave: GameSave = {
     gameId,
     timestamp,
@@ -1109,22 +1068,21 @@ export default function Game(props: GameProps) {
 
   // -----------------------------------------------------
 
-  /* ==Update the save file at the end of each turn== */
+  /* ==Update the save file at the end of each turn or when combat starts/ends== */
   useEffect(() => {
-    // get the saves array from local storage
-    saveOrLoadGameUsingLocalStorage(FunctionType.Save, gameId, currentGameSave);
+    saveGameToLocalStorage(gameId as string, currentGameSave);
   }, [
-    /*    devTools,
+    /* devTools,
     score,
     playerName,
     townName,
     difficulty,
     tutorials, */
     turn,
-    /*  nextCombatTurn,
-    numberOfCombatsStarted,
+    /* nextCombatTurn,
+    numberOfCombatsStarted, */
     inCombat,
-    resources,
+    /* resources,
     resourcePool,
     buildings,
     friendlyUnits,
@@ -1409,7 +1367,7 @@ export default function Game(props: GameProps) {
   );
 }
 
-/* export const gameLoader = ({params})=> {
+/* export const gameSavesLoader = ({params})=> {
   const {gameId} = params;
   const gameSave = gameSaves.find(save => save.gameId === gameId) ?? defaultSave;
   return gameSave

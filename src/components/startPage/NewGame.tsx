@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
-import { defaultPlayerName, defaultTownName } from "../../gameData";
-import { GameOptions, GameSave, GameState } from "../../types";
+import { GameOptions, GameSave } from "../../types";
 import { MenuBox, MenuBoxHeader, MenuInput } from ".";
 import { v4 as uuidv4 } from "uuid";
-import { FunctionType, saveOrLoadGameUsingLocalStorage } from "../../utils";
+import { saveGameToLocalStorage } from "../../utils";
 
 // Rename to "New Game"
 export default function NewGame() {
+  const [devTools] = useState(false);
+
+  // set default settings
+  const defaultGameSave = useLoaderData() as GameSave;
+
   const newUniqueGameId = uuidv4();
 
   // TODO: See Notes below
@@ -17,43 +21,19 @@ export default function NewGame() {
   // Save all this to a save file!
   // Game will be checking whether it should make a new game or not.
 
-  // set default settings
-  const defaultGameState = useLoaderData() as GameState;
   // pull existing saved options from local storage, in case they were tweaked
   const savedOptions: GameOptions = JSON.parse(
     localStorage.getItem("savedOptions") || "{}"
   );
+
   // overwrite defaults with tweaked options, if relevant
   const gameState = {
-    ...defaultGameState,
+    ...defaultGameSave,
     ...savedOptions,
   };
 
-  const [devTools] = useState(false);
-
-  /* const defaultOptions: GameOptions = {
-    playerName: defaultPlayerName,
-    townName: defaultTownName,
-    difficulty: "normal",
-    tutorials: true,
-  }; */
-
-  /* const gameOptions: GameOptions = {
-    ...defaultOptions,
-    ...savedOptions,
-  }; */
-
   // set those options in state
-  const [currentGameState, setCurrentGameState] = useState(gameState);
-
-  // FIXME: DO NEXT -- This wasn't fully changed yet -- Save the new settings here!
-  // TODO: Likely totally replace this process with ONE save to local storage, once the Play button is clicked.
-  // TODO: This should save the id and timestamp to the object and then be called within Game
-
-  // save those options to local storage any time there's a change
-  useEffect(() => {
-    localStorage.setItem("savedOptions", JSON.stringify(currentGameState));
-  }, [currentGameState]);
+  const [currentGameSave, setCurrentGameSave] = useState(gameState);
 
   return (
     <MenuBox icon="▶️" headerText="How to Play">
@@ -64,14 +44,14 @@ export default function NewGame() {
 
       <MenuInput
         header={"Player Name"}
-        placeholderText={currentGameState.playerName}
+        placeholderText={currentGameSave.playerName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={currentGameState.playerName}
+        value={currentGameSave.playerName}
         // what to do when input is changed
         onChange={(e) =>
-          setCurrentGameState({
-            ...currentGameState,
+          setCurrentGameSave({
+            ...currentGameSave,
             playerName: e.target.value,
           })
         }
@@ -79,14 +59,14 @@ export default function NewGame() {
 
       <MenuInput
         header={"Town Name"}
-        placeholderText={currentGameState.townName}
+        placeholderText={currentGameSave.townName}
         // current value of the input box
         // if no name is chosen, the default gets used
-        value={currentGameState.townName}
+        value={currentGameSave.townName}
         // what to do when input is changed
         onChange={(e) =>
-          setCurrentGameState({
-            ...currentGameState,
+          setCurrentGameSave({
+            ...currentGameSave,
             townName: e.target.value,
           })
         }
@@ -94,16 +74,6 @@ export default function NewGame() {
 
       {/* horizontal line */}
       <div className="mt-3 border-t border-gray-300"></div>
-
-      {devTools && (
-        <div className="bg-amber-100 capitalize text-gray-500">
-          <p className="font-bold text-gray-800">Summary (DevTool)</p>
-          <p>Player Name: {currentGameState.playerName}</p>
-          <p>Town Name: {currentGameState.townName}</p>
-          <p>Difficulty: {currentGameState.difficulty}</p>
-          <p>Tutorials: {currentGameState.tutorials ? "On" : "Off"}</p>
-        </div>
-      )}
 
       <div className="mt-3 items-center gap-2 sm:flex">
         <Link
@@ -115,6 +85,9 @@ export default function NewGame() {
         <Link
           to={`/:${newUniqueGameId}`}
           className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center font-semibold text-white outline-transparent ring-blue-600 ring-offset-2 focus:ring-2"
+          onClick={() =>
+            saveGameToLocalStorage(newUniqueGameId, currentGameSave)
+          }
         >
           Play
         </Link>

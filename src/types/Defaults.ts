@@ -5,6 +5,7 @@ import {
   ResourcePool,
   Resources,
   TipsSeen,
+  TrainingUnit,
   Unit,
 } from ".";
 
@@ -15,7 +16,9 @@ export interface GameOptions {
   tutorials: boolean;
 }
 
-export interface GameState {
+export interface GameSave {
+  gameId?: string;
+  timestamp?: string;
   devTools: boolean;
   score: number;
   playerName: string;
@@ -30,9 +33,11 @@ export interface GameState {
   resourcePool: ResourcePool;
   buildings: Buildings;
   friendlyUnits: Unit[];
-  friendlyTrainingUnits: Unit[];
+  friendlyTrainingUnits: TrainingUnit[];
   enemyUnits: Unit[];
   unitId: number;
   activeNavButtons: NavButtons;
   tipsSeen: TipsSeen;
 }
+
+export type GameState = Omit<GameSave, "gameId" | "timestamp">;

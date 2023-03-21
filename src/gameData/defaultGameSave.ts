@@ -7,9 +7,9 @@ import {
   resourcePoolData,
   tipsSeenData,
 } from ".";
-import { GameState } from "../types";
+import { GameSave } from "../types";
 
-export const defaultGameState: GameState = {
+export const defaultGameSave: GameSave = {
   devTools: false,
   score: 0,
   playerName: defaultPlayerName,

@@ -30,10 +30,10 @@ export default function Options() {
 
   const [options, setOptions] = useState(gameOptions);
 
-  // update local storage when the buttons are clicked
+  /* // update local storage when the buttons are clicked
   useEffect(() => {
     localStorage.setItem("savedOptions", JSON.stringify(options));
-  }, [options]);
+  }, [options]); */
 
   return (
     <MenuBox icon="🔧" headerText="Options">
@@ -159,6 +159,24 @@ export default function Options() {
       {/* horizontal line */}
       <div className="my-3 border-t border-gray-300"></div>
 
+      <div className="mt-3 items-center gap-2 sm:flex">
+        <Link
+          to="/"
+          className="mt-2 w-full flex-1 rounded-md bg-red-600 p-2.5 text-center font-semibold text-white outline-transparent ring-red-600 ring-offset-2 focus:ring-2"
+        >
+          Cancel
+        </Link>
+        <Link
+          to="/"
+          className="mt-2 w-full flex-1 rounded-md bg-green-600 p-2.5 text-center font-semibold text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
+          onClick={() =>
+            localStorage.setItem("savedOptions", JSON.stringify(options))
+          }
+        >
+          Save
+        </Link>
+      </div>
+      {/* 
       <div className="flex items-center gap-2 p-4">
         <Link
           to="/"
@@ -166,7 +184,7 @@ export default function Options() {
         >
           Close
         </Link>
-      </div>
+      </div> */}
     </MenuBox>
   );
 }
