@@ -1,6 +1,6 @@
 # Townsbattle
 
-<!-- ## [Play Here](https://townsbattle.up.railway.app/) -->
+## [Play Here](https://townsbattle.up.railway.app/)
 
 > An enemy army approaches! Collect resources, train units, construct buildings, and defeat waves of enemies. Survive as long as you can!
 
