@@ -23,6 +23,12 @@
 ![Card Art](src/assets/images/07-art-02.png)
 ![Card Art](src/assets/images/07-art-03.png)
 
+<details>
+  <summary>Screenshots</summary><details>
+  <img src="src/assets/images/00-mainMenu.png" name="main menu">
+  <img src="src/assets/images/01-planning.png" name="resources">
+</details>
+
 <!-- ![Normal View](images/screenshot01.png)
 ![Simplified View](images/screenshot02.png) -->
 
