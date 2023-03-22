@@ -10,6 +10,10 @@
 - There was a very steep learning curve, and I made countless mistakes, but I was rewarded with valuable experience and expertise in these technologies while creating a fun and unique game.
 - As an avid gamer who had never tried building my own game, this was a fantastic and rewarding challenge. I hope this project inspires others to explore new tech and improve their skills!
 
+## 🔎 Townsbattle Gameplay
+
+![](src/assets/images/00-gameplay.gif)
+
 ## 📷 Screenshots
 
 <details>
