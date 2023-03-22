@@ -14,7 +14,7 @@ export default function LeaderBoards() {
     localStorage.getItem("leaderboards") || "{}"
   );
 
-  const sortedLeaderboards = leaderboards.sort((a, b) => a.score - b.score);
+  // const sortedLeaderboards = leaderboards.sort((a, b) => a.score - b.score);
 
   return (
     <MenuBox headerText="Leaderboards" icon="🏆">
@@ -23,7 +23,7 @@ export default function LeaderBoards() {
       </MenuBoxHeader>
 
       {/* // TODO: Add delete save button to each save */}
-      {sortedLeaderboards.length > 0 && (
+      {leaderboards.length > 0 && (
         <table className="table-auto font-normal">
           <thead>
             <th>Player</th>
@@ -31,7 +31,7 @@ export default function LeaderBoards() {
             <th>Score</th>
           </thead>
           <tbody>
-            {sortedLeaderboards.map((save) => (
+            {leaderboards.map((save) => (
               <tr>
                 <th>{save.playerName}</th>
                 <th>{save.townName}</th>
