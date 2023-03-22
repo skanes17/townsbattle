@@ -12,7 +12,7 @@
 
 ## 📷 Screenshots
 
-[Main Menu](src\assets\images\00-mainMenu.png)
+[Main Menu](src/assets/images/00-mainMenu.png)
 [Resources]
 [Buildings]
 [Army]
