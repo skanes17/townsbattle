@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+# Townsbattle
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!-- ## [Play Here](https://townsbattle.up.railway.app/) -->
 
-## Available Scripts
+> An enemy army approaches! Collect resources, train units, construct buildings, and defeat waves of enemies. Survive as long as you can!
 
-In the project directory, you can run:
+## General Info
 
-### `npm start`
+- "Townsbattle" is my second project, created with the purpose of learning and matering React JS. I started the journey with no prior knowledge in React, TypeScript, Tailwind CSS, or Node.js/NPM. There was a very steep learning curve, and I made countless mistakes, but through building Townsbattle I gained valueable experience and expertise in these technologies while creating a fun and unique game. As an avid gamer who had never tried building my own game this was a fantastic and rewarding challenge.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+I hope this project inspires others to explore new tech and improve their skills!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## More About The Game
 
-### `npm test`
+- "Townsbattle" is a turn-based strategy game in which you defend your town against waves of enemy attacks. The game has two main phases: "Planning" and "Combat."
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In "Planning," you assign workers to collect resources, which you can then use to train units and construct buildings. Each building you construct unlocks something new, such as new units or game-changing bonuses.
 
-### `npm run build`
+In "Combat," you fight against increasingly tough waves of enemies with the army you have trained.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Buildings have health and help protect your Town Center, which is your most important building. If it's destroyed, it's game over.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Townsbattle was designed to be easy to play but challenging to master, with plenty of opportunities for strategic thinking and decision-making.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
 
-### `npm run eject`
+- Beautiful AI-generated art
+- Engaging turn-based game mechanics
+- Difficulty Options
+- Save and Load
+- Leaderboards
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Technologies Used
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- React
+- Tailwind CSS
+- TypeScript
+- [Node.js](https://nodejs.org/en) and [npm](https://www.npmjs.com/)
+- [Coolers](https://coolors.co/)
+- [Midjourney](https://discord.gg/midjourney)
+- [ChatGPT] (https://chat.openai.com/chat) - Great for dismantling and understanding each line of code at a deeper level
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Screenshots
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<!-- ![Normal View](images/screenshot01.png)
+![Simplified View](images/screenshot02.png) -->
 
-## Learn More
+## Future Iterations
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Gameplay balancing
+- More of everything! Resources, units, buildings and upgrades, and unique unit abilities
+- Boss enemies
+- Multiple game styles (e.g. Survival, Adventure)
+- Better endgame content
+- Roguelite mechanics
+- More animations and sounds
+- User authentication
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contact
+
+- [Scott Skanes](https://www.linkedin.com/in/sskanes/) - [scottskanes@gmail.com](scottskanes@gmail.com)
+- Project Link: https://github.com/skanes17/townsbattle
+
+## Acknowledgements
+
+- This app was created as part of the Get Coding program
+- A massive thanks to my coach and friend Devin Marsh, who constantly pushed me to make something better... and bigger... and more complicated 😂
+- Hearthstone for providing inspiration for art and combat mechanics
+- Gabby Burke, Michael Appleby and my wife Allison Skanes for playtesting and providing critical feedback
+- [MDN web docs](https://developer.mozilla.org/)
+-
+-
+- Countless other websites and YouTube videos
+
+The circle concept was inspired by a [John Varney TED-Ed lesson](https://youtu.be/2UphAzryVpY)
+
+- [MDN web docs](https://developer.mozilla.org/)
+- [Josh W Comeau CSS Tutorials](https://www.joshwcomeau.com/tutorials/css/)
+- [CSS Tricks](https://css-tricks.com/)
+- [Google Fonts](https://fonts.google.com/)
+- [Paletton](http://paletton.com/)
+- Countless other websites and YouTube videos

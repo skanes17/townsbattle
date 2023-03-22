@@ -28,8 +28,8 @@ export default function NewGame() {
   return (
     <MenuBox icon="▶️" headerText="How to Play">
       <MenuBoxHeader>
-        Collect resources, train units, construct buildings, and defeat waves of
-        enemies. Survive as long as you can!
+        An enemy army approaches! Collect resources, train units, construct
+        buildings, and defeat waves of enemies. Survive as long as you can!
       </MenuBoxHeader>
 
       <MenuInput
