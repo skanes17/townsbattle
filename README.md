@@ -20,28 +20,28 @@
 
 <details>
   <summary>Main Menu</summary>
-    <img src="src/assets/images/00-mainMenu.png" title="Main Menu">
+    <img src="src/assets/images/00-mainMenu.jpg" title="Main Menu">
 </details>
 <details>
   <summary>Planning</summary>
-    <img src="src/assets/images/01-planning.png" title="Resources">
-    <img src="src/assets/images/02-buildings.png" title="Buildings">
-    <img src="src/assets/images/03-army.png" title="Army">
+    <img src="src/assets/images/01-planning.jpg" title="Resources">
+    <img src="src/assets/images/02-buildings.jpg" title="Buildings">
+    <img src="src/assets/images/03-army.jpg" title="Army">
 </details>
 <details>
   <summary>Combat</summary>
-    <img src="src/assets/images/04-combat.png" title="Combat 1">
-    <img src="src/assets/images/05-combat-summary.png" title="Combat 2">
+    <img src="src/assets/images/04-combat.jpg" title="Combat 1">
+    <img src="src/assets/images/05-combat-summary.jpg" title="Combat 2">
 </details>
 <details>
   <summary>Mobile Friendly</summary>
-    <img src="src/assets/images/06-mobile.png" title="Mobile View">
+    <img src="src/assets/images/06-mobile.jpg" title="Mobile View">
   </details>
 <details>
   <summary>Card Art</summary>
-    <img src="src/assets/images/07-art-01.png" title="Card Art">
-    <img src="src/assets/images/07-art-02.png" title="Card Art">
-    <img src="src/assets/images/07-art-03.png" title="Card Art">
+    <img src="src/assets/images/07-art-01.jpg" title="Card Art">
+    <img src="src/assets/images/07-art-02.jpg" title="Card Art">
+    <img src="src/assets/images/07-art-03.jpg" title="Card Art">
 </details>
 
 <!-- ![Normal View](images/screenshot01.png)
