@@ -67,7 +67,7 @@
 - Tailwind CSS
 - TypeScript
 - [Node.js](https://nodejs.org/en) and [npm](https://www.npmjs.com/)
-- [Coolers](https://coolors.co/)
+- [Coolors](https://coolors.co/)
 - [Transform: CSS-to-Tailwind](https://transform.tools/css-to-tailwind)
 - [Midjourney](https://discord.gg/midjourney)
 - [ChatGPT](https://chat.openai.com/chat) - Great for understanding each line of code at a deeper level
