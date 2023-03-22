@@ -23,8 +23,6 @@
 ![Card Art](src/assets/images/07-art-02.png)
 ![Card Art](src/assets/images/07-art-03.png)
 
-<div className="font-bold">Hello there</div>
-
 <!-- ![Normal View](images/screenshot01.png)
 ![Simplified View](images/screenshot02.png) -->
 
