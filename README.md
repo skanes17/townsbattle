@@ -12,16 +12,16 @@
 
 ## 📷 Screenshots
 
-[Main Menu](src/assets/images/00-mainMenu.png)
-[Resources]
-[Buildings]
-[Army]
-[Combat 1]
-[Combat Combat 2]
-[Mobile View]
-[Card Art]
-[Card Art]
-[Card Art]
+![Main Menu](src/assets/images/00-mainMenu.png)
+![Resources](src/assets/images/01-planning.png)
+![Buildings](src/assets/images/02-buildings.png)
+![Army](src/assets/images/03-army.png)
+![Combat 1](src/assets/images/04-combat.png)
+![Combat Combat 2](src/assets/images/05-combat-summary.png)
+![Mobile View](src/assets/images/06-mobile.png)
+![Card Art](src/assets/images/07-art-01.png)
+![Card Art](src/assets/images/07-art-02.png)
+![Card Art](src/assets/images/07-art-03.png)
 
 <!-- ![Normal View](images/screenshot01.png)
 ![Simplified View](images/screenshot02.png) -->
