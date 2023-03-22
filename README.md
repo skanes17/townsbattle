@@ -10,6 +10,14 @@
 - There was a very steep learning curve, and I made countless mistakes, but I was rewarded with valuable experience and expertise in these technologies while creating a fun and unique game.
 - As an avid gamer who had never tried building my own game, this was a fantastic and rewarding challenge. I hope this project inspires others to explore new tech and improve their skills!
 
+## ⭐ Features
+
+- Beautiful AI-generated art
+- Engaging turn-based game mechanics
+- Difficulty Options
+- Save and Load
+- Leaderboards
+
 ## 🔎 Townsbattle Gameplay
 
 <div align="center">
@@ -44,9 +52,6 @@
     <img src="src/assets/images/07-art-03.jpg" title="Card Art">
 </details>
 
-<!-- ![Normal View](images/screenshot01.png)
-![Simplified View](images/screenshot02.png) -->
-
 ## 🕹️ How to Play
 
 - "Townsbattle" is a turn-based strategy game in which you defend your town against waves of enemy attacks. The game has two main phases: "Planning" and "Combat."
@@ -55,14 +60,6 @@
 - In "Combat," you fight against increasingly tough waves of enemies with the army you have trained.
 - Buildings have health and help protect your Town Center, which is your most important building. If it's destroyed, it's game over.
 - Townsbattle was designed to be easy to play but challenging to master, with plenty of opportunities for strategic thinking and decision-making.
-
-## ⭐ Features
-
-- Beautiful AI-generated art
-- Engaging turn-based game mechanics
-- Difficulty Options
-- Save and Load
-- Leaderboards
 
 ## 🖥️ Technologies Used
 
