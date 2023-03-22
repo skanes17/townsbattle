@@ -13,7 +13,7 @@
 ## 🔎 Townsbattle Gameplay
 
 <div align="center">
-![](src/assets/images/00-gameplay.gif)
+<img src="(src/assets/images/00-gameplay.gif)" title="Townsbattle Gameplay">
 </div>
 
 ## 📷 Screenshots
