@@ -12,7 +12,9 @@
 
 ## 🔎 Townsbattle Gameplay
 
+<div align="center">
 ![](src/assets/images/00-gameplay.gif)
+</div>
 
 ## 📷 Screenshots
 
