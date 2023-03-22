@@ -7,12 +7,13 @@
 ## ❓ General Info
 
 - "Townsbattle" is my second project, and I started it with no prior knowledge in React, TypeScript, Tailwind CSS, or Node.js/NPM.
-- There was a very steep learning curve, and I made countless mistakes, but I was rewarded with valueable experience and expertise in these technologies while creating a fun and unique game.
-- As an avid gamer who had never tried building my own game, this was a fantastic and rewarding challenge, and I hope this project inspires others to explore new tech and improve their skills!
+- There was a very steep learning curve, and I made countless mistakes, but I was rewarded with valuable experience and expertise in these technologies while creating a fun and unique game.
+- As an avid gamer who had never tried building my own game, this was a fantastic and rewarding challenge. I hope this project inspires others to explore new tech and improve their skills!
 
 ## 📷 Screenshots
 
 <details>
+  <summary>Main Menu</summary>
   <img src="src/assets/images/00-mainMenu.png" title="Main Menu">
   <img src="src/assets/images/01-planning.png" title="Resources">
   <img src="src/assets/images/02-buildings.png" title="Buildings">
