@@ -12,20 +12,19 @@
 
 ## 📷 Screenshots
 
-![Main Menu](src/assets/images/00-mainMenu.png)
-![Resources](src/assets/images/01-planning.png)
-![Buildings](src/assets/images/02-buildings.png)
-![Army](src/assets/images/03-army.png)
-![Combat 1](src/assets/images/04-combat.png)
-![Combat Combat 2](src/assets/images/05-combat-summary.png)
-![Mobile View](src/assets/images/06-mobile.png)
-![Card Art](src/assets/images/07-art-01.png)
-![Card Art](src/assets/images/07-art-02.png)
-![Card Art](src/assets/images/07-art-03.png)
-
 <details>
   <img src="src/assets/images/00-mainMenu.png" name="main menu">
   <img src="src/assets/images/01-planning.png" name="resources">
+  <img src="src/assets/images/00-mainMenu.png" name="Main Menu">
+  <img src="src/assets/images/01-planning.png" name="Resources">
+  <img src="src/assets/images/02-buildings.png" name="Buildings">
+  <img src="src/assets/images/03-army.png" name="Army">
+  <img src="src/assets/images/04-combat.png" name="Combat 1">
+  <img src="src/assets/images/05-combat-summary.png" name="Combat 2">
+  <img src="src/assets/images/06-mobile.png" name="Mobile View">
+  <img src="src/assets/images/07-art-01.png" name="Card Art">
+  <img src="src/assets/images/07-art-02.png" name="Card Art">
+  <img src="src/assets/images/07-art-03.png" name="Card Art">
 </details>
 
 <!-- ![Normal View](images/screenshot01.png)
