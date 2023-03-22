@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import { gameLoader, gameSavesLoader } from "../utils";
 import Game from "./Game";
-import { About, Leaderboards, Options } from "./startPage";
+import { About, Leaderboard, Options } from "./startPage";
 import LoadGame from "./startPage/LoadGame";
 import NewGame from "./startPage/NewGame";
 import SharedStartMenu from "./startPage/SharedStartMenu";
@@ -16,7 +16,7 @@ export const router = createBrowserRouter(
       {/* parent Route /, SharedStartMenu is rendered for all children using Outlet */}
       <Route path="/" element={<SharedStartMenu />}>
         <Route path="newGame" element={<NewGame />} />
-        <Route path="leaderboards" element={<Leaderboards />} />
+        <Route path="leaderboard" element={<Leaderboard />} />
         <Route path="options" element={<Options />} />
         <Route
           path="loadGame"

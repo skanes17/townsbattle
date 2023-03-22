@@ -3,7 +3,7 @@ export interface MenuItemProps {
   routerLink?: string;
   text:
     | "New Game"
-    | "Leaderboards"
+    | "Leaderboard"
     | "Options"
     | "How to Play"
     | "About"

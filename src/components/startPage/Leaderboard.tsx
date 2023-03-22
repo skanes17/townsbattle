@@ -10,20 +10,20 @@ export default function LeaderBoards() {
   };
 
   // pull existing saved options from local storage
-  const leaderboards: GameSave[] = JSON.parse(
-    localStorage.getItem("leaderboards") || "{}"
+  const leaderboard: GameSave[] = JSON.parse(
+    localStorage.getItem("leaderboard") || "{}"
   );
 
-  // const sortedLeaderboards = leaderboards.sort((a, b) => a.score - b.score);
+  // const sortedLeaderboards = leaderboard.sort((a, b) => a.score - b.score);
 
   return (
-    <MenuBox headerText="Leaderboards" icon="🏆">
+    <MenuBox headerText="Leaderboard" icon="🏆">
       <MenuBoxHeader>
         Look back on past games. Try to beat the High score!
       </MenuBoxHeader>
 
       {/* // TODO: Add delete save button to each save */}
-      {leaderboards.length > 0 && (
+      {leaderboard.length > 0 && (
         <table className="table-auto font-normal">
           <thead>
             <th>Player</th>
@@ -31,7 +31,7 @@ export default function LeaderBoards() {
             <th>Score</th>
           </thead>
           <tbody>
-            {leaderboards.map((save) => (
+            {leaderboard.map((save) => (
               <tr>
                 <th>{save.playerName}</th>
                 <th>{save.townName}</th>

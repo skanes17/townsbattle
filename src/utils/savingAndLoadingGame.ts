@@ -22,7 +22,7 @@ export function returnIndexOfExistingSaveDataForCurrentGame(
 
 export function stringifyGameAndSaveToLocalStorage(
   gameSave: GameSave[],
-  key: "gameSaves" | "leaderboards"
+  key: "gameSaves" | "leaderboard"
 ) {
   localStorage.setItem(key, JSON.stringify(gameSave));
 }
@@ -83,17 +83,17 @@ export const gameLoader = ({ params }) => {
 };
 
 export function getLeaderboardData() {
-  const leaderboards: GameSave[] = JSON.parse(
-    localStorage.getItem("leaderboards") ?? "[]"
+  const leaderboard: GameSave[] = JSON.parse(
+    localStorage.getItem("leaderboard") ?? "[]"
   );
-  return leaderboards;
+  return leaderboard;
 }
 
 export function addResultToLeaderBoardAndDeleteSave(currentGameSave: GameSave) {
-  const leaderboards = getLeaderboardData();
+  const leaderboard = getLeaderboardData();
 
-  leaderboards.push(currentGameSave);
-  stringifyGameAndSaveToLocalStorage(leaderboards, "leaderboards");
+  leaderboard.push(currentGameSave);
+  stringifyGameAndSaveToLocalStorage(leaderboard, "leaderboard");
 
   const savesArray = gameSavesLoader();
   const indexOfExistingSaveDataForCurrentGame =

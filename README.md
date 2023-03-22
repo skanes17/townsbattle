@@ -16,7 +16,7 @@
 - Engaging turn-based game mechanics
 - Difficulty Options
 - Save and Load
-- Leaderboards
+- Leaderboard
 
 ## 🔎 Townsbattle Gameplay
 
