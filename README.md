@@ -10,6 +10,22 @@
 - There was a very steep learning curve, and I made countless mistakes, but I was rewarded with valueable experience and expertise in these technologies while creating a fun and unique game.
 - As an avid gamer who had never tried building my own game, this was a fantastic and rewarding challenge, and I hope this project inspires others to explore new tech and improve their skills!
 
+## 📷 Screenshots
+
+[Main Menu](src\assets\images\00-mainMenu.png)
+[Resources]
+[Buildings]
+[Army]
+[Combat 1]
+[Combat Combat 2]
+[Mobile View]
+[Card Art]
+[Card Art]
+[Card Art]
+
+<!-- ![Normal View](images/screenshot01.png)
+![Simplified View](images/screenshot02.png) -->
+
 ## 🕹️ How to Play
 
 - "Townsbattle" is a turn-based strategy game in which you defend your town against waves of enemy attacks. The game has two main phases: "Planning" and "Combat."
@@ -34,13 +50,9 @@
 - TypeScript
 - [Node.js](https://nodejs.org/en) and [npm](https://www.npmjs.com/)
 - [Coolers](https://coolors.co/)
+- [Transform: CSS-to-Tailwind](https://transform.tools/css-to-tailwind)
 - [Midjourney](https://discord.gg/midjourney)
-- [ChatGPT] (https://chat.openai.com/chat) - Great for dismantling and understanding each line of code at a deeper level
-
-## 📷 Screenshots
-
-<!-- ![Normal View](images/screenshot01.png)
-![Simplified View](images/screenshot02.png) -->
+- [ChatGPT](https://chat.openai.com/chat) - Great for understanding each line of code at a deeper level
 
 ## 🔮 Future Iterations
 
@@ -60,9 +72,9 @@
 
 ## 🙏🏻 Acknowledgements
 
-- This app was created as part of the Get Coding program
-- A massive thanks to my coach and friend Devin Marsh, who constantly pushed me to make something better... and bigger... and more complicated 😂
+- This game was created as part of the Get Coding program
+- A massive thanks to my coach and friend Devin Marsh, who constantly pushed me to make something bigger, better, and more complicated 😂
 - Hearthstone for providing inspiration for art and combat mechanics
-- Gabby Burke, Michael Appleby and my wife Allison Skanes for playtesting and providing critical feedback
-- [MDN web docs](https://developer.mozilla.org/)
+- Gabby Burke, Michael Appleby, and my wife Allison Skanes for playtesting and providing critical feedback
+- [MDN Web Docs](https://developer.mozilla.org/)
 - Countless other websites and YouTube videos
