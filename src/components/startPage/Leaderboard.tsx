@@ -11,7 +11,7 @@ export default function LeaderBoards() {
 
   // pull existing saved options from local storage
   const leaderboard: GameSave[] = JSON.parse(
-    localStorage.getItem("leaderboard") || "{}"
+    localStorage.getItem("leaderboard") || "[]"
   );
 
   const sortedLeaderboards =
