@@ -495,8 +495,9 @@ export default function Combat({
     let buildingsConstructed = Object.keys(buildings).filter(
       (key) => clonedBuildings[key].constructed
     );
-    // this loop to chooses a constructed building at random and subtract enemy attack value from its current health
-    for (const unitIndex of survivingEnemyUnitIndexes) {
+
+    // this loop to chooses a constructed building at random and subtracts enemy attack value from its current health
+    bldgAttackedLoop: for (const unitIndex of survivingEnemyUnitIndexes) {
       if (
         !clonedBuildings["townCenter"].constructed ||
         buildingsConstructed.length === 0
@@ -508,20 +509,18 @@ export default function Combat({
           }`
         );
         //  switchPhase();
-        break;
+        break bldgAttackedLoop;
       }
 
-      // if there are any buildings besides the town center, hit them first!
+      // if there are any buildings besides the town center, hit them first! Else, hit the Town Center
       if (buildingsConstructed.length > 1) {
         buildingsConstructed = Object.keys(buildings)
           .filter((buildingType) => buildingType !== "townCenter")
           .filter((key) => clonedBuildings[key].constructed);
-        /* console.log("Avoiding the Town Center!"); */
       } else {
         buildingsConstructed = Object.keys(buildings).filter(
           (key) => clonedBuildings[key].constructed
         );
-        /* console.log("No choice but to hit the Town Center!"); */
       }
 
       const buildingAttacked =
@@ -532,7 +531,6 @@ export default function Combat({
         ];
 
       const enemyUnit = combatEnemyUnits[unitIndex];
-      // TODO: Consider Buffs??
       const enemyAttackValue = calculatedAttackValue(
         AttackValueType.card,
         enemyUnit
@@ -574,7 +572,6 @@ export default function Combat({
     return clonedBuildings;
   };
 
-  // TODO: In combat, make sure armor is included properly based on this
   const addSurvivalArmorBonus = (
     survivingUnits: Unit[],
     maximumArmor: number
