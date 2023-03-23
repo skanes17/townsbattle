@@ -73,6 +73,7 @@ export default function Game(props: GameProps) {
   );
   const [inCombat, setInCombat] = useState(gameSave.inCombat);
 
+  // Bug Hunt: This is working fine
   const planningTurnsUntilEnemyGen = useRef(
     calcMinPlanningTurnsUntilArmyGen(difficulty)
   );
@@ -81,6 +82,7 @@ export default function Game(props: GameProps) {
   const numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne = 4;
 
   // this is the turn on which enemies are actually generated
+  // BUG HUINT: This is also fine.
   const planningTurnToGenerateEnemies =
     planningTurnsUntilEnemyGen.current +
     Math.floor(
@@ -1123,11 +1125,12 @@ export default function Game(props: GameProps) {
               {/* justify-self-auto overrides parent grid positioning of this div */}
               <div className="align-center col-span-2 grid w-full grid-cols-3 rounded-lg bg-white/5 p-2 text-xs sm:col-span-3 lg:text-lg xl:text-xl">
                 <p>
-                  {width > breakpoint && `Current `}Turn: {turn}
+                  <span className="hidden sm:inline">Current </span>Turn: {turn}
                 </p>
 
                 <p className="sm:text-center">
-                  Turns Left{width > breakpoint && ` until Combat`}:{" "}
+                  Turns Left
+                  <span className="hidden sm:inline"> until Combat</span>:{" "}
                   {planningTurnToTriggerCombat - turn + 1}
                 </p>
 
