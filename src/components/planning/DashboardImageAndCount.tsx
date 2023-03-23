@@ -35,9 +35,11 @@ export default function DashboardImageAndCount({
           !isAResource && `mr-2`
         } h-7 w-7 rounded-lg ${border} border-zinc-700 group-hover:border-yellow-300 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
       >
-        {/* FIXME: */}
-        {/* @ts-ignore */}
-        {isAResource && dataObject[type].symbol}
+        {isAResource && (
+          /* FIXME: */
+          /* @ts-ignore */
+          <span className="font-emoji">{dataObject[type].symbol}</span>
+        )}
       </div>
       <div className="text-right group-hover:text-yellow-300">
         {/* @ts-ignore */}

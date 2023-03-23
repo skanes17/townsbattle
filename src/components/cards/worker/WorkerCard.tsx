@@ -98,6 +98,8 @@ export default function WorkerCard({
           <div className="col-span-2 row-start-1 flex items-center justify-center">
             <AddRemoveButton
               buttonType="remove"
+              textOrNumber="1"
+              symbol="−"
               onClick={() =>
                 addRemoveWorkers(
                   1,
@@ -105,24 +107,23 @@ export default function WorkerCard({
                   "remove workers from resource"
                 )
               }
-            >
-              -1
-            </AddRemoveButton>
+            />
           </div>
 
           <div className="col-span-2 row-start-1 flex items-center justify-center">
             <AddRemoveButton
               buttonType="add"
+              textOrNumber="1"
+              symbol="+"
               onClick={() =>
                 addRemoveWorkers(1, resourceType, "add workers to resource")
               }
-            >
-              +1
-            </AddRemoveButton>
+            />
           </div>
           <div className="col-start-1 row-start-2 flex items-center justify-center font-bold">
             <AddRemoveButton
               buttonType="remove"
+              textOrNumber="Zero"
               onClick={() =>
                 addRemoveWorkers(
                   resources[resourceType].workers,
@@ -130,13 +131,13 @@ export default function WorkerCard({
                   "remove workers from resource"
                 )
               }
-            >
-              Zero
-            </AddRemoveButton>
+            />
           </div>
           <div className="col-start-2 row-start-2 flex items-center justify-center">
             <AddRemoveButton
               buttonType="remove"
+              textOrNumber="5"
+              symbol="−"
               onClick={() =>
                 addRemoveWorkers(
                   5,
@@ -144,25 +145,24 @@ export default function WorkerCard({
                   "remove workers from resource"
                 )
               }
-            >
-              -5
-            </AddRemoveButton>
+            />
           </div>
 
           <div className="col-start-3 row-start-2 flex items-center justify-center font-bold">
             <AddRemoveButton
               buttonType="add"
+              textOrNumber="5"
+              symbol="+"
               onClick={() =>
                 addRemoveWorkers(5, resourceType, "add workers to resource")
               }
-            >
-              +5
-            </AddRemoveButton>
+            />
           </div>
 
           <div className="col-start-4 row-start-2 flex items-center justify-center">
             <AddRemoveButton
               buttonType="add"
+              textOrNumber="Max"
               onClick={() =>
                 addRemoveWorkers(
                   resourcePool["workers"],
@@ -170,9 +170,7 @@ export default function WorkerCard({
                   "add workers to resource"
                 )
               }
-            >
-              Max
-            </AddRemoveButton>
+            />
           </div>
         </div>
       </CardTemplate>

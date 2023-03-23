@@ -4,8 +4,8 @@ import { MenuItemProps } from "../../types";
 export default function MenuItem({ text, icon }: MenuItemProps) {
   return (
     <>
-      <div>{text}</div>
       <div>{icon}</div>
+      <div className="ml-2">{text}</div>
     </>
   );
 }

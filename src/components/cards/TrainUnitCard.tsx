@@ -193,35 +193,33 @@ export default function TrainUnitCard({
         <div className="col-span-2 row-start-1 flex items-center justify-center sm:col-span-1 sm:col-start-2">
           <AddRemoveButton
             buttonType="remove"
+            textOrNumber="1"
+            symbol="−"
             onClick={() => handleMinusClick(unitType, friendly)}
-          >
-            -1
-          </AddRemoveButton>
+          />
         </div>
         <CardShowCount countToShow={numberOfUnitsInTraining} />
         <div className="col-span-2 row-start-1 flex items-center justify-center sm:col-span-1 sm:col-start-4">
           <AddRemoveButton
             buttonType="add"
+            textOrNumber="1"
+            symbol="+"
             onClick={() => handlePlusClick(1, unitType, friendly)}
-          >
-            +1
-          </AddRemoveButton>
+          />
         </div>
         <div className="col-span-3 row-start-2 flex items-center justify-center font-bold sm:col-span-1 sm:col-start-1 sm:row-start-1">
           <AddRemoveButton
             buttonType="remove"
+            textOrNumber="Zero"
             onClick={() => handleZeroClick(unitType, friendly)}
-          >
-            Zero
-          </AddRemoveButton>
+          />
         </div>
         <div className="col-span-3 row-start-2 flex items-center justify-center sm:col-span-1 sm:col-start-5 sm:row-start-1">
           <AddRemoveButton
             buttonType="add"
+            textOrNumber="Max"
             onClick={() => handleMaxClick(unitType, friendly)}
-          >
-            Max
-          </AddRemoveButton>
+          />
         </div>
       </div>
 

@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -145,6 +148,12 @@ module.exports = {
         deepRed: "#9E1A1A",
         deepRedLighter: "#D32222",
         deepRedDarker: "#7B1414",
+      },
+      fontFamily: {
+        emoji: ['"Noto Color Emoji"'],
+        math: ['"Noto Sans Math"'],
+        roboto: ['"Open Sans"'],
+        sans: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         jiggleRight: {

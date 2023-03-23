@@ -10,7 +10,11 @@ export default function CombatCardSymbol({ unit }: CombatCardSymbolProps) {
     <div
       className={`col-span-3 items-center self-center text-center text-4xl font-bold sm:text-8xl md:text-9xl lg:text-[10rem]`}
     >
-      {unit.currentHealth === 0 ? "💀" : unit.symbol}
+      {unit.currentHealth === 0 ? (
+        <span className="font-emoji">💀</span>
+      ) : (
+        <span className="font-emoji">{unit.symbol}</span>
+      )}
     </div>
   );
 }

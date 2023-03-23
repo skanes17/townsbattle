@@ -106,17 +106,18 @@ export default function ConstructBuilding({
           buttonType={
             buildings[buildingType].underConstruction ? "remove" : "add"
           }
+          textOrNumber={
+            buildings[buildingType].underConstruction
+              ? "Cancel Construction"
+              : "Build"
+          }
           onClick={
             /* FIXME: Avoid using "as string" here if possible -- keyof BuildingType? */
             buildings[buildingType].underConstruction
               ? () => handleCancelClick(buildingType as string)
               : () => handleBuildClick(buildingType as string)
           }
-        >
-          {buildings[buildingType].underConstruction
-            ? "Cancel Construction"
-            : "Build"}
-        </AddRemoveButton>
+        />
       </div>
     </CardTemplate>
   );

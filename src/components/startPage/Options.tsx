@@ -36,6 +36,40 @@ export default function Options() {
         score!
       </MenuBoxHeader>
 
+      <MenuButtonContainer headerText="Tutorials">
+        {options.tutorials === true ? (
+          <>
+            <MenuButton
+              buttonText="Off"
+              buttonColor="blue"
+              isSelected={false}
+              onClick={() =>
+                setOptions({
+                  ...options,
+                  tutorials: false,
+                })
+              }
+            />
+            <MenuButton buttonText="On" buttonColor="blue" isSelected={true} />
+          </>
+        ) : (
+          <>
+            <MenuButton buttonText="Off" buttonColor="blue" isSelected={true} />
+            <MenuButton
+              buttonText="On"
+              buttonColor="blue"
+              isSelected={false}
+              onClick={() =>
+                setOptions({
+                  ...options,
+                  tutorials: true,
+                })
+              }
+            />
+          </>
+        )}
+      </MenuButtonContainer>
+
       <MenuButtonContainer headerText="Difficulty">
         {options.difficulty === "easy" ? (
           <MenuButton buttonText="Easy" buttonColor="green" isSelected={true} />
@@ -104,40 +138,6 @@ export default function Options() {
               })
             }
           />
-        )}
-      </MenuButtonContainer>
-
-      <MenuButtonContainer headerText="Tutorials">
-        {options.tutorials === true ? (
-          <>
-            <MenuButton
-              buttonText="Off"
-              buttonColor="blue"
-              isSelected={false}
-              onClick={() =>
-                setOptions({
-                  ...options,
-                  tutorials: false,
-                })
-              }
-            />
-            <MenuButton buttonText="On" buttonColor="blue" isSelected={true} />
-          </>
-        ) : (
-          <>
-            <MenuButton buttonText="Off" buttonColor="blue" isSelected={true} />
-            <MenuButton
-              buttonText="On"
-              buttonColor="blue"
-              isSelected={false}
-              onClick={() =>
-                setOptions({
-                  ...options,
-                  tutorials: true,
-                })
-              }
-            />
-          </>
         )}
       </MenuButtonContainer>
 

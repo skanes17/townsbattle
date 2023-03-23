@@ -1,13 +1,15 @@
 import React, { ReactNode } from "react";
 
 interface AddRemoveButtonProps {
-  children: ReactNode;
   buttonType: "add" | "remove";
+  textOrNumber: string;
+  symbol?: "−" | "+";
   onClick: () => void;
 }
 
 export default function AddRemoveButton({
-  children,
+  symbol,
+  textOrNumber,
   buttonType,
   onClick,
 }: AddRemoveButtonProps) {
@@ -28,7 +30,8 @@ export default function AddRemoveButton({
       className={`shadow ${bgColor} mb-1 min-w-full self-end rounded py-1 text-xs font-semibold text-white`}
       onClick={() => onClick()}
     >
-      {children}
+      <span className="font-math">{symbol}</span>
+      <span>{textOrNumber}</span>
     </button>
   );
 }
