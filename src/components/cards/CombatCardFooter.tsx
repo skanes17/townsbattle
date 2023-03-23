@@ -53,7 +53,7 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
         <p className="font-emoji">❤️</p>
         <p>
           <span className={`${healthTextColor}`}>{currentHealth}</span>
-          <span className="text-[0.33rem] sm:text-xs md:text-base lg:text-lg">
+          <span className="text-[0.5rem] sm:text-xs md:text-sm lg:text-lg">
             /{maxHealth}
           </span>
         </p>

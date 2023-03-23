@@ -428,7 +428,7 @@ export default function Combat({
       },
     };
 
-    /* TODO: Add in a town center destryoed here */
+    /* TODO: Add in a town center destroyed here */
     let eventIndex;
     if (
       survivingFriendlyUnitIndexes.length === 0 &&
@@ -508,8 +508,6 @@ export default function Combat({
           }`
         );
         //  switchPhase();
-        // TODO: Remove when saves implemented
-        // localStorage.clear();
         break;
       }
 
@@ -535,7 +533,10 @@ export default function Combat({
 
       const enemyUnit = combatEnemyUnits[unitIndex];
       // TODO: Consider Buffs??
-      const enemyAttackValue = enemyUnit.attack;
+      const enemyAttackValue = calculatedAttackValue(
+        AttackValueType.card,
+        enemyUnit
+      );
 
       /* console.log("Building Attacked: " + buildingAttacked.name); */
       /* console.log("Building Health: " + buildingAttacked.currentHealth); */

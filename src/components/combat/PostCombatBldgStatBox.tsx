@@ -49,13 +49,13 @@ export default function PostCombatBldgStatBox({
           // only show building types that were damaged
           return (
             buildings[buildingType].damage > 0 && (
-              <p className="ml-2">
+              <div className="ml-2">
                 {buildings[buildingType].name} ({buildings[buildingType].damage}{" "}
                 dmg)
                 {!buildings[buildingType].constructed ? (
                   <p className="ml-2 font-semibold text-red-400">Destroyed!</p>
                 ) : null}
-              </p>
+              </div>
             )
           );
         })}

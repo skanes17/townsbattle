@@ -83,11 +83,12 @@ export default function Game(props: GameProps) {
 
   // this is the turn on which enemies are actually generated
   // BUG HUINT: This is also fine.
-  const planningTurnToGenerateEnemies =
+  const planningTurnToGenerateEnemies = useRef(
     planningTurnsUntilEnemyGen.current +
-    Math.floor(
-      nextCombatTurn / numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne
-    );
+      Math.floor(
+        nextCombatTurn / numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne
+      )
+  );
 
   /* ===RESOURCES AND WORKERS=== */
   const [resources, setResources] = useState(gameSave.resources);
@@ -852,10 +853,13 @@ export default function Game(props: GameProps) {
 
   // planning turn on which combat actually starts
   const planningTurnToTriggerCombat =
-    planningTurnToGenerateEnemies + turnsBetweenEnemyArmyGenAndCombat.current;
+    planningTurnToGenerateEnemies.current +
+    turnsBetweenEnemyArmyGenAndCombat.current;
+
+  console.log("Planning Turn for Combat: " + planningTurnToTriggerCombat);
 
   const endTurn = () => {
-    if (turn === planningTurnToGenerateEnemies) {
+    if (turn === planningTurnToGenerateEnemies.current) {
       generateEnemyArmy(
         nextCombatTurn,
         friendlyUnits,

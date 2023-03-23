@@ -14,12 +14,8 @@ export const calculatedAttackValue = (
   // used destructuring to make code more readable
   const {
     attack,
-    currentHealth,
-    maxHealth,
-    fullHealthBonus,
     fullHealthAttackBonus,
     // chargingMultiplier,
-    berserker,
     berserkerAttackMultiplier,
   } = attacker;
   // if unit has full health, or charges before being selected, it does bonus attack damage
