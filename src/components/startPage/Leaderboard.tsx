@@ -14,7 +14,10 @@ export default function LeaderBoards() {
     localStorage.getItem("leaderboard") || "{}"
   );
 
-  const sortedLeaderboards = leaderboard.sort((a, b) => b.score - a.score);
+  const sortedLeaderboards =
+    leaderboard.length > 0
+      ? leaderboard.sort((a, b) => b.score - a.score)
+      : leaderboard;
 
   return (
     <MenuBox headerText="Leaderboard" icon="🏆">
