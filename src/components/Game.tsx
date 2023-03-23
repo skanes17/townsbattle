@@ -30,8 +30,8 @@ import {
 import {
   addResultToLeaderBoardAndDeleteSave,
   berserkerAttackBonusPowerLevel,
-  calcMinPlanningTurnsUntilArmyGen,
-  calcMinTurnsBetweenArmyGenAndCombat,
+  calcPlanningTurnsUntilArmyGen,
+  calcTurnsBetweenArmyGenAndCombat,
   chooseNameByUnitType,
   cloneBasicObjectWithJSON,
   countUnits,
@@ -54,6 +54,7 @@ import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSect
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
 import { generateScoutReport } from "../utils/generateScoutReport";
+import { calcTurnsToDelayCombat } from "../utils/calcTurnsToDelayCombat";
 
 export default function Game(props: GameProps) {
   const gameSave = useLoaderData() as GameSave;
@@ -73,22 +74,32 @@ export default function Game(props: GameProps) {
   );
   const [inCombat, setInCombat] = useState(gameSave.inCombat);
 
-  // Bug Hunt: This is working fine
   const planningTurnsUntilEnemyGen = useRef(
-    calcMinPlanningTurnsUntilArmyGen(difficulty)
+    calcPlanningTurnsUntilArmyGen(difficulty)
   );
 
   // after this many COMBATs, you'll get an extra planning turn before enemies are generated
   const numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne = 4;
+  const turnsToDelayCombat = calcTurnsToDelayCombat(
+    nextCombatTurn,
+    numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne
+  );
 
   // this is the turn on which enemies are actually generated
-  // BUG HUINT: This is also fine.
   const planningTurnToGenerateEnemies = useRef(
-    planningTurnsUntilEnemyGen.current +
-      Math.floor(
-        nextCombatTurn / numberOfCombatsStartedUntilEnemyGenGetsDelayedByOne
-      )
+    planningTurnsUntilEnemyGen.current + turnsToDelayCombat
   );
+
+  useEffect(() => {
+    console.log(`Combat changed to: ${inCombat}`);
+
+    // calculate new planningTurn until Enemy Gen
+    planningTurnToGenerateEnemies.current =
+      planningTurnsUntilEnemyGen.current + turnsToDelayCombat;
+
+    // calculate new value for the next planning phase
+    turnsBetweenEnemyArmyGenAndCombat.current = turnsBetweenEnemyGenAndCombat;
+  }, [inCombat]);
 
   /* ===RESOURCES AND WORKERS=== */
   const [resources, setResources] = useState(gameSave.resources);
@@ -847,8 +858,11 @@ export default function Game(props: GameProps) {
     setInCombat(!inCombat);
   };
 
+  const turnsBetweenEnemyGenAndCombat =
+    calcTurnsBetweenArmyGenAndCombat(difficulty);
+
   const turnsBetweenEnemyArmyGenAndCombat = useRef(
-    calcMinTurnsBetweenArmyGenAndCombat(difficulty)
+    turnsBetweenEnemyGenAndCombat
   );
 
   // planning turn on which combat actually starts
@@ -856,7 +870,10 @@ export default function Game(props: GameProps) {
     planningTurnToGenerateEnemies.current +
     turnsBetweenEnemyArmyGenAndCombat.current;
 
-  console.log("Planning Turn for Combat: " + planningTurnToTriggerCombat);
+  /* console.log("Planning Turn for Combat: " + planningTurnToTriggerCombat); */
+  /* console.log(
+    "Turns between Army Gen and Combat: " + turnsBetweenEnemyArmyGenAndCombat
+  ); */
 
   const endTurn = () => {
     if (turn === planningTurnToGenerateEnemies.current) {
@@ -866,10 +883,6 @@ export default function Game(props: GameProps) {
         unlockedUnitTypes,
         unitTypes
       );
-
-      // calculate new value for the next planning phase
-      turnsBetweenEnemyArmyGenAndCombat.current =
-        calcMinTurnsBetweenArmyGenAndCombat(difficulty);
     }
 
     // clone resources, resource pool, and buildings to preserve state
@@ -898,7 +911,7 @@ export default function Game(props: GameProps) {
 
       // change the number of planning turns until enemies are generated for the next turn
       planningTurnsUntilEnemyGen.current =
-        calcMinPlanningTurnsUntilArmyGen(difficulty);
+        calcPlanningTurnsUntilArmyGen(difficulty);
 
       // Unused -- reset turn to 1
       setTurn(1);

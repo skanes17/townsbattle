@@ -40,7 +40,7 @@ export default function PostCombatBldgStatBox({
 
         <p className={`font-bold ${textColor}`}>{headerText}</p>
         <p className={`ml-2 font-semibold`}>
-          {damagedBuildings.length ?? 0 > 0
+          {(damagedBuildings.length ?? 0) > 0
             ? `${damagedBuildings.length} total`
             : `None!`}
         </p>
@@ -49,7 +49,7 @@ export default function PostCombatBldgStatBox({
           // only show building types that were damaged
           return (
             buildings[buildingType].damage > 0 && (
-              <div className="ml-2">
+              <div key={buildingType} className="ml-2">
                 {buildings[buildingType].name} ({buildings[buildingType].damage}{" "}
                 dmg)
                 {!buildings[buildingType].constructed ? (
