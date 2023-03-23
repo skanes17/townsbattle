@@ -141,7 +141,7 @@ export default function Options() {
         )}
       </MenuButtonContainer>
 
-      <MenuButtonContainer headerText="Delete All Saved Data">
+      <MenuButtonContainer headerText="Data Management">
         <WarningButton
           counter={counter}
           setCounter={setCounter}
