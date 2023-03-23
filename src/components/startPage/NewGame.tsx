@@ -62,9 +62,6 @@ export default function NewGame() {
         }
       />
 
-      {/* horizontal line */}
-      <div className="mt-3 border-t border-gray-300"></div>
-
       <div className="mt-3 items-center gap-2 sm:flex">
         <Link
           to="/"
