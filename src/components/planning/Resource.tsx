@@ -14,7 +14,9 @@ export default function Resource({
 }: ResourceProps) {
   return (
     <div className="hover:text-yellow-300 ">
-      <span className="font-emoji">{resources[resourceType].symbol}</span>
+      <span className="font-emoji" title={`${resources[resourceType].name}`}>
+        {resources[resourceType].symbol}
+      </span>
       {resourcePool[resourceType]}
     </div>
   );

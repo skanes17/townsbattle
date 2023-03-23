@@ -39,7 +39,10 @@ export default function CardCostsInfo({
             /* If the resource is undefined, set the result to 0 */
             (costsObject[resourceType as ResourceType] ?? 0) > 0 && (
               <div key={resourceType}>
-                <span className="font-emoji">
+                <span
+                  className="font-emoji"
+                  title={`${resources[resourceType as ResourceType].name}`}
+                >
                   {resources[resourceType as ResourceType].symbol}
                 </span>
                 <span

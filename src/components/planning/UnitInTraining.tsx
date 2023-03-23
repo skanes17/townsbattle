@@ -14,7 +14,9 @@ export default function UnitInTraining({
 }: UnitInTrainingProps) {
   return (
     <div className="hover:text-yellow-300 ">
-      <span className="font-emoji">{BASE_UNIT_DATA[unitType].symbol}</span>{" "}
+      <span className="font-emoji" title={`${BASE_UNIT_DATA[unitType].name}`}>
+        {BASE_UNIT_DATA[unitType].symbol}
+      </span>{" "}
       {unitsInTraining[unitType]}
     </div>
   );

@@ -128,16 +128,22 @@ export function UnitTile({
           ></div>
         </div>
         <div className="absolute left-0 bottom-0 mx-auto w-full -translate-y-full bg-zinc-800/80 text-center text-xs">
-          {starDisplay}
+          <span className="font-emoji">{starDisplay}</span>
         </div>
         {/* Popup text */}
         <div className="fixed inset-0 flex h-[90%] w-[140%] translate-y-[5%] -translate-x-[20%] flex-col justify-center overflow-y-auto overflow-x-hidden rounded-lg bg-black/80 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:text-base">
           {randomName && <p>{randomName + id}</p>}
           {allAttackBonusesCheck(unit) ? (
-            <p className="font-semibold text-amber-400">🗡️{totalAttackValue}</p>
+            <p className="font-semibold text-amber-400">
+              <span className="font-emoji">🗡️</span>
+              {totalAttackValue}
+            </p>
           ) : (
             <div className="group/attack relative">
-              <p>🗡️{totalAttackValue}</p>
+              <p>
+                <span className="font-emoji">🗡️</span>
+                {totalAttackValue}
+              </p>
               <p className="group-hover/attack:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/attack:bg-zinc-800 group-hover/attack:opacity-90">
                 Attack
               </p>
@@ -145,25 +151,34 @@ export function UnitTile({
           )}
 
           {/* TODO: Add hoverText, and green text if buffed */}
-          {armor > 0 && <p>🛡️{armor}</p>}
+          {armor > 0 && (
+            <p>
+              <span className="font-emoji">🛡️</span>
+              {armor}
+            </p>
+          )}
 
           <div className="group/health relative">
             <p>
-              ❤️{currentHealth}/{maxHealth}
+              <span className="font-emoji">❤️</span>
+              {currentHealth}/{maxHealth}
             </p>
             <p className="group-hover/health:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/health:bg-zinc-800 group-hover/health:opacity-90">
               Health
             </p>
           </div>
 
-          {/*           {(unit.combatsSurvived ?? 0) > 0 && (
+          {(unit.combatsSurvived ?? 0) > 0 && (
             <div className="group/survived relative">
-              <p>⭐{unit.combatsSurvived}</p>
+              <p>
+                <span className="font-emoji">⭐</span>
+                {unit.combatsSurvived}
+              </p>
               <p className="group-hover/survived:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/survived:bg-zinc-800 group-hover/survived:opacity-90">
                 Survived
               </p>
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </>

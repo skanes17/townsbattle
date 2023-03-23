@@ -13,7 +13,9 @@ export default function CombatCardSymbol({ unit }: CombatCardSymbolProps) {
       {unit.currentHealth === 0 ? (
         <span className="font-emoji">💀</span>
       ) : (
-        <span className="font-emoji">{unit.symbol}</span>
+        <span className="font-emoji" title={`${unit.name}`}>
+          {unit.symbol}
+        </span>
       )}
     </div>
   );

@@ -17,7 +17,9 @@ export default function DisplayUnderConstruction({
       </div>
       <div className="grid auto-cols-max grid-flow-col justify-center gap-4 transition duration-75 ease-in-out hover:text-yellow-300 md:text-lg lg:text-2xl">
         {buildingsUnderConstruction.map((building) => (
-          <p className="font-emoji">{buildings[building].symbol}</p>
+          <p className="font-emoji" title={`${buildings[building].name}`}>
+            {buildings[building].symbol}
+          </p>
         ))}
       </div>
     </div>

@@ -2,7 +2,7 @@ import { ResourcePool, Resources } from "../types";
 
 export const resourceData: Resources = {
   workers: {
-    name: "worker",
+    name: "Worker",
     symbol: "🛠️",
     bgImage: "bg-worker",
     bgImageSm: "bg-workerSm",
@@ -10,7 +10,7 @@ export const resourceData: Resources = {
     bgImageLg: "bg-workerLg",
   },
   wood: {
-    name: "wood",
+    name: "Wood",
     symbol: "🪵",
     bgImage: "bg-wood",
     bgImageSm: "bg-woodSm",
@@ -20,7 +20,7 @@ export const resourceData: Resources = {
     multiplier: 1,
   },
   stone: {
-    name: "stone",
+    name: "Stone",
     symbol: "🪨",
     bgImage: "bg-stone",
     bgImageSm: "bg-stoneSm",
@@ -30,7 +30,7 @@ export const resourceData: Resources = {
     multiplier: 1,
   },
   metal: {
-    name: "metal",
+    name: "Metal",
     symbol: "🔩",
     bgImage: "bg-metal",
     bgImageSm: "bg-metalSm",
@@ -40,7 +40,7 @@ export const resourceData: Resources = {
     multiplier: 1,
   },
   crystal: {
-    name: "crystal",
+    name: "Crystal",
     symbol: "💎",
     bgImage: "bg-crystal",
     bgImageSm: "bg-crystalSm",
@@ -50,7 +50,7 @@ export const resourceData: Resources = {
     multiplier: 1,
   },
   gold: {
-    name: "gold",
+    name: "Gold",
     symbol: "🪙",
     bgImage: "bg-gold",
     bgImageSm: "bg-goldSm",

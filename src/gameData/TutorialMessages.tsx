@@ -24,8 +24,10 @@ export const TutorialMessages: Tutorials = {
         </p>
         <p>
           To start, use your first turn to{" "}
-          <span className="text-purple-400">assign 🛠️ workers</span> to{" "}
-          <span className="text-purple-400">collect resources</span>.
+          <span className="text-purple-400">
+            assign <span className="font-emoji">🛠️</span> workers
+          </span>{" "}
+          to <span className="text-purple-400">collect resources</span>.
         </p>
         <p>
           Use your next turns to collect more resources and/or{" "}
@@ -51,12 +53,21 @@ export const TutorialMessages: Tutorials = {
         </p>
         <p>
           All units have{" "}
-          <span className="text-purple-400">🗡️ Attack Power</span> and{" "}
-          <span className="text-purple-400">❤️ Health</span>.
+          <span className="text-purple-400">
+            <span className="font-emoji">🗡️</span> Attack Power
+          </span>{" "}
+          and{" "}
+          <span className="text-purple-400">
+            <span className="font-emoji">❤️</span> Health
+          </span>
+          .
         </p>
         <p>
-          Some even have <span className="text-purple-400">🛡️ Armor</span>, and{" "}
-          <span className="text-purple-400">special abilities</span>, like
+          Some even have{" "}
+          <span className="text-purple-400">
+            <span className="font-emoji">🛡️</span> Armor
+          </span>
+          , and <span className="text-purple-400">special abilities</span>, like
           hitting first in{" "}
           <span className="font-semibold text-amber-400">Combat</span>.
         </p>
@@ -87,7 +98,8 @@ export const TutorialMessages: Tutorials = {
         </h4>
         <p className="mx-4">
           Enemy units that survive Combat damage and destroy buildings. Each
-          unit chooses one random building to 🗡️ Attack, except your Town
+          unit chooses one random building to{" "}
+          <span className="font-emoji">🗡️</span> Attack, except your Town
           Center.
         </p>
         <p className="mx-4 text-right italic text-green-400">
@@ -101,8 +113,9 @@ export const TutorialMessages: Tutorials = {
     category: "Army",
     tutorial: (
       <p>
-        See your whole army, and check ❤️ Health levels, to help you plan for
-        the next <span className="font-semibold text-amber-400">Combat</span>.
+        See your whole army, and check <span className="font-emoji">❤️</span>{" "}
+        Health levels, to help you plan for the next{" "}
+        <span className="font-semibold text-amber-400">Combat</span>.
       </p>
     ),
   },
@@ -131,7 +144,8 @@ export const TutorialMessages: Tutorials = {
           </span>
           , and they will each{" "}
           <span className="text-purple-400">
-            lose ❤️ Health equal to their opponent's 🗡️ Attack
+            lose ❤️ Health equal to their opponent's{" "}
+            <span className="font-emoji">🗡️</span> Attack
           </span>
           .
         </p>
@@ -142,7 +156,10 @@ export const TutorialMessages: Tutorials = {
         </p>
         <p>
           Winning <span className="font-semibold text-amber-400">Combat</span>{" "}
-          grants you <span className="text-purple-400">1 extra 🛠️ Worker</span>{" "}
+          grants you{" "}
+          <span className="text-purple-400">
+            1 extra <span className="font-emoji">🛠️</span> Worker
+          </span>{" "}
           to use per turn.
         </p>
         <p className="mx-4 text-green-400">

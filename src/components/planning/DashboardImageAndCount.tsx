@@ -38,7 +38,10 @@ export default function DashboardImageAndCount({
         {isAResource && (
           /* FIXME: */
           /* @ts-ignore */
-          <span className="font-emoji">{dataObject[type].symbol}</span>
+          <span className="font-emoji" title={`${dataObject[type].name}`}>
+            {/* @ts-ignore */}
+            {dataObject[type].symbol}
+          </span>
         )}
       </div>
       <div className="text-right group-hover:text-yellow-300">

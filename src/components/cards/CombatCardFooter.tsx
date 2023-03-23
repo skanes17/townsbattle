@@ -36,7 +36,7 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
   return (
     <div className="grid-cols-auto grid w-full grid-cols-3 justify-between">
       <div className={`grid-rows-auto col-start-1 grid text-center`}>
-        <p>🗡️</p>
+        <p className="font-emoji">🗡️</p>
         {allAttackBonusesCheck(unit) ? (
           <p className="font-semibold text-amber-400">{totalAttackValue}</p>
         ) : (
@@ -45,12 +45,12 @@ export default function CombatCardFooter({ unit }: CombatCardFooterProps) {
       </div>
       {armor > 0 ? (
         <div className={`grid-rows-auto col-start-2 grid text-center`}>
-          <p>🛡️</p> <p>{armor}</p>
+          <p className="font-emoji">🛡️</p> <p>{armor}</p>
         </div>
       ) : null}
 
       <div className={`grid-rows-auto col-start-3 grid text-center`}>
-        <p>❤️</p>
+        <p className="font-emoji">❤️</p>
         <p>
           <span className={`${healthTextColor}`}>{currentHealth}</span>
           <span className="text-[0.33rem] sm:text-xs md:text-base lg:text-lg">
