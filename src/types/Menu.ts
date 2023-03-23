@@ -9,7 +9,7 @@ export interface MenuItemProps {
     | "About"
     | "Load Game";
   /* TODO: Replace with image */
-  icon: "▶️" | "🆕" | "💾" | "🏆" | "🔧" | "❓" | "⭐";
+  icon: "▶️" | "🆕" | "💾" | "🏆" | "⚙️" | "❓" | "⭐";
 }
 
 export type MenuText = Pick<MenuItemProps, "text">;

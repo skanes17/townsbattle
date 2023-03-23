@@ -9,13 +9,13 @@ export default function SharedStartMenu() {
         <div className="m-1 grid auto-rows-min place-items-center gap-1 rounded-3xl p-4 shadow-inherit">
           <MenuTitle title="Townsbattle" subtitle="Rise of the Defenders" />
           <Link className={routerLinkStyle} to="/newGame">
-            <MenuItem text="New Game" icon="▶️" />
+            <MenuItem text="New Game" icon="🆕" />
           </Link>
           <Link className={routerLinkStyle} to="/leaderboard">
             <MenuItem text="Leaderboard" icon="🏆" />
           </Link>
           <Link className={routerLinkStyle} to="/options">
-            <MenuItem text="Options" icon="🔧" />
+            <MenuItem text="Options" icon="⚙️" />
           </Link>
           <Link className={routerLinkStyle} to="/loadGame">
             <MenuItem text="Load Game" icon="💾" />

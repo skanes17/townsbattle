@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface MenuBoxHeaderProps {
-  children: string;
+  children: ReactNode;
 }
 
 export default function MenuBoxHeader({ children }: MenuBoxHeaderProps) {

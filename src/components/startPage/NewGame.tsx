@@ -26,7 +26,7 @@ export default function NewGame() {
   const [newGameSave, newNewGameSave] = useState(gameState);
 
   return (
-    <MenuBox icon="▶️" headerText="How to Play">
+    <MenuBox icon="🆕" headerText="How to Play">
       <MenuBoxHeader>
         An enemy army approaches! Collect resources, train units, construct
         buildings, and defeat waves of enemies. Survive as long as you can!

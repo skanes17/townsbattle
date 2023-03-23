@@ -4,11 +4,12 @@ export function tidyDateAndTime(date: Date) {
     month: "short",
     day: "numeric",
   });
-  const formattedTime = date.toLocaleString("en-US", {
+  /* const formattedTime = date.toLocaleString("en-US", {
     hour: "numeric",
     minute: "numeric",
     hour12: true,
-  });
-  const tidiedDateAndTime = `${formattedDate} (${formattedTime})`;
+  }); */
+  const tidiedDateAndTime = `${formattedDate}`;
+  /* const tidiedDateAndTime = `${formattedDate} (${formattedTime})`; */
   return tidiedDateAndTime;
 }

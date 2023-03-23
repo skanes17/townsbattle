@@ -39,7 +39,7 @@ export default function WarningButton({
     <>
       <button
         type="button"
-        className={`${buttonStyle} w-full flex-1 rounded-md border p-2.5 outline-transparent ring-offset-2 transition-transform ease-in `}
+        className={`${buttonStyle} w-3/4 flex-1 rounded-md border p-2.5 outline-transparent ring-offset-2 transition-transform ease-in `}
         onClick={
           counter < 2
             ? () => incrementPopupCounter()

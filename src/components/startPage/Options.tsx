@@ -29,7 +29,7 @@ export default function Options() {
   const [options, setOptions] = useState(gameOptions);
 
   return (
-    <MenuBox icon="🔧" headerText="Options">
+    <MenuBox icon="⚙️" headerText="Options">
       <MenuBoxHeader>
         Tutorials give you in-game tips on game mechanics. Difficulty increases
         the strength and number of enemies, but also greatly increases your
