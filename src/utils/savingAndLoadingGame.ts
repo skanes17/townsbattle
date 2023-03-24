@@ -89,12 +89,7 @@ export function getLeaderboardData() {
   return leaderboard;
 }
 
-export function addResultToLeaderBoardAndDeleteSave(currentGameSave: GameSave) {
-  const leaderboard = getLeaderboardData();
-
-  leaderboard.push(currentGameSave);
-  stringifyGameAndSaveToLocalStorage(leaderboard, "leaderboard");
-
+export function deleteThisSaveAndUpdateLocalStorage(currentGameSave: GameSave) {
   const savesArray = gameSavesLoader();
   const indexOfExistingSaveDataForCurrentGame =
     returnIndexOfExistingSaveDataForCurrentGame(
@@ -105,4 +100,13 @@ export function addResultToLeaderBoardAndDeleteSave(currentGameSave: GameSave) {
   // remove the save from the array then update local storage
   savesArray.splice(indexOfExistingSaveDataForCurrentGame, 1);
   stringifyGameAndSaveToLocalStorage(savesArray, "gameSaves");
+}
+
+export function addResultToLeaderBoardAndDeleteSave(currentGameSave: GameSave) {
+  const leaderboard = getLeaderboardData();
+
+  leaderboard.push(currentGameSave);
+  stringifyGameAndSaveToLocalStorage(leaderboard, "leaderboard");
+
+  deleteThisSaveAndUpdateLocalStorage(currentGameSave);
 }
