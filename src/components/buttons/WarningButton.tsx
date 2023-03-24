@@ -14,7 +14,7 @@ export default function WarningButton({
   let buttonText, buttonStyle;
   switch (counter) {
     case 0:
-      buttonText = "Delete ALL Saves and Leaderboards Data";
+      buttonText = "Delete ALL Saves and Leaderboard Data";
       buttonStyle = `bg-red-600 font-semibold`;
       break;
     case 1:

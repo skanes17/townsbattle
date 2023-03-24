@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { GameSave } from "../../types";
 import { MenuBox, MenuBoxHeader, MenuButtonContainer } from ".";
 
-export default function LeaderBoards() {
+export default function Leaderboard() {
   const [counter, setCounter] = useState(0);
   const incrementPopupCounter = () => {
     setCounter((prev) => prev + 1);
@@ -14,7 +14,7 @@ export default function LeaderBoards() {
     localStorage.getItem("leaderboard") || "[]"
   );
 
-  const sortedLeaderboards = leaderboard.sort((a, b) => b.score - a.score);
+  const sortedLeaderboard = leaderboard.sort((a, b) => b.score - a.score);
 
   return (
     <MenuBox headerText="Leaderboard" icon="🏆">
@@ -27,27 +27,32 @@ export default function LeaderBoards() {
       {/* Expands out to show details */}
 
       {/* // TODO: Add delete save button to each save */}
-      {sortedLeaderboards.length > 0 && (
+      {sortedLeaderboard.length > 0 && (
         <table className="my-2 w-full max-w-full table-auto border-separate border-spacing-[0.125rem] rounded-lg border-2 border-white/25 p-1 text-white transition-all hover:border-spacing-0">
           <thead className="rounded-tl-lg bg-black/50 text-center">
-            <th className="rounded-tl-lg">Rank</th>
-            <th>Player</th>
-            <th className="hidden rounded-tr-lg sm:table-cell sm:rounded-none">
-              Town
-            </th>
-            <th className="rounded-tr-lg">Score</th>
+            <tr>
+              <th className="rounded-tl-lg">Rank</th>
+              <th>Player</th>
+              <th className="hidden rounded-tr-lg sm:table-cell sm:rounded-none">
+                Town
+              </th>
+              <th className="rounded-tr-lg">Score</th>
+            </tr>
           </thead>
           <tbody className="text-center">
-            {sortedLeaderboards.map((save, index) => (
-              <tr className="first:text-amber-400 odd:bg-blue-900/50 even:bg-blue-800/50 hover:bg-amber-500 hover:text-black">
-                <th className="font-normal">{index + 1}</th>
-                <th className="overflow-y-auto font-normal">
+            {sortedLeaderboard.map((save, index) => (
+              <tr
+                key={save.gameId}
+                className="first:text-amber-400 odd:bg-blue-900/50 even:bg-blue-800/50 hover:bg-amber-500 hover:text-black"
+              >
+                <td className="font-normal">{index + 1}</td>
+                <td className="overflow-y-auto font-normal">
                   {save.playerName}
-                </th>
-                <th className="hidden font-normal sm:table-cell">
+                </td>
+                <td className="hidden font-normal sm:table-cell">
                   {save.townName}
-                </th>
-                <th className="font-normal">{save.score}</th>
+                </td>
+                <td className="font-normal">{save.score}</td>
               </tr>
             ))}
           </tbody>
