@@ -497,21 +497,7 @@ export default function Combat({
     );
 
     // this loop to chooses a constructed building at random and subtracts enemy attack value from its current health
-    bldgAttackedLoop: for (const unitIndex of survivingEnemyUnitIndexes) {
-      if (
-        !clonedBuildings["townCenter"].constructed ||
-        buildingsConstructed.length === 0
-      ) {
-        scoreUpdaterFn(points);
-        alert(
-          `Your Town Center was destroyed. It's Game Over! Your final score is ${
-            score + points
-          }`
-        );
-        //  switchPhase();
-        break bldgAttackedLoop;
-      }
-
+    for (const unitIndex of survivingEnemyUnitIndexes) {
       // if there are any buildings besides the town center, hit them first! Else, hit the Town Center
       if (buildingsConstructed.length > 1) {
         buildingsConstructed = Object.keys(buildings)
@@ -711,6 +697,24 @@ export default function Combat({
         }
         break;
       case Phases.PostCombat:
+        const clonedBuildings = cloneBasicObjectWithJSON(buildings);
+        const buildingsConstructed = Object.keys(buildings).filter(
+          (key) => clonedBuildings[key].constructed
+        );
+
+        if (
+          !clonedBuildings["townCenter"].constructed ||
+          buildingsConstructed.length === 0
+        ) {
+          scoreUpdaterFn(points);
+          alert(
+            `Your Town Center was destroyed. It's Game Over! Your final score is ${
+              score + points
+            }`
+          );
+          break;
+        }
+
         // reset all building damage to 0
         setBuildings(resetBuildingDamageToZero(buildings));
         sendArmiesToPlanning();
@@ -792,9 +796,10 @@ export default function Combat({
     setPhase(Phases.PostCombat);
   };
 
-  // simple draft of points sytem is +100 per enemy unit defeated
-  const points =
-    combatEnemyUnits.filter((unit) => unit.currentHealth === 0).length * 100;
+  // for each enemy defeated, add their build score to your total
+  const points = combatEnemyUnits
+    .filter((unit) => unit.currentHealth === 0)
+    .reduce((totalPoints, unit) => totalPoints + unit.buildScore, 0);
 
   return (
     /* whole screen */
