@@ -606,7 +606,6 @@ export default function Combat({
       unitsWithSurvivalPointsAdded,
       maximumArmor
     );
-    console.log(unitsWithArmorBonusAdded);
     setFriendlyUnits(unitsWithArmorBonusAdded);
 
     const enemyUnitsToSendToPlanning = determineWhichUnitsToSendToPlanning(
