@@ -18,6 +18,7 @@ import {
   TutorialCategory,
   TipsSeen,
   GameSave,
+  Difficulty,
 } from "../../types";
 import {
   addResultToLeaderBoardAndDeleteSave,
@@ -38,6 +39,7 @@ import useSound from "use-sound";
 import destroyBldgSfx from "../../assets/sounds/destroyBldgSfx.mp3";
 import { Modal, ModalHeader, ModalTextContent } from "../planning/tutorials";
 import { ArmyGrid } from "../shared";
+import { difficultyScoreMultipliers } from "../../gameData/difficultyScoreMultipliers";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -46,6 +48,7 @@ import { ArmyGrid } from "../shared";
 interface CombatProps {
   currentGameSave: GameSave;
   tutorials: boolean;
+  difficulty: Difficulty;
   tipsSeen: TipsSeen;
   markTipAsSeen: (tutorialCategory: TutorialCategory) => void;
   currentCombatTurn: number;
@@ -70,6 +73,7 @@ interface CombatProps {
 export default function Combat({
   currentGameSave,
   tutorials,
+  difficulty,
   tipsSeen,
   markTipAsSeen,
   currentCombatTurn,
@@ -93,7 +97,8 @@ export default function Combat({
 
   const [playDestroyBldgSound] = useSound(destroyBldgSfx);
 
-  const basePointsForCompletingCombat = 100;
+  const basePointsForCompletingCombat =
+    100 * difficultyScoreMultipliers[difficulty];
 
   // TODO: Consider modifying CombatUnits to include attack and health buffs!
 
@@ -798,7 +803,11 @@ export default function Combat({
   // for each enemy defeated, add their build score to your total
   const points = combatEnemyUnits
     .filter((unit) => unit.currentHealth === 0)
-    .reduce((totalPoints, unit) => totalPoints + unit.buildScore, 0);
+    .reduce(
+      (totalPoints, unit) =>
+        totalPoints + unit.buildScore * difficultyScoreMultipliers[difficulty],
+      0
+    );
 
   return (
     /* whole screen */
@@ -821,7 +830,9 @@ export default function Combat({
           selectedUnit={combatUnits[friendlyIndex]}
         />
       </div>
-      <div className="col-start-1 row-start-2">{/* Empty Cell */}</div>
+      <div className="col-start-1 row-start-2 self-center pl-2">
+        Points: {points}
+      </div>
       <div className="col-start-2 row-span-2 row-start-1 grid h-full w-full grid-cols-[1fr] grid-rows-[1fr_4.5fr_2.5fr_1fr]">
         {phase === Phases.PostCombat && (
           <div className="row-span-3 row-start-1 grid h-full w-full p-4">

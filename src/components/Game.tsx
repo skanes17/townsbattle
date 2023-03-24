@@ -54,6 +54,7 @@ import { TutorialModalAsSection } from "./planning/tutorials/TutorialModalAsSect
 import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
 import { generateScoutReport } from "../utils/generateScoutReport";
+import { difficultyScoreMultipliers } from "../gameData/difficultyScoreMultipliers";
 
 export default function Game(props: GameProps) {
   const gameSave = useLoaderData() as GameSave;
@@ -309,7 +310,8 @@ export default function Game(props: GameProps) {
 
   const addGoldToScore = () => {
     // score saved to constant in case resources state object is updated before the score state is updated
-    const scoreFromGold = resources["gold"].workers * 1000;
+    const scoreFromGold =
+      resources["gold"].workers * 1000 * difficultyScoreMultipliers[difficulty];
     setScore((prevScore) => prevScore + scoreFromGold);
   };
 
@@ -335,7 +337,9 @@ export default function Game(props: GameProps) {
       playConstructBldgSound();
 
       // add to score
-      const buildScore = clonedBuildings[buildingType].buildScore;
+      const buildScore =
+        clonedBuildings[buildingType].buildScore *
+        difficultyScoreMultipliers[difficulty];
       setScore((prevScore) => prevScore + buildScore);
     });
   };
@@ -355,7 +359,8 @@ export default function Game(props: GameProps) {
       let randomName = chooseNameByUnitType(unit.unitType);
 
       // add to score
-      const buildScore = _chosenUnit.buildScore;
+      const buildScore =
+        _chosenUnit.buildScore * difficultyScoreMultipliers[difficulty];
       setScore((prevScore) => prevScore + buildScore);
 
       return {
@@ -1010,6 +1015,7 @@ export default function Game(props: GameProps) {
         <Combat
           currentGameSave={currentGameSave}
           tutorials={tutorials}
+          difficulty={difficulty}
           tipsSeen={tipsSeen}
           markTipAsSeen={markTipAsSeen}
           currentCombatTurn={numberOfCombatsStarted}

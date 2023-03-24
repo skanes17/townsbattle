@@ -20,7 +20,7 @@ export default function Leaderboard() {
       {/* TODO: Expand out to show details */}
 
       {sortedLeaderboard.length > 0 && (
-        <table className="my-2 w-full max-w-full table-auto border-separate border-spacing-[0.125rem] rounded-lg border-2 border-white/25 p-1 text-white transition-all hover:border-spacing-0">
+        <table className="my-2 w-full max-w-full table-auto border-separate border-spacing-[0.125rem] overflow-x-auto rounded-lg border-2 border-white/25 p-1 text-white transition-all hover:border-spacing-0">
           <thead className="rounded-tl-lg bg-black/50 text-center">
             <tr>
               <th className="rounded-tl-lg">Rank</th>
@@ -28,6 +28,7 @@ export default function Leaderboard() {
               <th className="hidden rounded-tr-lg sm:table-cell sm:rounded-none">
                 Town
               </th>
+              <th className="rounded-tr-lg">Difficulty</th>
               <th className="rounded-tr-lg">Score</th>
             </tr>
           </thead>
@@ -44,6 +45,7 @@ export default function Leaderboard() {
                 <td className="hidden font-normal sm:table-cell">
                   {save.townName}
                 </td>
+                <td className="font-normal capitalize">{save.difficulty}</td>
                 <td className="font-normal">{save.score}</td>
               </tr>
             ))}
