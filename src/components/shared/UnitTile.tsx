@@ -152,10 +152,15 @@ export function UnitTile({
 
           {/* TODO: Add hoverText, and green text if buffed */}
           {armor > 0 && (
-            <p>
-              <span className="font-emoji">🛡️</span>
-              {armor}
-            </p>
+            <div className="group/armor relative">
+              <p>
+                <span className="font-emoji">🛡️</span>
+                {armor}
+              </p>
+              <p className="group-hover/armor:bg absolute inset-0 m-auto w-3/4 text-center text-amber-300 opacity-0 hover:rounded-lg group-hover/armor:bg-zinc-800 group-hover/armor:opacity-90">
+                Armor
+              </p>
+            </div>
           )}
 
           <div className="group/health relative">
@@ -168,7 +173,7 @@ export function UnitTile({
             </p>
           </div>
 
-          {(unit.combatsSurvived ?? 0) > 0 && (
+          {/* {(unit.combatsSurvived ?? 0) > 0 && (
             <div className="group/survived relative">
               <p>
                 <span className="font-emoji">⭐</span>
@@ -178,7 +183,7 @@ export function UnitTile({
                 Survived
               </p>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>
