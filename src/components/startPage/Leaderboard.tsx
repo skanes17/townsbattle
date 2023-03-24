@@ -4,11 +4,6 @@ import { GameSave } from "../../types";
 import { MenuBox, MenuBoxHeader, MenuButtonContainer } from ".";
 
 export default function Leaderboard() {
-  const [counter, setCounter] = useState(0);
-  const incrementPopupCounter = () => {
-    setCounter((prev) => prev + 1);
-  };
-
   // pull existing saved options from local storage
   const leaderboard: GameSave[] = JSON.parse(
     localStorage.getItem("leaderboard") || "[]"
@@ -22,11 +17,8 @@ export default function Leaderboard() {
         Look back on past games. Try to beat the High score!
       </MenuBoxHeader>
 
-      {/* Want Rank, PlayerName, TownName, Score */}
-      {/* On mobile: Rank, PlayerName, Score,  */}
-      {/* Expands out to show details */}
+      {/* TODO: Expand out to show details */}
 
-      {/* // TODO: Add delete save button to each save */}
       {sortedLeaderboard.length > 0 && (
         <table className="my-2 w-full max-w-full table-auto border-separate border-spacing-[0.125rem] rounded-lg border-2 border-white/25 p-1 text-white transition-all hover:border-spacing-0">
           <thead className="rounded-tl-lg bg-black/50 text-center">

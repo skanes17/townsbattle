@@ -11,7 +11,6 @@ interface SaveFileLinkProps {
 export function SaveFileLink({ gameSave }: SaveFileLinkProps) {
   const [counter, setCounter] = useState(0);
 
-  console.log(counter);
   return (
     <div className="m-1 grid grid-cols-[9fr_1fr] gap-2">
       {counter < 2 && (

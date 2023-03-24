@@ -7,7 +7,6 @@ import { SaveFileLink } from "./SaveFileLink";
 import { SaveFileLinkContainer } from "./SaveFileLinkContainer";
 
 export default function LoadGame() {
-  // saves should be available from the loader
   const savesArray = useLoaderData() as GameSave[];
 
   return (
@@ -17,7 +16,6 @@ export default function LoadGame() {
           "Any game you've started but haven't finished will appear below!"}
       </MenuBoxHeader>
 
-      {/* // TODO: Add delete save button to each save */}
       {savesArray.length > 0 && (
         <SaveFileLinkContainer>
           {savesArray.map((gameSave) => (
@@ -28,7 +26,6 @@ export default function LoadGame() {
       <Link
         className="mt-2 inline-flex w-1/4 justify-center rounded-md bg-green-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 hover:bg-green-700 focus:ring-2"
         to="/"
-        /* onClick={toggleLeaderboardModal} */
       >
         Close
       </Link>
