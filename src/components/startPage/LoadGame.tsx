@@ -21,7 +21,7 @@ export default function LoadGame() {
       {savesArray.length > 0 && (
         <SaveFileLinkContainer>
           {savesArray.map((gameSave) => (
-            <SaveFileLink gameSave={gameSave} />
+            <SaveFileLink key={gameSave.gameId} gameSave={gameSave} />
           ))}
         </SaveFileLinkContainer>
       )}

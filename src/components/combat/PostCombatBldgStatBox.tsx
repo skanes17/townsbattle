@@ -40,7 +40,7 @@ export default function PostCombatBldgStatBox({
 
         <p className={`font-bold ${textColor}`}>{headerText}</p>
         <p className={`ml-2 font-semibold`}>
-          {damagedBuildings.length ?? 0 > 0
+          {(damagedBuildings.length ?? 0) > 0
             ? `${damagedBuildings.length} total`
             : `None!`}
         </p>
