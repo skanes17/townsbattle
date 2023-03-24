@@ -489,7 +489,7 @@ export default function Combat({
     const clonedBuildings = cloneBasicObjectWithJSON(buildings);
 
     const initialNumberOfBuildingsConstructed = Object.keys(buildings).filter(
-      (key) => clonedBuildings[key].constructed
+      (key) => buildings[key].constructed
     ).length;
 
     let buildingsConstructed = Object.keys(buildings).filter(
@@ -515,13 +515,12 @@ export default function Combat({
             Math.floor(Math.random() * buildingsConstructed.length)
           ]
         ];
-
       const enemyUnit = combatEnemyUnits[unitIndex];
+
       const enemyAttackValue = calculatedAttackValue(
         AttackValueType.card,
         enemyUnit
       );
-
       /* console.log("Building Attacked: " + buildingAttacked.name); */
       /* console.log("Building Health: " + buildingAttacked.currentHealth); */
       /* console.log("Enemy Chosen: " + enemyUnit.name + enemyUnit.id); */
@@ -534,7 +533,6 @@ export default function Combat({
         0,
         buildingAttacked.currentHealth - enemyAttackValue
       );
-
       /* console.log("New Building Health: " + buildingAttacked.currentHealth);
       console.log(
         "Total Damage Dealt to This Building: " + buildingAttacked.damage
@@ -543,18 +541,29 @@ export default function Combat({
       if (buildingAttacked.currentHealth === 0) {
         // if the building is destroyed, set it to destroyed (constructed = false)
         buildingAttacked.constructed = false;
-
         // refill its health (for a future build)
         buildingAttacked.currentHealth = buildingAttacked.maxHealth;
         // refresh pool of buildings that are to be attacked
         buildingsConstructed = Object.keys(buildings).filter(
           (key) => clonedBuildings[key].constructed
         );
+        break;
       }
     }
     // play a sound at end of combat if any building was lost
     buildingsConstructed.length < initialNumberOfBuildingsConstructed &&
       playDestroyBldgSound();
+    if (
+      !clonedBuildings["townCenter"].constructed ||
+      buildingsConstructed.length === 0
+    ) {
+      scoreUpdaterFn(points);
+      alert(
+        `Your Town Center was destroyed. It's Game Over! Your final score is ${
+          score + points
+        }`
+      );
+    }
     return clonedBuildings;
   };
 
@@ -701,19 +710,6 @@ export default function Combat({
         const buildingsConstructed = Object.keys(buildings).filter(
           (key) => clonedBuildings[key].constructed
         );
-
-        if (
-          !clonedBuildings["townCenter"].constructed ||
-          buildingsConstructed.length === 0
-        ) {
-          scoreUpdaterFn(points);
-          alert(
-            `Your Town Center was destroyed. It's Game Over! Your final score is ${
-              score + points
-            }`
-          );
-          break;
-        }
 
         // reset all building damage to 0
         setBuildings(resetBuildingDamageToZero(buildings));
