@@ -65,13 +65,13 @@ export default function NewGame() {
       <div className="mt-3 items-center gap-2 sm:flex">
         <Link
           to="/"
-          className="mt-2 w-full flex-1 rounded-md bg-red-600 p-2.5 text-center font-semibold text-white outline-transparent ring-red-600 ring-offset-2 focus:ring-2"
+          className="mt-2 w-full flex-1 rounded-md bg-red-600 p-2.5 text-center font-semibold text-white outline-transparent ring-red-600 ring-offset-2 hover:bg-red-700 focus:ring-2"
         >
           Cancel
         </Link>
         <Link
           to={`/${newUniqueGameId}`}
-          className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center font-semibold text-white outline-transparent ring-blue-600 ring-offset-2 focus:ring-2"
+          className="mt-2 w-full flex-1 rounded-md bg-blue-600 p-2.5 text-center font-semibold text-white outline-transparent ring-blue-600 ring-offset-2 hover:bg-blue-700 focus:ring-2"
           onClick={() => saveGameToLocalStorage(newUniqueGameId, newGameSave)}
         >
           Start

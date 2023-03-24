@@ -856,16 +856,6 @@ export default function Game(props: GameProps) {
     planningTurnToGenerateEnemies.current +
     turnsBetweenEnemyArmyGenAndCombat.current;
 
-  console.log("Planning Turn for Combat: " + planningTurnToTriggerCombat);
-  console.log(
-    "Planning Turn to Generate Enemies: " +
-      planningTurnToGenerateEnemies.current
-  );
-  console.log(
-    "Turns between enemy gen and combat: " +
-      turnsBetweenEnemyArmyGenAndCombat.current
-  );
-
   const endTurn = () => {
     if (turn === planningTurnToGenerateEnemies.current) {
       generateEnemyArmy(

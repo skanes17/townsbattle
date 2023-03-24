@@ -26,7 +26,7 @@ export default function LoadGame() {
         </SaveFileLinkContainer>
       )}
       <Link
-        className="mt-2 inline-flex w-1/4 justify-center rounded-md bg-green-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 focus:ring-2"
+        className="mt-2 inline-flex w-1/4 justify-center rounded-md bg-green-600 p-2.5 text-white outline-transparent ring-green-600 ring-offset-2 hover:bg-green-700 focus:ring-2"
         to="/"
         /* onClick={toggleLeaderboardModal} */
       >

@@ -20,7 +20,7 @@ export default function MenuButton({
 
   isSelected ? (textStyle = "text-white") : (textStyle = "text-gray-800");
 
-  const defaultBg = "bg-zinc-200";
+  const defaultBg = "bg-zinc-200 hover:bg-zinc-300";
   switch (buttonColor) {
     case "green":
       buttonColors = "ring-green-600 active:bg-green-500";

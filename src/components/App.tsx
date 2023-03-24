@@ -16,13 +16,13 @@ export const router = createBrowserRouter(
       {/* parent Route /, SharedStartMenu is rendered for all children using Outlet */}
       <Route path="/" element={<SharedStartMenu />}>
         <Route path="newGame" element={<NewGame />} />
-        <Route path="leaderboard" element={<Leaderboard />} />
-        <Route path="options" element={<Options />} />
         <Route
           path="loadGame"
           element={<LoadGame />}
           loader={gameSavesLoader}
         />
+        <Route path="leaderboard" element={<Leaderboard />} />
+        <Route path="options" element={<Options />} />
         <Route path="about" element={<About />} />
       </Route>
       {/* load the appropriate game */}

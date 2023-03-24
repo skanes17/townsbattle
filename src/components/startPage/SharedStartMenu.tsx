@@ -11,14 +11,14 @@ export default function SharedStartMenu() {
           <Link className={routerLinkStyle} to="/newGame">
             <MenuItem text="New Game" icon="🆕" />
           </Link>
-          <Link className={routerLinkStyle} to="/leaderboard">
-            <MenuItem text="Leaderboard" icon="🏆" />
+          <Link className={routerLinkStyle} to="/loadGame">
+            <MenuItem text="Load Game" icon="💾" />
           </Link>
           <Link className={routerLinkStyle} to="/options">
             <MenuItem text="Options" icon="⚙️" />
           </Link>
-          <Link className={routerLinkStyle} to="/loadGame">
-            <MenuItem text="Load Game" icon="💾" />
+          <Link className={routerLinkStyle} to="/leaderboard">
+            <MenuItem text="Leaderboard" icon="🏆" />
           </Link>
           {/* <Link className={routerLinkStyle} to="/howtoplay">
               <MenuItem text="How to Play" icon="❓" />
