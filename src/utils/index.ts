@@ -6,7 +6,7 @@ export * from "./cloneWithJSON";
 export * from "./countUnits";
 export * from "./generateStars";
 export * from "./getSurvivingUnitIndexes";
-export * from "./minTurnsCalculators";
+export * from "./turnsCalculators";
 export * from "./randomNumberBetweenMinAndMax";
 export * from "./resourceChecker";
 export * from "./returnHealthBarStyleObject";

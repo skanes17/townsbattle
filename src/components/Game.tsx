@@ -30,8 +30,8 @@ import {
 import {
   addResultToLeaderBoardAndDeleteSave,
   berserkerAttackBonusPowerLevel,
-  calcMinPlanningTurnsUntilArmyGen,
-  calcMinTurnsBetweenArmyGenAndCombat,
+  calcPlanningTurnsUntilArmyGen,
+  calcTurnsBetweenArmyGenAndCombat,
   chooseNameByUnitType,
   cloneBasicObjectWithJSON,
   countUnits,
@@ -75,7 +75,7 @@ export default function Game(props: GameProps) {
 
   // Bug Hunt: This is working fine
   const planningTurnsUntilEnemyGen = useRef(
-    calcMinPlanningTurnsUntilArmyGen(difficulty)
+    calcPlanningTurnsUntilArmyGen(difficulty)
   );
 
   // after this many COMBATs, you'll get an extra planning turn before enemies are generated
@@ -848,7 +848,7 @@ export default function Game(props: GameProps) {
   };
 
   const turnsBetweenEnemyArmyGenAndCombat = useRef(
-    calcMinTurnsBetweenArmyGenAndCombat(difficulty)
+    calcTurnsBetweenArmyGenAndCombat(difficulty)
   );
 
   // planning turn on which combat actually starts
@@ -857,6 +857,14 @@ export default function Game(props: GameProps) {
     turnsBetweenEnemyArmyGenAndCombat.current;
 
   console.log("Planning Turn for Combat: " + planningTurnToTriggerCombat);
+  console.log(
+    "Planning Turn to Generate Enemies: " +
+      planningTurnToGenerateEnemies.current
+  );
+  console.log(
+    "Turns between enemy gen and combat: " +
+      turnsBetweenEnemyArmyGenAndCombat.current
+  );
 
   const endTurn = () => {
     if (turn === planningTurnToGenerateEnemies.current) {
@@ -866,10 +874,6 @@ export default function Game(props: GameProps) {
         unlockedUnitTypes,
         unitTypes
       );
-
-      // calculate new value for the next planning phase
-      turnsBetweenEnemyArmyGenAndCombat.current =
-        calcMinTurnsBetweenArmyGenAndCombat(difficulty);
     }
 
     // clone resources, resource pool, and buildings to preserve state
@@ -898,7 +902,11 @@ export default function Game(props: GameProps) {
 
       // change the number of planning turns until enemies are generated for the next turn
       planningTurnsUntilEnemyGen.current =
-        calcMinPlanningTurnsUntilArmyGen(difficulty);
+        calcPlanningTurnsUntilArmyGen(difficulty);
+
+      // calculate new value for the next planning phase
+      turnsBetweenEnemyArmyGenAndCombat.current =
+        calcTurnsBetweenArmyGenAndCombat(difficulty);
 
       // Unused -- reset turn to 1
       setTurn(1);

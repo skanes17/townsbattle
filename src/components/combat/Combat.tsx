@@ -489,24 +489,25 @@ export default function Combat({
     const clonedBuildings = cloneBasicObjectWithJSON(buildings);
 
     const initialNumberOfBuildingsConstructed = Object.keys(buildings).filter(
-      (key) => buildings[key].constructed
+      (key) => clonedBuildings[key].constructed
     ).length;
 
     let buildingsConstructed = Object.keys(buildings).filter(
       (key) => clonedBuildings[key].constructed
     );
-
-    // this loop to chooses a constructed building at random and subtracts enemy attack value from its current health
-    for (const unitIndex of survivingEnemyUnitIndexes) {
-      // if there are any buildings besides the town center, hit them first! Else, hit the Town Center
+    // this loop to chooses a constructed building at random and subtract enemy attack value from its current health
+    attackerLoop: for (const unitIndex of survivingEnemyUnitIndexes) {
+      // if there are any buildings besides the town center, hit them first!
       if (buildingsConstructed.length > 1) {
         buildingsConstructed = Object.keys(buildings)
           .filter((buildingType) => buildingType !== "townCenter")
           .filter((key) => clonedBuildings[key].constructed);
+        /* console.log("Avoiding the Town Center!"); */
       } else {
         buildingsConstructed = Object.keys(buildings).filter(
           (key) => clonedBuildings[key].constructed
         );
+        /* console.log("No choice but to hit the Town Center!"); */
       }
 
       const buildingAttacked =
@@ -515,6 +516,7 @@ export default function Combat({
             Math.floor(Math.random() * buildingsConstructed.length)
           ]
         ];
+
       const enemyUnit = combatEnemyUnits[unitIndex];
 
       const enemyAttackValue = calculatedAttackValue(
@@ -533,6 +535,7 @@ export default function Combat({
         0,
         buildingAttacked.currentHealth - enemyAttackValue
       );
+
       /* console.log("New Building Health: " + buildingAttacked.currentHealth);
       console.log(
         "Total Damage Dealt to This Building: " + buildingAttacked.damage
@@ -541,22 +544,20 @@ export default function Combat({
       if (buildingAttacked.currentHealth === 0) {
         // if the building is destroyed, set it to destroyed (constructed = false)
         buildingAttacked.constructed = false;
+
         // refill its health (for a future build)
         buildingAttacked.currentHealth = buildingAttacked.maxHealth;
         // refresh pool of buildings that are to be attacked
         buildingsConstructed = Object.keys(buildings).filter(
           (key) => clonedBuildings[key].constructed
         );
-        break;
+        if (buildingsConstructed.length === 0) break attackerLoop;
       }
     }
     // play a sound at end of combat if any building was lost
     buildingsConstructed.length < initialNumberOfBuildingsConstructed &&
       playDestroyBldgSound();
-    if (
-      !clonedBuildings["townCenter"].constructed ||
-      buildingsConstructed.length === 0
-    ) {
+    if (buildingsConstructed.length === 0) {
       scoreUpdaterFn(points);
       alert(
         `Your Town Center was destroyed. It's Game Over! Your final score is ${
@@ -712,13 +713,15 @@ export default function Combat({
         );
 
         // reset all building damage to 0
-        setBuildings(resetBuildingDamageToZero(buildings));
-        sendArmiesToPlanning();
-        // add points from this battle to total score, as well as some extra points based on how many combats completed
-        scoreUpdaterFn(
-          points + currentCombatTurn * basePointsForCompletingCombat
-        );
-        switchPhase();
+        if (buildingsConstructed.length > 0) {
+          setBuildings(resetBuildingDamageToZero(buildings));
+          sendArmiesToPlanning();
+          // add points from this battle to total score, as well as some extra points based on how many combats completed
+          scoreUpdaterFn(
+            points + currentCombatTurn * basePointsForCompletingCombat
+          );
+          switchPhase();
+        }
         break;
     }
   };
@@ -888,7 +891,7 @@ export default function Combat({
       <div className="col-start-2 row-start-2 h-full w-full self-center justify-self-center p-3">
         {phase === Phases.PreCombat && (
           <CombatButton
-            buttonText="Start"
+            buttonText={combatUnits.length > 0 ? `Start` : `Summary`}
             onClick={() => combatMegaFunction()}
           />
         )}
