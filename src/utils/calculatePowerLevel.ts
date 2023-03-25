@@ -11,6 +11,7 @@ export function calculatePowerLevel(army: Unit[]) {
     totalHealth,
     totalArmor,
     totalAttackBonus,
+    totalDeathEffectAndAoeDamage,
     totalThreat,
   } = army.reduce(
     // An arrow function is called for each unit in army
@@ -23,6 +24,11 @@ export function calculatePowerLevel(army: Unit[]) {
         totals.totalAttackBonus +
         fullHealthAttackBonusPowerLevel(unit) +
         berserkerAttackBonusPowerLevel(unit),
+      totalDeathEffectAndAoeDamage:
+        totals.totalDeathEffectAndAoeDamage +
+        ((unit.areaOfEffectDamageOnDeath ?? 0) *
+          (unit.numberOfUnitsAffectedByAoeDamageOnDeath ?? 0) +
+          (unit.damageToOpponentOnDeath ?? 0)),
       totalThreat: totals.totalThreat + unit.threatLevel,
     }),
     // Initilized values for total attack, total health, and total threat
@@ -31,13 +37,19 @@ export function calculatePowerLevel(army: Unit[]) {
       totalHealth: 0,
       totalArmor: 0,
       totalAttackBonus: 0,
+      totalDeathEffectAndAoeDamage: 0,
       totalThreat: 0,
     }
   );
 
   /* TODO: Consider adding resources into the mix */
   const armyPowerLevel =
-    totalAttack + totalHealth + totalArmor + totalAttackBonus + totalThreat;
+    totalAttack +
+    totalHealth +
+    totalArmor +
+    totalAttackBonus +
+    totalDeathEffectAndAoeDamage +
+    totalThreat;
 
   return armyPowerLevel;
 }
