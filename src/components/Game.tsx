@@ -55,6 +55,7 @@ import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
 import { generateScoutReport } from "../utils/generateScoutReport";
 import { difficultyScoreMultipliers } from "../gameData/difficultyScoreMultipliers";
+import { calculatePowerLevel } from "../utils/calculatePowerLevel";
 
 export default function Game(props: GameProps) {
   const gameSave = useLoaderData() as GameSave;
@@ -383,40 +384,7 @@ export default function Game(props: GameProps) {
     unlockedUnitTypes: (UnitType | undefined)[],
     allUnitTypes: UnitType[]
   ) => {
-    // calculate the friendly army power level (the sum of all the attack, health, and threat levels)
-    const {
-      totalAttack,
-      totalHealth,
-      totalArmor,
-      totalAttackBonus,
-      totalThreat,
-    } = friendlyUnits.reduce(
-      // and an arrow function is called for each unit in friendlyUnits
-      (totals, unit) => ({
-        // For each unit, the arrow function adds the unit's attack, health, and threat to each total
-        totalAttack: totals.totalAttack + unit.attack,
-        totalHealth: totals.totalHealth + unit.currentHealth,
-        totalArmor: totals.totalArmor + unit.armor,
-        totalAttackBonus:
-          totals.totalAttackBonus +
-          fullHealthAttackBonusPowerLevel(unit) +
-          berserkerAttackBonusPowerLevel(unit),
-        totalThreat: totals.totalThreat + unit.threatLevel,
-      }),
-      // Initilized values for total attack, total health, and total threat
-      {
-        totalAttack: 0,
-        totalHealth: 0,
-        totalArmor: 0,
-        totalAttackBonus: 0,
-        totalThreat: 0,
-      }
-    );
-
-    /* TODO: Consider adding resources into the mix */
-    const friendlyPowerLevel =
-      totalAttack + totalHealth + totalArmor + totalAttackBonus + totalThreat;
-    /* console.log(friendlyPowerLevel); */
+    const friendlyPowerLevel = calculatePowerLevel(friendlyUnits);
 
     // The following process takes the calculated power level and scales the enemy's power level accordingly.
     let difficultyMultiplier;
