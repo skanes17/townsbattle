@@ -219,11 +219,11 @@ export default function Combat({
   // default behaviour
   const unitsFight = () => {
     // chosen units attack each other
-    const _friendlyArmyCopy = [...combatUnits];
-    const selectedFriendly = _friendlyArmyCopy[friendlyIndex];
+    const _friendlyArmy = [...combatUnits];
+    const selectedFriendly = _friendlyArmy[friendlyIndex];
     const clonedSelectedFriendly = { ...selectedFriendly };
-    const _enemyArmyCopy = [...combatEnemyUnits];
-    const selectedEnemy = _enemyArmyCopy[enemyIndex];
+    const _enemyArmy = [...combatEnemyUnits];
+    const selectedEnemy = _enemyArmy[enemyIndex];
     const clonedSelectedEnemy = { ...selectedEnemy };
 
     // INCORPORATE PASSIVE EFFECTS HERE
@@ -332,7 +332,7 @@ export default function Combat({
         ...survivingFriendlyUnitIndexes,
       ].filter(
         (survivingUnitIndex) =>
-          _friendlyArmyCopy[survivingUnitIndex] !== selectedFriendly
+          _friendlyArmy[survivingUnitIndex] !== selectedFriendly
       );
       const numUnitsToBeDamaged =
         selectedEnemy.numberOfUnitsAffectedByAoeDamageOnDeath ?? 0;
@@ -352,7 +352,7 @@ export default function Combat({
 
       // Damage each relevant unit
       for (const index of unitsAffectedByAoeDamage) {
-        const unitToBeDamagedByAoe = _friendlyArmyCopy[index];
+        const unitToBeDamagedByAoe = _friendlyArmy[index];
         const areaOfEffectDamageOnDeath =
           selectedEnemy.areaOfEffectDamageOnDeath ?? 0;
         unitToBeDamagedByAoe.currentHealth = Math.max(
@@ -403,7 +403,7 @@ export default function Combat({
           ...survivingEnemyUnitIndexes,
         ].filter(
           (survivingUnitIndex) =>
-            _enemyArmyCopy[survivingUnitIndex] !== selectedEnemy
+            _enemyArmy[survivingUnitIndex] !== selectedEnemy
         );
         const numUnitsToBeDamaged =
           selectedFriendly.numberOfUnitsAffectedByAoeDamageOnDeath ?? 0;
@@ -423,7 +423,7 @@ export default function Combat({
 
         // Damage each relevant unit
         for (const index of unitsAffectedByAoeDamage) {
-          const unitToBeDamagedByAoe = _enemyArmyCopy[index];
+          const unitToBeDamagedByAoe = _enemyArmy[index];
           const areaOfEffectDamageOnDeath =
             selectedFriendly.areaOfEffectDamageOnDeath ?? 0;
           unitToBeDamagedByAoe.currentHealth = Math.max(
@@ -491,8 +491,8 @@ export default function Combat({
     // experimenting with appending to top
     setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
 
-    setCombatEnemyUnits(_enemyArmyCopy);
-    setCombatUnits(_friendlyArmyCopy);
+    setCombatEnemyUnits(_enemyArmy);
+    setCombatUnits(_friendlyArmy);
   };
 
   // returning units to their armies and choosing new ones

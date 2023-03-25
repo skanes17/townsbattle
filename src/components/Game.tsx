@@ -55,7 +55,12 @@ import { TipsSeen, TutorialCategory } from "../types/TutorialTypes";
 import { ArmyGrid } from "./shared";
 import { generateScoutReport } from "../utils/generateScoutReport";
 import { difficultyScoreMultipliers } from "../gameData/difficultyScoreMultipliers";
-import { calculatePowerLevel } from "../utils/calculatePowerLevel";
+import {
+  areaOfEffectDamagePowerLevel,
+  calculatePowerLevel,
+  sumIndividualPowerLevelContributions,
+  totalAttackBonusesPowerLevel,
+} from "../utils/calculatePowerLevel";
 
 export default function Game(props: GameProps) {
   const gameSave = useLoaderData() as GameSave;
@@ -546,17 +551,14 @@ export default function Game(props: GameProps) {
       // add this unit's power level to the total
       const { attack, maxHealth, armor, threatLevel } =
         chosenUnitWithCurrentHealth;
-      powerLevel +=
-        attack +
-        maxHealth +
-        armor +
-        fullHealthAttackBonusPowerLevel(chosenUnitWithCurrentHealth) +
-        berserkerAttackBonusPowerLevel(chosenUnitWithCurrentHealth) +
-        (chosenUnitWithCurrentHealth.damageToOpponentOnDeath ?? 0) +
-        (chosenUnitWithCurrentHealth.areaOfEffectDamageOnDeath ?? 0) *
-          (chosenUnitWithCurrentHealth.numberOfUnitsAffectedByAoeDamageOnDeath ??
-            0) +
-        threatLevel;
+      powerLevel += sumIndividualPowerLevelContributions(
+        attack,
+        maxHealth,
+        armor,
+        totalAttackBonusesPowerLevel(chosenUnitWithCurrentHealth),
+        areaOfEffectDamagePowerLevel(chosenUnitWithCurrentHealth),
+        threatLevel
+      );
     }
     // end of while loop
 

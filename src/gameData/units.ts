@@ -66,7 +66,7 @@ export const baseUnitData: BaseUnitData = {
     bgImageLg: "bg-archerLg",
     threatLevel: 1.5,
     // decrease the attack but it attacks first
-    attack: 3,
+    attack: 4,
     maxHealth: 7,
     armor: 0,
     resourceCosts: { workers: 1, wood: 3, metal: 2 },
@@ -93,7 +93,7 @@ export const baseUnitData: BaseUnitData = {
     bgImageLg: "bg-knightLg",
     threatLevel: 1.5,
     attack: 6,
-    maxHealth: 6,
+    maxHealth: 7,
     armor: 1,
     resourceCosts: { workers: 2, stone: 3, metal: 3 },
     buildScore: 80,
@@ -133,13 +133,12 @@ export const baseUnitData: BaseUnitData = {
     damagesOpponentOnDeath: false,
     doesAreaOfEffectDamageOnDeath: true,
   },
-  // reimagine -- auto-kill opposing unit, on death does 1/3 of its attack to 2 random units
   bombird: {
     unitType: "bombird",
     name: "Bombird",
     symbol: "💣",
     description:
-      "Explodes on death, hugely damaging the opposing unit and harming 2 units in the enemy army.",
+      "Explodes on death, hugely damaging their opponent and harming up to 2 enemy army units.",
     lockedText: "Unlocked by Explosives Research",
     bgImage: "bg-bomber",
     bgImageSm: "bg-bomberSm",
@@ -147,7 +146,7 @@ export const baseUnitData: BaseUnitData = {
     bgImageLg: "bg-bomberLg",
     threatLevel: 3,
     attack: 1,
-    maxHealth: 1,
+    maxHealth: 5,
     armor: 0,
     resourceCosts: { workers: 3, wood: 2, stone: 2, metal: 2, crystal: 2 },
     buildScore: 110,
