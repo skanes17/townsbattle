@@ -552,6 +552,10 @@ export default function Game(props: GameProps) {
         armor +
         fullHealthAttackBonusPowerLevel(chosenUnitWithCurrentHealth) +
         berserkerAttackBonusPowerLevel(chosenUnitWithCurrentHealth) +
+        (chosenUnitWithCurrentHealth.damageToOpponentOnDeath ?? 0) +
+        (chosenUnitWithCurrentHealth.areaOfEffectDamageOnDeath ?? 0) *
+          (chosenUnitWithCurrentHealth.numberOfUnitsAffectedByAoeDamageOnDeath ??
+            0) +
         threatLevel;
     }
     // end of while loop

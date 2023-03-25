@@ -5,6 +5,7 @@ import {
   PostCombatEvent,
   SummaryEvent,
   NoArmyEvent,
+  BombirdDeathEvent,
 } from "../../types";
 
 /* TODO: Make flavourtexts based on unit type; see below in combat phase */
@@ -153,6 +154,30 @@ export const messages = {
             {event.data.enemy.attack} damage
           </span>
           .
+        </p>
+      );
+    },
+    // idx: 4
+    (event: BombirdDeathEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.destroyedUnit.randomName}
+          </span>{" "}
+          <span className="font-semibold text-red-500">explodes,</span> doing{" "}
+          <span className="text-amber-400">
+            {event.data.destroyedUnit.damageToOpponentOnDeath} damage
+          </span>{" "}
+          to{" "}
+          <span className="text-red-400">
+            {event.data.opposingUnit.randomName}
+          </span>
+          . The blast hits {event.data.numberOfUnitsAffected} units in the
+          opposing army for{" "}
+          <span className="text-amber-400">
+            {event.data.destroyedUnit.areaOfEffectDamageOnDeath}
+          </span>{" "}
+          damage each.
         </p>
       );
     },
