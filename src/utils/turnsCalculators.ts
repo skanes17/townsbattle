@@ -9,7 +9,7 @@ export function calcPlanningTurnsUntilArmyGen(difficulty: Difficulty): number {
       planningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(4, 6);
       break;
     case "normal":
-      planningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(3, 4);
+      planningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(4, 5);
       break;
     case "hard":
       planningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(3, 4);
@@ -18,7 +18,7 @@ export function calcPlanningTurnsUntilArmyGen(difficulty: Difficulty): number {
       planningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(3, 4);
       break;
     default:
-      planningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(3, 4);
+      planningTurnsUntilArmyGen = randomNumberBetweenMinAndMax(4, 5);
       break;
   }
   return planningTurnsUntilArmyGen;
