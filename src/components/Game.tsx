@@ -60,7 +60,6 @@ import { calculatePowerLevel } from "../utils/calculatePowerLevel";
 export default function Game(props: GameProps) {
   const gameSave = useLoaderData() as GameSave;
 
-  /* TODO: Set state using useLoader() data */
   const [devTools] = useState(gameSave.devTools);
   // points from rounds of combat get added to this
   const [score, setScore] = useState(gameSave.score);
