@@ -4,6 +4,7 @@ export * from "./calculateAttackValues";
 export * from "./chooseNameByUnitType";
 export * from "./cloneWithJSON";
 export * from "./countUnits";
+export * from "./damageAndReturnNewHealth";
 export * from "./generateScoutReport";
 export * from "./generateStars";
 export * from "./getSurvivingUnitIndexes";
