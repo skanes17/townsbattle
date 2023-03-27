@@ -56,9 +56,16 @@ export interface MainCombatEvent {
 export interface BombirdDeathEvent {
   type: "combat";
   data: {
-    destroyedUnit: Unit;
-    opposingUnit: Unit;
+    destroyedUnit: {
+      randomName: string;
+      damageToOpponentOnDeath?: number;
+      areaOfEffectDamageOnDeath?: number;
+    };
+    opposingUnit: {
+      randomName: string;
+    };
     numberOfUnitsAffected: number;
+    randomNamesOfUnitsAffectedByAoeDamage: string[];
   };
 }
 

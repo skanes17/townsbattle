@@ -220,10 +220,11 @@ export default function Combat({
   const unitsFight = () => {
     // chosen units attack each other
     const _friendlyArmy = [...combatUnits];
-    const selectedFriendly = _friendlyArmy[friendlyIndex];
-    const clonedSelectedFriendly = { ...selectedFriendly };
     const _enemyArmy = [...combatEnemyUnits];
+    const selectedFriendly = _friendlyArmy[friendlyIndex];
     const selectedEnemy = _enemyArmy[enemyIndex];
+    // units cloned to preserve fullHealthAttackBonus, etc
+    const clonedSelectedFriendly = { ...selectedFriendly };
     const clonedSelectedEnemy = { ...selectedEnemy };
 
     // INCORPORATE PASSIVE EFFECTS HERE
@@ -238,8 +239,8 @@ export default function Combat({
         selectedEnemy.currentHealth -
           calculatedAttackValue(
             AttackValueType.toEnemy,
-            selectedFriendly,
-            selectedEnemy
+            clonedSelectedFriendly,
+            clonedSelectedEnemy
           )
       );
 
@@ -250,8 +251,8 @@ export default function Combat({
           selectedFriendly.currentHealth -
             calculatedAttackValue(
               AttackValueType.toEnemy,
-              selectedEnemy,
-              selectedFriendly
+              clonedSelectedEnemy,
+              clonedSelectedFriendly
             )
         );
       } else {
@@ -267,8 +268,8 @@ export default function Combat({
         selectedFriendly.currentHealth -
           calculatedAttackValue(
             AttackValueType.toEnemy,
-            selectedEnemy,
-            selectedFriendly
+            clonedSelectedEnemy,
+            clonedSelectedFriendly
           )
       );
       // If the friendly survives, it attacks. Else, it's dead and its attack is set to 0.
@@ -278,24 +279,20 @@ export default function Combat({
           selectedEnemy.currentHealth -
             calculatedAttackValue(
               AttackValueType.toEnemy,
-              selectedFriendly,
-              selectedEnemy
+              clonedSelectedFriendly,
+              clonedSelectedEnemy
             )
         );
       } else selectedFriendly.attack = 0;
     } else {
       // default fight -- no hitsFirst mechanic
-      // units cloned to preserve fullHealthAttackBonus, etc
-      const clonedFriendly = { ...selectedFriendly };
-      const clonedEnemy = { ...selectedEnemy };
-
       selectedEnemy.currentHealth = Math.max(
         0,
         selectedEnemy.currentHealth -
           calculatedAttackValue(
             AttackValueType.toEnemy,
-            clonedFriendly,
-            clonedEnemy
+            clonedSelectedFriendly,
+            clonedSelectedEnemy
           )
       );
 
@@ -305,83 +302,111 @@ export default function Combat({
         selectedFriendly.currentHealth -
           calculatedAttackValue(
             AttackValueType.toEnemy,
-            clonedEnemy,
-            clonedFriendly
+            clonedSelectedEnemy,
+            clonedSelectedFriendly
           )
       );
     }
 
     // FIXME: Consolidate these into one function (or multiple smaller functions)
     // if ENEMY dies, do this
-    if (
-      selectedEnemy.currentHealth === 0 &&
-      selectedEnemy.damagesOpponentOnDeath &&
-      selectedEnemy.doesAreaOfEffectDamageOnDeath
-    ) {
-      // unit damages opponent on death
-      const damageToOpponent = selectedEnemy.damageToOpponentOnDeath ?? 0;
-      selectedFriendly.currentHealth = Math.max(
-        0,
-        selectedFriendly.currentHealth - damageToOpponent
-      );
-
-      // unit does area of effect damage to opposing army on death
-      const unitsAffectedByAoeDamage = [];
-      // don't include the opposing unit in the AoE damage
-      const clonedSurvivingUnitIndexes = [
-        ...survivingFriendlyUnitIndexes,
-      ].filter(
-        (survivingUnitIndex) =>
-          _friendlyArmy[survivingUnitIndex] !== selectedFriendly
-      );
-      const numUnitsToBeDamaged =
-        selectedEnemy.numberOfUnitsAffectedByAoeDamageOnDeath ?? 0;
-
-      // Fill an array with the required number of unique unit indices from the appropriate army to be damaged
-      while (
-        clonedSurvivingUnitIndexes.length > 0 &&
-        unitsAffectedByAoeDamage.length < numUnitsToBeDamaged
-      ) {
-        const randomIndex = Math.floor(
-          Math.random() * clonedSurvivingUnitIndexes.length
-        );
-        unitsAffectedByAoeDamage.push(
-          clonedSurvivingUnitIndexes.splice(randomIndex, 1)[0]
-        );
-      }
-
-      // Damage each relevant unit
-      for (const index of unitsAffectedByAoeDamage) {
-        const unitToBeDamagedByAoe = _friendlyArmy[index];
-        const areaOfEffectDamageOnDeath =
-          selectedEnemy.areaOfEffectDamageOnDeath ?? 0;
-        unitToBeDamagedByAoe.currentHealth = Math.max(
+    if (selectedEnemy.currentHealth === 0) {
+      if (selectedEnemy.damagesOpponentOnDeath) {
+        // unit damages opponent on death
+        const { damageToOpponentOnDeath } = selectedEnemy;
+        selectedFriendly.currentHealth = Math.max(
           0,
-          unitToBeDamagedByAoe.currentHealth - areaOfEffectDamageOnDeath
+          selectedFriendly.currentHealth - (damageToOpponentOnDeath ?? 0)
         );
       }
 
+      const indexesOfUnitsAffectedByAoeDamage: number[] = [];
+      const randomNamesOfUnitsAffectedByAoeDamage: string[] = [];
+      if (selectedEnemy.doesAreaOfEffectDamageOnDeath) {
+        // defeated unit does area of effect damage to opposing army on death
+        // don't include the opposing unit in the AoE damage
+        const clonedSurvivingUnitIndexes = [
+          ...survivingFriendlyUnitIndexes,
+        ].filter(
+          (survivingUnitIndex) =>
+            _friendlyArmy[survivingUnitIndex] !== selectedFriendly
+        );
+        const numberOfUnitsToBeDamaged =
+          selectedEnemy.numberOfUnitsAffectedByAoeDamageOnDeath ?? 0;
+
+        // Fill an array with the required number of unique unit indices from the appropriate army to be damaged
+        while (
+          clonedSurvivingUnitIndexes.length > 0 &&
+          indexesOfUnitsAffectedByAoeDamage.length < numberOfUnitsToBeDamaged
+        ) {
+          const randomIndex = Math.floor(
+            Math.random() * clonedSurvivingUnitIndexes.length
+          );
+          indexesOfUnitsAffectedByAoeDamage.push(
+            clonedSurvivingUnitIndexes.splice(randomIndex, 1)[0]
+          );
+        }
+
+        indexesOfUnitsAffectedByAoeDamage.forEach((index) => {
+          randomNamesOfUnitsAffectedByAoeDamage.push(
+            _friendlyArmy[index].randomName
+          );
+        });
+
+        // Damage each relevant unit
+        for (const index of indexesOfUnitsAffectedByAoeDamage) {
+          const unitToBeDamagedByAoe = _friendlyArmy[index];
+
+          const areaOfEffectDamageOnDeath =
+            selectedEnemy.areaOfEffectDamageOnDeath ?? 0;
+          unitToBeDamagedByAoe.currentHealth = Math.max(
+            0,
+            unitToBeDamagedByAoe.currentHealth - areaOfEffectDamageOnDeath
+          );
+        }
+      }
       if (selectedEnemy.unitType === "bombird") {
+        console.log("Bombird dead!");
+        const {
+          randomName,
+          damageToOpponentOnDeath,
+          areaOfEffectDamageOnDeath,
+        } = selectedEnemy;
+
+        console.log(selectedEnemy);
+
         const bombirdEvent: BombirdDeathEvent = {
           type: "combat",
           data: {
-            destroyedUnit: selectedEnemy,
-            opposingUnit: selectedFriendly,
-            numberOfUnitsAffected: unitsAffectedByAoeDamage.length,
+            destroyedUnit: {
+              randomName,
+              damageToOpponentOnDeath,
+              areaOfEffectDamageOnDeath,
+            },
+            opposingUnit: { randomName: selectedFriendly.randomName },
+            numberOfUnitsAffected: indexesOfUnitsAffectedByAoeDamage.length,
+            // what happens if empty string array?
+            randomNamesOfUnitsAffectedByAoeDamage,
           },
         };
+
+        console.log(bombirdEvent);
+
+        // FIXME: Note; the error is happening when hit by archer... shouldn't be dead if attack is 4!
 
         // bombird event index
         const eventIndex = 4;
 
         const combatState = { event: bombirdEvent, idx: eventIndex };
+        console.log(combatState);
+
         // experimenting with appending to top
         setCombatEvents((prevCombatEvents) => [
           combatState,
           ...prevCombatEvents,
         ]);
 
-        /* TODO: PICK UP FROM HERE, DO FOR FRIENDLY */
+        // TODO: PICK UP FROM HERE, DO FOR FRIENDLY
       }
     }
     // if FRIENDLY dies, do this
@@ -395,9 +420,9 @@ export default function Combat({
         );
       }
 
-      // Check if selected enemy does area of effect damage on death
+      // Check if selected unit does area of effect damage on death
       if (selectedFriendly.doesAreaOfEffectDamageOnDeath) {
-        const unitsAffectedByAoeDamage = [];
+        const indexesOfUnitsAffectedByAoeDamage = [];
         // don't include the opposing unit in the AoE damage
         const clonedSurvivingUnitIndexes = [
           ...survivingEnemyUnitIndexes,
@@ -411,18 +436,18 @@ export default function Combat({
         // Fill an array with the required number of unique unit indices from the appropriate army to be damaged
         while (
           clonedSurvivingUnitIndexes.length > 0 &&
-          unitsAffectedByAoeDamage.length < numUnitsToBeDamaged
+          indexesOfUnitsAffectedByAoeDamage.length < numUnitsToBeDamaged
         ) {
           const randomIndex = Math.floor(
             Math.random() * clonedSurvivingUnitIndexes.length
           );
-          unitsAffectedByAoeDamage.push(
+          indexesOfUnitsAffectedByAoeDamage.push(
             clonedSurvivingUnitIndexes.splice(randomIndex, 1)[0]
           );
         }
 
         // Damage each relevant unit
-        for (const index of unitsAffectedByAoeDamage) {
+        for (const index of indexesOfUnitsAffectedByAoeDamage) {
           const unitToBeDamagedByAoe = _enemyArmy[index];
           const areaOfEffectDamageOnDeath =
             selectedFriendly.areaOfEffectDamageOnDeath ?? 0;
@@ -488,7 +513,6 @@ export default function Combat({
     const eventIndex = Math.floor(Math.random() * messages.combat.length);
 
     const combatState = { event: combatEvent, idx: eventIndex };
-    // experimenting with appending to top
     setCombatEvents((prevCombatEvents) => [combatState, ...prevCombatEvents]);
 
     setCombatEnemyUnits(_enemyArmy);

@@ -26,7 +26,7 @@ export const baseUnitData: BaseUnitData = {
     berserker: false,
     survivalArmorBonus: false,
     damagesOpponentOnDeath: false,
-    doesAreaOfEffectDamageOnDeath: true,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   fighter: {
     unitType: "fighter",
@@ -52,7 +52,7 @@ export const baseUnitData: BaseUnitData = {
     berserkerAttackMultiplier: 1.5,
     survivalArmorBonus: false,
     damagesOpponentOnDeath: false,
-    doesAreaOfEffectDamageOnDeath: true,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   archer: {
     unitType: "archer",
@@ -78,7 +78,7 @@ export const baseUnitData: BaseUnitData = {
     berserker: false,
     survivalArmorBonus: false,
     damagesOpponentOnDeath: false,
-    doesAreaOfEffectDamageOnDeath: true,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   knight: {
     unitType: "knight",
@@ -104,7 +104,7 @@ export const baseUnitData: BaseUnitData = {
     berserker: false,
     survivalArmorBonus: true,
     damagesOpponentOnDeath: false,
-    doesAreaOfEffectDamageOnDeath: true,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   // TODO: Consider allowing an armor buff for first hit, eg no damage when first hit
   mage: {
@@ -131,7 +131,7 @@ export const baseUnitData: BaseUnitData = {
     berserker: false,
     survivalArmorBonus: false,
     damagesOpponentOnDeath: false,
-    doesAreaOfEffectDamageOnDeath: true,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   bombird: {
     unitType: "bombird",
@@ -165,24 +165,3 @@ export const baseUnitData: BaseUnitData = {
 };
 
 export const berserkerHealthTrigger = 0.5;
-
-/* export const unitCostsData = {
-  fighter: {
-    workers: 1,
-    wood: 2,
-    stone: 2,
-    metal: 0,
-  },
-  archer: {
-    workers: 1,
-    wood: 2,
-    stone: 0,
-    metal: 2,
-  },
-  knight: {
-    workers: 1,
-    wood: 0,
-    stone: 2,
-    metal: 2,
-  },
-}; */

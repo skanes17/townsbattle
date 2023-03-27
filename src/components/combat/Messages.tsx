@@ -1,4 +1,3 @@
-import React from "react";
 import {
   PreCombatEvent,
   MainCombatEvent,
@@ -160,24 +159,35 @@ export const messages = {
     // idx: 4
     (event: BombirdDeathEvent) => {
       return (
-        <p>
+        <p className="bg-amber-400/5">
           <span className="text-green-400">
             {event.data.destroyedUnit.randomName}
           </span>{" "}
           <span className="font-semibold text-red-500">explodes,</span> doing{" "}
-          <span className="text-amber-400">
+          <span className="font-bold text-amber-400">
             {event.data.destroyedUnit.damageToOpponentOnDeath} damage
           </span>{" "}
           to{" "}
           <span className="text-red-400">
             {event.data.opposingUnit.randomName}
           </span>
-          . The blast hits {event.data.numberOfUnitsAffected} units in the
-          opposing army for{" "}
+          ! The blast hits{" "}
+          {event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 1 ? (
+            <span className="font-bold text-amber-400">
+              {event.data.randomNamesOfUnitsAffectedByAoeDamage.join(" and ")}
+            </span>
+          ) : event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 0 ? (
+            <span className="font-bold text-amber-400">
+              {event.data.randomNamesOfUnitsAffectedByAoeDamage}
+            </span>
+          ) : (
+            <span className="font-bold text-amber-400">no one</span>
+          )}{" "}
+          in the opposing army for{" "}
           <span className="text-amber-400">
             {event.data.destroyedUnit.areaOfEffectDamageOnDeath}
           </span>{" "}
-          damage each.
+          damage.
         </p>
       );
     },
