@@ -307,15 +307,15 @@ export default function Combat({
     else if (matchups.unitsHitSimultaneously) {
       // damage the selected friendly unit
       selectedEnemy.currentHealth = damageUnitAndReturnNewHealth(
-        selectedEnemy,
-        selectedFriendly
+        clonedSelectedEnemy,
+        clonedSelectedFriendly
       );
       selectedEnemy.currentHealth === 0 && (matchupResults.enemyDied = true);
 
       // damage the selected enemy unit
       selectedFriendly.currentHealth = damageUnitAndReturnNewHealth(
-        selectedFriendly,
-        selectedEnemy
+        clonedSelectedFriendly,
+        clonedSelectedEnemy
       );
       selectedFriendly.currentHealth === 0 &&
         (matchupResults.friendlyDied = true);
@@ -332,11 +332,14 @@ export default function Combat({
           unitType: selectedFriendly.unitType,
           /* attack: combatUnits[friendlyIndex].attack, */
           // cloned so bonuses are incorporated into the combat log is correct before stats are altered
-          attack: calculatedAttackValue(
-            AttackValueType.toEnemy,
-            clonedSelectedFriendly,
-            clonedSelectedEnemy
-          ),
+          attack:
+            matchups.onlyTheEnemyHitsFirst && selectedFriendly.attack === 0
+              ? 0
+              : calculatedAttackValue(
+                  AttackValueType.toEnemy,
+                  clonedSelectedFriendly,
+                  clonedSelectedEnemy
+                ),
           maxHealth: selectedFriendly.maxHealth,
           // used copy to avoid state update's async issues
           currentHealth: selectedFriendly.currentHealth,
@@ -347,16 +350,20 @@ export default function Combat({
           incomingDmgReduction: selectedFriendly.incomingDmgReduction, */
           id: selectedFriendly.id,
         },
+
         enemy: {
           name: selectedEnemy.name,
           randomName: selectedEnemy.randomName,
           unitType: selectedEnemy.unitType,
           /* attack: selectedEnemy.attack, */
-          attack: calculatedAttackValue(
-            AttackValueType.toEnemy,
-            clonedSelectedEnemy,
-            clonedSelectedFriendly
-          ),
+          attack:
+            matchups.onlyTheFriendlyHitsFirst && selectedEnemy.attack === 0
+              ? 0
+              : calculatedAttackValue(
+                  AttackValueType.toEnemy,
+                  clonedSelectedEnemy,
+                  clonedSelectedFriendly
+                ),
           maxHealth: selectedEnemy.maxHealth,
           // used copy to avoid state update's async issues
           currentHealth: selectedEnemy.currentHealth,
@@ -433,14 +440,13 @@ export default function Combat({
     // FIXME: Consolidate the enemy and friendly death processes!
     // if FRIENDLY dies, do this
     if (matchupResults.friendlyDied) {
-      if (selectedEnemy.damagesOpponentOnDeath) {
+      if (selectedFriendly.damagesOpponentOnDeath) {
         // unit damages opponent on death
-        selectedFriendly.currentHealth =
-          calculateNewHealthAfterDamagedByDyingUnit(
-            typeOfDamageOnDeath.Direct,
-            selectedFriendly,
-            selectedEnemy
-          );
+        selectedEnemy.currentHealth = calculateNewHealthAfterDamagedByDyingUnit(
+          typeOfDamageOnDeath.Direct,
+          selectedEnemy,
+          selectedFriendly
+        );
       }
 
       let indexesOfUnitsAffectedByAoeDamage: number[] = [];

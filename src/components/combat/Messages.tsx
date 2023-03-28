@@ -54,7 +54,7 @@ export const messages = {
           </span>{" "}
           sees{" "}
           <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
-          and calls him something nasty.
+          and calls them something nasty.
         </p>
       );
     },
