@@ -62,7 +62,7 @@ import {
   totalAttackBonusesPowerLevel,
 } from "../utils/calculatePowerLevel";
 
-export default function Game(props: GameProps) {
+export default function Game() {
   const gameSave = useLoaderData() as GameSave;
 
   const [devTools] = useState(gameSave.devTools);

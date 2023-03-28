@@ -6,8 +6,13 @@ interface CombatCardHeader {
 }
 
 export default function CombatCardHeader({ unit }: CombatCardHeader) {
+  const bossNameStyle =
+    unit.unitType === "uwuu"
+      ? "font-bold sm:font-extrabold text-red-400"
+      : "font-semibold sm:font-bold";
+
   return (
-    <div className={`self-center text-center font-semibold sm:font-bold`}>
+    <div className={`${bossNameStyle} self-center text-center`}>
       {unit.randomName}
     </div>
   );

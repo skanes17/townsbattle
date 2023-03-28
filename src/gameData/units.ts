@@ -1,6 +1,6 @@
 // TODO: Add in effect description? eg "Extra damage when unharmed"
 
-import { BaseUnitData } from "../types";
+import { BaseUnitData, BossUnitData, Unit } from "../types";
 
 export const baseUnitData: BaseUnitData = {
   villager: {
@@ -150,6 +150,34 @@ export const baseUnitData: BaseUnitData = {
     armor: 0,
     resourceCosts: { workers: 3, wood: 2, stone: 2, metal: 2, crystal: 2 },
     buildScore: 110,
+    hitsFirst: false,
+    fullHealthBonus: false,
+    chargesBeforeSelection: false,
+    chargingMultiplier: 1,
+    berserker: false,
+    survivalArmorBonus: false,
+    damagesOpponentOnDeath: true,
+    damageToOpponentOnDeath: 25,
+    doesAreaOfEffectDamageOnDeath: true,
+    areaOfEffectDamageOnDeath: 3,
+    numberOfUnitsAffectedByAoeDamageOnDeath: 2,
+  },
+  uwuu: {
+    unitType: "uwuu",
+    name: "Uwuu",
+    symbol: "🦉",
+    description: "Uwuu is a wise owl who has been around for a long time. Run.",
+    lockedText: "Unit cannot be unlocked",
+    bgImage: "bg-uwuu",
+    bgImageSm: "bg-uwuuSm",
+    bgImageMd: "bg-uwuuMd",
+    bgImageLg: "bg-uwuuLg",
+    threatLevel: 50,
+    attack: 30,
+    maxHealth: 50,
+    armor: 2,
+    resourceCosts: { workers: 50, wood: 50, stone: 50, metal: 50, crystal: 50 },
+    buildScore: 2000,
     hitsFirst: false,
     fullHealthBonus: false,
     chargesBeforeSelection: false,

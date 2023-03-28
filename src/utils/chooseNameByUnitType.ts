@@ -33,6 +33,9 @@ export function chooseNameByUnitType(unitType: UnitType) {
       randomName =
         bombirdNames[Math.floor(Math.random() * bombirdNames.length)];
       break;
+    case "uwuu":
+      randomName = "Uwuu";
+      break;
   }
   return randomName;
 }

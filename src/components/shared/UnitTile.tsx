@@ -114,11 +114,17 @@ export function UnitTile({
 
   const starDisplay = generateStars(unit.combatsSurvived);
 
+  const placementInGrid =
+    unit.unitType === "uwuu" ? "col-start-1 row-start-1" : "";
+  // TODO: Add shimmering edge
+  const bossNameStyle =
+    unit.unitType === "uwuu" ? "font-semibold text-red-400" : "";
+
   return (
     <>
       <div
         key={`${name}${id}`}
-        className={`${bg} group relative h-20 w-[3.33rem] snap-start justify-items-center rounded-lg bg-cover bg-center saturate-125 sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
+        className={`${bg} ${placementInGrid} group relative h-20 w-[3.33rem] snap-start justify-items-center rounded-lg bg-cover bg-center saturate-125 sm:h-24 sm:w-[4rem] md:h-[7.5rem] md:w-20 ${bgColor} ${borderWidth} ${borderColor} p-1 text-center shadow-inner ${hoverBorder}`}
       >
         <div
           className={`absolute left-0 right-0 bottom-[2.5%] mx-auto h-2 w-[95%] rounded-sm ${healthBarBackgroundColor} backdrop-blur-[1px] transition-all duration-500 ease-out md:h-3`}
@@ -132,7 +138,7 @@ export function UnitTile({
         </div>
         {/* Popup text */}
         <div className="fixed inset-0 flex h-[90%] w-[140%] translate-y-[5%] -translate-x-[20%] flex-col justify-center overflow-y-auto overflow-x-hidden rounded-lg bg-black/80 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:text-base">
-          {randomName && <p>{randomName + id}</p>}
+          {randomName && <p className={`${bossNameStyle}`}>{randomName}</p>}
           {allAttackBonusesCheck(unit) ? (
             <p className="font-semibold text-amber-400">
               <span className="font-emoji">🗡️</span>

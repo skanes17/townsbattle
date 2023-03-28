@@ -6,20 +6,22 @@ export type UnitType =
   | "archer"
   | "knight"
   | "mage"
-  | "bombird";
+  | "bombird"
+  | "uwuu";
 export type UnitName =
   | "Villager"
   | "Fighter"
   | "Archer"
   | "Knight"
   | "Mage"
-  | "Bombird";
+  | "Bombird"
+  | "Uwuu";
 
 export interface Unit {
   unitType: UnitType;
   name: UnitName;
   randomName: string;
-  symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣";
+  symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣" | "🦉";
   description?: string;
   lockedText: string;
   bgImage: string;
@@ -64,3 +66,45 @@ export interface TrainingUnit {
   /* Can't remember where I was going to use tempId */
   tempId?: number;
 }
+
+// TODO: Replace with BossType, BossName?
+export interface BossUnit {
+  bossType: Boss;
+  name: BossName;
+  randomName: string;
+  symbol: "🦉";
+  description?: string;
+  lockedText: string;
+  bgImage: string;
+  bgImageSm: string;
+  bgImageMd: string;
+  bgImageLg: string;
+  threatLevel: number;
+  attack: number;
+  maxHealth: number;
+  armor: number;
+  currentHealth: number;
+  buildScore: number;
+  hitsFirst: boolean;
+  fullHealthBonus: boolean;
+  fullHealthAttackBonus?: number;
+  chargesBeforeSelection: boolean;
+  chargingMultiplier?: number;
+  berserker: boolean;
+  berserkerAttackMultiplier?: number;
+  id?: number;
+  combatsSurvived?: number;
+  survivalArmorBonus: boolean;
+  damagesOpponentOnDeath: boolean;
+  damageToOpponentOnDeath?: number;
+  doesAreaOfEffectDamageOnDeath: boolean;
+  areaOfEffectDamageOnDeath?: number;
+  numberOfUnitsAffectedByAoeDamageOnDeath?: number;
+}
+
+export interface BossUnitData {
+  [key: string]: BossUnit;
+}
+
+export type Boss = "uwuu";
+export type BossName = "Uwuu";
