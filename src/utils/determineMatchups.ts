@@ -11,6 +11,6 @@ export function determineMatchups(
     onlyTheEnemyHitsFirst:
       selectedEnemy.hitsFirst && !selectedFriendly.hitsFirst,
     unitsHitSimultaneously:
-      !selectedFriendly.hitsFirst && !selectedEnemy.hitsFirst,
+      selectedFriendly.hitsFirst === selectedEnemy.hitsFirst,
   };
 }
