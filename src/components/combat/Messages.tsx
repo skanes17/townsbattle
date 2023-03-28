@@ -4,7 +4,7 @@ import {
   PostCombatEvent,
   SummaryEvent,
   NoArmyEvent,
-  BombirdDeathEvent,
+  AoeOnDeathEvent,
 } from "../../types";
 
 /* TODO: Make flavourtexts based on unit type; see below in combat phase */
@@ -72,7 +72,7 @@ export const messages = {
     },
     /* more alternatives here */
   ],
-  combat: [
+  mainCombat: [
     (event: MainCombatEvent) => {
       return (
         <p>
@@ -156,8 +156,10 @@ export const messages = {
         </p>
       );
     },
-    // idx: 4
-    (event: BombirdDeathEvent) => {
+  ],
+  aoeOnDeath: [
+    // idx: 0 -- Bombird
+    (event: AoeOnDeathEvent) => {
       return (
         <p className="bg-amber-400/5">
           <span className="text-green-400">

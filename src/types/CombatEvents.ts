@@ -4,10 +4,10 @@ export interface CombatEvent {
   event:
     | PreCombatEvent
     | MainCombatEvent
+    | AoeOnDeathEvent
     | PostCombatEvent
     | SummaryEvent
-    | NoArmyEvent
-    | BombirdDeathEvent;
+    | NoArmyEvent;
   idx: number;
 }
 
@@ -26,7 +26,7 @@ export interface PreCombatEvent {
 /* TODO: Add in buffs/bonuses into the list! */
 
 export interface MainCombatEvent {
-  type: "combat";
+  type: "mainCombat";
   data: {
     friendly: {
       name: string;
@@ -53,8 +53,8 @@ export interface MainCombatEvent {
   };
 }
 
-export interface BombirdDeathEvent {
-  type: "combat";
+export interface AoeOnDeathEvent {
+  type: "aoeOnDeath";
   data: {
     destroyedUnit: {
       randomName: string;

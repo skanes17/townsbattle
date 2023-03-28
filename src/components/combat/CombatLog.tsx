@@ -1,6 +1,5 @@
 import React, { useState, MouseEvent } from "react";
 import { CombatEvent } from "../../types";
-import POddStyle from "./POddStyle";
 import { messages } from "./Messages";
 
 interface CombatLogProps {
