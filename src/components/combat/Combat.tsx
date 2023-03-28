@@ -42,6 +42,8 @@ import CombatCardTemplate from "../cards/CombatCardTemplate";
 import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 /* @ts-ignore */
 import destroyBldgSfx from "../../assets/sounds/destroyBldgSfx.mp3";
+/* @ts-ignore */
+import bombirdExplosionSfx from "../../assets/sounds/bombirdExplosionSfx.mp3";
 import { difficultyScoreMultipliers } from "../../gameData/difficultyScoreMultipliers";
 import { MatchupResults, Matchups } from "../../types/conditionalsInCombat";
 import { Modal, ModalHeader, ModalTextContent } from "../planning/tutorials";
@@ -111,6 +113,7 @@ export default function Combat({
   const [subPhase, setSubPhase] = useState<SubPhases>(SubPhases.Fight);
 
   const [playDestroyBldgSound] = useSound(destroyBldgSfx);
+  const [playBombirdExplosionSound] = useSound(bombirdExplosionSfx);
 
   const basePointsForCompletingCombat =
     100 * difficultyScoreMultipliers[difficulty];
@@ -430,6 +433,7 @@ export default function Combat({
         );
       }
       if (selectedEnemy.unitType === "bombird") {
+        playBombirdExplosionSound();
         const bombirdCombatState = produceBombirdAoeOnDeathEvent(
           UnitDestroyed.Enemy,
           selectedEnemy,
@@ -479,6 +483,7 @@ export default function Combat({
         );
       }
       if (selectedFriendly.unitType === "bombird") {
+        playBombirdExplosionSound();
         const bombirdCombatState = produceBombirdAoeOnDeathEvent(
           UnitDestroyed.Friendly,
           selectedFriendly,
