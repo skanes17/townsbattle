@@ -1,6 +1,12 @@
 import { AoeOnDeathEvent, Unit } from "../types";
 
+export enum UnitDestroyed {
+  Friendly,
+  Enemy,
+}
+
 export function produceBombirdAoeOnDeathEvent(
+  unitDestroyed: UnitDestroyed,
   destroyedUnit: Unit,
   opposingUnit: Unit,
   indexesOfUnitsAffectedByAoeDamage: number[],
@@ -25,8 +31,16 @@ export function produceBombirdAoeOnDeathEvent(
     },
   };
 
+  let eventIndex;
   // bombird aoe event index
-  const eventIndex = 0;
+  switch (unitDestroyed) {
+    case UnitDestroyed.Friendly:
+      eventIndex = 0;
+      break;
+    case UnitDestroyed.Enemy:
+      eventIndex = 1;
+      break;
+  }
 
   const bombirdCombatState = { event: aoeOnDeathEvent, idx: eventIndex };
   return bombirdCombatState;

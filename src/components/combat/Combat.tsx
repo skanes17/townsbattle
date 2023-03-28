@@ -50,7 +50,10 @@ import CombatLog from "./CombatLog";
 import { messages } from "./Messages";
 import PostCombatSummary from "./PostCombatSummary";
 import { determineMatchups } from "../../utils/determineMatchups";
-import { produceBombirdAoeOnDeathEvent } from "../../utils/produceAoeEvent";
+import {
+  produceBombirdAoeOnDeathEvent,
+  UnitDestroyed,
+} from "../../utils/produceAoeEvent";
 import { getIndexesOfUnitsAffectedByAoeDamage } from "../../utils/getIndexesOfUnitsAffectedByAoeDamage";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
@@ -428,6 +431,7 @@ export default function Combat({
       }
       if (selectedEnemy.unitType === "bombird") {
         const bombirdCombatState = produceBombirdAoeOnDeathEvent(
+          UnitDestroyed.Enemy,
           selectedEnemy,
           selectedFriendly,
           indexesOfUnitsAffectedByAoeDamage,
@@ -476,6 +480,7 @@ export default function Combat({
       }
       if (selectedFriendly.unitType === "bombird") {
         const bombirdCombatState = produceBombirdAoeOnDeathEvent(
+          UnitDestroyed.Friendly,
           selectedFriendly,
           selectedEnemy,
           indexesOfUnitsAffectedByAoeDamage,

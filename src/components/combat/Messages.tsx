@@ -202,6 +202,7 @@ export const messages = {
           {event.data.friendly.unitType === "archer" ? "shoots at" : null}{" "}
           {event.data.friendly.unitType === "knight" ? "bashes" : null}{" "}
           {event.data.friendly.unitType === "mage" ? "casts a spell on" : null}{" "}
+          {event.data.friendly.unitType === "bombird" ? "flies toward" : null}{" "}
           <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           for{" "}
           <span className="text-amber-400">
@@ -221,7 +222,7 @@ export const messages = {
           <span className="text-green-400">
             {event.data.friendly.randomName}
           </span>{" "}
-          injures{" "}
+          attacks{" "}
           <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           for{" "}
           <span className="text-amber-400">
@@ -275,7 +276,7 @@ export const messages = {
     },
   ],
   aoeOnDeath: [
-    // idx: 0 -- Bombird
+    // idx: 0 -- Friendly Bombird explodes
     (event: AoeOnDeathEvent) => {
       return (
         <p className="bg-amber-400/5">
@@ -283,7 +284,7 @@ export const messages = {
             {event.data.destroyedUnit.randomName}
           </span>{" "}
           <span className="font-semibold text-red-500">explodes,</span> doing{" "}
-          <span className="font-bold text-amber-400">
+          <span className="font-semibold text-amber-400">
             {event.data.destroyedUnit.damageToOpponentOnDeath} damage
           </span>{" "}
           to{" "}
@@ -292,17 +293,53 @@ export const messages = {
           </span>
           ! The blast hits{" "}
           {event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 1 ? (
-            <span className="font-bold text-amber-400">
+            <span className="text-red-400">
               {event.data.randomNamesOfUnitsAffectedByAoeDamage.join(" and ")}
             </span>
           ) : event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 0 ? (
-            <span className="font-bold text-amber-400">
+            <span className="text-red-400">
               {event.data.randomNamesOfUnitsAffectedByAoeDamage}
             </span>
           ) : (
-            <span className="font-bold text-amber-400">no one</span>
+            <span className="text-red-400">no one</span>
           )}{" "}
-          in the opposing army for{" "}
+          in the enemy army for{" "}
+          <span className="text-amber-400">
+            {event.data.destroyedUnit.areaOfEffectDamageOnDeath}
+          </span>{" "}
+          damage.
+        </p>
+      );
+    },
+    // idx: 1 -- Enemy Bombird explodes
+    (event: AoeOnDeathEvent) => {
+      return (
+        <p className="bg-amber-400/5">
+          <span className="text-green-400">
+            {event.data.opposingUnit.randomName}
+          </span>{" "}
+          is hit for{" "}
+          <span className="font-semibold text-amber-400">
+            {event.data.destroyedUnit.damageToOpponentOnDeath} damage
+          </span>{" "}
+          as{" "}
+          <span className="text-red-400">
+            {event.data.destroyedUnit.randomName}
+          </span>{" "}
+          <span className="font-semibold text-red-500">explodes</span>! The
+          blast hits{" "}
+          {event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 1 ? (
+            <span className="text-green-400">
+              {event.data.randomNamesOfUnitsAffectedByAoeDamage.join(" and ")}
+            </span>
+          ) : event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 0 ? (
+            <span className="text-green-400">
+              {event.data.randomNamesOfUnitsAffectedByAoeDamage}
+            </span>
+          ) : (
+            <span className="text-green-400">no one</span>
+          )}{" "}
+          for{" "}
           <span className="text-amber-400">
             {event.data.destroyedUnit.areaOfEffectDamageOnDeath}
           </span>{" "}
