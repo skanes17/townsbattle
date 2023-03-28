@@ -3,8 +3,9 @@ import { enemyColor, friendlyColor } from "../../gameData";
 import { ArmyColors } from "../../types";
 import { SubPhases } from "../../types/CombatPhases";
 import { Unit } from "../../types/Unit";
-import { CombatCardFooter, CombatCardHeader, CombatCardSymbol } from ".";
 import CardBgWithImage from "./CardBgWithImage";
+import CombatCardFooter from "./CombatCardFooter";
+import CombatCardHeader from "./CombatCardHeader";
 
 interface CombatCardTemplateProps {
   armyStyle: "friendly" | "enemy";

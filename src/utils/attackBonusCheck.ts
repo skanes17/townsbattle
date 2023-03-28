@@ -18,6 +18,12 @@ export function berserkBonusCheck(unit: Unit) {
   return berserkCheckAttackBonusActive;
 }
 
+export function aoeDamageOnDeathActiveCheck(unit: Unit) {
+  const aoeDamageOnDeathActive =
+    unit.doesAreaOfEffectDamageOnDeath && unit.currentHealth === 0;
+  return aoeDamageOnDeathActive;
+}
+
 export function allAttackBonusesCheck(unit: Unit) {
   const hasAttackBonus = fullHealthBonusCheck(unit) || berserkBonusCheck(unit);
   return hasAttackBonus;

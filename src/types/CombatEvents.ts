@@ -1,9 +1,10 @@
-import { UnitType } from "./Unit";
+import { Unit, UnitType } from "./Unit";
 
 export interface CombatEvent {
   event:
     | PreCombatEvent
     | MainCombatEvent
+    | AoeOnDeathEvent
     | PostCombatEvent
     | SummaryEvent
     | NoArmyEvent;
@@ -25,7 +26,7 @@ export interface PreCombatEvent {
 /* TODO: Add in buffs/bonuses into the list! */
 
 export interface MainCombatEvent {
-  type: "combat";
+  type: "mainCombat";
   data: {
     friendly: {
       name: string;
@@ -49,6 +50,22 @@ export interface MainCombatEvent {
       incomingDmgReduction: number; */
       id?: number;
     };
+  };
+}
+
+export interface AoeOnDeathEvent {
+  type: "aoeOnDeath";
+  data: {
+    destroyedUnit: {
+      randomName: string;
+      damageToOpponentOnDeath?: number;
+      areaOfEffectDamageOnDeath?: number;
+    };
+    opposingUnit: {
+      randomName: string;
+    };
+    numberOfUnitsAffected: number;
+    randomNamesOfUnitsAffectedByAoeDamage: string[];
   };
 }
 

@@ -1,5 +1,9 @@
-import { Unit } from "../types";
-import { berserkBonusCheck, fullHealthBonusCheck } from "./attackBonusCheck";
+import { Building, Unit } from "../types";
+import {
+  aoeDamageOnDeathActiveCheck,
+  berserkBonusCheck,
+  fullHealthBonusCheck,
+} from "./attackBonusCheck";
 
 export enum AttackValueType {
   card,
@@ -42,3 +46,50 @@ export const calculatedAttackValue = (
       return Math.max(0, attack + attackBonus - (defender?.armor ?? 0));
   }
 };
+
+export enum typeOfDamageOnDeath {
+  Direct,
+  AoE,
+}
+
+export const calculateNewHealthAfterDamagedByDyingUnit = (
+  type: typeOfDamageOnDeath.Direct | typeOfDamageOnDeath.AoE,
+  unitBeingDamaged: Unit,
+  dyingUnit: Unit
+): number => {
+  let damageValue: number;
+  switch (type) {
+    case typeOfDamageOnDeath.Direct:
+      damageValue = dyingUnit.damageToOpponentOnDeath ?? 0;
+      break;
+    case typeOfDamageOnDeath.AoE:
+      damageValue = dyingUnit.areaOfEffectDamageOnDeath ?? 0;
+      break;
+  }
+
+  const { currentHealth, armor } = unitBeingDamaged;
+  // this calculation catches numbers below 0 as well as numbers exceeding original health
+  const newHealthAfterDamage = Math.min(
+    currentHealth,
+    Math.max(0, currentHealth + armor - damageValue)
+  );
+
+  return newHealthAfterDamage;
+};
+
+/* 
+This calculation finds the new health of a character after taking damage.
+The expression currentHealth + armor - damageValue calculates the
+effective health of the character after taking damage and considering
+the armor value. If the result of this calculation is negative,
+it means that the character's health is reduced to zero, because the
+damage taken is greater than the sum of the character's current health
+and armor.
+To handle this case, we use Math.max(0, currentHealth + armor - damageValue)
+to ensure that the effective health cannot be negative.
+Then, Math.min is used to compare the calculated effective health with the
+character's current health and return the minimum value of the two. This is
+because the effective health cannot be greater than the current health of
+the character. The result of Math.min is the final effective health of
+the character after taking damage, considering the armor value.
+*/

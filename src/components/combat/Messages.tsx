@@ -1,10 +1,10 @@
-import React from "react";
 import {
   PreCombatEvent,
   MainCombatEvent,
   PostCombatEvent,
   SummaryEvent,
   NoArmyEvent,
+  AoeOnDeathEvent,
 } from "../../types";
 
 /* TODO: Make flavourtexts based on unit type; see below in combat phase */
@@ -41,7 +41,7 @@ export const messages = {
           <span className="text-green-400">
             {event.data.friendly.randomName}
           </span>{" "}
-          wants to try his luck against{" "}
+          wants to try their luck against{" "}
           <span className="text-red-400">{event.data.enemy.randomName}</span>.
         </p>
       );
@@ -54,7 +54,7 @@ export const messages = {
           </span>{" "}
           sees{" "}
           <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
-          and calls him something nasty.
+          and calls them something nasty.
         </p>
       );
     },
@@ -70,9 +70,126 @@ export const messages = {
         </p>
       );
     },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          The air crackles with tension as{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          prepares to face{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          takes a deep breath and steps forward, ready to face{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          The battlefield falls silent as{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          and{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
+          prepare to engage.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          readies themselves, ready to take on{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          The tension between{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          and{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span> is
+          palpable as they face off.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          As{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          approaches{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>,
+          they can feel the weight of their decisions pressing down on them.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          and{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
+          lock eyes and ready themselves for the fight ahead.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          With a fierce battle cry,{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          engages{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          draws strength from their determination as they prepare to engage{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          {event.data.friendly.randomName} and {event.data.enemy.randomName}{" "}
+          share a silent moment of mutual respect before they begin their
+          battle.
+        </p>
+      );
+    },
     /* more alternatives here */
   ],
-  combat: [
+  mainCombat: [
     (event: MainCombatEvent) => {
       return (
         <p>
@@ -85,6 +202,7 @@ export const messages = {
           {event.data.friendly.unitType === "archer" ? "shoots at" : null}{" "}
           {event.data.friendly.unitType === "knight" ? "bashes" : null}{" "}
           {event.data.friendly.unitType === "mage" ? "casts a spell on" : null}{" "}
+          {event.data.friendly.unitType === "bombird" ? "flies toward" : null}{" "}
           <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           for{" "}
           <span className="text-amber-400">
@@ -104,7 +222,7 @@ export const messages = {
           <span className="text-green-400">
             {event.data.friendly.randomName}
           </span>{" "}
-          injures{" "}
+          attacks{" "}
           <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           for{" "}
           <span className="text-amber-400">
@@ -153,6 +271,79 @@ export const messages = {
             {event.data.enemy.attack} damage
           </span>
           .
+        </p>
+      );
+    },
+  ],
+  aoeOnDeath: [
+    // idx: 0 -- Friendly Bombird explodes
+    (event: AoeOnDeathEvent) => {
+      return (
+        <p className="bg-amber-400/5">
+          <span className="text-green-400">
+            {event.data.destroyedUnit.randomName}
+          </span>{" "}
+          <span className="font-semibold text-red-500">explodes,</span> doing{" "}
+          <span className="font-semibold text-amber-400">
+            {event.data.destroyedUnit.damageToOpponentOnDeath} damage
+          </span>{" "}
+          to{" "}
+          <span className="text-red-400">
+            {event.data.opposingUnit.randomName}
+          </span>
+          ! The blast hits{" "}
+          {event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 1 ? (
+            <span className="text-red-400">
+              {event.data.randomNamesOfUnitsAffectedByAoeDamage.join(" and ")}
+            </span>
+          ) : event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 0 ? (
+            <span className="text-red-400">
+              {event.data.randomNamesOfUnitsAffectedByAoeDamage}
+            </span>
+          ) : (
+            <span className="text-red-400">no one</span>
+          )}{" "}
+          in the enemy army for{" "}
+          <span className="text-amber-400">
+            {event.data.destroyedUnit.areaOfEffectDamageOnDeath}
+          </span>{" "}
+          damage.
+        </p>
+      );
+    },
+    // idx: 1 -- Enemy Bombird explodes
+    (event: AoeOnDeathEvent) => {
+      return (
+        <p className="bg-amber-400/5">
+          <span className="text-green-400">
+            {event.data.opposingUnit.randomName}
+          </span>{" "}
+          is hit for{" "}
+          <span className="font-semibold text-amber-400">
+            {event.data.destroyedUnit.damageToOpponentOnDeath} damage
+          </span>{" "}
+          as{" "}
+          <span className="text-red-400">
+            {event.data.destroyedUnit.randomName}
+          </span>{" "}
+          <span className="font-semibold text-red-500">explodes</span>! The
+          blast hits{" "}
+          {event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 1 ? (
+            <span className="text-green-400">
+              {event.data.randomNamesOfUnitsAffectedByAoeDamage.join(" and ")}
+            </span>
+          ) : event.data.randomNamesOfUnitsAffectedByAoeDamage.length > 0 ? (
+            <span className="text-green-400">
+              {event.data.randomNamesOfUnitsAffectedByAoeDamage}
+            </span>
+          ) : (
+            <span className="text-green-400">no one</span>
+          )}{" "}
+          for{" "}
+          <span className="text-amber-400">
+            {event.data.destroyedUnit.areaOfEffectDamageOnDeath}
+          </span>{" "}
+          damage.
         </p>
       );
     },

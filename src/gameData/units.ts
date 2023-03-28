@@ -25,6 +25,8 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   fighter: {
     unitType: "fighter",
@@ -49,6 +51,8 @@ export const baseUnitData: BaseUnitData = {
     berserker: true,
     berserkerAttackMultiplier: 1.5,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   archer: {
     unitType: "archer",
@@ -73,6 +77,8 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   knight: {
     unitType: "knight",
@@ -97,6 +103,8 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: true,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   // TODO: Consider allowing an armor buff for first hit, eg no damage when first hit
   mage: {
@@ -122,20 +130,23 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: false,
+    doesAreaOfEffectDamageOnDeath: false,
   },
   bombird: {
     unitType: "bombird",
     name: "Bombird",
     symbol: "💣",
-    description: "Big damage but self-destructs!",
+    description:
+      "Explodes on death, hugely damaging their opponent and harming up to 2 enemy army units.",
     lockedText: "Unlocked by Explosives Research",
     bgImage: "bg-bomber",
     bgImageSm: "bg-bomberSm",
     bgImageMd: "bg-bomberMd",
     bgImageLg: "bg-bomberLg",
     threatLevel: 3,
-    attack: 12,
-    maxHealth: 1,
+    attack: 1,
+    maxHealth: 5,
     armor: 0,
     resourceCosts: { workers: 3, wood: 2, stone: 2, metal: 2, crystal: 2 },
     buildScore: 110,
@@ -145,28 +156,12 @@ export const baseUnitData: BaseUnitData = {
     chargingMultiplier: 1,
     berserker: false,
     survivalArmorBonus: false,
+    damagesOpponentOnDeath: true,
+    damageToOpponentOnDeath: 25,
+    doesAreaOfEffectDamageOnDeath: true,
+    areaOfEffectDamageOnDeath: 3,
+    numberOfUnitsAffectedByAoeDamageOnDeath: 2,
   },
 };
 
 export const berserkerHealthTrigger = 0.5;
-
-/* export const unitCostsData = {
-  fighter: {
-    workers: 1,
-    wood: 2,
-    stone: 2,
-    metal: 0,
-  },
-  archer: {
-    workers: 1,
-    wood: 2,
-    stone: 0,
-    metal: 2,
-  },
-  knight: {
-    workers: 1,
-    wood: 0,
-    stone: 2,
-    metal: 2,
-  },
-}; */

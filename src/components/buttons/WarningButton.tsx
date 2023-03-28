@@ -1,20 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 
-interface WarningButtonProps {
-  counter: number;
-  setCounter: Dispatch<SetStateAction<number>>;
-  incrementPopupCounter: () => void;
-}
+export default function WarningButton() {
+  const [counter, setCounter] = useState(0);
+  const incrementPopupCounter = () => {
+    setCounter((prev) => prev + 1);
+  };
 
-export default function WarningButton({
-  counter,
-  setCounter,
-  incrementPopupCounter,
-}: WarningButtonProps) {
   let buttonText, buttonStyle;
   switch (counter) {
     case 0:
-      buttonText = "Delete ALL Saves and Leaderboard Data";
+      buttonText = "Delete ALL Settings, Saves, and Leaderboard Data";
       buttonStyle = `bg-red-600 font-semibold`;
       break;
     case 1:

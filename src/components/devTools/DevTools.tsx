@@ -36,6 +36,7 @@ export default function DevTools({
         {/* Get all base unit types, dynamically create a button for each */}
         {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
           <AddUnitButton
+            key={unitType}
             addUnit={addUnit}
             unitType={unitType as UnitType}
             name={BASE_UNIT_DATA[unitType].name}
@@ -58,6 +59,7 @@ export default function DevTools({
 
         {Object.keys(BASE_UNIT_DATA).map((unitType: string) => (
           <AddUnitButton
+            key={unitType}
             addUnit={addUnit}
             unitType={unitType as UnitType}
             name={BASE_UNIT_DATA[unitType].name}
@@ -70,6 +72,7 @@ export default function DevTools({
       <div>
         {resourceTypes.map((resourceType) => (
           <AddResourceButton
+            key={resourceType}
             addResource={addResource}
             resourceType={resourceType}
             name={resources[resourceType].name}
