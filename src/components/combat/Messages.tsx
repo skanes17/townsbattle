@@ -41,7 +41,7 @@ export const messages = {
           <span className="text-green-400">
             {event.data.friendly.randomName}
           </span>{" "}
-          wants to try his luck against{" "}
+          wants to try their luck against{" "}
           <span className="text-red-400">{event.data.enemy.randomName}</span>.
         </p>
       );
@@ -67,6 +67,123 @@ export const messages = {
           agrees to battle{" "}
           <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
           but they're not happy about it.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          The air crackles with tension as{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          prepares to face{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          takes a deep breath and steps forward, ready to face{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          The battlefield falls silent as{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          and{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
+          prepare to engage.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          readies themselves, ready to take on{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          The tension between{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          and{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span> is
+          palpable as they face off.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          As{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          approaches{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>,
+          they can feel the weight of their decisions pressing down on them.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          and{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>{" "}
+          lock eyes and ready themselves for the fight ahead.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          With a fierce battle cry,{" "}
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          engages{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          <span className="text-green-400">
+            {event.data.friendly.randomName}
+          </span>{" "}
+          draws strength from their determination as they prepare to engage{" "}
+          <span className="text-red-400">{event.data.enemy.randomName}</span>.
+        </p>
+      );
+    },
+    (event: PreCombatEvent) => {
+      return (
+        <p>
+          {event.data.friendly.randomName} and {event.data.enemy.randomName}{" "}
+          share a silent moment of mutual respect before they begin their
+          battle.
         </p>
       );
     },
