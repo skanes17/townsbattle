@@ -6,11 +6,6 @@ import { MenuButton, WarningButton } from "../buttons";
 import { MenuBox, MenuBoxHeader, MenuButtonContainer } from "../startPage";
 
 export default function Options() {
-  const [counter, setCounter] = useState(0);
-  const incrementPopupCounter = () => {
-    setCounter((prev) => prev + 1);
-  };
-
   const defaultOptions: GameOptions = {
     difficulty: "normal",
     tutorials: true,
@@ -142,11 +137,7 @@ export default function Options() {
       </MenuButtonContainer>
 
       <MenuButtonContainer headerText="Data Management">
-        <WarningButton
-          counter={counter}
-          setCounter={setCounter}
-          incrementPopupCounter={incrementPopupCounter}
-        />
+        <WarningButton />
       </MenuButtonContainer>
 
       {/* horizontal line */}
