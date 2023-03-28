@@ -372,8 +372,8 @@ export default function Combat({
 
     /* FIXME: Should choose the appropriate message based on context (eg unit types) when two units are fighting */
     const eventIndex = Math.floor(Math.random() * messages.mainCombat.length);
+    console.log(eventIndex);
 
-    // FIXME: If this is removed, the combat works fine!!
     const mainCombatState = {
       event: mainCombatEvent,
       idx: eventIndex,
@@ -457,7 +457,7 @@ export default function Combat({
 
         indexesOfUnitsAffectedByAoeDamage.forEach((index) => {
           randomNamesOfUnitsAffectedByAoeDamage.push(
-            _friendlyArmy[index].randomName
+            _enemyArmy[index].randomName
           );
         });
 
