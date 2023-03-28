@@ -1,10 +1,14 @@
-import React, { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import useSound from "use-sound";
 import { TutorialMessages } from "../../gameData";
 import {
+  AoeOnDeathEvent,
   BaseUnitData,
   Buildings,
   CombatEvent,
+  Difficulty,
+  GameSave,
   MainCombatEvent,
   NoArmyEvent,
   Phases,
@@ -13,13 +17,10 @@ import {
   ResourcePool,
   SubPhases,
   SummaryEvent,
+  TipsSeen,
+  TutorialCategory,
   Unit,
   UnitType,
-  TutorialCategory,
-  TipsSeen,
-  GameSave,
-  Difficulty,
-  AoeOnDeathEvent,
 } from "../../types";
 import {
   addResultToLeaderBoardAndDeleteSave,
@@ -36,18 +37,19 @@ import {
 import { getSurvivingUnitIndexes } from "../../utils/getSurvivingUnitIndexes";
 import { CombatButton } from "../buttons";
 import {} from "../cards";
-import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 import CombatCardTemplate from "../cards/CombatCardTemplate";
-import useSound from "use-sound";
+import PreCombatCardTemplate from "../cards/PreCombatCardTemplate";
 /* @ts-ignore */
 import destroyBldgSfx from "../../assets/sounds/destroyBldgSfx.mp3";
-import { Modal, ModalHeader, ModalTextContent } from "../planning/tutorials";
-import { ArmyGrid } from "../shared";
 import { difficultyScoreMultipliers } from "../../gameData/difficultyScoreMultipliers";
 import { MatchupResults, Matchups } from "../../types/conditionalsInCombat";
+import { Modal, ModalHeader, ModalTextContent } from "../planning/tutorials";
+import { ArmyGrid } from "../shared";
 import CombatLog from "./CombatLog";
-import PostCombatSummary from "./PostCombatSummary";
 import { messages } from "./Messages";
+import PostCombatSummary from "./PostCombatSummary";
+import { determineMatchups } from "../../utils/determineMatchups";
+import { produceBombirdAoeOnDeathEvent } from "../../utils/produceAoeEvent";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -249,14 +251,10 @@ export default function Combat({
     // holds all messages for the main combat
     const updatedCombatEvents: CombatEvent[] = [...combatEvents];
 
-    const matchups: Matchups = {
-      onlyTheFriendlyHitsFirst:
-        selectedFriendly.hitsFirst && !selectedEnemy.hitsFirst,
-      onlyTheEnemyHitsFirst:
-        selectedEnemy.hitsFirst && !selectedFriendly.hitsFirst,
-      unitsHitSimultaneously:
-        !selectedFriendly.hitsFirst && !selectedEnemy.hitsFirst,
-    };
+    const matchups: Matchups = determineMatchups(
+      selectedFriendly,
+      selectedEnemy
+    );
 
     // initializing values; they may change depending on combat result
     const matchupResults: MatchupResults = {
@@ -286,16 +284,13 @@ export default function Combat({
         selectedEnemy.attack = 0;
         matchupResults.enemyDied = true;
       }
-    }
-
-    // only run this if the enemy hits first and the friendly does not
+    } // only run this if the enemy hits first and the friendly does not
     else if (matchups.onlyTheEnemyHitsFirst) {
       // Friendly gets hit first
       selectedFriendly.currentHealth = damageUnitAndReturnNewHealth(
         selectedFriendly,
         selectedEnemy
       );
-
       // If the friendly survives, it attacks. Else, it's dead and its attack is set to 0.
       if (selectedFriendly.currentHealth > 0) {
         selectedEnemy.currentHealth = damageUnitAndReturnNewHealth(
@@ -372,9 +367,8 @@ export default function Combat({
         },
       },
     };
-    /* FIXME: Should choose the appropriate message based on context (eg unit types) when two units are fighting */
 
-    // FIXME: It's this!!!!!!!!! It's sometimes choosing the bombird message!!
+    /* FIXME: Should choose the appropriate message based on context (eg unit types) when two units are fighting */
     const eventIndex = Math.floor(Math.random() * messages.mainCombat.length);
 
     // FIXME: If this is removed, the combat works fine!!
@@ -444,32 +438,12 @@ export default function Combat({
         }
       }
       if (selectedEnemy.unitType === "bombird") {
-        const {
-          randomName,
-          damageToOpponentOnDeath,
-          areaOfEffectDamageOnDeath,
-        } = selectedEnemy;
-
-        const aoeOnDeathEvent: AoeOnDeathEvent = {
-          type: "aoeOnDeath",
-          data: {
-            destroyedUnit: {
-              randomName,
-              damageToOpponentOnDeath,
-              areaOfEffectDamageOnDeath,
-            },
-            opposingUnit: { randomName: selectedFriendly.randomName },
-            numberOfUnitsAffected: indexesOfUnitsAffectedByAoeDamage.length,
-            // what happens if empty string array?
-            randomNamesOfUnitsAffectedByAoeDamage,
-          },
-        };
-
-        // bombird event index
-        const eventIndex = 0;
-
-        const bombirdCombatState = { event: aoeOnDeathEvent, idx: eventIndex };
-
+        const bombirdCombatState = produceBombirdAoeOnDeathEvent(
+          selectedEnemy,
+          selectedFriendly,
+          indexesOfUnitsAffectedByAoeDamage,
+          randomNamesOfUnitsAffectedByAoeDamage
+        );
         updatedCombatEvents.unshift(bombirdCombatState);
       }
     }
@@ -532,32 +506,12 @@ export default function Combat({
         }
       }
       if (selectedFriendly.unitType === "bombird") {
-        const {
-          randomName,
-          damageToOpponentOnDeath,
-          areaOfEffectDamageOnDeath,
-        } = selectedFriendly;
-
-        const aoeOnDeathEvent: AoeOnDeathEvent = {
-          type: "aoeOnDeath",
-          data: {
-            destroyedUnit: {
-              randomName,
-              damageToOpponentOnDeath,
-              areaOfEffectDamageOnDeath,
-            },
-            opposingUnit: { randomName: selectedEnemy.randomName },
-            numberOfUnitsAffected: indexesOfUnitsAffectedByAoeDamage.length,
-            // what happens if empty string array?
-            randomNamesOfUnitsAffectedByAoeDamage,
-          },
-        };
-
-        // bombird event index
-        const eventIndex = 0;
-
-        const bombirdCombatState = { event: aoeOnDeathEvent, idx: eventIndex };
-
+        const bombirdCombatState = produceBombirdAoeOnDeathEvent(
+          selectedFriendly,
+          selectedEnemy,
+          indexesOfUnitsAffectedByAoeDamage,
+          randomNamesOfUnitsAffectedByAoeDamage
+        );
         updatedCombatEvents.unshift(bombirdCombatState);
       }
     }
