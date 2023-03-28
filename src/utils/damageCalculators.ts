@@ -1,4 +1,9 @@
-import { AttackValueType, calculatedAttackValue } from ".";
+import {
+  AttackValueType,
+  calculatedAttackValue,
+  calculateNewHealthAfterDamagedByDyingUnit,
+  typeOfDamageOnDeath,
+} from ".";
 import { Unit } from "../types";
 
 export function damageUnitAndReturnNewHealth(defender: Unit, attacker: Unit) {
@@ -21,4 +26,21 @@ export function simpleDamageFloorFunction(
   damageDoneToIt?: number
 ) {
   return Math.max(0, currentHealthOfDefender - (damageDoneToIt ?? 0));
+}
+
+export function damageUnitsWithAoe(
+  indexesOfUnitsAffectedByAoeDamage: number[],
+  damagedArmy: Unit[],
+  destroyedUnit: Unit
+) {
+  for (const index of indexesOfUnitsAffectedByAoeDamage) {
+    const unitToBeDamagedByAoe = damagedArmy[index];
+
+    unitToBeDamagedByAoe.currentHealth =
+      calculateNewHealthAfterDamagedByDyingUnit(
+        typeOfDamageOnDeath.AoE,
+        unitToBeDamagedByAoe,
+        destroyedUnit
+      );
+  }
 }

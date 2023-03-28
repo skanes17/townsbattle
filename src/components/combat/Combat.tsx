@@ -31,6 +31,7 @@ import {
   cloneBasicObjectWithJSON,
   countUnits,
   damageUnitAndReturnNewHealth,
+  damageUnitsWithAoe,
   simpleDamageFloorFunction,
   typeOfDamageOnDeath,
 } from "../../utils";
@@ -50,6 +51,7 @@ import { messages } from "./Messages";
 import PostCombatSummary from "./PostCombatSummary";
 import { determineMatchups } from "../../utils/determineMatchups";
 import { produceBombirdAoeOnDeathEvent } from "../../utils/produceAoeEvent";
+import { getIndexesOfUnitsAffectedByAoeDamage } from "../../utils/getIndexesOfUnitsAffectedByAoeDamage";
 
 // TODO: Consider adding a button for an auto-play, like it steps forward every 2 seconds or something
 
@@ -392,32 +394,17 @@ export default function Combat({
           );
       }
 
-      const indexesOfUnitsAffectedByAoeDamage: number[] = [];
+      let indexesOfUnitsAffectedByAoeDamage: number[] = [];
       const randomNamesOfUnitsAffectedByAoeDamage: string[] = [];
       if (selectedEnemy.doesAreaOfEffectDamageOnDeath) {
-        // defeated unit does area of effect damage to opposing army on death
-        // don't include the opposing unit in the AoE damage
-        const clonedSurvivingUnitIndexes = [
-          ...survivingFriendlyUnitIndexes,
-        ].filter(
-          (survivingUnitIndex) =>
-            _friendlyArmy[survivingUnitIndex] !== selectedFriendly
-        );
-        const numberOfUnitsToBeDamaged =
-          selectedEnemy.numberOfUnitsAffectedByAoeDamageOnDeath ?? 0;
-
-        // Fill an array with the required number of unique unit indices from the appropriate army to be damaged
-        while (
-          clonedSurvivingUnitIndexes.length > 0 &&
-          indexesOfUnitsAffectedByAoeDamage.length < numberOfUnitsToBeDamaged
-        ) {
-          const randomIndex = Math.floor(
-            Math.random() * clonedSurvivingUnitIndexes.length
-          );
-          indexesOfUnitsAffectedByAoeDamage.push(
-            clonedSurvivingUnitIndexes.splice(randomIndex, 1)[0]
-          );
-        }
+        indexesOfUnitsAffectedByAoeDamage = [
+          ...getIndexesOfUnitsAffectedByAoeDamage(
+            selectedEnemy,
+            selectedFriendly,
+            _friendlyArmy,
+            survivingFriendlyUnitIndexes
+          ),
+        ];
 
         indexesOfUnitsAffectedByAoeDamage.forEach((index) => {
           randomNamesOfUnitsAffectedByAoeDamage.push(
@@ -426,16 +413,11 @@ export default function Combat({
         });
 
         // Damage each relevant unit
-        for (const index of indexesOfUnitsAffectedByAoeDamage) {
-          const unitToBeDamagedByAoe = _friendlyArmy[index];
-
-          unitToBeDamagedByAoe.currentHealth =
-            calculateNewHealthAfterDamagedByDyingUnit(
-              typeOfDamageOnDeath.AoE,
-              unitToBeDamagedByAoe,
-              selectedEnemy
-            );
-        }
+        damageUnitsWithAoe(
+          indexesOfUnitsAffectedByAoeDamage,
+          _friendlyArmy,
+          selectedEnemy
+        );
       }
       if (selectedEnemy.unitType === "bombird") {
         const bombirdCombatState = produceBombirdAoeOnDeathEvent(
@@ -451,59 +433,40 @@ export default function Combat({
     // FIXME: Consolidate the enemy and friendly death processes!
     // if FRIENDLY dies, do this
     if (matchupResults.friendlyDied) {
-      if (selectedFriendly.damagesOpponentOnDeath) {
+      if (selectedEnemy.damagesOpponentOnDeath) {
         // unit damages opponent on death
-        selectedEnemy.currentHealth = calculateNewHealthAfterDamagedByDyingUnit(
-          typeOfDamageOnDeath.Direct,
-          selectedEnemy,
-          selectedFriendly
-        );
+        selectedFriendly.currentHealth =
+          calculateNewHealthAfterDamagedByDyingUnit(
+            typeOfDamageOnDeath.Direct,
+            selectedFriendly,
+            selectedEnemy
+          );
       }
 
-      const indexesOfUnitsAffectedByAoeDamage: number[] = [];
+      let indexesOfUnitsAffectedByAoeDamage: number[] = [];
       const randomNamesOfUnitsAffectedByAoeDamage: string[] = [];
       if (selectedFriendly.doesAreaOfEffectDamageOnDeath) {
-        // defeated unit does area of effect damage to opposing army on death
-        // don't include the opposing unit in the AoE damage
-        const clonedSurvivingUnitIndexes = [
-          ...survivingEnemyUnitIndexes,
-        ].filter(
-          (survivingUnitIndex) =>
-            _enemyArmy[survivingUnitIndex] !== selectedEnemy
-        );
-        const numberOfUnitsToBeDamaged =
-          selectedFriendly.numberOfUnitsAffectedByAoeDamageOnDeath ?? 0;
-
-        // Fill an array with the required number of unique unit indices from the appropriate army to be damaged
-        while (
-          clonedSurvivingUnitIndexes.length > 0 &&
-          indexesOfUnitsAffectedByAoeDamage.length < numberOfUnitsToBeDamaged
-        ) {
-          const randomIndex = Math.floor(
-            Math.random() * clonedSurvivingUnitIndexes.length
-          );
-          indexesOfUnitsAffectedByAoeDamage.push(
-            clonedSurvivingUnitIndexes.splice(randomIndex, 1)[0]
-          );
-        }
+        indexesOfUnitsAffectedByAoeDamage = [
+          ...getIndexesOfUnitsAffectedByAoeDamage(
+            selectedFriendly,
+            selectedEnemy,
+            _enemyArmy,
+            survivingEnemyUnitIndexes
+          ),
+        ];
 
         indexesOfUnitsAffectedByAoeDamage.forEach((index) => {
           randomNamesOfUnitsAffectedByAoeDamage.push(
-            _enemyArmy[index].randomName
+            _friendlyArmy[index].randomName
           );
         });
 
         // Damage each relevant unit
-        for (const index of indexesOfUnitsAffectedByAoeDamage) {
-          const unitToBeDamagedByAoe = _enemyArmy[index];
-
-          unitToBeDamagedByAoe.currentHealth =
-            calculateNewHealthAfterDamagedByDyingUnit(
-              typeOfDamageOnDeath.AoE,
-              unitToBeDamagedByAoe,
-              selectedFriendly
-            );
-        }
+        damageUnitsWithAoe(
+          indexesOfUnitsAffectedByAoeDamage,
+          _enemyArmy,
+          selectedFriendly
+        );
       }
       if (selectedFriendly.unitType === "bombird") {
         const bombirdCombatState = produceBombirdAoeOnDeathEvent(
