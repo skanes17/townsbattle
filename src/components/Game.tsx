@@ -171,43 +171,27 @@ export default function Game() {
   const bossUnits = Object.values(BASE_UNIT_DATA).filter((unit) => unit.boss);
 
   // ===UNLOCKABLES===
-  const unlockedUnitTypes: (UnitType | undefined)[] = Object.keys(buildings)
-    // filter by buildings set up to unlock a unit type which are also constructed
-    .filter(
-      (buildingType) =>
-        buildings[buildingType].unlockedUnit &&
-        buildings[buildingType].constructed
-    )
-    // map out the associated unit types
-    .map((building) => buildings[building].unlockedUnit);
 
-  const lockedUnitTypes: (UnitType | undefined)[] = Object.keys(buildings)
-    // filter by units set up to unlock a unit type but are not yet constructed
-    .filter(
-      (buildingType) =>
-        buildings[buildingType].unlockedUnit &&
-        !buildings[buildingType].constructed
-    )
-    // map out the associated unit types
-    .map((building) => buildings[building].unlockedUnit);
+  // Returns unit types that have been unlocked by constructing a specific building
+  const unlockedUnitTypes = Object.values(buildings)
+    .filter((building) => building.unlockedUnit && building.constructed)
+    .map((building) => building.unlockedUnit);
 
-  const resourcesLockedToPlayer: (BaseResourceType | undefined)[] = Object.keys(
-    buildings
-  )
+  // Returns unit types that are still locked due to buildings not yet constructed
+  const lockedUnitTypes = Object.values(buildings)
+    .filter((building) => building.unlockedUnit && !building.constructed)
+    .map((building) => building.unlockedUnit);
+
+  const resourcesLockedToPlayer = Object.values(buildings)
     // filter by buildings set up to unlock a resource type but are not yet constructed
-    .filter(
-      (buildingType) =>
-        buildings[buildingType].unlockedResource &&
-        !buildings[buildingType].constructed
-    )
+    .filter((building) => building.unlockedResource && !building.constructed)
     // map out the associated resource types
-    .map((building) => buildings[building].unlockedResource);
+    .map((building) => building.unlockedResource);
 
   // this filter method will filter all locked resourced from the base resources
-  const resourceTypesAvailableToPlayer: (BaseResourceType | undefined)[] =
-    allBaseResourceTypesInTheGame.filter(
-      (resourceType) => !resourcesLockedToPlayer.includes(resourceType)
-    );
+  const resourceTypesAvailableToPlayer = allBaseResourceTypesInTheGame.filter(
+    (resourceType) => !resourcesLockedToPlayer.includes(resourceType)
+  );
 
   // ids for tracking units
   const [unitId, setUnitId] = useState(gameSave.unitId);
@@ -329,11 +313,10 @@ export default function Game() {
   };
 
   const resetAssignedWorkers = (resources: Resources) => {
-    Object.keys(resources)
-      .filter((resourceType) => resourceType !== "workers")
-      .map((resourceType) => {
-        resources[resourceType as BaseResourceType].workers = 0;
-      });
+    Object.entries(resources).forEach(([resourceType, resource]) => {
+      if (resourceType === "workers") return; // Do not reset the workers resource
+      resource.workers = 0; // Reset workers to 0
+    });
   };
 
   const buildingConstructor = (clonedBuildings: Buildings) => {
@@ -788,10 +771,11 @@ export default function Game() {
     ](numberOfUnitTypes, unitWeight);
 
     let newUnits: Unit[] = [];
+
     // Add the appropriate number of each unit to the enemy army
-    Object.keys(BASE_UNIT_DATA).map((unit: string, index) => {
+    Object.values(ENEMY_BASE_UNIT_DATA).map((unit, index) => {
       // grab the chosen unit from the base unit data
-      const chosenUnit = ENEMY_BASE_UNIT_DATA[unit as UnitType];
+      const chosenUnit = unit;
 
       // the index is used to call the appropriate ratio from the composition function
       // that ratio is multiplied by numberOfFriendlyUnits to give a number of units
