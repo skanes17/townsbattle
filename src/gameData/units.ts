@@ -1,6 +1,6 @@
 // TODO: Add in effect description? eg "Extra damage when unharmed"
 
-import { BaseUnitData, BossUnitData, Unit } from "../types";
+import { BaseUnitData } from "../types";
 
 export const baseUnitData: BaseUnitData = {
   villager: {
@@ -189,6 +189,7 @@ export const baseUnitData: BaseUnitData = {
     doesAreaOfEffectDamageOnDeath: true,
     areaOfEffectDamageOnDeath: 3,
     numberOfUnitsAffectedByAoeDamageOnDeath: 2,
+    boss: true,
   },
 };
 

@@ -71,7 +71,6 @@ interface CombatProps {
   currentCombatTurn: number;
   BASE_UNIT_DATA: BaseUnitData;
   unitTypes: UnitType[];
-  unlockedUnitTypes: (UnitType | undefined)[];
   friendlyUnits: Unit[];
   setFriendlyUnits: Dispatch<SetStateAction<Unit[]>>;
   enemyUnits: Unit[];
@@ -96,7 +95,6 @@ export default function Combat({
   currentCombatTurn,
   BASE_UNIT_DATA,
   unitTypes,
-  unlockedUnitTypes,
   friendlyUnits,
   enemyUnits,
   setFriendlyUnits,

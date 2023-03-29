@@ -52,6 +52,7 @@ export interface Unit {
   doesAreaOfEffectDamageOnDeath: boolean;
   areaOfEffectDamageOnDeath?: number;
   numberOfUnitsAffectedByAoeDamageOnDeath?: number;
+  boss?: boolean;
 }
 
 export interface BaseUnitData {
@@ -66,45 +67,3 @@ export interface TrainingUnit {
   /* Can't remember where I was going to use tempId */
   tempId?: number;
 }
-
-// TODO: Replace with BossType, BossName?
-export interface BossUnit {
-  bossType: Boss;
-  name: BossName;
-  randomName: string;
-  symbol: "🦉";
-  description?: string;
-  lockedText: string;
-  bgImage: string;
-  bgImageSm: string;
-  bgImageMd: string;
-  bgImageLg: string;
-  threatLevel: number;
-  attack: number;
-  maxHealth: number;
-  armor: number;
-  currentHealth: number;
-  buildScore: number;
-  hitsFirst: boolean;
-  fullHealthBonus: boolean;
-  fullHealthAttackBonus?: number;
-  chargesBeforeSelection: boolean;
-  chargingMultiplier?: number;
-  berserker: boolean;
-  berserkerAttackMultiplier?: number;
-  id?: number;
-  combatsSurvived?: number;
-  survivalArmorBonus: boolean;
-  damagesOpponentOnDeath: boolean;
-  damageToOpponentOnDeath?: number;
-  doesAreaOfEffectDamageOnDeath: boolean;
-  areaOfEffectDamageOnDeath?: number;
-  numberOfUnitsAffectedByAoeDamageOnDeath?: number;
-}
-
-export interface BossUnitData {
-  [key: string]: BossUnit;
-}
-
-export type Boss = "uwuu";
-export type BossName = "Uwuu";

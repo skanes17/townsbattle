@@ -150,17 +150,25 @@ export default function Game() {
 
   const BASE_UNIT_DATA = baseUnitData;
   const FRIENDLY_BASE_UNIT_DATA = cloneBasicObjectWithJSON(BASE_UNIT_DATA);
-  // adds bonuses as necessary -- TODO: redo this with a more robust systems approach
-  Object.keys(FRIENDLY_BASE_UNIT_DATA).map((unit: string) => {
-    if (buildings["mealHall"].constructed) {
-      FRIENDLY_BASE_UNIT_DATA[unit as UnitType].attack +=
-        buildings["mealHall"].attackBonus;
-      FRIENDLY_BASE_UNIT_DATA[unit as UnitType].maxHealth +=
-        buildings["mealHall"].healthBonus;
-    }
-  });
+
+  // ====BUFFS FROM BUILDINGS====
+  // TODO: redo this with a more robust systems approach
+  // Save the meal hall building data to a variable called building.
+  const mealHall = buildings["mealHall"];
+  // If the building has been constructed, then do the following:
+  if (mealHall.constructed) {
+    Object.values(FRIENDLY_BASE_UNIT_DATA).map((unit) => {
+      // Increase each unit's attack by the meal hall's attack bonus
+      unit.attack += mealHall.attackBonus;
+      // Increase each unit's max health by the meal hall's health bonus.
+      unit.maxHealth += mealHall.healthBonus;
+    });
+  }
   const ENEMY_BASE_UNIT_DATA = cloneBasicObjectWithJSON(BASE_UNIT_DATA);
   const unitTypes = Object.keys(BASE_UNIT_DATA) as UnitType[];
+
+  // ===BOSSES===
+  const bossUnits = Object.values(BASE_UNIT_DATA).filter((unit) => unit.boss);
 
   // ===UNLOCKABLES===
   const unlockedUnitTypes: (UnitType | undefined)[] = Object.keys(buildings)
@@ -994,7 +1002,6 @@ export default function Game() {
           currentCombatTurn={numberOfCombatsStarted}
           BASE_UNIT_DATA={BASE_UNIT_DATA}
           unitTypes={unitTypes}
-          unlockedUnitTypes={unlockedUnitTypes}
           friendlyUnits={friendlyUnits}
           enemyUnits={enemyUnits}
           setFriendlyUnits={setFriendlyUnits}
