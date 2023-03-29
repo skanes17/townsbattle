@@ -61,6 +61,7 @@ import {
   sumIndividualPowerLevelContributions,
   totalAttackBonusesPowerLevel,
 } from "../utils/calculatePowerLevel";
+import { smallChanceOfChoosingAVillager } from "../utils/smallChanceOfChoosingAVillager";
 
 export default function Game() {
   const gameSave = useLoaderData() as GameSave;
@@ -168,7 +169,9 @@ export default function Game() {
   const unitTypes = Object.keys(BASE_UNIT_DATA) as UnitType[];
 
   // ===BOSSES===
-  const bossUnits = Object.values(BASE_UNIT_DATA).filter((unit) => unit.boss);
+  const bossUnits = Object.values(BASE_UNIT_DATA)
+    .filter((unit) => unit.boss)
+    .map((unit) => unit.unitType);
 
   // ===UNLOCKABLES===
 
@@ -377,8 +380,16 @@ export default function Game() {
     nextCombatTurn: number,
     friendlyUnits: Unit[],
     unlockedUnitTypes: (UnitType | undefined)[],
+    bossUnitTypes: UnitType[],
     allUnitTypes: UnitType[]
   ) => {
+    const normalUnits = allUnitTypes.filter(
+      (unit) => !bossUnitTypes.includes(unit)
+    );
+    const normalUnitsNoVillagers = allUnitTypes.filter(
+      (unit) => !bossUnitTypes.includes(unit) && unit !== "villager"
+    );
+
     const friendlyPowerLevel = calculatePowerLevel(friendlyUnits);
 
     // The following process takes the calculated power level and scales the enemy's power level accordingly.
@@ -401,13 +412,13 @@ export default function Game() {
       case "normal":
         difficultyMultiplier = 1.0;
         basePowerLevel = 2;
-        equalityTurn = 10;
+        equalityTurn = 12;
         growthRate = 0.05;
         break;
       case "hard":
         difficultyMultiplier = 1.25;
         basePowerLevel = 3;
-        equalityTurn = 8;
+        equalityTurn = 10;
         growthRate = 0.05;
         break;
       case "nightmare":
@@ -418,8 +429,8 @@ export default function Game() {
         break;
       default:
         difficultyMultiplier = 1.0;
-        basePowerLevel = 3;
-        equalityTurn = 20;
+        basePowerLevel = 2;
+        equalityTurn = 12;
         growthRate = 0.05;
     }
 
@@ -469,58 +480,57 @@ export default function Game() {
         // introduces fighters
         numberOfDesiredUnitsTypesInOrder = 2;
         unitType = selectFromFilteredUnits(
-          allUnitTypes,
+          normalUnits,
           numberOfDesiredUnitsTypesInOrder
         );
       } else if (nextCombatTurn < 6) {
         // introduces archers
         numberOfDesiredUnitsTypesInOrder = 3;
         unitType = selectFromFilteredUnits(
-          allUnitTypes,
+          normalUnits,
           numberOfDesiredUnitsTypesInOrder
         );
       } else if (nextCombatTurn < 9) {
+        // introduces knights
         numberOfDesiredUnitsTypesInOrder = 4;
         unitType = selectFromFilteredUnits(
-          allUnitTypes,
+          normalUnits,
           numberOfDesiredUnitsTypesInOrder
         );
       } else if (nextCombatTurn < 12) {
-        // introduces mages
-        numberOfDesiredUnitsTypesInOrder = 5;
-        unitType = selectFromFilteredUnits(
-          allUnitTypes,
-          numberOfDesiredUnitsTypesInOrder
-        );
+        switch (true) {
+          // introduces boss unit Uwuu on turn 10
+          case powerLevel === 0 && nextCombatTurn === 10:
+            unitType = bossUnitTypes[0];
+            break;
+          default:
+            // introduces mages
+            numberOfDesiredUnitsTypesInOrder = 5;
+            unitType = selectFromFilteredUnits(
+              normalUnitsNoVillagers,
+              numberOfDesiredUnitsTypesInOrder
+            );
+        }
       } else if (nextCombatTurn < 15) {
         // introduces bombirds (all of the unit types at this point)
         numberOfDesiredUnitsTypesInOrder = 5;
         unitType = selectFromFilteredUnits(
-          allUnitTypes,
+          normalUnitsNoVillagers,
           numberOfDesiredUnitsTypesInOrder
         );
       }
       // TODO: Do more manual progression staging here when new units are added!
       else {
-        // At this point, all units in the game are available for choosing, with villagers sprinkled in
         // TODO: Could utilize the army generator functions here!
-        const allUnitsButworkers = allUnitTypes.filter(
-          (unit: UnitType) => unit !== "villager"
-        );
-        // pick a non-villager at random
-        const nonVillagerUnitType =
-          allUnitsButworkers[
-            Math.floor(Math.random() * allUnitsButworkers.length)
-          ];
 
-        // This is just a setup to have villagers be 5% of the army, for funsies
-        const aScatteringOfVillagers: UnitType[] =
-          Array(19).fill(nonVillagerUnitType);
-        aScatteringOfVillagers.push("villager");
-        unitType =
-          aScatteringOfVillagers[
-            Math.floor(Math.random() * aScatteringOfVillagers.length)
-          ];
+        // At this point, all units in the game are available for choosing, with villagers sprinkled in
+        // This number sets how likely you'd like a villager to be chosen
+        const percentChanceOfChoosingVillager = 5;
+
+        unitType = smallChanceOfChoosingAVillager(
+          normalUnitsNoVillagers,
+          percentChanceOfChoosingVillager
+        );
       }
 
       // enemy units don't get buffs in this version of the game
@@ -832,6 +842,7 @@ export default function Game() {
         nextCombatTurn,
         friendlyUnits,
         unlockedUnitTypes,
+        bossUnits,
         unitTypes
       );
     }
@@ -1245,9 +1256,3 @@ export default function Game() {
     </>
   );
 }
-
-/* export const gameSavesLoader = ({params})=> {
-  const {gameId} = params;
-  const gameSave = gameSaves.find(save => save.gameId === gameId) ?? defaultSave;
-  return gameSave
-} */

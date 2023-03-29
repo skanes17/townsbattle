@@ -1,4 +1,5 @@
 import { BaseUnitData, UnitCounts, UnitType } from "../../types";
+import { calcTotalUnitCount } from "../../utils/calcTotalUnitCount";
 
 interface UnitCountsBoxProps {
   headerText: string;
@@ -32,10 +33,7 @@ export default function UnitCountsBox({
       break;
   }
 
-  const totalUnitCount = Object.values(unitCounts).reduce(
-    (acc, cur) => acc + cur,
-    0
-  );
+  const totalUnitCount = calcTotalUnitCount(unitCounts);
 
   /* FIXME: unitType assertions below */
   return (
