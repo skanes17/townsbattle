@@ -1,4 +1,5 @@
 import React from "react";
+import { Transition } from "@headlessui/react";
 import { UnitTile } from ".";
 import { Phases, Unit } from "../../types";
 
@@ -50,13 +51,23 @@ export function ArmyGrid({
     >
       {army.length > 0 &&
         army.map((unit) => (
-          <UnitTile
-            key={`${unit.unitType}${unit.id}`}
-            armyStyle={armyStyle}
-            unit={unit}
-            selectedUnit={selectedUnit}
-            phase={phase}
-          />
+          <Transition
+            show={unit.currentHealth > 0}
+            enter="transition-opacity ease-in-out duration-1000"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity ease-in-out duration-1000"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <UnitTile
+              key={`${unit.unitType}${unit.id}`}
+              armyStyle={armyStyle}
+              unit={unit}
+              selectedUnit={selectedUnit}
+              phase={phase}
+            />
+          </Transition>
         ))}
     </div>
   );
