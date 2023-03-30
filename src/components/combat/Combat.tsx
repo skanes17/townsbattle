@@ -954,7 +954,7 @@ export default function Combat({
         </Modal>
       )}
 
-      <div className="col-start-1 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-indigo-500/5">
+      <div className="col-start-1 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-indigo-900/50 bg-[#1c1c26]">
         <ArmyGrid
           gridStyle="combat"
           armyStyle="friendly"
@@ -1056,7 +1056,7 @@ export default function Combat({
           )}
       </div>
 
-      <div className="col-start-3 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-red-900/50 bg-red-500/5">
+      <div className="col-start-3 row-start-1 h-full w-full self-center justify-self-center overflow-y-auto rounded-lg border border-red-900/50 bg-[#231a1d]">
         <ArmyGrid
           gridStyle="combat"
           armyStyle="enemy"

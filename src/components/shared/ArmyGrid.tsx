@@ -49,15 +49,25 @@ export function ArmyGrid({
       className={` ${style} relative grid h-full grid-flow-dense auto-rows-min grid-cols-[repeat(auto-fit,minmax(3.33rem,1fr))] justify-items-center gap-1 overflow-hidden rounded p-2 sm:grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] md:grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]`}
     >
       {army.length > 0 &&
-        army.map((unit) => (
-          <UnitTile
-            key={`${unit.unitType}${unit.id}`}
-            armyStyle={armyStyle}
-            unit={unit}
-            selectedUnit={selectedUnit}
-            phase={phase}
-          />
-        ))}
+        army.map((unit) =>
+          unit.boss ? (
+            <UnitTile
+              key={`${unit.unitType}${unit.id}`}
+              armyStyle={armyStyle}
+              unit={unit}
+              selectedUnit={selectedUnit}
+              phase={phase}
+            />
+          ) : (
+            <UnitTile
+              key={`${unit.unitType}${unit.id}`}
+              armyStyle={armyStyle}
+              unit={unit}
+              selectedUnit={selectedUnit}
+              phase={phase}
+            />
+          )
+        )}
     </div>
   );
 }

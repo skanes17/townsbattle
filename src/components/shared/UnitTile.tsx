@@ -109,8 +109,7 @@ export function UnitTile({
 
   const totalAttackValue = calculatedAttackValue(AttackValueType.card, unit);
 
-  const placementInGrid =
-    unit.unitType === "uwuu" ? "col-start-1 row-start-1" : "";
+  const placementInGrid = unit.unitType === "uwuu" ? "order-first" : "";
   // TODO: Add shimmering edge
   const bossNameStyle =
     unit.unitType === "uwuu" ? "font-semibold text-red-400" : "";
