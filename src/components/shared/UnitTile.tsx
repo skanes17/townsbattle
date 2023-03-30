@@ -1,11 +1,8 @@
 import React from "react";
 import { Phases, Unit } from "../../types";
-import {
-  AttackValueType,
-  calculatedAttackValue,
-  generateStars,
-} from "../../utils";
+import { AttackValueType, calculatedAttackValue } from "../../utils";
 import { allAttackBonusesCheck } from "../../utils/attackBonusCheck";
+import { StarDisplay } from "../combat/StarFooter";
 
 interface UnitTileProps {
   armyStyle: "friendly" | "enemy";
@@ -112,8 +109,6 @@ export function UnitTile({
 
   const totalAttackValue = calculatedAttackValue(AttackValueType.card, unit);
 
-  const starDisplay = generateStars(unit.combatsSurvived);
-
   const placementInGrid =
     unit.unitType === "uwuu" ? "col-start-1 row-start-1" : "";
   // TODO: Add shimmering edge
@@ -134,7 +129,9 @@ export function UnitTile({
           ></div>
         </div>
         <div className="absolute left-0 bottom-0 mx-auto w-full -translate-y-full bg-zinc-800/80 text-center text-xs">
-          <span className="font-emoji">{starDisplay}</span>
+          <StarDisplay
+            combatsSurvivedOrTierNumber={unit.combatsSurvived ?? 0}
+          />
         </div>
         {/* Popup text */}
         <div className="fixed inset-0 flex h-[90%] w-[140%] translate-y-[5%] -translate-x-[20%] flex-col justify-center overflow-y-auto overflow-x-hidden rounded-lg bg-black/80 text-center text-xs text-white opacity-0 group-hover:opacity-100 sm:text-base">

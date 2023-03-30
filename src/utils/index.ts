@@ -6,7 +6,6 @@ export * from "./cloneWithJSON";
 export * from "./countUnits";
 export * from "./damageCalculators";
 export * from "./generateScoutReport";
-export * from "./generateStars";
 export * from "./getSurvivingUnitIndexes";
 export * from "./turnsCalculators";
 export * from "./randomNumberBetweenMinAndMax";
