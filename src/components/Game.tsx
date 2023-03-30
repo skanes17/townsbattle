@@ -173,6 +173,9 @@ export default function Game() {
     .filter((unit) => unit.boss)
     .map((unit) => unit.unitType);
 
+    const turnsBetweenBosses = 5;
+    const bossTurn = (nextCombatTurn%turnsBetweenBosses)===0;
+
   // ===UNLOCKABLES===
 
   // Returns unit types that have been unlocked by constructing a specific building
@@ -574,6 +577,8 @@ export default function Game() {
         enemyArmy,
         powerLevel
       );
+
+      const bossTurn = 
 
       if (scoutReport.relativeSizeOfTheEnemy < 0.5) {
         if (scoutReport.relativePowerOfTheEnemy < 0.5) {
