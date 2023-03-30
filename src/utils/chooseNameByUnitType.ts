@@ -1,16 +1,16 @@
 import {
   archerNames,
+  baseUnitData,
   bombirdNames,
   fighterNames,
   knightNames,
   mageNames,
-  randomUnitNames,
   villagerNames,
 } from "../gameData";
 import { UnitType } from "../types";
 
 export function chooseNameByUnitType(unitType: UnitType) {
-  let randomName;
+  let randomName: string;
   switch (unitType) {
     case "villager":
       randomName =
@@ -33,8 +33,8 @@ export function chooseNameByUnitType(unitType: UnitType) {
       randomName =
         bombirdNames[Math.floor(Math.random() * bombirdNames.length)];
       break;
-    case "uwuu":
-      randomName = "Uwuu";
+    default:
+      randomName = baseUnitData[unitType].name;
       break;
   }
   return randomName;

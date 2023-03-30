@@ -173,6 +173,8 @@ export default function Game() {
     .filter((unit) => unit.boss)
     .map((unit) => unit.unitType);
 
+  // console.log(bossUnits);
+
   const turnsBetweenBosses = 5;
   const bossTurn = nextCombatTurn % turnsBetweenBosses === 0;
 
@@ -487,12 +489,20 @@ export default function Game() {
           numberOfDesiredUnitsTypesInOrder
         );
       } else if (nextCombatTurn < 6) {
-        // introduces archers
-        numberOfDesiredUnitsTypesInOrder = 3;
-        unitType = selectFromFilteredUnits(
-          normalUnits,
-          numberOfDesiredUnitsTypesInOrder
-        );
+        switch (true) {
+          // introduces boss unit Beast Rider on turn 5
+          case powerLevel === 0 && nextCombatTurn === 5:
+            // index 0 is Beast Rider
+            unitType = bossUnitTypes[0];
+            break;
+          default:
+            // introduces archers
+            numberOfDesiredUnitsTypesInOrder = 3;
+            unitType = selectFromFilteredUnits(
+              normalUnits,
+              numberOfDesiredUnitsTypesInOrder
+            );
+        }
       } else if (nextCombatTurn < 9) {
         // introduces knights
         numberOfDesiredUnitsTypesInOrder = 4;
@@ -504,7 +514,8 @@ export default function Game() {
         switch (true) {
           // introduces boss unit Uwuu on turn 10
           case powerLevel === 0 && nextCombatTurn === 10:
-            unitType = bossUnitTypes[0];
+            // index 1 is Uwuu
+            unitType = bossUnitTypes[1];
             break;
           default:
             // introduces mages

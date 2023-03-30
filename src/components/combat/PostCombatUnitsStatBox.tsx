@@ -1,3 +1,4 @@
+import { baseUnitData } from "../../gameData";
 import { BaseUnitData, UnitCounts, UnitType } from "../../types";
 import { calcTotalUnitCount } from "../../utils/calcTotalUnitCount";
 
@@ -46,11 +47,13 @@ export default function PostCombatUnitsStatBox({
         {/* BODY */}
 
         {unitTypes!.map((unitType) => {
-          const bg = BASE_UNIT_DATA[unitType as UnitType].bgImageSm ?? ``;
+          const { name, bgImageSm } = BASE_UNIT_DATA[unitType as UnitType];
+          const bg = bgImageSm ?? ``;
+          const unitCount = unitCounts[unitType as UnitType];
 
           // only show unit types that were defeated
           return (
-            unitCounts[unitType!] > 0 && (
+            unitCount > 0 && (
               <div
                 key={unitType}
                 className="mt-1 inline-flex flex-wrap capitalize sm:flex-nowrap"
@@ -59,8 +62,8 @@ export default function PostCombatUnitsStatBox({
                   className={`group mr-2 h-7 w-7 rounded-lg border border-zinc-700 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
                 ></div>
                 <span>
-                  {unitCounts[unitType as UnitType]} {unitType}
-                  {unitCounts[unitType as UnitType] > 1 && `s`}
+                  {unitCount} {name}
+                  {unitCount > 1 && `s`}
                 </span>
               </div>
             )

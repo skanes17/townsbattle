@@ -1,3 +1,4 @@
+import { baseUnitData } from "../../gameData";
 import { BaseUnitData, UnitCounts, UnitType } from "../../types";
 import { calcTotalUnitCount } from "../../utils/calcTotalUnitCount";
 
@@ -55,7 +56,8 @@ export default function UnitCountsBox({
                   className={`group mr-2 h-7 w-7 rounded-lg border border-zinc-700 group-hover:border-yellow-300 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
                 ></div>
                 <span className="group-hover:text-yellow-300">
-                  {unitCounts[unitType as UnitType]} {unitType}
+                  {unitCounts[unitType as UnitType]}{" "}
+                  {baseUnitData[unitType as UnitType].name}
                   {unitCounts[unitType as UnitType] > 1 && `s`}
                 </span>
               </div>
