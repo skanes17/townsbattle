@@ -173,8 +173,8 @@ export default function Game() {
     .filter((unit) => unit.boss)
     .map((unit) => unit.unitType);
 
-    const turnsBetweenBosses = 5;
-    const bossTurn = (nextCombatTurn%turnsBetweenBosses)===0;
+  const turnsBetweenBosses = 5;
+  const bossTurn = nextCombatTurn % turnsBetweenBosses === 0;
 
   // ===UNLOCKABLES===
 
@@ -577,8 +577,6 @@ export default function Game() {
         enemyArmy,
         powerLevel
       );
-
-      const bossTurn = 
 
       if (scoutReport.relativeSizeOfTheEnemy < 0.5) {
         if (scoutReport.relativePowerOfTheEnemy < 0.5) {
