@@ -67,6 +67,7 @@
 - Tailwind CSS
 - TypeScript
 - [Node.js](https://nodejs.org/en) and [npm](https://www.npmjs.com/)
+- [HeadlessUI](https://headlessui.com/)
 - [Coolors](https://coolors.co/)
 - [Transform: CSS-to-Tailwind](https://transform.tools/css-to-tailwind)
 - [Midjourney](https://discord.gg/midjourney)
