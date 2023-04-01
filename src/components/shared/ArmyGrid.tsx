@@ -52,6 +52,7 @@ export function ArmyGrid({
       {army.length > 0 &&
         army.map((unit) => (
           <Transition
+            key={`${unit.unitType}${unit.id}`}
             show={unit.currentHealth > 0}
             enter="transition-opacity ease-in-out duration-1000"
             enterFrom="opacity-0"
@@ -61,7 +62,6 @@ export function ArmyGrid({
             leaveTo="opacity-0"
           >
             <UnitTile
-              key={`${unit.unitType}${unit.id}`}
               armyStyle={armyStyle}
               unit={unit}
               selectedUnit={selectedUnit}

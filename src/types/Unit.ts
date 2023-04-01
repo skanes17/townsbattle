@@ -7,6 +7,7 @@ export type UnitType =
   | "knight"
   | "mage"
   | "bombird"
+  | "beastRider"
   | "uwuu";
 export type UnitName =
   | "Villager"
@@ -15,14 +16,16 @@ export type UnitName =
   | "Knight"
   | "Mage"
   | "Bombird"
+  | "Beast Rider"
   | "Uwuu";
 
 export interface Unit {
   unitType: UnitType;
   name: UnitName;
   randomName: string;
-  symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣" | "🦉";
+  symbol: "🧑🏻‍🌾" | "⚔️" | "🏹" | "🛡️" | "🪄" | "💣" | "🐲" | "🦉";
   description?: string;
+  scoutWarning?: string;
   lockedText: string;
   bgImage: string;
   bgImageSm: string;
