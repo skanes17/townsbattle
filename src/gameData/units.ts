@@ -180,7 +180,7 @@ export const baseUnitData: BaseUnitData = {
     bgImageLg: "bg-beastRiderLg",
     threatLevel: 50,
     attack: 20,
-    maxHealth: 25,
+    maxHealth: 20,
     armor: 1,
     resourceCosts: { workers: 25, wood: 25, stone: 25, metal: 25, crystal: 25 },
     buildScore: 750,
