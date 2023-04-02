@@ -520,6 +520,7 @@ export default function Game() {
           default:
             // introduces mages
             numberOfDesiredUnitsTypesInOrder = 5;
+            // TODO: add in Beast Riders as regular units
             unitType = selectFromFilteredUnits(
               normalUnitsNoVillagers,
               numberOfDesiredUnitsTypesInOrder
