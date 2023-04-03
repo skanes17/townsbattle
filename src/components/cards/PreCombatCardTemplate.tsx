@@ -1,5 +1,5 @@
 import React from "react";
-import { enemyColor, friendlyColor } from "../../gameData";
+import { baseUnitData, enemyColor, friendlyColor } from "../../gameData";
 import {
   ArmyColors,
   BaseUnitData,
@@ -57,7 +57,8 @@ export default function PreCombatCardTemplate({
                   className={`group mr-2 h-7 w-7 rounded-lg border border-zinc-700 sm:h-8 sm:w-8 lg:h-9 lg:w-9 ${bg} bg-cover bg-center`}
                 ></div>
                 <span>
-                  {unitCounts[unitType as UnitType]} {unitType}
+                  {unitCounts[unitType as UnitType]}{" "}
+                  {baseUnitData[unitType as UnitType].name}
                   {unitCounts[unitType as UnitType] > 1 && `s`}
                 </span>
               </div>
