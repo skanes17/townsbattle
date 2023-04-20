@@ -7,8 +7,10 @@
 ## ❓ General Info
 
 - "Townsbattle" is my second project, and I started it with no prior knowledge in React, TypeScript, Tailwind CSS, or Node.js/NPM. Each piece of art was painstakingly generated using prompts to Midjourney AI.
-- There was a very steep learning curve, and I made countless mistakes, but I was rewarded with valuable experience and expertise in these technologies while creating a fun and unique game.
-- As an avid gamer who had never tried building my own game, this was a fantastic and rewarding challenge. I hope this project inspires others to explore new tech and improve their skills!
+- Building a game as my second project was an exciting challenge. I used React, TypeScript, Tailwind CSS, and Node.js/NPM, all of which were new to me. All art was painstakingly generated using prompts to Midjourney AI.
+- This project's greatest challenge was learning to “Think in React”; mastering the concepts of component hierarchies, conditional rendering, and state management.
+- Making a game from scratch offered plenty of opportunity to tackle interesting refactoring and debugging challenges while giving me a great excuse to explore my interests in game design, animation, sound design, and AI.
+- I hope this project inspires others to explore new tech and improve their skills!
 
 ## ⭐ Features
 
